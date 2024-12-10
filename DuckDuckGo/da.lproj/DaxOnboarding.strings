@@ -1,12 +1,6 @@
 /* Class = "UIButton"; normalTitle = "Hide"; ObjectID = "hgy-75-OvJ"; */
 "hgy-75-OvJ.normalTitle" = "Skjul";
 
-/* Class = "UILabel"; text = "Welcome to\nDuckDuckGo!"; ObjectID = "Lvy-9G-3gr"; */
-"Lvy-9G-3gr.text" = "Velkommen til\nDuckDuckGo!";
-
-/* Class = "UIButton"; normalTitle = "Let’s Do It!"; ObjectID = "oAv-Zt-uIt"; */
-"oAv-Zt-uIt.normalTitle" = "Lad os gøre det!";
-
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "zJt-F9-L48"; */
 "zJt-F9-L48.normalTitle" = "Knap";
 

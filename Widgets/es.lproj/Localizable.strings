@@ -1,9 +1,3 @@
-/* No comment provided by engineer. */
-"iOS 17 required" = "Se necesita iOS 17";
-
-/* No comment provided by engineer. */
-"Label" = "Etiqueta";
-
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Genera al instante una nueva Duck Address privada.";
 
@@ -82,11 +76,29 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Desconectar";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Hasta %@";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Descartar";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Despertar";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "La VPN está activada";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "VPN en modo de suspenso";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "La VPN está activada";
 
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "La VPN está desactivada";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "La VPN está en modo de suspensión";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "No conectado";

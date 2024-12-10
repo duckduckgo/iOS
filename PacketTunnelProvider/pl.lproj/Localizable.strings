@@ -1,18 +1,15 @@
 /* The body of the notification when Privacy Pro subscription expired */
-"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+"network.protection.entitlement.expired.notification.body" = "Sieć VPN została rozłączona z powodu wygasłej subskrypcji. Subskrybuj Privacy Pro, aby ponownie połączyć się z siecią DuckDuckGo VPN.";
 
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Niepowodzenie połączenia usługi ochrony sieci.Spróbuj ponownie później.";
-
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "Usługa ochrony sieci została przerwana. Próba ponownego połączenia...";
-
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Usługa ochrony sieci jest włączona. Twoja lokalizacja i aktywność w Internecie są chronione.";
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "Wstrzymano VPN na %@";
 
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Przekierowanie ruchu urządzenia przez %@.";
+
+/* The body of the notification shown when VPN connects successfully after snooze with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "Wstrzymanie VPN zostało zakończone. Przekierowanie ruchu urządzenia przez %@.";
 

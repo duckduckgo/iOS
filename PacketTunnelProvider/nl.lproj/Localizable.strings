@@ -1,18 +1,15 @@
 /* The body of the notification when Privacy Pro subscription expired */
-"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+"network.protection.entitlement.expired.notification.body" = "De VPN-verbinding is verbroken omdat het abonnement is verlopen. Abonneer je op Privacy Pro om opnieuw verbinding te maken met DuckDuckGo VPN.";
 
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "De netwerkbeveiliging kan geen verbinding maken. Probeer het later opnieuw.";
-
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "De netwerkbeveiliging is onderbroken. Er wordt geprobeerd opnieuw verbinding te maken ...";
-
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "De netwerkbeveiliging is ingeschakeld. Je locatie en online-activiteiten zijn beschermd.";
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "VPN in sluimerstand voor %@";
 
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Apparaatverkeer routeren via %@.";
+
+/* The body of the notification shown when VPN connects successfully after snooze with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "De VPN-sluimerstand is beëindigd. Apparaatverkeer wordt gerouteerd via %@.";
 

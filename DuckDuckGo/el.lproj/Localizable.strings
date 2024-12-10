@@ -341,7 +341,7 @@
 "autofill.keep-enabled.alert.disable" = "Απενεργοποίηση";
 
 /* A link that takes the user to the DuckDuckGo help pages explaining password managers */
-"autofill.learn.more.link.title" = "Learn More";
+"autofill.learn.more.link.title" = "Μάθετε περισσότερα";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Προβολή";
@@ -978,9 +978,6 @@
 "dax.onboarding.home.subsequent" = "Το έχετε!\n\nΝα θυμάστε: κάθε φορά που περιηγείστε μαζί μου μια ανατριχιαστική διαφήμιση χάνει τα φτερά της. 👍";
 
 /* No comment provided by engineer. */
-"dax.onboarding.message" = "Το Διαδίκτυο μπορεί να είναι κάπως ανατριχιαστικό.\n\nΜην ανησυχείτε! Το να πραγματοποιείτε αναζήτηση και περιήγηση ιδιωτικά είναι πιο εύκολο απ' όσο νομίζετε.";
-
-/* No comment provided by engineer. */
 "Debug" = "Επανόρθωση σφαλμάτων";
 
 /* Default string used if users device is not iPhone or iPad */
@@ -1080,7 +1077,7 @@
 "duckPlayer.never.label" = "Ποτέ";
 
 /* Body text for the modal feature explanation */
-"duckplayer.presentation.modal.body" = "Το Duck Player σάς επιτρέπει να παρακολουθείτε YouTube χωρίς στοχευμένες διαφημίσεις, χαρίζοντάς σας μια κινηματογραφική εμπειρία στο DuckDuckGo, ενώ το περιεχόμενο που παρακολουθείτε δεν θα επηρεάσει τις συστάσεις που θα λαμβάνετε.";
+"duckplayer.presentation.modal.body" = "Duck Player lets you watch YouTube without targeted ads in DuckDuckGo and what you watch won’t influence your recommendations.";
 
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Το κατάλαβα!";
@@ -1088,17 +1085,23 @@
 /* Two line title (separated by \n) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Πνίγεστε από τις διαφημίσεις στο YouTube; Δοκιμάστε το Duck Player!";
 
+/* Two line title (separated by \n) for the feature explanation */
+"duckplayer.presentation.modal.title.youtube" = "Πνίγεστε από τις διαφημίσεις στο YouTube; Όχι με το Duck Player!";
+
 /* Footer label in the settings screen for Duck Player */
 "duckplayer.settings.footer" = "Το DuckDuckGo παρέχει όλα τα Privacy Essentials που χρειάζεστε για να προστατευτείτε καθώς περιηγείστε στον ιστό.";
 
 /* Text explaining what Duck Player is in the settings screen. */
-"duckplayer.settings.info-text" = "Το Duck Player παρέχει μια καθαρή εμπειρία προβολής χωρίς εξατομικευμένες διαφημίσεις, ενώ εμποδίζει τη δραστηριότητα προβολής να επηρεάσει τις συστάσεις που θα λαμβάνετε στο YouTube.";
+"duckplayer.settings.info-text" = "Duck Player lets you watch YouTube without targeted ads in DuckDuckGo and what you watch won’t influence your recommendations.";
 
 /* Button that takes the user to learn more about Duck Player. */
 "duckplayer.settings.learn-more" = "Μάθετε περισσότερα";
 
+/* Settings screen cell text for DuckPlayer settings to open in new tab */
+"duckplayer.settings.open-new-tab-label" = "Ανοίξτε το Duck Player σε νέα καρτέλα";
+
 /* Settings screen cell text for DuckPlayer settings */
-"duckplayer.settings.open-videos-in" = "Ανοίξτε τα βίντεο στο Duck Player";
+"duckplayer.settings.open-videos-in" = "Ανοίξτε τα βίντεο του YouTube στο Duck Player";
 
 /* Settings screen cell text for DuckPlayer settings */
 "duckplayer.settings.title" = "Duck Player";
@@ -1168,9 +1171,6 @@
 
 /* Title for prompt to sign up for email protection */
 "email.signup-prompt.title" = "Απόκρυψη του email σας και \n αποκλεισμός εφαρμογών παρακολούθησης";
-
-/* No comment provided by engineer. */
-"empty!" = "empty!";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Δεν προστέθηκαν σελιδοδείκτες ακόμα";
@@ -1322,6 +1322,39 @@
 /* Confirmation button */
 "feedback.form.submit" = "Υποβολή";
 
+/* Title of the feedback form */
+"feedback.form.title" = "Βοηθήστε να βελτιώσουμε το Privacy Pro";
+
+/* Category for Identity Theft Restoration feedback */
+"feedback.general.category.itr" = "Identity Theft Restoration";
+
+/* Category for Personal Info Removal feedback */
+"feedback.general.category.pir" = "Αφαίρεση προσωπικών πληροφοριών";
+
+/* Category for subscription and payments feedback */
+"feedback.general.category.ppro" = "Συνδρομές και πληρωμές";
+
+/* Prompt to select a category for general feedback */
+"feedback.general.category.select" = "ΕΠΙΛΕΞΤΕ ΚΑΤΗΓΟΡΙΑ";
+
+/* Category for VPN feedback */
+"feedback.general.category.vpn" = "VPN";
+
+/* Category for access code issues */
+"feedback.itr.category.access-code" = "Πρόβλημα με τον κωδικό πρόσβασης";
+
+/* Category for issues contacting an advisor */
+"feedback.itr.category.cant-contact-advisor" = "Αδυναμία επικοινωνίας με τον σύμβουλο";
+
+/* Prompt to select a category for Identity Theft Restoration feedback */
+"feedback.itr.category.select" = "ΕΠΙΛΕΞΤΕ ΚΑΤΗΓΟΡΙΑ";
+
+/* Category for other Identity Theft Restoration issues */
+"feedback.itr.category.something-else" = "Κάτι άλλο";
+
+/* Category for unhelpful advisor calls */
+"feedback.itr.category.unhelpful" = "Η κλήση στον Σύμβουλο δεν βοήθησε";
+
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Να είστε όσο το δυνατόν πιο συγκεκριμένοι";
 
@@ -1361,6 +1394,24 @@
 /* No comment provided by engineer. */
 "feedback.performance.slowLoading" = "Οι ιστοσελίδες ή τα αποτελέσματα αναζήτησης φορτώνουν αργά";
 
+/* Category for when scan finds incorrect records */
+"feedback.pir.category.not-me" = "Η σάρωση βρήκε εγγραφές που δεν με αφορούν";
+
+/* Category for when scan doesn't find info on a specific site */
+"feedback.pir.category.nothing-on-site" = "Η σάρωση δεν βρήκε τις πληροφορίες μου σε έναν συγκεκριμένο ιστότοπο";
+
+/* Category for other Personal Info Removal issues */
+"feedback.pir.category.other" = "Κάτι άλλο";
+
+/* Category for when the removal process is stuck */
+"feedback.pir.category.removal-stuck" = "Η διαδικασία αφαίρεσης έχει κολλήσει";
+
+/* Category for when the scan is stuck */
+"feedback.pir.category.scan-stuck" = "Η σάρωση για εγγραφές έχει κολλήσει";
+
+/* Prompt to select a category for Personal Info Removal feedback */
+"feedback.pir.category.select" = "ΕΠΙΛΕΞΤΕ ΚΑΤΗΓΟΡΙΑ";
+
 /* Header above input field */
 "feedback.positive.form.header" = "Μοιραστείτε τις λεπτομέρειες";
 
@@ -1378,6 +1429,15 @@
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Μοιραστείτε τις λεπτομέρειες";
+
+/* Category for other Privacy Pro issues */
+"feedback.ppro.category.other" = "Κάτι άλλο";
+
+/* Category for one-time password issues */
+"feedback.ppro.category.otp" = "Πρόβλημα με τον κωδικό πρόσβασης μίας χρήσης";
+
+/* Prompt to select a category for Privacy Pro feedback */
+"feedback.ppro.category.select" = "ΕΠΙΛΕΞΤΕ ΚΑΤΗΓΟΡΙΑ";
 
 /* No comment provided by engineer. */
 "feedback.start.footer" = "Τα ανώνυμα σχόλιά σας είναι σημαντικά για εμάς.";
@@ -1529,12 +1589,6 @@
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Προβολή όλων των καρτελών";
 
-/* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Καλώς ορίσατε στο\nDuckDuckGo!";
-
-/* No comment provided by engineer. */
-"LOREM IPSUM" = "LOREM IPSUM";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Το DuckDuckGo για Mac έχει την ταχύτητα που χρειάζεστε, τις λειτουργίες περιήγησης που αναμένετε και περιλαμβάνει τις καλύτερες δυνατότητες απορρήτου στην κατηγορία μας.";
 
@@ -1586,62 +1640,53 @@
 /* Edit button */
 "navigation.title.edit" = "Επεξεργασία";
 
-/* String indicating NetP is connected when viewed from the settings screen */
-"netP.cell.connected" = "Connected";
-
-/* String indicating NetP is disconnected when viewed from the settings screen */
-"netP.cell.disconnected" = "Not connected";
-
-/* Title for the DuckDuckGo VPN feature in settings */
-"netP.settings.title" = "VPN";
+/* String indicating NetP is snoozing when viewed from the settings screen */
+"netP.cell.snoozing" = "Αναβολή";
 
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
 
 /* The body of the notification when Privacy Pro subscription expired */
-"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
-
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Η σύνδεση της Προστασίας δικτύου απέτυχε. Ξαναδοκιμάστε αργότερα.";
+"network.protection.entitlement.expired.notification.body" = "Το VPN αποσυνδέθηκε λόγω λήξης της συνδρομής. Εγγραφείτε στο Privacy Pro για να συνδέσετε εκ νέου το DuckDuckGo VPN.";
 
 /* Title for the VPN FAQ screen. */
 "network.protection.faq.title" = "Συχνές ερωτήσεις DuckDuckGo VPN";
 
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "Η Προστασία δικτύου διακόπηκε. Γίνεται προσπάθεια επανασύνδεσης τώρα...";
-
 /* Message for the network protection invite dialog */
-"network.protection.invite.dialog.message" = "Enter your invite code to get started.";
+"network.protection.invite.dialog.message" = "Εισαγάγετε τον κωδικό πρόσκλησής σου για να αρχίσετε.";
 
 /* Title for the network protection invite screen */
 "network.protection.invite.dialog.title" = "Έχετε προσκληθεί να δοκιμάσετε το DuckDuckGo VPN";
 
 /* Prompt for the network protection invite code text field */
-"network.protection.invite.field.prompt" = "Invite Code";
+"network.protection.invite.field.prompt" = "Κωδικός πρόσκλησης";
 
 /* Message for the network protection invite success view */
-"network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
+"network.protection.invite.success.message" = "Κρύψτε την τοποθεσία σας από ιστότοπους και αποκρύψτε τη διαδικτυακή δραστηριότητά σας από τους παρόχους Internet και άλλους χρήστες του δικτύου σας.";
 
 /* Title for the network protection invite success view */
-"network.protection.invite.success.title" = "Success! You’re in.";
+"network.protection.invite.success.title" = "Τέλεια! Τα καταφέρατε.";
 
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Ανοικτό VPN";
 
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "Το VPN τέθηκε σε αναστολή για %@";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Συνδέθηκε · %@";
 
 /* The label for the NetP VPN when connecting */
-"network.protection.status.connecting" = "Connecting...";
+"network.protection.status.connecting" = "Σύνδεση...";
 
 /* The label for the NetP VPN when disconnected */
-"network.protection.status.disconnected" = "Not connected";
+"network.protection.status.disconnected" = "Δεν έχει συνδεθεί";
 
 /* The label for the NetP VPN when disconnecting */
-"network.protection.status.disconnecting" = "Disconnecting...";
+"network.protection.status.disconnecting" = "Αποσύνδεση...";
 
 /* Message label text for the status view when VPN is disconnected */
 "network.protection.status.header.message.off" = "Συνδεθείτε για να διασφαλίσετε όλη την επισκεψιμότητά σας στο διαδίκτυο\nαπό τη συσκευή σας.";
@@ -1655,26 +1700,41 @@
 /* Header title label text for the status view when VPN is connected */
 "network.protection.status.header.title.on" = "Το DuckDuckGo VPN είναι ενεργοποιημένο";
 
+/* Header title label text for the status view when VPN is snoozing */
+"network.protection.status.header.title.snoozed" = "Το DuckDuckGo VPN βρίσκεται σε κατάσταση αναστολής λειτουργίας";
+
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
-"network.protection.status.menu.share.feedback" = "Share Feedback";
+"network.protection.status.menu.share.feedback" = "Κοινοποίηση σχολίου";
+
+/* The label for the NetP VPN when paused */
+"network.protection.status.paused" = "Σε παύση";
+
+/* The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00' */
+"network.protection.status.snoozing.format" = "Σε αναβολή, απομένει %@";
+
+/* Snooze button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.snooze" = "Αναβολή για 20 λεπτά";
+
+/* Wake Up button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.wake-up" = "Αφύπνιση";
 
 /* Connection details label shown in NetworkProtection's status view. */
-"network.protection.status.view.connection.details" = "Connection Details";
+"network.protection.status.view.connection.details" = "Λεπτομέρειες σύνδεσης";
 
 /* Custom DNS label shown in NetworkProtection's status view. */
-"network.protection.status.view.custom.dns" = "DNS Server";
+"network.protection.status.view.custom.dns" = "Διακομιστής DNS";
 
 /* Generic connection failed error message shown in NetworkProtection's status view. */
-"network.protection.status.view.error.connection.failed.message" = "Please try again later.";
+"network.protection.status.view.error.connection.failed.message" = "Ξαναδοκιμάστε αργότερα.";
 
 /* Generic connection failed error title shown in NetworkProtection's status view. */
-"network.protection.status.view.error.connection.failed.title" = "Failed to Connect.";
+"network.protection.status.view.error.connection.failed.title" = "Αποτυχία σύνδεσης.";
 
 /* IP Address label shown in NetworkProtection's status view. */
-"network.protection.status.view.ip.address" = "IP Address";
+"network.protection.status.view.ip.address" = "Διεύθυνση IP";
 
 /* Location label shown in NetworkProtection's status view. */
-"network.protection.status.view.location" = "Location";
+"network.protection.status.view.location" = "Τοποθεσία";
 
 /* Label shown on the title of the settings section in NetworkProtection's status view. */
 "network.protection.status.view.settings.section.title" = "Διαχείριση";
@@ -1682,11 +1742,11 @@
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "VPN";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Η Προστασία δικτύου είναι Ενεργή. Η τοποθεσία και η διαδικτυακή δραστηριότητά σας προστατεύονται.";
-
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Δρομολόγηση κυκλοφορίας της συσκευής μέσω %@.";
+
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "Η αναστολή του VPN έχει τελειώσει. Δρομολόγηση κυκλοφορίας της συσκευής μέσω %@.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Ενεργοποίηση ειδοποιήσεων";
@@ -1698,13 +1758,13 @@
 "network.protection.vpn.about" = "Σχετικά";
 
 /* Section header for the toggle for VPN notifications. */
-"network.protection.vpn.alerts.section.header" = "Notifications";
+"network.protection.vpn.alerts.section.header" = "Ειδοποιήσεις";
 
 /* List section footer for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.section.footer" = "Ειδοποιηθείτε εάν η ισχύς της σύνδεσής σας μειωθεί ή αλλάξει η κατάσταση του VPN.";
 
 /* Title for the toggle for VPN notifications. */
-"network.protection.vpn.alerts.toggle.title" = "VPN Notifications";
+"network.protection.vpn.alerts.toggle.title" = "Ειδοποιήσεις VPN";
 
 /* Title for the data volume section in the VPN status screen */
 "network.protection.vpn.data-volume" = "Όγκος δεδομένων";
@@ -1713,13 +1773,13 @@
 "network.protection.vpn.exclude.local.networks.setting.footer" = "Επιτρέψτε στην τοπική κυκλοφορία να παρακάμψει το VPN και να συνδεθεί σε συσκευές του τοπικού δικτύου σας, όπως ένας εκτυπωτής.";
 
 /* Header text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.header" = "General";
+"network.protection.vpn.exclude.local.networks.setting.header" = "Γενικά";
 
 /* Title for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.title" = "Εξαίρεση τοπικών δικτύων";
 
 /* Title for the VPN Location screen's All Countries section. */
-"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+"network.protection.vpn.location.all.countries.section.title" = "Όλες οι χώρες";
 
 /* Description of the location type in the VPN status screen */
 "network.protection.vpn.location.connected" = "Συνδεδεμένη τοποθεσία";
@@ -1734,7 +1794,7 @@
 "network.protection.vpn.location.recommended.section.footer" = "Αυτόματη σύνδεση στον εγγύτερο διακομιστή που μπορούμε να βρούμε.";
 
 /* Title for the VPN Location screen's Recommended section. */
-"network.protection.vpn.location.recommended.section.title" = "Recommended";
+"network.protection.vpn.location.recommended.section.title" = "Προτείνεται";
 
 /* Description of the location type in the VPN status screen */
 "network.protection.vpn.location.selected" = "Επιλεγμένη τοποθεσία";
@@ -1752,13 +1812,13 @@
 "network.protection.vpn.preferred.location.nearest" = "Πλησιέστερη τοποθεσία";
 
 /* Title for the Preferred Location VPN Settings item. */
-"network.protection.vpn.preferred.location.title" = "Preferred Location";
+"network.protection.vpn.preferred.location.title" = "Προτιμώμενη τοποθεσία";
 
 /* Footer text for the DNS server setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "DuckDuckGo routes DNS queries through our DNS servers so your internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "Το DuckDuckGo δρομολογεί τα ερωτήματα DNS μέσω των διακομιστών DNS μας, ώστε ο πάροχος διαδικτύου σας να μην μπορεί να δει ποιους ιστότοπους επισκέπτεστε.";
 
 /* Title for the FAQ row in the VPN status screen. */
-"network.protection.vpn.settings.faq" = "FAQs and Support";
+"network.protection.vpn.settings.faq" = "Συχνές ερωτήσεις και υποστήριξη";
 
 /* Title for the feedback row in the VPN status screen. */
 "network.protection.vpn.settings.share-feedback" = "Κοινοποίηση σχολίου VPN";
@@ -1940,6 +2000,66 @@
 /* Deactivate button */
 "pm.deactivate" = "Απενεργοποίηση";
 
+/* Label for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.label" = "Email (προαιρετικό)";
+
+/* Placeholder for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.placeholder" = "name@email.com";
+
+/* Placeholder for the General Feedback step in the Privacy Pro feedback form */
+"ppro.feedback-form.general-feedback.placeholder" = "Στείλτε μας τα σχόλιά σας...";
+
+/* Title for the General Feedback step in the Privacy Pro feedback form */
+"ppro.feedback-form.general-feedback.title" = "Γενικά σχόλια";
+
+/* Title for the ITR category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-itr-problem.title" = "Identity Theft Restoration";
+
+/* Title for the PIR category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-pir-problem.title" = "Personal Information Removal";
+
+/* Title for the Subscriptions and Payments category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-ppro-problem.title" = "Συνδρομές και πληρωμές";
+
+/* Placeholder for the Report a Problem step in the Privacy Pro feedback form */
+"ppro.feedback-form.report-problem.placeholder" = "Πείτε μας τι συμβαίνει...";
+
+/* Title for the Report a Problem step in the Privacy Pro feedback form */
+"ppro.feedback-form.report-problem.title" = "Αναφέρετε ένα πρόβλημα";
+
+/* Title for the VPN category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-vpn-problem.title" = "VPN";
+
+/* Placeholder for the Feature Request step in the Privacy Pro feedback form */
+"ppro.feedback-form.request-feature.placeholder" = "Ποιες λειτουργίες θα θέλατε να δείτε;";
+
+/* Title for the Feature Request step in the Privacy Pro feedback form */
+"ppro.feedback-form.request-feature.title" = "Αίτημα για λειτουργία";
+
+/* Title for the category selection section in the Privacy Pro feedback form */
+"ppro.feedback-form.select-category.title" = "ΕΠΙΛΕΞΤΕ ΚΑΤΗΓΟΡΙΑ";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-1" = "Βρήκατε ένα πρόβλημα που δεν καλύπτεται στο [κέντρο βοήθειας](duck://); Θέλουμε σίγουρα να μάθουμε γι' αυτό.Παρέχετε ένα email αν θέλετε να επικοινωνήσουμε μαζί σας για το θέμα αυτό (ίσως δεν είμαστε σε θέση να απαντήσουμε σε όλα τα θέματα):";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-2" = "Εκτός από τις λεπτομέρειες που καταχωρήθηκαν παραπάνω, στέλνουμε κάποιες ανώνυμες πληροφορίες με τα σχόλιά σας:";
+
+/* Bullet text for the body of the PPro feedback form */
+"ppro.feedback-form.text-3" = "• Εάν κάποιες λειτουργίες του προγράμματος περιήγησης είναι ενεργές";
+
+/* Bullet text for the body of the PPro feedback form */
+"ppro.feedback-form.text-4" = "• Συγκεντρωτικά διαγνωστικά εφαρμογών (π.χ. κωδικοί σφαλμάτων)";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-5" = "Πατώντας «Υποβολή» συμφωνείτε ότι το DuckDuckGo μπορεί να χρησιμοποιήσει τις πληροφορίες που υποβάλλονται για βελτίωση της εφαρμογής.";
+
+/* Title for the text box in the Privacy Pro feedback form */
+"ppro.feedback-form.text-box.title" = "Σχόλια";
+
+/* Title for the Privacy Pro feedback form */
+"ppro.feedback-form.title" = "Αποστολή σχολίου";
+
 /* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
 "prefrences.sync.bookmarks-limit-exceeded-action" = "Διαχείριση σελιδοδεικτών";
 
@@ -2029,6 +2149,18 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Αγαπημένα";
 
+/* Name of the option the user can chose to give general browser feedback */
+"send.browser.feedback.general-feedback" = "Γενικά σχόλια";
+
+/* Name of the option the user can chose to give browser feedback about a problem they enountered */
+"send.browser.feedback.report-problem" = "Αναφέρετε ένα πρόβλημα";
+
+/* Name of the option the user can chose to give browser feedback about a feature they would like */
+"send.browser.feedback.request-feature" = "Αιτηθείτε μια λειτουργία";
+
+/* Title of the picker where the user can chose the category of the feedback they want ot send. */
+"send.browser.feedback.select-category" = "ΕΠΙΛΕΞΤΕ ΚΑΤΗΓΟΡΙΑ";
+
 /* Settings cell for About DDG */
 "settings.about.ddg" = "Σχετικά με το DuckDuckGo";
 
@@ -2083,6 +2215,9 @@
 
 /* Section footer Autolock description */
 "settings.autolock.description" = "Εάν έχει ενεργοποιηθεί το Touch ID, το Face ID ή ο κωδικός πρόσβασης συστήματος, θα σας ζητηθεί να ξεκλειδώσετε την εφαρμογή κατά το άνοιγμά της.";
+
+/* Settings cell for Browser Feedback */
+"settings.browser.feedback" = "Σχόλια για το πρόγραμμα περιήγησης";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Αυτόματη απαλοιφή δεδομένων";
@@ -2182,7 +2317,7 @@
 "settings.ppro" = "Privacy Pro";
 
 /* Title for Link in the Footer of Privacy Pro section */
-"settings.ppro.footer" = "Privacy Policy and Terms of Service";
+"settings.ppro.footer" = "Πολιτική απορρήτου και Όροι χρήσης υπηρεσιών";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Προεπισκοπήσεις με παρατεταμένο πάτημα";
@@ -2208,23 +2343,20 @@
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Ορίστε τη θέση της γραμμής διευθύνσεών σας";
 
-/* Subscription activation pending description */
-"settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
+/* Privacy pro description subtitle in settings when the is activating */
+"settings.subscription.activating" = "Ενεργοποίηση";
 
-/* Subscription activation pending title */
-"settings.subscription.activation.pending.title" = "Η συνδρομή σας ενεργοποιείται";
+/* Subscription activation pending description */
+"settings.subscription.activation.pending.description" = "Αυτό παίρνει περισσότερο χρόνο από το συνηθισμένο. Ελέγξτε πάλι αργότερα.";
 
 /* Data Broker protection cell subtitle for privacy pro */
-"settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
+"settings.subscription.DBP.subtitle" = "Αφαιρέστε τις πληροφορίες σας από ιστότοπους που τις πωλούν";
 
 /* Data Broker protection cell title for privacy pro */
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
-/* Privacy pro description subtext */
-"settings.subscription.description" = "Πιο απρόσκοπτη προστασία του απορρήτου με τρεις νέες προστασίες:";
-
 /* I have a Subscription button text for privacy pro */
-"settings.subscription.existing.subscription" = "I Have a Subscription";
+"settings.subscription.existing.subscription" = "Έχω συνδρομή";
 
 /* Subscription expired description */
 "settings.subscription.expired.comment" = "Εγγραφείτε ξανά για να συνεχίσετε να χρησιμοποιείτε το Privacy Pro";
@@ -2232,23 +2364,26 @@
 /* Subscription expired tittle message */
 "settings.subscription.expired.title" = "Η συνδρομή σας στο Privacy Pro έληξε";
 
-/* Privacy pro features list */
-"settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
-
 /* Identity theft restoration cell subtitle for privacy pro */
-"settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
+"settings.subscription.ITR.subtitle" = "Αν κλαπεί η ταυτότητά σας, θα σας βοηθήσουμε να την αποκαταστήσετε";
 
 /* Identity theft restoration cell title for privacy pro */
 "settings.subscription.ITR.title" = "Identity Theft Restoration";
 
 /* Get Privacy Pro button text for privacy pro */
-"settings.subscription.learn.more" = "Get Privacy Pro";
+"settings.subscription.learn.more" = "Απόκτησε το Privacy Pro";
 
 /* Subscription Settings button text for privacy pro */
-"settings.subscription.manage" = "Subscription Settings";
+"settings.subscription.manage" = "Ρυθμίσεις συνδρομής";
 
-/* Call to action title for Privacy Pro */
-"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
+/* Privacy Pro description subtitle in settings */
+"settings.subscription.row.description" = "Περιλαμβάνει το VPN μας και τo Identity Theft Restoration.";
+
+/* Call to action title for Privacy Pro settings */
+"settings.subscription.subscribe" = "Προστατέψτε τη σύνδεση και την ταυτότητά σας με το Privacy Pro";
+
+/* Privacy pro description subtitle in settings */
+"settings.subscription.us.description" = "Περιλαμβάνει το VPN μας και τα Personal Information Removal και Identity Theft Restoration.";
 
 /* VPN cell title for privacy pro */
 "settings.subscription.VPN.title" = "VPN";
@@ -2317,67 +2452,64 @@
 "siteFeedback.urlPlaceholder" = "Ποιος ιστότοπος είναι κατεστραμμένος;";
 
 /* Subscription Activation Info */
-"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+"subscription.activate..header.description" = "Αποκτήστε πρόσβαση στη συνδρομή σας Privacy Pro σε αυτήν τη συσκευή μέσω Apple ID ή διεύθυνσης email.";
 
 /* Button for adding email address to subscription */
-"subscription.activate.add.email.button" = "Add Email";
+"subscription.activate.add.email.button" = "Προσθήκη email";
 
 /* Apple ID option for activation */
 "subscription.activate.appleid" = "Apple ID";
 
 /* Button text for restoring purchase via Apple ID */
-"subscription.activate.appleid.button" = "Restore Purchase";
+"subscription.activate.appleid.button" = "Επαναφορά αγοράς";
 
 /* Description for Apple ID activation */
-"subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
+"subscription.activate.appleid.description" = "Κάντε επαναφορά της αγοράς σας για να ενεργοποιήσετε τη συνδρομή σας σε αυτήν τη συσκευή.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
+"subscription.activate.description" = "Η συνδρομή σας είναι αυτόματα διαθέσιμη στο DuckDuckGo σε οποιαδήποτε συσκευή είναι συνδεδεμένη στον λογαριασμό σας στο Apple ID.";
 
 /* Button for editing email address added to subscription */
-"subscription.activate.edit.email.button" = "Edit Email";
+"subscription.activate.edit.email.button" = "Επεξεργασία email";
 
 /* View Title for editing your email account */
-"subscription.activate.edit.email.title" = "Edit Email";
+"subscription.activate.edit.email.title" = "Επεξεργασία email";
 
 /* Email option for activation */
-"subscription.activate.email" = "Email";
+"subscription.activate.email" = "ηλεκτρονικό ταχυδρομείο";
 
 /* Restore button title for Email */
-"subscription.activate.email.button" = "Enter Email";
+"subscription.activate.email.button" = "Εισαγωγή email";
 
 /* Description for Email activation */
-"subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
+"subscription.activate.email.description" = "Χρησιμοποιήστε το email σας για να ενεργοποιήσετε τη συνδρομή σας στη συσκευή αυτή.";
 
 /* Activate subscription title */
 "subscription.activate.email.title" = "Ενεργοποίηση συνδρομής";
 
 /* Button title for cancelling email deletion */
-"subscription.activate.manage.email.cancel" = "Cancel";
+"subscription.activate.manage.email.cancel" = "Ακύρωση";
 
 /* Button title for confirming email deletion */
-"subscription.activate.manage.email.OK" = "OK";
+"subscription.activate.manage.email.OK" = "Εντάξει";
 
 /* Restore button title for AppleID */
-"subscription.activate.restore.apple" = "Restore Purchase";
+"subscription.activate.restore.apple" = "Επαναφορά αγοράς";
 
 /* Subscription Activation Title */
-"subscription.activate.title" = "Activate your subscription on this device";
+"subscription.activate.title" = "Ενεργοποιήστε τη συνδρομή σας σε αυτήν τη συσκευή";
 
 /* Resend activation instructions button */
-"subscription.add.device.resend.instructions" = "Resend Instructions";
+"subscription.add.device.resend.instructions" = "Εκ νέου αποστολή οδηγιών";
 
 /* Add email to an existing subscription */
-"subscription.add.email" = "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.";
+"subscription.add.email" = "Πρόσθεσε μια διεύθυνση email για να ενεργοποιήσετε τη συνδρομή σας στις άλλες συσκευές σας. Θα χρησιμοποιήσουμε αυτήν τη διεύθυνση μόνο για να επαληθεύσουμε τη συνδρομή σας.";
 
 /* View title for adding email to subscription */
-"subscription.add.email.title" = "Add Email";
-
-/* Title for Alert messages */
-"subscription.alert.title" = "subscription.alert.title";
+"subscription.add.email.title" = "Προσθήκη email";
 
 /* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
+"subscription.available.apple" = "Το Privacy Pro είναι διαθέσιμο σε οποιαδήποτε συσκευή που είναι συνδεδεμένη στο ίδιο Apple ID.";
 
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Η συνδρομή σας αγοράστηκε μέσω του Google Play Store. Για να ανανεώσετε τη συνδρομή σας, ανοίξτε τις ρυθμίσεις συνδρομής στο Google Play Store σε συσκευή που είναι συνδεδεμένη στον ίδιο λογαριασμό Google που χρησιμοποιήθηκε για την αρχική αγορά της συνδρομής σας.";
@@ -2385,89 +2517,86 @@
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Προγράμματα συνδρομής";
 
-/* Subscription annual billing period type */
-"subscription.billing.period.annual" = "annual";
-
-/* Subscription monthly billing period type */
-"subscription.billing.period.monthly" = "monthly";
-
 /* Subscription Removal confirmation message */
-"subscription.cancel.message" = "Your subscription has been removed from this device.";
+"subscription.cancel.message" = "Η συνδρομή σας έχει αφαιρεθεί από αυτήν τη συσκευή.";
 
 /* Change plan or cancel title */
-"subscription.change.plan" = "Update Plan or Cancel";
+"subscription.change.plan" = "Ενημέρωση προγράμματος ή ακύρωση";
 
 /* Navigation Button for closing subscription view */
-"subscription.close" = "Close";
+"subscription.close" = "Κλείσιμο";
 
 /* Title for Confirm messages */
-"subscription.confirm.title" = "Are you sure?";
+"subscription.confirm.title" = "Είστε σίγουροι;";
 
 /* Header for section for activating subscription on other devices */
-"subscription.devices.header" = "Activate on Other Devices";
+"subscription.devices.header" = "Ενεργοποίηση σε άλλες συσκευές";
 
 /* Footer for section for activating subscription on other devices when email was not yet added */
-"subscription.devices.no.email.footer" = "Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+"subscription.devices.no.email.footer" = "Προσθέστε ένα προαιρετικό email στη συνδρομή σας για να αποκτήσετε πρόσβαση στο Privacy Pro από άλλες συσκευές. **[Μάθετε περισσότερα](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Footer for section for activating subscription on other devices when email is added */
-"subscription.devices.with.email.footer" = "Use this email to activate your subscription in Settings > Privacy Pro in the DuckDuckGo app on your other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+"subscription.devices.with.email.footer" = "Χρησιμοποιήστε αυτό το email για να ενεργοποιήσετε τη συνδρομή σας στις Ρυθμίσεις > Privacy Pro στην εφαρμογή DuckDuckGo στις άλλες συσκευές σας. **[Μάθε περισσότερα](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Alert content for not found subscription */
-"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+"subscription.email.inactive.alert.message" = "Η συνδρομή που συνδέεται με αυτό το email δεν είναι πλέον ενεργή.";
 
 /* Alert title for not found subscription */
-"subscription.email.inactive.alert.title" = "Subscription Not Found";
+"subscription.email.inactive.alert.title" = "Η συνδρομή δεν βρέθηκε";
 
 /* Alert content for not found subscription */
-"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+"subscription.expired.alert.message" = "Η συνδρομή που συνδέεται με αυτό το Apple ID δεν είναι πλέον ενεργή.";
 
 /* FAQ Button */
-"subscription.faq" = "FAQs and Support";
+"subscription.faq" = "Συχνές ερωτήσεις και υποστήριξη";
 
 /* FAQ Description */
-"subscription.faq.description" = "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.";
+"subscription.faq.description" = "Πάρτε απαντήσεις σε συχνές ερωτήσεις ή επικοινωνήστε με την υποστήριξη του Privacy Pro από τις σελίδες βοήθειας που διαθέτουμε.";
+
+/* Send Feedback Button */
+"subscription.feedback" = "Αποστολή σχολίου";
 
 /* Cancel action for the existing subscription dialog */
-"subscription.found.cancel" = "Cancel";
+"subscription.found.cancel" = "Ακύρωση";
 
 /* Restore action for the existing subscription dialog */
-"subscription.found.restore" = "Restore";
+"subscription.found.restore" = "Επαναφορά";
 
 /* Message for the existing subscription dialog */
-"subscription.found.text" = "We found a subscription associated with this Apple ID.";
+"subscription.found.text" = "Βρήκαμε μια συνδρομή που σχετίζεται με αυτό το Apple ID.";
 
 /* Title for the existing subscription dialog */
-"subscription.found.title" = "Subscription Found";
+"subscription.found.title" = "Βρέθηκε συνδρομή";
 
 /* Help and support Section header */
-"subscription.help" = "Help and support";
+"subscription.help" = "Βοήθεια και υποστήριξη";
 
 /* Manage Plan header */
-"subscription.manage.plan" = "Manage Plan";
+"subscription.manage.plan" = "Διαχείριση προγράμματος";
 
 /* Header for the subscription section */
-"subscription.manage.title" = "Subscription";
+"subscription.manage.title" = "Συνδρομή";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
+"subscription.notFound.alert.message" = "Δεν υπάρχει συνδρομή που να συνδέεται με αυτό το Apple ID.";
 
 /* Alert title for not found subscription */
-"subscription.notFound.alert.title" = "Subscription Not Found";
+"subscription.notFound.alert.title" = "Η συνδρομή δεν βρέθηκε";
 
 /* View plans button text */
-"subscription.notFound.view.plans" = "View Plans";
+"subscription.notFound.view.plans" = "Προβολή προγραμμάτων";
 
 /* Hero Text for Personal information removal */
-"subscription.pir.hero" = "Activate Privacy Pro on desktop to set up Personal Information Removal";
+"subscription.pir.hero" = "Ενεργοποιήστε το Privacy Pro στην επιφάνεια εργασίας για να ρυθμίσετε το Personal Information Removal";
 
 /* Description on how to use Personal information removal in desktop. The first placeholder references a location in the Desktop application. <i.e: Settings > Privacy Pro>, and the second, the menu entry. i.e. <I have a Subscription> */
-"subscription.pir.heroText" = "In the DuckDuckGo browser for desktop, go to %1$@ and click %2$@ to get started.";
+"subscription.pir.heroText" = "Στο πρόγραμμα περιήγησης DuckDuckGo για επιτραπέζιους υπολογιστές, μεταβείτε στο %1$@ και κάντε κλικ στο %2$@ για να αρχίσετε.";
 
 /* Settings references a menu in the Desktop app, Privacy Pro, references our product name */
-"subscription.pir.heroTextLocation" = "Settings > Privacy Pro";
+"subscription.pir.heroTextLocation" = "Ρυθμίσεις > Privacy Pro";
 
 /* Menu item for enabling Personal Information Removal on Desktop */
-"subscription.pir.heroTextMenyEntry" = "I have a subscription";
+"subscription.pir.heroTextMenyEntry" = "Έχω συνδρομή";
 
 /* Text for the 'macOS' button */
 "subscription.pir.macos" = "Mac";
@@ -2476,28 +2605,28 @@
 "subscription.pir.windows" = "Windows";
 
 /* Progress view title when completing the purchase */
-"subscription.progress.view.completing.purchase" = "Completing purchase...";
+"subscription.progress.view.completing.purchase" = "Ολοκλήρωση της αγοράς...";
 
 /* Progress view title when starting the purchase */
-"subscription.progress.view.purchasing.subscription" = "Purchase in progress...";
+"subscription.progress.view.purchasing.subscription" = "Αγορά σε εξέλιξη...";
 
 /* Progress view title when restoring past subscription purchase */
-"subscription.progress.view.restoring.subscription" = "Restoring subscription...";
+"subscription.progress.view.restoring.subscription" = "Επαναφορά συνδρομής...";
 
 /* Remove from this device button */
-"subscription.remove.from.device.button" = "Remove From This Device";
+"subscription.remove.from.device.button" = "Αφαίρεση από αυτήν τη συσκευή";
 
 /* Remove from device confirmation dialog text */
-"subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
+"subscription.remove.from.device.text" = "Δεν θα μπορείτε πλέον να έχετε πρόσβαση στη συνδρομή Privacy Pro σε αυτήν τη συσκευή. Αυτό δεν θα ακυρώσει τη συνδρομή σας και θα παραμείνει ενεργή στις υπόλοιπες συσκευές σας.";
 
 /* Remove from device confirmation dialog title */
-"subscription.remove.from.device.title" = "Remove from this device?";
+"subscription.remove.from.device.title" = "Αφαίρεση από αυτήν τη συσκευή;";
 
 /* Remove subscription button text */
-"subscription.remove.subscription" = "Remove Subscription";
+"subscription.remove.subscription" = "Αφαίρεση συνδρομής";
 
 /* Remove subscription cancel button text */
-"subscription.remove.subscription.cancel" = "Cancel";
+"subscription.remove.subscription.cancel" = "Ακύρωση";
 
 /* Button text for general error message */
 "subscription.restore.backend.error.button" = "Επιστροφή στις Ρυθμίσεις";
@@ -2509,28 +2638,43 @@
 "subscription.restore.backend.error.title" = "Κάτι πήγε λάθος";
 
 /* Alert for general error message */
-"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+"subscription.restore.general.error.message" = "Το App Store δεν μπόρεσε να επεξεργαστεί την αγορά σας. Ξαναδοκιμάστε αργότερα.";
 
 /* Alert for general error title */
-"subscription.restore.general.error.title" = "Something Went Wrong";
+"subscription.restore.general.error.title" = "Κάτι πήγε λάθος";
 
 /* Alert button text for restored purchase alert */
-"subscription.restore.success.alert.button" = "OK";
+"subscription.restore.success.alert.button" = "Εντάξει";
 
 /* Alert message for restored purchase */
-"subscription.restore.success.alert.message" = "Your purchases have been restored.";
+"subscription.restore.success.alert.message" = "Οι αγορές σας έχουν αποκατασταθεί.";
 
 /* Alert title for restored purchase */
-"subscription.restore.success.alert.title" = "You’re all set.";
+"subscription.restore.success.alert.title" = "Είστε πανέτοιμοι.";
+
+/* Subtitle in header when subscribed */
+"subscription.subscribed" = "Έχει γίνει εγγραφή";
 
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Η συνδρομή σας έληξε %@";
 
-/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
-"subscription.subscription.expiring.caption" = "Your %1$@ subscription expires on %2$@.";
+/* Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)' */
+"subscription.subscription.expiring.monthly.caption" = "Η μηνιαία συνδρομή σας λήγει %@.";
 
-/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
-"subscription.subscription.renewing.caption" = "Your %1$@ subscription renews on %2$@.";
+/* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
+"subscription.subscription.expiring.unknown.caption" = "Η συνδρομή σας λήγει %@.";
+
+/* Annual subscription expiration info where parameter is expiration date. This reads as 'Your annual subscription expires on (date)' */
+"subscription.subscription.expiring.yearly.caption" = "Η ετήσια συνδρομή σας λήγει %@.";
+
+/* Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)' */
+"subscription.subscription.renewing.monthly.caption" = "Η μηνιαία συνδρομή σας ανανεώνεται %@.";
+
+/* Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)' */
+"subscription.subscription.renewing.unknown.caption" = "Η συνδρομή σας ανανεώνεται %@.";
+
+/* Annual subscription renewal info where parameter is renewal date. This reads as 'Your annual subscription renews on (date)' */
+"subscription.subscription.renewing.yearly.caption" = "Η ετήσια συνδρομή σας ανανεώνεται %@.";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
@@ -2677,118 +2821,118 @@
 "voiceSearch.footer.note.old" = "Η επεξεργασία του ήχου πραγματοποιείται στη συσκευή. Δεν αποθηκεύεται ούτε κοινοποιείται σε οποιονδήποτε, συμπεριλαμβανομένου του DuckDuckGo.";
 
 /* Cancel action for the alert when the subscription expires */
-"vpn.access-revoked.alert.action.cancel" = "Dismiss";
+"vpn.access-revoked.alert.action.cancel" = "Απόρριψη";
 
 /* Primary action for the alert when the subscription expires */
-"vpn.access-revoked.alert.action.subscribe" = "Subscribe";
+"vpn.access-revoked.alert.action.subscribe" = "Εγγραφείτε";
 
 /* Alert message for the alert when the Privacy Pro subscription expiress */
-"vpn.access-revoked.alert.message" = "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+"vpn.access-revoked.alert.message" = "Εγγραφείτε στο Privacy Pro για να συνδέσετε εκ νέου το DuckDuckGo VPN.";
 
 /* Alert title for the alert when the Privacy Pro subscription expires */
-"vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
+"vpn.access-revoked.alert.title" = "Το VPN αποσυνδέθηκε λόγω λήξης της συνδρομής";
 
 /* Title for the VPN widget onboarding screen */
 "vpn.addWidget.settings.title" = "Εύρεση και επιλογή του DuckDuckGo. Στη συνέχεια, σύρετε προς το VPN και επιλέξτε Προσθήκη μικροεφαρμογής.";
 
 /* Title for the Cancel button of the VPN feedback form */
-"vpn.feedback-form.button.cancel" = "Cancel";
+"vpn.feedback-form.button.cancel" = "Ακύρωση";
 
 /* Title for the Done button of the VPN feedback form */
-"vpn.feedback-form.button.done" = "Done";
+"vpn.feedback-form.button.done" = "Ολοκληρώθηκε";
 
 /* Title for the Submit button of the VPN feedback form */
-"vpn.feedback-form.button.submit" = "Submit";
+"vpn.feedback-form.button.submit" = "Υποβολή";
 
 /* Title for the Submitting state of the VPN feedback form */
-"vpn.feedback-form.button.submitting" = "Submitting…";
+"vpn.feedback-form.button.submitting" = "Υποβολή...";
 
 /* Title for the browser crash/freeze category of the VPN feedback form */
-"vpn.feedback-form.category.browser-crash-or-freeze" = "VPN causes browser to crash or freeze";
+"vpn.feedback-form.category.browser-crash-or-freeze" = "Το VPN προκαλεί σφάλματα ή παγώνει το πρόγραμμα περιήγησης";
 
 /* Title for the 'VPN fails to connect' category of the VPN feedback form */
-"vpn.feedback-form.category.fails-to-connect" = "VPN fails to connect";
+"vpn.feedback-form.category.fails-to-connect" = "Το VPN δεν μπορεί να συνδεθεί";
 
 /* Title for the 'VPN feature request' category of the VPN feedback form */
-"vpn.feedback-form.category.feature-request" = "VPN feature request";
+"vpn.feedback-form.category.feature-request" = "Αίτημα για λειτουργία VPN";
 
 /* Title for the category 'VPN causes issues with other apps or websites' category of the VPN feedback form */
-"vpn.feedback-form.category.issues-with-apps" = "VPN causes issues with other apps or websites";
+"vpn.feedback-form.category.issues-with-apps" = "Το VPN προκαλεί προβλήματα με άλλες εφαρμογές ή ιστότοπους";
 
 /* Title for the local device connectivity category of the VPN feedback form */
-"vpn.feedback-form.category.local-device-connectivity" = "VPN won't let me connect to local device";
+"vpn.feedback-form.category.local-device-connectivity" = "Το VPN δε με αφήνει να συνδεθώ σε τοπική συσκευή";
 
 /* Title for the 'other VPN feedback' category of the VPN feedback form */
-"vpn.feedback-form.category.other" = "Other VPN feedback";
+"vpn.feedback-form.category.other" = "Άλλα σχόλια για το VPN";
 
 /* Title for the category selection state of the VPN feedback form */
-"vpn.feedback-form.category.select-category" = "Select a category";
+"vpn.feedback-form.category.select-category" = "ΕΠΙΛΕΞΤΕ ΚΑΤΗΓΟΡΙΑ";
 
 /* Title for the 'VPN is too slow' category of the VPN feedback form */
-"vpn.feedback-form.category.too-slow" = "VPN connection is too slow";
+"vpn.feedback-form.category.too-slow" = "Η σύνδεση του VPN είναι πολύ αργή";
 
 /* Title for the 'unable to install' category of the VPN feedback form */
-"vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
+"vpn.feedback-form.category.unable-to-install" = "Δεν είναι δυνατή η εγκατάσταση του VPN";
 
 /* Title for the feedback sent view description of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";
+"vpn.feedback-form.sending-confirmation.description" = "Τα σχόλιά σου θα μας βοηθήσουν να βελτιώσουμε το\n DuckDuckGo VPN.";
 
 /* Title for the feedback sending error text of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.error" = "We couldn't send your feedback right now, please try again.";
+"vpn.feedback-form.sending-confirmation.error" = "Δεν μπορέσαμε να στείλουμε τα σχόλιά σας αυτήν τη στιγμή, προσπάθησε ξανά.";
 
 /* Title for the feedback sent view title of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.title" = "Thank you!";
+"vpn.feedback-form.sending-confirmation.title" = "Σε ευχαριστούμε!";
 
 /* Toast message when the VPN feedback form is submitted successfully */
-"vpn.feedback-form.submitted.message" = "Thank You! Feedback submitted.";
+"vpn.feedback-form.submitted.message" = "Σας ευχαριστούμε! Το σχόλιο υποβλήθηκε.";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-1" = "Please describe what's happening, what you expected to happen, and the steps that led to the issue:";
+"vpn.feedback-form.text-1" = "Περιγράψτε τι συμβαίνει, τι περιμένατε να συμβεί και ποια ήταν τα βήματα που οδήγησαν στο πρόβλημα:";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-2" = "In addition to the details entered into this form, your app issue report will contain:";
+"vpn.feedback-form.text-2" = "Εκτός από τα στοιχεία που καταχωρήσατε στη φόρμα αυτή, η αναφορά προβλήματος της εφαρμογής σας θα περιέχει:";
 
 /* Bullet text for the body of the VPN feedback form */
-"vpn.feedback-form.text-3" = "• Whether specific DuckDuckGo features are enabled";
+"vpn.feedback-form.text-3" = "• Εάν είναι ενεργοποιημένες συγκεκριμένες λειτουργίες του DuckDuckGo";
 
 /* Bullet text for the body of the VPN feedback form */
-"vpn.feedback-form.text-4" = "• Aggregate DuckDuckGo app diagnostics";
+"vpn.feedback-form.text-4" = "• Συγκεντρωτικά διαγνωστικά εφαρμογών DuckDuckGo";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-5" = "By tapping \"Submit\" I agree that DuckDuckGo may use the information in this report for purposes of improving the app's features.";
+"vpn.feedback-form.text-5" = "Πατώντας «Υποβολή» συμφωνώ ότι το DuckDuckGo μπορεί να χρησιμοποιήσει τις πληροφορίες της αναφοράς αυτής για σκοπούς βελτίωσης των λειτουργιών της εφαρμογής.";
 
 /* Title for each screen of the VPN feedback form */
-"vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+"vpn.feedback-form.title" = "Βοηθήστε μας να βελτιώσουμε το DuckDuckGo VPN";
 
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Προσθήκη μικροεφαρμογής VPN στην Αρχική οθόνη";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
-"vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";
+"vpn.settings.dns.section-disclaimer" = "Η χρήση ενός προσαρμοσμένου διακομιστή DNS μπορεί να επηρεάσει τις ταχύτητες περιήγησης και να εκθέσει τη δραστηριότητά σας σε τρίτους, αν ο διακομιστής δεν είναι ασφαλής ή αξιόπιστος.";
 
 /* Header text for the DNS section on the VPN Settings screen */
 "vpn.settings.dns.section-header" = "DNS";
 
 /* Title for the Apply button on the DNS Server setting screen */
-"vpn.settings.dns.server.apply.button.title" = "Apply";
+"vpn.settings.dns.server.apply.button.title" = "Εφαρμογή";
 
 /* Default value for the DNS Server row on the VPN Settings screen */
 "vpn.settings.dns.server.default.value" = "DuckDuckGo";
 
 /* Title for the IPv4 Address setting */
-"vpn.settings.dns.server.ipv4.title" = "IPv4 Address";
+"vpn.settings.dns.server.ipv4.title" = "Διεύθυνση IPv4";
 
 /* Custom option for the DNS Server setting */
-"vpn.settings.dns.server.option.custom" = "Custom";
+"vpn.settings.dns.server.option.custom" = "Προσαρμογή";
 
 /* Recommended option for the DNS Server setting */
-"vpn.settings.dns.server.option.default" = "DuckDuckGo (Recommended)";
+"vpn.settings.dns.server.option.default" = "DuckDuckGo (Συνιστάται)";
 
 /* Title for the DNS Server setting screen */
-"vpn.settings.dns.server.screen.title" = "DNS Server";
+"vpn.settings.dns.server.screen.title" = "Διακομιστής DNS";
 
 /* Title for the DNS Server row on the VPN Settings screen */
-"vpn.settings.dns.server.title" = "DNS Server";
+"vpn.settings.dns.server.title" = "Διακομιστής DNS";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Επιτρέψτε ειδοποιήσεις";

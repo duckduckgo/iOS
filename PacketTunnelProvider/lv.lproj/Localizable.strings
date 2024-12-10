@@ -1,18 +1,15 @@
 /* The body of the notification when Privacy Pro subscription expired */
-"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+"network.protection.entitlement.expired.notification.body" = "VPN atvienots, jo ir beidzies abonements. Abonē Privacy Pro, lai atkārtoti izveidotu savienojumu ar DuckDuckGo VPN.";
 
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Tīkla aizsardzībai neizdevās izveidot savienojumu. Lūdzu, mēģini vēlreiz vēlāk.";
-
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "Tīkla aizsardzība tika pārtraukta. Tagad tiek mēģināts atkārtoti izveidot savienojumu...";
-
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Tīkla aizsardzība ir ieslēgta. Tava atrašanās vieta un darbības tiešsaistē ir aizsargātas.";
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "VPN ir atslēgts uz %@";
 
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Ierīces datplūsma tiek maršrutēta caur: %@.";
+
+/* The body of the notification shown when VPN connects successfully after snooze with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN snauda ir beigusies. Ierīces datplūsma tiek maršrutēta caur: %@.";
 

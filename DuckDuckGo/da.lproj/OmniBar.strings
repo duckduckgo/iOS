@@ -7,6 +7,9 @@
 /* Class = "UIButton"; accessibilityLabel = "Clear Text"; ObjectID = "Dt8-We-5tV"; */
 "Dt8-We-5tV.accessibilityLabel" = "Slet teksten";
 
+/* Class = "UIButton"; accessibilityLabel = "Clear Text"; ObjectID = "gb5-wL-4OW"; */
+"gb5-wL-4OW.accessibilityLabel" = "Slet teksten";
+
 /* Class = "UIButton"; accessibilityLabel = "Share"; ObjectID = "hor-Jd-3kw"; */
 "hor-Jd-3kw.accessibilityLabel" = "Del";
 

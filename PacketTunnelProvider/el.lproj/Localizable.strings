@@ -1,18 +1,15 @@
 /* The body of the notification when Privacy Pro subscription expired */
-"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+"network.protection.entitlement.expired.notification.body" = "Το VPN αποσυνδέθηκε λόγω λήξης της συνδρομής. Εγγραφείτε στο Privacy Pro για να συνδέσετε εκ νέου το DuckDuckGo VPN.";
 
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Η σύνδεση της Προστασίας δικτύου απέτυχε. Ξαναδοκιμάστε αργότερα.";
-
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "Η Προστασία δικτύου διακόπηκε. Γίνεται προσπάθεια επανασύνδεσης τώρα...";
-
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Η Προστασία δικτύου είναι Ενεργή. Η τοποθεσία και η διαδικτυακή δραστηριότητά σας προστατεύονται.";
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "Το VPN τέθηκε σε αναστολή για %@";
 
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Δρομολόγηση κυκλοφορίας της συσκευής μέσω %@.";
+
+/* The body of the notification shown when VPN connects successfully after snooze with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "Η αναστολή του VPN έχει τελειώσει. Δρομολόγηση κυκλοφορίας της συσκευής μέσω %@.";
 

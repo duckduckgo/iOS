@@ -88,11 +88,6 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
         showNotification(.connection, content)
     }
 
-    func showConnectionNotification(serverLocation: String?) {
-        let content = notificationContent(body: UserText.networkProtectionConnectionSuccessNotificationBody)
-        showNotification(.connection, content)
-    }
-
     func showReconnectingNotification() {
         let content = notificationContent(body: UserText.networkProtectionConnectionInterruptedNotificationBody)
         showNotification(.connection, content)

@@ -10,9 +10,6 @@
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
 "5YD-Od-uDU.text" = "Automaticky vymazat data";
 
-/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "8YG-7Q-Czd"; */
-"8YG-7Q-Czd.normalTitle" = "Nastavení";
-
 /* Class = "UILabel"; text = "App Exit, Inactive for 1 Hour"; ObjectID = "9EC-lx-77p"; */
 "9EC-lx-77p.text" = "Ukončení aplikace, neaktivní po dobu 1 hodiny";
 
@@ -75,9 +72,6 @@
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Nechráněné stránky";
-
-/* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
-"ssa-zd-L3T.title" = "Velikost textu";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Zobrazit klávesnici na";

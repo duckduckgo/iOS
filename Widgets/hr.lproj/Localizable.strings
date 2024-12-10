@@ -1,9 +1,3 @@
-/* No comment provided by engineer. */
-"iOS 17 required" = "iOS 17 required";
-
-/* No comment provided by engineer. */
-"Label" = "Label";
-
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Odmah generiraj novu privatnu adresu - Duck Address.";
 
@@ -82,11 +76,29 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Prekini vezu";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Do %@";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Odbaci";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Probudi";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "VPN je uključen";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "VPN je u stanju mirovanja";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN je uključen";
 
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "VPN je isključen";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "VPN je u stanju mirovanja";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Nije povezano";

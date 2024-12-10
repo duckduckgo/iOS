@@ -10,9 +10,6 @@
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
 "5YD-Od-uDU.text" = "Automātiski notīrīt datus";
 
-/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "8YG-7Q-Czd"; */
-"8YG-7Q-Czd.normalTitle" = "Iestatījumi";
-
 /* Class = "UILabel"; text = "App Exit, Inactive for 1 Hour"; ObjectID = "9EC-lx-77p"; */
 "9EC-lx-77p.text" = "Iziešana no lietotnes, neaktīva 1 stundu";
 
@@ -75,9 +72,6 @@
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Neaizsargātas vietnes";
-
-/* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
-"ssa-zd-L3T.title" = "Burtu izmērs";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Rādīt tastatūru";

@@ -71,7 +71,11 @@ extension SSLErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling {
             return nil
         }
 
-        let errorData = SpecialErrorData.ssl(type: errorType, domain: host, eTldPlus1: storageCache.tld.eTLDplus1(host))
+        let errorData = SpecialErrorData.ssl(
+            type: errorType,
+            domain: host,
+            eTldPlus1: storageCache.tld.eTLDplus1(host)
+        )
 
         return SSLSpecialError(type: errorType, error: SpecialErrorModel(url: failedURL, errorData: errorData))
     }
@@ -90,7 +94,7 @@ extension SSLErrorPageNavigationHandler: SpecialErrorPageActionHandler {
         Pixel.fire(pixel: .certificateWarningLeaveClicked)
     }
 
-    func visitSite() {
+    func visitSite(url: URL, errorData: SpecialErrorData) {
         shouldBypassSSLError = true
     }
 

@@ -182,6 +182,16 @@ import os.log
         crashCollection.startAttachingCrashLogMessages { pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+
+                // Each crash comes with an `appVersion` parameter representing the version that the crash occurred on.
+                // This is to disambiguate the situation where a crash occurs, but isn't sent until the next update.
+                // If for some reason the parameter can't be found, fall back to the current version.
+                if let crashAppVersion = params[PixelParameters.appVersion] {
+                    let dailyParameters = [PixelParameters.appVersion: crashAppVersion]
+                    DailyPixel.fireDaily(.dbCrashDetectedDaily, withAdditionalParameters: dailyParameters)
+                } else {
+                    DailyPixel.fireDaily(.dbCrashDetectedDaily)
+                }
             }
 
             // Async dispatch because rootViewController may otherwise be nil here

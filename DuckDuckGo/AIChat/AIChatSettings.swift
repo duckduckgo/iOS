@@ -74,7 +74,7 @@ struct AIChatSettings: AIChatSettingsProvider {
     }
 
     var isAIChatAddressBarShortcutFeatureEnabled: Bool {
-        return isFeatureEnabled(for: .addressBarShortcut)
+        return false
     }
 
     var isAIChatBrowsingMenubarShortcutFeatureEnabled: Bool {

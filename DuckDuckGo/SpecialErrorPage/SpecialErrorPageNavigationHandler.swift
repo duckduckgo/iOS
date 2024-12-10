@@ -75,6 +75,8 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
 
         switch result {
         case let .navigationHandled(.mainFrame(response)):
+            // Re-use the same request to avoid that the new sideload request is intercepted and cancelled
+            // due to parameters added to the header.
             var request = response.navigationAction.request
             request.url = response.errorData.url
             isSpecialErrorPageRequest = true
@@ -132,11 +134,11 @@ extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate 
             if webView?.canGoBack == true {
                 _ = webView?.goBack()
             } else {
-                forceCloseTab()
+                closeTab()
             }
         }
 
-        func forceCloseTab() {
+        func closeTab() {
             delegate?.closeSpecialErrorPageTab()
         }
 
@@ -148,7 +150,7 @@ extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate 
             navigateBackIfPossible()
         case .maliciousSite:
             maliciousSiteProtectionNavigationHandler.leaveSite()
-            forceCloseTab()
+            closeTab()
         }
     }
 

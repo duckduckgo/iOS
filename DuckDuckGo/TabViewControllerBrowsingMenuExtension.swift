@@ -31,7 +31,7 @@ extension TabViewController {
     private var shouldShowAIChatInMenuHeader: Bool {
         let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
-        return settings.isAIChatBrowsingToolbarShortcutFeatureEnabled
+        return settings.isAIChatBrowsingMenuUserSettingsEnabled
     }
 
     private var shouldShowPrintButtonInBrowsingMenuList: Bool { shouldShowAIChatInMenuHeader }

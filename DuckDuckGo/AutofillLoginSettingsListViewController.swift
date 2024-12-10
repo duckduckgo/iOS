@@ -785,9 +785,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     // MARK: Cell Methods
     
-    private func credentialCell(for tableView: UITableView, item: AutofillLoginListItemViewModel, indexPath: IndexPath) -> AutofillListItemTableViewCell {
+    private func credentialCell(for tableView: UITableView, item: AutofillLoginItem, indexPath: IndexPath) -> AutofillListItemTableViewCell {
         let cell = tableView.dequeueCell(ofType: AutofillListItemTableViewCell.self, for: indexPath)
-        cell.viewModel = item
+        cell.item = item
         cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = UIColor(designSystemColor: .surface)
         return cell

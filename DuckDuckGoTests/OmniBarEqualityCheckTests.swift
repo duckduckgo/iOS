@@ -50,7 +50,7 @@ final class OmniBarEqualityCheckTests: XCTestCase {
         barOmniBarState.showBackButton = !fooOmniBarState.showBackButton
         barOmniBarState.showForwardButton = !fooOmniBarState.showForwardButton
         barOmniBarState.showBookmarksButton = !fooOmniBarState.showBookmarksButton
-        barOmniBarState.showShareButton = !fooOmniBarState.showShareButton
+        barOmniBarState.showAccessoryButton = !fooOmniBarState.showAccessoryButton
         barOmniBarState.clearTextOnStart = !fooOmniBarState.clearTextOnStart
         barOmniBarState.allowsTrackersAnimation = !fooOmniBarState.allowsTrackersAnimation
         barOmniBarState.showSearchLoupe = !fooOmniBarState.showSearchLoupe
@@ -77,7 +77,7 @@ private struct DummyOmniBarState: OmniBarState, OmniBarLoadingBearerStateCreatin
     var showBackButton = false
     var showForwardButton = false
     var showBookmarksButton = false
-    var showShareButton = false
+    var showAccessoryButton = false
     var clearTextOnStart = false
     var allowsTrackersAnimation = false
     var showSearchLoupe = false

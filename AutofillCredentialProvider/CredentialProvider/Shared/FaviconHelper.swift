@@ -43,11 +43,11 @@ struct FaviconHelper {
     }
 
     private static func createFakeFavicon(forDomain domain: String,
-                                   size: CGFloat = 192,
-                                   backgroundColor: UIColor = UIColor.red,
-                                   bold: Bool = true,
-                                   preferredFakeFaviconLetters: String? = nil,
-                                   letterCount: Int = 2) -> UIImage? {
+                                          size: CGFloat = 192,
+                                          backgroundColor: UIColor = UIColor.red,
+                                          bold: Bool = true,
+                                          preferredFakeFaviconLetters: String? = nil,
+                                          letterCount: Int = 2) -> UIImage? {
 
         let cornerRadius = size * 0.125
         let imageRect = CGRect(x: 0, y: 0, width: size, height: size)

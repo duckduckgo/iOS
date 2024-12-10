@@ -123,4 +123,3 @@ extension CredentialProviderListDetailsViewController: CredentialProviderListDet
         showActionMessage(message)
     }
 }
-

@@ -312,6 +312,8 @@ extension Pixel {
         case autofillOnboardedUser
         case autofillToggledOn
         case autofillToggledOff
+        case autofillExtensionToggledOn
+        case autofillExtensionToggledOff
         case autofillLoginsStacked
 
         case autofillManagementOpened
@@ -332,7 +334,18 @@ extension Pixel {
 
         case getDesktopCopy
         case getDesktopShare
-        
+
+        case autofillExtensionEnabled
+        case autofillExtensionDisabled
+        case autofillExtensionWelcomeDismiss
+        case autofillExtensionWelcomeLaunchApp
+        case autofillExtensionQuickTypeConfirmed
+        case autofillExtensionQuickTypeCancelled
+        case autofillExtensionPasswordsOpened
+        case autofillExtensionPasswordsDismissed
+        case autofillExtensionPasswordSelected
+        case autofillExtensionPasswordsSearch
+
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
         case secureVaultError
@@ -1203,6 +1216,8 @@ extension Pixel.Event {
         case .autofillOnboardedUser: return "m_autofill_onboardeduser"
         case .autofillToggledOn: return "m_autofill_toggled_on"
         case .autofillToggledOff: return "m_autofill_toggled_off"
+        case .autofillExtensionToggledOn: return "m_autofill_extension_toggled_on"
+        case .autofillExtensionToggledOff: return "m_autofill_extension_toggled_off"
 
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
@@ -1231,6 +1246,18 @@ extension Pixel.Event {
 
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"
+
+        // Autofill Credential Provider Extension
+        case .autofillExtensionEnabled: return "autofill_extension_enabled"
+        case .autofillExtensionDisabled: return "autofill_extension_disabled"
+        case .autofillExtensionWelcomeDismiss: return "autofill_extension_welcome_dismiss"
+        case .autofillExtensionWelcomeLaunchApp: return "autofill_extension_welcome_launch_app"
+        case .autofillExtensionQuickTypeConfirmed: return "autofill_extension_quicktype_confirmed"
+        case .autofillExtensionQuickTypeCancelled: return "autofill_extension_quicktype_cancelled"
+        case .autofillExtensionPasswordsOpened: return "autofill_extension_passwords_opened"
+        case .autofillExtensionPasswordsDismissed: return "autofill_extension_passwords_dismissed"
+        case .autofillExtensionPasswordSelected: return "autofill_extension_password_selected"
+        case .autofillExtensionPasswordsSearch: return "autofill_extension_passwords_search"
 
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"

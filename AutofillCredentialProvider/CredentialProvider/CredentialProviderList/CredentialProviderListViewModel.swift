@@ -36,7 +36,13 @@ final class CredentialProviderListViewModel: ObservableObject {
         case searchingNoResults
     }
 
-    var isSearching: Bool = false
+    var isSearching: Bool = false {
+        didSet {
+            if oldValue != isSearching, isSearching {
+                Pixel.fire(pixel: .autofillExtensionPasswordsSearch)
+            }
+        }
+    }
     var authenticationNotRequired = false
 
     private let serviceIdentifiers: [ASCredentialServiceIdentifier]

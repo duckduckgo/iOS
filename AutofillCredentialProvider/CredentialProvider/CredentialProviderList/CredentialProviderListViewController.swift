@@ -139,6 +139,8 @@ final class CredentialProviderListViewController: UIViewController {
         registerForKeyboardNotifications()
 
         navigationItem.searchController = searchController
+
+        Pixel.fire(pixel: .autofillExtensionPasswordsOpened)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -290,6 +292,7 @@ final class CredentialProviderListViewController: UIViewController {
 
     @objc private func doneTapped() {
         onDismiss()
+        Pixel.fire(pixel: .autofillExtensionPasswordsDismissed)
     }
 
 }
@@ -358,6 +361,7 @@ extension CredentialProviderListViewController: UITableViewDelegate {
                 presentDetailsForCredentials(item: item)
             } else {
                 onRowSelected(item)
+                Pixel.fire(pixel: .autofillExtensionPasswordSelected)
             }
         default:
             return

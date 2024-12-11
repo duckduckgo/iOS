@@ -795,7 +795,7 @@ extension Pixel {
         case settingsAutomaticallyClearDataOn
         case settingsAutomaticallyClearDataOff
         case settingsNextStepsAddAppToDock
-        case settingsNextStepsAddWidget        
+        case settingsNextStepsAddWidget
         case settingsMoreSearchSettings
 
         // Web pixels

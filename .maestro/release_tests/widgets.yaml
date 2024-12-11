@@ -30,10 +30,14 @@ appId: com.duckduckgo.mobile.ios
 # Validate search widget
 - longPressOn:
     point: 50%,50%
+
+# iOS 18 now has an edit button first
+- tapOn: "Edit"
 - tapOn: "Add Widget"
 - tapOn: "Search Widgets"
-- inputText: "DuckDuck"
-- tapOn: "DuckDuckGo"
+- inputText: "DuckDuckGo"
+- tapOn: 
+    point: 30%,30%
 - tapOn: " Add Widget"
 - tapOn: "Done"
 - tapOn: "DuckDuckGo"
@@ -48,10 +52,12 @@ appId: com.duckduckgo.mobile.ios
 - pressKey: HOME
 - longPressOn:
     point: 50%,50%
+- tapOn: "Edit"
 - tapOn: "Add Widget"
 - tapOn: "Search Widgets"
-- inputText: "DuckDuck"
-- tapOn: "DuckDuckGo"
+- inputText: "DuckDuckGo"
+- tapOn:
+    point: 30%,30%
 - assertVisible: "Search"
 - swipe:  
     start: 90%, 50%

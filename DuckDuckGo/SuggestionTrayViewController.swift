@@ -43,8 +43,6 @@ class SuggestionTrayViewController: UIViewController {
         autocompleteController != nil
     }
 
-    private let appSettings = AppUserDefaults()
-
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
     private var willRemoveAutocomplete = false
@@ -53,6 +51,7 @@ class SuggestionTrayViewController: UIViewController {
     private let historyManager: HistoryManaging
     private let tabsModel: TabsModel
     private let featureFlagger: FeatureFlagger
+    private let appSettings: AppSettings
 
     var selectedSuggestion: Suggestion? {
         autocompleteController?.selectedSuggestion
@@ -82,12 +81,19 @@ class SuggestionTrayViewController: UIViewController {
         }
     }
     
-    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksDatabase: CoreDataDatabase, historyManager: HistoryManaging, tabsModel: TabsModel, featureFlagger: FeatureFlagger) {
+    required init?(coder: NSCoder,
+                   favoritesViewModel: FavoritesListInteracting,
+                   bookmarksDatabase: CoreDataDatabase,
+                   historyManager: HistoryManaging,
+                   tabsModel: TabsModel,
+                   featureFlagger: FeatureFlagger,
+                   appSettings: AppSettings) {
         self.favoritesModel = favoritesViewModel
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.tabsModel = tabsModel
         self.featureFlagger = featureFlagger
+        self.appSettings = appSettings
         super.init(coder: coder)
     }
     
@@ -118,6 +124,9 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func show(for type: SuggestionType) {
+
+        self.fullHeightConstraint.constant = appSettings.currentAddressBarPosition == .bottom ? 50 : 0
+
         switch type {
         case .autocomplete(let query):
             displayAutocompleteSuggestions(forQuery: query)
@@ -171,7 +180,7 @@ class SuggestionTrayViewController: UIViewController {
         if isFirstPresentation {
             variableHeightConstraint.constant = Constant.suggestionTrayInitialHeight
         }
-        
+
         variableWidthConstraint.constant = width
         fullWidthConstraint.isActive = false
         fullHeightConstraint.isActive = false
@@ -326,6 +335,6 @@ extension SuggestionTrayViewController {
 
 private extension SuggestionTrayViewController {
     enum Constant {
-        static let suggestionTrayInitialHeight = 312.0 // ie 52 * 6
+        static let suggestionTrayInitialHeight = 380.0
     }
 }

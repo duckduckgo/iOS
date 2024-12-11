@@ -68,6 +68,8 @@ final class MockTabDelegate: TabDelegate {
 
     func tabDidRequestAutofillLogins(tab: DuckDuckGo.TabViewController) {}
 
+    func tabDidRequestAIChat(tab: TabViewController) {}
+    
     func tabDidRequestSettings(tab: DuckDuckGo.TabViewController) {}
 
     func tab(_ tab: DuckDuckGo.TabViewController, didRequestSettingsToLogins account: BrowserServicesKit.SecureVaultModels.WebsiteAccount) {}

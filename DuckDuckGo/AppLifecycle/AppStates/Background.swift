@@ -108,3 +108,7 @@ extension Background {
     }
 
 }
+
+struct DoubleBackground: AppState {
+    
+}

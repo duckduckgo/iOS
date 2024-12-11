@@ -27,7 +27,8 @@ import NetworkProtection
 extension Pixel {
     
     public enum Event {
-        
+
+        case appInstall
         case appLaunch
         case refreshPressed
         case pullToRefresh
@@ -80,6 +81,7 @@ extension Pixel {
         case browsingMenuShare
         case browsingMenuCopy
         case browsingMenuPrint
+        case browsingMenuListPrint
         case browsingMenuFindInPage
         case browsingMenuZoom
         case browsingMenuDisableProtection
@@ -87,7 +89,8 @@ extension Pixel {
         case browsingMenuReportBrokenSite
         case browsingMenuFireproof
         case browsingMenuAutofill
-        
+        case browsingMenuAIChat
+
         case addressBarShare
         case addressBarSettings
         case addressBarCancelPressedOnNTP
@@ -309,6 +312,8 @@ extension Pixel {
         case autofillOnboardedUser
         case autofillToggledOn
         case autofillToggledOff
+        case autofillExtensionToggledOn
+        case autofillExtensionToggledOff
         case autofillLoginsStacked
 
         case autofillManagementOpened
@@ -329,7 +334,18 @@ extension Pixel {
 
         case getDesktopCopy
         case getDesktopShare
-        
+
+        case autofillExtensionEnabled
+        case autofillExtensionDisabled
+        case autofillExtensionWelcomeDismiss
+        case autofillExtensionWelcomeLaunchApp
+        case autofillExtensionQuickTypeConfirmed
+        case autofillExtensionQuickTypeCancelled
+        case autofillExtensionPasswordsOpened
+        case autofillExtensionPasswordsDismissed
+        case autofillExtensionPasswordSelected
+        case autofillExtensionPasswordsSearch
+
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
         case secureVaultError
@@ -503,6 +519,7 @@ extension Pixel {
         
         // MARK: debug pixels
         case dbCrashDetected
+        case dbCrashDetectedDaily
         case crashOnCrashHandlersSetUp
 
         case dbMigrationError
@@ -532,12 +549,12 @@ extension Pixel {
         case contentBlockingCompilationFailed(listType: CompileRulesListType,
                                               component: ContentBlockerDebugEvents.Component)
         
-        case contentBlockingCompilationTime
         case contentBlockingLookupRulesSucceeded
         case contentBlockingFetchLRCSucceeded
         case contentBlockingNoMatchInLRC
         case contentBlockingLRCMissing
         
+        case contentBlockingCompilationTaskPerformance(iterationCount: Int, timeBucketAggregation: CompileTimeBucketAggregation)
         case ampBlockingRulesCompilationFailed
         
         case webKitDidTerminate
@@ -895,9 +912,13 @@ extension Pixel {
         case appDidShowUITime(time: BucketAggregation)
         case appDidBecomeActiveTime(time: BucketAggregation)
 
+        // MARK: AI Chat
+        case openAIChatBefore10min
+        case openAIChatAfter10min
+        case aiChatNoRemoteSettingsFound(settings: String)
+
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
-
     }
 
 }
@@ -908,6 +929,7 @@ extension Pixel.Event {
     
     public var name: String {
         switch self {
+        case .appInstall: return "m_install"
         case .appLaunch: return "ml"
         case .refreshPressed: return "m_r"
         case .pullToRefresh: return "m_pull-to-reload"
@@ -959,6 +981,7 @@ extension Pixel.Event {
         case .browsingMenuToggleBrowsingMode: return "mb_dm"
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
+
         case .browsingMenuFindInPage: return "mb_fp"
         case .browsingMenuZoom: return "m_menu_page_zoom_taps"
         case .browsingMenuDisableProtection: return "mb_wla"
@@ -968,6 +991,8 @@ extension Pixel.Event {
         case .browsingMenuAutofill: return "m_nav_autofill_menu_item_pressed"
             
         case .browsingMenuShare: return "m_browsingmenu_share"
+        case .browsingMenuAIChat: return "m_aichat_menu_tab_icon"
+        case .browsingMenuListPrint: return "m_browsing_menu_list_print"
 
         case .addressBarShare: return "m_addressbar_share"
         case .addressBarSettings: return "m_addressbar_settings"
@@ -1191,6 +1216,8 @@ extension Pixel.Event {
         case .autofillOnboardedUser: return "m_autofill_onboardeduser"
         case .autofillToggledOn: return "m_autofill_toggled_on"
         case .autofillToggledOff: return "m_autofill_toggled_off"
+        case .autofillExtensionToggledOn: return "m_autofill_extension_toggled_on"
+        case .autofillExtensionToggledOff: return "m_autofill_extension_toggled_off"
 
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
@@ -1219,6 +1246,18 @@ extension Pixel.Event {
 
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"
+
+        // Autofill Credential Provider Extension
+        case .autofillExtensionEnabled: return "autofill_extension_enabled"
+        case .autofillExtensionDisabled: return "autofill_extension_disabled"
+        case .autofillExtensionWelcomeDismiss: return "autofill_extension_welcome_dismiss"
+        case .autofillExtensionWelcomeLaunchApp: return "autofill_extension_welcome_launch_app"
+        case .autofillExtensionQuickTypeConfirmed: return "autofill_extension_quicktype_confirmed"
+        case .autofillExtensionQuickTypeCancelled: return "autofill_extension_quicktype_cancelled"
+        case .autofillExtensionPasswordsOpened: return "autofill_extension_passwords_opened"
+        case .autofillExtensionPasswordsDismissed: return "autofill_extension_passwords_dismissed"
+        case .autofillExtensionPasswordSelected: return "autofill_extension_password_selected"
+        case .autofillExtensionPasswordsSearch: return "autofill_extension_passwords_search"
 
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
@@ -1367,6 +1406,7 @@ extension Pixel.Event {
             // MARK: debug pixels
             
         case .dbCrashDetected: return "m_d_crash"
+        case .dbCrashDetectedDaily: return "m_d_crash_daily"
         case .crashOnCrashHandlersSetUp: return "m_d_crash_on_handlers_setup"
         case .dbMigrationError: return "m_d_dbme"
         case .dbRemovalError: return "m_d_dbre"
@@ -1397,13 +1437,14 @@ extension Pixel.Event {
         case .contentBlockingCompilationFailed(let listType, let component):
             return "m_d_content_blocking_\(listType)_\(component)_compilation_failed"
             
-        case .contentBlockingCompilationTime: return "m_content_blocking_compilation_time"
             
         case .contentBlockingLookupRulesSucceeded: return "m_content_blocking_lookup_rules_succeeded"
         case .contentBlockingFetchLRCSucceeded: return "m_content_blocking_fetch_lrc_succeeded"
         case .contentBlockingNoMatchInLRC: return "m_content_blocking_no_match_in_lrc"
         case .contentBlockingLRCMissing: return "m_content_blocking_lrc_missing"
 
+        case .contentBlockingCompilationTaskPerformance(let iterationCount, let timeBucketAggregation):
+            return "m_content_blocking_compilation_loops_\(iterationCount)_time_\(timeBucketAggregation)"
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
             
         case .webKitDidTerminate: return "m_d_wkt"
@@ -1787,6 +1828,12 @@ extension Pixel.Event {
         case .appDidShowUITime(let time): return "m_debug_app-did-show-ui-time-\(time)"
         case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
 
+        // MARK: AI Chat
+        case .openAIChatAfter10min: return "m_aichat_open_after_10_min"
+        case .openAIChatBefore10min: return "m_aichat_open_before_10_min"
+        case .aiChatNoRemoteSettingsFound(let settings):
+            return "m_aichat_no_remote_settings_found-\(settings.lowercased())"
+
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state"
 
@@ -1863,6 +1910,50 @@ extension Pixel.Event {
         case blockingAttribution
         case attributed
         case unknown
-        
+
+    }
+
+    public enum CompileTimeBucketAggregation: String, CustomStringConvertible {
+
+        public var description: String { rawValue }
+     
+        case lessThan1 = "1"
+        case lessThan2 = "2"
+        case lessThan3 = "3"
+        case lessThan4 = "4"
+        case lessThan5 = "5"
+        case lessThan6 = "6"
+        case lessThan7 = "7"
+        case lessThan8 = "8"
+        case lessThan9 = "9"
+        case lessThan10 = "10"
+        case more
+
+        public init(number: Double) {
+            switch number {
+            case ...1:
+                self = .lessThan1
+            case ...2:
+                self = .lessThan2
+            case ...3:
+                self = .lessThan3
+            case ...4:
+                self = .lessThan4
+            case ...5:
+                self = .lessThan5
+            case ...6:
+                self = .lessThan6
+            case ...7:
+                self = .lessThan7
+            case ...8:
+                self = .lessThan8
+            case ...9:
+                self = .lessThan9
+            case ...10:
+                self = .lessThan10
+            default:
+                self = .more
+            }
+        }
     }
 }

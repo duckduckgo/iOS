@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Lukk";
+
+/* Done button title */
+"action.button.done" = "Ferdig";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "Åpne DuckDuckGo";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Automatisk fylling av passord er aktivert!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "enhet";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Avbryt";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Lås opp enheten for å få tilgang til passord";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "URL-adresse til nettsted";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "Kopier %@";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Adressen er kopiert";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Notatene er kopiert";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Passordet er kopiert";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Brukernavnet er kopiert";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Skjul passord";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Sist oppdatert %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Tittel";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Notater";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Passord";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Vis passord";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Brukernavn";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Passord lagres på enheten din på en sikker måte.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Ingen passord er lagret ennå";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Velg et passord du vil bruke til «%@»";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Søk i passord";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "for «%@»";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Ingen resultater";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Forslag";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Passord";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Angi en kode på %@ for å fylle inn DuckDuckGo-passordene dine automatisk.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Enhetens kode kreves";
+

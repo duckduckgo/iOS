@@ -27,6 +27,7 @@ import RemoteMessaging
 import Configuration
 import Combine
 import SubscriptionTestingUtilities
+import Common
 @testable import DuckDuckGo
 @testable import Core
 
@@ -47,7 +48,8 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             settingHandlers: [],
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
             syncErrorHandler: SyncErrorHandler(),
-            faviconStoring: MockFaviconStore()
+            faviconStoring: MockFaviconStore(),
+            tld: TLD()
         )
         
         let remoteMessagingClient = RemoteMessagingClient(
@@ -111,7 +113,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
         let expectedUrl = try XCTUnwrap(URL.makeSearchURL(query: query, queryContext: nil))
 
         // WHEN
-        mainVC.searchFor(query)
+        mainVC.searchFromOnboarding(for: query)
 
         // THEN
         assertExpected(queryURL: expectedUrl)
@@ -123,7 +125,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
         let expectedUrl = try XCTUnwrap(URL(string: site))
 
         // WHEN
-        mainVC.navigateTo(url: expectedUrl)
+        mainVC.navigateFromOnboarding(to: expectedUrl)
 
         // THEN
         assertExpected(url: expectedUrl)

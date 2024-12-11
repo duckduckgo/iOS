@@ -23,6 +23,7 @@ final class RoundedPageSheetContainerViewController: UIViewController {
     let contentViewController: UIViewController
     private let logoImage: UIImage?
     private let titleText: String
+    private let allowedOrientation: UIInterfaceOrientationMask
 
     private lazy var titleBarView: TitleBarView = {
         let titleBarView = TitleBarView(logoImage: logoImage, title: titleText) { [weak self] in
@@ -31,18 +32,30 @@ final class RoundedPageSheetContainerViewController: UIViewController {
         return titleBarView
     }()
 
-    init(contentViewController: UIViewController, logoImage: UIImage?, title: String) {
+    init(contentViewController: UIViewController, logoImage: UIImage?, title: String, allowedOrientation: UIInterfaceOrientationMask = .all) {
         self.contentViewController = contentViewController
         self.logoImage = logoImage
         self.titleText = title
+        self.allowedOrientation = allowedOrientation
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .custom
-
         transitioningDelegate = self
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override var shouldAutorotate: Bool {
+        return false
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return allowedOrientation
+    }
+
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return UIInterfaceOrientation.portrait
     }
 
     override func viewDidLoad() {
@@ -52,15 +65,6 @@ final class RoundedPageSheetContainerViewController: UIViewController {
         setupTitleBar()
         setupContentViewController()
     }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-
-        coordinator.animate(alongsideTransition: { _ in
-            // Update layout or constraints here
-        }, completion: nil)
-    }
-
 
     private func setupTitleBar() {
         view.addSubview(titleBarView)

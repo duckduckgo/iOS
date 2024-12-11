@@ -1,6 +1,5 @@
 // swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-
 import PackageDescription
 
 let package = Package(
@@ -11,10 +10,15 @@ let package = Package(
     products: [
         .library(
             name: "AIChat",
-            targets: ["AIChat"]),
+            targets: ["AIChat"]
+        ),
     ],
     targets: [
         .target(
-            name: "AIChat"),
+            name: "AIChat",
+            resources: [
+                .process("Resources/Assets.xcassets")
+            ]
+        ),
     ]
 )

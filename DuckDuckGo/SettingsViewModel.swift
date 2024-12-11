@@ -592,6 +592,7 @@ extension SettingsViewModel {
     }
 
     func openMoreSearchSettings() {
+        Pixel.fire(pixel: .settingsMoreSearchSettings)
         UIApplication.shared.open(URL.searchSettings)
     }
 

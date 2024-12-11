@@ -778,7 +778,6 @@ extension Pixel {
         case settingsAccessibilityOpen
         case settingsAccessiblityTextZoom
 
-        #warning("NEW PIXELS - remove this comment")
         case settingsPrivateSearchOpen
         case settingsEmailProtectionOpen
         case settingsEmailProtectionEnable
@@ -796,8 +795,7 @@ extension Pixel {
         case settingsAutomaticallyClearDataOn
         case settingsAutomaticallyClearDataOff
         case settingsNextStepsAddAppToDock
-        case settingsNextStepsAddWidget
-        
+        case settingsNextStepsAddWidget        
         case settingsMoreSearchSettings
 
         // Web pixels

@@ -19,6 +19,7 @@
 
 import Foundation
 import SwiftUI
+import Crashes
 
 final class CrashCollectionOnboardingViewModel: ObservableObject {
 
@@ -106,6 +107,10 @@ final class CrashCollectionOnboardingViewModel: ObservableObject {
         }
         set {
             appSettings.crashCollectionOptInStatus = newValue
+            if appSettings.crashCollectionOptInStatus == .optedOut {
+                let crashCollection = CrashCollection.init(crashReportSender: CrashReportSender(platform: .iOS))
+                crashCollection.clearCRCID()
+            }
         }
     }
 }

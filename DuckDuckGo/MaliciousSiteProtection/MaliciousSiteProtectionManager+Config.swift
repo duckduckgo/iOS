@@ -31,7 +31,7 @@ extension MaliciousSiteProtectionManager {
         }
     }
 
-    static func updateInterval(for dataKind: MaliciousSiteProtection.DataManager.StoredDataType) -> TimeInterval? {
+    static func updateInterval(for dataKind: MaliciousSiteProtection.DataManager.StoredDataType) -> TimeInterval {
         switch dataKind {
         case .hashPrefixSet: .minutes(20)
         case .filterSet: .hours(12)

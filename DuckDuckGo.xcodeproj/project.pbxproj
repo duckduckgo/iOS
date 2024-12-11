@@ -796,12 +796,17 @@
 		9F254ADE2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */; };
 		9F254ADF2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */; };
 		9F254AF12CF8D5250063B308 /* MaliciousSiteProtection in Frameworks */ = {isa = PBXBuildFile; productRef = 9F254AF02CF8D5250063B308 /* MaliciousSiteProtection */; };
+		9F254AFC2CF8E2BB0063B308 /* MaliciousSiteProtectionManager+Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AFB2CF8E2BB0063B308 /* MaliciousSiteProtectionManager+Config.swift */; };
 		9F254AFF2CF9FA1B0063B308 /* WebViewNavigationHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AFE2CF9FA1B0063B308 /* WebViewNavigationHandling.swift */; };
 		9F254B012CF9FA8D0063B308 /* SpecialErrorPageActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B002CF9FA8D0063B308 /* SpecialErrorPageActionHandler.swift */; };
 		9F254B032CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B022CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift */; };
 		9F254B052CF9FB890063B308 /* SpecialErrorPageContextHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B042CF9FB890063B308 /* SpecialErrorPageContextHandling.swift */; };
 		9F254B082CF9FC270063B308 /* SpecialErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B072CF9FC270063B308 /* SpecialErrorModel.swift */; };
 		9F38A28C2D09BDE500EB100E /* SpecialErrorPageThreatProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F38A28B2D09BDE500EB100E /* SpecialErrorPageThreatProvider.swift */; };
+		9F38A2912D09D51C00EB100E /* malwareHashPrefixes.json in Resources */ = {isa = PBXBuildFile; fileRef = 9F38A28E2D09D51C00EB100E /* malwareHashPrefixes.json */; };
+		9F38A2922D09D51C00EB100E /* phishingHashPrefixes.json in Resources */ = {isa = PBXBuildFile; fileRef = 9F38A2902D09D51C00EB100E /* phishingHashPrefixes.json */; };
+		9F38A2932D09D51C00EB100E /* malwareFilterSet.json in Resources */ = {isa = PBXBuildFile; fileRef = 9F38A28D2D09D51C00EB100E /* malwareFilterSet.json */; };
+		9F38A2942D09D51C00EB100E /* phishingFilterSet.json in Resources */ = {isa = PBXBuildFile; fileRef = 9F38A28F2D09D51C00EB100E /* phishingFilterSet.json */; };
 		9F46BEF82CD8D7490092E0EF /* OnboardingView+AddToDockContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F46BEF72CD8D7490092E0EF /* OnboardingView+AddToDockContent.swift */; };
 		9F4CC5152C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4CC5142C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift */; };
 		9F4CC5172C48B8D4006A96EB /* TabViewControllerDaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4CC5162C48B8D4006A96EB /* TabViewControllerDaxDialogTests.swift */; };
@@ -2694,12 +2699,17 @@
 		9F254AD72CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSSLErrorPageNavigationHandler.swift; sourceTree = "<group>"; };
 		9F254ADA2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSpecialErrorPageNavigationDelegate.swift; sourceTree = "<group>"; };
 		9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyWKNavigation.swift; sourceTree = "<group>"; };
+		9F254AFB2CF8E2BB0063B308 /* MaliciousSiteProtectionManager+Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MaliciousSiteProtectionManager+Config.swift"; sourceTree = "<group>"; };
 		9F254AFE2CF9FA1B0063B308 /* WebViewNavigationHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewNavigationHandling.swift; sourceTree = "<group>"; };
 		9F254B002CF9FA8D0063B308 /* SpecialErrorPageActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageActionHandler.swift; sourceTree = "<group>"; };
 		9F254B022CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageNavigationDelegate.swift; sourceTree = "<group>"; };
 		9F254B042CF9FB890063B308 /* SpecialErrorPageContextHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageContextHandling.swift; sourceTree = "<group>"; };
 		9F254B072CF9FC270063B308 /* SpecialErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorModel.swift; sourceTree = "<group>"; };
 		9F38A28B2D09BDE500EB100E /* SpecialErrorPageThreatProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageThreatProvider.swift; sourceTree = "<group>"; };
+		9F38A28D2D09D51C00EB100E /* malwareFilterSet.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = malwareFilterSet.json; sourceTree = "<group>"; };
+		9F38A28E2D09D51C00EB100E /* malwareHashPrefixes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = malwareHashPrefixes.json; sourceTree = "<group>"; };
+		9F38A28F2D09D51C00EB100E /* phishingFilterSet.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = phishingFilterSet.json; sourceTree = "<group>"; };
+		9F38A2902D09D51C00EB100E /* phishingHashPrefixes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = phishingHashPrefixes.json; sourceTree = "<group>"; };
 		9F46BEF72CD8D7490092E0EF /* OnboardingView+AddToDockContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView+AddToDockContent.swift"; sourceTree = "<group>"; };
 		9F4CC5142C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingPresenterMock.swift; sourceTree = "<group>"; };
 		9F4CC5162C48B8D4006A96EB /* TabViewControllerDaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerDaxDialogTests.swift; sourceTree = "<group>"; };
@@ -5215,7 +5225,9 @@
 			isa = PBXGroup;
 			children = (
 				9F06EB742D09E8D200905426 /* FeatureFlags */,
+				9F254AF22CF8E1F30063B308 /* Resources */,
 				9F254AAA2CF47DD50063B308 /* MaliciousSiteProtectionManager.swift */,
+				9F254AFB2CF8E2BB0063B308 /* MaliciousSiteProtectionManager+Config.swift */,
 			);
 			path = MaliciousSiteProtection;
 			sourceTree = "<group>";
@@ -5244,6 +5256,17 @@
 				9FBC76692CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift */,
 			);
 			path = TestDoubles;
+			sourceTree = "<group>";
+		};
+		9F254AF22CF8E1F30063B308 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9F38A28D2D09D51C00EB100E /* malwareFilterSet.json */,
+				9F38A28E2D09D51C00EB100E /* malwareHashPrefixes.json */,
+				9F38A28F2D09D51C00EB100E /* phishingFilterSet.json */,
+				9F38A2902D09D51C00EB100E /* phishingHashPrefixes.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		9F254AFD2CF9F9EC0063B308 /* SpecialErrorPageInterfaces */ = {
@@ -7573,6 +7596,10 @@
 				1E242960293F585300584836 /* cookie-icon-animated-40-light.json in Resources */,
 				984147C024F026A300362052 /* Tab.storyboard in Resources */,
 				4B6ED9452B992FE4007F5CAA /* vpn-dark-mode.json in Resources */,
+				9F38A2912D09D51C00EB100E /* malwareHashPrefixes.json in Resources */,
+				9F38A2922D09D51C00EB100E /* phishingHashPrefixes.json in Resources */,
+				9F38A2932D09D51C00EB100E /* malwareFilterSet.json in Resources */,
+				9F38A2942D09D51C00EB100E /* phishingFilterSet.json in Resources */,
 				02F880642AB206740020C2DF /* PrivacyInfo.xcprivacy in Resources */,
 				F41610BC29E5DF66001F709D /* DeprecatedColors.xcassets in Resources */,
 				9F8E0F2A2CCA5C9D001EA7C5 /* add-to-dock-demo.mp4 in Resources */,
@@ -8317,6 +8344,7 @@
 				9F06EB752D09E8D200905426 /* MaliciousSiteProtectionFeatureFlags.swift in Sources */,
 				8598D2E22CEB98B500C45685 /* FaviconRequestModifier.swift in Sources */,
 				CBAD0F102D0062A7006267B8 /* UIService.swift in Sources */,
+				9F254AFC2CF8E2BB0063B308 /* MaliciousSiteProtectionManager+Config.swift in Sources */,
 				8598D2E32CEB98B500C45685 /* FaviconUserScript.swift in Sources */,
 				8598D2E42CEB98B500C45685 /* FaviconSourcesProvider.swift in Sources */,
 				BD862E052B30DB250073E2EE /* VPNFeedbackCategory.swift in Sources */,

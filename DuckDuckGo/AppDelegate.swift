@@ -706,6 +706,10 @@ import os.log
 
     func applicationWillResignActive(_ application: UIApplication) {
         appStateMachine.handle(.suspending)
+        Task { @MainActor in
+            await refreshShortcuts()
+            await vpnWorkaround.removeRedditSessionWorkaround()
+        }
     }
 
     private func fireAppLaunchPixel() {

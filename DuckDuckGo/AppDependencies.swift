@@ -53,4 +53,6 @@ struct AppDependencies {
     let autofillPixelReporter: AutofillPixelReporter
     let crashReportUploaderOnboarding: CrashCollectionOnboarding
 
+    var syncDidFinishCancellable: AnyCancellable?
+
 }

@@ -27,12 +27,14 @@ struct Background: AppState {
     private let lastBackgroundDate: Date = Date()
     private let application: UIApplication
     private let appDependencies: AppDependencies
-    private var syncDidFinishCancellable: AnyCancellable? // TODO: should we pass it through appDependencies to sustain its lifecycle? perhaps we should have a registry to register it
+    private var syncDidFinishCancellable: AnyCancellable?
+
     var urlToOpen: URL?
 
     init(stateContext: Inactive.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
+        syncDidFinishCancellable = appDependencies.syncDidFinishCancellable
 
         let autoClear = appDependencies.autoClear
         let privacyStore = appDependencies.privacyStore

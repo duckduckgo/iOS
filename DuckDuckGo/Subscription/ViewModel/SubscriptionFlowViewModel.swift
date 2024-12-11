@@ -60,8 +60,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
 
-    private static let allowedDomains = [ "duckduckgo.com" ]
-    
+    private static let allowedDomains: [String] = []
+
     private var webViewSettings =  AsyncHeadlessWebViewSettings(bounces: false,
                                                                 allowedDomains: allowedDomains,
                                                                 contentBlocking: false)

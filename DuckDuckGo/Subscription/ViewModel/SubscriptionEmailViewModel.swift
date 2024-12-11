@@ -60,8 +60,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
     
-    private static let allowedDomains = [ "duckduckgo.com" ]
-    
+    private static let allowedDomains: [String] = []
+
     enum SubscriptionRestoreError: Error {
         case failedToRestoreFromEmail,
              subscriptionExpired,

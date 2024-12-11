@@ -51,7 +51,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     }
     
     private var currentURL: URL?
-    private static let allowedDomains = [ "duckduckgo.com" ]
+    private static let allowedDomains: [String] = []
     
     private var externalLinksViewModel: SubscriptionExternalLinkViewModel?
     // Limit navigation to these external domains

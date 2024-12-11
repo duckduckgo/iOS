@@ -1,5 +1,7 @@
 default_platform :ios
 
+platform :ios do
+
 before_all do
   setup_ci if is_ci
 end
@@ -190,7 +192,7 @@ lane :promote_latest_testflight_to_appstore do |options|
     app_identifier: app_identifier
   )
 
-  latest_build_number = lane_context[SharedValues::LATEST_TESTFLIGHT_BUILD_NUMBER]   
+  latest_build_number = lane_context[SharedValues::LATEST_TESTFLIGHT_BUILD_NUMBER]
   latest_build_version = lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION]
 
   UI.message("The latest build number #{latest_build_number} of the latest version: #{latest_build_version} for app identifier: #{app_identifier}")
@@ -198,7 +200,7 @@ lane :promote_latest_testflight_to_appstore do |options|
   upload_metadata({
     build_number: latest_build_number.to_s,
     app_version: latest_build_version.to_s,
-    app_identifier: app_identifier 
+    app_identifier: app_identifier
   })
 end
 
@@ -369,4 +371,6 @@ def common_deliver_arguments
        add_id_info_uses_idfa: false
     }
   }
+end
+
 end

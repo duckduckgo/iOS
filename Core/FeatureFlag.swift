@@ -63,6 +63,10 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/0/1208767141940869/f
     case freeTrials
+
+    /// Feature flag to enable / disable phishing and malware protection
+    /// https://app.asana.com/0/1206329551987282/1207149365636877/f
+    case maliciousSiteProtection
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
@@ -146,6 +150,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.subfeature(PrivacyProSubfeature.isLaunchedROWOverride))
         case .freeTrials:
             return .remoteDevelopment(.subfeature(PrivacyProSubfeature.freeTrials))
+        case .maliciousSiteProtection:
+            return .internalOnly()
         }
     }
 }

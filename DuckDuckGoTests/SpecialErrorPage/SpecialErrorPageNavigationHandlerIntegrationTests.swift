@@ -20,13 +20,15 @@
 import Testing
 import WebKit
 import SpecialErrorPages
+import MaliciousSiteProtection
 @testable import DuckDuckGo
 
-@Suite("Special Error Pages - SSL Integration Tests", .serialized)
+@Suite("Special Error Pages - Integration Tests", .serialized)
 final class SpecialErrorPageNavigationHandlerIntegrationTests {
     private var sut: SpecialErrorPageNavigationHandler!
     private var webView: MockSpecialErrorWebView!
     private var sslErrorPageNavigationHandler: SSLErrorPageNavigationHandler!
+    private var maliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandler!
 
     @MainActor
     init() {
@@ -34,14 +36,16 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         featureFlagger.enabledFeatureFlags = [.sslCertificatesBypass]
         webView = MockSpecialErrorWebView(frame: CGRect(), configuration: .nonPersistent())
         sslErrorPageNavigationHandler = SSLErrorPageNavigationHandler(featureFlagger: featureFlagger)
+        maliciousSiteProtectionNavigationHandler = MaliciousSiteProtectionNavigationHandler()
         sut = SpecialErrorPageNavigationHandler(
             sslErrorPageNavigationHandler: sslErrorPageNavigationHandler,
-            maliciousSiteProtectionNavigationHandler: MockMaliciousSiteProtectionNavigationHandler()
+            maliciousSiteProtectionNavigationHandler: maliciousSiteProtectionNavigationHandler
         )
     }
 
     deinit {
         sslErrorPageNavigationHandler = nil
+        maliciousSiteProtectionNavigationHandler = nil
         sut = nil
         webView = nil
     }
@@ -248,5 +252,32 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
 
         // THEN
         #expect(script.isEnabled)
+    }
+
+    @MainActor
+    @Test(
+        "Test Current Threat Kind Returns Threat Kind",
+        arguments: [
+            ("www.example.com", nil),
+            ("http://privacy-test-pages.site/security/badware/phishing.html", ThreatKind.phishing),
+            ("http://privacy-test-pages.site/security/badware/malware.html", .malware),
+        ]
+    )
+    func whenCurrentThreatKindIsCalledThenAskMaliciousSiteProtectionNavigationHandlerForThreatKind(threatInfo: (path: String, threat: ThreatKind?)) async throws {
+        // GIVEN
+        let url = try #require(URL(string: threatInfo.path))
+        webView.setCurrentURL(url)
+        sut.attachWebView(webView)
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        let response = MockNavigationResponse.with(url: url)
+        _ = await sut.handleDecidePolicyfor(navigationResponse: response, webView: webView)
+        sut.visitSiteAction()
+
+        // WHEN
+        let result = sut.currentThreatKind
+
+        // THEN
+        #expect(result == threatInfo.threat)
     }
 }

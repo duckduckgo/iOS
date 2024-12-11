@@ -799,6 +799,7 @@
 		9F254B032CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B022CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift */; };
 		9F254B052CF9FB890063B308 /* SpecialErrorPageContextHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B042CF9FB890063B308 /* SpecialErrorPageContextHandling.swift */; };
 		9F254B082CF9FC270063B308 /* SpecialErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B072CF9FC270063B308 /* SpecialErrorModel.swift */; };
+		9F38A28C2D09BDE500EB100E /* SpecialErrorPageThreatProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F38A28B2D09BDE500EB100E /* SpecialErrorPageThreatProvider.swift */; };
 		9F46BEF82CD8D7490092E0EF /* OnboardingView+AddToDockContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F46BEF72CD8D7490092E0EF /* OnboardingView+AddToDockContent.swift */; };
 		9F4CC5152C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4CC5142C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift */; };
 		9F4CC5172C48B8D4006A96EB /* TabViewControllerDaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4CC5162C48B8D4006A96EB /* TabViewControllerDaxDialogTests.swift */; };
@@ -2694,6 +2695,7 @@
 		9F254B022CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageNavigationDelegate.swift; sourceTree = "<group>"; };
 		9F254B042CF9FB890063B308 /* SpecialErrorPageContextHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageContextHandling.swift; sourceTree = "<group>"; };
 		9F254B072CF9FC270063B308 /* SpecialErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorModel.swift; sourceTree = "<group>"; };
+		9F38A28B2D09BDE500EB100E /* SpecialErrorPageThreatProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageThreatProvider.swift; sourceTree = "<group>"; };
 		9F46BEF72CD8D7490092E0EF /* OnboardingView+AddToDockContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView+AddToDockContent.swift"; sourceTree = "<group>"; };
 		9F4CC5142C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingPresenterMock.swift; sourceTree = "<group>"; };
 		9F4CC5162C48B8D4006A96EB /* TabViewControllerDaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerDaxDialogTests.swift; sourceTree = "<group>"; };
@@ -5230,6 +5232,7 @@
 				9F254B002CF9FA8D0063B308 /* SpecialErrorPageActionHandler.swift */,
 				9F254B022CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift */,
 				9F254B042CF9FB890063B308 /* SpecialErrorPageContextHandling.swift */,
+				9F38A28B2D09BDE500EB100E /* SpecialErrorPageThreatProvider.swift */,
 			);
 			path = SpecialErrorPageInterfaces;
 			sourceTree = "<group>";
@@ -8285,6 +8288,7 @@
 				F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */,
 				EEC02C142B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift in Sources */,
 				D63FF8962C1B67E9006DE24D /* YoutubeOverlayUserScript.swift in Sources */,
+				9F38A28C2D09BDE500EB100E /* SpecialErrorPageThreatProvider.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				8598D2E02CEB98B500C45685 /* Favicons.swift in Sources */,
 				8598D2E12CEB98B500C45685 /* NotFoundCachingDownloader.swift in Sources */,
@@ -12003,8 +12007,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 224.1.0;
+				branch = "alessandro/malicious-site-protection-address-bar-and-privacy-dashboard";
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

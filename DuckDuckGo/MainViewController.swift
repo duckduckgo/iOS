@@ -525,6 +525,7 @@ class MainViewController: UIViewController {
 
 
     var keyboardShowing = false
+    private var didSendGestureDismissPixel: Bool = false
 
     @objc
     private func keyboardDidShow() {
@@ -533,14 +534,16 @@ class MainViewController: UIViewController {
 
     @objc
     private func keyboardWillHide() {
-        if newTabPageViewController?.isDragging == true, keyboardShowing {
+        if !didSendGestureDismissPixel, newTabPageViewController?.isDragging == true, keyboardShowing {
             Pixel.fire(pixel: .addressBarGestureDismiss)
+            didSendGestureDismissPixel = true
         }
     }
 
     @objc
     private func keyboardDidHide() {
         keyboardShowing = false
+        didSendGestureDismissPixel = false
     }
 
     private func registerForPageRefreshPatterns() {

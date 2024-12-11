@@ -1646,11 +1646,32 @@
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "VPN do DuckDuckGo";
 
+/* Button title for tooltip about adding VPN widget */
+"network.protection.addwidget.tip.action" = "Adicionar widget";
+
+/* Message for tooltip about adding VPN widget */
+"network.protection.addwidget.tip.message" = "Ativa e desativa a VPN diretamente no ecrã inicial.";
+
+/* Title for tooltip about adding VPN widget */
+"network.protection.addwidget.tip.title" = "Adicionar widget de VPN";
+
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "VPN desativada devido a subscrição expirada. Subscreve o Privacy Pro para voltar a ligar a DuckDuckGo VPN.";
 
+/* The body of the notification shown when VPN fails to reconnect */
+"network.protection.failure.notification.body" = "A VPN DuckDuckGo não conseguiu estabelecer ligação. Tenta novamente mais tarde.";
+
 /* Title for the VPN FAQ screen. */
 "network.protection.faq.title" = "Perguntas frequentes sobre a DuckDuckGo VPN";
+
+/* Message for tooltip about geoswitching */
+"network.protection.geoswitching.tip.message" = "Podes personalizar a localização da tua VPN ligando-te a qualquer um dos nossos servidores em todo o mundo.";
+
+/* Title for tooltip about geoswitching */
+"network.protection.geoswitching.tip.title" = "Alterar a localização";
+
+/* The body of the notification shown when VPN connection is interrupted */
+"network.protection.interrupted.notification.body" = "A VPN DuckDuckGo foi interrompida. A tentar ligar novamente…";
 
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Introduz o código de convite para começares.";
@@ -1672,6 +1693,15 @@
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Abrir VPN";
+
+/* Button title for tooltip about VPN snooze mode */
+"network.protection.snooze.tip.action" = "Saiba mais";
+
+/* Message for tooltip about VPN snooze mode */
+"network.protection.snooze.tip.message" = "Podes utilizar sites ou aplicações que bloqueiam o tráfego da VPN suspendendo a ligação VPN.";
+
+/* Title for tooltip about VPN snooze mode */
+"network.protection.snooze.tip.title" = "Evitar conflitos de VPN";
 
 /* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
 "network.protection.snoozed.notification.body" = "VPN suspensa por %@";
@@ -1741,6 +1771,9 @@
 
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "VPN";
+
+/* The body of the notification shown when VPN reconnects successfully */
+"network.protection.success.notification.body" = "A VPN DuckDuckGo está ativada. A tua localização e atividade online estão protegidas.";
 
 /* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "A encaminhar o tráfego do dispositivo através de %@.";

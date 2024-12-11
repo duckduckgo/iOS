@@ -1646,11 +1646,32 @@
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
 
+/* Button title for tooltip about adding VPN widget */
+"network.protection.addwidget.tip.action" = "Добави приспособлението";
+
+/* Message for tooltip about adding VPN widget */
+"network.protection.addwidget.tip.message" = "Можете да включвате и изключвате VPN направо от началния екран.";
+
+/* Title for tooltip about adding VPN widget */
+"network.protection.addwidget.tip.title" = "Добавете приспособлението VPN";
+
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "VPN връзката е прекъсната поради изтекъл абонамент. Абонирайте се за Privacy Pro, за да свържете отново DuckDuckGo VPN.";
 
+/* The body of the notification shown when VPN fails to reconnect */
+"network.protection.failure.notification.body" = "DuckDuckGo VPN не можа да се свърже. Моля, опитайте отново по-късно.";
+
 /* Title for the VPN FAQ screen. */
 "network.protection.faq.title" = "Често задавани въпроси за DuckDuckGo VPN";
+
+/* Message for tooltip about geoswitching */
+"network.protection.geoswitching.tip.message" = "Можете да персонализирате Вашето VPN местоположение, като се свържете с някой от нашите сървъри по целия свят.";
+
+/* Title for tooltip about geoswitching */
+"network.protection.geoswitching.tip.title" = "Променете Вашето местоположение";
+
+/* The body of the notification shown when VPN connection is interrupted */
+"network.protection.interrupted.notification.body" = "DuckDuckGo VPN беше прекъснат. Извършва се опит за повторно свързване...";
 
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Въведете кода за покана, за да започнете.";
@@ -1672,6 +1693,15 @@
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Отваряне на VPN";
+
+/* Button title for tooltip about VPN snooze mode */
+"network.protection.snooze.tip.action" = "Научете повече";
+
+/* Message for tooltip about VPN snooze mode */
+"network.protection.snooze.tip.message" = "Можете да използвате сайтове или приложения, които блокират VPN трафика, като изключите временно VPN връзката.";
+
+/* Title for tooltip about VPN snooze mode */
+"network.protection.snooze.tip.title" = "Така ще избегнете на конфликти с VPN";
 
 /* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
 "network.protection.snoozed.notification.body" = "VPN е отложен за %@";
@@ -1741,6 +1771,9 @@
 
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "VPN";
+
+/* The body of the notification shown when VPN reconnects successfully */
+"network.protection.success.notification.body" = "DuckDuckGo VPN е включен. Вашето местоположение и онлайн активност са защитени.";
 
 /* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Трафикът на устройството се маршрутизира през %@.";

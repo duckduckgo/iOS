@@ -1646,11 +1646,32 @@
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
 
+/* Button title for tooltip about adding VPN widget */
+"network.protection.addwidget.tip.action" = "Lisage vidin";
+
+/* Message for tooltip about adding VPN widget */
+"network.protection.addwidget.tip.message" = "Lülitage VPN sisse ja välja otse avakuvalt.";
+
+/* Title for tooltip about adding VPN widget */
+"network.protection.addwidget.tip.title" = "VPN vidina lisamine";
+
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "VPN-ühendus katkestati aegunud tellimuse tõttu. DuckDuckGo VPN-i taasühendamiseks telli Privacy Pro.";
 
+/* The body of the notification shown when VPN fails to reconnect */
+"network.protection.failure.notification.body" = "DuckDuckGo VPN-i ühendamine ebaõnnestus. Proovige hiljem uuesti.";
+
 /* Title for the VPN FAQ screen. */
 "network.protection.faq.title" = "DuckDuckGo VPN-i KKK";
+
+/* Message for tooltip about geoswitching */
+"network.protection.geoswitching.tip.message" = "Saate oma VPN-i asukohta kohandada, ühendades mõne meie serveriga kogu maailmas.";
+
+/* Title for tooltip about geoswitching */
+"network.protection.geoswitching.tip.title" = "Muutke oma asukohta";
+
+/* The body of the notification shown when VPN connection is interrupted */
+"network.protection.interrupted.notification.body" = "DuckDuckGo VPN katkestati. Proovin uuesti ühendust luua...";
 
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Alustamiseks sisesta oma kutsekood.";
@@ -1672,6 +1693,15 @@
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Ava VPN";
+
+/* Button title for tooltip about VPN snooze mode */
+"network.protection.snooze.tip.action" = "Loe edasi";
+
+/* Message for tooltip about VPN snooze mode */
+"network.protection.snooze.tip.message" = "VPN-i liiklust blokeerivaid saite või rakendusi saate kasutada VPN-ühendust uinutades.";
+
+/* Title for tooltip about VPN snooze mode */
+"network.protection.snooze.tip.title" = "Vältige VPN-konflikte";
 
 /* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
 "network.protection.snoozed.notification.body" = "VPN on peatatud %@ jooksul";
@@ -1741,6 +1771,9 @@
 
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "VPN";
+
+/* The body of the notification shown when VPN reconnects successfully */
+"network.protection.success.notification.body" = "DuckDuckGo VPN on sisse lülitatud. Teie asukoht ja võrgutegevus on kaitstud.";
 
 /* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Seadme liiklus suunatakse läbi %@.";

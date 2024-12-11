@@ -1,11 +1,20 @@
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "VPN byla odpojena kvůli vypršení platnosti předplatného. Předplať si službu Privacy Pro, ať můžeš DuckDuckGo VPN dál používat.";
 
+/* The body of the notification shown when VPN fails to reconnect */
+"network.protection.failure.notification.body" = "VPN DuckDuckGo se nepodařilo připojit. Zkus to znovu později.";
+
+/* The body of the notification shown when VPN connection is interrupted */
+"network.protection.interrupted.notification.body" = "VPN DuckDuckGo byla odpojená. Probíhá pokus o opětovné připojení...";
+
 /* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
 "network.protection.snoozed.notification.body" = "VPN je uspaná na %@";
+
+/* The body of the notification shown when VPN reconnects successfully */
+"network.protection.success.notification.body" = "VPN DuckDuckGo je zapnutá. Tvoje poloha a online aktivita jsou chráněné.";
 
 /* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Směrování provozu zařízení přes %@.";

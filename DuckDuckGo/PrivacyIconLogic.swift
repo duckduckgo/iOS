@@ -34,6 +34,8 @@ final class PrivacyIconLogic {
     static func privacyIcon(for privacyInfo: PrivacyInfo) -> PrivacyIcon {
         if privacyInfo.url.isDuckDuckGoSearch {
             return .daxLogo
+        } else if privacyInfo.malicousSiteThreatKind != .none {
+            return .alert
         } else {
             let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
             let isUserUnprotected = config.isUserUnprotected(domain: privacyInfo.url.host)

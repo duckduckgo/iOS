@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "b71ed70ce9b0ef3ce51d4f96da0193ab70493944",
-        "version" : "221.3.0"
+        "branch" : "alessandro/malicious-site-protection-address-bar-and-privacy-dashboard",
+        "revision" : "5bc2e8b352103675dcc038d450d936d34a4101d6"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "022c845b06ace6a4aa712a4fa3e79da32193d5c6",
-        "version" : "7.4.0"
+        "branch" : "pr-releases/pr-252",
+        "revision" : "8b9ae746ea7bb2e46588fd4b1a81efabf69c20a4"
       }
     },
     {

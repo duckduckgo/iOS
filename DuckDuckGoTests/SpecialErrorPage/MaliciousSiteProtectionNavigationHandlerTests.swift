@@ -196,6 +196,27 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         #expect(sut.bypassedMaliciousSiteThreatKind == threat)
     }
 
+    @MainActor
+    @Test(
+        "Threat Kind Returns right value",
+        arguments: [
+            ThreatKind.phishing,
+            .malware
+        ]
+    )
+    func whenThreatKindIsCalledReturnRightValue(threat: ThreatKind) throws {
+        // GIVEN
+        let url = try #require(URL(string: "https://www.example.com"))
+        let error = SpecialErrorData.maliciousSite(kind: threat, url: url)
+        sut.visitSite(url: url, errorData: error)
+
+        // WHEN
+        let result = sut.currentThreatKind
+
+        // THEN
+        #expect(result == threat)
+    }
+
     @Test("Leave Site Pixel", .disabled("Will be implmented in upcoming PR"))
     func whenLeaveSiteActionThenFirePixel() throws {
 

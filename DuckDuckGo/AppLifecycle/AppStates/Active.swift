@@ -53,11 +53,6 @@ struct Active: AppState {
                        withAdditionalParameters: [PixelParameters.time: String(launchTime)])
         }
 
-         // Enable subscriptionCookieManager if feature flag is present
-         if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains) {
-             appDependencies.subscriptionService.subscriptionCookieManager.enableSettingSubscriptionCookie()
-         }
-
         // Keep track of feature flag changes
         let subscriptionCookieManager = appDependencies.subscriptionService.subscriptionCookieManager
         appDependencies.subscriptionService.onPrivacyConfigurationUpdate = { [privacyConfigurationManager] in
@@ -73,7 +68,7 @@ struct Active: AppState {
         }
 
         // onApplicationLaunch code
-        Task { @MainActor [self] in // todo? is capturing self here ok?
+        Task { @MainActor [self] in // is capturing self here ok?
             await beginAuthentication()
             initialiseBackgroundFetch(application)
             applyAppearanceChanges()
@@ -207,11 +202,11 @@ struct Active: AppState {
          Logger.sync.debug("App launched with url \(url.absoluteString)")
          // If showing the onboarding intro ignore deeplinks
          guard mainViewController.needsToShowOnboardingIntro() == false else {
-             return // todo was return false
+             return
          }
 
          if handleEmailSignUpDeepLink(url) {
-             return // todo was return true
+             return
          }
 
          NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)

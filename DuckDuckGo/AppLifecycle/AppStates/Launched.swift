@@ -566,6 +566,13 @@ struct Launched: AppState {
             return WKHTTPCookieStoreWrapper(store: WKWebsiteDataStore.current().httpCookieStore)
         }, eventMapping: SubscriptionCookieManageEventPixelMapping())
 
+        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
+
+        // Enable subscriptionCookieManager if feature flag is present
+        if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains) {
+            subscriptionCookieManager.enableSettingSubscriptionCookie()
+        }
+
         return subscriptionCookieManager
     }
 

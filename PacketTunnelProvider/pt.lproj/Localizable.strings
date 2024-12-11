@@ -1,11 +1,20 @@
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "VPN desativada devido a subscrição expirada. Subscreve o Privacy Pro para voltar a ligar a DuckDuckGo VPN.";
 
+/* The body of the notification shown when VPN fails to reconnect */
+"network.protection.failure.notification.body" = "A VPN DuckDuckGo não conseguiu estabelecer ligação. Tenta novamente mais tarde.";
+
+/* The body of the notification shown when VPN connection is interrupted */
+"network.protection.interrupted.notification.body" = "A VPN DuckDuckGo foi interrompida. A tentar ligar novamente…";
+
 /* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
 "network.protection.snoozed.notification.body" = "VPN suspensa por %@";
+
+/* The body of the notification shown when VPN reconnects successfully */
+"network.protection.success.notification.body" = "A VPN DuckDuckGo está ativada. A tua localização e atividade online estão protegidas.";
 
 /* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "A encaminhar o tráfego do dispositivo através de %@.";

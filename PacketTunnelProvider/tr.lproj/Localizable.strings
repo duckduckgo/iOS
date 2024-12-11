@@ -1,11 +1,20 @@
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "Abonelik süresi dolduğu için VPN bağlantısı kesildi. DuckDuckGo VPN'e yeniden bağlanmak için Privacy Pro'ya abone olun.";
 
+/* The body of the notification shown when VPN fails to reconnect */
+"network.protection.failure.notification.body" = "DuckDuckGo VPN bağlanamadı. Lütfen daha sonra tekrar deneyin.";
+
+/* The body of the notification shown when VPN connection is interrupted */
+"network.protection.interrupted.notification.body" = "DuckDuckGo VPN kesintiye uğradı. Şimdi yeniden bağlanmaya çalışılıyor...";
+
 /* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
 "network.protection.snoozed.notification.body" = "VPN %@ için uyku moduna alındı";
+
+/* The body of the notification shown when VPN reconnects successfully */
+"network.protection.success.notification.body" = "DuckDuckGo VPN Açık. Konumunuz ve çevrimiçi etkinliğiniz korunuyor.";
 
 /* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Cihaz trafiği %@ üzerinden yönlendiriliyor.";

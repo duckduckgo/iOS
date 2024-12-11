@@ -92,7 +92,7 @@ struct Active: AppState {
         let uiService = appDependencies.uiService
         let syncService = appDependencies.syncService
         let autoClear = appDependencies.autoClear
-        Task { @MainActor [self] in // todo? is capturing self here ok?
+        Task { @MainActor [self] in // is capturing self here ok?
             await beginAuthentication(lastBackgroundDate: stateContext.lastBackgroundDate)
             await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
             uiService.showKeyboardIfSettingOn = true
@@ -198,7 +198,7 @@ struct Active: AppState {
     }
 
     // MARK: handle application(_:open:options:) logic here
-    func openURL(_ url: URL) { // TODO: should we reset URL? probably not
+    func openURL(_ url: URL) {
          Logger.sync.debug("App launched with url \(url.absoluteString)")
          // If showing the onboarding intro ignore deeplinks
          guard mainViewController.needsToShowOnboardingIntro() == false else {
@@ -335,7 +335,7 @@ struct Active: AppState {
     }
 
     private func presentExpiredEntitlementAlert() {
-        let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak mainViewController] in //todo?
+        let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak mainViewController] in
             mainViewController?.segueToPrivacyPro()
         }
         window.rootViewController?.present(alertController, animated: true) { [weak tunnelDefaults] in

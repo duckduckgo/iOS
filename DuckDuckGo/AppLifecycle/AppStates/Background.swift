@@ -34,6 +34,7 @@ struct Background: AppState {
     init(stateContext: Inactive.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
         syncDidFinishCancellable = appDependencies.syncDidFinishCancellable
 
         let autoClear = appDependencies.autoClear
@@ -83,7 +84,6 @@ struct Background: AppState {
     }
 
     private func resetAppStartTime() {
-//        didFinishLaunchingStartTime = nil // TODO: not needed most likely
         appDependencies.mainViewController.appDidFinishLaunchingStartTime = nil
     }
 

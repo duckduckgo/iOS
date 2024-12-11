@@ -57,7 +57,7 @@ extension Active {
         switch event {
         case .suspending:
             return Inactive(stateContext: makeStateContext())
-        case .openURL(let url): // TODO: update to tech design
+        case .openURL(let url):
             openURL(url)
             return self
         case .launching, .activating, .backgrounding:
@@ -69,13 +69,16 @@ extension Active {
 
 extension Inactive {
 
-    func apply(event: AppEvent) -> any AppState {
+    mutating func apply(event: AppEvent) -> any AppState {
         switch event {
         case .backgrounding:
             return Background(stateContext: makeStateContext())
         case .activating:
             return Active(stateContext: makeStateContext())
-        case .launching, .suspending, .openURL:
+        case .openURL(let url):
+            urlToOpen = url
+            return self
+        case .launching, .suspending:
             return handleUnexpectedEvent(event)
         }
     }
@@ -104,16 +107,17 @@ extension DoubleBackground {
 
     func apply(event: AppEvent) -> any AppState {
         // report event so we know what events can be called at this moment, but do not let SM be stuck in this state just not to be flooded with these events
-        _ = handleUnexpectedEvent(event)
+        handleUnexpectedEvent(event)
 
-        switch event {
-        case .activating(let application):
-            return Active(application: application)
-        case .suspending(let application):
-            return Inactive(application: application)
-        case .launching, .backgrounding, .openURL:
-            return self
-        }
+        //todo: to be removed
+//        switch event {
+//        case .activating(let application):
+//            return Active(application: application)
+//        case .suspending(let application):
+//            return Inactive(application: application)
+//        case .launching, .backgrounding, .openURL:
+//            return self
+//        }
 
     }
 
@@ -123,16 +127,17 @@ extension InactiveBackground {
 
     func apply(event: AppEvent) -> any AppState {
         // report event so we know what events can be called at this moment, but do not let SM be stuck in this state just not to be flooded with these events
-        _ = handleUnexpectedEvent(event)
+        handleUnexpectedEvent(event)
 
-        switch event {
-        case .activating(let application):
-            return Active(application: application)
-        case .suspending(let application):
-            return Inactive(application: application)
-        case .launching, .backgrounding, .openURL:
-            return self
-        }
+        //todo: to be removed
+//        switch event {
+//        case .activating(let application):
+//            return Active(application: application)
+//        case .suspending(let application):
+//            return Inactive(application: application)
+//        case .launching, .backgrounding, .openURL:
+//            return self
+//        }
     }
 
 }

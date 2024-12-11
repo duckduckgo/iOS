@@ -32,6 +32,8 @@ import Subscription
 import WebKit
 import Common
 import Combine
+import PixelKit
+import PixelExperimentKit
 
 @MainActor
 struct Launched: AppState {
@@ -147,15 +149,15 @@ struct Launched: AppState {
                 // If for some reason the parameter can't be found, fall back to the current version.
                 if let crashAppVersion = params[PixelParameters.appVersion] {
                     let dailyParameters = [PixelParameters.appVersion: crashAppVersion]
-//                    DailyPixel.fireDaily(.dbCrashDetectedDaily, withAdditionalParameters: dailyParameters) //todo uncomment after merge
+                    DailyPixel.fireDaily(.dbCrashDetectedDaily, withAdditionalParameters: dailyParameters)
                 } else {
-//                    DailyPixel.fireDaily(.dbCrashDetectedDaily) //todo uncomment after merge
+                    DailyPixel.fireDaily(.dbCrashDetectedDaily)
                 }
             }
 
             // Async dispatch because rootViewController may otherwise be nil here
             DispatchQueue.main.async {
-                guard let viewController = application.window?.rootViewController else { return } // todo: check if it shows
+                guard let viewController = application.window?.rootViewController else { return }
                 crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
             }
         }
@@ -273,7 +275,7 @@ struct Launched: AppState {
                                    marketplaceAdPostbackManager: marketplaceAdPostbackManager)
 
         func cleanUpATBAndAssignVariant(variantManager: VariantManager,
-                                                daxDialogs: DaxDialogs,
+                                        daxDialogs: DaxDialogs,
                                         marketplaceAdPostbackManager: MarketplaceAdPostbackManager) {
             let historyMessageManager = HistoryMessageManager()
 
@@ -316,27 +318,27 @@ struct Launched: AppState {
         dryRun = true
 #endif
         let isPhone = UIDevice.current.userInterfaceIdiom == .phone
-//        let source = isPhone ? PixelKit.Source.iOS : PixelKit.Source.iPadOS
-//        PixelKit.setUp(dryRun: dryRun,
-//                       appVersion: AppVersion.shared.versionNumber,
-//                       source: source.rawValue,
-//                       defaultHeaders: [:],
-//                       defaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) { (pixelName: String, headers: [String: String], parameters: [String: String], _, _, onComplete: @escaping PixelKit.CompletionBlock) in
-//
-//            let url = URL.pixelUrl(forPixelNamed: pixelName)
-//            let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
-//            let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
-//            Task {
-//                do {
-//                    _ = try await DefaultAPIService().fetch(request: request)
-//                    onComplete(true, nil)
-//                } catch {
-//                    onComplete(false, error)
-//                }
-//            }
-//        }
-//        PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger,
-//                                        eventTracker: ExperimentEventTracker(store: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()))
+        let source = isPhone ? PixelKit.Source.iOS : PixelKit.Source.iPadOS
+        PixelKit.setUp(dryRun: dryRun,
+                       appVersion: AppVersion.shared.versionNumber,
+                       source: source.rawValue,
+                       defaultHeaders: [:],
+                       defaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) { (pixelName: String, headers: [String: String], parameters: [String: String], _, _, onComplete: @escaping PixelKit.CompletionBlock) in
+
+            let url = URL.pixelUrl(forPixelNamed: pixelName)
+            let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
+            let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
+            Task {
+                do {
+                    _ = try await DefaultAPIService().fetch(request: request)
+                    onComplete(true, nil)
+                } catch {
+                    onComplete(false, error)
+                }
+            }
+        }
+        PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                        eventTracker: ExperimentEventTracker(store: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()))
 
         let syncErrorHandler = SyncErrorHandler()
 
@@ -346,8 +348,8 @@ struct Launched: AppState {
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
             syncErrorHandler: syncErrorHandler,
-            faviconStoring: Favicons.shared//, todo: comment out after merge
-//            tld: AppDependencyProvider.shared.storageCache.tld comment out after merge
+            faviconStoring: Favicons.shared,
+            tld: AppDependencyProvider.shared.storageCache.tld
         )
 
         syncService = DDGSync(
@@ -495,16 +497,16 @@ struct Launched: AppState {
                     Pixel.fire(pixel: .autofillOnboardedUser)
                 case .autofillToggledOn:
                     Pixel.fire(pixel: .autofillToggledOn, withAdditionalParameters: params ?? [:])
-//                    if let autofillExtensionToggled = autofillUsageMonitor.autofillExtensionEnabled {// todo: uncomment after merge
-//                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
-//                                   withAdditionalParameters: params ?? [:])
-//                    }
+                    if let autofillExtensionToggled = autofillUsageMonitor.autofillExtensionEnabled {
+                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+                                   withAdditionalParameters: params ?? [:])
+                    }
                 case .autofillToggledOff:
                     Pixel.fire(pixel: .autofillToggledOff, withAdditionalParameters: params ?? [:])
-//                    if let autofillExtensionToggled = autofillUsageMonitor.autofillExtensionEnabled {// todo: uncomment after merge
-//                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
-//                                   withAdditionalParameters: params ?? [:])
-//                    }
+                    if let autofillExtensionToggled = autofillUsageMonitor.autofillExtensionEnabled {
+                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+                                   withAdditionalParameters: params ?? [:])
+                    }
                 case .autofillLoginsStacked:
                     Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
                 default:

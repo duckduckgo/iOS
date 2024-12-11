@@ -24,6 +24,8 @@ struct Inactive: AppState {
     private let application: UIApplication
     private let appDependencies: AppDependencies
 
+    var urlToOpen: URL?
+
     init(stateContext: Active.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
@@ -45,12 +47,14 @@ extension Inactive {
     struct StateContext {
 
         let application: UIApplication
+        let urlToOpen: URL?
         let appDependencies: AppDependencies
 
     }
 
     func makeStateContext() -> StateContext {
         .init(application: application,
+              urlToOpen: urlToOpen,
               appDependencies: appDependencies)
     }
 

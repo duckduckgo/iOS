@@ -1743,7 +1743,7 @@
 "network.protection.status.snoozing.format" = "Wstrzymano, pozostało %@";
 
 /* Snooze button title shown in NetworkProtection's status view. */
-"network.protection.status.view.action.snooze" = "Wstrzymano na 20 minut";
+"network.protection.status.view.action.snooze" = "Wstrzymaj na 20 minut";
 
 /* Wake Up button title shown in NetworkProtection's status view. */
 "network.protection.status.view.action.wake-up" = "Przywróć";

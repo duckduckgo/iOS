@@ -33,6 +33,7 @@ final class AIChatWebViewController: UIViewController {
         webView.backgroundColor = .systemBackground
         webView.navigationDelegate = self
         webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.scrollView.bounces = false
         return webView
     }()
 

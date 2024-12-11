@@ -61,6 +61,7 @@ struct Launched: AppState {
     private let privacyProDataReporter: PrivacyProDataReporting
     private let isTesting = ProcessInfo().arguments.contains("testing")
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
+    private let crashReportUploaderOnboarding: CrashCollectionOnboarding
 
     // These should ideally be let properties instead of force-unwrapped. However, due to various initialization paths, such as database completion blocks, setting them up in advance is currently not feasible. Refactoring will be done once this code is streamlined.
     private var uiService: UIService!
@@ -77,12 +78,13 @@ struct Launched: AppState {
 
     var urlToOpen: URL?
 
-    let application: UIApplication
+    private let application: UIApplication
     init(stateContext: Init.StateContext) {
 
         application = stateContext.application
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
         vpnWorkaround = VPNRedditSessionWorkaround(accountManager: accountManager, tunnelController: tunnelController)
+        crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
 
         defer {
             let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
@@ -136,15 +138,24 @@ struct Launched: AppState {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        crashCollection.startAttachingCrashLogMessages { [application] pixelParameters, payloads, sendReport in
+        crashCollection.startAttachingCrashLogMessages { [application, crashReportUploaderOnboarding] pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+
+                // Each crash comes with an `appVersion` parameter representing the version that the crash occurred on.
+                // This is to disambiguate the situation where a crash occurs, but isn't sent until the next update.
+                // If for some reason the parameter can't be found, fall back to the current version.
+                if let crashAppVersion = params[PixelParameters.appVersion] {
+                    let dailyParameters = [PixelParameters.appVersion: crashAppVersion]
+//                    DailyPixel.fireDaily(.dbCrashDetectedDaily, withAdditionalParameters: dailyParameters) //todo uncomment after merge
+                } else {
+//                    DailyPixel.fireDaily(.dbCrashDetectedDaily) //todo uncomment after merge
+                }
             }
 
             // Async dispatch because rootViewController may otherwise be nil here
             DispatchQueue.main.async {
                 guard let viewController = application.window?.rootViewController else { return } // todo: check if it shows
-                let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
                 crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
             }
         }
@@ -174,9 +185,9 @@ struct Launched: AppState {
             let webView = blockingDelegate.prepareWebView()
             window!.rootViewController?.view.addSubview(webView)
             window!.rootViewController?.view.backgroundColor = .red
-            application.setWindow(window!)
-
             webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
+
+            application.setWindow(window!)
 
             let request = URLRequest(url: URL(string: "about:blank")!)
             webView.load(request)
@@ -300,6 +311,33 @@ struct Launched: AppState {
             ).wrappedValue
         ) ?? defaultEnvironment
 
+        var dryRun = false
+#if DEBUG
+        dryRun = true
+#endif
+        let isPhone = UIDevice.current.userInterfaceIdiom == .phone
+//        let source = isPhone ? PixelKit.Source.iOS : PixelKit.Source.iPadOS
+//        PixelKit.setUp(dryRun: dryRun,
+//                       appVersion: AppVersion.shared.versionNumber,
+//                       source: source.rawValue,
+//                       defaultHeaders: [:],
+//                       defaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) { (pixelName: String, headers: [String: String], parameters: [String: String], _, _, onComplete: @escaping PixelKit.CompletionBlock) in
+//
+//            let url = URL.pixelUrl(forPixelNamed: pixelName)
+//            let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
+//            let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
+//            Task {
+//                do {
+//                    _ = try await DefaultAPIService().fetch(request: request)
+//                    onComplete(true, nil)
+//                } catch {
+//                    onComplete(false, error)
+//                }
+//            }
+//        }
+//        PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger,
+//                                        eventTracker: ExperimentEventTracker(store: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()))
+
         let syncErrorHandler = SyncErrorHandler()
 
         syncDataProviders = SyncDataProviders(
@@ -308,7 +346,8 @@ struct Launched: AppState {
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
             syncErrorHandler: syncErrorHandler,
-            faviconStoring: Favicons.shared
+            faviconStoring: Favicons.shared//, todo: comment out after merge
+//            tld: AppDependencyProvider.shared.storageCache.tld comment out after merge
         )
 
         syncService = DDGSync(
@@ -348,7 +387,6 @@ struct Launched: AppState {
             purchasePlatform: .appStore)
 
         subscriptionCookieManager = Self.makeSubscriptionCookieManager(application: application)
-        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
 
         let homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                           remoteMessagingClient: remoteMessagingClient,
@@ -369,7 +407,11 @@ struct Launched: AppState {
             window!.makeKeyAndVisible()
             application.setWindow(window)
 
-            window!.presentInsufficientDiskSpaceAlert()
+            presentInsufficientDiskSpaceAlert()
+            func presentInsufficientDiskSpaceAlert() {
+                let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
+                window!.rootViewController?.present(alertController, animated: true, completion: nil)
+            }
         } else {
             let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
             let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
@@ -407,7 +449,7 @@ struct Launched: AppState {
 
             let autoClear = AutoClear(worker: mainViewController)
             self.autoClear = autoClear
-            let applicationState = stateContext.application.applicationState
+            let applicationState = application.applicationState
             let vpnWorkaround = vpnWorkaround
             Task {
                 await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
@@ -416,6 +458,7 @@ struct Launched: AppState {
         }
         unService = UNService(window: window!, accountManager: accountManager)
         uiService = UIService(window: window!)
+
         voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
@@ -438,6 +481,7 @@ struct Launched: AppState {
 
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
+        let autofillUsageMonitor = AutofillUsageMonitor()
         autofillPixelReporter = AutofillPixelReporter(
             userDefaults: .standard,
             autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
@@ -451,8 +495,16 @@ struct Launched: AppState {
                     Pixel.fire(pixel: .autofillOnboardedUser)
                 case .autofillToggledOn:
                     Pixel.fire(pixel: .autofillToggledOn, withAdditionalParameters: params ?? [:])
+//                    if let autofillExtensionToggled = autofillUsageMonitor.autofillExtensionEnabled {// todo: uncomment after merge
+//                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+//                                   withAdditionalParameters: params ?? [:])
+//                    }
                 case .autofillToggledOff:
                     Pixel.fire(pixel: .autofillToggledOff, withAdditionalParameters: params ?? [:])
+//                    if let autofillExtensionToggled = autofillUsageMonitor.autofillExtensionEnabled {// todo: uncomment after merge
+//                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+//                                   withAdditionalParameters: params ?? [:])
+//                    }
                 case .autofillLoginsStacked:
                     Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
                 default:
@@ -497,7 +549,8 @@ struct Launched: AppState {
                                                      privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager),
             onboardingPixelReporter: onboardingPixelReporter,
             widgetRefreshModel: widgetRefreshModel,
-            autofillPixelReporter: autofillPixelReporter
+            autofillPixelReporter: autofillPixelReporter,
+            crashReportUploaderOnboarding: crashReportUploaderOnboarding
         )
     }
 

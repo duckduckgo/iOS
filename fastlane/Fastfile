@@ -2,218 +2,216 @@ default_platform :ios
 
 platform :ios do
 
-before_all do
-  setup_ci if is_ci
-end
+  before_all do
+    setup_ci if is_ci
+  end
 
-#################################################
-# Public lanes
-#################################################
+  #################################################
+  # Public lanes
+  #################################################
 
-desc 'Fetches and updates certificates and provisioning profiles for App Store distribution'
-lane :sync_signing do |options|
-  do_sync_signing(options)
-end
+  desc 'Fetches and updates certificates and provisioning profiles for App Store distribution'
+  lane :sync_signing do |options|
+    do_sync_signing(options)
+  end
 
-desc 'Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution'
-lane :sync_signing_adhoc do |options|
-  do_sync_signing(options)
-end
+  desc 'Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution'
+  lane :sync_signing_adhoc do |options|
+    do_sync_signing(options)
+  end
 
-desc 'Fetches and updates certificates and provisioning profiles for Alpha distribution'
-lane :sync_signing_alpha do |options|
-  do_sync_signing(options)
-end
+  desc 'Fetches and updates certificates and provisioning profiles for Alpha distribution'
+  lane :sync_signing_alpha do |options|
+    do_sync_signing(options)
+  end
 
-desc 'Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution'
-lane :sync_signing_alpha_adhoc do |options|
-  do_sync_signing(options)
-end
+  desc 'Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution'
+  lane :sync_signing_alpha_adhoc do |options|
+    do_sync_signing(options)
+  end
 
-desc 'Makes Ad-Hoc build with a specified name and alpha bundle ID in a given directory'
-lane :adhoc do |options|
-  alpha_adhoc(options)
-end
+  desc 'Makes Ad-Hoc build with a specified name and alpha bundle ID in a given directory'
+  lane :adhoc do |options|
+    alpha_adhoc(options)
+  end
 
-desc 'Makes Ad-Hoc build with a specified name and release bundle ID in a given directory'
-lane :release_adhoc do |options|
+  desc 'Makes Ad-Hoc build with a specified name and release bundle ID in a given directory'
+  lane :release_adhoc do |options|
 
-  # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
-  if is_ci
-    configurations = [
-      {
-        targets: ["DuckDuckGo"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios"
-      },
-      {
-        targets: ["ShareExtension"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.ShareExtension"
-      },
-      {
-        targets: ["OpenAction"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.OpenAction2"
-      },
-      {
-        targets: ["WidgetsExtension"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.Widgets"
-      },
-      {
-        targets: ["PacketTunnelProvider"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.NetworkExtension"
-      },
-      {
-        targets: ["AutofillCredentialProvider"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.CredentialExtension"
-      }
-    ]
+    # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
+    if is_ci
+      configurations = [
+        {
+          targets: ["DuckDuckGo"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios"
+        },
+        {
+          targets: ["ShareExtension"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.ShareExtension"
+        },
+        {
+          targets: ["OpenAction"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.OpenAction2"
+        },
+        {
+          targets: ["WidgetsExtension"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.Widgets"
+        },
+        {
+          targets: ["PacketTunnelProvider"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.NetworkExtension"
+        },
+        {
+          targets: ["AutofillCredentialProvider"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.CredentialExtension"
+        }
+      ]
 
-    configurations.each do |config|
-      update_code_signing_settings(
-        use_automatic_signing: false,
-        build_configurations: ["Release"],
-        code_sign_identity: "iPhone Distribution",
-        **config
-      )
+      configurations.each do |config|
+        update_code_signing_settings(
+          use_automatic_signing: false,
+          build_configurations: ["Release"],
+          code_sign_identity: "iPhone Distribution",
+          **config
+        )
+      end
+    end
+
+    sync_signing_adhoc(options)
+
+    suffix = ""
+    if options[:suffix]
+      suffix = "#{options[:suffix]}-"
+    end
+
+    timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
+    output_name = "DuckDuckGo-#{suffix}#{timestamp}"
+
+    build_app(
+      output_directory: options[:output],
+      output_name: output_name,
+      export_method: "ad-hoc",
+      scheme: "DuckDuckGo",
+      export_options: "adhocExportOptions.plist",
+      derived_data_path: "DerivedData",
+      xcargs: "-skipPackagePluginValidation -skipMacroValidation"
+    )
+
+    if is_ci
+      sh("echo output_name=#{output_name} >> $GITHUB_ENV")
+    end
+
+    Dir.chdir("..") do
+      sh("open", "#{options[:output]}") unless is_ci
     end
   end
 
-  sync_signing_adhoc(options)
+  desc 'Makes Ad-Hoc build for alpha with a specified name and alpha bundle ID in a given directory'
+  lane :alpha_adhoc do |options|
 
-  suffix = ""
-  if options[:suffix]
-    suffix = "#{options[:suffix]}-"
-  end
+    # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
+    if is_ci
+      configurations = [
+        {
+          targets: ["DuckDuckGo"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha"
+        },
+        {
+          targets: ["ShareExtension"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.ShareExtension"
+        },
+        {
+          targets: ["OpenAction"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.OpenAction2"
+        },
+        {
+          targets: ["WidgetsExtension"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.Widgets"
+        },
+        {
+          targets: ["PacketTunnelProvider"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.NetworkExtension"
+        },
+        {
+          targets: ["AutofillCredentialProvider"],
+          profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.CredentialExtension"
+        }
+      ]
 
-  timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
-  output_name = "DuckDuckGo-#{suffix}#{timestamp}"
+      configurations.each do |config|
+        update_code_signing_settings(
+          use_automatic_signing: false,
+          build_configurations: ["Alpha"],
+          code_sign_identity: "iPhone Distribution",
+          **config
+        )
+      end
+    end
 
-  build_app(
-    output_directory: options[:output],
-    output_name: output_name,
-    export_method: "ad-hoc",
-    scheme: "DuckDuckGo",
-    export_options: "adhocExportOptions.plist",
-    derived_data_path: "DerivedData",
-    xcargs: "-skipPackagePluginValidation -skipMacroValidation"
-  )
+    sync_signing_alpha_adhoc(options)
 
-  if is_ci
-    sh("echo output_name=#{output_name} >> $GITHUB_ENV")
-  end
+    suffix = ""
+    if options[:suffix]
+      suffix = "#{options[:suffix]}-"
+    end
 
-  Dir.chdir("..") do
-    sh("open", "#{options[:output]}") unless is_ci
-  end
-end
+    timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
+    output_name = "DuckDuckGo-Alpha-#{suffix}#{timestamp}"
 
-desc 'Makes Ad-Hoc build for alpha with a specified name and alpha bundle ID in a given directory'
-lane :alpha_adhoc do |options|
+    build_app(
+      output_directory: options[:output],
+      output_name: output_name,
+      export_method: "ad-hoc",
+      configuration: "Alpha",
+      scheme: "DuckDuckGo-Alpha",
+      export_options: "alphaAdhocExportOptions.plist",
+      derived_data_path: "DerivedData",
+      xcargs: "-skipPackagePluginValidation"
+    )
 
-  # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
-  if is_ci
-    configurations = [
-      {
-        targets: ["DuckDuckGo"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha"
-      },
-      {
-        targets: ["ShareExtension"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.ShareExtension"
-      },
-      {
-        targets: ["OpenAction"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.OpenAction2"
-      },
-      {
-        targets: ["WidgetsExtension"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.Widgets"
-      },
-      {
-        targets: ["PacketTunnelProvider"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.NetworkExtension"
-      },
-      {
-        targets: ["AutofillCredentialProvider"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.CredentialExtension"
-      }
-    ]
+    if is_ci
+      sh("echo output_name=#{output_name} >> $GITHUB_ENV")
+    end
 
-    configurations.each do |config|
-      update_code_signing_settings(
-        use_automatic_signing: false,
-        build_configurations: ["Alpha"],
-        code_sign_identity: "iPhone Distribution",
-        **config
-      )
+    Dir.chdir("..") do
+      sh("open", "#{options[:output]}") unless is_ci
     end
   end
 
-  sync_signing_alpha_adhoc(options)
+  desc 'Promotes the latest TestFlight build to App Store without submitting for review'
+  lane :promote_latest_testflight_to_appstore do |options|
 
-  suffix = ""
-  if options[:suffix]
-    suffix = "#{options[:suffix]}-"
+    app_identifier = options[:alpha] ? "com.duckduckgo.mobile.ios.alpha" : "com.duckduckgo.mobile.ios"
+
+    latest_testflight_build_number(
+      api_key: get_api_key,
+      username: get_username(options),
+      platform: 'ios',
+      app_identifier: app_identifier
+    )
+
+    latest_build_number = lane_context[SharedValues::LATEST_TESTFLIGHT_BUILD_NUMBER]
+    latest_build_version = lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION]
+
+    UI.message("The latest build number #{latest_build_number} of the latest version: #{latest_build_version} for app identifier: #{app_identifier}")
+
+    upload_metadata({
+      build_number: latest_build_number.to_s,
+      app_version: latest_build_version.to_s,
+      app_identifier: app_identifier
+    })
   end
 
-  timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
-  output_name = "DuckDuckGo-Alpha-#{suffix}#{timestamp}"
+  desc 'Makes App Store release build and uploads it to App Store Connect'
+  lane :release_appstore do |options|
+    build_release(options)
 
-  build_app(
-    output_directory: options[:output],
-    output_name: output_name,
-    export_method: "ad-hoc",
-    configuration: "Alpha",
-    scheme: "DuckDuckGo-Alpha",
-    export_options: "alphaAdhocExportOptions.plist",
-    derived_data_path: "DerivedData",
-    xcargs: "-skipPackagePluginValidation"
-  )
+    deliver(common_deliver_arguments.merge(options))
 
-  if is_ci
-    sh("echo output_name=#{output_name} >> $GITHUB_ENV")
-  end
-
-  Dir.chdir("..") do
-    sh("open", "#{options[:output]}") unless is_ci
-  end
-end
-
-
-
-desc 'Promotes the latest TestFlight build to App Store without submitting for review'
-lane :promote_latest_testflight_to_appstore do |options|
-
-  app_identifier = options[:alpha] ? "com.duckduckgo.mobile.ios.alpha" : "com.duckduckgo.mobile.ios"
-
-  latest_testflight_build_number(
-    api_key: get_api_key,
-    username: get_username(options),
-    platform: 'ios',
-    app_identifier: app_identifier
-  )
-
-  latest_build_number = lane_context[SharedValues::LATEST_TESTFLIGHT_BUILD_NUMBER]
-  latest_build_version = lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION]
-
-  UI.message("The latest build number #{latest_build_number} of the latest version: #{latest_build_version} for app identifier: #{app_identifier}")
-
-  upload_metadata({
-    build_number: latest_build_number.to_s,
-    app_version: latest_build_version.to_s,
-    app_identifier: app_identifier
-  })
-end
-
-desc 'Makes App Store release build and uploads it to App Store Connect'
-lane :release_appstore do |options|
-  build_release(options)
-
-  deliver(common_deliver_arguments.merge(options))
-
-  begin
-    upload_metadata(options)
-  rescue => exception
-    UI.user_error! %{Failed to upload metadata: #{exception}
+    begin
+      upload_metadata(options)
+    rescue => exception
+      UI.user_error! %{Failed to upload metadata: #{exception}
 1. Your build has been successfully uploaded, it's only a problem with App Store metadata.
 2. It's possible that there is a submission for another platform (macOS) in a non-editable state
   (e.g. Pending Developer Release, Developer Rejected, Rejected or Metadata Rejected).
@@ -222,155 +220,155 @@ lane :release_appstore do |options|
   to update metadata manually.
 4. Use upload_metadata lane to only handle metadata (without building the release and uploading a build):
   $ bundle exec fastlane upload_metadata
-    }
-  end
-end
-
-desc 'Updates App Store metadata'
-lane :upload_metadata do |options|
-  deliver(common_deliver_arguments.merge(options).merge({
-    skip_binary_upload: true,
-    skip_metadata: false,
-    version_check_wait_retry_limit: 1
-  }))
-end
-
-desc 'Makes App Store release build and uploads it to TestFlight'
-lane :release_testflight do
-  build_release
-
-  upload_to_testflight(
-    api_key: get_api_key
-  )
-end
-
-desc 'Makes Alpha release build and uploads it to TestFlight'
-lane :release_alpha do |options|
-  build_alpha(options)
-
-  upload_to_testflight(
-    api_key: get_api_key,
-    groups: options[:groups],
-    skip_waiting_for_build_processing: true
-  )
-end
-
-desc 'Latest build number for version'
-lane :latest_build_number_for_version do |options|
-  if options[:app_identifier]
-    app_identifier = options[:app_identifier]
-  end
-  build_number = latest_testflight_build_number(
-    api_key: get_api_key,
-    version: options[:version],
-    initial_build_number: -1,
-    username: get_username(options))
-  if options[:file_name]
-    File.write(options[:file_name], build_number)
-  end
-end
-
-desc 'Increment build number based on version in App Store Connect'
-lane :increment_build_number_for_version do |options|
-  if options[:app_identifier]
-    app_identifier = options[:app_identifier]
-  end
-  increment_build_number({
-    build_number:
-      latest_testflight_build_number(
-        api_key: get_api_key,
-        version: options[:version],
-        app_identifier: app_identifier,
-        initial_build_number: -1,
-        username: get_username(options)) + 1,
-    skip_info_plist: "true"
-  })
-end
-
-#################################################
-# Private lanes
-#################################################
-
-private_lane :build_release do |options|
-  sync_signing(options)
-
-  build_app(
-    export_method: "app-store",
-    scheme: "DuckDuckGo",
-    export_options: "appStoreExportOptions.plist",
-    derived_data_path: "DerivedData",
-    xcargs: "-skipPackagePluginValidation -skipMacroValidation"
-  )
-end
-
-private_lane :build_alpha do |options|
-  sync_signing_alpha(options)
-
-  build_app(
-    export_method: "app-store",
-    configuration: "Alpha",
-    scheme: "DuckDuckGo-Alpha",
-    export_options: "alphaExportOptions.plist",
-    derived_data_path: "DerivedData",
-    xcargs: "-skipPackagePluginValidation -skipMacroValidation"
-  )
-end
-
-private_lane :get_api_key do
-  has_api_key = [
-    "APPLE_API_KEY_ID",
-    "APPLE_API_KEY_ISSUER",
-    "APPLE_API_KEY_BASE64"
-  ].map {|x| ENV.has_key? x}.reduce(&:&)
-
-  if has_api_key
-    app_store_connect_api_key(
-      key_id: ENV["APPLE_API_KEY_ID"],
-      issuer_id: ENV["APPLE_API_KEY_ISSUER"],
-      key_content: ENV["APPLE_API_KEY_BASE64"],
-      is_key_content_base64: true
-    )
-  else
-    nil
-  end
-end
-
-private_lane :get_username do |options|
-  if options[:username]
-    options[:username]
-  elsif is_ci
-    nil # don't make assumptions in CI
-  else
-    git_user_email = Action.sh("git", "config", "user.email").chomp
-    if git_user_email.end_with? "@duckduckgo.com"
-      git_user_email
+      }
     end
   end
-end
 
-private_lane :do_sync_signing do |options|
-  is_adhoc = lane_context[SharedValues::LANE_NAME].include?("adhoc")
-  sync_code_signing(
-    api_key: get_api_key,
-    username: get_username(options),
-	  readonly: is_ci && !is_adhoc
-  )
-end
+  desc 'Updates App Store metadata'
+  lane :upload_metadata do |options|
+    deliver(common_deliver_arguments.merge(options).merge({
+      skip_binary_upload: true,
+      skip_metadata: false,
+      version_check_wait_retry_limit: 1
+    }))
+  end
 
-def common_deliver_arguments
-  {
-    api_key: get_api_key,
-    submit_for_review: false,
-    automatic_release: false,
-    phased_release: true,
-    force: true,
-    skip_screenshots: true,
-    skip_metadata: true,
-    precheck_include_in_app_purchases: false,
-    submission_information: {
-       add_id_info_uses_idfa: false
+  desc 'Makes App Store release build and uploads it to TestFlight'
+  lane :release_testflight do
+    build_release
+
+    upload_to_testflight(
+      api_key: get_api_key
+    )
+  end
+
+  desc 'Makes Alpha release build and uploads it to TestFlight'
+  lane :release_alpha do |options|
+    build_alpha(options)
+
+    upload_to_testflight(
+      api_key: get_api_key,
+      groups: options[:groups],
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc 'Latest build number for version'
+  lane :latest_build_number_for_version do |options|
+    if options[:app_identifier]
+      app_identifier = options[:app_identifier]
+    end
+    build_number = latest_testflight_build_number(
+      api_key: get_api_key,
+      version: options[:version],
+      initial_build_number: -1,
+      username: get_username(options))
+    if options[:file_name]
+      File.write(options[:file_name], build_number)
+    end
+  end
+
+  desc 'Increment build number based on version in App Store Connect'
+  lane :increment_build_number_for_version do |options|
+    if options[:app_identifier]
+      app_identifier = options[:app_identifier]
+    end
+    increment_build_number({
+      build_number:
+        latest_testflight_build_number(
+          api_key: get_api_key,
+          version: options[:version],
+          app_identifier: app_identifier,
+          initial_build_number: -1,
+          username: get_username(options)) + 1,
+      skip_info_plist: "true"
+    })
+  end
+
+  #################################################
+  # Private lanes
+  #################################################
+
+  private_lane :build_release do |options|
+    sync_signing(options)
+
+    build_app(
+      export_method: "app-store",
+      scheme: "DuckDuckGo",
+      export_options: "appStoreExportOptions.plist",
+      derived_data_path: "DerivedData",
+      xcargs: "-skipPackagePluginValidation -skipMacroValidation"
+    )
+  end
+
+  private_lane :build_alpha do |options|
+    sync_signing_alpha(options)
+
+    build_app(
+      export_method: "app-store",
+      configuration: "Alpha",
+      scheme: "DuckDuckGo-Alpha",
+      export_options: "alphaExportOptions.plist",
+      derived_data_path: "DerivedData",
+      xcargs: "-skipPackagePluginValidation -skipMacroValidation"
+    )
+  end
+
+  private_lane :get_api_key do
+    has_api_key = [
+      "APPLE_API_KEY_ID",
+      "APPLE_API_KEY_ISSUER",
+      "APPLE_API_KEY_BASE64"
+    ].map {|x| ENV.has_key? x}.reduce(&:&)
+
+    if has_api_key
+      app_store_connect_api_key(
+        key_id: ENV["APPLE_API_KEY_ID"],
+        issuer_id: ENV["APPLE_API_KEY_ISSUER"],
+        key_content: ENV["APPLE_API_KEY_BASE64"],
+        is_key_content_base64: true
+      )
+    else
+      nil
+    end
+  end
+
+  private_lane :get_username do |options|
+    if options[:username]
+      options[:username]
+    elsif is_ci
+      nil # don't make assumptions in CI
+    else
+      git_user_email = Action.sh("git", "config", "user.email").chomp
+      if git_user_email.end_with? "@duckduckgo.com"
+        git_user_email
+      end
+    end
+  end
+
+  private_lane :do_sync_signing do |options|
+    is_adhoc = lane_context[SharedValues::LANE_NAME].include?("adhoc")
+    sync_code_signing(
+      api_key: get_api_key,
+      username: get_username(options),
+      readonly: is_ci && !is_adhoc
+    )
+  end
+
+  def common_deliver_arguments
+    {
+      api_key: get_api_key,
+      submit_for_review: false,
+      automatic_release: false,
+      phased_release: true,
+      force: true,
+      skip_screenshots: true,
+      skip_metadata: true,
+      precheck_include_in_app_purchases: false,
+      submission_information: {
+        add_id_info_uses_idfa: false
+      }
     }
-  }
-end
+  end
 
 end

@@ -60,7 +60,11 @@ extension Pixel {
         case tabSwitcherClickCloseTab
         case tabSwitcherSwipeCloseTab
         case tabSwitchLongPressNewTab
-        case tabSwitcherOpenDaily
+        case tabSwitcherOpenedDaily
+
+        case tabSwitcherOpenedFromSerp
+        case tabSwitcherOpenedFromWebsite
+        case tabSwitcherOpenedFromNewTabPage
 
         case settingsDoNotSellShown
         case settingsDoNotSellOn
@@ -118,7 +122,7 @@ extension Pixel {
         case tabBarForwardPressed
         case bookmarksButtonPressed
         case tabBarBookmarksLongPressed
-        case tabBarTabSwitcherPressed
+        case tabBarTabSwitcherOpened
         
         case homeScreenShown
         case homeScreenEditFavorite
@@ -969,7 +973,11 @@ extension Pixel.Event {
         case .tabSwitcherClickCloseTab: return "m_tab_manager_close_tab_click"
         case .tabSwitcherSwipeCloseTab: return "m_tab_manager_close_tab_swipe"
         case .tabSwitchLongPressNewTab: return "m_tab_manager_long_press_new_tab"
-        case .tabSwitcherOpenDaily: return "m_tab_manager_clicked_daily"
+        case .tabSwitcherOpenedDaily: return "m_tab_manager_opened_daily"
+
+        case .tabSwitcherOpenedFromSerp: return "m_tab_manager_open_from_serp"
+        case .tabSwitcherOpenedFromWebsite: return "m_tab_manager_open_from_website"
+        case .tabSwitcherOpenedFromNewTabPage: return "m_tab_manager_open_from_newtabpage"
 
         case .settingsDoNotSellShown: return "ms_dns"
         case .settingsDoNotSellOn: return "ms_dns_on"
@@ -1049,7 +1057,7 @@ extension Pixel.Event {
         case .tabBarForwardPressed: return "mt_fw"
         case .bookmarksButtonPressed: return "mt_bm"
         case .tabBarBookmarksLongPressed: return "mt_bl"
-        case .tabBarTabSwitcherPressed: return "mt_tb"
+        case .tabBarTabSwitcherOpened: return "m_tab_manager_opened"
 
         case .bookmarkLaunchList: return "m_bookmark_launch_list"
         case .bookmarkLaunchScored: return "m_bookmark_launch_scored"

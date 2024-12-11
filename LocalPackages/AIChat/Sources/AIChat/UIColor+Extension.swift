@@ -21,6 +21,6 @@ import UIKit
 
 extension UIColor {
     static var webViewBackgroundColor: UIColor {
-        return UIColor(named: "webViewBackgroundColor", in: Bundle.module, compatibleWith: nil) ?? UIColor.red
+        return UIColor(named: "webViewBackgroundColor", in: Bundle.module, compatibleWith: nil) ?? UIColor.clear
     }
 }

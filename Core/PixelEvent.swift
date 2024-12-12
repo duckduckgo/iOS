@@ -916,6 +916,7 @@ extension Pixel {
         case openAIChatBefore10min
         case openAIChatAfter10min
         case aiChatNoRemoteSettingsFound(settings: String)
+        case openAIChatFromAddressBar
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
@@ -1833,6 +1834,7 @@ extension Pixel.Event {
         case .openAIChatBefore10min: return "m_aichat_open_before_10_min"
         case .aiChatNoRemoteSettingsFound(let settings):
             return "m_aichat_no_remote_settings_found-\(settings.lowercased())"
+        case .openAIChatFromAddressBar: return "m_aichat_addressbar_icon"
 
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state"

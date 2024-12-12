@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Fermer";
+
+/* Done button title */
+"action.button.done" = "Terminé";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "Ouvrir DuckDuckGo";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Saisie automatique des mots de passe activée !";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "appareil";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Annuler";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Déverrouiller l'appareil pour accéder aux mots de passe";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "URL du site Web";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "Copier %@";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Adresse copiée";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Notes copiées";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Mot de passe copié";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Nom d'utilisateur copié";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Masquer le mot de passe";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Dernière modification : %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Titre";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Notes";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Mot de passe";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Afficher le mot de passe";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Nom d'utilisateur";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Les mots de passe sont stockés en toute sécurité sur votre appareil.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Aucun mot de passe n'a été enregistré";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Choisissez un mot de passe à utiliser pour « %@ »";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Rechercher un mot de passe";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "pour '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Aucun résultat";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Suggéré";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Mots de passe";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Définissez un code d'accès sur %@ pour saisir automatiquement vos mots de passe DuckDuckGo.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Code d'accès de l'appareil requis";
+

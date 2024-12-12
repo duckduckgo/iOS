@@ -265,11 +265,20 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
-    var aiChatEnabledBinding: Binding<Bool> {
+    var aiChatBrowsingMenuEnabledBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.aiChatSettings.isAIChatBrowsingMenuUserSettingsEnabled },
             set: { newValue in
                 self.aiChatSettings.enableAIChatBrowsingMenuUserSettings(enable: newValue)
+            }
+        )
+    }
+
+    var aiChatAddressBarEnabledBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.aiChatSettings.isAIChatAddressBarUserSettingsEnabled },
+            set: { newValue in
+                self.aiChatSettings.enableAIChatAddressBarUserSettings(enable: newValue)
             }
         )
     }
@@ -465,8 +474,9 @@ extension SettingsViewModel {
             duckPlayerMode: appSettings.duckPlayerMode,
             duckPlayerOpenInNewTab: appSettings.duckPlayerOpenInNewTab,
             duckPlayerOpenInNewTabEnabled: featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab),
-            aiChatEnabled: aiChatSettings.isAIChatFeatureEnabled
-
+            aiChat: SettingsState.AIChat(enabled: aiChatSettings.isAIChatFeatureEnabled,
+                                         isAIChatBrowsingMenuFeatureFlagEnabled: aiChatSettings.isAIChatBrowsingMenubarShortcutFeatureEnabled,
+                                         isAIChatAddressBarFeatureFlagEnabled: aiChatSettings.isAIChatAddressBarShortcutFeatureEnabled)
         )
         
         updateRecentlyVisitedSitesVisibility()

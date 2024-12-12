@@ -18,6 +18,8 @@
 		<string>match AppStore com.duckduckgo.mobile.ios.Widgets</string>
 		<key>com.duckduckgo.mobile.ios.NetworkExtension</key>
 		<string>match AppStore com.duckduckgo.mobile.ios.NetworkExtension</string>
+		<key>com.duckduckgo.mobile.ios.CredentialExtension</key>
+		<string>match AppStore com.duckduckgo.mobile.ios.CredentialExtension</string>
 	</dict>
 </dict>
 </plist>

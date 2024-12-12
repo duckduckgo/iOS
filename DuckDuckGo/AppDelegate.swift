@@ -182,6 +182,16 @@ import os.log
         crashCollection.startAttachingCrashLogMessages { pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+
+                // Each crash comes with an `appVersion` parameter representing the version that the crash occurred on.
+                // This is to disambiguate the situation where a crash occurs, but isn't sent until the next update.
+                // If for some reason the parameter can't be found, fall back to the current version.
+                if let crashAppVersion = params[PixelParameters.appVersion] {
+                    let dailyParameters = [PixelParameters.appVersion: crashAppVersion]
+                    DailyPixel.fireDaily(.dbCrashDetectedDaily, withAdditionalParameters: dailyParameters)
+                } else {
+                    DailyPixel.fireDaily(.dbCrashDetectedDaily)
+                }
             }
 
             // Async dispatch because rootViewController may otherwise be nil here
@@ -331,7 +341,8 @@ import os.log
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
             syncErrorHandler: syncErrorHandler,
-            faviconStoring: Favicons.shared
+            faviconStoring: Favicons.shared,
+            tld: AppDependencyProvider.shared.storageCache.tld
         )
 
         let syncService = DDGSync(
@@ -1097,7 +1108,7 @@ import os.log
         autofillPixelReporter = AutofillPixelReporter(
             userDefaults: .standard,
             autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
-            eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
+            eventMapping: EventMapping<AutofillPixelEvent> {[weak self] event, _, params, _ in
                 switch event {
                 case .autofillActiveUser:
                     Pixel.fire(pixel: .autofillActiveUser)
@@ -1107,8 +1118,16 @@ import os.log
                     Pixel.fire(pixel: .autofillOnboardedUser)
                 case .autofillToggledOn:
                     Pixel.fire(pixel: .autofillToggledOn, withAdditionalParameters: params ?? [:])
+                    if let autofillExtensionToggled = self?.autofillUsageMonitor.autofillExtensionEnabled {
+                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+                                   withAdditionalParameters: params ?? [:])
+                    }
                 case .autofillToggledOff:
                     Pixel.fire(pixel: .autofillToggledOff, withAdditionalParameters: params ?? [:])
+                    if let autofillExtensionToggled = self?.autofillUsageMonitor.autofillExtensionEnabled {
+                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+                                   withAdditionalParameters: params ?? [:])
+                    }
                 case .autofillLoginsStacked:
                     Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
                 default:

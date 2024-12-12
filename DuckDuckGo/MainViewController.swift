@@ -41,31 +41,31 @@ import BrokenSitePrompt
 import AIChat
 
 class MainViewController: UIViewController {
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
     }
-    
+
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
         let isIPad = UIDevice.current.userInterfaceIdiom == .pad
-        
+
         return isIPad ? [.left, .right] : []
     }
-    
+
     weak var findInPageView: FindInPageView!
     weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
     weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
-    
+
     weak var notificationView: UIView?
 
     var chromeManager: BrowserChromeManager!
-    
+
     var allowContentUnderflow = false {
         didSet {
             viewCoordinator.constraints.contentContainerTop.constant = allowContentUnderflow ? contentUnderflow : 0
         }
     }
-    
+
     var contentUnderflow: CGFloat {
         return 3 + (allowContentUnderflow ? -viewCoordinator.navigationBarContainer.frame.size.height : 0)
     }
@@ -84,7 +84,7 @@ class MainViewController: UIViewController {
     var newTabPageViewController: NewTabPageViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
-    
+
     let homePageConfiguration: HomePageConfiguration
     let homeTabManager: NewTabPageManager
     let tabManager: TabManager
@@ -124,6 +124,7 @@ class MainViewController: UIViewController {
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
     private var vpnCancellables = Set<AnyCancellable>()
     private var feedbackCancellable: AnyCancellable?
+    private var aiChatCancellables = Set<AnyCancellable>()
 
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private let subscriptionCookieManager: SubscriptionCookieManaging
@@ -138,7 +139,7 @@ class MainViewController: UIViewController {
         viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
         return viewModel
     }()
-    
+
     weak var tabSwitcherController: TabSwitcherViewController?
     var tabSwitcherButton: TabSwitcherButton!
 
@@ -147,26 +148,26 @@ class MainViewController: UIViewController {
     var presentedMenuButton: MenuButton {
         AppWidthObserver.shared.isLargeWidth ? viewCoordinator.omniBar.menuButtonContent : menuButton
     }
-    
+
     let gestureBookmarksButton = GestureToolbarButton()
-    
+
     private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
-    
+
     let bookmarksCachingSearch: BookmarksCachingSearch
-    
+
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
         return tabManager.current(createIfNeeded: false)
     }
-    
+
     var searchBarRect: CGRect {
         let view = UIApplication.shared.firstKeyWindow?.rootViewController?.view
         return viewCoordinator.omniBar.searchContainer.convert(viewCoordinator.omniBar.searchContainer.bounds, to: view)
     }
-    
+
     var keyModifierFlags: UIKeyModifierFlags?
     var showKeyboardAfterFireButton: DispatchWorkItem?
-    
+
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
 
@@ -177,7 +178,7 @@ class MainViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
     }
-    
+
     let fireproofing: Fireproofing
     let websiteDataManager: WebsiteDataManaging
     let textZoomCoordinator: TextZoomCoordinating
@@ -195,6 +196,13 @@ class MainViewController: UIViewController {
                                                         pixelHandler: AIChatPixelHandler())
         aiChatViewController.delegate = self
         return aiChatViewController
+    }()
+
+    private var omnibarAccessoryHandler: OmnibarAccessoryHandler = {
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+
+        return OmnibarAccessoryHandler(settings: settings)
     }()
 
     init(
@@ -330,6 +338,7 @@ class MainViewController: UIViewController {
         subscribeToSettingsDeeplinkNotifications()
         subscribeToNetworkProtectionEvents()
         subscribeToUnifiedFeedbackNotifications()
+        subscribeToAIChatSettingsEvents()
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -392,7 +401,8 @@ class MainViewController: UIViewController {
         swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
                                                     tabPreviewsSource: previewsSource,
                                                     appSettings: appSettings,
-                                                    voiceSearchHelper: voiceSearchHelper) { [weak self] in
+                                                    voiceSearchHelper: voiceSearchHelper,
+                                                    omnibarAccessoryHandler: omnibarAccessoryHandler) { [weak self] in
 
             guard $0 != self?.tabManager.model.currentIndex else { return }
             
@@ -515,6 +525,7 @@ class MainViewController: UIViewController {
 
 
     var keyboardShowing = false
+    private var didSendGestureDismissPixel: Bool = false
 
     @objc
     private func keyboardDidShow() {
@@ -523,14 +534,16 @@ class MainViewController: UIViewController {
 
     @objc
     private func keyboardWillHide() {
-        if newTabPageViewController?.isDragging == true, keyboardShowing {
+        if !didSendGestureDismissPixel, newTabPageViewController?.isDragging == true, keyboardShowing {
             Pixel.fire(pixel: .addressBarGestureDismiss)
+            didSendGestureDismissPixel = true
         }
     }
 
     @objc
     private func keyboardDidHide() {
         keyboardShowing = false
+        didSendGestureDismissPixel = false
     }
 
     private func registerForPageRefreshPatterns() {
@@ -1119,6 +1132,8 @@ class MainViewController: UIViewController {
             viewCoordinator.omniBar.resetPrivacyIcon(for: tab.url)
         }
 
+        viewCoordinator.omniBar.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: tab.url)
+
         viewCoordinator.omniBar.startBrowsing()
     }
 
@@ -1530,6 +1545,15 @@ class MainViewController: UIViewController {
             .store(in: &settingsDeepLinkcancellables)
     }
 
+    private func subscribeToAIChatSettingsEvents() {
+        NotificationCenter.default.publisher(for: .aiChatSettingsChanged)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.refreshOmniBar()
+            }
+            .store(in: &aiChatCancellables)
+    }
+
     private func subscribeToNetworkProtectionEvents() {
         NotificationCenter.default.publisher(for: .accountDidSignIn)
             .receive(on: DispatchQueue.main)
@@ -1686,6 +1710,18 @@ class MainViewController: UIViewController {
         }
         
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
+    }
+
+    private func openAIChat() {
+        let logoImage = UIImage(named: "Logo")
+        let title = UserText.aiChatTitle
+
+        let roundedPageSheet = RoundedPageSheetContainerViewController(
+            contentViewController: aiChatViewController,
+            logoImage: logoImage,
+            title: title)
+
+        present(roundedPageSheet, animated: true, completion: nil)
     }
 }
 
@@ -2045,17 +2081,23 @@ extension MainViewController: OmniBarDelegate {
         hideNotificationBarIfBrokenSitePromptShown(afterRefresh: true)
     }
 
-    func onSharePressed() {
+    func onAccessoryPressed(accessoryType: OmniBar.AccessoryType) {
         hideSuggestionTray()
         guard let link = currentTab?.link else { return }
-        currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton)
+
+        switch accessoryType {
+        case .chat:
+            openAIChat()
+        case .share:
+            currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.accessoryButton)
+        }
     }
 
-    func onShareLongPressed() {
+    func onAccessoryLongPressed(accessoryType: OmniBar.AccessoryType) {
         if featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild {
             segueToDebugSettings()
         } else {
-            onSharePressed()
+            onAccessoryPressed(accessoryType: accessoryType)
         }
     }
 
@@ -2346,15 +2388,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestAIChat(tab: TabViewController) {
-        let logoImage = UIImage(named: "Logo")
-        let title = UserText.aiChatTitle
-
-        let roundedPageSheet = RoundedPageSheetContainerViewController(
-            contentViewController: aiChatViewController,
-            logoImage: logoImage,
-            title: title)
-
-        present(roundedPageSheet, animated: true, completion: nil)
+        openAIChat()
     }
 
     func tabDidRequestBookmarks(tab: TabViewController) {
@@ -2952,5 +2986,6 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
 extension MainViewController: AIChatViewControllerDelegate {
     func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
         loadUrlInNewTab(url, inheritedAttribution: nil)
+        viewController.dismiss(animated: true)
     }
 }

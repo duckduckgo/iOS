@@ -58,6 +58,10 @@ lane :release_adhoc do |options|
       {
         targets: ["PacketTunnelProvider"],
         profile_name: "match AdHoc com.duckduckgo.mobile.ios.NetworkExtension"
+      },
+      {
+        targets: ["AutofillCredentialProvider"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.CredentialExtension"
       }
     ]
 
@@ -125,6 +129,10 @@ lane :alpha_adhoc do |options|
       {
         targets: ["PacketTunnelProvider"],
         profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.NetworkExtension"
+      },
+      {
+        targets: ["AutofillCredentialProvider"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.CredentialExtension"
       }
     ]
 

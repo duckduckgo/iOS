@@ -23,15 +23,15 @@ final class UserText {
 
     // MARK: - Network Protection Notifications
 
-    static let networkProtectionNotificationsTitle = NSLocalizedString("network.protection.notification.title", value: "DuckDuckGo", comment: "The title of the notifications shown from Network Protection")
+    static let networkProtectionNotificationsTitle = NSLocalizedString("network.protection.notification.title", value: "DuckDuckGo", comment: "The title of the notifications shown from VPN")
 
-    static let networkProtectionConnectionSuccessNotificationBody = NSLocalizedString("network.protection.success.notification.body", value: "Network Protection is On. Your location and online activity are protected.", comment: "The body of the notification shown when Network Protection reconnects successfully")
+    static let networkProtectionConnectionSuccessNotificationBody = NSLocalizedString("network.protection.success.notification.body", value: "DuckDuckGo VPN is On. Your location and online activity are protected.", comment: "The body of the notification shown when VPN reconnects successfully")
 
     static func networkProtectionConnectionSuccessNotificationBody(serverLocation: String) -> String {
         let localized = NSLocalizedString(
             "network.protection.success.notification.subtitle.including.serverLocation",
             value: "Routing device traffic through %@.",
-            comment: "The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter"
+            comment: "The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter"
         )
         return String(format: localized, serverLocation)
     }
@@ -40,14 +40,14 @@ final class UserText {
         let localized = NSLocalizedString(
             "network.protection.success.notification.subtitle.snooze.ended.including.serverLocation",
             value: "VPN snooze has ended. Routing device traffic through %@.",
-            comment: "The body of the notification shown when Network Protection connects successfully after snooze with the city + state/country as formatted parameter"
+            comment: "The body of the notification shown when VPN connects successfully after snooze with the city + state/country as formatted parameter"
         )
         return String(format: localized, serverLocation)
     }
 
-    static let networkProtectionConnectionInterruptedNotificationBody = NSLocalizedString("network.protection.interrupted.notification.body", value: "Network Protection was interrupted. Attempting to reconnect now...", comment: "The body of the notification shown when Network Protection's connection is interrupted")
+    static let networkProtectionConnectionInterruptedNotificationBody = NSLocalizedString("network.protection.interrupted.notification.body", value: "DuckDuckGo VPN was interrupted. Attempting to reconnect now...", comment: "The body of the notification shown when VPN connection is interrupted")
 
-    static let networkProtectionConnectionFailureNotificationBody = NSLocalizedString("network.protection.failure.notification.body", value: "Network Protection failed to connect. Please try again later.", comment: "The body of the notification shown when Network Protection fails to reconnect")
+    static let networkProtectionConnectionFailureNotificationBody = NSLocalizedString("network.protection.failure.notification.body", value: "DuckDuckGo VPN failed to connect. Please try again later.", comment: "The body of the notification shown when VPN fails to reconnect")
 
     static let networkProtectionEntitlementExpiredNotificationBody = NSLocalizedString("network.protection.entitlement.expired.notification.body", value: "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.", comment: "The body of the notification when Privacy Pro subscription expired")
 

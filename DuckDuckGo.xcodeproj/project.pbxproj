@@ -773,6 +773,8 @@
 		98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */; };
 		9F06EB752D09E8D200905426 /* MaliciousSiteProtectionFeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB732D09E8D200905426 /* MaliciousSiteProtectionFeatureFlags.swift */; };
 		9F06EB7B2D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB792D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift */; };
+		9F06EB7D2D0AEBD000905426 /* MaliciousSiteProtectionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB7C2D0AEBD000905426 /* MaliciousSiteProtectionManagerTests.swift */; };
+		9F06EB822D0AEE1F00905426 /* MaliciousSiteProtectionMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB802D0AEE1F00905426 /* MaliciousSiteProtectionMocks.swift */; };
 		9F16230B2CA0F0190093C4FC /* DebouncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F16230A2CA0F0190093C4FC /* DebouncerTests.swift */; };
 		9F1798572CD2443F0073018B /* AddToDockPromoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1798562CD2443F0073018B /* AddToDockPromoViewModelTests.swift */; };
 		9F23B8012C2BC94400950875 /* OnboardingBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F23B8002C2BC94400950875 /* OnboardingBackground.swift */; };
@@ -2682,6 +2684,8 @@
 		98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemableNavigationController.swift; sourceTree = "<group>"; };
 		9F06EB732D09E8D200905426 /* MaliciousSiteProtectionFeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionFeatureFlags.swift; sourceTree = "<group>"; };
 		9F06EB792D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionFeatureFlagsTests.swift; sourceTree = "<group>"; };
+		9F06EB7C2D0AEBD000905426 /* MaliciousSiteProtectionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionManagerTests.swift; sourceTree = "<group>"; };
+		9F06EB802D0AEE1F00905426 /* MaliciousSiteProtectionMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionMocks.swift; sourceTree = "<group>"; };
 		9F16230A2CA0F0190093C4FC /* DebouncerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebouncerTests.swift; sourceTree = "<group>"; };
 		9F1798562CD2443F0073018B /* AddToDockPromoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDockPromoViewModelTests.swift; sourceTree = "<group>"; };
 		9F23B8002C2BC94400950875 /* OnboardingBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBackground.swift; sourceTree = "<group>"; };
@@ -5165,9 +5169,19 @@
 		9F06EB7A2D09EC2000905426 /* MaliciousSiteProtection */ = {
 			isa = PBXGroup;
 			children = (
+				9F06EB7F2D0AEE0600905426 /* Mocks */,
 				9F06EB792D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift */,
+				9F06EB7C2D0AEBD000905426 /* MaliciousSiteProtectionManagerTests.swift */,
 			);
 			path = MaliciousSiteProtection;
+			sourceTree = "<group>";
+		};
+		9F06EB7F2D0AEE0600905426 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				9F06EB802D0AEE1F00905426 /* MaliciousSiteProtectionMocks.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		9F23B7FF2C2BABE000950875 /* OnboardingIntro */ = {
@@ -8743,6 +8757,7 @@
 				9F23B8092C2BE9B700950875 /* MockURLOpener.swift in Sources */,
 				9F8007262C5261AF003EDAF4 /* MockPrivacyDataReporter.swift in Sources */,
 				F40F843728C939760081AE75 /* AutofillLoginListViewModelTests.swift in Sources */,
+				9F06EB7D2D0AEBD000905426 /* MaliciousSiteProtectionManagerTests.swift in Sources */,
 				C14882E827F20DAB00D59F0C /* TestDataLoader.swift in Sources */,
 				C14882EA27F20DD000D59F0C /* MockBookmarksCoreDataStorage.swift in Sources */,
 				1E05D1DB29C47B3300BF9A1F /* DailyPixelTests.swift in Sources */,
@@ -8755,6 +8770,7 @@
 				F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */,
 				85010504292FFB080033978F /* FireproofFaviconUpdaterTests.swift in Sources */,
 				F1D477C91F2139410031ED49 /* SmallOmniBarStateTests.swift in Sources */,
+				9F06EB822D0AEE1F00905426 /* MaliciousSiteProtectionMocks.swift in Sources */,
 				56A061452BEE086E00F24B36 /* CapturingSyncPausedStateManager.swift in Sources */,
 				987130C9294AAB9F00AB05E0 /* BookmarkUtilsTests.swift in Sources */,
 				56A061442BEE086700F24B36 /* CapturingAdapterErrorHandler.swift in Sources */,

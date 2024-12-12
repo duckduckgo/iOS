@@ -108,7 +108,8 @@ final class CrashCollectionOnboardingViewModel: ObservableObject {
         set {
             appSettings.crashCollectionOptInStatus = newValue
             if appSettings.crashCollectionOptInStatus == .optedOut {
-                let crashCollection = CrashCollection.init(crashReportSender: CrashReportSender(platform: .iOS))
+                let crashCollection = CrashCollection.init(crashReportSender: CrashReportSender(platform: .iOS,
+                                                                                                pixelEvents: CrashReportSender.pixelEvents))
                 crashCollection.clearCRCID()
             }
         }

@@ -505,6 +505,9 @@ extension Pixel {
         case dbCrashDetected
         case crashOnCrashHandlersSetUp
 
+        case crashReportCRCIDMissing // crashreporting_crcid-missing
+        case crashReportingSubmissionFailed // crashreporting_submission-failed
+
         case dbMigrationError
         case dbRemovalError
         case dbDestroyError
@@ -1367,6 +1370,8 @@ extension Pixel.Event {
             // MARK: debug pixels
             
         case .dbCrashDetected: return "m_d_crash"
+        case .crashReportCRCIDMissing: return "crashreporting_crcid-missing"
+        case .crashReportingSubmissionFailed: return "crashreporting_submission-failed"
         case .crashOnCrashHandlersSetUp: return "m_d_crash_on_handlers_setup"
         case .dbMigrationError: return "m_d_dbme"
         case .dbRemovalError: return "m_d_dbre"

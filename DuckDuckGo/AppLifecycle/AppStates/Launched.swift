@@ -79,6 +79,7 @@ struct Launched: AppState {
     private var window: UIWindow?
 
     var urlToOpen: URL?
+    var shortcutItemToHandle: UIApplicationShortcutItem?
 
     private let application: UIApplication
     init(stateContext: Init.StateContext) {
@@ -647,6 +648,7 @@ extension Launched {
         let isTesting: Bool
         let didFinishLaunchingStartTime: CFAbsoluteTime
         let urlToOpen: URL?
+        let shortcutItemToHandle: UIApplicationShortcutItem?
         let appDependencies: AppDependencies
 
     }
@@ -656,6 +658,7 @@ extension Launched {
               isTesting: isTesting,
               didFinishLaunchingStartTime: didFinishLaunchingStartTime,
               urlToOpen: urlToOpen,
+              shortcutItemToHandle: shortcutItemToHandle,
               appDependencies: appDependencies)
     }
 

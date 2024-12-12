@@ -41,6 +41,13 @@ import PixelExperimentKit
 import WebKit
 import os.log
 
+enum AppBehavior: String {
+
+    case existing
+    case stateMachine
+
+}
+
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
 
     static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
@@ -51,14 +58,14 @@ import os.log
     }
 
     private var testing = false
-    var appIsLaunching = false
-    var overlayWindow: UIWindow?
+    private var appIsLaunching = false
+    private var overlayWindow: UIWindow?
     var window: UIWindow?
 
     private lazy var privacyStore = PrivacyUserDefaults()
-    private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
+    private var bookmarksDatabase: CoreDataDatabase!
 
-    private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
+    private var widgetRefreshModel: NetworkProtectionWidgetRefreshModel!
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
 
     @MainActor
@@ -83,20 +90,20 @@ import os.log
     private var syncStateCancellable: AnyCancellable?
     private var isSyncInProgressCancellable: AnyCancellable?
 
-    private let crashCollection = CrashCollection(platform: .iOS)
+    private var crashCollection: CrashCollection!
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
     private var autofillPixelReporter: AutofillPixelReporter?
-    private var autofillUsageMonitor = AutofillUsageMonitor()
+    private var autofillUsageMonitor: AutofillUsageMonitor!
 
     private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
     private var subscriptionCookieManager: SubscriptionCookieManaging!
     private var subscriptionCookieManagerFeatureFlagCancellable: AnyCancellable?
-    var privacyProDataReporter: PrivacyProDataReporting!
+    private var privacyProDataReporter: PrivacyProDataReporting!
 
     // MARK: - Feature specific app event handlers
 
-    private let tipKitAppEventsHandler = TipKitAppEventHandler()
+    private var tipKitAppEventsHandler: TipKitAppEventHandler!
 
     // MARK: lifecycle
 
@@ -110,378 +117,403 @@ import os.log
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     private var didCrashDuringCrashHandlersSetUp: Bool
 
-    private let launchOptionsHandler = LaunchOptionsHandler()
-    private let onboardingPixelReporter = OnboardingPixelReporter()
+    private var launchOptionsHandler: LaunchOptionsHandler!
+    private var onboardingPixelReporter: OnboardingPixelReporter!
 
-    private let voiceSearchHelper = VoiceSearchHelper()
+    private var voiceSearchHelper: VoiceSearchHelper!
 
-    private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
-
+    private var marketplaceAdPostbackManager: MarketplaceAdPostbackManager!
     private var didFinishLaunchingStartTime: CFAbsoluteTime?
 
     private let appStateMachine: AppStateMachine = AppStateMachine()
+    private let appBehavior: AppBehavior = {
+        if let appBehavior = AppDependencyProvider.shared.appSettings.appBehavior {
+            return appBehavior
+        }
+        let appBehavior: AppBehavior = Double.random(in: 0..<1) < 0.2 ? .stateMachine : .existing // 20% of users will run through new flow
+        AppDependencyProvider.shared.appSettings.appBehavior = appBehavior
+        return appBehavior
+    }()
 
     override init() {
         super.init()
-//        if !didCrashDuringCrashHandlersSetUp {
-//            didCrashDuringCrashHandlersSetUp = true
-//            CrashLogMessageExtractor.setUp(swapCxaThrow: false)
-//            didCrashDuringCrashHandlersSetUp = false
-//        }
+
+        if appBehavior == .existing {
+
+            bookmarksDatabase = BookmarksDatabase.make()
+            widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
+            crashCollection = CrashCollection(platform: .iOS)
+            autofillUsageMonitor = AutofillUsageMonitor()
+            tipKitAppEventsHandler = TipKitAppEventHandler()
+            launchOptionsHandler = LaunchOptionsHandler()
+            onboardingPixelReporter = OnboardingPixelReporter()
+            voiceSearchHelper = VoiceSearchHelper()
+            marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
+
+
+            if !didCrashDuringCrashHandlersSetUp {
+                didCrashDuringCrashHandlersSetUp = true
+                CrashLogMessageExtractor.setUp(swapCxaThrow: false)
+                didCrashDuringCrashHandlersSetUp = false
+            }
+        }
+
     }
 
     // swiftlint:disable:next function_body_length
     // swiftlint:disable:next cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-        appStateMachine.handle(.launching(application))
-        return true
-        didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
-        defer {
-            if let didFinishLaunchingStartTime {
-                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
-                Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
-                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+        if appBehavior == .stateMachine {
+            appStateMachine.handle(.launching(application))
+            return true
+        } else {
+            didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
+            defer {
+                if let didFinishLaunchingStartTime {
+                    let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+                    Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                               withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+                }
             }
-        }
 
 
 #if targetEnvironment(simulator)
-        if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
-            // Disable hardware keyboards.
-            let setHardwareLayout = NSSelectorFromString("setHardwareLayout:")
-            UITextInputMode.activeInputModes
-            // Filter `UIKeyboardInputMode`s.
-                .filter({ $0.responds(to: setHardwareLayout) })
-                .forEach { $0.perform(setHardwareLayout, with: nil) }
-        }
+            if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
+                // Disable hardware keyboards.
+                let setHardwareLayout = NSSelectorFromString("setHardwareLayout:")
+                UITextInputMode.activeInputModes
+                // Filter `UIKeyboardInputMode`s.
+                    .filter({ $0.responds(to: setHardwareLayout) })
+                    .forEach { $0.perform(setHardwareLayout, with: nil) }
+            }
 #endif
 
 #if DEBUG
-        Pixel.isDryRun = true
+            Pixel.isDryRun = true
 #else
-        Pixel.isDryRun = false
+            Pixel.isDryRun = false
 #endif
 
-        ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
-        // Explicitly prepare ContentBlockingUpdating instance before Tabs are created
-        _ = ContentBlockingUpdating.shared
+            ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
+            // Explicitly prepare ContentBlockingUpdating instance before Tabs are created
+            _ = ContentBlockingUpdating.shared
 
-        // Can be removed after a couple of versions
-        cleanUpMacPromoExperiment2()
-        cleanUpIncrementalRolloutPixelTest()
+            // Can be removed after a couple of versions
+            cleanUpMacPromoExperiment2()
+            cleanUpIncrementalRolloutPixelTest()
 
-        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
+            APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
 
-        if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
-            Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
-        } else {
-            Configuration.setURLProvider(AppConfigurationURLProvider())
-        }
+            if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
+                Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
+            } else {
+                Configuration.setURLProvider(AppConfigurationURLProvider())
+            }
 
-        crashCollection.startAttachingCrashLogMessages { pixelParameters, payloads, sendReport in
-            pixelParameters.forEach { params in
-                Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+            crashCollection.startAttachingCrashLogMessages { pixelParameters, payloads, sendReport in
+                pixelParameters.forEach { params in
+                    Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
 
-                // Each crash comes with an `appVersion` parameter representing the version that the crash occurred on.
-                // This is to disambiguate the situation where a crash occurs, but isn't sent until the next update.
-                // If for some reason the parameter can't be found, fall back to the current version.
-                if let crashAppVersion = params[PixelParameters.appVersion] {
-                    let dailyParameters = [PixelParameters.appVersion: crashAppVersion]
-                    DailyPixel.fireDaily(.dbCrashDetectedDaily, withAdditionalParameters: dailyParameters)
-                } else {
-                    DailyPixel.fireDaily(.dbCrashDetectedDaily)
+                    // Each crash comes with an `appVersion` parameter representing the version that the crash occurred on.
+                    // This is to disambiguate the situation where a crash occurs, but isn't sent until the next update.
+                    // If for some reason the parameter can't be found, fall back to the current version.
+                    if let crashAppVersion = params[PixelParameters.appVersion] {
+                        let dailyParameters = [PixelParameters.appVersion: crashAppVersion]
+                        DailyPixel.fireDaily(.dbCrashDetectedDaily, withAdditionalParameters: dailyParameters)
+                    } else {
+                        DailyPixel.fireDaily(.dbCrashDetectedDaily)
+                    }
+                }
+
+                // Async dispatch because rootViewController may otherwise be nil here
+                DispatchQueue.main.async {
+                    guard let viewController = self.window?.rootViewController else { return }
+
+                    let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
+                    crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
+                    self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
                 }
             }
 
-            // Async dispatch because rootViewController may otherwise be nil here
-            DispatchQueue.main.async {
-                guard let viewController = self.window?.rootViewController else { return }
+            clearTmp()
 
-                let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
-                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
-                self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
-            }
-        }
-
-        clearTmp()
-
-        _ = DefaultUserAgentManager.shared
-        testing = ProcessInfo().arguments.contains("testing")
-        if testing {
-            Pixel.isDryRun = true
             _ = DefaultUserAgentManager.shared
-            Database.shared.loadStore { _, _ in }
-            _ = BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
+            testing = ProcessInfo().arguments.contains("testing")
+            if testing {
+                Pixel.isDryRun = true
+                _ = DefaultUserAgentManager.shared
+                Database.shared.loadStore { _, _ in }
+                _ = BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
 
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+                window = UIWindow(frame: UIScreen.main.bounds)
+                window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
 
-            let blockingDelegate = BlockingNavigationDelegate()
-            let webView = blockingDelegate.prepareWebView()
-            window?.rootViewController?.view.addSubview(webView)
-            window?.rootViewController?.view.backgroundColor = .red
-            webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
+                let blockingDelegate = BlockingNavigationDelegate()
+                let webView = blockingDelegate.prepareWebView()
+                window?.rootViewController?.view.addSubview(webView)
+                window?.rootViewController?.view.backgroundColor = .red
+                webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
 
-            let request = URLRequest(url: URL(string: "about:blank")!)
-            webView.load(request)
+                let request = URLRequest(url: URL(string: "about:blank")!)
+                webView.load(request)
 
-            return true
-        }
+                return true
+            }
 
-        removeEmailWaitlistState()
+            removeEmailWaitlistState()
 
-        var shouldPresentInsufficientDiskSpaceAlertAndCrash = false
-        Database.shared.loadStore { context, error in
-            guard let context = context else {
-                
-                let parameters = [PixelParameters.applicationState: "\(application.applicationState.rawValue)",
-                                  PixelParameters.dataAvailability: "\(application.isProtectedDataAvailable)"]
+            var shouldPresentInsufficientDiskSpaceAlertAndCrash = false
+            Database.shared.loadStore { context, error in
+                guard let context = context else {
 
-                switch error {
-                case .none:
-                    fatalError("Could not create database stack: Unknown Error")
-                case .some(CoreDataDatabase.Error.containerLocationCouldNotBePrepared(let underlyingError)):
-                    Pixel.fire(pixel: .dbContainerInitializationError,
-                               error: underlyingError,
-                               withAdditionalParameters: parameters)
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create database stack: \(underlyingError.localizedDescription)")
-                case .some(let error):
-                    Pixel.fire(pixel: .dbInitializationError,
-                               error: error,
-                               withAdditionalParameters: parameters)
-                    if error.isDiskFull {
-                        shouldPresentInsufficientDiskSpaceAlertAndCrash = true
-                        return
-                    } else {
+                    let parameters = [PixelParameters.applicationState: "\(application.applicationState.rawValue)",
+                                      PixelParameters.dataAvailability: "\(application.isProtectedDataAvailable)"]
+
+                    switch error {
+                    case .none:
+                        fatalError("Could not create database stack: Unknown Error")
+                    case .some(CoreDataDatabase.Error.containerLocationCouldNotBePrepared(let underlyingError)):
+                        Pixel.fire(pixel: .dbContainerInitializationError,
+                                   error: underlyingError,
+                                   withAdditionalParameters: parameters)
                         Thread.sleep(forTimeInterval: 1)
-                        fatalError("Could not create database stack: \(error.localizedDescription)")
+                        fatalError("Could not create database stack: \(underlyingError.localizedDescription)")
+                    case .some(let error):
+                        Pixel.fire(pixel: .dbInitializationError,
+                                   error: error,
+                                   withAdditionalParameters: parameters)
+                        if error.isDiskFull {
+                            shouldPresentInsufficientDiskSpaceAlertAndCrash = true
+                            return
+                        } else {
+                            Thread.sleep(forTimeInterval: 1)
+                            fatalError("Could not create database stack: \(error.localizedDescription)")
+                        }
+                    }
+                }
+                DatabaseMigration.migrate(to: context)
+            }
+
+            switch BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
+            case .success:
+                break
+            case .failure(let error):
+                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
+                           error: error)
+                if error.isDiskFull {
+                    shouldPresentInsufficientDiskSpaceAlertAndCrash = true
+                } else {
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create database stack: \(error.localizedDescription)")
+                }
+            }
+
+            WidgetCenter.shared.reloadAllTimelines()
+
+            Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+
+            PrivacyFeatures.httpsUpgrade.loadDataAsync()
+
+            let variantManager = DefaultVariantManager()
+            let daxDialogs = DaxDialogs.shared
+
+            // assign it here, because "did become active" is already too late and "viewWillAppear"
+            // has already been called on the HomeViewController so won't show the home row CTA
+            cleanUpATBAndAssignVariant(variantManager: variantManager, daxDialogs: daxDialogs)
+
+            // MARK: Sync initialisation
+#if DEBUG
+            let defaultEnvironment = ServerEnvironment.development
+#else
+            let defaultEnvironment = ServerEnvironment.production
+#endif
+
+            let environment = ServerEnvironment(
+                UserDefaultsWrapper(
+                    key: .syncEnvironment,
+                    defaultValue: defaultEnvironment.description
+                ).wrappedValue
+            ) ?? defaultEnvironment
+
+            var dryRun = false
+#if DEBUG
+            dryRun = true
+#endif
+            let isPhone = UIDevice.current.userInterfaceIdiom == .phone
+            let source = isPhone ? PixelKit.Source.iOS : PixelKit.Source.iPadOS
+            PixelKit.setUp(dryRun: dryRun,
+                           appVersion: AppVersion.shared.versionNumber,
+                           source: source.rawValue,
+                           defaultHeaders: [:],
+                           defaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) { (pixelName: String, headers: [String: String], parameters: [String: String], _, _, onComplete: @escaping PixelKit.CompletionBlock) in
+
+                let url = URL.pixelUrl(forPixelNamed: pixelName)
+                let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
+                let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
+                Task {
+                    do {
+                        _ = try await DefaultAPIService().fetch(request: request)
+                        onComplete(true, nil)
+                    } catch {
+                        onComplete(false, error)
                     }
                 }
             }
-            DatabaseMigration.migrate(to: context)
-        }
+            PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                            eventTracker: ExperimentEventTracker(store: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()))
 
-        switch BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
-        case .success:
-            break
-        case .failure(let error):
-            Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
-                       error: error)
-            if error.isDiskFull {
-                shouldPresentInsufficientDiskSpaceAlertAndCrash = true
+            let syncErrorHandler = SyncErrorHandler()
+
+            syncDataProviders = SyncDataProviders(
+                bookmarksDatabase: bookmarksDatabase,
+                secureVaultErrorReporter: SecureVaultReporter(),
+                settingHandlers: [FavoritesDisplayModeSyncHandler()],
+                favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
+                syncErrorHandler: syncErrorHandler,
+                faviconStoring: Favicons.shared,
+                tld: AppDependencyProvider.shared.storageCache.tld
+            )
+
+            let syncService = DDGSync(
+                dataProvidersSource: syncDataProviders,
+                errorEvents: SyncErrorHandler(),
+                privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                environment: environment
+            )
+            syncService.initializeIfNeeded()
+            self.syncService = syncService
+
+            let fireproofing = UserDefaultsFireproofing.xshared
+            privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
+
+            isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
+                .filter { $0 }
+                .sink { [weak syncService] _ in
+                    DailyPixel.fire(pixel: .syncDaily, includedParameters: [.appVersion])
+                    syncService?.syncDailyStats.sendStatsIfNeeded(handler: { params in
+                        Pixel.fire(pixel: .syncSuccessRateDaily,
+                                   withAdditionalParameters: params,
+                                   includedParameters: [.appVersion])
+                    })
+                }
+
+            remoteMessagingClient = RemoteMessagingClient(
+                bookmarksDatabase: bookmarksDatabase,
+                appSettings: AppDependencyProvider.shared.appSettings,
+                internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+                configurationStore: AppDependencyProvider.shared.configurationStore,
+                database: Database.shared,
+                errorEvents: RemoteMessagingStoreErrorHandling(),
+                remoteMessagingAvailabilityProvider: PrivacyConfigurationRemoteMessagingAvailabilityProvider(
+                    privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager
+                ),
+                duckPlayerStorage: DefaultDuckPlayerStorage()
+            )
+            remoteMessagingClient.registerBackgroundRefreshTaskHandler()
+
+            subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
+                privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                purchasePlatform: .appStore)
+
+            subscriptionCookieManager = makeSubscriptionCookieManager()
+
+            homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
+                                                          remoteMessagingClient: remoteMessagingClient,
+                                                          privacyProDataReporter: privacyProDataReporter)
+
+            let previewsSource = TabPreviewsSource()
+            let historyManager = makeHistoryManager()
+            let tabsModel = prepareTabsModel(previewsSource: previewsSource)
+
+            privacyProDataReporter.injectTabsModel(tabsModel)
+
+            if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+
+                window = UIWindow(frame: UIScreen.main.bounds)
+                window?.rootViewController = BlankSnapshotViewController(addressBarPosition: AppDependencyProvider.shared.appSettings.currentAddressBarPosition,
+                                                                         voiceSearchHelper: voiceSearchHelper)
+                window?.makeKeyAndVisible()
+
+                presentInsufficientDiskSpaceAlert()
             } else {
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create database stack: \(error.localizedDescription)")
-            }
-        }
+                let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
+                let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
+                let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
+                                              bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                              historyManager: historyManager,
+                                              homePageConfiguration: homePageConfiguration,
+                                              syncService: syncService,
+                                              syncDataProviders: syncDataProviders,
+                                              appSettings: AppDependencyProvider.shared.appSettings,
+                                              previewsSource: previewsSource,
+                                              tabsModel: tabsModel,
+                                              syncPausedStateManager: syncErrorHandler,
+                                              privacyProDataReporter: privacyProDataReporter,
+                                              variantManager: variantManager,
+                                              contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                              contextualOnboardingLogic: daxDialogs,
+                                              contextualOnboardingPixelReporter: onboardingPixelReporter,
+                                              subscriptionFeatureAvailability: subscriptionFeatureAvailability,
+                                              voiceSearchHelper: voiceSearchHelper,
+                                              featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                              fireproofing: fireproofing,
+                                              subscriptionCookieManager: subscriptionCookieManager,
+                                              textZoomCoordinator: makeTextZoomCoordinator(),
+                                              websiteDataManager: makeWebsiteDataManager(fireproofing: fireproofing),
+                                              appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
-        WidgetCenter.shared.reloadAllTimelines()
+                main.loadViewIfNeeded()
+                syncErrorHandler.alertPresenter = main
 
-        Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
-            WidgetCenter.shared.reloadAllTimelines()
-        }
-        
-        PrivacyFeatures.httpsUpgrade.loadDataAsync()
-        
-        let variantManager = DefaultVariantManager()
-        let daxDialogs = DaxDialogs.shared
+                window = UIWindow(frame: UIScreen.main.bounds)
+                window?.rootViewController = main
+                window?.makeKeyAndVisible()
 
-        // assign it here, because "did become active" is already too late and "viewWillAppear"
-        // has already been called on the HomeViewController so won't show the home row CTA
-        cleanUpATBAndAssignVariant(variantManager: variantManager, daxDialogs: daxDialogs)
-
-        // MARK: Sync initialisation
-#if DEBUG
-        let defaultEnvironment = ServerEnvironment.development
-#else
-        let defaultEnvironment = ServerEnvironment.production
-#endif
-
-        let environment = ServerEnvironment(
-            UserDefaultsWrapper(
-                key: .syncEnvironment,
-                defaultValue: defaultEnvironment.description
-            ).wrappedValue
-        ) ?? defaultEnvironment
-
-        var dryRun = false
-#if DEBUG
-        dryRun = true
-#endif
-        let isPhone = UIDevice.current.userInterfaceIdiom == .phone
-        let source = isPhone ? PixelKit.Source.iOS : PixelKit.Source.iPadOS
-        PixelKit.setUp(dryRun: dryRun,
-                       appVersion: AppVersion.shared.versionNumber,
-                       source: source.rawValue,
-                       defaultHeaders: [:],
-                       defaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) { (pixelName: String, headers: [String: String], parameters: [String: String], _, _, onComplete: @escaping PixelKit.CompletionBlock) in
-
-            let url = URL.pixelUrl(forPixelNamed: pixelName)
-            let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
-            let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
-            Task {
-                do {
-                    _ = try await DefaultAPIService().fetch(request: request)
-                    onComplete(true, nil)
-                } catch {
-                    onComplete(false, error)
+                autoClear = AutoClear(worker: main)
+                let applicationState = application.applicationState
+                Task {
+                    await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
+                    await vpnWorkaround.installRedditSessionWorkaround()
                 }
             }
-        }
-        PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger,
-                                        eventTracker: ExperimentEventTracker(store: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()))
 
-        let syncErrorHandler = SyncErrorHandler()
+            self.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
-        syncDataProviders = SyncDataProviders(
-            bookmarksDatabase: bookmarksDatabase,
-            secureVaultErrorReporter: SecureVaultReporter(),
-            settingHandlers: [FavoritesDisplayModeSyncHandler()],
-            favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
-            syncErrorHandler: syncErrorHandler,
-            faviconStoring: Favicons.shared,
-            tld: AppDependencyProvider.shared.storageCache.tld
-        )
+            // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
+            // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
+            AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
-        let syncService = DDGSync(
-            dataProvidersSource: syncDataProviders,
-            errorEvents: SyncErrorHandler(),
-            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            environment: environment
-        )
-        syncService.initializeIfNeeded()
-        self.syncService = syncService
+            UNUserNotificationCenter.current().delegate = self
 
-        let fireproofing = UserDefaultsFireproofing.xshared
-        privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
+            window?.windowScene?.screenshotService?.delegate = self
+            ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
-        isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
-            .filter { $0 }
-            .sink { [weak syncService] _ in
-                DailyPixel.fire(pixel: .syncDaily, includedParameters: [.appVersion])
-                syncService?.syncDailyStats.sendStatsIfNeeded(handler: { params in
-                    Pixel.fire(pixel: .syncSuccessRateDaily,
-                               withAdditionalParameters: params,
-                               includedParameters: [.appVersion])
-                })
+            appIsLaunching = true
+
+            // Temporary logic for rollout of Autofill as on by default for new installs only
+            if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
+                AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
             }
 
-        remoteMessagingClient = RemoteMessagingClient(
-            bookmarksDatabase: bookmarksDatabase,
-            appSettings: AppDependencyProvider.shared.appSettings,
-            internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
-            configurationStore: AppDependencyProvider.shared.configurationStore,
-            database: Database.shared,
-            errorEvents: RemoteMessagingStoreErrorHandling(),
-            remoteMessagingAvailabilityProvider: PrivacyConfigurationRemoteMessagingAvailabilityProvider(
-                privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager
-            ),
-            duckPlayerStorage: DefaultDuckPlayerStorage()
-        )
-        remoteMessagingClient.registerBackgroundRefreshTaskHandler()
+            NewTabPageIntroMessageSetup().perform()
 
-        subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            purchasePlatform: .appStore)
+            widgetRefreshModel.beginObservingVPNStatus()
 
-        subscriptionCookieManager = makeSubscriptionCookieManager()
+            AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
-        homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
-                                                      remoteMessagingClient: remoteMessagingClient,
-                                                      privacyProDataReporter: privacyProDataReporter)
+            setUpAutofillPixelReporter()
 
-        let previewsSource = TabPreviewsSource()
-        let historyManager = makeHistoryManager()
-        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
-
-        privacyProDataReporter.injectTabsModel(tabsModel)
-        
-        if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = BlankSnapshotViewController(addressBarPosition: AppDependencyProvider.shared.appSettings.currentAddressBarPosition,
-                                                                     voiceSearchHelper: voiceSearchHelper)
-            window?.makeKeyAndVisible()
-
-            presentInsufficientDiskSpaceAlert()
-        } else {
-            let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
-            let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
-            let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
-                                          bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
-                                          historyManager: historyManager,
-                                          homePageConfiguration: homePageConfiguration,
-                                          syncService: syncService,
-                                          syncDataProviders: syncDataProviders,
-                                          appSettings: AppDependencyProvider.shared.appSettings,
-                                          previewsSource: previewsSource,
-                                          tabsModel: tabsModel,
-                                          syncPausedStateManager: syncErrorHandler,
-                                          privacyProDataReporter: privacyProDataReporter,
-                                          variantManager: variantManager,
-                                          contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                          contextualOnboardingLogic: daxDialogs,
-                                          contextualOnboardingPixelReporter: onboardingPixelReporter,
-                                          subscriptionFeatureAvailability: subscriptionFeatureAvailability,
-                                          voiceSearchHelper: voiceSearchHelper,
-                                          featureFlagger: AppDependencyProvider.shared.featureFlagger,
-                                          fireproofing: fireproofing,
-                                          subscriptionCookieManager: subscriptionCookieManager,
-                                          textZoomCoordinator: makeTextZoomCoordinator(),
-                                          websiteDataManager: makeWebsiteDataManager(fireproofing: fireproofing),
-                                          appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
-
-            main.loadViewIfNeeded()
-            syncErrorHandler.alertPresenter = main
-
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = main
-            window?.makeKeyAndVisible()
-
-            autoClear = AutoClear(worker: main)
-            let applicationState = application.applicationState
-            Task {
-                await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
-                await vpnWorkaround.installRedditSessionWorkaround()
+            if didCrashDuringCrashHandlersSetUp {
+                Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
+                didCrashDuringCrashHandlersSetUp = false
             }
+
+            tipKitAppEventsHandler.appDidFinishLaunching()
+
+            return true
         }
-
-        self.voiceSearchHelper.migrateSettingsFlagIfNecessary()
-
-        // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
-        // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
-        AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-
-        UNUserNotificationCenter.current().delegate = self
-        
-        window?.windowScene?.screenshotService?.delegate = self
-        ThemeManager.shared.updateUserInterfaceStyle(window: window)
-
-        appIsLaunching = true
-
-        // Temporary logic for rollout of Autofill as on by default for new installs only
-        if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
-            AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
-        }
-
-        NewTabPageIntroMessageSetup().perform()
-
-        widgetRefreshModel.beginObservingVPNStatus()
-
-        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
-
-        setUpAutofillPixelReporter()
-
-        if didCrashDuringCrashHandlersSetUp {
-            Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
-            didCrashDuringCrashHandlersSetUp = false
-        }
-
-        tipKitAppEventsHandler.appDidFinishLaunching()
-
-        return true
     }
 
     private func makeWebsiteDataManager(fireproofing: Fireproofing,
@@ -638,100 +670,102 @@ import os.log
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        guard !testing else { return }
+        if appBehavior == .stateMachine {
+            appStateMachine.handle(.activating)
+        } else {
+            guard !testing else { return }
 
-        appStateMachine.handle(.activating)
-        return
-        defer {
-            if let didFinishLaunchingStartTime {
-                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
-                Pixel.fire(pixel: .appDidBecomeActiveTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
-                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            defer {
+                if let didFinishLaunchingStartTime {
+                    let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+                    Pixel.fire(pixel: .appDidBecomeActiveTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                               withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+                }
             }
-        }
 
-        StorageInconsistencyMonitor().didBecomeActive(isProtectedDataAvailable: application.isProtectedDataAvailable)
-        syncService.initializeIfNeeded()
-        syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
+            StorageInconsistencyMonitor().didBecomeActive(isProtectedDataAvailable: application.isProtectedDataAvailable)
+            syncService.initializeIfNeeded()
+            syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 
-        if !(overlayWindow?.rootViewController is AuthenticationViewController) {
-            removeOverlay()
-        }
-        
-        StatisticsLoader.shared.load {
-            StatisticsLoader.shared.refreshAppRetentionAtb()
-            self.fireAppLaunchPixel()
-            self.reportAdAttribution()
-            self.onboardingPixelReporter.fireEnqueuedPixelsIfNeeded()
-        }
-        
-        if appIsLaunching {
-            appIsLaunching = false
-            onApplicationLaunch(application)
-        }
+            if !(overlayWindow?.rootViewController is AuthenticationViewController) {
+                removeOverlay()
+            }
 
-        mainViewController?.showBars()
-        mainViewController?.didReturnFromBackground()
-        
-        if !privacyStore.authenticationEnabled {
-            showKeyboardOnLaunch()
-        }
+            StatisticsLoader.shared.load {
+                StatisticsLoader.shared.refreshAppRetentionAtb()
+                self.fireAppLaunchPixel()
+                self.reportAdAttribution()
+                self.onboardingPixelReporter.fireEnqueuedPixelsIfNeeded()
+            }
 
-        if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
-            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
-            AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
-        }
-        AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()
+            if appIsLaunching {
+                appIsLaunching = false
+                onApplicationLaunch(application)
+            }
 
-        AppConfigurationFetch().start { result in
-            self.sendAppLaunchPostback()
-            if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
+            mainViewController?.showBars()
+            mainViewController?.didReturnFromBackground()
+
+            if !privacyStore.authenticationEnabled {
+                showKeyboardOnLaunch()
+            }
+
+            if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
                 ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
             }
-        }
+            AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()
 
-        syncService.scheduler.notifyAppLifecycleEvent()
-        
-        privacyProDataReporter.injectSyncService(syncService)
-
-        fireFailedCompilationsPixelIfNeeded()
-
-        widgetRefreshModel.refreshVPNWidget()
-
-        if tunnelDefaults.showEntitlementAlert {
-            presentExpiredEntitlementAlert()
-        }
-
-        presentExpiredEntitlementNotificationIfNeeded()
-
-        Task {
-            await stopAndRemoveVPNIfNotAuthenticated()
-            await refreshShortcuts()
-            await vpnWorkaround.installRedditSessionWorkaround()
-
-            if #available(iOS 17.0, *) {
-                await VPNSnoozeLiveActivityManager().endSnoozeActivityIfNecessary()
+            AppConfigurationFetch().start { result in
+                self.sendAppLaunchPostback()
+                if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
+                    ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                }
             }
-        }
 
-        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscriptionAndEntitlements { isSubscriptionActive in
-            if isSubscriptionActive {
-                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+            syncService.scheduler.notifyAppLifecycleEvent()
+
+            privacyProDataReporter.injectSyncService(syncService)
+
+            fireFailedCompilationsPixelIfNeeded()
+
+            widgetRefreshModel.refreshVPNWidget()
+
+            if tunnelDefaults.showEntitlementAlert {
+                presentExpiredEntitlementAlert()
             }
+
+            presentExpiredEntitlementNotificationIfNeeded()
+
+            Task {
+                await stopAndRemoveVPNIfNotAuthenticated()
+                await refreshShortcuts()
+                await vpnWorkaround.installRedditSessionWorkaround()
+
+                if #available(iOS 17.0, *) {
+                    await VPNSnoozeLiveActivityManager().endSnoozeActivityIfNecessary()
+                }
+            }
+
+            AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscriptionAndEntitlements { isSubscriptionActive in
+                if isSubscriptionActive {
+                    DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+                }
+            }
+
+            Task {
+                await subscriptionCookieManager.refreshSubscriptionCookie()
+            }
+
+            let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
+            importPasswordsStatusHandler.checkSyncSuccessStatus()
+
+            Task {
+                await privacyProDataReporter.saveWidgetAdded()
+            }
+
+            AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
         }
-
-        Task {
-            await subscriptionCookieManager.refreshSubscriptionCookie()
-        }
-
-        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
-        importPasswordsStatusHandler.checkSyncSuccessStatus()
-
-        Task {
-            await privacyProDataReporter.saveWidgetAdded()
-        }
-
-        AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
     }
 
     private func stopAndRemoveVPNIfNotAuthenticated() async {
@@ -745,10 +779,13 @@ import os.log
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        appStateMachine.handle(.suspending)
-        Task { @MainActor in
-            await refreshShortcuts()
-            await vpnWorkaround.removeRedditSessionWorkaround()
+        if appBehavior == .stateMachine {
+            appStateMachine.handle(.suspending)
+        } else {
+            Task { @MainActor in
+                await refreshShortcuts()
+                await vpnWorkaround.removeRedditSessionWorkaround()
+            }
         }
     }
 
@@ -827,28 +864,31 @@ import os.log
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        return
-        ThemeManager.shared.updateUserInterfaceStyle()
+        if appBehavior == .existing {
+            ThemeManager.shared.updateUserInterfaceStyle()
 
-        Task { @MainActor in
-            await beginAuthentication()
-            await autoClear?.clearDataIfEnabledAndTimeExpired(applicationState: .active)
-            showKeyboardIfSettingOn = true
-            syncService.scheduler.resumeSyncQueue()
+            Task { @MainActor in
+                await beginAuthentication()
+                await autoClear?.clearDataIfEnabledAndTimeExpired(applicationState: .active)
+                showKeyboardIfSettingOn = true
+                syncService.scheduler.resumeSyncQueue()
+            }
         }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        appStateMachine.handle(.backgrounding)
-        return
-        displayBlankSnapshotWindow()
-        autoClear?.startClearingTimer()
-        lastBackgroundDate = Date()
-        AppDependencyProvider.shared.autofillLoginSession.endSession()
-        suspendSync()
-        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
-        privacyProDataReporter.saveApplicationLastSessionEnded()
-        resetAppStartTime()
+        if appBehavior == .stateMachine {
+            appStateMachine.handle(.backgrounding)
+        } else {
+            displayBlankSnapshotWindow()
+            autoClear?.startClearingTimer()
+            lastBackgroundDate = Date()
+            AppDependencyProvider.shared.autofillLoginSession.endSession()
+            suspendSync()
+            syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
+            privacyProDataReporter.saveApplicationLastSessionEnded()
+            resetAppStartTime()
+        }
     }
 
     private func resetAppStartTime() {
@@ -881,40 +921,47 @@ import os.log
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
-        handleShortCutItem(shortcutItem)
+        if appBehavior == .stateMachine {
+            appStateMachine.handle(.handleShortcutItem(shortcutItem))
+        } else {
+            handleShortCutItem(shortcutItem)
+        }
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        Logger.sync.debug("App launched with url \(url.absoluteString)")
-        appStateMachine.handle(.openURL(url))
-        return true
+        if appBehavior == .stateMachine {
+            appStateMachine.handle(.openURL(url))
+            return true
+        } else {
+            Logger.sync.debug("App launched with url \(url.absoluteString)")
 
-        // If showing the onboarding intro ignore deeplinks
-        guard mainViewController?.needsToShowOnboardingIntro() == false else {
-            return false
-        }
+            // If showing the onboarding intro ignore deeplinks
+            guard mainViewController?.needsToShowOnboardingIntro() == false else {
+                return false
+            }
 
-        if handleEmailSignUpDeepLink(url) {
+            if handleEmailSignUpDeepLink(url) {
+                return true
+            }
+
+            NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
+
+            // The openVPN action handles the navigation stack on its own and does not need it to be cleared
+            if url != AppDeepLinkSchemes.openVPN.url {
+                mainViewController?.clearNavigationStack()
+            }
+
+            Task { @MainActor in
+                // Autoclear should have happened by now
+                showKeyboardIfSettingOn = false
+
+                if !handleAppDeepLink(app, mainViewController, url) {
+                    mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil, fromExternalLink: true)
+                }
+            }
+
             return true
         }
-
-        NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
-
-        // The openVPN action handles the navigation stack on its own and does not need it to be cleared
-        if url != AppDeepLinkSchemes.openVPN.url {
-            mainViewController?.clearNavigationStack()
-        }
-
-        Task { @MainActor in
-            // Autoclear should have happened by now
-            showKeyboardIfSettingOn = false
-
-            if !handleAppDeepLink(app, mainViewController, url) {
-                mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil, fromExternalLink: true)
-            }
-        }
-
-        return true
     }
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -1148,7 +1195,7 @@ import os.log
     }
 
     @MainActor
-    func refreshShortcuts() async {
+    private func refreshShortcuts() async {
         guard AppDependencyProvider.shared.vpnFeatureVisibility.shouldShowVPNShortcut() else {
             UIApplication.shared.shortcutItems = nil
             return

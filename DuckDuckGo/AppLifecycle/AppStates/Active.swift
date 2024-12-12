@@ -77,6 +77,8 @@ struct Active: AppState {
 
         if let url = stateContext.urlToOpen {
             openURL(url)
+        } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
+            handleShortcutItem(shortcutItemToHandle)
         }
 
         activateApp(isTesting: stateContext.isTesting)
@@ -455,6 +457,33 @@ struct Active: AppState {
             } else {
                 (window.rootViewController as? MainViewController)?.segueToPrivacyPro()
             }
+        }
+    }
+
+    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
+        Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
+
+        Task { @MainActor in
+            if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+                mainViewController.clearNavigationStack()
+                mainViewController.loadQueryInNewTab(query)
+                return
+            }
+
+            if shortcutItem.type == AppDelegate.ShortcutKey.passwords {
+                mainViewController.clearNavigationStack()
+                // Give the `clearNavigationStack` call time to complete.
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [application] in
+                    (application.window?.rootViewController as? MainViewController)?.launchAutofillLogins(openSearch: true, source: .appIconShortcut)
+                }
+                Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
+                return
+            }
+
+            if shortcutItem.type == AppDelegate.ShortcutKey.openVPNSettings {
+                presentNetworkProtectionStatusSettingsModal()
+            }
+
         }
     }
 

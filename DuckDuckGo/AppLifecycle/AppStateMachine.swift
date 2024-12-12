@@ -27,6 +27,7 @@ enum AppEvent {
     case suspending
 
     case openURL(URL)
+    case handleShortcutItem(UIApplicationShortcutItem)
 
 }
 

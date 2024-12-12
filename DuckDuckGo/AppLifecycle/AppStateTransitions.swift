@@ -42,6 +42,9 @@ extension Launched {
         case .openURL(let url):
             urlToOpen = url
             return self
+        case .handleShortcutItem(let shortcutItem):
+            shortcutItemToHandle = shortcutItem
+            return self
         case .backgrounding:
             return InactiveBackground()
         case .launching, .suspending:
@@ -59,6 +62,9 @@ extension Active {
             return Inactive(stateContext: makeStateContext())
         case .openURL(let url):
             openURL(url)
+            return self
+        case .handleShortcutItem(let shortcutItem):
+            handleShortcutItem(shortcutItem)
             return self
         case .launching, .activating, .backgrounding:
             return handleUnexpectedEvent(event)
@@ -78,7 +84,7 @@ extension Inactive {
         case .openURL(let url):
             urlToOpen = url
             return self
-        case .launching, .suspending:
+        case .launching, .suspending, .handleShortcutItem:
             return handleUnexpectedEvent(event)
         }
     }
@@ -96,7 +102,7 @@ extension Background {
             return self
         case .backgrounding:
             return DoubleBackground()
-        case .launching, .suspending:
+        case .launching, .suspending, .handleShortcutItem:
             return handleUnexpectedEvent(event)
         }
     }
@@ -151,6 +157,7 @@ extension AppEvent {
         case .backgrounding: return "backgrounding"
         case .suspending: return "suspending"
         case .openURL: return "openURL"
+        case .handleShortcutItem: return "handleShortcutItem"
         }
     }
 

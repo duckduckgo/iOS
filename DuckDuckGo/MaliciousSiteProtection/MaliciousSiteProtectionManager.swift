@@ -1,5 +1,6 @@
 //
 //  MaliciousSiteProtectionManager.swift
+//  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
@@ -27,55 +28,60 @@ import PixelKit
 final class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
     private let detector: MaliciousSiteDetecting
     private let updateManager: MaliciousSiteProtection.UpdateManager
-    //private let detectionPreferences: MaliciousSiteProtectionPreferences
-    private let featureFlagger: FeatureFlagger
-    //private let configManager: PrivacyConfigurationManaging
+    private let maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger
+    private let preferencesManager: MaliciousSiteProtectionPreferencesPublishing
 
-    private var featureFlagsCancellable: AnyCancellable?
-   // private var detectionPreferencesEnabledCancellable: AnyCancellable?
-    private(set) var updateTask: Task<Void, Error>?
+    private var preferencesManagerCancellable: AnyCancellable?
+    private var updateTask: Task<Void, Error>?
 
-    init(
-        detector: MaliciousSiteDetecting,
-        updateManager: MaliciousSiteProtection.UpdateManager,
-        featureFlagger: FeatureFlagger
-    ) {
-        self.detector = detector
-        self.updateManager = updateManager
-        self.featureFlagger = featureFlagger
-        //self.configManager = configManager ?? AppPrivacyFeatures.shared.contentBlocking.privacyConfigurationManager
-        setupBindings()
+    var isBackgroundUpdatesEnabled: Bool { updateTask != nil }
+
+    private static let debugEvents = EventMapping<MaliciousSiteProtection.Event> { event, _, _, _ in
+        PixelKit.fire(event)
     }
 
-    convenience init(apiEnvironment: MaliciousSiteDetector.APIEnvironment = .production) {
+    init(
+        apiEnvironment: MaliciousSiteDetector.APIEnvironment = .production,
+        apiService: APIService = DefaultAPIService(urlSession: .shared),
+        embeddedDataProvider: MaliciousSiteProtection.EmbeddedDataProviding = EmbeddedDataProvider(),
+        dataManager: MaliciousSiteProtection.DataManager? = nil,
+        detector: MaliciousSiteProtection.MaliciousSiteDetecting? = nil,
+        preferencesManager: MaliciousSiteProtectionPreferencesPublishing = MaliciousSiteProtectionPreferencesManager(),
+        maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger = MaliciousSiteProtectionFeatureFlags(),
+        updateIntervalProvider: UpdateManager.UpdateIntervalProvider? = nil
+    ) {
         let embeddedDataProvider = EmbeddedDataProvider()
-        let configurationUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileStore = MaliciousSiteProtection.FileStore(dataStoreURL: configurationUrl)
-        let dataManager = MaliciousSiteProtection.DataManager(
-            fileStore: fileStore,
+
+        let dataManager = dataManager ?? MaliciousSiteProtection.DataManager(
+            fileStore: MaliciousSiteProtection.FileStore(
+                dataStoreURL: FileManager.default.urls(
+                    for: .documentDirectory,
+                    in: .userDomainMask
+                )
+                .first!
+            ),
             embeddedDataProvider: embeddedDataProvider,
             fileNameProvider: Self.fileName(for:)
         )
-        let apiService = DefaultAPIService(urlSession: .shared)
-        let detector = MaliciousSiteDetector(
+
+        self.detector = detector ?? MaliciousSiteDetector(
             apiEnvironment: apiEnvironment,
             service: apiService,
             dataManager: dataManager,
             eventMapping: Self.debugEvents
         )
-        let updateManager = MaliciousSiteProtection.UpdateManager(
+
+        self.updateManager = MaliciousSiteProtection.UpdateManager(
             apiEnvironment: apiEnvironment,
             service: apiService,
             dataManager: dataManager,
-            updateIntervalProvider: Self.updateInterval
+            updateIntervalProvider: updateIntervalProvider ?? Self.updateInterval
         )
-        let featureFlagger = AppDependencyProvider.shared.featureFlagger
 
-        self.init(detector: detector, updateManager: updateManager, featureFlagger: featureFlagger)
-    }
+        self.preferencesManager = preferencesManager
+        self.maliciousSiteProtectionFeatureFlagger = maliciousSiteProtectionFeatureFlagger
 
-    private static let debugEvents = EventMapping<MaliciousSiteProtection.Event> {event, _, _, _ in
-        PixelKit.fire(event)
+        self.setupBindings()
     }
 
 }
@@ -85,8 +91,12 @@ final class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
 extension MaliciousSiteProtectionManager {
 
     func evaluate(_ url: URL) async -> ThreatKind? {
-//        guard configManager.privacyConfig.isFeature(.maliciousSiteProtection, enabledForDomain: url.host),
-//              detectionPreferences.isEnabled else { return .none }
+        guard
+            maliciousSiteProtectionFeatureFlagger.shouldDetectMaliciousThreat(forDomain: url.host),
+            preferencesManager.isEnabled
+        else {
+            return .none
+        }
 
         return await detector.evaluate(url)
     }
@@ -98,30 +108,16 @@ extension MaliciousSiteProtectionManager {
 private extension MaliciousSiteProtectionManager {
 
     func setupBindings() {
-//        if featureFlagger.isFeatureOn(.maliciousSiteProtectionErrorPage) {
-//            subscribeToDetectionPreferences()
-//            return
-//        }
-//
-//        guard let overridesHandler = featureFlagger.localOverrides?.actionHandler as? FeatureFlagOverridesPublishingHandler<FeatureFlag> else { return }
-//        featureFlagsCancellable = overridesHandler.flagDidChangePublisher
-//            .filter { $0.0 == .maliciousSiteProtectionErrorPage }
-//            .sink { [weak self] change in
-//                guard let self else { return }
-//                if change.1 {
-//                    subscribeToDetectionPreferences()
-//                } else {
-//                    detectionPreferencesEnabledCancellable = nil
-//                    stopUpdateTasks()
-//                }
-//            }
+        guard maliciousSiteProtectionFeatureFlagger.isMaliciousSiteProtectionEnabled else { return }
+        subscribeToDetectionPreferences()
     }
 
     func subscribeToDetectionPreferences() {
-//        detectionPreferencesEnabledCancellable = detectionPreferences.$isEnabled
-//            .sink { [weak self] isEnabled in
-//                self?.handleIsEnabledChange(enabled: isEnabled)
-//            }
+        preferencesManagerCancellable = preferencesManager
+            .isEnabledPublisher
+            .sink { [weak self] isEnabled in
+                self?.handleIsEnabledChange(enabled: isEnabled)
+            }
     }
 
     func handleIsEnabledChange(enabled: Bool) {
@@ -141,4 +137,23 @@ private extension MaliciousSiteProtectionManager {
         updateTask = nil
     }
 
+}
+
+protocol MaliciousSiteProtectionPreferencesPublishing {
+    var isEnabled: Bool { get }
+    var isEnabledPublisher: AnyPublisher<Bool, Never> { get }
+}
+
+protocol MaliciousSiteProtectionPreferencesManaging {
+    var isEnabled: Bool { get set }
+}
+
+final class MaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging, MaliciousSiteProtectionPreferencesPublishing {
+    @Published var isEnabled: Bool
+
+    var isEnabledPublisher: AnyPublisher<Bool, Never> { $isEnabled.eraseToAnyPublisher() }
+
+    init() {
+        isEnabled = true
+    }
 }

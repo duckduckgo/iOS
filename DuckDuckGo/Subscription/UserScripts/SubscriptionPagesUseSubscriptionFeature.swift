@@ -196,16 +196,12 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
         guard accountManager.isUserAuthenticated else { return [Constants.token: Constants.empty] }
 
-        let authToken: String
-
         switch await appStoreAccountManagementFlow.refreshAuthTokenIfNeeded() {
-        case .success(let refreshedToken):
-            authToken = refreshedToken
+        case .success(let currentAuthToken):
+            return [Constants.token: currentAuthToken]
         case .failure:
-            authToken = Constants.empty
+            return [Constants.token: Constants.empty]
         }
-
-        return [Constants.token: authToken]
     }
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {

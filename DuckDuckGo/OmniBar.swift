@@ -546,7 +546,6 @@ class OmniBar: UIView {
     }
 
     @IBAction func onAccessoryPressed(_ sender: Any) {
-        Pixel.fire(pixel: .addressBarShare)
         omniDelegate?.onAccessoryPressed(accessoryType: accessoryType)
     }
     

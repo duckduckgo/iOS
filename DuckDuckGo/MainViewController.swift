@@ -1719,7 +1719,8 @@ class MainViewController: UIViewController {
         let roundedPageSheet = RoundedPageSheetContainerViewController(
             contentViewController: aiChatViewController,
             logoImage: logoImage,
-            title: title)
+            title: title,
+            allowedOrientation: .portrait)
 
         present(roundedPageSheet, animated: true, completion: nil)
     }
@@ -2088,7 +2089,9 @@ extension MainViewController: OmniBarDelegate {
         switch accessoryType {
         case .chat:
             openAIChat()
+            Pixel.fire(pixel: .openAIChatFromAddressBar)
         case .share:
+            Pixel.fire(pixel: .addressBarShare)
             currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.accessoryButton)
         }
     }

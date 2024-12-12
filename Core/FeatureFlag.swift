@@ -60,7 +60,7 @@ public enum FeatureFlag: String {
     case crashReportOptInStatusResetting
 
     /// https://app.asana.com/0/0/1208767141940869/f
-    case freeTrials
+    case privacyProFreeTrialJan25
 }
 
 extension FeatureFlag: FeatureFlagDescribing {

@@ -58,5 +58,8 @@ struct SettingsAppearanceView: View {
         .applySettingsListModifiers(title: UserText.settingsAppearanceSection,
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onFirstAppear {
+            Pixel.fire(pixel: .settingsAppearanceOpen)
+        }
     }
 }

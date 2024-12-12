@@ -773,6 +773,8 @@ extension Pixel {
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
+
+        // MARK: Settings
         case settingsPresented
         case settingsSetAsDefault
         case settingsVoiceSearchOn
@@ -789,6 +791,26 @@ extension Pixel {
         case settingsAddressBarSelectorPressed
         case settingsAccessibilityOpen
         case settingsAccessiblityTextZoom
+
+        case settingsPrivateSearchOpen
+        case settingsEmailProtectionOpen
+        case settingsEmailProtectionEnable
+        case settingsGeneralOpen
+        case settingsSyncOpen
+        case settingsAppearanceOpen
+        case settingsThemeSelectorPressed
+        case settingsAddressBarTopSelected
+        case settingsAddressBarBottomSelected
+        case settingsShowFullURLOn
+        case settingsShowFullURLOff
+        case settingsDataClearingOpen
+        case settingsFireButtonSelectorPressed
+        case settingsDataClearingClearDataOpen
+        case settingsAutomaticallyClearDataOn
+        case settingsAutomaticallyClearDataOff
+        case settingsNextStepsAddAppToDock
+        case settingsNextStepsAddWidget
+        case settingsMoreSearchSettings
 
         // Web pixels
         case privacyProOfferMonthlyPriceClick
@@ -970,7 +992,27 @@ extension Pixel.Event {
         case .settingsAutoconsentShown: return "m_settings_autoconsent_shown"
         case .settingsAutoconsentOn: return "m_settings_autoconsent_on"
         case .settingsAutoconsentOff: return "m_settings_autoconsent_off"
-            
+
+        case .settingsPrivateSearchOpen: return "m_settings_private_search_open"
+        case .settingsEmailProtectionOpen: return "m_settings_email_protection_open"
+        case .settingsEmailProtectionEnable: return "m_settings_email_protection_enable"
+        case .settingsGeneralOpen: return "m_settings_general_open"
+        case .settingsSyncOpen: return "m_settings_sync_open"
+        case .settingsAppearanceOpen: return "m_settings_appearance_open"
+        case .settingsThemeSelectorPressed: return "m_settings_theme_selector_pressed"
+        case .settingsAddressBarTopSelected: return "m_settings_address_bar_top_selected"
+        case .settingsAddressBarBottomSelected: return "m_settings_address_bar_bottom_selected"
+        case .settingsShowFullURLOn: return "m_settings_show_full_url_on"
+        case .settingsShowFullURLOff: return "m_settings_show_full_url_off"
+        case .settingsDataClearingOpen: return "m_settings_data_clearing_open"
+        case .settingsFireButtonSelectorPressed: return "m_settings_fire_button_selector_pressed"
+        case .settingsDataClearingClearDataOpen: return "m_settings_data_clearing_clear_data_open"
+        case .settingsAutomaticallyClearDataOn: return "m_settings_automatically_clear_data_on"
+        case .settingsAutomaticallyClearDataOff: return "m_settings_automatically_clear_data_off"
+        case .settingsNextStepsAddAppToDock: return "m_settings_next_steps_add_app_to_dock"
+        case .settingsNextStepsAddWidget: return "m_settings_next_steps_add_widget"
+        case .settingsMoreSearchSettings: return "m_settings_more_search_settings"
+
         case .browsingMenuOpened: return "mb"
         case .browsingMenuNewTab: return "mb_tb"
         case .browsingMenuAddToBookmarks: return "mb_abk"
@@ -1673,6 +1715,8 @@ extension Pixel.Event {
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"
+
+        // MARK: Settings
         case .settingsPresented: return "m_settings_presented"
         case .settingsSetAsDefault: return "m_settings_set_as_default"
         case .settingsVoiceSearchOn: return "m_settings_voice_search_on"

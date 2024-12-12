@@ -72,7 +72,11 @@ struct WidgetEducationView: View {
                 .padding(.horizontal)
                 .padding(.top, Const.Padding.top)
             }
-        }.navigationBarTitle(navBarTitle, displayMode: .inline)
+        }
+        .navigationBarTitle(navBarTitle, displayMode: .inline)
+        .onFirstAppear {
+            Pixel.fire(pixel: .settingsNextStepsAddWidget)
+        }
     }
     
     private var secondParagraphText: Text {

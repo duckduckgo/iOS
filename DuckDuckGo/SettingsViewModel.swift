@@ -807,7 +807,6 @@ extension SettingsViewModel {
                                                                          queue: .main) { [weak self] _ in
             guard let settings = self?.appSettings else { return }
             self?.state.autoclearDataEnabled = (AutoClearSettingsModel(settings: settings) != nil)
-            Pixel.fire(pixel: self?.state.autoclearDataEnabled == true ? .settingsAutomaticallyClearDataOn : .settingsAutomaticallyClearDataOff)
         }
         
         textZoomObserver = NotificationCenter.default.addObserver(forName: AppUserDefaults.Notifications.textZoomChange,

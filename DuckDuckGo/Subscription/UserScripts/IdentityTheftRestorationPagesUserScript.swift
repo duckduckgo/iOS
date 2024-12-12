@@ -64,6 +64,6 @@ extension IdentityTheftRestorationPagesUserScript: WKScriptMessageHandlerWithRep
 extension IdentityTheftRestorationPagesUserScript: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         // unsupported
-        Logger.subscription.debug("Unsupported function: \(#function)")
+        Logger.subscription.log("Unsupported function: \(#function)")
     }
 }

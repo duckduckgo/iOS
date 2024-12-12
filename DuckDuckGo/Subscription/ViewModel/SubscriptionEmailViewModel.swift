@@ -69,7 +69,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
 
     private var cancellables = Set<AnyCancellable>()
-    var accountManager: AccountManager { subscriptionManager.accountManager }
+//    var accountManager: AccountManager { subscriptionManager.accountManager }
 
     private var isWelcomePageOrSuccessPage: Bool {
         let subscriptionActivateSuccessURL = subscriptionManager.url(for: .activateSuccess)
@@ -131,12 +131,12 @@ final class SubscriptionEmailViewModel: ObservableObject {
     func onAppear() {
         state.shouldDismissView = false
         // If the user is Authenticated & not in the Welcome page
-        if accountManager.isUserAuthenticated && !isWelcomePageOrSuccessPage {
+        if subscriptionManager.isUserAuthenticated && !isWelcomePageOrSuccessPage {
             // If user is authenticated, we want to "Add or manage email" instead of activating
             let addEmailToSubscriptionURL = subscriptionManager.url(for: .addEmail)
             let manageSubscriptionEmailURL = subscriptionManager.url(for: .manageEmail)
-            emailURL = accountManager.email == nil ? addEmailToSubscriptionURL : manageSubscriptionEmailURL
-            state.viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionEditEmailTitle
+            emailURL = subscriptionManager.userEmail == nil ? addEmailToSubscriptionURL : manageSubscriptionEmailURL
+            state.viewTitle = subscriptionManager.userEmail == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionEditEmailTitle
             
             // Also we assume subscription requires managing, and not activation
             state.managingSubscriptionEmail = true

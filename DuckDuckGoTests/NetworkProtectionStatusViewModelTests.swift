@@ -42,13 +42,7 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         tunnelController = MockTunnelController()
         statusObserver = MockConnectionStatusObserver()
         serverInfoObserver = MockConnectionServerInfoObserver()
-        subscriptionManager = SubscriptionManagerMock(accountManager: AccountManagerMock(),
-                                                      subscriptionEndpointService: SubscriptionEndpointServiceMock(),
-                                                      authEndpointService: AuthEndpointServiceMock(),
-                                                      storePurchaseManager: StorePurchaseManagerMock(),
-                                                      currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production, purchasePlatform: .appStore),
-                                                      canPurchase: true,
-                                                      subscriptionFeatureMappingCache: SubscriptionFeatureMappingCacheMock())
+        subscriptionManager = SubscriptionManagerMock()
         viewModel = NetworkProtectionStatusViewModel(tunnelController: tunnelController,
                                                      settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
                                                      statusObserver: statusObserver,

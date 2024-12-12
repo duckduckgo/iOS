@@ -134,7 +134,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
         }
     }
 
-    private let accountManager: any AccountManager
+    private let subscriptionManager: any SubscriptionManager
     private let apiService: any Networking.APIService
     private let vpnMetadataCollector: any UnifiedMetadataCollector
     private let defaultMetadataCollector: any UnifiedMetadataCollector
@@ -151,26 +151,22 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
          feedbackSender: any UnifiedFeedbackSender = DefaultFeedbackSender(),
          source: Source = .unknown) {
         self.viewState = .feedbackPending
-
-        self.accountManager = subscriptionManager.accountManager
+        self.subscriptionManager = subscriptionManager
         self.apiService = apiService
         self.vpnMetadataCollector = vpnMetadataCollector
         self.defaultMetadataCollector = defaultMetadatCollector
         self.feedbackSender = feedbackSender
         self.source = source.rawValue
 
-        Task {
-            let features = await subscriptionManager.currentSubscriptionFeatures()
-
-            if features.contains(.networkProtection) {
-                availableCategories.append(.vpn)
-            }
-            if features.contains(.dataBrokerProtection) {
-                availableCategories.append(.pir)
-            }
-            if features.contains(.identityTheftRestoration) || features.contains(.identityTheftRestorationGlobal) {
-                availableCategories.append(.itr)
-            }
+        let features = subscriptionManager.currentEntitlements
+        if features.contains(.networkProtection) {
+            availableCategories.append(.vpn)
+        }
+        if features.contains(.dataBrokerProtection) {
+            availableCategories.append(.pir)
+        }
+        if features.contains(.identityTheftRestoration) || features.contains(.identityTheftRestorationGlobal) {
+            availableCategories.append(.itr)
         }
     }
 
@@ -284,7 +280,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
     private func submitIssue(metadata: UnifiedFeedbackMetadata?) async throws {
         guard !userEmail.isEmpty, let selectedCategory else { return }
 
-        guard let accessToken = accountManager.accessToken else {
+        guard let accessToken = try? await subscriptionManager.getTokenContainer(policy: .localValid) else {
             throw Error.missingAccessToken
         }
 

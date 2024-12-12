@@ -64,7 +64,7 @@ final class SubscriptionITPViewModel: ObservableObject {
         self.itpURL = subscriptionManager.url(for: .identityTheftRestoration)
         self.manageITPURL = self.itpURL
         self.userScript = IdentityTheftRestorationPagesUserScript()
-        self.subFeature = IdentityTheftRestorationPagesFeature(accountManager: subscriptionManager.accountManager)
+        self.subFeature = IdentityTheftRestorationPagesFeature(subscriptionManager: subscriptionManager)
 
         let webViewSettings = AsyncHeadlessWebViewSettings(bounces: false,
                                                            allowedDomains: Self.allowedDomains,

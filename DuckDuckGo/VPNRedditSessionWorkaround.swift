@@ -28,11 +28,11 @@ final class VPNRedditSessionWorkaround {
     @UserDefaultsWrapper(key: .vpnRedditWorkaroundInstalled, defaultValue: false)
     var vpnWorkaroundInstalled: Bool
 
-    private let accountManager: AccountManager
+    private let subscriptionManager: SubscriptionManager
     private let tunnelController: TunnelController
 
-    init(accountManager: AccountManager, tunnelController: TunnelController) {
-        self.accountManager = accountManager
+    init(subscriptionManager: SubscriptionManager, tunnelController: TunnelController) {
+        self.subscriptionManager = subscriptionManager
         self.tunnelController = tunnelController
     }
 
@@ -50,7 +50,7 @@ final class VPNRedditSessionWorkaround {
 
     @MainActor
     func installRedditSessionWorkaround(to cookieStore: WKHTTPCookieStore) async {
-        guard accountManager.isUserAuthenticated,
+        guard subscriptionManager.isUserAuthenticated,
               await tunnelController.isConnected,
             let redditSessionCookie = HTTPCookie.emptyRedditSession else {
             return

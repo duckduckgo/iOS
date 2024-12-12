@@ -98,7 +98,7 @@ public final class PersistentPixel: PersistentPixelFiring {
         var additionalParameters = additionalParameters
         additionalParameters[PixelParameters.originalPixelTimestamp] = dateString
 
-        Logger.general.debug("Firing persistent pixel named \(pixel.name)")
+        Logger.pixels.debug("Firing persistent pixel named \(pixel.name)")
 
         pixelFiring.fire(pixel: pixel,
                          error: error,

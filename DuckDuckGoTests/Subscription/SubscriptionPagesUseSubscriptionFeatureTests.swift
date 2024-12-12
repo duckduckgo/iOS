@@ -55,7 +55,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
                                                                 SubscriptionOption(id: "2",
                                                                                    cost: SubscriptionOptionCost(displayPrice: "99 USD", recurrence: "yearly"))
                                                              ],
-                                                             features: [.networkProtection, .dataBrokerProtection, .identityTheftRestoration])
+                                                             availableEntitlements: [.networkProtection, .dataBrokerProtection, .identityTheftRestoration])
 
         static let mockParams: [String: String] = [:]
         @MainActor static let mockScriptMessage = MockWKScriptMessage(name: "", body: "", webView: WKWebView() )

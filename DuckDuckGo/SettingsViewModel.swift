@@ -766,13 +766,20 @@ extension SettingsViewModel {
                 throw SubscriptionEndpointServiceError.noData
             }
 
-            let subscription = try await subscriptionManager.currentSubscription(refresh: true)
+            let subscription = try await subscriptionManager.getSubscription(cachePolicy: .reloadIgnoringLocalCacheData)
             Logger.subscription.log("Subscription loaded: \(subscription.debugDescription, privacy: .public)")
             state.subscription.subscriptionExist = true
             state.subscription.platform = subscription.platform
             state.subscription.hasActiveSubscription = subscription.isActive
-            state.subscription.entitlements = subscriptionManager.currentEntitlements
-            state.subscription.subscriptionFeatures = subscriptionManager.currentEntitlements
+            let features = await subscriptionManager.currentSubscriptionFeatures(forceRefresh: true)
+            state.subscription.entitlements = features.compactMap({ feature in
+                if feature.enabled {
+                    return feature.entitlement
+                } else {
+                    return nil
+                }
+            })
+            state.subscription.subscriptionFeatures = features.map({ feature in feature.entitlement })
         } catch SubscriptionEndpointServiceError.noData, OAuthClientError.missingTokens {
             // Auth successful but no Subscription is available
             Logger.subscription.log("Subscription not present")

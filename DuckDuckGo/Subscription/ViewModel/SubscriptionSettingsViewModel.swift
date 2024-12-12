@@ -114,8 +114,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
 
         if loadingIndicator { displaySubscriptionLoader(true) }
 
-        if let subscription = try? await self.subscriptionManager.currentSubscription(refresh: cachePolicy != SubscriptionCachePolicy.returnCacheDataDontLoad) {
-            DispatchQueue.main.async {
+        if let subscription = try? await self.subscriptionManager.getSubscription(cachePolicy: cachePolicy) {
+            Task { @MainActor in
                 self.state.subscriptionInfo = subscription
                 if loadingIndicator { self.displaySubscriptionLoader(false) }
             }
@@ -140,7 +140,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
 
         if let tokenContainer = try? await subscriptionManager.getTokenContainer(policy: tokensPolicy) {
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 self.state.subscriptionEmail = tokenContainer.decodedAccessToken.email
                 if loadingIndicator { self.displayEmailLoader(true) }
             }

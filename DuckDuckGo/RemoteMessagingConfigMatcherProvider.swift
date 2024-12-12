@@ -84,7 +84,7 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
         
         let surveyActionMapper: DefaultRemoteMessagingSurveyURLBuilder
 
-        if let subscription = try? await subscriptionManager.currentSubscription(refresh: false) {
+        if let subscription = try? await subscriptionManager.getSubscription(cachePolicy: .returnCacheDataElseLoad) {
             privacyProDaysSinceSubscribed = Calendar.current.numberOfDaysBetween(subscription.startedAt, and: Date()) ?? -1
             privacyProDaysUntilExpiry = Calendar.current.numberOfDaysBetween(Date(), and: subscription.expiresOrRenewsAt) ?? -1
             privacyProPurchasePlatform = subscription.platform.rawValue

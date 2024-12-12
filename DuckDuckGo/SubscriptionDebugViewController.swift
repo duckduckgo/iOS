@@ -404,12 +404,10 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func getSubscriptionDetails() {
         Task {
             do {
-                let subscription = try await subscriptionManager.currentSubscription(refresh: true)
-                showAlert(title: "Subscription info", message: "\(subscription)")
-            } catch OAuthClientError.missingTokens {
-                showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
+                let subscription = try await subscriptionManager.getSubscription(cachePolicy: .reloadIgnoringLocalCacheData)
+                showAlert(title: "Subscription info", message: subscription.debugDescription)
             } catch {
-                showAlert(title: "Error retrieving subscription", message: "\(error)")
+                showAlert(title: "Subscription info", message: "\(error)")
             }
         }
     }

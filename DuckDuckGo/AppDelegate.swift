@@ -317,7 +317,11 @@ import os.log
 
             let url = URL.pixelUrl(forPixelNamed: pixelName)
             let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
-            let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
+            guard let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders) else {
+                onComplete(false, nil)
+                return
+            }
+
             Task {
                 do {
                     _ = try await DefaultAPIService().fetch(request: request)
@@ -1152,7 +1156,7 @@ import os.log
             return
         }
 
-        if AppDependencyProvider.shared.subscriptionManager.isEntitlementActive(.networkProtection) {
+        if await AppDependencyProvider.shared.subscriptionManager.isFeatureActive(.networkProtection) {
             let items = [
                 UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
                                           localizedTitle: UserText.netPOpenVPNQuickAction,
@@ -1228,12 +1232,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         completionHandler()
     }
-
+    
     func presentNetworkProtectionStatusSettingsModal() {
-        if AppDependencyProvider.shared.subscriptionManager.isEntitlementActive(.networkProtection) {
-            (window?.rootViewController as? MainViewController)?.segueToVPN()
-        } else {
-            (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
+        Task {
+            if await AppDependencyProvider.shared.subscriptionManager.isFeatureActive(.networkProtection) {
+                Task { @MainActor in
+                    (window?.rootViewController as? MainViewController)?.segueToVPN()
+                }
+            } else {
+                Task { @MainActor in
+                    (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
+                }
+            }
         }
     }
 

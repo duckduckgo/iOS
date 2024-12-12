@@ -67,6 +67,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
     enum Error: String, Swift.Error {
         case missingAccessToken
         case invalidResponse
+        case invalidRequest
     }
 
     struct Payload: Codable {
@@ -158,15 +159,24 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
         self.feedbackSender = feedbackSender
         self.source = source.rawValue
 
-        let features = subscriptionManager.currentEntitlements
-        if features.contains(.networkProtection) {
-            availableCategories.append(.vpn)
-        }
-        if features.contains(.dataBrokerProtection) {
-            availableCategories.append(.pir)
-        }
-        if features.contains(.identityTheftRestoration) || features.contains(.identityTheftRestorationGlobal) {
-            availableCategories.append(.itr)
+        Task {
+            let features = await subscriptionManager.currentSubscriptionFeatures(forceRefresh: false)
+            let vpnFeature = features.first { $0.entitlement == .networkProtection }
+            let dbpFeature = features.first { $0.entitlement == .dataBrokerProtection }
+            let itrFeature = features.first { $0.entitlement == .identityTheftRestoration }
+            let itrgFeature = features.first { $0.entitlement == .identityTheftRestorationGlobal }
+
+            if vpnFeature?.enabled ?? false {
+                availableCategories.append(.vpn)
+            }
+            if dbpFeature?.enabled ?? false {
+                availableCategories.append(.pir)
+            }
+            let idpEnabled = itrFeature?.enabled ?? false
+            let idpgEnabled = itrgFeature?.enabled ?? false
+            if idpEnabled || idpgEnabled {
+                availableCategories.append(.itr)
+            }
         }
     }
 
@@ -292,7 +302,9 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
                               problemSubCategory: selectedSubcategory ?? "",
                               customMetadata: metadata?.toString() ?? "")
         let headers = APIRequestV2.HeadersV2(additionalHeaders: [HTTPHeaderKey.authorization: "Bearer \(accessToken)"])
-        let request = APIRequestV2(url: Self.feedbackEndpoint, method: .post, headers: headers, body: payload.toData())
+        guard let request = APIRequestV2(url: Self.feedbackEndpoint, method: .post, headers: headers, body: payload.toData()) else {
+            throw Error.invalidRequest
+        }
 
         let response: Response = try await apiService.fetch(request: request).decodeBody()
         if let error = response.error, !error.isEmpty {

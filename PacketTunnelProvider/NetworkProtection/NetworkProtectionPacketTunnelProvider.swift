@@ -489,9 +489,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
         let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
                                                                              baseURL: subscriptionEnvironment.serviceEnvironment.url)
-        let subscriptionFeatureMappingCache = DefaultSubscriptionFeatureMappingCache(subscriptionEndpointService: subscriptionEndpointService,
-                                                                                             userDefaults: UserDefaults.standard)
-        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionEndpointService)
 
         let pixelHandler: SubscriptionManager.PixelHandler = { type in
             switch type {
@@ -502,7 +500,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
                                                              oAuthClient: authClient,
                                                              subscriptionEndpointService: subscriptionEndpointService,
-                                                             subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
                                                              subscriptionEnvironment: subscriptionEnvironment,
                                                              subscriptionFeatureFlagger: nil,
                                                              pixelHandler: pixelHandler)
@@ -518,15 +515,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         notificationsPresenter.requestAuthorization()
 
         let entitlementsCheck: (() async -> Result<Bool, Error>) = {
-            do {
-                Logger.networkProtection.log("Entitlements check...")
-                let entitlements = try await subscriptionManager.getEntitlements(forceRefresh: true)
-                Logger.networkProtection.log("Entitlements found: \(entitlements, privacy: .public)")
-                return .success(entitlements.contains(.networkProtection))
-            } catch {
-                Logger.networkProtection.error("Failed to get entitlements: \(error)")
-                return .failure(error)
-            }
+            Logger.networkProtection.log("Entitlements check...")
+            let isNetworkProtectionEnabled = await subscriptionManager.isFeatureActive(.networkProtection)
+            Logger.networkProtection.log("NetworkProtectionEnabled if: \( isNetworkProtectionEnabled ? "Enabled" : "Disabled", privacy: .public)")
+            return .success(isNetworkProtectionEnabled)
         }
 
         super.init(notificationsPresenter: notificationsPresenterDecorator,

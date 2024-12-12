@@ -194,8 +194,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // MARK: Broker Methods (Called from WebView via UserScripts)
     
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        await appStoreAccountManagementFlow.refreshAuthTokenIfNeeded()
-        let authToken = accountManager.authToken ?? Constants.empty
+        guard accountManager.isUserAuthenticated else { return [Constants.token: Constants.empty] }
+
+        let authToken: String
+
+        switch await appStoreAccountManagementFlow.refreshAuthTokenIfNeeded() {
+        case .success(let refreshedToken):
+            authToken = refreshedToken
+        case .failure:
+            authToken = Constants.empty
+        }
 
         return [Constants.token: authToken]
     }

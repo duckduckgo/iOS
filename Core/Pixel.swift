@@ -147,6 +147,7 @@ public struct PixelParameters {
 
     // Autofill
     public static let countBucket = "count_bucket"
+    public static let backfilled = "backfilled"
 
     // Privacy Dashboard
     public static let daysSinceInstall = "daysSinceInstall"
@@ -161,6 +162,9 @@ public struct PixelParameters {
     public static let retriedPixel = "retriedPixel"
 
     public static let time = "time"
+
+    public static let appState = "state"
+    public static let appEvent = "event"
 }
 
 public struct PixelValues {

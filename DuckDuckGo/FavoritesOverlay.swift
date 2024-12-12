@@ -66,14 +66,23 @@ class FavoritesOverlay: UIViewController {
         collectionView.backgroundColor = .clear
 
         view.addSubview(collectionView)
-        
+
         renderer.install(into: self)
         
         registerForKeyboardNotifications()
         
         decorate()
     }
-    
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if isPad {
+            collectionView.flashScrollIndicators()
+        }
+
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

@@ -20,6 +20,7 @@
 import UIKit
 import SwiftUI
 import DuckUI
+import Core
 
 class AutofillListItemTableViewCell: UITableViewCell {
 
@@ -78,12 +79,12 @@ class AutofillListItemTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var viewModel: AutofillLoginListItemViewModel? {
+    var item: AutofillLoginItem? {
         didSet {
-            guard let viewModel = viewModel else {
+            guard let item = item else {
                 return
             }
-            setupContentView(with: viewModel)
+            setupContentView(with: item)
         }
     }
     
@@ -119,7 +120,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
         ])
     }
 
-    private func setupContentView(with item: AutofillLoginListItemViewModel) {
+    private func setupContentView(with item: AutofillLoginItem) {
         titleLabel.text = item.title
         subtitleLabel.text = item.subtitle
         iconImageView.loadFavicon(forDomain: item.account.domain, usingCache: .fireproof, preferredFakeFaviconLetters: item.preferredFaviconLetters)

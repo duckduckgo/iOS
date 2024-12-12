@@ -22,49 +22,39 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>black</key>
+			<key>AppIcon-black</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppIconBlack29x29</string>
-					<string>AppIconBlack40x40</string>
-					<string>AppIconBlack60x60</string>
+					<string>AppIcon-black</string>
 				</array>
 			</dict>
-			<key>blue</key>
+			<key>AppIcon-blue</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppIconBlue29x29</string>
-					<string>AppIconBlue40x40</string>
-					<string>AppIconBlue60x60</string>
+					<string>AppIcon-blue</string>
 				</array>
 			</dict>
-			<key>green</key>
+			<key>AppIcon-green</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppIconGreen29x29</string>
-					<string>AppIconGreen40x40</string>
-					<string>AppIconGreen60x60</string>
+					<string>AppIcon-green</string>
 				</array>
 			</dict>
-			<key>purple</key>
+			<key>AppIcon-purple</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppIconPurple29x29</string>
-					<string>AppIconPurple40x40</string>
-					<string>AppIconPurple60x60</string>
+					<string>AppIcon-purple</string>
 				</array>
 			</dict>
-			<key>yellow</key>
+			<key>AppIcon-yellow</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppIconYellow29x29</string>
-					<string>AppIconYellow40x40</string>
-					<string>AppIconYellow60x60</string>
+					<string>AppIcon-yellow</string>
 				</array>
 			</dict>
 		</dict>
@@ -82,44 +72,39 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>black</key>
+			<key>AppIcon-black</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppIconBlack76x76</string>
-					<string>AppIconBlack83.5x83.5</string>
+					<string>AppIcon-black</string>
 				</array>
 			</dict>
-			<key>blue</key>
+			<key>AppIcon-green</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppIconBlue76x76</string>
-					<string>AppIconBlue83.5x83.5</string>
+					<string>AppIcon-blue</string>
 				</array>
 			</dict>
-			<key>green</key>
+			<key>AppIcon-green</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppIconGreen76x76</string>
-					<string>AppIconGreen83.5x83.5</string>
+					<string>AppIcon-green</string>
 				</array>
 			</dict>
-			<key>purple</key>
+			<key>AppIcon-purple</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppIconPurple76x76</string>
-					<string>AppIconPurple83.5x83.5</string>
+					<string>AppIcon-purple</string>
 				</array>
 			</dict>
-			<key>yellow</key>
+			<key>AppIcon-yellow</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppIconYellow76x76</string>
-					<string>AppIconYellow83.5x83.5</string>
+					<string>AppIcon-yellow</string>
 				</array>
 			</dict>
 		</dict>
@@ -158,6 +143,7 @@
 				<string>ddgFavorites</string>
 				<string>ddgQuickLink</string>
 				<string>ddgAddFavorite</string>
+				<string>ddgOpenPasswords</string>
 				<string>http</string>
 				<string>https</string>
 			</array>
@@ -245,5 +231,7 @@
 	<string>https://duckduckgo.com</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>VAULT_APP_GROUP</key>
+	<string>$(AppIdentifierPrefix)$(VAULT_APP_GROUP)</string>
 </dict>
 </plist>

@@ -1,6 +1,6 @@
 {
     "_builtWith": {
-        "tracker-radar": "e270978af9ffd0c909a62969df5f894128d41682920fb7a4c913e25e9ab1ecef-4013b4e91930c643394cb31c6c745356f133b04f",
+        "tracker-radar": "1108f03ca047465b2b8d8ab3385ba2cd4f21e1d0111571f8342b3eb0735b1c4a-4013b4e91930c643394cb31c6c745356f133b04f",
         "tracker-surrogates": "fe15c53e755af1257774459ecf066f673f485cb0"
     },
     "readme": "https://github.com/duckduckgo/tracker-blocklists",
@@ -6604,44 +6604,7 @@
             "fingerprinting": 2,
             "cookies": 0.00112,
             "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "coveo\\.com\\/coveo\\.analytics\\.js\\/2\\/coveoua\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.000163
-                },
-                {
-                    "rule": "coveo\\.com\\/coveo\\.analytics\\.js\\/1\\.0\\/coveoua\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000613
-                },
-                {
-                    "rule": "coveo\\.com\\/coveo\\.analytics\\.js\\/coveoua\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.0000681
-                },
-                {
-                    "rule": "coveo\\.com\\/coveo\\.analytics\\.js\\/latest\\/coveoua\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.0000204
-                },
-                {
-                    "rule": "coveo\\.com\\/atomic\\/v1\\.110\\/p-f4cb35d7\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000136
-                },
-                {
-                    "rule": "coveo\\.com\\/atomic\\/v1\\/p-217d4a01\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "coveo\\.com\\/coveo\\.analytics\\.js\\/2\\/coveoua\\.browser\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000136
-                }
-            ]
+            "default": "ignore"
         },
         "cpmstar.com": {
             "domain": "cpmstar.com",
@@ -8652,14 +8615,7 @@
             "fingerprinting": 2,
             "cookies": 0.00114,
             "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "elfsight\\.com\\/apps\\/social-share-buttons\\/release\\/bcbd1ca01fc572c7bc650c98dbe032152aa706f5\\/app\\/socialShareButtons\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0
-                }
-            ]
+            "default": "ignore"
         },
         "elitrack.com": {
             "domain": "elitrack.com",
@@ -13283,7 +13239,27 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "impervadns\\.net//SP2013v1/Enterprise/JS/",
+                    "rule": "impervadns\\.net\\/\\/SP2013v1\\/Enterprise\\/JS\\/foundation\\.min\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.000136
+                },
+                {
+                    "rule": "impervadns\\.net\\/\\/SP2013v1\\/Enterprise\\/JS\\/enterprise\\.min\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.000136
+                },
+                {
+                    "rule": "impervadns\\.net\\/\\/SP2013v1\\/Enterprise\\/JS\\/jquery\\.cookie\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.000136
+                },
+                {
+                    "rule": "impervadns\\.net\\/\\/SP2013v1\\/Enterprise\\/JS\\/knockout\\.min\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.000136
+                },
+                {
+                    "rule": "impervadns\\.net\\/\\/SP2013v1\\/Enterprise\\/JS\\/jquery-ui\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.000136
                 },
@@ -15754,28 +15730,7 @@
                     "rule": "listrakbi\\.com/v1/Product"
                 },
                 {
-                    "rule": "listrakbi\\.com/json/07c34100-1080-4c55-9097-05c7f4a2b19b"
-                },
-                {
-                    "rule": "listrakbi\\.com/json/f5f04466-f923-491d-9354-679d54e32def"
-                },
-                {
-                    "rule": "listrakbi\\.com/json/eb9d26f3-d7e9-4df8-9800-a79cfaf345be"
-                },
-                {
                     "rule": "listrakbi\\.com/SadvKLqKgI5T/cart/update"
-                },
-                {
-                    "rule": "listrakbi\\.com/json/a6c8a6f0-379f-4e0e-8f1a-db4e3efa6123"
-                },
-                {
-                    "rule": "listrakbi\\.com/json/86d9476c-c670-4b5d-a33c-bca65c91576f"
-                },
-                {
-                    "rule": "listrakbi\\.com/json/043b15b6-cb62-4e61-9d8a-89856bdbf496"
-                },
-                {
-                    "rule": "listrakbi\\.com/json/9902c090-0d30-4673-b94b-3851cb8d6035"
                 },
                 {
                     "rule": "listrakbi\\.com/RmR1Kqh2AYPr/cart/update"
@@ -15797,6 +15752,9 @@
                 },
                 {
                     "rule": "listrakbi\\.com/[a-zA-Z0-9]+\\.js"
+                },
+                {
+                    "rule": "listrakbi\\.com/json/.*"
                 }
             ]
         },
@@ -21828,18 +21786,6 @@
                     "rule": "qualtrics\\.com/WRSiteInterceptEngine/"
                 },
                 {
-                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/wr-dialog-close-btn-black\\.png"
-                },
-                {
-                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/wr-dialog-close-btn-white\\.png"
-                },
-                {
-                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/building_preview\\.gif"
-                },
-                {
-                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/remove_screen_capture\\.png"
-                },
-                {
                     "rule": "qualtrics\\.com/static/prototype-ui-modules/SharedGraphics/siteintercept/svg-close-btn-black-7\\.svg"
                 },
                 {
@@ -21855,12 +21801,6 @@
                     "rule": "qualtrics\\.com/static/prototype-ui-modules/SharedGraphics/siteintercept/svg-close-btn-black-4\\.svg"
                 },
                 {
-                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/popup_shadow_transparent\\.png"
-                },
-                {
-                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/feedback-blue-right\\.png"
-                },
-                {
                     "rule": "qualtrics\\.com/ControlPanel/Graphic\\.php"
                 },
                 {
@@ -21874,6 +21814,9 @@
                 },
                 {
                     "rule": "qualtrics\\.com/static/q-siteintercept/"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRQualtricsShared/"
                 }
             ]
         },
@@ -22242,6 +22185,18 @@
             "fingerprinting": 1,
             "cookies": 0.01,
             "default": "block"
+        },
+        "rebuyengine.com": {
+            "domain": "rebuyengine.com",
+            "owner": {
+                "name": "rebuyengine.com",
+                "displayName": "rebuyengine.com"
+            },
+            "prevalence": 0.00142,
+            "fingerprinting": 2,
+            "cookies": 0.00125,
+            "categories": [],
+            "default": "ignore"
         },
         "reconditerake.com": {
             "domain": "reconditerake.com",
@@ -26892,28 +26847,10 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "tiktok\\.com/i18n/pixel/events\\.js"
-                },
-                {
-                    "rule": "tiktok\\.com/i18n/pixel/static/identify_d1af3\\.js"
-                },
-                {
                     "rule": "tiktok\\.com/api/v2/pixel"
                 },
                 {
-                    "rule": "tiktok\\.com/i18n/pixel/sdk\\.js"
-                },
-                {
                     "rule": "tiktok\\.com/api/v2/performance_interaction"
-                },
-                {
-                    "rule": "tiktok\\.com/i18n/pixel/config\\.js"
-                },
-                {
-                    "rule": "tiktok\\.com/i18n/pixel/disable_cookie"
-                },
-                {
-                    "rule": "tiktok\\.com/i18n/pixel/static/identify_821f6\\.js"
                 },
                 {
                     "rule": "tiktok\\.com/v1/user/webid"
@@ -26934,13 +26871,7 @@
                     "rule": "tiktok\\.com/oembed"
                 },
                 {
-                    "rule": "tiktok\\.com/i18n/pixel/enable_cookie"
-                },
-                {
-                    "rule": "tiktok\\.com/i18n/pixel/static/identify_a7248\\.js"
-                },
-                {
-                    "rule": "tiktok\\.com/i18n/pixel/static/main\\..*\\.js"
+                    "rule": "tiktok\\.com/i18n/pixel/"
                 }
             ]
         },
@@ -32665,17 +32596,6 @@
             "cookies": 0.01,
             "default": "block"
         },
-        "acceptableauthority.com": {
-            "domain": "acceptableauthority.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (acceptableauthority.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
         "accountsdoor.com": {
             "domain": "accountsdoor.com",
             "owner": {
@@ -32944,17 +32864,6 @@
             "domain": "ak0gsh40.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (ak0gsh40.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
-        "alertarithmetic.com": {
-            "domain": "alertarithmetic.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (alertarithmetic.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -35100,17 +35009,6 @@
             "domain": "compiledoctor.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (compiledoctor.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
-        "concernedchange.com": {
-            "domain": "concernedchange.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (concernedchange.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -37516,17 +37414,6 @@
             "cookies": 0.01,
             "default": "block"
         },
-        "fertilefeeling.com": {
-            "domain": "fertilefeeling.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (fertilefeeling.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
         "fewjuice.com": {
             "domain": "fewjuice.com",
             "owner": {
@@ -38906,17 +38793,6 @@
             "domain": "harmonywing.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (harmonywing.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
-        "hatefulrequest.com": {
-            "domain": "hatefulrequest.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (hatefulrequest.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -41454,17 +41330,6 @@
             "cookies": 0.01,
             "default": "block"
         },
-        "numberlessring.com": {
-            "domain": "numberlessring.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (numberlessring.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
         "numerousnest.com": {
             "domain": "numerousnest.com",
             "owner": {
@@ -42928,6 +42793,17 @@
             "cookies": 0.01,
             "default": "block"
         },
+        "razzweb.com": {
+            "domain": "razzweb.com",
+            "owner": {
+                "name": "Leven Labs, Inc. DBA Admiral (razzweb.com)",
+                "displayName": "Admiral"
+            },
+            "prevalence": 0.0107,
+            "fingerprinting": 1,
+            "cookies": 0.01,
+            "default": "block"
+        },
         "reactjspdf.com": {
             "domain": "reactjspdf.com",
             "owner": {
@@ -43075,17 +42951,6 @@
             "domain": "reconditeprison.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (reconditeprison.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
-        "reflectivestatement.com": {
-            "domain": "reflectivestatement.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (reflectivestatement.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -43500,6 +43365,17 @@
             "cookies": 0.01,
             "default": "block"
         },
+        "sableshelf.com": {
+            "domain": "sableshelf.com",
+            "owner": {
+                "name": "Leven Labs, Inc. DBA Admiral (sableshelf.com)",
+                "displayName": "Admiral"
+            },
+            "prevalence": 0.0107,
+            "fingerprinting": 1,
+            "cookies": 0.01,
+            "default": "block"
+        },
         "sablesmile.com": {
             "domain": "sablesmile.com",
             "owner": {
@@ -43581,6 +43457,17 @@
             "domain": "samplesamba.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (samplesamba.com)",
+                "displayName": "Admiral"
+            },
+            "prevalence": 0.0107,
+            "fingerprinting": 1,
+            "cookies": 0.01,
+            "default": "block"
+        },
+        "samuraibots.com": {
+            "domain": "samuraibots.com",
+            "owner": {
+                "name": "Leven Labs, Inc. DBA Admiral (samuraibots.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -43841,17 +43728,6 @@
             "cookies": 0.01,
             "default": "block"
         },
-        "scribbleson.com": {
-            "domain": "scribbleson.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (scribbleson.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
         "scrollservice.com": {
             "domain": "scrollservice.com",
             "owner": {
@@ -43933,17 +43809,6 @@
             "domain": "seedscissors.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (seedscissors.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
-        "seemlysuggestion.com": {
-            "domain": "seemlysuggestion.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (seemlysuggestion.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -44164,6 +44029,17 @@
             "domain": "shakytaste.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (shakytaste.com)",
+                "displayName": "Admiral"
+            },
+            "prevalence": 0.0107,
+            "fingerprinting": 1,
+            "cookies": 0.01,
+            "default": "block"
+        },
+        "shallowart.com": {
+            "domain": "shallowart.com",
+            "owner": {
+                "name": "Leven Labs, Inc. DBA Admiral (shallowart.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -44395,17 +44271,6 @@
             "domain": "sinceresubstance.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (sinceresubstance.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
-        "sinkbooks.com": {
-            "domain": "sinkbooks.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (sinkbooks.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -45293,17 +45158,6 @@
             "cookies": 0.01,
             "default": "block"
         },
-        "steepscale.com": {
-            "domain": "steepscale.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (steepscale.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
         "steepsister.com": {
             "domain": "steepsister.com",
             "owner": {
@@ -45491,17 +45345,6 @@
             "cookies": 0.01,
             "default": "block"
         },
-        "strangersponge.com": {
-            "domain": "strangersponge.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (strangersponge.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
         "strangesink.com": {
             "domain": "strangesink.com",
             "owner": {
@@ -45678,17 +45521,6 @@
             "cookies": 0.01,
             "default": "block"
         },
-        "sugarfriction.com": {
-            "domain": "sugarfriction.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (sugarfriction.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
         "suggestionbridge.com": {
             "domain": "suggestionbridge.com",
             "owner": {
@@ -45770,17 +45602,6 @@
             "domain": "swellstocking.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (swellstocking.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
-        "swelteringsleep.com": {
-            "domain": "swelteringsleep.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (swelteringsleep.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -45935,17 +45756,6 @@
             "domain": "tastelesstrees.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (tastelesstrees.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
-        "tastelesstrucks.com": {
-            "domain": "tastelesstrucks.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (tastelesstrucks.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -47251,17 +47061,6 @@
             "cookies": 0.01,
             "default": "block"
         },
-        "voicelessvein.com": {
-            "domain": "voicelessvein.com",
-            "owner": {
-                "name": "Leven Labs, Inc. DBA Admiral (voicelessvein.com)",
-                "displayName": "Admiral"
-            },
-            "prevalence": 0.0107,
-            "fingerprinting": 1,
-            "cookies": 0.01,
-            "default": "block"
-        },
         "voidgoo.com": {
             "domain": "voidgoo.com",
             "owner": {
@@ -47541,6 +47340,17 @@
             "domain": "wildcommittee.com",
             "owner": {
                 "name": "Leven Labs, Inc. DBA Admiral (wildcommittee.com)",
+                "displayName": "Admiral"
+            },
+            "prevalence": 0.0107,
+            "fingerprinting": 1,
+            "cookies": 0.01,
+            "default": "block"
+        },
+        "wildwoodavenue.com": {
+            "domain": "wildwoodavenue.com",
+            "owner": {
+                "name": "Leven Labs, Inc. DBA Admiral (wildwoodavenue.com)",
                 "displayName": "Admiral"
             },
             "prevalence": 0.0107,
@@ -55488,6 +55298,13 @@
             "prevalence": 0.0136,
             "displayName": "Rating-Widget"
         },
+        "rebuyengine.com": {
+            "domains": [
+                "rebuyengine.com"
+            ],
+            "prevalence": 0,
+            "displayName": "rebuyengine.com"
+        },
         "Recruitics LLC": {
             "domains": [
                 "recruitics.com"
@@ -57949,13 +57766,6 @@
             "prevalence": 0.0107,
             "displayName": "Admiral"
         },
-        "Leven Labs, Inc. DBA Admiral (acceptableauthority.com)": {
-            "domains": [
-                "acceptableauthority.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
         "Leven Labs, Inc. DBA Admiral (accountsdoor.com)": {
             "domains": [
                 "accountsdoor.com"
@@ -58134,13 +57944,6 @@
         "Leven Labs, Inc. DBA Admiral (ak0gsh40.com)": {
             "domains": [
                 "ak0gsh40.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
-        "Leven Labs, Inc. DBA Admiral (alertarithmetic.com)": {
-            "domains": [
-                "alertarithmetic.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -59751,13 +59554,6 @@
         "Leven Labs, Inc. DBA Admiral (compiledoctor.com)": {
             "domains": [
                 "compiledoctor.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
-        "Leven Labs, Inc. DBA Admiral (concernedchange.com)": {
-            "domains": [
-                "concernedchange.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -61477,13 +61273,6 @@
             "prevalence": 0.0107,
             "displayName": "Admiral"
         },
-        "Leven Labs, Inc. DBA Admiral (fertilefeeling.com)": {
-            "domains": [
-                "fertilefeeling.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
         "Leven Labs, Inc. DBA Admiral (fewjuice.com)": {
             "domains": [
                 "fewjuice.com"
@@ -62516,13 +62305,6 @@
         "Leven Labs, Inc. DBA Admiral (harmonywing.com)": {
             "domains": [
                 "harmonywing.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
-        "Leven Labs, Inc. DBA Admiral (hatefulrequest.com)": {
-            "domains": [
-                "hatefulrequest.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -64284,13 +64066,6 @@
             "prevalence": 0.0107,
             "displayName": "Admiral"
         },
-        "Leven Labs, Inc. DBA Admiral (numberlessring.com)": {
-            "domains": [
-                "numberlessring.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
         "Leven Labs, Inc. DBA Admiral (numerousnest.com)": {
             "domains": [
                 "numerousnest.com"
@@ -65418,6 +65193,13 @@
             "prevalence": 0.0107,
             "displayName": "Admiral"
         },
+        "Leven Labs, Inc. DBA Admiral (razzweb.com)": {
+            "domains": [
+                "razzweb.com"
+            ],
+            "prevalence": 0.0107,
+            "displayName": "Admiral"
+        },
         "Leven Labs, Inc. DBA Admiral (reactjspdf.com)": {
             "domains": [
                 "reactjspdf.com"
@@ -65533,13 +65315,6 @@
         "Leven Labs, Inc. DBA Admiral (reconditerespect.com)": {
             "domains": [
                 "reconditerespect.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
-        "Leven Labs, Inc. DBA Admiral (reflectivestatement.com)": {
-            "domains": [
-                "reflectivestatement.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -65866,6 +65641,13 @@
             "prevalence": 0.0107,
             "displayName": "Admiral"
         },
+        "Leven Labs, Inc. DBA Admiral (sableshelf.com)": {
+            "domains": [
+                "sableshelf.com"
+            ],
+            "prevalence": 0.0107,
+            "displayName": "Admiral"
+        },
         "Leven Labs, Inc. DBA Admiral (sablesmile.com)": {
             "domains": [
                 "sablesmile.com"
@@ -65932,6 +65714,13 @@
         "Leven Labs, Inc. DBA Admiral (samplesamba.com)": {
             "domains": [
                 "samplesamba.com"
+            ],
+            "prevalence": 0.0107,
+            "displayName": "Admiral"
+        },
+        "Leven Labs, Inc. DBA Admiral (samuraibots.com)": {
+            "domains": [
+                "samuraibots.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -66153,13 +65942,6 @@
             "prevalence": 0.0107,
             "displayName": "Admiral"
         },
-        "Leven Labs, Inc. DBA Admiral (scribbleson.com)": {
-            "domains": [
-                "scribbleson.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
         "Leven Labs, Inc. DBA Admiral (scribblestring.com)": {
             "domains": [
                 "scribblestring.com"
@@ -66226,13 +66008,6 @@
         "Leven Labs, Inc. DBA Admiral (seedscissors.com)": {
             "domains": [
                 "seedscissors.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
-        "Leven Labs, Inc. DBA Admiral (seemlysuggestion.com)": {
-            "domains": [
-                "seemlysuggestion.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -66394,6 +66169,13 @@
         "Leven Labs, Inc. DBA Admiral (shakytaste.com)": {
             "domains": [
                 "shakytaste.com"
+            ],
+            "prevalence": 0.0107,
+            "displayName": "Admiral"
+        },
+        "Leven Labs, Inc. DBA Admiral (shallowart.com)": {
+            "domains": [
+                "shallowart.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -66576,13 +66358,6 @@
         "Leven Labs, Inc. DBA Admiral (singroot.com)": {
             "domains": [
                 "singroot.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
-        "Leven Labs, Inc. DBA Admiral (sinkbooks.com)": {
-            "domains": [
-                "sinkbooks.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -67266,13 +67041,6 @@
             "prevalence": 0.0107,
             "displayName": "Admiral"
         },
-        "Leven Labs, Inc. DBA Admiral (steepscale.com)": {
-            "domains": [
-                "steepscale.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
         "Leven Labs, Inc. DBA Admiral (steepsister.com)": {
             "domains": [
                 "steepsister.com"
@@ -67427,13 +67195,6 @@
             "prevalence": 0.0107,
             "displayName": "Admiral"
         },
-        "Leven Labs, Inc. DBA Admiral (strangersponge.com)": {
-            "domains": [
-                "strangersponge.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
         "Leven Labs, Inc. DBA Admiral (strangesink.com)": {
             "domains": [
                 "strangesink.com"
@@ -67581,13 +67342,6 @@
             "prevalence": 0.0107,
             "displayName": "Admiral"
         },
-        "Leven Labs, Inc. DBA Admiral (sugarfriction.com)": {
-            "domains": [
-                "sugarfriction.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
         "Leven Labs, Inc. DBA Admiral (suggestionbridge.com)": {
             "domains": [
                 "suggestionbridge.com"
@@ -67668,13 +67422,6 @@
         "Leven Labs, Inc. DBA Admiral (swellstocking.com)": {
             "domains": [
                 "swellstocking.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
-        "Leven Labs, Inc. DBA Admiral (swelteringsleep.com)": {
-            "domains": [
-                "swelteringsleep.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -67780,13 +67527,6 @@
         "Leven Labs, Inc. DBA Admiral (tastelesstrees.com)": {
             "domains": [
                 "tastelesstrees.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
-        "Leven Labs, Inc. DBA Admiral (tastelesstrucks.com)": {
-            "domains": [
-                "tastelesstrucks.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -68708,13 +68448,6 @@
             "prevalence": 0.0107,
             "displayName": "Admiral"
         },
-        "Leven Labs, Inc. DBA Admiral (voicelessvein.com)": {
-            "domains": [
-                "voicelessvein.com"
-            ],
-            "prevalence": 0.0107,
-            "displayName": "Admiral"
-        },
         "Leven Labs, Inc. DBA Admiral (voidgoo.com)": {
             "domains": [
                 "voidgoo.com"
@@ -68921,6 +68654,13 @@
         "Leven Labs, Inc. DBA Admiral (wildcommittee.com)": {
             "domains": [
                 "wildcommittee.com"
+            ],
+            "prevalence": 0.0107,
+            "displayName": "Admiral"
+        },
+        "Leven Labs, Inc. DBA Admiral (wildwoodavenue.com)": {
+            "domains": [
+                "wildwoodavenue.com"
             ],
             "prevalence": 0.0107,
             "displayName": "Admiral"
@@ -69842,7 +69582,6 @@
         "abstractedauthority.com": "Leven Labs, Inc. DBA Admiral (abstractedauthority.com)",
         "absurdapple.com": "Leven Labs, Inc. DBA Admiral (absurdapple.com)",
         "abundantcoin.com": "Leven Labs, Inc. DBA Admiral (abundantcoin.com)",
-        "acceptableauthority.com": "Leven Labs, Inc. DBA Admiral (acceptableauthority.com)",
         "accountsdoor.com": "Leven Labs, Inc. DBA Admiral (accountsdoor.com)",
         "accurateanimal.com": "Leven Labs, Inc. DBA Admiral (accurateanimal.com)",
         "accuratecoal.com": "Leven Labs, Inc. DBA Admiral (accuratecoal.com)",
@@ -69869,7 +69608,6 @@
         "aheadgrow.com": "Leven Labs, Inc. DBA Admiral (aheadgrow.com)",
         "aheadmachine.com": "Leven Labs, Inc. DBA Admiral (aheadmachine.com)",
         "ak0gsh40.com": "Leven Labs, Inc. DBA Admiral (ak0gsh40.com)",
-        "alertarithmetic.com": "Leven Labs, Inc. DBA Admiral (alertarithmetic.com)",
         "aliasanvil.com": "Leven Labs, Inc. DBA Admiral (aliasanvil.com)",
         "alikeaddition.com": "Leven Labs, Inc. DBA Admiral (alikeaddition.com)",
         "aliveachiever.com": "Leven Labs, Inc. DBA Admiral (aliveachiever.com)",
@@ -70100,7 +69838,6 @@
         "comfygoodness.com": "Leven Labs, Inc. DBA Admiral (comfygoodness.com)",
         "comparereaction.com": "Leven Labs, Inc. DBA Admiral (comparereaction.com)",
         "compiledoctor.com": "Leven Labs, Inc. DBA Admiral (compiledoctor.com)",
-        "concernedchange.com": "Leven Labs, Inc. DBA Admiral (concernedchange.com)",
         "concernedchickens.com": "Leven Labs, Inc. DBA Admiral (concernedchickens.com)",
         "condemnedcomb.com": "Leven Labs, Inc. DBA Admiral (condemnedcomb.com)",
         "conditionchange.com": "Leven Labs, Inc. DBA Admiral (conditionchange.com)",
@@ -70346,7 +70083,6 @@
         "feeblestamp.com": "Leven Labs, Inc. DBA Admiral (feeblestamp.com)",
         "feignedfaucet.com": "Leven Labs, Inc. DBA Admiral (feignedfaucet.com)",
         "fernwaycloud.com": "Leven Labs, Inc. DBA Admiral (fernwaycloud.com)",
-        "fertilefeeling.com": "Leven Labs, Inc. DBA Admiral (fertilefeeling.com)",
         "fewjuice.com": "Leven Labs, Inc. DBA Admiral (fewjuice.com)",
         "fewkittens.com": "Leven Labs, Inc. DBA Admiral (fewkittens.com)",
         "finalizeforce.com": "Leven Labs, Inc. DBA Admiral (finalizeforce.com)",
@@ -70495,7 +70231,6 @@
         "harborcub.com": "Leven Labs, Inc. DBA Admiral (harborcub.com)",
         "harmonicbamboo.com": "Leven Labs, Inc. DBA Admiral (harmonicbamboo.com)",
         "harmonywing.com": "Leven Labs, Inc. DBA Admiral (harmonywing.com)",
-        "hatefulrequest.com": "Leven Labs, Inc. DBA Admiral (hatefulrequest.com)",
         "headydegree.com": "Leven Labs, Inc. DBA Admiral (headydegree.com)",
         "headyhook.com": "Leven Labs, Inc. DBA Admiral (headyhook.com)",
         "healflowers.com": "Leven Labs, Inc. DBA Admiral (healflowers.com)",
@@ -70747,7 +70482,6 @@
         "notifyglass.com": "Leven Labs, Inc. DBA Admiral (notifyglass.com)",
         "nudgeduck.com": "Leven Labs, Inc. DBA Admiral (nudgeduck.com)",
         "nullnorth.com": "Leven Labs, Inc. DBA Admiral (nullnorth.com)",
-        "numberlessring.com": "Leven Labs, Inc. DBA Admiral (numberlessring.com)",
         "numerousnest.com": "Leven Labs, Inc. DBA Admiral (numerousnest.com)",
         "nutritiousbean.com": "Leven Labs, Inc. DBA Admiral (nutritiousbean.com)",
         "nuttyorganization.com": "Leven Labs, Inc. DBA Admiral (nuttyorganization.com)",
@@ -70909,6 +70643,7 @@
         "rangergustav.com": "Leven Labs, Inc. DBA Admiral (rangergustav.com)",
         "rarestcandy.com": "Leven Labs, Inc. DBA Admiral (rarestcandy.com)",
         "raresummer.com": "Leven Labs, Inc. DBA Admiral (raresummer.com)",
+        "razzweb.com": "Leven Labs, Inc. DBA Admiral (razzweb.com)",
         "reactjspdf.com": "Leven Labs, Inc. DBA Admiral (reactjspdf.com)",
         "readingguilt.com": "Leven Labs, Inc. DBA Admiral (readingguilt.com)",
         "readymoon.com": "Leven Labs, Inc. DBA Admiral (readymoon.com)",
@@ -70926,7 +70661,6 @@
         "reconditeprison.com": "Leven Labs, Inc. DBA Admiral (reconditeprison.com)",
         "reconditerake.com": "Leven Labs, Inc. DBA Admiral (reconditerake.com)",
         "reconditerespect.com": "Leven Labs, Inc. DBA Admiral (reconditerespect.com)",
-        "reflectivestatement.com": "Leven Labs, Inc. DBA Admiral (reflectivestatement.com)",
         "refundradar.com": "Leven Labs, Inc. DBA Admiral (refundradar.com)",
         "regexmail.com": "Leven Labs, Inc. DBA Admiral (regexmail.com)",
         "regularplants.com": "Leven Labs, Inc. DBA Admiral (regularplants.com)",
@@ -70973,6 +70707,7 @@
         "ruthlessdegree.com": "Leven Labs, Inc. DBA Admiral (ruthlessdegree.com)",
         "ruthlessmilk.com": "Leven Labs, Inc. DBA Admiral (ruthlessmilk.com)",
         "sableloss.com": "Leven Labs, Inc. DBA Admiral (sableloss.com)",
+        "sableshelf.com": "Leven Labs, Inc. DBA Admiral (sableshelf.com)",
         "sablesmile.com": "Leven Labs, Inc. DBA Admiral (sablesmile.com)",
         "sablesong.com": "Leven Labs, Inc. DBA Admiral (sablesong.com)",
         "sadloaf.com": "Leven Labs, Inc. DBA Admiral (sadloaf.com)",
@@ -70983,6 +70718,7 @@
         "samesticks.com": "Leven Labs, Inc. DBA Admiral (samesticks.com)",
         "samestretch.com": "Leven Labs, Inc. DBA Admiral (samestretch.com)",
         "samplesamba.com": "Leven Labs, Inc. DBA Admiral (samplesamba.com)",
+        "samuraibots.com": "Leven Labs, Inc. DBA Admiral (samuraibots.com)",
         "sandstrophies.com": "Leven Labs, Inc. DBA Admiral (sandstrophies.com)",
         "satisfycork.com": "Leven Labs, Inc. DBA Admiral (satisfycork.com)",
         "savoryorange.com": "Leven Labs, Inc. DBA Admiral (savoryorange.com)",
@@ -71014,7 +70750,6 @@
         "screechingfurniture.com": "Leven Labs, Inc. DBA Admiral (screechingfurniture.com)",
         "screechingstocking.com": "Leven Labs, Inc. DBA Admiral (screechingstocking.com)",
         "screechingstove.com": "Leven Labs, Inc. DBA Admiral (screechingstove.com)",
-        "scribbleson.com": "Leven Labs, Inc. DBA Admiral (scribbleson.com)",
         "scribblestring.com": "Leven Labs, Inc. DBA Admiral (scribblestring.com)",
         "scrollservice.com": "Leven Labs, Inc. DBA Admiral (scrollservice.com)",
         "scrubswim.com": "Leven Labs, Inc. DBA Admiral (scrubswim.com)",
@@ -71025,7 +70760,6 @@
         "secretspiders.com": "Leven Labs, Inc. DBA Admiral (secretspiders.com)",
         "secretturtle.com": "Leven Labs, Inc. DBA Admiral (secretturtle.com)",
         "seedscissors.com": "Leven Labs, Inc. DBA Admiral (seedscissors.com)",
-        "seemlysuggestion.com": "Leven Labs, Inc. DBA Admiral (seemlysuggestion.com)",
         "selectivesummer.com": "Leven Labs, Inc. DBA Admiral (selectivesummer.com)",
         "selfishsea.com": "Leven Labs, Inc. DBA Admiral (selfishsea.com)",
         "selfishsnake.com": "Leven Labs, Inc. DBA Admiral (selfishsnake.com)",
@@ -71049,6 +70783,7 @@
         "shakyseat.com": "Leven Labs, Inc. DBA Admiral (shakyseat.com)",
         "shakysurprise.com": "Leven Labs, Inc. DBA Admiral (shakysurprise.com)",
         "shakytaste.com": "Leven Labs, Inc. DBA Admiral (shakytaste.com)",
+        "shallowart.com": "Leven Labs, Inc. DBA Admiral (shallowart.com)",
         "shallowblade.com": "Leven Labs, Inc. DBA Admiral (shallowblade.com)",
         "shamerain.com": "Leven Labs, Inc. DBA Admiral (shamerain.com)",
         "shapecomb.com": "Leven Labs, Inc. DBA Admiral (shapecomb.com)",
@@ -71075,7 +70810,6 @@
         "sincerepelican.com": "Leven Labs, Inc. DBA Admiral (sincerepelican.com)",
         "sinceresubstance.com": "Leven Labs, Inc. DBA Admiral (sinceresubstance.com)",
         "singroot.com": "Leven Labs, Inc. DBA Admiral (singroot.com)",
-        "sinkbooks.com": "Leven Labs, Inc. DBA Admiral (sinkbooks.com)",
         "sixauthority.com": "Leven Labs, Inc. DBA Admiral (sixauthority.com)",
         "sixscissors.com": "Leven Labs, Inc. DBA Admiral (sixscissors.com)",
         "sizzlingsmoke.com": "Leven Labs, Inc. DBA Admiral (sizzlingsmoke.com)",
@@ -71173,7 +70907,6 @@
         "steadfastsystem.com": "Leven Labs, Inc. DBA Admiral (steadfastsystem.com)",
         "steadycopper.com": "Leven Labs, Inc. DBA Admiral (steadycopper.com)",
         "stealsteel.com": "Leven Labs, Inc. DBA Admiral (stealsteel.com)",
-        "steepscale.com": "Leven Labs, Inc. DBA Admiral (steepscale.com)",
         "steepsister.com": "Leven Labs, Inc. DBA Admiral (steepsister.com)",
         "steepsquirrel.com": "Leven Labs, Inc. DBA Admiral (steepsquirrel.com)",
         "stepcattle.com": "Leven Labs, Inc. DBA Admiral (stepcattle.com)",
@@ -71196,7 +70929,6 @@
         "stormyachiever.com": "Leven Labs, Inc. DBA Admiral (stormyachiever.com)",
         "straightnest.com": "Leven Labs, Inc. DBA Admiral (straightnest.com)",
         "strangeclocks.com": "Leven Labs, Inc. DBA Admiral (strangeclocks.com)",
-        "strangersponge.com": "Leven Labs, Inc. DBA Admiral (strangersponge.com)",
         "strangesink.com": "Leven Labs, Inc. DBA Admiral (strangesink.com)",
         "streetsort.com": "Leven Labs, Inc. DBA Admiral (streetsort.com)",
         "stretchsister.com": "Leven Labs, Inc. DBA Admiral (stretchsister.com)",
@@ -71218,7 +70950,6 @@
         "succeedscene.com": "Leven Labs, Inc. DBA Admiral (succeedscene.com)",
         "successfulscent.com": "Leven Labs, Inc. DBA Admiral (successfulscent.com)",
         "suddensoda.com": "Leven Labs, Inc. DBA Admiral (suddensoda.com)",
-        "sugarfriction.com": "Leven Labs, Inc. DBA Admiral (sugarfriction.com)",
         "suggestionbridge.com": "Leven Labs, Inc. DBA Admiral (suggestionbridge.com)",
         "sulkycook.com": "Leven Labs, Inc. DBA Admiral (sulkycook.com)",
         "summerobject.com": "Leven Labs, Inc. DBA Admiral (summerobject.com)",
@@ -71231,7 +70962,6 @@
         "suspectmark.com": "Leven Labs, Inc. DBA Admiral (suspectmark.com)",
         "swankysquare.com": "Leven Labs, Inc. DBA Admiral (swankysquare.com)",
         "swellstocking.com": "Leven Labs, Inc. DBA Admiral (swellstocking.com)",
-        "swelteringsleep.com": "Leven Labs, Inc. DBA Admiral (swelteringsleep.com)",
         "swimfreely.com": "Leven Labs, Inc. DBA Admiral (swimfreely.com)",
         "swingslip.com": "Leven Labs, Inc. DBA Admiral (swingslip.com)",
         "swordgoose.com": "Leven Labs, Inc. DBA Admiral (swordgoose.com)",
@@ -71247,7 +70977,6 @@
         "tangyamount.com": "Leven Labs, Inc. DBA Admiral (tangyamount.com)",
         "tangycover.com": "Leven Labs, Inc. DBA Admiral (tangycover.com)",
         "tastelesstrees.com": "Leven Labs, Inc. DBA Admiral (tastelesstrees.com)",
-        "tastelesstrucks.com": "Leven Labs, Inc. DBA Admiral (tastelesstrucks.com)",
         "tastesnake.com": "Leven Labs, Inc. DBA Admiral (tastesnake.com)",
         "tawdryson.com": "Leven Labs, Inc. DBA Admiral (tawdryson.com)",
         "tdzvm.pw": "Leven Labs, Inc. DBA Admiral (tdzvm.pw)",
@@ -71379,7 +71108,6 @@
         "vividfrost.com": "Leven Labs, Inc. DBA Admiral (vividfrost.com)",
         "vividmeadow.com": "Leven Labs, Inc. DBA Admiral (vividmeadow.com)",
         "vividplume.com": "Leven Labs, Inc. DBA Admiral (vividplume.com)",
-        "voicelessvein.com": "Leven Labs, Inc. DBA Admiral (voicelessvein.com)",
         "voidgoo.com": "Leven Labs, Inc. DBA Admiral (voidgoo.com)",
         "volatileprofit.com": "Leven Labs, Inc. DBA Admiral (volatileprofit.com)",
         "volatilevessel.com": "Leven Labs, Inc. DBA Admiral (volatilevessel.com)",
@@ -71410,6 +71138,7 @@
         "whisperingsummit.com": "Leven Labs, Inc. DBA Admiral (whisperingsummit.com)",
         "whispermeeting.com": "Leven Labs, Inc. DBA Admiral (whispermeeting.com)",
         "wildcommittee.com": "Leven Labs, Inc. DBA Admiral (wildcommittee.com)",
+        "wildwoodavenue.com": "Leven Labs, Inc. DBA Admiral (wildwoodavenue.com)",
         "wirecomic.com": "Leven Labs, Inc. DBA Admiral (wirecomic.com)",
         "wiredforcoffee.com": "Leven Labs, Inc. DBA Admiral (wiredforcoffee.com)",
         "wirypaste.com": "Leven Labs, Inc. DBA Admiral (wirypaste.com)",
@@ -74914,6 +74643,7 @@
         "secretmag.ru": "Rambler Internet Holding, LLC",
         "top100.ru": "Rambler Internet Holding, LLC",
         "rating-widget.com": "Rating-Widget, Inc.",
+        "rebuyengine.com": "rebuyengine.com",
         "recruitics.com": "Recruitics LLC",
         "dubsmash.com": "Reddit Inc.",
         "redd.it": "Reddit Inc.",

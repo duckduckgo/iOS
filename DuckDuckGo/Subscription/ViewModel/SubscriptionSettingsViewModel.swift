@@ -81,7 +81,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM dd, yyyy"
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
         return formatter
     }()
     
@@ -187,7 +188,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @MainActor
     private func updateSubscriptionsStatusMessage(status: PrivacyProSubscription.Status, date: Date, product: String, billingPeriod: PrivacyProSubscription.BillingPeriod) {
         Logger.subscription.log("Update subscription status: \(status.rawValue)")
-        let billingPeriod = billingPeriod == .monthly ? UserText.subscriptionMonthlyBillingPeriod : UserText.subscriptionAnnualBillingPeriod
+//        let billingPeriod = billingPeriod == .monthly ? UserText.subscriptionMonthlyBillingPeriod : UserText.subscriptionAnnualBillingPeriod
         let date = dateFormatter.string(from: date)
 
         switch status {

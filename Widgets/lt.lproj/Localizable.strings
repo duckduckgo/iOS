@@ -1,9 +1,3 @@
-/* No comment provided by engineer. */
-"iOS 17 required" = "Reikalinga „iOS 17“";
-
-/* No comment provided by engineer. */
-"Label" = "Etiketė";
-
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Nedelsiant sugeneruokite naują privatų „Duck Address“.";
 
@@ -82,11 +76,29 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Atjungti";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Iki %@";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Atmesti";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Atšaukti pristabdymą";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "VPN įjungtas";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "VPN pristabdymas";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN įjungtas";
 
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "VPN išjungtas";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "VPN pristabdytas";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Neprijungta";

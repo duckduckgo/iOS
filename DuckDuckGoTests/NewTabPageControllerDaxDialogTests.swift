@@ -82,9 +82,8 @@ final class NewTabPageControllerDaxDialogTests: XCTestCase {
         hvc = nil
     }
 
-    func testWhenContextualDaxDialogsSupported_OnDidAppear_CorrectTypePassedToDialogFactory() throws {
+    func testWhenViewDidAppear_CorrectTypePassedToDialogFactory() throws {
         // GIVEN
-        variantManager.supportedFeatures = [.contextualDaxDialogs]
         let expectedSpec = randomDialogType()
         specProvider.specToReturn = expectedSpec
 
@@ -92,30 +91,14 @@ final class NewTabPageControllerDaxDialogTests: XCTestCase {
         hvc.viewDidAppear(false)
 
         // THEN
-        XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.contextualDaxDialogs.rawValue)
         XCTAssertFalse(self.specProvider.nextHomeScreenMessageCalled)
         XCTAssertTrue(self.specProvider.nextHomeScreenMessageNewCalled)
         XCTAssertEqual(self.dialogFactory.homeDialog, expectedSpec)
         XCTAssertNotNil(self.dialogFactory.onDismiss)
     }
 
-    func testWhenOldOnboarding_OnDidAppear_NothingPassedDialogFactory() throws {
+    func testWhenOnboardingComplete_CorrectTypePassedToDialogFactory() throws {
         // GIVEN
-        variantManager.supportedFeatures = []
-
-        // WHEN
-        hvc.viewDidAppear(false)
-
-        // THEN
-        XCTAssertTrue(specProvider.nextHomeScreenMessageCalled)
-        XCTAssertFalse(specProvider.nextHomeScreenMessageNewCalled)
-        XCTAssertNil(dialogFactory.homeDialog)
-        XCTAssertNil(dialogFactory.onDismiss)
-    }
-
-    func testWhenContextualDaxDialogsSupported_OnOnboardingComplete_CorrectTypePassedToDialogFactory() throws {
-        // GIVEN
-        variantManager.supportedFeatures = [.contextualDaxDialogs]
         let expectedSpec = randomDialogType()
         specProvider.specToReturn = expectedSpec
 
@@ -123,51 +106,18 @@ final class NewTabPageControllerDaxDialogTests: XCTestCase {
         hvc.onboardingCompleted()
 
         // THEN
-        XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.contextualDaxDialogs.rawValue)
         XCTAssertFalse(self.specProvider.nextHomeScreenMessageCalled)
         XCTAssertTrue(self.specProvider.nextHomeScreenMessageNewCalled)
         XCTAssertEqual(self.dialogFactory.homeDialog, expectedSpec)
         XCTAssertNotNil(self.dialogFactory.onDismiss)
-    }
-
-    func testWhenOldOnboarding_OnOnboardingComplete_NothingPassedDialogFactory() throws {
-        // GIVEN
-        variantManager.supportedFeatures = []
-
-        // WHEN
-        hvc.onboardingCompleted()
-
-        // THEN
-        XCTAssertTrue(specProvider.nextHomeScreenMessageCalled)
-        XCTAssertFalse(specProvider.nextHomeScreenMessageNewCalled)
-        XCTAssertNil(dialogFactory.homeDialog)
-        XCTAssertNil(dialogFactory.onDismiss)
-    }
-
-    func testWhenOldOnboarding_OnOpenedAsNewTab_NothingPassedDialogFactory() throws {
-        // GIVEN
-        variantManager.supportedFeatures = []
-
-        // WHEN
-        hvc.openedAsNewTab(allowingKeyboard: true)
-
-        // THEN
-        XCTAssertTrue(specProvider.nextHomeScreenMessageCalled)
-        XCTAssertFalse(specProvider.nextHomeScreenMessageNewCalled)
-        XCTAssertNil(dialogFactory.homeDialog)
-        XCTAssertNil(dialogFactory.onDismiss)
     }
 
     func testWhenShowNextDaxDialog_AndShouldShowDaxDialogs_ThenReturnTrue() {
-        // GIVEN
-        variantManager.supportedFeatures = []
-
         // WHEN
         hvc.showNextDaxDialog()
 
         // THEN
-        XCTAssertTrue(specProvider.nextHomeScreenMessageCalled)
-        XCTAssertFalse(specProvider.nextHomeScreenMessageNewCalled)
+        XCTAssertTrue(specProvider.nextHomeScreenMessageNewCalled)
     }
 
     private func randomDialogType() -> DaxDialogs.HomeScreenSpec {

@@ -18,6 +18,7 @@
 //
 
 import Core
+import BrowserServicesKit
 
 protocol HomeRowReminderStorage {
 
@@ -36,14 +37,22 @@ class HomeRowReminder {
 
     private var storage: HomeRowReminderStorage
     private var homeMessageStorage: HomeMessageStorage
+    private let variantManager: VariantManager
 
-    init(storage: HomeRowReminderStorage = UserDefaultsHomeRowReminderStorage(),
-         homeMessageStorage: HomeMessageStorage = HomeMessageStorage()) {
+    init(
+        storage: HomeRowReminderStorage = UserDefaultsHomeRowReminderStorage(),
+        homeMessageStorage: HomeMessageStorage = HomeMessageStorage(),
+        variantManager: VariantManager = DefaultVariantManager()
+    ) {
         self.storage = storage
         self.homeMessageStorage = homeMessageStorage
+        self.variantManager = variantManager
     }
 
     func showNow() -> Bool {
+        // If user saw Add to Dock instruction during onboarding do not show the reminder.
+        guard !(variantManager.isSupported(feature: .addToDockIntro) || variantManager.isSupported(feature: .addToDockContextual)) else { return false }
+
         guard !hasShownBefore() else { return false }
         guard hasReminderTimeElapsed else { return false }
         return true

@@ -54,5 +54,8 @@ struct SettingsDataClearingView: View {
         .applySettingsListModifiers(title: UserText.dataClearing,
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onFirstAppear {
+            Pixel.fire(pixel: .settingsDataClearingOpen)
+        }
     }
 }

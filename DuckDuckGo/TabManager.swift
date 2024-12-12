@@ -44,6 +44,8 @@ class TabManager {
     private let onboardingPixelReporter: OnboardingPixelReporting
     private let featureFlagger: FeatureFlagger
     private let textZoomCoordinator: TextZoomCoordinating
+    private let fireproofing: Fireproofing
+    private let websiteDataManager: WebsiteDataManaging
     private let subscriptionCookieManager: SubscriptionCookieManaging
     private let appSettings: AppSettings
 
@@ -66,7 +68,9 @@ class TabManager {
          featureFlagger: FeatureFlagger,
          subscriptionCookieManager: SubscriptionCookieManaging,
          appSettings: AppSettings,
-         textZoomCoordinator: TextZoomCoordinating) {
+         textZoomCoordinator: TextZoomCoordinating,
+         websiteDataManager: WebsiteDataManaging,
+         fireproofing: Fireproofing) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
@@ -81,6 +85,8 @@ class TabManager {
         self.subscriptionCookieManager = subscriptionCookieManager
         self.appSettings = appSettings
         self.textZoomCoordinator = textZoomCoordinator
+        self.websiteDataManager = websiteDataManager
+        self.fireproofing = fireproofing
         registerForNotifications()
     }
 
@@ -105,7 +111,9 @@ class TabManager {
                                                               onboardingPixelReporter: onboardingPixelReporter,
                                                               featureFlagger: featureFlagger,
                                                               subscriptionCookieManager: subscriptionCookieManager,
-                                                              textZoomCoordinator: textZoomCoordinator)
+                                                              textZoomCoordinator: textZoomCoordinator,
+                                                              websiteDataManager: websiteDataManager,
+                                                              fireproofing: fireproofing)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -185,7 +193,9 @@ class TabManager {
                                                               onboardingPixelReporter: onboardingPixelReporter,
                                                               featureFlagger: featureFlagger,
                                                               subscriptionCookieManager: subscriptionCookieManager,
-                                                              textZoomCoordinator: textZoomCoordinator)
+                                                              textZoomCoordinator: textZoomCoordinator,
+                                                              websiteDataManager: websiteDataManager,
+                                                              fireproofing: fireproofing)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

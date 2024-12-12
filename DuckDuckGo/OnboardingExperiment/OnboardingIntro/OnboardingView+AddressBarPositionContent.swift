@@ -23,7 +23,6 @@ import Onboarding
 
 private enum Metrics {
     static let titleFont = Font.system(size: 20, weight: .semibold)
-    static let messageFont = Font.system(size: 16)
 }
 
 extension OnboardingView {
@@ -51,7 +50,7 @@ extension OnboardingView {
 
         var body: some View {
             VStack(spacing: 16.0) {
-                AnimatableTypingText(UserText.HighlightsOnboardingExperiment.AddressBarPosition.title, startAnimating: animateTitle) {
+                AnimatableTypingText(UserText.Onboarding.AddressBarPosition.title, startAnimating: animateTitle) {
                     showContent.wrappedValue = true
                 }
                 .foregroundColor(.primary)
@@ -61,7 +60,7 @@ extension OnboardingView {
                     OnboardingAddressBarPositionPicker()
 
                     Button(action: action) {
-                        Text(verbatim: UserText.HighlightsOnboardingExperiment.AddressBarPosition.cta)
+                        Text(verbatim: UserText.Onboarding.AddressBarPosition.cta)
                     }
                     .buttonStyle(PrimaryButtonStyle())
                 }

@@ -18,13 +18,28 @@
 //
 
 import Core
+import AuthenticationServices
 
 final class AutofillUsageMonitor {
 
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveSaveEvent), name: .autofillSaveEvent, object: nil)
+
+        ASCredentialIdentityStore.shared.getState({ state in
+            if state.isEnabled {
+                self.autofillExtensionEnabled = true
+            } else {
+                if self.autofillExtensionEnabled != nil {
+                    Pixel.fire(pixel: .autofillExtensionDisabled)
+                    self.autofillExtensionEnabled = false
+                }
+            }
+        })
     }
-    
+
+    @UserDefaultsWrapper(key: .autofillExtensionEnabled, defaultValue: nil)
+    var autofillExtensionEnabled: Bool?
+
     @UserDefaultsWrapper(key: .autofillFirstTimeUser, defaultValue: true)
     private var autofillFirstTimeUser: Bool
 

@@ -51,11 +51,11 @@ extension VPNAddWidgetTip: Tip {
     }
 
     var title: Text {
-        Text("Add VPN Widget")
+        Text(UserText.networkProtectionAddWidgetTipTitle)
     }
 
     var message: Text? {
-        Text("Turn the VPN on and off right from the Home Screen.")
+        Text(UserText.networkProtectionAddWidgetTipMessage)
     }
 
     var image: Image? {
@@ -64,7 +64,7 @@ extension VPNAddWidgetTip: Tip {
 
     var actions: [Action] {
         [Action(id: ActionIdentifiers.addWidget.rawValue) {
-            Text("Add widget")
+            Text(UserText.networkProtectionAddWidgetTipAction)
                 .foregroundStyle(Color(designSystemColor: .accent))
         }]
     }

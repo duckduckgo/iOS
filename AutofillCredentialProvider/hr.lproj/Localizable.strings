@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Zatvori";
+
+/* Done button title */
+"action.button.done" = "Gotovo";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "Otvori DuckDuckGo";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Automatsko popunjavanje lozinki je aktivirano!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "uređaj";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Otkaži";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Otključaj uređaj za pristup lozinkama";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "URL web lokacije";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "Kopiraj %@";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Adresa je kopirana";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Bilješke su kopirane";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Lozinka je kopirana";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Korisničko ime je kopirano";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Sakrij lozinku";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Posljednje ažuriranje: %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Naslov";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Bilješke";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Lozinka";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Pokaži lozinku";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Korisničko ime";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Lozinke su sigurno pohranjene na tvom uređaju.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Još nema spremljenih lozinki";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Odaberi lozinku koju ćeš koristiti za \"%@\"";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Pretraživanje lozinki";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "za '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Nema rezultata";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Predloženo";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Lozinke";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Postavi šifru na uređaju %@ kako bi se tvoje DuckDuckGo lozinke popunjavale automatski.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Potrebna je šifra uređaja.";
+

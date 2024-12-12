@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1732540137973,
+    "version": 1733826965137,
     "features": {
         "adAttributionReporting": {
             "state": "disabled",
@@ -69,10 +69,26 @@
             },
             "hash": "b813ade8472a097ffbd43a3331116fe1"
         },
-        "aiChat": {
+        "additionalCampaignPixelParams": {
             "state": "disabled",
             "exceptions": [],
             "hash": "c292bb627849854515cebbded288ef5a"
+        },
+        "aiChat": {
+            "state": "disabled",
+            "exceptions": [],
+            "features": {
+                "browsingToolbarShortcut": {
+                    "state": "disabled"
+                },
+                "addressBarShortcut": {
+                    "state": "disabled"
+                }
+            },
+            "settings": {
+                "aiChatURL": "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=4"
+            },
+            "hash": "4b5209f8cbe489299641ea30ed9a2542"
         },
         "ampLinks": {
             "exceptions": [
@@ -99,6 +115,9 @@
                 },
                 {
                     "domain": "flexmls.com"
+                },
+                {
+                    "domain": "asuracomic.net"
                 },
                 {
                     "domain": "instructure.com"
@@ -128,7 +147,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "fa5f86bac5946c528cd6bc7449a2718a"
+            "hash": "2e91c1024751b208d974721cd5c4a020"
         },
         "androidBrowserConfig": {
             "exceptions": [],
@@ -139,6 +158,14 @@
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "auraExperiment": {
+            "exceptions": [],
+            "settings": {
+                "packages": []
+            },
+            "state": "disabled",
+            "hash": "527fd2e156c7669f001516ee2d3d7c0e"
         },
         "autocompleteTabs": {
             "state": "enabled",
@@ -586,6 +613,201 @@
                     "domain": "outlet46.de"
                 },
                 {
+                    "domain": "mytolino.de"
+                },
+                {
+                    "domain": "google.ae"
+                },
+                {
+                    "domain": "google.at"
+                },
+                {
+                    "domain": "google.be"
+                },
+                {
+                    "domain": "google.bg"
+                },
+                {
+                    "domain": "google.by"
+                },
+                {
+                    "domain": "google.ca"
+                },
+                {
+                    "domain": "google.ch"
+                },
+                {
+                    "domain": "google.cl"
+                },
+                {
+                    "domain": "google.co.id"
+                },
+                {
+                    "domain": "google.co.il"
+                },
+                {
+                    "domain": "google.co.in"
+                },
+                {
+                    "domain": "google.co.jp"
+                },
+                {
+                    "domain": "google.co.ke"
+                },
+                {
+                    "domain": "google.co.kr"
+                },
+                {
+                    "domain": "google.co.nz"
+                },
+                {
+                    "domain": "google.co.th"
+                },
+                {
+                    "domain": "google.co.uk"
+                },
+                {
+                    "domain": "google.co.ve"
+                },
+                {
+                    "domain": "google.co.za"
+                },
+                {
+                    "domain": "google.com"
+                },
+                {
+                    "domain": "google.com.ar"
+                },
+                {
+                    "domain": "google.com.au"
+                },
+                {
+                    "domain": "google.com.br"
+                },
+                {
+                    "domain": "google.com.co"
+                },
+                {
+                    "domain": "google.com.ec"
+                },
+                {
+                    "domain": "google.com.eg"
+                },
+                {
+                    "domain": "google.com.hk"
+                },
+                {
+                    "domain": "google.com.mx"
+                },
+                {
+                    "domain": "google.com.my"
+                },
+                {
+                    "domain": "google.com.pe"
+                },
+                {
+                    "domain": "google.com.ph"
+                },
+                {
+                    "domain": "google.com.pk"
+                },
+                {
+                    "domain": "google.com.py"
+                },
+                {
+                    "domain": "google.com.sa"
+                },
+                {
+                    "domain": "google.com.sg"
+                },
+                {
+                    "domain": "google.com.tr"
+                },
+                {
+                    "domain": "google.com.tw"
+                },
+                {
+                    "domain": "google.com.ua"
+                },
+                {
+                    "domain": "google.com.uy"
+                },
+                {
+                    "domain": "google.com.vn"
+                },
+                {
+                    "domain": "google.cz"
+                },
+                {
+                    "domain": "google.de"
+                },
+                {
+                    "domain": "google.dk"
+                },
+                {
+                    "domain": "google.dz"
+                },
+                {
+                    "domain": "google.ee"
+                },
+                {
+                    "domain": "google.es"
+                },
+                {
+                    "domain": "google.fi"
+                },
+                {
+                    "domain": "google.fr"
+                },
+                {
+                    "domain": "google.gr"
+                },
+                {
+                    "domain": "google.hr"
+                },
+                {
+                    "domain": "google.hu"
+                },
+                {
+                    "domain": "google.ie"
+                },
+                {
+                    "domain": "google.it"
+                },
+                {
+                    "domain": "google.lt"
+                },
+                {
+                    "domain": "google.lv"
+                },
+                {
+                    "domain": "google.nl"
+                },
+                {
+                    "domain": "google.no"
+                },
+                {
+                    "domain": "google.pl"
+                },
+                {
+                    "domain": "google.pt"
+                },
+                {
+                    "domain": "google.ro"
+                },
+                {
+                    "domain": "google.rs"
+                },
+                {
+                    "domain": "google.ru"
+                },
+                {
+                    "domain": "google.se"
+                },
+                {
+                    "domain": "google.sk"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -596,6 +818,9 @@
                 },
                 {
                     "domain": "flexmls.com"
+                },
+                {
+                    "domain": "asuracomic.net"
                 },
                 {
                     "domain": "instructure.com"
@@ -627,7 +852,7 @@
                     }
                 }
             },
-            "hash": "2c73b04e22812bf92bc2a859e7540c3a"
+            "hash": "32cbf1af6d2dd1ef9c61bb3cc34852dd"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -640,10 +865,15 @@
         "autofillSurveys": {
             "state": "enabled",
             "settings": {
-                "surveys": []
+                "surveys": [
+                    {
+                        "id": "2024-12-04",
+                        "url": "https://selfserve.decipherinc.com/survey/selfserve/32ab/241201"
+                    }
+                ]
             },
             "exceptions": [],
-            "hash": "1d554e00b6a8adc2a7514accf9a92fdb"
+            "hash": "2f7e9f55c5dbcb35ee01be966b079512"
         },
         "autofill": {
             "exceptions": [
@@ -708,9 +938,12 @@
                             }
                         ]
                     }
+                },
+                "partialFormSaves": {
+                    "state": "enabled"
                 }
             },
-            "hash": "28d4af98382248e184c4315bd49f4222"
+            "hash": "07b6b3bb0e6ddc4bf3dadbbbd0419478"
         },
         "backgroundAgentPixelTest": {
             "state": "enabled",
@@ -735,6 +968,11 @@
             },
             "hash": "91e54b0d57fbf1cf8668c9a929631432"
         },
+        "blockList": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
+        },
         "bookmarks": {
             "state": "enabled",
             "exceptions": [],
@@ -756,10 +994,13 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "37e0cf88badfc8b01b6394f0884502f6"
+            "hash": "2b0962b6ea0b84b7450358766ccf667d"
         },
         "brokenSitePrompt": {
             "state": "enabled",
@@ -1462,6 +1703,9 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
@@ -1480,7 +1724,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "cb1f114a9e0314393b2a0f789cba163f"
+            "hash": "9b33d212830c6b5b67317c0621b15006"
         },
         "clickToPlay": {
             "exceptions": [
@@ -1497,6 +1741,9 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
@@ -1510,7 +1757,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "894fb86c1f058aee9db47cfcdf3637de"
+            "hash": "1533ba1f2ef66001f0e4d6faf0d48be7"
         },
         "clientBrandHint": {
             "exceptions": [],
@@ -1554,10 +1801,13 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "96b2f778bab196aa424e9c859ddea778"
+            "hash": "ee5eabf360024d267d4668e73c053a48"
         },
         "contextualOnboarding": {
             "exceptions": [],
@@ -1630,11 +1880,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "fce0a9ccd7ae060d25e7debe4d8905fb"
+            "hash": "91ceb18e840b0b322c2fd818e6b5453a"
         },
         "customUserAgent": {
             "settings": {
@@ -1824,6 +2077,9 @@
                 },
                 {
                     "domain": "flexmls.com"
+                },
+                {
+                    "domain": "asuracomic.net"
                 },
                 {
                     "domain": "instructure.com"
@@ -2770,7 +3026,7 @@
                             },
                             {
                                 "selector": "[data-identity='billboard-ad']",
-                                "type": "hide-empty"
+                                "type": "hide"
                             },
                             {
                                 "selector": "[data-identity='leaderboard-ad']",
@@ -2969,6 +3225,23 @@
                             },
                             {
                                 "selector": "[id*='ddc-sidebox-ad-stacked-wrap']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "e-chords.com",
+                        "rules": [
+                            {
+                                "selector": ".adscifra",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".banner",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "#banner",
                                 "type": "hide-empty"
                             }
                         ]
@@ -5189,7 +5462,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "16e64ea4c926bdf7c865a8b7cbde1b2b"
+            "hash": "a3957788141533420149b5c96c8de136"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -5206,11 +5479,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
+            "hash": "01c90bccc9b20770953ff3f786fa4dac"
         },
         "extendedOnboarding": {
             "exceptions": [],
@@ -5236,10 +5512,13 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "7f042650922da2636492e77ed1101bce"
+            "hash": "0cc652d37e184686c92eb64e6ab9d3fa"
         },
         "fingerprintingBattery": {
             "exceptions": [
@@ -5259,11 +5538,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "enabled",
-            "hash": "fcc2138fa97c35ded544b39708fda919"
+            "hash": "3821c0fed8912dd05b1618e3a0594fcf"
         },
         "fingerprintingCanvas": {
             "settings": {
@@ -5367,11 +5649,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "49a3d497835bf5715aaaa73f87dd974f"
+            "hash": "1165c91b6e289988a60b72a97d3a5a3b"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -5442,6 +5727,9 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "target.com"
                 },
                 {
@@ -5449,7 +5737,7 @@
                 }
             ],
             "state": "enabled",
-            "hash": "b1f406c6ff87e27244d26289c0e383f9"
+            "hash": "b1de304ce2c53c1fc1ef395c98296f8f"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -5502,11 +5790,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "enabled",
-            "hash": "046340bb9287a20efed6189525ec5fed"
+            "hash": "7e7b65104a08a935f2263eb34b84d3cb"
         },
         "fingerprintingTemporaryStorage": {
             "exceptions": [
@@ -5532,11 +5823,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "enabled",
-            "hash": "14b7fe3d276b52109c59f0c71aee4f71"
+            "hash": "934f0960313eb7801841ee99cd3dc802"
         },
         "googleRejected": {
             "exceptions": [
@@ -5553,11 +5847,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
+            "hash": "01c90bccc9b20770953ff3f786fa4dac"
         },
         "gpc": {
             "state": "enabled",
@@ -5605,6 +5902,9 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
@@ -5617,7 +5917,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "501bbc6471eb079cb27fa8a2a47467a5"
+            "hash": "92dbff4d73bdec464f5767165933b0bf"
         },
         "harmfulApis": {
             "settings": {
@@ -5732,11 +6032,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "fb598c4167ff166d85dd49c701cc5579"
+            "hash": "603b489064ac5a2379d18a946644e499"
         },
         "history": {
             "state": "enabled",
@@ -5786,10 +6089,13 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "b47d255c6f836ecb7ae0b3e61cc2c025"
+            "hash": "a0a328c1f5189fabc27bd1659146c3a2"
         },
         "incontextSignup": {
             "exceptions": [],
@@ -5817,10 +6123,14 @@
             "exceptions": [],
             "hash": "429cea8d27316dc62af04159ec7c42b5"
         },
-        "loadingBarExp": {
+        "maliciousSiteProtection": {
+            "state": "internal",
             "exceptions": [],
-            "state": "disabled",
-            "hash": "728493ef7a1488e4781656d3f9db84aa"
+            "settings": {
+                "hashPrefixUpdateFrequency": 20,
+                "filterSetUpdateFrequency": 720
+            },
+            "hash": "ca9942379aea7619f878337a2debdee8"
         },
         "marketplaceAdPostback": {
             "state": "enabled",
@@ -5856,6 +6166,9 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
@@ -5867,7 +6180,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "d14f6e3a9aa4139ee1d517016b59691e"
+            "hash": "ac148f97532e086f27bedc5b7f6fc4a2"
         },
         "networkProtection": {
             "state": "enabled",
@@ -5916,11 +6229,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "82088db85ca7f64418fbfd57db25ade1"
+            "hash": "e3342b0dc61ba52c56a90f553b7bfc43"
         },
         "performanceMetrics": {
             "state": "enabled",
@@ -5938,39 +6254,18 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "6792064606a5a72c5cd44addb4d40bda"
+            "hash": "04fb7d6e0337563a26060b1a32d2332e"
         },
         "phishingDetection": {
-            "state": "internal",
-            "exceptions": [
-                {
-                    "domain": "marvel.com"
-                },
-                {
-                    "domain": "sundancecatalog.com"
-                },
-                {
-                    "domain": "noaprints.com"
-                },
-                {
-                    "domain": "flexmls.com"
-                },
-                {
-                    "domain": "instructure.com"
-                }
-            ],
-            "features": {
-                "allowErrorPage": {
-                    "state": "internal"
-                },
-                "allowPreferencesToggle": {
-                    "state": "internal"
-                }
-            },
-            "hash": "9a9143022e6cc8976461b337abfa81a1"
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
         },
         "pluginPointFocusedViewPlugin": {
             "state": "disabled",
@@ -6046,7 +6341,7 @@
                     "minSupportedVersion": "7.136.0"
                 },
                 "setAccessTokenCookieForSubscriptionDomains": {
-                    "state": "enabled",
+                    "state": "disabled",
                     "rollout": {
                         "steps": [
                             {
@@ -6054,13 +6349,18 @@
                             },
                             {
                                 "percent": 50
+                            },
+                            {
+                                "percent": 100
                             }
                         ]
-                    },
-                    "minSupportedVersion": "7.145.1"
+                    }
+                },
+                "freeTrials": {
+                    "state": "internal"
                 }
             },
-            "hash": "2a9bad4e25e3a161fbbbc324a240c03e"
+            "hash": "c002a2f7b1299197657574c7328e8f88"
         },
         "privacyProtectionsPopup": {
             "state": "disabled",
@@ -6100,11 +6400,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "138c3b2409f6b3bf967b804ab9bf2ce2"
+            "hash": "359af23cc499c17b84ef08a118fedc4a"
         },
         "remoteMessaging": {
             "state": "enabled",
@@ -6127,13 +6430,16 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "settings": {
                 "windowInMs": 0
             },
-            "hash": "baf19d9e0f506ed09f46c95b1849adee"
+            "hash": "54b249ffdfd7710373849720c7bf1ed8"
         },
         "runtimeChecks": {
             "state": "disabled",
@@ -6151,11 +6457,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "settings": {},
-            "hash": "dfede9f06b9e322e198736703d013d15"
+            "hash": "c2c2d48b0fc1b03db53065ca5da92675"
         },
         "sendFullPackageInstallSource": {
             "state": "enabled",
@@ -6178,11 +6487,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
+            "hash": "01c90bccc9b20770953ff3f786fa4dac"
         },
         "showOnAppLaunch": {
             "exceptions": [
@@ -6199,11 +6511,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
+            "hash": "01c90bccc9b20770953ff3f786fa4dac"
         },
         "sslCertificates": {
             "state": "enabled",
@@ -6230,11 +6545,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
+            "hash": "01c90bccc9b20770953ff3f786fa4dac"
         },
         "syncPromotion": {
             "state": "enabled",
@@ -7143,6 +7461,7 @@
                                     "itsthevibe.com",
                                     "nytimes.com",
                                     "realmadrid.com",
+                                    "repretel.com",
                                     "rocketnews24.com",
                                     "solitaired.com",
                                     "stuff.co.nz",
@@ -7160,6 +7479,7 @@
                             {
                                 "rule": "securepubads.g.doubleclick.net/pagead/ppub_config",
                                 "domains": [
+                                    "repretel.com",
                                     "rocketnews24.com",
                                     "weather.com",
                                     "wunderground.com"
@@ -9705,10 +10025,13 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "f5b235ed3c5c9afdd44edfa3464235cf"
+            "hash": "cc188a741d0bbe34cd7de16f70a69df7"
         },
         "trackingCookies1p": {
             "settings": {
@@ -9731,11 +10054,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "763f56424b0827b5731927a043219912"
+            "hash": "2426b21363085484652b231ca66897a5"
         },
         "trackingCookies3p": {
             "settings": {
@@ -9755,11 +10081,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "82088db85ca7f64418fbfd57db25ade1"
+            "hash": "e3342b0dc61ba52c56a90f553b7bfc43"
         },
         "trackingParameters": {
             "exceptions": [
@@ -9789,6 +10118,9 @@
                 },
                 {
                     "domain": "flexmls.com"
+                },
+                {
+                    "domain": "asuracomic.net"
                 },
                 {
                     "domain": "theverge.com"
@@ -9827,7 +10159,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "3792a4970c07fe00da08f77e7dcf01ed"
+            "hash": "51753ddb14b1c7a22eb20f74f46c092d"
         },
         "userAgentRotation": {
             "settings": {
@@ -9847,11 +10179,14 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "asuracomic.net"
+                },
+                {
                     "domain": "instructure.com"
                 }
             ],
             "state": "disabled",
-            "hash": "9225b8785d6973db37abde99d81d219c"
+            "hash": "fbc6687658b62b108ed7769a660dd8e0"
         },
         "voiceSearch": {
             "exceptions": [],
@@ -9876,6 +10211,9 @@
                 },
                 {
                     "domain": "flexmls.com"
+                },
+                {
+                    "domain": "asuracomic.net"
                 },
                 {
                     "domain": "wsj.com"
@@ -9954,7 +10292,7 @@
                     }
                 ]
             },
-            "hash": "2853748f3ebb813d59f4db4a7bb13c83"
+            "hash": "39bd8f30c68f608ae78ffde4e13bef93"
         },
         "webViewBlobDownload": {
             "exceptions": [],
@@ -10010,6 +10348,26 @@
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "experimentTest": {
+            "state": "enabled",
+            "exceptions": [],
+            "features": {
+                "experimentTestAA": {
+                    "state": "enabled",
+                    "cohorts": [
+                        {
+                            "name": "control",
+                            "weight": 1
+                        },
+                        {
+                            "name": "treatment",
+                            "weight": 1
+                        }
+                    ]
+                }
+            },
+            "hash": "0fe5af5a94e036bf5d78076df6dd771b"
         }
     },
     "unprotectedTemporary": []

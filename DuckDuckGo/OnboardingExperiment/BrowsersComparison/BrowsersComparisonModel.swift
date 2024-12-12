@@ -117,29 +117,18 @@ extension BrowsersComparisonModel.PrivacyFeature {
         case blockCreepyAds
         case eraseBrowsingData
 
-        // Remove it once Highlights experiment finishes
-        static var onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
-
         var title: String {
             switch self {
             case .privateSearch:
-                UserText.DaxOnboardingExperiment.BrowsersComparison.Features.privateSearch
+                UserText.Onboarding.BrowsersComparison.Features.privateSearch
             case .blockThirdPartyTrackers:
-                Self.onboardingManager.isOnboardingHighlightsEnabled ?
-                UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.trackerBlockers :
-                UserText.DaxOnboardingExperiment.BrowsersComparison.Features.trackerBlockers
+                UserText.Onboarding.BrowsersComparison.Features.trackerBlockers
             case .blockCookiePopups:
-                Self.onboardingManager.isOnboardingHighlightsEnabled ?
-                UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.cookiePopups:
-                UserText.DaxOnboardingExperiment.BrowsersComparison.Features.cookiePopups
+                UserText.Onboarding.BrowsersComparison.Features.cookiePopups
             case .blockCreepyAds:
-                Self.onboardingManager.isOnboardingHighlightsEnabled ?
-                UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.creepyAds :
-                UserText.DaxOnboardingExperiment.BrowsersComparison.Features.creepyAds
+                UserText.Onboarding.BrowsersComparison.Features.creepyAds
             case .eraseBrowsingData:
-                Self.onboardingManager.isOnboardingHighlightsEnabled ?
-                UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.eraseBrowsingData:
-                UserText.DaxOnboardingExperiment.BrowsersComparison.Features.eraseBrowsingData
+                UserText.Onboarding.BrowsersComparison.Features.eraseBrowsingData
             }
         }
     }

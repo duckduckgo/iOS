@@ -67,7 +67,7 @@ struct SettingsSubscriptionView: View {
             let subtitleText = {
                 switch subscriptionManager.storePurchaseManager().currentStorefrontRegion {
                 case .usa:
-                    UserText.settingsPProDescription
+                    UserText.settingsPProUSDescription
                 case .restOfWorld:
                     UserText.settingsPProROWDescription
                 }

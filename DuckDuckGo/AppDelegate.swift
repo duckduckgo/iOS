@@ -36,6 +36,8 @@ import RemoteMessaging
 import SyncDataProviders
 import Subscription
 import NetworkProtection
+import PixelKit
+import PixelExperimentKit
 import WebKit
 import os.log
 
@@ -114,6 +116,8 @@ import os.log
 
     private var didFinishLaunchingStartTime: CFAbsoluteTime?
 
+    private let appStateMachine = AppStateMachine()
+
     override init() {
         super.init()
 
@@ -128,6 +132,7 @@ import os.log
     // swiftlint:disable:next cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        appStateMachine.handle(.launching(application, launchOptions: launchOptions))
         didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
         defer {
             if let didFinishLaunchingStartTime {
@@ -174,6 +179,16 @@ import os.log
         crashCollection.startAttachingCrashLogMessages { pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+
+                // Each crash comes with an `appVersion` parameter representing the version that the crash occurred on.
+                // This is to disambiguate the situation where a crash occurs, but isn't sent until the next update.
+                // If for some reason the parameter can't be found, fall back to the current version.
+                if let crashAppVersion = params[PixelParameters.appVersion] {
+                    let dailyParameters = [PixelParameters.appVersion: crashAppVersion]
+                    DailyPixel.fireDaily(.dbCrashDetectedDaily, withAdditionalParameters: dailyParameters)
+                } else {
+                    DailyPixel.fireDaily(.dbCrashDetectedDaily)
+                }
             }
 
             // Async dispatch because rootViewController may otherwise be nil here
@@ -288,6 +303,33 @@ import os.log
             ).wrappedValue
         ) ?? defaultEnvironment
 
+        var dryRun = false
+#if DEBUG
+        dryRun = true
+#endif
+        let isPhone = UIDevice.current.userInterfaceIdiom == .phone
+        let source = isPhone ? PixelKit.Source.iOS : PixelKit.Source.iPadOS
+        PixelKit.setUp(dryRun: dryRun,
+                       appVersion: AppVersion.shared.versionNumber,
+                       source: source.rawValue,
+                       defaultHeaders: [:],
+                       defaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) { (pixelName: String, headers: [String: String], parameters: [String: String], _, _, onComplete: @escaping PixelKit.CompletionBlock) in
+
+            let url = URL.pixelUrl(forPixelNamed: pixelName)
+            let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
+            let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
+            Task {
+                do {
+                    _ = try await DefaultAPIService().fetch(request: request)
+                    onComplete(true, nil)
+                } catch {
+                    onComplete(false, error)
+                }
+            }
+        }
+        PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                        eventTracker: ExperimentEventTracker(store: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()))
+
         let syncErrorHandler = SyncErrorHandler()
 
         syncDataProviders = SyncDataProviders(
@@ -296,7 +338,8 @@ import os.log
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
             syncErrorHandler: syncErrorHandler,
-            faviconStoring: Favicons.shared
+            faviconStoring: Favicons.shared,
+            tld: AppDependencyProvider.shared.storageCache.tld
         )
 
         let syncService = DDGSync(
@@ -308,7 +351,8 @@ import os.log
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
-        privacyProDataReporter = PrivacyProDataReporter()
+        let fireproofing = UserDefaultsFireproofing.xshared
+        privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
 
         isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
             .filter { $0 }
@@ -380,8 +424,10 @@ import os.log
                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                           voiceSearchHelper: voiceSearchHelper,
                                           featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                          fireproofing: fireproofing,
                                           subscriptionCookieManager: subscriptionCookieManager,
                                           textZoomCoordinator: makeTextZoomCoordinator(),
+                                          websiteDataManager: makeWebsiteDataManager(fireproofing: fireproofing),
                                           appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
             main.loadViewIfNeeded()
@@ -436,6 +482,13 @@ import os.log
         tipKitAppEventsHandler.appDidFinishLaunching()
 
         return true
+    }
+
+    private func makeWebsiteDataManager(fireproofing: Fireproofing,
+                                        dataStoreIDManager: DataStoreIDManaging = DataStoreIDManager.shared) -> WebsiteDataManaging {
+        return WebCacheManager(cookieStorage: MigratableCookieStorage(),
+                               fireproofing: fireproofing,
+                               dataStoreIDManager: dataStoreIDManager)
     }
 
     private func makeTextZoomCoordinator() -> TextZoomCoordinator {
@@ -587,6 +640,8 @@ import os.log
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        appStateMachine.handle(.activating(application))
+
         defer {
             if let didFinishLaunchingStartTime {
                 let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
@@ -691,6 +746,7 @@ import os.log
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        appStateMachine.handle(.suspending(application))
         Task { @MainActor in
             await refreshShortcuts()
             await vpnWorkaround.removeRedditSessionWorkaround()
@@ -783,6 +839,7 @@ import os.log
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        appStateMachine.handle(.backgrounding(application))
         displayBlankSnapshotWindow()
         autoClear?.startClearingTimer()
         lastBackgroundDate = Date()
@@ -829,6 +886,7 @@ import os.log
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         Logger.sync.debug("App launched with url \(url.absoluteString)")
+        appStateMachine.handle(.openURL(url))
 
         // If showing the onboarding intro ignore deeplinks
         guard mainViewController?.needsToShowOnboardingIntro() == false else {
@@ -1052,7 +1110,7 @@ import os.log
         autofillPixelReporter = AutofillPixelReporter(
             userDefaults: .standard,
             autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
-            eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
+            eventMapping: EventMapping<AutofillPixelEvent> {[weak self] event, _, params, _ in
                 switch event {
                 case .autofillActiveUser:
                     Pixel.fire(pixel: .autofillActiveUser)
@@ -1062,8 +1120,16 @@ import os.log
                     Pixel.fire(pixel: .autofillOnboardedUser)
                 case .autofillToggledOn:
                     Pixel.fire(pixel: .autofillToggledOn, withAdditionalParameters: params ?? [:])
+                    if let autofillExtensionToggled = self?.autofillUsageMonitor.autofillExtensionEnabled {
+                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+                                   withAdditionalParameters: params ?? [:])
+                    }
                 case .autofillToggledOff:
                     Pixel.fire(pixel: .autofillToggledOff, withAdditionalParameters: params ?? [:])
+                    if let autofillExtensionToggled = self?.autofillUsageMonitor.autofillExtensionEnabled {
+                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+                                   withAdditionalParameters: params ?? [:])
+                    }
                 case .autofillLoginsStacked:
                     Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
                 default:

@@ -20,7 +20,6 @@
 import Foundation
 @testable import DuckDuckGo
 
-final class OnboardingManagerMock: OnboardingHighlightsManaging, OnboardingAddToDockManaging {
-    var isOnboardingHighlightsEnabled: Bool = false
+final class OnboardingManagerMock: OnboardingAddToDockManaging {
     var addToDockEnabledState: OnboardingAddToDockState = .disabled
 }

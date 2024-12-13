@@ -2920,7 +2920,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* VPN settings screen cell text to learn how to control the VPN with Siri */
-"vpn.settings.control.with.siri" = "Control with Siri";
+"vpn.settings.control.with.siri" = "Control VPN With Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";

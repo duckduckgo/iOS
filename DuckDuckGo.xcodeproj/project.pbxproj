@@ -11714,7 +11714,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "jacek/new-breakage-form";
+				branch = "mgurgel/new-breakage-form-feedback";
 				kind = branch;
 			};
 		};

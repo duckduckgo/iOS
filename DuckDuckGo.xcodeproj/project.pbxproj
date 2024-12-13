@@ -892,6 +892,7 @@
 		C10CB5F32A1A5BDF0048E503 /* AutofillViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10CB5F22A1A5BDF0048E503 /* AutofillViews.swift */; };
 		C111B26927F579EF006558B1 /* BookmarkOrFolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C111B26827F579EF006558B1 /* BookmarkOrFolderTests.swift */; };
 		C12324C32C4697C900FBB26B /* AutofillBreakageReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1836CE42C35A0EA0016D057 /* AutofillBreakageReportTableViewCell.swift */; };
+		C12552972D0B06A100A0FDAA /* FreeTrialsFeatureFlagExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12552962D0B06A100A0FDAA /* FreeTrialsFeatureFlagExperiment.swift */; };
 		C12726EE2A5FF88C00215B02 /* EmailSignupPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12726ED2A5FF88C00215B02 /* EmailSignupPromptView.swift */; };
 		C12726F02A5FF89900215B02 /* EmailSignupPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12726EF2A5FF89900215B02 /* EmailSignupPromptViewModel.swift */; };
 		C12726F22A5FF8CB00215B02 /* EmailSignupPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12726F12A5FF8CB00215B02 /* EmailSignupPromptViewController.swift */; };
@@ -2764,6 +2765,8 @@
 		C1193F612D08642900CB3239 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C11C4D302D08648100288E85 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C11C4D312D08648100288E85 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C12552942D0AFD1300A0FDAA /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = SOURCE_ROOT; };
+		C12552962D0B06A100A0FDAA /* FreeTrialsFeatureFlagExperiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeTrialsFeatureFlagExperiment.swift; sourceTree = "<group>"; };
 		C12726ED2A5FF88C00215B02 /* EmailSignupPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignupPromptView.swift; sourceTree = "<group>"; };
 		C12726EF2A5FF89900215B02 /* EmailSignupPromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignupPromptViewModel.swift; sourceTree = "<group>"; };
 		C12726F12A5FF8CB00215B02 /* EmailSignupPromptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignupPromptViewController.swift; sourceTree = "<group>"; };
@@ -5352,6 +5355,14 @@
 			name = Autofill;
 			sourceTree = "<group>";
 		};
+		C12552952D0B066B00A0FDAA /* FreeTrialsExperiment */ = {
+			isa = PBXGroup;
+			children = (
+				C12552962D0B06A100A0FDAA /* FreeTrialsFeatureFlagExperiment.swift */,
+			);
+			path = FreeTrialsExperiment;
+			sourceTree = "<group>";
+		};
 		C14882D627F2010700D59F0C /* ImportExport */ = {
 			isa = PBXGroup;
 			children = (
@@ -5747,18 +5758,19 @@
 		D664C7922B289AA000CBFA76 /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
-				BDE91CD42C6292BF0005CB74 /* Feedback */,
-				F1FDC92F2BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift */,
-				D60170BB2BA32DD6001911B5 /* Subscription.swift */,
-				1E53508E2C7C9A1F00818DAA /* DefaultSubscriptionManager+AccountManagerKeychainAccessDelegate.swift */,
 				D6D95CE42B6DA3F200960317 /* AsyncHeadlessWebview */,
+				1E53508E2C7C9A1F00818DAA /* DefaultSubscriptionManager+AccountManagerKeychainAccessDelegate.swift */,
+				D664C7962B289AA000CBFA76 /* Extensions */,
+				BDE91CD42C6292BF0005CB74 /* Feedback */,
+				C12552952D0B066B00A0FDAA /* FreeTrialsExperiment */,
+				BDE219E52C406D19005D5884 /* PrivacyProDataReporting.swift */,
+				D60170BB2BA32DD6001911B5 /* Subscription.swift */,
+				D65CEA6F2B6AC6C9008A759B /* Subscription.xcassets */,
+				1E39BEAF2CC9477200496FBA /* SubscriptionCookieManageEventPixelMapping.swift */,
+				F1FDC92F2BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift */,
+				D664C7B02B289AA000CBFA76 /* UserScripts */,
 				D664C7932B289AA000CBFA76 /* ViewModel */,
 				D664C7AC2B289AA000CBFA76 /* Views */,
-				D664C7B02B289AA000CBFA76 /* UserScripts */,
-				D664C7962B289AA000CBFA76 /* Extensions */,
-				D65CEA6F2B6AC6C9008A759B /* Subscription.xcassets */,
-				BDE219E52C406D19005D5884 /* PrivacyProDataReporting.swift */,
-				1E39BEAF2CC9477200496FBA /* SubscriptionCookieManageEventPixelMapping.swift */,
 			);
 			path = Subscription;
 			sourceTree = "<group>";
@@ -8148,6 +8160,7 @@
 				4B412ACC2BBB3D0900A39F5E /* LazyView.swift in Sources */,
 				7B10FF252D11A56300F36BF2 /* ControlWidgetVPNIntents.swift in Sources */,
 				85047C772A0D5D3D00D2FF3F /* SyncSettingsViewController+SyncDelegate.swift in Sources */,
+				C12552972D0B06A100A0FDAA /* FreeTrialsFeatureFlagExperiment.swift in Sources */,
 				85DDE0402AC6FF65006ABCA2 /* MainView.swift in Sources */,
 				980891A72237D5D800313A70 /* FeedbackPresenter.swift in Sources */,
 				CBAD0F0C2CFF4EE1006267B8 /* AppDependencies.swift in Sources */,

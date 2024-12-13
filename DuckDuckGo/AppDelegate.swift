@@ -99,7 +99,14 @@ enum AppBehavior: String {
     private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
     private var subscriptionCookieManager: SubscriptionCookieManaging!
     private var subscriptionCookieManagerFeatureFlagCancellable: AnyCancellable?
-    private var privacyProDataReporter: PrivacyProDataReporting!
+    private var _privacyProDataReporter: PrivacyProDataReporting?
+    var privacyProDataReporter: PrivacyProDataReporting? {
+        if appBehavior == .stateMachine {
+            return (appStateMachine.currentState as? Active)?.appDependencies.privacyProDataReporter
+        } else {
+            return _privacyProDataReporter
+        }
+    }
 
     // MARK: - Feature specific app event handlers
 
@@ -386,7 +393,7 @@ enum AppBehavior: String {
             self.syncService = syncService
 
             let fireproofing = UserDefaultsFireproofing.xshared
-            privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
+            _privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
 
             isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
                 .filter { $0 }
@@ -421,13 +428,13 @@ enum AppBehavior: String {
 
             homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                           remoteMessagingClient: remoteMessagingClient,
-                                                          privacyProDataReporter: privacyProDataReporter)
+                                                          privacyProDataReporter: _privacyProDataReporter!)
 
             let previewsSource = TabPreviewsSource()
             let historyManager = makeHistoryManager()
             let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
-            privacyProDataReporter.injectTabsModel(tabsModel)
+            _privacyProDataReporter!.injectTabsModel(tabsModel)
 
             if shouldPresentInsufficientDiskSpaceAlertAndCrash {
 
@@ -450,7 +457,7 @@ enum AppBehavior: String {
                                               previewsSource: previewsSource,
                                               tabsModel: tabsModel,
                                               syncPausedStateManager: syncErrorHandler,
-                                              privacyProDataReporter: privacyProDataReporter,
+                                              privacyProDataReporter: _privacyProDataReporter!,
                                               variantManager: variantManager,
                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                                               contextualOnboardingLogic: daxDialogs,
@@ -726,7 +733,7 @@ enum AppBehavior: String {
 
             syncService.scheduler.notifyAppLifecycleEvent()
 
-            privacyProDataReporter.injectSyncService(syncService)
+            _privacyProDataReporter?.injectSyncService(syncService)
 
             fireFailedCompilationsPixelIfNeeded()
 
@@ -762,7 +769,7 @@ enum AppBehavior: String {
             importPasswordsStatusHandler.checkSyncSuccessStatus()
 
             Task {
-                await privacyProDataReporter.saveWidgetAdded()
+                await _privacyProDataReporter?.saveWidgetAdded()
             }
 
             AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
@@ -887,7 +894,7 @@ enum AppBehavior: String {
             AppDependencyProvider.shared.autofillLoginSession.endSession()
             suspendSync()
             syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
-            privacyProDataReporter.saveApplicationLastSessionEnded()
+            _privacyProDataReporter?.saveApplicationLastSessionEnded()
             resetAppStartTime()
         }
     }

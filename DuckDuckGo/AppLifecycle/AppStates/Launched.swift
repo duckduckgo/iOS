@@ -82,6 +82,8 @@ struct Launched: AppState {
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
     private let application: UIApplication
+
+    // swiftlint:disable:next cyclomatic_complexity
     init(stateContext: Init.StateContext) {
 
         application = stateContext.application

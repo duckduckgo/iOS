@@ -669,6 +669,7 @@ enum AppBehavior: String {
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     func applicationDidBecomeActive(_ application: UIApplication) {
         if appBehavior == .stateMachine {
             appStateMachine.handle(.activating)

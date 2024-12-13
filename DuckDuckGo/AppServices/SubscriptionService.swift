@@ -39,6 +39,4 @@ final class SubscriptionService {
             .store(in: &cancellables)
     }
 
-
-
 }

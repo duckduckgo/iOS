@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import DesignResourcesKit
 import SwiftUICore
 
 private struct SiriBubble: Shape {
@@ -60,15 +61,15 @@ struct SiriBubbleView: View {
     }
 
     var body: some View {
-        HStack {
+        HStack(alignment: .center) {
             Text(text)
-                .foregroundStyle(Color.black)
-
-            Spacer()
+                .foregroundStyle(Color(designSystemColor: .textPrimary))
+                .multilineTextAlignment(.center)
         }.padding(12)
             .padding(.bottom, SiriBubble.tipHeight)
+            .frame(maxWidth: .infinity)
             .background(SiriBubble()
-                .fill(Color.white)
+                .fill(Color(designSystemColor: .surface))
                 .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 8)
                 .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2))
     }

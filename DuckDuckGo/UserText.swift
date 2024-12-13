@@ -337,9 +337,9 @@ public struct UserText {
     public static let addWidget = NSLocalizedString("addWidget.button", value: "Add Widget", comment: "")
     public static let addWidgetTitle = NSLocalizedString("addWidget.title", value: "One tap to your favorite sites.", comment: "")
     public static let addWidgetDescription = NSLocalizedString("addWidget.description", value: "Get quick access to private search and the sites you love.", comment: "")
-    public static let addWidgetSettingsFirstParagraph = NSLocalizedString("addWidget.settings.firstParagraph", value: "Long-press on the home screen until the apps jiggle.", comment: "")
-    public static let addWidgetSettingsSecondParagraph = NSLocalizedString("addWidget.settings.secondParagraph", value: "Tap the “Edit” button, then choose “Add Widget”.", comment: "")
-    public static let addWidgetSettingsThirdParagraph = NSLocalizedString("addWidget.settings.title", value: "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.", comment: "")
+    public static let addWidgetSettingsFirstParagraph = NSLocalizedString("addWidget.settings.firstParagraph", value: "Long-press anywhere on the Home Screen until the apps jiggle", comment: "")
+    public static let addWidgetSettingsSecondParagraph = NSLocalizedString("addWidget.settings.secondParagraph", value: "Tap the **Edit** button, then choose **Add Widget**", comment: "")
+    public static let addWidgetSettingsThirdParagraph = NSLocalizedString("addWidget.settings.title", value: "Find and select **DuckDuckGo**. Then choose a widget.", comment: "")
 
     public static let actionSaveToDownloads = NSLocalizedString("downloads.alert.action.save-to-downloads", value: "Save to Downloads", comment: "Alert action for starting a file dowload")
     public static func messageDownloadStarted(for filename: String) -> String {
@@ -449,13 +449,13 @@ public struct UserText {
 
     // MARK: - Control Center Widget Education
 
-    public static let controlCenterWidgetEducationParagraph1 = NSLocalizedString("control.center.widget.education.paragraph.1", value: "Swipe down from the top-right corner of the screen.", comment: "First paragraph of the Control Center Widget Education screen")
-    public static let controlCenterWidgetEducationParagraph2 = NSLocalizedString("control.center.widget.education.paragraph.2", value: "Tap the “+” button at the top left of Control Center.", comment: "Second paragraph of the Control Center Widget Education screen")
-    public static let controlCenterWidgetEducationParagraph3 = NSLocalizedString("control.center.widget.education.paragraph.3", value: "Tap “+ Add a Control” at the bottom of the screen.", comment: "Third paragraph of the Control Center Widget Education screen")
+    public static let controlCenterWidgetEducationParagraph1 = NSLocalizedString("control.center.widget.education.paragraph.1", value: "Swipe down from the top-right corner of the screen", comment: "First paragraph of the Control Center Widget Education screen")
+    public static let controlCenterWidgetEducationParagraph2 = NSLocalizedString("control.center.widget.education.paragraph.2", value: "Tap the **+** button at the top left of **Control Center**", comment: "Second paragraph of the Control Center Widget Education screen")
+    public static let controlCenterWidgetEducationParagraph3 = NSLocalizedString("control.center.widget.education.paragraph.3", value: "Tap **Add a Control** at the bottom of the screen", comment: "Third paragraph of the Control Center Widget Education screen")
 
     // MARK: - Control Center Widget Education: VPN
 
-    public static let controlCenterVPNWidgetEducationParagraph = NSLocalizedString("control.center.vpn.widget.education.paragraph", value: "Find DuckDuckGo in the list, then tap the VPN control to add it to your Control Center.", comment: "Fourth paragraph of the Control Center VPN Widget Education screen")
+    public static let controlCenterVPNWidgetEducationParagraph = NSLocalizedString("control.center.vpn.widget.education.paragraph", value: "Find **DuckDuckGo** in the list, then tap **VPN control** to add it", comment: "Fourth paragraph of the Control Center VPN Widget Education screen")
 
     // MARK: - Waitlist
     
@@ -675,11 +675,11 @@ public struct UserText {
 
     public static let vpnSettingsAddWidget = NSLocalizedString("vpn.settings.add.widget", value: "Add VPN Widget to Home Screen", comment: "VPN settings screen cell text for adding the VPN widget to the home screen")
     public static let vpnSettingsAddControlCenterWidget = NSLocalizedString("vpn.settings.add.control-center.widget", value: "Add VPN to Control Center", comment: "VPN settings screen cell text for adding the VPN widget to the control center")
-    public static let vpnSettingsControlWithSiri = NSLocalizedString("vpn.settings.control.with.siri", value: "Control with Siri", comment: "VPN settings screen cell text to learn how to control the VPN with Siri")
+    public static let vpnSettingsControlWithSiri = NSLocalizedString("vpn.settings.control.with.siri", value: "Control VPN With Siri", comment: "VPN settings screen cell text to learn how to control the VPN with Siri")
 
     // MARK: - VPN Widget
 
-    public static let addVPNWidgetSettingsThirdParagraph = NSLocalizedString("vpn.addWidget.settings.title", value: "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.", comment: "Title for the VPN widget onboarding screen")
+    public static let addVPNWidgetSettingsThirdParagraph = NSLocalizedString("vpn.addWidget.settings.title", value: "Find and select **DuckDuckGo**, then swipe to **VPN** and select **Add Widget**", comment: "Title for the VPN widget onboarding screen")
 
     // MARK: Custom DNS
 

@@ -775,6 +775,7 @@
 		9F06EB7B2D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB792D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift */; };
 		9F06EB7D2D0AEBD000905426 /* MaliciousSiteProtectionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB7C2D0AEBD000905426 /* MaliciousSiteProtectionManagerTests.swift */; };
 		9F06EB822D0AEE1F00905426 /* MaliciousSiteProtectionMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB802D0AEE1F00905426 /* MaliciousSiteProtectionMocks.swift */; };
+		9F06EB872D0C733B00905426 /* MaliciousSiteProtectionPreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB862D0C733900905426 /* MaliciousSiteProtectionPreferencesManager.swift */; };
 		9F16230B2CA0F0190093C4FC /* DebouncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F16230A2CA0F0190093C4FC /* DebouncerTests.swift */; };
 		9F1798572CD2443F0073018B /* AddToDockPromoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1798562CD2443F0073018B /* AddToDockPromoViewModelTests.swift */; };
 		9F23B8012C2BC94400950875 /* OnboardingBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F23B8002C2BC94400950875 /* OnboardingBackground.swift */; };
@@ -2680,6 +2681,7 @@
 		9F06EB792D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionFeatureFlagsTests.swift; sourceTree = "<group>"; };
 		9F06EB7C2D0AEBD000905426 /* MaliciousSiteProtectionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionManagerTests.swift; sourceTree = "<group>"; };
 		9F06EB802D0AEE1F00905426 /* MaliciousSiteProtectionMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionMocks.swift; sourceTree = "<group>"; };
+		9F06EB862D0C733900905426 /* MaliciousSiteProtectionPreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionPreferencesManager.swift; sourceTree = "<group>"; };
 		9F16230A2CA0F0190093C4FC /* DebouncerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebouncerTests.swift; sourceTree = "<group>"; };
 		9F1798562CD2443F0073018B /* AddToDockPromoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDockPromoViewModelTests.swift; sourceTree = "<group>"; };
 		9F23B8002C2BC94400950875 /* OnboardingBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBackground.swift; sourceTree = "<group>"; };
@@ -5178,6 +5180,14 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		9F06EB852D0C733100905426 /* UserPreferences */ = {
+			isa = PBXGroup;
+			children = (
+				9F06EB862D0C733900905426 /* MaliciousSiteProtectionPreferencesManager.swift */,
+			);
+			path = UserPreferences;
+			sourceTree = "<group>";
+		};
 		9F23B7FF2C2BABE000950875 /* OnboardingIntro */ = {
 			isa = PBXGroup;
 			children = (
@@ -5232,6 +5242,7 @@
 		9F254AA92CF47CD30063B308 /* MaliciousSiteProtection */ = {
 			isa = PBXGroup;
 			children = (
+				9F06EB852D0C733100905426 /* UserPreferences */,
 				9F06EB742D09E8D200905426 /* FeatureFlags */,
 				9F254AF22CF8E1F30063B308 /* Resources */,
 				9F254AAA2CF47DD50063B308 /* MaliciousSiteProtectionManager.swift */,
@@ -8196,6 +8207,7 @@
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
 				1E8AD1C927BFAD1500ABA377 /* DirectoryMonitor.swift in Sources */,
 				377D80222AB48554002AF251 /* FavoritesDisplayModeSyncHandler.swift in Sources */,
+				9F06EB872D0C733B00905426 /* MaliciousSiteProtectionPreferencesManager.swift in Sources */,
 				1E8AD1D127C000AB00ABA377 /* OngoingDownloadRow.swift in Sources */,
 				C1935A0E2C88D11D001AD72D /* AutofillSurveyView.swift in Sources */,
 				1DEAADF02BA46E0700E25A97 /* PrivateSearchView.swift in Sources */,

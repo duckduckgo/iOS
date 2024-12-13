@@ -138,22 +138,3 @@ private extension MaliciousSiteProtectionManager {
     }
 
 }
-
-protocol MaliciousSiteProtectionPreferencesPublishing {
-    var isEnabled: Bool { get }
-    var isEnabledPublisher: AnyPublisher<Bool, Never> { get }
-}
-
-protocol MaliciousSiteProtectionPreferencesManaging {
-    var isEnabled: Bool { get set }
-}
-
-final class MaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging, MaliciousSiteProtectionPreferencesPublishing {
-    @Published var isEnabled: Bool
-
-    var isEnabledPublisher: AnyPublisher<Bool, Never> { $isEnabled.eraseToAnyPublisher() }
-
-    init() {
-        isEnabled = true
-    }
-}

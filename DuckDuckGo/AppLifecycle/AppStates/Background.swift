@@ -35,8 +35,19 @@ struct Background: AppState {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
-        syncDidFinishCancellable = appDependencies.syncDidFinishCancellable
 
+        run()
+    }
+
+    init(stateContext: Launched.StateContext) {
+        application = stateContext.application
+        appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
+
+        run()
+    }
+
+    mutating func run() {
         let autoClear = appDependencies.autoClear
         let privacyStore = appDependencies.privacyStore
         let privacyProDataReporter = appDependencies.privacyProDataReporter
@@ -55,7 +66,7 @@ struct Background: AppState {
         autofillLoginSession.endSession()
 
         suspendSync(syncService: syncService)
-        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(stateContext.application)
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
         privacyProDataReporter.saveApplicationLastSessionEnded()
 
         resetAppStartTime()
@@ -70,7 +81,7 @@ struct Background: AppState {
                 Logger.sync.debug("Forcing background task completion")
                 UIApplication.shared.endBackgroundTask(taskID)
             }
-            syncDidFinishCancellable?.cancel()
+            appDependencies.syncDidFinishCancellable?.cancel()
             syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
                 .prefix(1)
                 .receive(on: DispatchQueue.main)
@@ -107,8 +118,4 @@ extension Background {
               appDependencies: appDependencies)
     }
 
-}
-
-struct DoubleBackground: AppState {
-    
 }

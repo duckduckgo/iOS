@@ -2611,8 +2611,15 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher(_ button: TabSwitcherButton) {
-        Pixel.fire(pixel: .tabBarTabSwitcherPressed)
-        DailyPixel.fireDaily(.tabSwitcherOpenDaily, withAdditionalParameters: TabSwitcherOpenDailyPixel().parameters(with: tabManager.model.tabs))
+        Pixel.fire(pixel: .tabBarTabSwitcherOpened)
+        DailyPixel.fireDaily(.tabSwitcherOpenedDaily, withAdditionalParameters: TabSwitcherOpenDailyPixel().parameters(with: tabManager.model.tabs))
+        if currentTab?.url?.isDuckDuckGoSearch == true {
+            Pixel.fire(pixel: .tabSwitcherOpenedFromSerp)
+        } else if currentTab?.url != nil {
+            Pixel.fire(pixel: .tabSwitcherOpenedFromWebsite)
+        } else {
+            Pixel.fire(pixel: .tabSwitcherOpenedFromNewTabPage)
+        }
 
         performCancel()
         showTabSwitcher()

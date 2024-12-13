@@ -86,17 +86,17 @@ struct FeatureFlagItemView: View {
 final class FeatureFlagDebugViewModel: ObservableObject {
     @Published var items: [FeatureFlagItem] = []
 
-    init(featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-         featureFlagOverrider: FeatureFlagOverrider = AppDependencyProvider.shared.featureFlagOverrider) {
+    init(featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         for flag in FeatureFlag.allCases {
-            guard flag != .debugMenu else {
+            guard flag != .debugMenu,
+                    let localOverrides = featureFlagger.localOverrides else {
                 continue
             }
             items.append(
                 FeatureFlagItem(
                     featureFlag: flag,
                     featureFlagger: featureFlagger,
-                    featureFlagOverrider: featureFlagOverrider
+                    featureFlagOverrider: localOverrides
                 )
             )
         }
@@ -119,15 +119,15 @@ final class FeatureFlagItem: ObservableObject, Identifiable {
     public var sourceTitle: String
     public var configFeatureTitle: String?
 
-    init(featureFlag: FeatureFlag, featureFlagger: FeatureFlagger, featureFlagOverrider: FeatureFlagOverrider) {
+    init(featureFlag: FeatureFlag, featureFlagger: FeatureFlagger, featureFlagOverrider: FeatureFlagLocalOverriding) {
         self.featureFlag = featureFlag
-        overrideState = OverrideState(bool: featureFlagOverrider.overrideValue(for: featureFlag))
+        overrideState = OverrideState(bool: featureFlagOverrider.override(for: featureFlag))
         flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
         sourceTitle = featureFlag.source.presentableText.title
         configFeatureTitle = featureFlag.source.presentableText.configFeatureTitle
-        overrideState = OverrideState(bool: featureFlagOverrider.overrideValue(for: featureFlag))
-        overrideStateCancellable = $overrideState.sink { [weak self] in
-            featureFlagOverrider.setOverride(value: $0.bool, for: featureFlag)
+        overrideState = OverrideState(bool: featureFlagOverrider.override(for: featureFlag))
+        overrideStateCancellable = $overrideState.sink { [weak self] _ in
+            featureFlagOverrider.toggleOverride(for: featureFlag)
             self?.flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
         }
     }

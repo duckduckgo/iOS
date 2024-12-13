@@ -306,12 +306,14 @@ final class SpecialErrorPageNavigationHandlerTests {
         sut.attachWebView(webView)
         sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: .genericSSL)
         #expect(!delegate.didCallCloseSpecialErrorPageTab)
+        #expect(!delegate.capturedShouldCreateNewEmptyTab)
 
         // WHEN
         sut.leaveSiteAction()
 
         // THEN
         #expect(delegate.didCallCloseSpecialErrorPageTab)
+        #expect(!delegate.capturedShouldCreateNewEmptyTab)
     }
 
     @MainActor
@@ -337,13 +339,15 @@ final class SpecialErrorPageNavigationHandlerTests {
         let delegate = SpySpecialErrorPageNavigationDelegate()
         sut.delegate = delegate
         #expect(!delegate.didCallCloseSpecialErrorPageTab)
-        
+        #expect(!delegate.capturedShouldCreateNewEmptyTab)
+
 
         // WHEN
         sut.leaveSiteAction()
 
         // THEN
         #expect(delegate.didCallCloseSpecialErrorPageTab)
+        #expect(delegate.capturedShouldCreateNewEmptyTab)
     }
 
     @MainActor

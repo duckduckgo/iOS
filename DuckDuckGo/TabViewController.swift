@@ -3148,8 +3148,8 @@ extension UserContentController {
 
 extension TabViewController: SpecialErrorPageNavigationDelegate {
 
-    func closeSpecialErrorPageTab() {
-        delegate?.tabDidRequestClose(self)
+    func closeSpecialErrorPageTab(shouldCreateNewEmptyTab: Bool) {
+        delegate?.tabDidRequestClose(self, shouldCreateEmptyTabAtSamePosition: shouldCreateNewEmptyTab)
     }
 
 }

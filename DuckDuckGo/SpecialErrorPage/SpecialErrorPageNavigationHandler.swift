@@ -148,7 +148,7 @@ extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate 
         }
 
         func closeTab(shouldCreateNewTab: Bool) {
-            delegate?.closeSpecialErrorPageTab(shouldCreateNewEmptyTab: true)
+            delegate?.closeSpecialErrorPageTab(shouldCreateNewEmptyTab: shouldCreateNewTab)
         }
 
         guard let errorData else { return }

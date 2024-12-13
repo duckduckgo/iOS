@@ -66,6 +66,34 @@ final class SpecialErrorPageNavigationHandlerTests {
     }
 
     @MainActor
+    @Test
+    func whenHandleDecidePolicyForNavigationActionIsCalled_AndNavigationIsMainFrame_ThenResetErrorData() async throws {
+        // GIVEN
+        let maliciousURL = try #require(URL(string: "https://www.phishing.com"))
+        webView.setCurrentURL(maliciousURL)
+        let errorData = SpecialErrorData.maliciousSite(kind: .phishing, url: maliciousURL)
+        let maliciousNavigationAction = MockNavigationAction(request: URLRequest(url: maliciousURL), targetFrame: MockFrameInfo(isMainFrame: true))
+        let maliciousNavigationResponse = MockNavigationResponse.with(url: maliciousURL)
+        maliciousSiteProtectionNavigationHandler.task = Task {
+            .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: maliciousNavigationAction, errorData: errorData)))
+        }
+        _ = await sut.handleDecidePolicyfor(navigationResponse: maliciousNavigationResponse, webView: webView)
+        #expect(sut.errorData == errorData)
+        #expect(sut.failedURL == maliciousURL)
+
+        let url = try #require(URL(string: "https://www.example.com"))
+        webView.setCurrentURL(url)
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
+
+        // WHEN
+        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+
+        // THEN
+        #expect(sut.errorData == nil)
+        #expect(sut.failedURL == nil)
+    }
+
+    @MainActor
     @Test("Decide Policy For Navigation Response forwards event to Malicious Site Protection Handler")
     func whenHandleDecidePolicyforNavigationResponseThenAskMaliciousSiteProtectionNavigationHandlerToHandleTheDecision() async throws {
         // GIVEN

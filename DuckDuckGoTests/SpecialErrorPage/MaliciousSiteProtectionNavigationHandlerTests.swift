@@ -133,7 +133,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         "Handle known threat in Main Frame",
         arguments: [
             ThreatKind.phishing,
-                .malware
+            .malware
         ]
     )
     func whenThreatKindIsNotNil_AndNavigationIsMainFrame_ThenReturnNavigationHandledMainFrame(threat: ThreatKind) async throws {
@@ -156,7 +156,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         "Handle known threat in IFrame",
         arguments: [
             ThreatKind.phishing,
-                .malware
+            .malware
         ]
     )
     func whenThreatKindIsNotNil_AndNavigationIsIFrame_ThenReturnNavigationHandledIFrame(threat: ThreatKind) async throws {
@@ -178,7 +178,8 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
     @Test(
         "Visit Site sets Exemption URL and Threat Kind",
         arguments: [
-            ThreatKind.phishing, .malware
+            ThreatKind.phishing,
+            .malware
         ]
     )
     func whenVisitSiteActionThenSetExemptionURLAndThreatKind(threat: ThreatKind) throws {

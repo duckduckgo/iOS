@@ -78,7 +78,7 @@ struct Active: AppState {
         if let url = stateContext.urlToOpen {
             openURL(url)
         } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
-            handleShortcutItem(shortcutItemToHandle)
+            handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
         }
 
         activateApp(isTesting: stateContext.isTesting)
@@ -460,10 +460,17 @@ struct Active: AppState {
         }
     }
 
-    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
+    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, appIsLaunching: Bool = false) {
         Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
-
+        let autoClear = appDependencies.autoClear
         Task { @MainActor in
+
+            if appIsLaunching {
+                await autoClear.clearDataIfEnabled()
+            } else {
+                await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
+            }
+
             if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
                 mainViewController.clearNavigationStack()
                 mainViewController.loadQueryInNewTab(query)

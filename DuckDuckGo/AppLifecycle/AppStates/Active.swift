@@ -465,6 +465,7 @@ struct Active: AppState {
         let autoClear = appDependencies.autoClear
         Task { @MainActor in
 
+            // This if/else could potentially be removed by ensuring previous autoClear calls (triggered during both Launch and Active states) are completed before proceeding. To be looked at in next milestones
             if appIsLaunching {
                 await autoClear.clearDataIfEnabled()
             } else {

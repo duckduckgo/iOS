@@ -125,13 +125,13 @@
 "addWidget.description" = "Get quick access to private search and the sites you love.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Long-press on the home screen until the apps jiggle.";
+"addWidget.settings.firstParagraph" = "Long-press anywhere on the Home Screen until the apps jiggle";
 
 /* No comment provided by engineer. */
-"addWidget.settings.secondParagraph" = "Tap the “Edit” button, then choose “Add Widget”.";
+"addWidget.settings.secondParagraph" = "Tap the **Edit** button, then choose **Add Widget**";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+"addWidget.settings.title" = "Find and select **DuckDuckGo**. Then choose a widget.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "One tap to your favorite sites.";
@@ -873,16 +873,16 @@
 "contextual.onboarding.try-search.surprise-me-title" = "Surprise me!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
-"control.center.vpn.widget.education.paragraph" = "Find DuckDuckGo in the list, then tap the VPN control to add it to your Control Center.";
+"control.center.vpn.widget.education.paragraph" = "Find **DuckDuckGo** in the list, then tap **VPN control** to add it";
 
 /* First paragraph of the Control Center Widget Education screen */
-"control.center.widget.education.paragraph.1" = "Swipe down from the top-right corner of the screen.";
+"control.center.widget.education.paragraph.1" = "Swipe down from the top-right corner of the screen";
 
 /* Second paragraph of the Control Center Widget Education screen */
-"control.center.widget.education.paragraph.2" = "Tap the “+” button at the top left of Control Center.";
+"control.center.widget.education.paragraph.2" = "Tap the **+** button at the top left of **Control Center**";
 
 /* Third paragraph of the Control Center Widget Education screen */
-"control.center.widget.education.paragraph.3" = "Tap “+ Add a Control” at the bottom of the screen.";
+"control.center.widget.education.paragraph.3" = "Tap **Add a Control** at the bottom of the screen";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Always Send Crash Reports";
@@ -2842,7 +2842,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+"vpn.addWidget.settings.title" = "Find and select **DuckDuckGo**, then swipe to **VPN** and select **Add Widget**";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
@@ -2920,7 +2920,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* VPN settings screen cell text to learn how to control the VPN with Siri */
-"vpn.settings.control.with.siri" = "Control with Siri";
+"vpn.settings.control.with.siri" = "Control VPN With Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";

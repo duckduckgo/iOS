@@ -76,7 +76,9 @@ private struct NumberedParagraph: View {
             NumberedCircle(number: number)
             VStack(alignment: .leading, spacing: Const.Spacing.textAndImage) {
                 HStack {
-                    Text(config.text)
+                    // The LocalizedStringKey wrapper is necessary to properly parse markdown
+                    Text(LocalizedStringKey(config.text))
+                        .foregroundStyle(Color(designSystemColor: .textPrimary))
                         .font(Font(uiFont: Const.Font.text))
                         .lineSpacing(Const.Spacing.line)
 
@@ -124,8 +126,8 @@ private struct NumberedCircle: View {
 }
 
 private extension Color {
-    static let circle = Color.blue0
-    static let numbers = Color.blueBase
+    static let circle = Color(designSystemColor: .textSelectionFill)
+    static let numbers = Color(designSystemColor: .textLink)
 }
 
 private enum Const {

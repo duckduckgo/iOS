@@ -164,7 +164,7 @@ struct NetworkProtectionVPNSettingsView: View {
 
                 if #available(iOS 18.0, *) {
                     NavigationLink {
-                        ControlCenterWidgetEducationView(navBarTitle: "Control Center",
+                        ControlCenterWidgetEducationView(navBarTitle: "Add DuckDuckGo VPN Shortcut to Your Control Center",
                                                          widget: .vpnToggle)
                     } label: {
                         Label {

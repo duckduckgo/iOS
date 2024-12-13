@@ -40,18 +40,24 @@ struct FeatureFlagItemView: View {
     @StateObject var viewModel: FeatureFlagItem
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Text(viewModel.id).daxTitle3()
                 Spacer()
                 Text(viewModel.flagStateIndicator)
             }
 
-            Picker("Local Override:", selection: $viewModel.overrideState) {
-                ForEach(FeatureFlagItem.OverrideState.allCases) { state in
-                    Text(state.rawValue).tag(state)
+            if viewModel.overridingSupported {
+                HStack {
+                    Button("Toggle Override") {
+                        viewModel.toggleOverride()
+                    }
+                    Spacer()
+                    if viewModel.isOverriden {
+                        Text("⚙️")
+                    }
                 }
-            }.daxBodyBold()
+            }
             HStack {
                 Text("Flag Source:")
                     .daxBodyBold()
@@ -95,8 +101,7 @@ final class FeatureFlagDebugViewModel: ObservableObject {
             items.append(
                 FeatureFlagItem(
                     featureFlag: flag,
-                    featureFlagger: featureFlagger,
-                    featureFlagOverrider: localOverrides
+                    featureFlagger: featureFlagger
                 )
             )
         }
@@ -105,7 +110,7 @@ final class FeatureFlagDebugViewModel: ObservableObject {
 
 final class FeatureFlagItem: ObservableObject, Identifiable {
     private let featureFlag: FeatureFlag
-    private var overrideStateCancellable: AnyCancellable?
+    private let featureFlagger: FeatureFlagger
 
     public var id: String {
         featureFlag.rawValue
@@ -114,51 +119,34 @@ final class FeatureFlagItem: ObservableObject, Identifiable {
     public var flagTitle: String {
         featureFlag.rawValue
     }
-    @Published public var flagStateIndicator: String
-    @Published public var overrideState: OverrideState
-    public var sourceTitle: String
-    public var configFeatureTitle: String?
 
-    init(featureFlag: FeatureFlag, featureFlagger: FeatureFlagger, featureFlagOverrider: FeatureFlagLocalOverriding) {
-        self.featureFlag = featureFlag
-        overrideState = OverrideState(bool: featureFlagOverrider.override(for: featureFlag))
-        flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
-        sourceTitle = featureFlag.source.presentableText.title
-        configFeatureTitle = featureFlag.source.presentableText.configFeatureTitle
-        overrideState = OverrideState(bool: featureFlagOverrider.override(for: featureFlag))
-        overrideStateCancellable = $overrideState.sink { [weak self] _ in
-            featureFlagOverrider.toggleOverride(for: featureFlag)
-            self?.flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
-        }
+    @Published public var flagStateIndicator: String
+
+    public var sourceTitle: String {
+        featureFlag.source.presentableText.title
     }
 
-    public enum OverrideState: String, Identifiable, CaseIterable {
-        public var id: String {
-            rawValue
-        }
+    public var configFeatureTitle: String? {
+        featureFlag.source.presentableText.configFeatureTitle
+    }
 
-        public var bool: Bool? {
-            switch self {
-            case .overrideOn:
-                return true
-            case .overrideOff:
-                return false
-            case .noOverride:
-                return nil
-            }
-        }
+    public var overridingSupported: Bool {
+        featureFlag.supportsLocalOverriding
+    }
 
-        init(bool: Bool?) {
-            guard let bool else {
-                self = .noOverride
-                return
-            }
-            self = bool ? .overrideOn : .overrideOff
-        }
+    public var isOverriden: Bool {
+        featureFlagger.localOverrides?.override(for: featureFlag) != featureFlagger.isFeatureOn(for: featureFlag, allowOverride: false)
+    }
 
-        case overrideOn = "On"
-        case overrideOff = "Off"
-        case noOverride = "None"
+    init(featureFlag: FeatureFlag, featureFlagger: FeatureFlagger) {
+        self.featureFlag = featureFlag
+        self.featureFlagger = featureFlagger
+        flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
+    }
+
+    public func toggleOverride() {
+        featureFlagger.localOverrides?.toggleOverride(for: featureFlag)
+        flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
     }
 }
 

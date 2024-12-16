@@ -192,8 +192,7 @@ class MainViewController: UIViewController {
         let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
         let aiChatViewController = AIChatViewController(settings: settings,
-                                                        webViewConfiguration: WKWebViewConfiguration.persistent(),
-                                                        pixelHandler: AIChatPixelHandler())
+                                                        webViewConfiguration: WKWebViewConfiguration.persistent())
         aiChatViewController.delegate = self
         return aiChatViewController
     }()

@@ -96,38 +96,61 @@ extension AIChatWebViewController {
         let request = URLRequest(url: chatModel.aiChatURL)
         webView.load(request)
     }
+
+    public func loadQuery(_ query: String) {
+        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              var urlComponents = URLComponents(url: chatModel.aiChatURL, resolvingAgainstBaseURL: false) else {
+            print("Invalid URL or failed to encode query")
+            return
+        }
+
+        var queryItems = urlComponents.queryItems ?? []
+        if let index = queryItems.firstIndex(where: { $0.name == "q" }) {
+            queryItems[index].value = encodedQuery
+        } else {
+            queryItems.append(URLQueryItem(name: "q", value: encodedQuery))
+        }
+        urlComponents.queryItems = queryItems
+
+        if let urlWithQuery = urlComponents.url {
+            webView.load(URLRequest(url: urlWithQuery))
+        } else {
+            print("Failed to construct URL with query")
+        }
+    }
+
 }
 
 // MARK: - WKNavigationDelegate
 
 extension AIChatWebViewController: WKNavigationDelegate {
-
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
-        if let url = navigationAction.request.url {
-            if url == chatModel.aiChatURL || navigationAction.targetFrame?.isMainFrame == false {
-                return .allow
-            } else {
-                delegate?.aiChatWebViewController(self, didRequestToLoad: url)
-                return .cancel
-            }
-        } else {
-            return .allow
-        }
-    }
-
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        loadingView.startAnimating()
-    }
-
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        loadingView.stopAnimating()
-    }
-
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        loadingView.stopAnimating()
-    }
-
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        loadingView.stopAnimating()
-    }
+//
+//    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+//        if let url = navigationAction.request.url {
+//            if url == chatModel.aiChatURL || navigationAction.targetFrame?.isMainFrame == false {
+//                return .allow
+//            } else {
+//                delegate?.aiChatWebViewController(self, didRequestToLoad: url)
+//                return .cancel
+//            }
+//        } else {
+//            return .allow
+//        }
+//    }
+//
+//    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+//        loadingView.startAnimating()
+//    }
+//
+//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+//        loadingView.stopAnimating()
+//    }
+//
+//    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+//        loadingView.stopAnimating()
+//    }
+//
+//    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+//        loadingView.stopAnimating()
+//    }
 }

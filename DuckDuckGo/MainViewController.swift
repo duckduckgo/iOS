@@ -1712,7 +1712,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    private func openAIChat() {
+    private func openAIChat(query: String? = nil) {
         let logoImage = UIImage(named: "Logo")
         let title = UserText.aiChatTitle
 
@@ -1723,6 +1723,10 @@ class MainViewController: UIViewController {
             allowedOrientation: .portrait)
 
         present(roundedPageSheet, animated: true, completion: nil)
+
+        if let query = query {
+            aiChatViewController.loadQuery(query)
+        }
     }
 }
 
@@ -2088,12 +2092,34 @@ extension MainViewController: OmniBarDelegate {
 
         switch accessoryType {
         case .chat:
-            openAIChat()
+            let query: String?
+
+            if let tabURL = currentTab?.url {
+                query = tabURL.isDuckDuckGoSearch ? extractQueryValue(from: tabURL) : nil
+            } else {
+                query = nil
+            }
+
+            openAIChat(query: query)
             Pixel.fire(pixel: .openAIChatFromAddressBar)
+
         case .share:
             Pixel.fire(pixel: .addressBarShare)
             currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.accessoryButton)
         }
+    }
+
+    func extractQueryValue(from url: URL) -> String? {
+        guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let queryItems = urlComponents.queryItems else {
+            return nil
+        }
+
+        if let queryItem = queryItems.first(where: { $0.name == "q" }),
+           let value = queryItem.value {
+            return value
+        }
+        return nil
     }
 
     func onAccessoryLongPressed(accessoryType: OmniBar.AccessoryType) {

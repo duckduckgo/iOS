@@ -37,6 +37,7 @@ public final class AIChatViewController: UIViewController {
     private var cleanupCancellable: AnyCancellable?
     private var didCleanup: Bool = false
     private let timerPixelHandler: TimerPixelHandler
+    private var query: String?
 
     /// Initializes a new instance of `AIChatViewController` with the specified remote settings and web view configuration.
     ///
@@ -84,6 +85,7 @@ extension AIChatViewController {
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         chatModel.startCleanupTimer()
+        reload()
     }
     
     public override func didReceiveMemoryWarning() {
@@ -93,6 +95,10 @@ extension AIChatViewController {
             chatModel.cancelTimer()
             removeWebViewController()
         }
+    }
+
+    public func reload() {
+        webViewController?.reload()
     }
 }
 
@@ -118,12 +124,25 @@ extension AIChatViewController {
         ])
 
         viewController.didMove(toParent: self)
+
+        if let query = query {
+            webViewController?.loadQuery(query)
+            self.query = nil
+        }
     }
 
     private func removeWebViewController() {
         webViewController?.removeFromParent()
         webViewController?.view.removeFromSuperview()
         webViewController = nil
+    }
+
+    public func loadQuery(_ query: String) {
+        if let webViewController = webViewController {
+            webViewController.loadQuery(query)
+        } else {
+            self.query = query
+        }
     }
 }
 

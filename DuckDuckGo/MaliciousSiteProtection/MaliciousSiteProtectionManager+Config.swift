@@ -40,6 +40,7 @@ extension MaliciousSiteProtectionManager {
 
     struct EmbeddedDataProvider: MaliciousSiteProtection.EmbeddedDataProviding {
 
+        // swiftlint:disable:next nesting
         private enum Constants {
             static let embeddedDataRevision = 1696473
             static let phishingEmbeddedHashPrefixDataSHA = "cdb609c37e950b7d0dcdaa80ae4071cf2c87223cfdd189caafae723722bd3158"

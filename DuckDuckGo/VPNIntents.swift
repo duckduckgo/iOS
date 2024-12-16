@@ -112,7 +112,7 @@ extension EnableVPNIntent: ForegroundContinuableIntent {
         } catch EnableAttemptFailure.firstSetupNeeded {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectCancelled)
 
-            throw needsToContinueInForegroundError("You need to first enable the VPN from within the DuckDuckGo app.") {
+            throw needsToContinueInForegroundError("You need to enable the VPN from the DuckDuckGo App.") {
 
                 await UIApplication.shared.open(AppDeepLinkSchemes.openVPN.url)
             }

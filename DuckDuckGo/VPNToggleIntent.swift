@@ -26,33 +26,28 @@ import OSLog
 
 // MARK: - Toggle
 
-
 /// `ForegroundContinuableIntent` isn't available for extensions, which makes it impossible to call
 /// from extensions.  This is the recommended workaround from:
 ///     https://mastodon.social/@mgorbach/110812347476671807
 ///
 @available(iOS 17.0, *)
 struct VPNToggleIntent: SetValueIntent {
-    @Parameter(title: "Enabled")
-    var value: Bool
-}
-
-@available(iOS 17.0, *)
-@available(iOSApplicationExtension, unavailable)
-extension VPNToggleIntent: SetValueIntent & ForegroundContinuableIntent {
     static let title: LocalizedStringResource = "Toggle DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Toggles the DuckDuckGo VPN"
     static let isDiscoverable: Bool = false
+
+    @Parameter(title: "Enabled")
+    var value: Bool
 
     @MainActor
     func perform() async throws -> some IntentResult {
         if value {
             try await startVPN()
+            return .result()
         } else {
             try await stopVPN()
+            return .result()
         }
-
-        return .result()
     }
 
     private func startVPN() async throws {
@@ -67,10 +62,7 @@ extension VPNToggleIntent: SetValueIntent & ForegroundContinuableIntent {
             case VPNIntentTunnelController.StartFailure.vpnNotConfigured:
                 DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectCancelled)
 
-                let dialog = IntentDialog(stringLiteral: UserText.vpnNeedsToBeEnabledFromApp)
-                throw needsToContinueInForegroundError(dialog) {
-                    await UIApplication.shared.open(AppDeepLinkSchemes.openVPN.url)
-                }
+                throw error
             default:
                 DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectFailure, error: error)
                 throw error

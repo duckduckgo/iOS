@@ -25,8 +25,14 @@ import Core
 
 // MARK: - Enable & Disable
 
+/// App intent to disable the VPN
+///
+/// This is used in our Widget only.
+/// This is very similar to ``DisableVPNAppIntent``, but this can run in both widget and app,
+/// does not support continuation in the app and does not provide any result dialog.
+///
 @available(iOS 17.0, *)
-struct DisableVPNIntent: AppIntent {
+struct VPNWidgetDisableIntent: AppIntent {
 
     private enum DisableAttemptFailure: CustomNSError {
         case cancelled
@@ -53,21 +59,19 @@ struct DisableVPNIntent: AppIntent {
             return .result()
         } catch {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectFailure, error: error)
-            return .result()
+            throw error
         }
     }
 }
 
-/// `ForegroundContinuableIntent` isn't available for extensions, which makes it impossible to call
-/// from extensions.  This is the recommended workaround from:
-///     https://mastodon.social/@mgorbach/110812347476671807
+/// App intent to disable the VPN
+///
+/// This is used in our Widget only.
+/// This is very similar to ``DisableVPNAppIntent``, but this can run in both widget and app,
+/// does not support continuation in the app and does not provide any result dialog.
 ///
 @available(iOS 17.0, *)
-struct EnableVPNIntent: AppIntent {}
-
-@available(iOS 17.0, *)
-@available(iOSApplicationExtension, unavailable)
-extension EnableVPNIntent: ForegroundContinuableIntent {
+struct VPNWidgetEnableIntent: AppIntent {
     static let title: LocalizedStringResource = "Enable DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
@@ -88,14 +92,9 @@ extension EnableVPNIntent: ForegroundContinuableIntent {
             switch error {
             case VPNIntentTunnelController.StartFailure.vpnNotConfigured:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectCancelled)
-
-                let dialog = IntentDialog(stringLiteral: UserText.vpnNeedsToBeEnabledFromApp)
-                throw needsToContinueInForegroundError(dialog) {
-                    await UIApplication.shared.open(AppDeepLinkSchemes.openVPN.url)
-                }
+                throw error
             default:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectFailure, error: error)
-
                 throw error
             }
         }

@@ -25,7 +25,7 @@ struct VPNAutoShortcutsiOS17: AppShortcutsProvider {
 
     @AppShortcutsBuilder
     static var appShortcuts: [AppShortcut] {
-        AppShortcut(intent: EnableVPNIntent(),
+        AppShortcut(intent: EnableVPNAppIntent(),
                     phrases: [
                         "Connect \(.applicationName) VPN",
                         "Connect the \(.applicationName) VPN",
@@ -42,7 +42,7 @@ struct VPNAutoShortcutsiOS17: AppShortcutsProvider {
                         "Protect my connection with \(.applicationName)"
                     ],
                     systemImageName: "globe")
-        AppShortcut(intent: DisableVPNIntent(),
+        AppShortcut(intent: DisableVPNAppIntent(),
                     phrases: [
                         "Disconnect \(.applicationName) VPN",
                         "Disconnect the \(.applicationName) VPN",

@@ -197,7 +197,6 @@
 	<array>
 		<string>CancelSnoozeLiveActivityAppIntentIntent</string>
 		<string>ConfigurationIntent</string>
-		<string>EnableVPNIntentIntent</string>
 	</array>
 	<key>SUBSCRIPTION_APP_GROUP</key>
 	<string>$(AppIdentifierPrefix)$(SUBSCRIPTION_APP_GROUP)</string>

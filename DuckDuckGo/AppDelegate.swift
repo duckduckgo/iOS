@@ -134,6 +134,7 @@ enum AppBehavior: String {
 
     private let appStateMachine: AppStateMachine = AppStateMachine()
     private let appBehavior: AppBehavior = {
+        guard !ProcessInfo().arguments.contains("testing") else { return .existing }
         if let appBehavior = AppDependencyProvider.shared.appSettings.appBehavior {
             return appBehavior
         }

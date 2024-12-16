@@ -19,22 +19,39 @@
 
 import Foundation
 import Combine
+import Core
+
+protocol MaliciousSiteProtectionPreferencesStorage: AnyObject {
+    var isEnabled: Bool { get set }
+}
+
+final class MaliciousSiteProtectionPreferencesUserDefaultsStore: MaliciousSiteProtectionPreferencesStorage {
+    @UserDefaultsWrapper(key: .maliciousSiteProtectionEnabled, defaultValue: false)
+    var isEnabled: Bool
+}
 
 protocol MaliciousSiteProtectionPreferencesPublishing {
     var isEnabled: Bool { get }
     var isEnabledPublisher: AnyPublisher<Bool, Never> { get }
 }
 
-protocol MaliciousSiteProtectionPreferencesManaging {
+protocol MaliciousSiteProtectionPreferencesManaging: AnyObject {
     var isEnabled: Bool { get set }
 }
 
 final class MaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging, MaliciousSiteProtectionPreferencesPublishing {
-    @Published var isEnabled: Bool
+    @Published var isEnabled: Bool {
+        didSet {
+            store.isEnabled = isEnabled
+        }
+    }
 
     var isEnabledPublisher: AnyPublisher<Bool, Never> { $isEnabled.eraseToAnyPublisher() }
 
-    init() {
-        isEnabled = true
+    private let store: MaliciousSiteProtectionPreferencesStorage
+
+    init(store: MaliciousSiteProtectionPreferencesStorage = MaliciousSiteProtectionPreferencesUserDefaultsStore()) {
+        self.store = store
+        isEnabled = store.isEnabled
     }
 }

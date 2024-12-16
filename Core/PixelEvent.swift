@@ -505,8 +505,8 @@ extension Pixel {
         case dbCrashDetected
         case crashOnCrashHandlersSetUp
 
-        case crashReportCRCIDMissing // crashreporting_crcid-missing
-        case crashReportingSubmissionFailed // crashreporting_submission-failed
+        case crashReportCRCIDMissing
+        case crashReportingSubmissionFailed
 
         case dbMigrationError
         case dbRemovalError

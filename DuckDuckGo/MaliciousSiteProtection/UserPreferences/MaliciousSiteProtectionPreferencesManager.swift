@@ -19,6 +19,16 @@
 
 import Foundation
 import Combine
+import Core
+
+protocol MaliciousSiteProtectionPreferencesStorage: AnyObject {
+    var isEnabled: Bool { get set }
+}
+
+final class MaliciousSiteProtectionPreferencesUserDefaultsStore: MaliciousSiteProtectionPreferencesStorage {
+    @UserDefaultsWrapper(key: .maliciousSiteProtectionEnabled, defaultValue: false)
+    var isEnabled: Bool
+}
 
 protocol MaliciousSiteProtectionPreferencesPublishing {
     var isMaliciousSiteProtectionOnPublisher: AnyPublisher<Bool, Never> { get }
@@ -37,12 +47,18 @@ protocol MaliciousSiteProtectionPreferencesWriting {
 typealias MaliciousSiteProtectionPreferencesManaging = MaliciousSiteProtectionPreferencesWriting & MaliciousSiteProtectionPreferencesProvider
 
 final class MaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging {
-    @Published var isMaliciousSiteProtectionOn: Bool
+    @Published var isMaliciousSiteProtectionOn: Bool {
+        didSet {
+            store.isEnabled = isMaliciousSiteProtectionOn
+        }
+    }
 
     var isMaliciousSiteProtectionOnPublisher: AnyPublisher<Bool, Never> { $isMaliciousSiteProtectionOn.eraseToAnyPublisher() }
 
-    // TODO: Inject Store
-    init() {
-        isMaliciousSiteProtectionOn = true
+    private let store: MaliciousSiteProtectionPreferencesStorage
+
+    init(store: MaliciousSiteProtectionPreferencesStorage = MaliciousSiteProtectionPreferencesUserDefaultsStore()) {
+        self.store = store
+        isMaliciousSiteProtectionOn = store.isEnabled
     }
 }

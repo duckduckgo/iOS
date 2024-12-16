@@ -582,4 +582,24 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         XCTAssertNil(tabNavigator.openedURL, "No new tabs should open")
     }
     
+    @MainActor
+    func testHandleDelegateNavigation_YoutubeWatchURLWithDuckPlayerEnabledAndSameVideoNavigation_ReturnsFalse() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
+        let youtubeInternalURL = URL(string: "https://www.youtube.com/watch?v=abc123&settings")!
+        let request = URLRequest(url: youtubeURL)
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: request, targetFrame: mockFrameInfo)
+        playerSettings.mode = .enabled
+        featureFlagger.enabledFeatures = [.duckPlayer, .duckPlayerOpenInNewTab]
+
+        mockWebView.setCurrentURL(youtubeInternalURL)
+        
+        // Act
+        let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertFalse(shouldCancel, "Expected navigation NOT to be cancelled as it's Youtube Internal navigation")
+    }
+    
 }

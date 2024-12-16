@@ -45,6 +45,7 @@ final class MockMaliciousSiteDataProvider: MaliciousSiteProtection.EmbeddedDataP
 
     func hash(for dataType: MaliciousSiteProtection.DataManager.StoredDataType) -> String {
         let url = url(for: dataType)
+        // swiftlint:disable:next force_try
         let data = try! data(withContentsOf: url)
         let sha = data.sha256
         return sha

@@ -361,7 +361,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 return true
             } catch {
                 if self.rootView.model.isSyncEnabled {
-                    handleError(.unableToMergeTwoAccounts, error: error, event: .syncLoginExistingAccountError)
+                    handlePairingTwoSeparateAccounts(recoveryKey: recoveryKey)
                 } else {
                     handleError(.unableToSyncToServer, error: error, event: .syncLoginError)
                 }

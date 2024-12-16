@@ -182,6 +182,37 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
     }
 
+    @MainActor
+    func handlePairingTwoSeparateAccounts(recoveryKey: SyncCode.RecoveryKey) {
+        let alertController = UIAlertController(
+            title: UserText.syncAlertSwitchAccountTitle,
+            message: UserText.syncAlertSwitchAccountMessage,
+            preferredStyle: .alert)
+        alertController.addAction(title: UserText.syncAlertSwitchAccountButton, style: .default) { [weak self] in
+            Task { [weak self] in
+                do {
+                    try await self?.syncService.disconnect()
+                } catch {
+                    // TODO: Send sync_user_switched_logout_error pixel
+                }
+
+                do {
+                    try await self?.loginAndShowDeviceConnected(recoveryKey: recoveryKey)
+                } catch {
+                    // TODO: Send sync_user_switched_login_error pixel
+                }
+                // TODO: Send sync_user_switched_account_pixel
+            }
+        }
+        alertController.addAction(title: UserText.actionCancel, style: .cancel)
+        // Gives time to the is syncing view to appear
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.dismissPresentedViewController { [weak self] in
+                self?.present(alertController, animated: true, completion: nil)
+            }
+        }
+    }
+
     private func getErrorType(from errorString: String?) -> AsyncErrorType? {
         guard let errorString = errorString else {
             return nil

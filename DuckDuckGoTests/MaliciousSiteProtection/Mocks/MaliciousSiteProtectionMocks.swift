@@ -125,3 +125,8 @@ final class MockMaliciousSiteProtectionFeatureFlags: MaliciousSiteProtectionFeat
     }
 
 }
+
+final class MockMaliciousSiteProtectionPreferencesStore: MaliciousSiteProtectionPreferencesStorage {
+    var isEnabled: Bool = true
+
+}

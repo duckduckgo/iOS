@@ -470,6 +470,16 @@ extension Pixel {
         case networkProtectionWidgetDisconnectCancelled
         case networkProtectionWidgetDisconnectFailure
 
+        case vpnControlCenterConnectAttempt
+        case vpnControlCenterConnectSuccess
+        case vpnControlCenterConnectCancelled
+        case vpnControlCenterConnectFailure
+
+        case vpnControlCenterDisconnectAttempt
+        case vpnControlCenterDisconnectSuccess
+        case vpnControlCenterDisconnectCancelled
+        case vpnControlCenterDisconnectFailure
+
         case networkProtectionDNSUpdateCustom
         case networkProtectionDNSUpdateDefault
 
@@ -1670,6 +1680,16 @@ extension Pixel.Event {
         case .networkProtectionWidgetDisconnectSuccess: return "m_netp_widget_disconnect_success"
         case .networkProtectionWidgetDisconnectCancelled: return "m_netp_widget_disconnect_cancelled"
         case .networkProtectionWidgetDisconnectFailure: return "m_netp_widget_disconnect_failure"
+
+        case .vpnControlCenterConnectAttempt: return "m_vpn_control-center_connect_attempt"
+        case .vpnControlCenterConnectSuccess: return "m_vpn_control-center_connect_success"
+        case .vpnControlCenterConnectCancelled: return "m_vpn_control-center_connect_cancelled"
+        case .vpnControlCenterConnectFailure: return "m_vpn_control-center_connect_failure"
+
+        case .vpnControlCenterDisconnectAttempt: return "m_vpn_control-center_disconnect_attempt"
+        case .vpnControlCenterDisconnectSuccess: return "m_vpn_control-center_disconnect_success"
+        case .vpnControlCenterDisconnectCancelled: return "m_vpn_control-center_disconnect_cancelled"
+        case .vpnControlCenterDisconnectFailure: return "m_vpn_control-center_disconnect_failure"
 
         // MARK: Secure Vault
         case .secureVaultL1KeyMigration: return "m_secure-vault_keystore_event_l1-key-migration"

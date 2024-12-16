@@ -936,8 +936,19 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return false
         }
         
+        // Allow Youtube's internal navigation when DuckPlayer is enabled and user is watching on Youtube
+        // This is to prevent DuckPlayer from interfering with Youtube's internal navigation for search and settings
+        // https://app.asana.com/0/1204099484721401/1208930843675395/f
+        var isYoutubeInternalNavigation = false
+        if let (destinationVideoID, _) = url.youtubeVideoParams,
+           let (originVideoID, _) = webView.url?.youtubeVideoParams,
+            destinationVideoID == originVideoID,
+            duckPlayerMode == .enabled {
+                isYoutubeInternalNavigation = true
+        }
+        
         // Redirect to Duck Player if enabled
-        if url.isYoutubeWatch && duckPlayerMode == .enabled && !isDuckPlayerRedirect(url: url) {
+        if url.isYoutubeWatch && duckPlayerMode == .enabled && !isDuckPlayerRedirect(url: url) && !isYoutubeInternalNavigation {
             redirectToDuckPlayerVideo(url: url, webView: webView)
             return true
         }

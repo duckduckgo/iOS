@@ -25,72 +25,52 @@ import Core
 
 // MARK: - Toggle
 
+
+/// `ForegroundContinuableIntent` isn't available for extensions, which makes it impossible to call
+/// from extensions.  This is the recommended workaround from:
+///     https://mastodon.social/@mgorbach/110812347476671807
+///
 @available(iOS 17.0, *)
 struct VPNToggleIntent: SetValueIntent {
+    @Parameter(title: "Enabled")
+    var value: Bool
+}
+
+@available(iOS 17.0, *)
+@available(iOSApplicationExtension, unavailable)
+extension VPNToggleIntent: SetValueIntent & ForegroundContinuableIntent {
     static let title: LocalizedStringResource = "Toggle DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Toggles the DuckDuckGo VPN"
     static let isDiscoverable: Bool = false
 
-    @Parameter(title: "Enabled")
-    var value: Bool
-
     @MainActor
     func perform() async throws -> some IntentResult {
-        if value {
-            try await enableVPN()
-        } else {
-            try await disableVPN()
-        }
-
-        await VPNSnoozeLiveActivityManager().endSnoozeActivity()
-
-        return .result()
-    }
-
-    func enableVPN() async throws {
-        let managers = try await NETunnelProviderManager.loadAllFromPreferences()
-        guard let manager = managers.first else {
-            return
-        }
-
-        manager.isOnDemandEnabled = true
-        try await manager.saveToPreferences()
-        try manager.connection.startVPNTunnel()
-    }
-
-    func disableVPN() async throws {
         do {
-            //DailyPixel.fire(pixel: .networkProtectionWidgetDisconnectAttempt)
+            //DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectAttempt)
 
-            let managers = try await NETunnelProviderManager.loadAllFromPreferences()
-            guard let manager = managers.first else {
-                return
+            let controller = VPNIntentTunnelController()
+
+            if value {
+                try await controller.start()
+            } else {
+                try await controller.stop()
             }
 
-            //manager.connection.status
-
-            manager.isOnDemandEnabled = false
-            try await manager.saveToPreferences()
-            manager.connection.stopVPNTunnel()
-
-            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
-
-            var iterations = 0
-
-            while iterations <= 10 {
-                try? await Task.sleep(interval: .seconds(0.5))
-
-                if manager.connection.status == .disconnected {
-                    //DailyPixel.fire(pixel: .networkProtectionWidgetDisconnectSuccess)
-                    return
-                }
-
-                iterations += 1
-            }
-
-            VPNReloadStatusWidgets()
+            return .result()
         } catch {
-            // no-op
+            switch error {
+            case VPNIntentTunnelController.StartFailure.vpnNotConfigured:
+                //DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectCancelled)
+
+                let dialog = IntentDialog(stringLiteral: UserText.vpnNeedsToBeEnabledFromApp)
+                throw needsToContinueInForegroundError() {
+                    await UIApplication.shared.open(AppDeepLinkSchemes.openVPN.url)
+                }
+            default:
+                //DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectFailure, error: error)
+
+                throw error
+            }
         }
     }
 }

@@ -43,22 +43,12 @@ struct DisableVPNIntent: AppIntent {
         do {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectAttempt)
 
-            let managers = try await NETunnelProviderManager.loadAllFromPreferences()
-            guard let manager = managers.first else {
-                throw DisableAttemptFailure.cancelled
-            }
-
-            manager.isOnDemandEnabled = false
-            try await manager.saveToPreferences()
-            manager.connection.stopVPNTunnel()
-
-            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
-
-            VPNReloadStatusWidgets()
+            let controller = VPNIntentTunnelController()
+            try await controller.stop()
 
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectSuccess)
             return .result()
-        } catch DisableAttemptFailure.cancelled {
+        } catch VPNIntentTunnelController.StopFailure.vpnNotConfigured {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectCancelled)
             return .result()
         } catch {
@@ -78,11 +68,6 @@ struct EnableVPNIntent: AppIntent {}
 @available(iOS 17.0, *)
 @available(iOSApplicationExtension, unavailable)
 extension EnableVPNIntent: ForegroundContinuableIntent {
-
-    private enum EnableAttemptFailure: CustomNSError {
-        case firstSetupNeeded
-    }
-
     static let title: LocalizedStringResource = "Enable DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
@@ -94,31 +79,25 @@ extension EnableVPNIntent: ForegroundContinuableIntent {
         do {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectAttempt)
 
-            let managers = try await NETunnelProviderManager.loadAllFromPreferences()
-            guard let manager = managers.first else {
-                throw EnableAttemptFailure.firstSetupNeeded
-            }
-
-            manager.isOnDemandEnabled = true
-            try await manager.saveToPreferences()
-            try manager.connection.startVPNTunnel()
-
-            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
-
-            VPNReloadStatusWidgets()
+            let controller = VPNIntentTunnelController()
+            try await controller.start()
 
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectSuccess)
             return .result()
-        } catch EnableAttemptFailure.firstSetupNeeded {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectCancelled)
-
-            throw needsToContinueInForegroundError("You need to enable the VPN from the DuckDuckGo App.") {
-
-                await UIApplication.shared.open(AppDeepLinkSchemes.openVPN.url)
-            }
         } catch {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectFailure, error: error)
-            return .result()
+            switch error {
+            case VPNIntentTunnelController.StartFailure.vpnNotConfigured:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectCancelled)
+
+                let dialog = IntentDialog(stringLiteral: UserText.vpnNeedsToBeEnabledFromApp)
+                throw needsToContinueInForegroundError(dialog) {
+                    await UIApplication.shared.open(AppDeepLinkSchemes.openVPN.url)
+                }
+            default:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectFailure, error: error)
+
+                throw error
+            }
         }
     }
 }

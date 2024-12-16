@@ -1010,6 +1010,8 @@
 		CBD4F13E279EBFAB00B20FD7 /* HomeMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF14FC227970072001D94D0 /* HomeMessageView.swift */; };
 		CBD4F13F279EBFAF00B20FD7 /* HomeMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF14FC427970AB0001D94D0 /* HomeMessageViewModel.swift */; };
 		CBD4F140279EBFB300B20FD7 /* SwiftUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1AEFB02799AA940031AE3D /* SwiftUICollectionViewCell.swift */; };
+		CBD79F482D1061DA00DBB45A /* NewAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD79F472D1061D500DBB45A /* NewAppDelegate.swift */; };
+		CBD79F4A2D1061E200DBB45A /* OldAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD79F492D1061DF00DBB45A /* OldAppDelegate.swift */; };
 		CBDD5DDF29A6736A00832877 /* APIHeadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDD5DDE29A6736A00832877 /* APIHeadersTests.swift */; };
 		CBDD5DE129A6741300832877 /* MockBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDD5DE029A6741300832877 /* MockBundle.swift */; };
 		CBECDB6F2CD3DFBE005B8B87 /* PageRefreshMonitor in Frameworks */ = {isa = PBXBuildFile; productRef = CBECDB6E2CD3DFBE005B8B87 /* PageRefreshMonitor */; };
@@ -2913,6 +2915,8 @@
 		CBC88EE42C8097B500F0F8C5 /* URLCredentialCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLCredentialCreator.swift; sourceTree = "<group>"; };
 		CBC8DC252AF6D4CD00BA681A /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CBD4F13B279EBF4A00B20FD7 /* HomeMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessage.swift; sourceTree = "<group>"; };
+		CBD79F472D1061D500DBB45A /* NewAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAppDelegate.swift; sourceTree = "<group>"; };
+		CBD79F492D1061DF00DBB45A /* OldAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldAppDelegate.swift; sourceTree = "<group>"; };
 		CBD7AE812AF6D5B6009052FD /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CBDD5DDE29A6736A00832877 /* APIHeadersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHeadersTests.swift; sourceTree = "<group>"; };
 		CBDD5DE029A6741300832877 /* MockBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBundle.swift; sourceTree = "<group>"; };
@@ -6530,6 +6534,8 @@
 				83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */,
 				CB24F70E29A3EB15006DCC58 /* AppConfigurationURLProvider.swift */,
 				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
+				CBD79F492D1061DF00DBB45A /* OldAppDelegate.swift */,
+				CBD79F472D1061D500DBB45A /* NewAppDelegate.swift */,
 				85DB12EC2A1FED0C000A4A72 /* AppDelegate+AppDeepLinks.swift */,
 				98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */,
 				85BA58591F3506AE00C6E8CA /* AppSettings.swift */,
@@ -7723,6 +7729,7 @@
 				B623C1C42862CD670043013E /* WKDownloadSession.swift in Sources */,
 				6FD1BAE42B87A107000C475C /* AdAttributionPixelReporter.swift in Sources */,
 				1E8AD1D927C4FEC100ABA377 /* DownloadsListSectioningHelper.swift in Sources */,
+				CBD79F4A2D1061E200DBB45A /* OldAppDelegate.swift in Sources */,
 				D60170BD2BA34CE8001911B5 /* Subscription.swift in Sources */,
 				1E4DCF4827B6A35400961E25 /* DownloadsListModel.swift in Sources */,
 				C12726F02A5FF89900215B02 /* EmailSignupPromptViewModel.swift in Sources */,
@@ -7784,6 +7791,7 @@
 				CB3C788E2D06D3A700A7E4ED /* Init.swift in Sources */,
 				CB3C788F2D06D3A700A7E4ED /* Inactive.swift in Sources */,
 				1EA513782866039400493C6A /* TrackerAnimationLogic.swift in Sources */,
+				CBD79F482D1061DA00DBB45A /* NewAppDelegate.swift in Sources */,
 				854A01332A558B3A00FCC628 /* UIView+Constraints.swift in Sources */,
 				9FB0271B2C2927D0009EA190 /* OnboardingView.swift in Sources */,
 				C12726EE2A5FF88C00215B02 /* EmailSignupPromptView.swift in Sources */,

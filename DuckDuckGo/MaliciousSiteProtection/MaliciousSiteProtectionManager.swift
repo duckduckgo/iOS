@@ -55,7 +55,7 @@ final class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
         let dataManager = dataManager ?? MaliciousSiteProtection.DataManager(
             fileStore: MaliciousSiteProtection.FileStore(
                 dataStoreURL: FileManager.default.urls(
-                    for: .documentDirectory,
+                    for: .applicationSupportDirectory,
                     in: .userDomainMask
                 )
                 .first!

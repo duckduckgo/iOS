@@ -22,6 +22,31 @@ import BrowserServicesKit
 import PixelExperimentKit
 import PixelKit
 
+/// A protocol that defines a method for firing experiment-related analytics pixels.
+///
+/// Types conforming to this protocol can be used to send experiment data (e.g., metrics and user actions).
+/// This protocol is particularly useful for injecting dependencies to enable testing.
+protocol ExperimentPixelFiring {
+    /// Fires an experiment pixel with the specified parameters.
+    ///
+    /// - Parameters:
+    ///   - subfeatureID: The unique identifier of the subfeature associated with the experiment.
+    ///   - metric: The name of the metric being tracked (e.g., impressions, clicks, conversions).
+    ///   - conversionWindowDays: The time range (in days) to associate the pixel with conversion events.
+    ///   - value: A string representing the value associated with the metric, such as counts or statuses.
+    static func fireExperimentPixel(for subfeatureID: SubfeatureID,
+                                    metric: String,
+                                    conversionWindowDays: ConversionWindow,
+                                    value: String)
+}
+
+/// Conforming `PixelKit` to the `ExperimentPixelFiring` protocol.
+///
+/// `PixelKit` provides the concrete implementation for firing experiment pixels. By extending
+/// `PixelKit` to conform to `ExperimentPixelFiring`, its functionality can be injected and mocked
+/// for testing purposes.
+extension PixelKit: ExperimentPixelFiring {}
+
 /// Protocol defining the functionality required for a feature flag experiment related to free trials.
 protocol FreeTrialsFeatureFlagExperimenting: FeatureFlagExperimentDescribing {
     /// Increments the count of paywall views.
@@ -83,10 +108,13 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
     /// Persistent storage for experiment-related data.
     private let storage: UserDefaults
 
+    private let experimentPixelFirer: ExperimentPixelFiring.Type
+
     /// Initializes the experiment with the specified storage.
     /// - Parameter storage: The persistent storage to use. Defaults to `UserDefaults.standard`.
-    init(storage: UserDefaults = .standard) {
+    init(storage: UserDefaults = .standard, experimentPixelFirer: ExperimentPixelFiring.Type = PixelKit.self) {
         self.storage = storage
+        self.experimentPixelFirer = experimentPixelFirer
     }
 
     /// Increments the paywall view count and logs the updated value.
@@ -97,7 +125,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
 
     /// Fires a pixel tracking the impression of the paywall.
     func firePaywallImpressionPixel() {
-        PixelKit.fireExperimentPixel(for: Constants.subfeatureIdentifier,
+        experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricPaywallImpressions,
                                      conversionWindowDays: Constants.conversionWindowDays,
                                      value: "\(paywallViewCount)")
@@ -105,7 +133,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
 
     /// Fires a pixel when the monthly subscription offer is selected.
     func fireOfferSelectionMonthlyPixel() {
-        PixelKit.fireExperimentPixel(for: Constants.subfeatureIdentifier,
+        experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricStartClickedMonthly,
                                      conversionWindowDays: Constants.conversionWindowDays,
                                      value: "\(paywallViewCount)")
@@ -113,7 +141,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
 
     /// Fires a pixel when the yearly subscription offer is selected.
     func fireOfferSelectionYearlyPixel() {
-        PixelKit.fireExperimentPixel(for: Constants.subfeatureIdentifier,
+        experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricStartClickedYearly,
                                      conversionWindowDays: Constants.conversionWindowDays,
                                      value: "\(paywallViewCount)")
@@ -121,7 +149,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
 
     /// Fires a pixel when a monthly subscription is started.
     func fireSubscriptionStartedMonthlyPixel() {
-        PixelKit.fireExperimentPixel(for: Constants.subfeatureIdentifier,
+        experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricSubscriptionStartedMonthly,
                                      conversionWindowDays: Constants.conversionWindowDays,
                                      value: "\(paywallViewCount)")
@@ -129,7 +157,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
 
     /// Fires a pixel when a yearly subscription is started.
     func fireSubscriptionStartedYearlyPixel() {
-        PixelKit.fireExperimentPixel(for: Constants.subfeatureIdentifier,
+        experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricSubscriptionStartedYearly,
                                      conversionWindowDays: Constants.conversionWindowDays,
                                      value: "\(paywallViewCount)")

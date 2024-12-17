@@ -204,7 +204,7 @@
 "alert.sync-switch-account-button" = "Switch Account";
 
 /* Description for switching sync accounts when there's two */
-"alert.sync-switch-account-message" = "This device is already synced, are you sure you want to sync it with a different back up or device? Switching won't remove any data already synced to this.";
+"alert.sync-switch-account-message" = "This device is already synced, are you sure you want to sync it with a different back up or device? Switching won't remove any data already synced to this device.";
 
 /* Switch account title in alert */
 "alert.sync-switch-account-title" = "Switch to a different Sync?";

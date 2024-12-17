@@ -961,7 +961,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let unknownErrorTryAgainMessage = NSLocalizedString("error.unknown.try.again", value: "An unknown error has occurred", comment: "Generic error message on a dialog for when the cause is not known.")
     public static let syncPausedAlertOkButton = NSLocalizedString("alert.sync-paused-alert-ok-button", value: "OK", comment: "Confirmation button in alert")
     public static let syncPausedAlertLearnMoreButton = NSLocalizedString("alert.sync-paused-alert-learn-more-button", value: "Learn More", comment: "Learn more button in alert")
-    public static let syncAlertSwitchAccountTitle = NSLocalizedString("alert.sync-switch-account-button", value: "Switch to a different Sync?", comment: "Switch account title in alert")
+    public static let syncAlertSwitchAccountTitle = NSLocalizedString("alert.sync-switch-account-title", value: "Switch to a different Sync?", comment: "Switch account title in alert")
     public static let syncAlertSwitchAccountMessage = NSLocalizedString("alert.sync-switch-account-message", value: "This device is already synced, are you sure you want to sync it with a different back up or device? Switching won't remove any data already synced to this.", comment: "Description for switching sync accounts when there's two")
     public static let syncAlertSwitchAccountButton = NSLocalizedString("alert.sync-switch-account-button", value: "Switch Account", comment: "Switch account button in alert")
     public static let syncErrorAlertTitle = NSLocalizedString("alert.sync-error", value: "Sync & Backup Error", comment: "Title for sync error alert")

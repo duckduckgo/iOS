@@ -103,7 +103,10 @@ extension Background {
         case .backgrounding:
             run()
             return self
-        case .launching, .suspending, .handleShortcutItem:
+        case .handleShortcutItem(let shortcutItem):
+            shortcutItemToHandle = shortcutItem
+            return self
+        case .launching, .suspending:
             return handleUnexpectedEvent(event)
         }
     }

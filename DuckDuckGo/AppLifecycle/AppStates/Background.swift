@@ -29,6 +29,7 @@ struct Background: AppState {
     private var appDependencies: AppDependencies
 
     var urlToOpen: URL?
+    var shortcutItemToHandle: UIApplicationShortcutItem?
 
     init(stateContext: Inactive.StateContext) {
         application = stateContext.application
@@ -106,6 +107,8 @@ extension Background {
         let application: UIApplication
         let lastBackgroundDate: Date
         let urlToOpen: URL?
+        let shortcutItemToHandle: UIApplicationShortcutItem?
+
         let appDependencies: AppDependencies
 
     }
@@ -114,6 +117,7 @@ extension Background {
         .init(application: application,
               lastBackgroundDate: lastBackgroundDate,
               urlToOpen: urlToOpen,
+              shortcutItemToHandle: shortcutItemToHandle,
               appDependencies: appDependencies)
     }
 

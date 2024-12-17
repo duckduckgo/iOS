@@ -103,6 +103,8 @@ struct Active: AppState {
 
         if let url = stateContext.urlToOpen {
             openURL(url)
+        } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
+            handleShortcutItem(shortcutItemToHandle, appIsLaunching: false)
         }
 
         activateApp()

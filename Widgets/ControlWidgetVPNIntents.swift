@@ -23,6 +23,8 @@ import NetworkProtection
 import WidgetKit
 import Core
 import OSLog
+import VPNWidgetSupport
+import VPNAppIntents
 
 // MARK: - Toggle
 
@@ -31,10 +33,10 @@ import OSLog
 ///     https://mastodon.social/@mgorbach/110812347476671807
 ///
 @available(iOS 17.0, *)
-struct VPNToggleIntent: SetValueIntent {
-    static let title: LocalizedStringResource = "Toggle DuckDuckGo VPN"
-    static let description: LocalizedStringResource = "Toggles the DuckDuckGo VPN"
-    static let isDiscoverable: Bool = false
+struct ControlWidgetToggleVPNIntent: SetValueIntent {
+    static let title: LocalizedStringResource = "Toggle DuckDuckGo VPN from the Control Center Widget"
+    static let description: LocalizedStringResource = "Toggles the DuckDuckGo VPN from the Control Center widget"
+    static let isDiscoverable = false
 
     @Parameter(title: "Enabled")
     var value: Bool
@@ -43,25 +45,28 @@ struct VPNToggleIntent: SetValueIntent {
     func perform() async throws -> some IntentResult {
         if value {
             try await startVPN()
-            return .result()
         } else {
             try await stopVPN()
-            return .result()
         }
+
+        return .result()
     }
 
     private func startVPN() async throws {
         do {
             DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectAttempt)
 
-            let controller = VPNIntentTunnelController()
+            let controller = VPNWidgetTunnelController()
             try await controller.start()
+
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
+            VPNReloadStatusWidgets()
+
             DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectSuccess)
         } catch {
             switch error {
-            case VPNIntentTunnelController.StartFailure.vpnNotConfigured:
+            case VPNWidgetTunnelController.StartFailure.vpnNotConfigured:
                 DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectCancelled)
-
                 throw error
             default:
                 DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectFailure, error: error)
@@ -74,12 +79,16 @@ struct VPNToggleIntent: SetValueIntent {
         do {
             DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterDisconnectAttempt)
 
-            let controller = VPNIntentTunnelController()
+            let controller = VPNWidgetTunnelController()
             try await controller.stop()
+
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
+            VPNReloadStatusWidgets()
+
             DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterDisconnectSuccess)
         } catch {
             switch error {
-            case VPNIntentTunnelController.StopFailure.vpnNotConfigured:
+            case VPNWidgetTunnelController.StopFailure.vpnNotConfigured:
                 DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterDisconnectCancelled)
                 throw error
             default:

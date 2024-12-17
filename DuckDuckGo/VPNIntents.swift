@@ -22,17 +22,18 @@ import NetworkExtension
 import NetworkProtection
 import WidgetKit
 import Core
+import VPNWidgetSupport
 
 // MARK: - Enable & Disable
 
 /// App intent to disable the VPN
 ///
 /// This is used in App Shortcuts, for things like Shortcuts.app, Spotlight and Siri.
-/// This is very similar to ``WidgetVPNDisableIntent``, but this runs in-app, allows continuation in the app if needed,
+/// This is very similar to ``WidgetDisableVPNIntent``, but this runs in-app, allows continuation in the app if needed,
 /// and provides a result dialog.
 ///
 @available(iOS 17.0, *)
-struct DisableVPNAppIntent: AppIntent {
+struct DisableVPNIntent: AppIntent {
 
     private enum DisableAttemptFailure: CustomNSError {
         case cancelled
@@ -49,12 +50,15 @@ struct DisableVPNAppIntent: AppIntent {
         do {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectAttempt)
 
-            let controller = VPNIntentTunnelController()
+            let controller = VPNWidgetTunnelController()
             try await controller.stop()
+
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
+            VPNReloadStatusWidgets()
 
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectSuccess)
             return .result(dialog: "DuckDuckGo VPN is disconnecting...")
-        } catch VPNIntentTunnelController.StopFailure.vpnNotConfigured {
+        } catch VPNWidgetTunnelController.StopFailure.vpnNotConfigured {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectCancelled)
             return .result(dialog: "The DuckDuckGo VPN is not connected")
         } catch {
@@ -67,12 +71,12 @@ struct DisableVPNAppIntent: AppIntent {
 /// App intent to enable the VPN
 ///
 /// This is used in App Shortcuts, for things like Shortcuts.app, Spotlight and Siri.
-/// This is very similar to ``VPNWidgetEnableIntent``, but this runs in-app, allows continuation in the app if needed,
+/// This is very similar to ``WidgetEnableVPNIntent``, but this runs in-app, allows continuation in the app if needed,
 /// and provides a result dialog.
 ///
 @available(iOS 17.0, *)
 @available(iOSApplicationExtension, unavailable)
-struct EnableVPNAppIntent: ForegroundContinuableIntent {
+struct EnableVPNIntent: ForegroundContinuableIntent {
     static let title: LocalizedStringResource = "Enable DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
@@ -84,14 +88,17 @@ struct EnableVPNAppIntent: ForegroundContinuableIntent {
         do {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectAttempt)
 
-            let controller = VPNIntentTunnelController()
+            let controller = VPNWidgetTunnelController()
             try await controller.start()
+
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
+            VPNReloadStatusWidgets()
 
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectSuccess)
             return .result(dialog: "DuckDuckGo VPN is connecting...")
         } catch {
             switch error {
-            case VPNIntentTunnelController.StartFailure.vpnNotConfigured:
+            case VPNWidgetTunnelController.StartFailure.vpnNotConfigured:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectCancelled)
 
                 let dialog = IntentDialog(stringLiteral: UserText.vpnNeedsToBeEnabledFromApp)

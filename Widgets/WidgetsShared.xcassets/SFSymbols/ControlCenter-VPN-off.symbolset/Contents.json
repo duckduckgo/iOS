@@ -3,12 +3,9 @@
     "author" : "xcode",
     "version" : 1
   },
-  "properties" : {
-    "symbol-rendering-intent" : "template"
-  },
   "symbols" : [
     {
-      "filename" : "VPN-Off.svg",
+      "filename" : "VPNOFF4.svg",
       "idiom" : "universal"
     }
   ]

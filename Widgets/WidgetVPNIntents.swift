@@ -22,6 +22,7 @@ import NetworkExtension
 import NetworkProtection
 import WidgetKit
 import Core
+import VPNWidgetSupport
 
 // MARK: - Enable & Disable
 
@@ -32,7 +33,7 @@ import Core
 /// does not support continuation in the app and does not provide any result dialog.
 ///
 @available(iOS 17.0, *)
-struct VPNWidgetDisableIntent: AppIntent {
+struct WidgetDisableVPNIntent: AppIntent {
 
     private enum DisableAttemptFailure: CustomNSError {
         case cancelled
@@ -41,7 +42,7 @@ struct VPNWidgetDisableIntent: AppIntent {
     static let title: LocalizedStringResource = "Disable DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Disables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
-    static let isDiscoverable: Bool = true
+    static let isDiscoverable: Bool = false
     static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
 
     @MainActor
@@ -49,12 +50,15 @@ struct VPNWidgetDisableIntent: AppIntent {
         do {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectAttempt)
 
-            let controller = VPNIntentTunnelController()
+            let controller = VPNWidgetTunnelController()
             try await controller.stop()
+
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
+            VPNReloadStatusWidgets()
 
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectSuccess)
             return .result()
-        } catch VPNIntentTunnelController.StopFailure.vpnNotConfigured {
+        } catch VPNWidgetTunnelController.StopFailure.vpnNotConfigured {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectCancelled)
             return .result()
         } catch {
@@ -71,11 +75,11 @@ struct VPNWidgetDisableIntent: AppIntent {
 /// does not support continuation in the app and does not provide any result dialog.
 ///
 @available(iOS 17.0, *)
-struct VPNWidgetEnableIntent: AppIntent {
+struct WidgetEnableVPNIntent: AppIntent {
     static let title: LocalizedStringResource = "Enable DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
-    static let isDiscoverable: Bool = true
+    static let isDiscoverable: Bool = false
     static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
 
     @MainActor
@@ -83,14 +87,17 @@ struct VPNWidgetEnableIntent: AppIntent {
         do {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectAttempt)
 
-            let controller = VPNIntentTunnelController()
+            let controller = VPNWidgetTunnelController()
             try await controller.start()
+
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
+            VPNReloadStatusWidgets()
 
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectSuccess)
             return .result()
         } catch {
             switch error {
-            case VPNIntentTunnelController.StartFailure.vpnNotConfigured:
+            case VPNWidgetTunnelController.StartFailure.vpnNotConfigured:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectCancelled)
                 throw error
             default:
@@ -128,7 +135,6 @@ struct CancelSnoozeVPNIntent: AppIntent {
             return .result()
         }
     }
-
 }
 
 @available(iOS 17.0, *)

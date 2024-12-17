@@ -174,7 +174,7 @@ struct VPNStatusView: View {
                 switch status {
                 case .connected:
                     let buttonTitle = snoozeTimingStore.isSnoozing ? UserText.vpnWidgetLiveActivityWakeUpButton : UserText.vpnWidgetDisconnectButton
-                    let intent: any AppIntent = snoozeTimingStore.isSnoozing ? CancelSnoozeVPNIntent() : VPNWidgetDisableIntent()
+                    let intent: any AppIntent = snoozeTimingStore.isSnoozing ? CancelSnoozeVPNIntent() : WidgetDisableVPNIntent()
 
                     Button(buttonTitle, intent: intent)
                         .font(.system(size: 14, weight: .semibold))
@@ -192,7 +192,7 @@ struct VPNStatusView: View {
                         .padding(.top, 6)
                         .padding(.bottom, 16)
                 case .connecting, .reasserting:
-                    Button(UserText.vpnWidgetDisconnectButton, intent: VPNWidgetDisableIntent())
+                    Button(UserText.vpnWidgetDisconnectButton, intent: WidgetDisableVPNIntent())
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(disconnectButtonForegroundColor(isDisabled: status != .connected))
                         .buttonStyle(.borderedProminent)
@@ -234,7 +234,7 @@ struct VPNStatusView: View {
     private var connectButton: Button<Text> {
         switch entry.status {
         case .status:
-            Button(UserText.vpnWidgetConnectButton, intent: VPNWidgetEnableIntent())
+            Button(UserText.vpnWidgetConnectButton, intent: WidgetEnableVPNIntent())
         case .error, .notConfigured:
             Button(UserText.vpnWidgetConnectButton) {
                 openURL(DeepLinks.openVPN)

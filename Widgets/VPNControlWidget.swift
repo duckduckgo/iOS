@@ -19,11 +19,12 @@
 
 import Foundation
 import SwiftUI
+import VPNAppIntents
 import WidgetKit
 
 @available(iOSApplicationExtension 18.0, *)
 public struct VPNControlWidget: ControlWidget {
-    static let displayName = LocalizedStringResource(stringLiteral: "VPN")
+    static let displayName = LocalizedStringResource(stringLiteral: "DuckDuckGo VPN")
     static let description = LocalizedStringResource(stringLiteral: "View and manage your VPN connection. Requires a Privacy Pro subscription.")
 
     public init() {}
@@ -32,7 +33,7 @@ public struct VPNControlWidget: ControlWidget {
         StaticControlConfiguration(kind: .vpn,
                                    provider: VPNControlStatusValueProvider()) { status in
 
-            ControlWidgetToggle("DuckDuckGo VPN", isOn: status.isConnected, action: VPNToggleIntent()) { isOn in
+            ControlWidgetToggle("DuckDuckGo VPN", isOn: status.isConnected, action: ControlWidgetToggleVPNIntent()) { isOn in
                 if isOn {
                     Label("Enabled", image: "ControlCenter-VPN-on")
                 } else {

@@ -26,8 +26,7 @@ struct Background: AppState {
 
     private let lastBackgroundDate: Date = Date()
     private let application: UIApplication
-    private let appDependencies: AppDependencies
-    private var syncDidFinishCancellable: AnyCancellable?
+    private var appDependencies: AppDependencies
 
     var urlToOpen: URL?
 
@@ -82,7 +81,7 @@ struct Background: AppState {
                 UIApplication.shared.endBackgroundTask(taskID)
             }
             appDependencies.syncDidFinishCancellable?.cancel()
-            syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
+            appDependencies.syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
                 .prefix(1)
                 .receive(on: DispatchQueue.main)
                 .sink { _ in

@@ -939,8 +939,6 @@ extension Pixel {
         case appDidBecomeActiveTime(time: BucketAggregation)
 
         // MARK: AI Chat
-        case openAIChatBefore10min
-        case openAIChatAfter10min
         case aiChatNoRemoteSettingsFound(settings: String)
         case openAIChatFromAddressBar
 
@@ -1882,8 +1880,6 @@ extension Pixel.Event {
         case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
 
         // MARK: AI Chat
-        case .openAIChatAfter10min: return "m_aichat_open_after_10_min"
-        case .openAIChatBefore10min: return "m_aichat_open_before_10_min"
         case .aiChatNoRemoteSettingsFound(let settings):
             return "m_aichat_no_remote_settings_found-\(settings.lowercased())"
         case .openAIChatFromAddressBar: return "m_aichat_addressbar_icon"

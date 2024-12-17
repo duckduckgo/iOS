@@ -361,7 +361,11 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 return true
             } catch {
                 if self.rootView.model.isSyncEnabled {
-                    handlePairingTwoSeparateAccounts(recoveryKey: recoveryKey)
+                    if rootView.model.devices.count > 1 {
+                        promptToSwitchAccounts(recoveryKey: recoveryKey)
+                    } else {
+                        switchAccounts(recoveryKey: recoveryKey)
+                    }
                 } else {
                     handleError(.unableToSyncToServer, error: error, event: .syncLoginError)
                 }

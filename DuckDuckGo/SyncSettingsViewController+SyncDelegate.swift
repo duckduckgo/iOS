@@ -183,26 +183,13 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     @MainActor
-    func handlePairingTwoSeparateAccounts(recoveryKey: SyncCode.RecoveryKey) {
+    func promptToSwitchAccounts(recoveryKey: SyncCode.RecoveryKey) {
         let alertController = UIAlertController(
             title: UserText.syncAlertSwitchAccountTitle,
             message: UserText.syncAlertSwitchAccountMessage,
             preferredStyle: .alert)
         alertController.addAction(title: UserText.syncAlertSwitchAccountButton, style: .default) { [weak self] in
-            Task { [weak self] in
-                do {
-                    try await self?.syncService.disconnect()
-                } catch {
-                    // TODO: Send sync_user_switched_logout_error pixel
-                }
-
-                do {
-                    try await self?.loginAndShowDeviceConnected(recoveryKey: recoveryKey)
-                } catch {
-                    // TODO: Send sync_user_switched_login_error pixel
-                }
-                // TODO: Send sync_user_switched_account_pixel
-            }
+            self?.switchAccounts(recoveryKey: recoveryKey)
         }
         alertController.addAction(title: UserText.actionCancel, style: .cancel)
         // Gives time to the is syncing view to appear
@@ -210,6 +197,23 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             self?.dismissPresentedViewController { [weak self] in
                 self?.present(alertController, animated: true, completion: nil)
             }
+        }
+    }
+
+    func switchAccounts(recoveryKey: SyncCode.RecoveryKey) {
+        Task { [weak self] in
+            do {
+                try await self?.syncService.disconnect()
+            } catch {
+                // TODO: Send sync_user_switched_logout_error pixel
+            }
+
+            do {
+                try await self?.loginAndShowDeviceConnected(recoveryKey: recoveryKey)
+            } catch {
+                // TODO: Send sync_user_switched_login_error pixel
+            }
+            // TODO: Send sync_user_switched_account_pixel
         }
     }
 

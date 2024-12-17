@@ -162,6 +162,9 @@
 "aichat.title" = "DuckDuckGo AI Chat";
 
 /* No comment provided by engineer. */
+"alert.message.alreadyBookmarkAll" = "All tabs are already bookmarked. Please add new tab";
+
+/* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
 /* Description for alert shown when sync error occurs because of bad bookmarks data */
@@ -208,6 +211,9 @@
 
 /* Title of the warning message */
 "alert.sync.warning.sync-paused" = "Sync & Backup is Paused";
+
+/* Question from confirmation dialog */
+"alert.title.alreadyBookmarkAll" = "Already BookMarked!";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Bookmark All Tabs?";

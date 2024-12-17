@@ -230,20 +230,36 @@ class TabSwitcherViewController: UIViewController {
     }
    
     @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
-         
-        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
-                                      message: UserText.alertBookmarkAllMessage,
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        alert.addAction(title: UserText.actionBookmark, style: .default) {
-            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
-            model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-            let result = self.bookmarkAll(viewModel: model)
-            self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
-        }
-        
-        present(alert, animated: true, completion: nil)
+
+            let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
+                                          message: UserText.alertBookmarkAllMessage,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+            alert.addAction(title: UserText.actionBookmark, style: .default) {
+
+                let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
+                model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+                let result = self.bookmarkAll(viewModel: model)
+
+                if result.newCount > 0 {
+                    self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
+
+                } else {
+                    let alert = UIAlertController(title: UserText.alertAlreadyBookmarkedAllTitle,
+                                                  message: UserText.alertAlreadyBookmarkAllMessage,
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+                    alert.addAction(title: UserText.actionNewTab, style: .default) {
+                        self.makeActionOnAddPressed()
+                    }
+                    self.present(alert, animated: true, completion: nil)
+                }
+
+            }
+
+            present(alert, animated: true, completion: nil)
     }
+
 
     private func bookmarkAll(viewModel: MenuBookmarksInteracting) -> BookmarkAllResult {
         let tabs = self.tabsModel.tabs
@@ -292,6 +308,10 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
+        self.makeActionOnAddPressed()
+    }
+
+    private func makeActionOnAddPressed() {
         guard !isProcessingUpdates else { return }
 
         Pixel.fire(pixel: .tabSwitcherNewTab)

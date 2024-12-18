@@ -68,7 +68,7 @@ struct Active: AppState {
         }
 
         // onApplicationLaunch code
-        Task { @MainActor [self] in // is capturing self here ok?
+        Task { @MainActor [self] in
             await beginAuthentication()
             initialiseBackgroundFetch(application)
             applyAppearanceChanges()
@@ -94,7 +94,7 @@ struct Active: AppState {
         let uiService = appDependencies.uiService
         let syncService = appDependencies.syncService
         let autoClear = appDependencies.autoClear
-        Task { @MainActor [self] in // is capturing self here ok?
+        Task { @MainActor [self] in
             await beginAuthentication(lastBackgroundDate: stateContext.lastBackgroundDate)
             await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
             uiService.showKeyboardIfSettingOn = true

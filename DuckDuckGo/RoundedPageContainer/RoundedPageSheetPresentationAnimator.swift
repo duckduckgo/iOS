@@ -54,8 +54,9 @@ final class RoundedPageSheetPresentationAnimator: NSObject, UIViewControllerAnim
         })
     }
 }
-
 class RoundedPageSheetDismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+    private var animator: UIViewPropertyAnimator?
+
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return AnimatorConstants.duration
     }
@@ -79,5 +80,38 @@ class RoundedPageSheetDismissalAnimator: NSObject, UIViewControllerAnimatedTrans
             fromView.removeFromSuperview()
             transitionContext.completeTransition(finished)
         })
+    }
+
+    func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
+        if let existingAnimator = animator {
+            return existingAnimator
+        }
+
+        guard let fromViewController = transitionContext.viewController(forKey: .from) as? RoundedPageSheetContainerViewController,
+              let fromView = fromViewController.view,
+              let contentView = fromViewController.contentViewController.view else {
+            fatalError("Invalid view controller setup")
+        }
+
+        let containerView = transitionContext.containerView
+
+        let animator = UIViewPropertyAnimator(duration: AnimatorConstants.duration,
+                                              dampingRatio: AnimatorConstants.springDamping) {
+            fromView.alpha = 0
+            contentView.transform = CGAffineTransform(translationX: 0, y: containerView.bounds.height)
+        }
+
+        animator.addCompletion { position in
+            switch position {
+            case .end:
+                fromView.removeFromSuperview()
+                transitionContext.completeTransition(true)
+            default:
+                transitionContext.completeTransition(false)
+            }
+        }
+
+        self.animator = animator
+        return animator
     }
 }

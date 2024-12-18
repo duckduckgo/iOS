@@ -25,6 +25,9 @@ final class RoundedPageSheetContainerViewController: UIViewController {
     private let titleText: String
     private let allowedOrientation: UIInterfaceOrientationMask
 
+    private var interactiveDismissalTransition: UIPercentDrivenInteractiveTransition?
+    private var isInteractiveDismissal = false
+
     private lazy var titleBarView: TitleBarView = {
         let titleBarView = TitleBarView(logoImage: logoImage, title: titleText) { [weak self] in
             self?.closeController()
@@ -76,6 +79,38 @@ final class RoundedPageSheetContainerViewController: UIViewController {
             titleBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             titleBarView.heightAnchor.constraint(equalToConstant: 44)
         ])
+
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        titleBarView.addGestureRecognizer(panGesture)
+    }
+
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        let velocity = gesture.velocity(in: view)
+        let progress = translation.y / view.bounds.height
+
+        switch gesture.state {
+        case .began:
+            isInteractiveDismissal = true
+            interactiveDismissalTransition = UIPercentDrivenInteractiveTransition()
+            dismiss(animated: true, completion: nil)
+        case .changed:
+            interactiveDismissalTransition?.update(progress)
+        case .ended, .cancelled:
+            let shouldDismiss = progress > 0.3 || velocity.y > 1000
+            if shouldDismiss {
+                interactiveDismissalTransition?.finish()
+            } else {
+                interactiveDismissalTransition?.cancel()
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.view.transform = .identity
+                })
+            }
+            isInteractiveDismissal = false
+            interactiveDismissalTransition = nil
+        default:
+            break
+        }
     }
 
     private func setupContentViewController() {
@@ -84,7 +119,7 @@ final class RoundedPageSheetContainerViewController: UIViewController {
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            contentViewController.view.topAnchor.constraint(equalTo: titleBarView.bottomAnchor), // Below the title bar
+            contentViewController.view.topAnchor.constraint(equalTo: titleBarView.bottomAnchor),
             contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             contentViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
@@ -109,6 +144,10 @@ extension RoundedPageSheetContainerViewController: UIViewControllerTransitioning
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return RoundedPageSheetDismissalAnimator()
+    }
+
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return isInteractiveDismissal ? interactiveDismissalTransition : nil
     }
 }
 
@@ -170,7 +209,6 @@ final private class TitleBarView: UIView {
 
         self.closeAction = closeAction
     }
-
     private var closeAction: (() -> Void)?
 
     @objc private func closeButtonTapped() {

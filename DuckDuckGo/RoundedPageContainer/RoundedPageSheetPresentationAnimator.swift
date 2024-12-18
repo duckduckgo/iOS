@@ -21,9 +21,11 @@ import UIKit
 
 enum AnimatorConstants {
     static let duration: TimeInterval = 0.4
+    static let springDamping: CGFloat = 0.9
+    static let springVelocity: CGFloat = 0.5
 }
 
-class RoundedPageSheetPresentationAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+final class RoundedPageSheetPresentationAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return AnimatorConstants.duration
     }
@@ -39,7 +41,12 @@ class RoundedPageSheetPresentationAnimator: NSObject, UIViewControllerAnimatedTr
         toView.alpha = 0
         contentView.transform = CGAffineTransform(translationX: 0, y: containerView.bounds.height)
 
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+        UIView.animate(withDuration: AnimatorConstants.duration,
+                       delay: 0,
+                       usingSpringWithDamping: AnimatorConstants.springDamping,
+                       initialSpringVelocity: AnimatorConstants.springVelocity,
+                       options: .curveEaseInOut,
+                       animations: {
             toView.alpha = 1
             contentView.transform = .identity
         }, completion: { finished in
@@ -60,7 +67,12 @@ class RoundedPageSheetDismissalAnimator: NSObject, UIViewControllerAnimatedTrans
 
         let containerView = transitionContext.containerView
 
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+        UIView.animate(withDuration: AnimatorConstants.duration,
+                       delay: 0,
+                       usingSpringWithDamping: AnimatorConstants.springDamping,
+                       initialSpringVelocity: AnimatorConstants.springVelocity,
+                       options: .curveEaseInOut,
+                       animations: {
             fromView.alpha = 0
             contentView.transform = CGAffineTransform(translationX: 0, y: containerView.bounds.height)
         }, completion: { finished in

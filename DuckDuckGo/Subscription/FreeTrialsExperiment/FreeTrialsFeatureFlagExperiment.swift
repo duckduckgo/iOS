@@ -120,7 +120,6 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
     /// Increments the paywall view count and logs the updated value.
     func incrementPaywallViewCount() {
         paywallViewCount += 1
-        Logger.subscription.debug("EX SETUP: paywallViewCount = \(self.paywallViewCount)")
     }
 
     /// Fires a pixel tracking the impression of the paywall.
@@ -128,7 +127,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
         experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricPaywallImpressions,
                                      conversionWindowDays: Constants.conversionWindowDays,
-                                     value: "\(paywallViewCount)")
+                                     value: "\(1)")
     }
 
     /// Fires a pixel when the monthly subscription offer is selected.
@@ -168,11 +167,9 @@ private extension FreeTrialsFeatureFlagExperiment {
     /// Computed property for managing the paywall view count in persistent storage.
     var paywallViewCount: Int {
         get {
-            Logger.subscription.debug("EX SETUP: paywallViewCount GET")
             return storage.integer(forKey: Constants.paywallViewCountKey)
         }
         set {
-            Logger.subscription.debug("EX SETUP: paywallViewCount SET")
             storage.set(newValue, forKey: Constants.paywallViewCountKey)
         }
     }

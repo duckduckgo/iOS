@@ -62,16 +62,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let getAccessToken = "getAccessToken"
     }
     
-    struct ProductIDs {
-        static let monthly = "1month"
-        static let yearly = "1year"
-    }
-    
-    struct RecurrenceOptions {
-        static let month = "monthly"
-        static let year = "yearly"
-    }
-    
     enum UseSubscriptionError: Error {
         case purchaseFailed,
              missingEntitlements,
@@ -96,6 +86,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     private let appStoreRestoreFlow: AppStoreRestoreFlow
     private let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
     private let privacyProDataReporter: PrivacyProDataReporting?
+    private let featureFlagger: FeatureFlagger
+    private let freeTrialsExperiment: any FreeTrialsFeatureFlagExperimenting
 
     init(subscriptionManager: SubscriptionManager,
          subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
@@ -103,7 +95,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
          appStorePurchaseFlow: AppStorePurchaseFlow,
          appStoreRestoreFlow: AppStoreRestoreFlow,
          appStoreAccountManagementFlow: AppStoreAccountManagementFlow,
-         privacyProDataReporter: PrivacyProDataReporting? = nil) {
+         privacyProDataReporter: PrivacyProDataReporting? = nil,
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         freeTrialsExperiment: any FreeTrialsFeatureFlagExperimenting = FreeTrialsFeatureFlagExperiment()) {
         self.subscriptionManager = subscriptionManager
         self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
         self.appStorePurchaseFlow = appStorePurchaseFlow
@@ -111,6 +105,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         self.appStoreAccountManagementFlow = appStoreAccountManagementFlow
         self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
         self.privacyProDataReporter = subscriptionAttributionOrigin != nil ? privacyProDataReporter : nil
+        self.featureFlagger = featureFlagger
+        self.freeTrialsExperiment = freeTrialsExperiment
     }
 
     // Transaction Status and errors are observed from ViewModels to handle errors in the UI
@@ -203,10 +199,22 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             return [Constants.token: Constants.empty]
         }
     }
-    
+
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {
         resetSubscriptionFlow()
-        if let subscriptionOptions = await subscriptionManager.storePurchaseManager().subscriptionOptions() {
+
+        var subscriptionOptions: SubscriptionOptions?
+
+        if let freeTrialsCohort = freeTrialCohortIfApplicable() {
+            freeTrialsExperiment.incrementPaywallViewCount()
+            freeTrialsExperiment.firePaywallImpressionPixel()
+
+            subscriptionOptions = await freeTrialSubscriptionOptions(for: freeTrialsCohort)
+        } else {
+            subscriptionOptions = await subscriptionManager.storePurchaseManager().subscriptionOptions()
+        }
+
+        if let subscriptionOptions {
             if subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
                 return subscriptionOptions
             } else {
@@ -277,6 +285,10 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
         
         setTransactionStatus(.polling)
+
+        // Free Trials Experiment Pixels
+        fireFreeTrialSubscriptionPurchasePixelIfApplicable(for: subscriptionSelection.id)
+
         switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
         case .success(let purchaseUpdate):
             Logger.subscription.debug("Subscription purchase completed successfully")
@@ -376,12 +388,22 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func subscriptionsMonthlyPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
         Logger.subscription.debug("Web function called: \(#function)")
         Pixel.fire(pixel: .privacyProOfferMonthlyPriceClick)
+
+        if shouldFireFreeTrialPixel {
+            freeTrialsExperiment.fireOfferSelectionMonthlyPixel()
+        }
+
         return nil
     }
 
     func subscriptionsYearlyPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
         Logger.subscription.debug("Web function called: \(#function)")
         Pixel.fire(pixel: .privacyProOfferYearlyPriceClick)
+
+        if shouldFireFreeTrialPixel {
+            freeTrialsExperiment.fireOfferSelectionYearlyPixel()
+        }
+
         return nil
     }
 
@@ -411,7 +433,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     @MainActor
     func pushPurchaseUpdate(originalMessage: WKScriptMessage, purchaseUpdate: PurchaseUpdate) async {
-        pushAction(method: .onPurchaseUpdate, webView: originalMessage.webView!, params: purchaseUpdate)
+        guard let webView = originalMessage.webView else { return }
+
+        pushAction(method: .onPurchaseUpdate, webView: webView, params: purchaseUpdate)
     }
 
     func pushAction(method: SubscribeActionName, webView: WKWebView, params: Encodable) {
@@ -456,6 +480,72 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         onSetSubscription = nil
         onActivateSubscription = nil
         onBackToSettings = nil
+    }
+}
+
+private extension SubscriptionPagesUseSubscriptionFeature {
+
+    /// Determines whether a free trial pixel should be fired.
+    /// - Returns: `true` if the user is part of a free trial cohort, otherwise `false`.
+    var shouldFireFreeTrialPixel: Bool {
+        freeTrialCohortIfApplicable() != nil
+    }
+
+    /// Fires a subscription purchase pixel for a free trial if applicable.
+    ///
+    /// This method checks if the user is part of a free trial cohort and fires
+    /// the appropriate pixel based on the subscription type (monthly or yearly).
+    ///
+    /// - Parameter id: The subscription identifier used to determine the type of subscription.
+    func fireFreeTrialSubscriptionPurchasePixelIfApplicable(for id: String) {
+        // Check if the pixel should be fired; exit early if not applicable
+        guard shouldFireFreeTrialPixel else { return }
+
+        /*
+         Logic based on strings is obviously not ideal, but acceptable for this temporary
+         experiment.
+        */
+        if id.contains("month") {
+            freeTrialsExperiment.fireSubscriptionStartedMonthlyPixel()
+        } else if id.contains("year") {
+            freeTrialsExperiment.fireSubscriptionStartedYearlyPixel()
+        }
+    }
+
+    /// Retrieves the free trial cohort for the user, if applicable.
+    ///
+    /// Cohorts are determined based on the feature flag configuration, user authentication status,
+    /// and whether the user can make purchases.
+    ///
+    /// - Returns: A `FreeTrialsFeatureFlagExperiment.Cohort` if the user is part of a cohort, otherwise `nil`.
+    func freeTrialCohortIfApplicable() -> FreeTrialsFeatureFlagExperiment.Cohort? {
+        // Check if the user is authenticated; free trials are not applicable for authenticated users
+        guard !subscriptionManager.accountManager.isUserAuthenticated else { return nil }
+        // Ensure that the user can make purchases
+        guard subscriptionManager.canPurchase else { return nil }
+
+        // Retrieve the cohort if the feature flag is enabled
+        guard let cohort = featureFlagger.getCohortIfEnabled(for: freeTrialsExperiment)
+                as? FreeTrialsFeatureFlagExperiment.Cohort else { return nil }
+
+        return cohort
+    }
+
+    /// Retrieves the appropriate subscription options based on the free trial cohort.
+    ///
+    /// - Parameter freeTrialsCohort: The cohort the user belongs to (`control` or `treatment`).
+    /// - Returns: A `SubscriptionOptions` object containing the relevant subscription options.
+    func freeTrialSubscriptionOptions(for freeTrialsCohort: FreeTrialsFeatureFlagExperiment.Cohort) async -> SubscriptionOptions? {
+        var subscriptionOptions: SubscriptionOptions?
+
+        switch freeTrialsCohort {
+        case .control:
+            subscriptionOptions = await subscriptionManager.storePurchaseManager().subscriptionOptions()
+        case .treatment:
+            subscriptionOptions = await subscriptionManager.storePurchaseManager().freeTrialSubscriptionOptions()
+        }
+
+        return subscriptionOptions
     }
 }
 

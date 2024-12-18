@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "e8654e1a51bd20fa8fa234a4155a9aec37411ed1",
-        "version" : "221.1.0"
+        "branch" : "jacek/refactor-app-delegate",
+        "revision" : "3712ccc0b6867e08b6235083f7e754d537f0b5cb"
       }
     },
     {

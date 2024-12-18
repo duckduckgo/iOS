@@ -78,7 +78,7 @@ struct Background: AppState {
         // When reopened, the app will reliably run the old flow.
         if ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .forceOldAppDelegate) {
             (UIApplication.shared.delegate as? AppDelegate)?.forceOldAppDelegate()
-            fatalError() // we silently crash in the background
+            fatalError("crash to ensure the app restarts using the old app delegate next time")
         }
     }
 

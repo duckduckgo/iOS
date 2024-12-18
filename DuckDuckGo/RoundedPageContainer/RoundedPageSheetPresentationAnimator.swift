@@ -66,6 +66,7 @@ class RoundedPageSheetDismissalAnimator: NSObject, UIViewControllerAnimatedTrans
               let fromView = fromViewController.view,
               let contentView = fromViewController.contentViewController.view else { return }
 
+        let fromBackgroundView = fromViewController.backgroundView
         let containerView = transitionContext.containerView
 
         UIView.animate(withDuration: AnimatorConstants.duration,
@@ -74,7 +75,7 @@ class RoundedPageSheetDismissalAnimator: NSObject, UIViewControllerAnimatedTrans
                        initialSpringVelocity: AnimatorConstants.springVelocity,
                        options: .curveEaseInOut,
                        animations: {
-            fromView.alpha = 0
+            fromBackgroundView.alpha = 0
             contentView.transform = CGAffineTransform(translationX: 0, y: containerView.bounds.height)
         }, completion: { finished in
             fromView.removeFromSuperview()
@@ -94,10 +95,11 @@ class RoundedPageSheetDismissalAnimator: NSObject, UIViewControllerAnimatedTrans
         }
 
         let containerView = transitionContext.containerView
+        let fromBackgroundView = fromViewController.backgroundView
 
         let animator = UIViewPropertyAnimator(duration: AnimatorConstants.duration,
                                               dampingRatio: AnimatorConstants.springDamping) {
-            fromView.alpha = 0
+            fromBackgroundView.alpha = 0
             contentView.transform = CGAffineTransform(translationX: 0, y: containerView.bounds.height)
         }
 

@@ -22,6 +22,7 @@ import UIKit
 final class RoundedPageSheetContainerViewController: UIViewController {
     let contentViewController: UIViewController
     private let allowedOrientation: UIInterfaceOrientationMask
+    let backgroundView = UIView()
 
     private var interactiveDismissalTransition: UIPercentDrivenInteractiveTransition?
     private var isInteractiveDismissal = false
@@ -52,8 +53,9 @@ final class RoundedPageSheetContainerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .clear
 
+        setupBackgroundView()
         setupContentViewController()
     }
 
@@ -84,6 +86,20 @@ final class RoundedPageSheetContainerViewController: UIViewController {
         default:
             break
         }
+    }
+
+    private func setupBackgroundView() {
+        view.addSubview(backgroundView)
+
+        backgroundView.backgroundColor = .black
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 
     private func setupContentViewController() {

@@ -84,6 +84,13 @@ extension AIChatViewController {
     }
 }
 
+// MARK: - Public functions
+extension AIChatViewController {
+    public func loadQuery(_ query: URLQueryItem) {
+        webViewController?.loadQuery(query)
+    }
+}
+
 // MARK: - Views Setup
 extension AIChatViewController {
 

@@ -60,7 +60,11 @@ extension Pixel {
         case tabSwitcherClickCloseTab
         case tabSwitcherSwipeCloseTab
         case tabSwitchLongPressNewTab
-        case tabSwitcherOpenDaily
+        case tabSwitcherOpenedDaily
+
+        case tabSwitcherOpenedFromSerp
+        case tabSwitcherOpenedFromWebsite
+        case tabSwitcherOpenedFromNewTabPage
 
         case settingsDoNotSellShown
         case settingsDoNotSellOn
@@ -118,7 +122,7 @@ extension Pixel {
         case tabBarForwardPressed
         case bookmarksButtonPressed
         case tabBarBookmarksLongPressed
-        case tabBarTabSwitcherPressed
+        case tabBarTabSwitcherOpened
         
         case homeScreenShown
         case homeScreenEditFavorite
@@ -773,6 +777,8 @@ extension Pixel {
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
+
+        // MARK: Settings
         case settingsPresented
         case settingsSetAsDefault
         case settingsVoiceSearchOn
@@ -789,6 +795,26 @@ extension Pixel {
         case settingsAddressBarSelectorPressed
         case settingsAccessibilityOpen
         case settingsAccessiblityTextZoom
+
+        case settingsPrivateSearchOpen
+        case settingsEmailProtectionOpen
+        case settingsEmailProtectionEnable
+        case settingsGeneralOpen
+        case settingsSyncOpen
+        case settingsAppearanceOpen
+        case settingsThemeSelectorPressed
+        case settingsAddressBarTopSelected
+        case settingsAddressBarBottomSelected
+        case settingsShowFullURLOn
+        case settingsShowFullURLOff
+        case settingsDataClearingOpen
+        case settingsFireButtonSelectorPressed
+        case settingsDataClearingClearDataOpen
+        case settingsAutomaticallyClearDataOn
+        case settingsAutomaticallyClearDataOff
+        case settingsNextStepsAddAppToDock
+        case settingsNextStepsAddWidget
+        case settingsMoreSearchSettings
 
         // Web pixels
         case privacyProOfferMonthlyPriceClick
@@ -913,9 +939,8 @@ extension Pixel {
         case appDidBecomeActiveTime(time: BucketAggregation)
 
         // MARK: AI Chat
-        case openAIChatBefore10min
-        case openAIChatAfter10min
         case aiChatNoRemoteSettingsFound(settings: String)
+        case openAIChatFromAddressBar
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
@@ -961,7 +986,11 @@ extension Pixel.Event {
         case .tabSwitcherClickCloseTab: return "m_tab_manager_close_tab_click"
         case .tabSwitcherSwipeCloseTab: return "m_tab_manager_close_tab_swipe"
         case .tabSwitchLongPressNewTab: return "m_tab_manager_long_press_new_tab"
-        case .tabSwitcherOpenDaily: return "m_tab_manager_clicked_daily"
+        case .tabSwitcherOpenedDaily: return "m_tab_manager_opened_daily"
+
+        case .tabSwitcherOpenedFromSerp: return "m_tab_manager_open_from_serp"
+        case .tabSwitcherOpenedFromWebsite: return "m_tab_manager_open_from_website"
+        case .tabSwitcherOpenedFromNewTabPage: return "m_tab_manager_open_from_newtabpage"
 
         case .settingsDoNotSellShown: return "ms_dns"
         case .settingsDoNotSellOn: return "ms_dns_on"
@@ -970,7 +999,27 @@ extension Pixel.Event {
         case .settingsAutoconsentShown: return "m_settings_autoconsent_shown"
         case .settingsAutoconsentOn: return "m_settings_autoconsent_on"
         case .settingsAutoconsentOff: return "m_settings_autoconsent_off"
-            
+
+        case .settingsPrivateSearchOpen: return "m_settings_private_search_open"
+        case .settingsEmailProtectionOpen: return "m_settings_email_protection_open"
+        case .settingsEmailProtectionEnable: return "m_settings_email_protection_enable"
+        case .settingsGeneralOpen: return "m_settings_general_open"
+        case .settingsSyncOpen: return "m_settings_sync_open"
+        case .settingsAppearanceOpen: return "m_settings_appearance_open"
+        case .settingsThemeSelectorPressed: return "m_settings_theme_selector_pressed"
+        case .settingsAddressBarTopSelected: return "m_settings_address_bar_top_selected"
+        case .settingsAddressBarBottomSelected: return "m_settings_address_bar_bottom_selected"
+        case .settingsShowFullURLOn: return "m_settings_show_full_url_on"
+        case .settingsShowFullURLOff: return "m_settings_show_full_url_off"
+        case .settingsDataClearingOpen: return "m_settings_data_clearing_open"
+        case .settingsFireButtonSelectorPressed: return "m_settings_fire_button_selector_pressed"
+        case .settingsDataClearingClearDataOpen: return "m_settings_data_clearing_clear_data_open"
+        case .settingsAutomaticallyClearDataOn: return "m_settings_automatically_clear_data_on"
+        case .settingsAutomaticallyClearDataOff: return "m_settings_automatically_clear_data_off"
+        case .settingsNextStepsAddAppToDock: return "m_settings_next_steps_add_app_to_dock"
+        case .settingsNextStepsAddWidget: return "m_settings_next_steps_add_widget"
+        case .settingsMoreSearchSettings: return "m_settings_more_search_settings"
+
         case .browsingMenuOpened: return "mb"
         case .browsingMenuNewTab: return "mb_tb"
         case .browsingMenuAddToBookmarks: return "mb_abk"
@@ -1021,7 +1070,7 @@ extension Pixel.Event {
         case .tabBarForwardPressed: return "mt_fw"
         case .bookmarksButtonPressed: return "mt_bm"
         case .tabBarBookmarksLongPressed: return "mt_bl"
-        case .tabBarTabSwitcherPressed: return "mt_tb"
+        case .tabBarTabSwitcherOpened: return "m_tab_manager_opened"
 
         case .bookmarkLaunchList: return "m_bookmark_launch_list"
         case .bookmarkLaunchScored: return "m_bookmark_launch_scored"
@@ -1673,6 +1722,8 @@ extension Pixel.Event {
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"
+
+        // MARK: Settings
         case .settingsPresented: return "m_settings_presented"
         case .settingsSetAsDefault: return "m_settings_set_as_default"
         case .settingsVoiceSearchOn: return "m_settings_voice_search_on"
@@ -1829,10 +1880,9 @@ extension Pixel.Event {
         case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
 
         // MARK: AI Chat
-        case .openAIChatAfter10min: return "m_aichat_open_after_10_min"
-        case .openAIChatBefore10min: return "m_aichat_open_before_10_min"
         case .aiChatNoRemoteSettingsFound(let settings):
             return "m_aichat_no_remote_settings_found-\(settings.lowercased())"
+        case .openAIChatFromAddressBar: return "m_aichat_addressbar_icon"
 
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-2"

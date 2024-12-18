@@ -1,5 +1,5 @@
 //
-//  AIChatPixelHandler.swift
+//  UIColor+Extension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,16 +17,10 @@
 //  limitations under the License.
 //
 
-import AIChat
-import Core
+import UIKit
 
-struct AIChatPixelHandler: AIChatPixelHandling {
-    func fire(pixel: AIChatPixel) {
-        switch pixel {
-        case .openAfter10min:
-            Pixel.fire(pixel: .openAIChatAfter10min)
-        case .openBefore10min:
-            Pixel.fire(pixel: .openAIChatBefore10min)
-        }
+extension UIColor {
+    static var webViewBackgroundColor: UIColor {
+        return UIColor(named: "webViewBackgroundColor", in: Bundle.module, compatibleWith: nil) ?? UIColor.clear
     }
 }

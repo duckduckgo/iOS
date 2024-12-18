@@ -1,5 +1,5 @@
 //
-//  URLQueryItemTests.swift
+//  URLExtensionTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import XCTest
 @testable import AIChat
 
-class URLQueryItemTests: XCTestCase {
+class URLExtensionTests: XCTestCase {
 
     func testAddingQueryItemToEmptyURL() {
         let url = URL(string: "https://example.com")!
@@ -80,6 +80,46 @@ class URLQueryItemTests: XCTestCase {
         XCTAssertEqual(result.scheme, "https")
         XCTAssertEqual(result.host, "example.com")
         XCTAssertEqual(result.queryItemsDictionary, ["key": ""])
+    }
+
+    func testIsDuckAIURLWithValidURL() {
+        if let url = URL(string: "https://duckduckgo.com/?ia=chat") {
+            XCTAssertTrue(url.isDuckAIURL, "The URL should be identified as a DuckDuckGo AI URL.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIURLWithInvalidDomain() {
+        if let url = URL(string: "https://example.com/?ia=chat") {
+            XCTAssertFalse(url.isDuckAIURL, "The URL should not be identified as a DuckDuckGo AI URL due to the domain.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIURLWithMissingQueryItem() {
+        if let url = URL(string: "https://duckduckgo.com/") {
+            XCTAssertFalse(url.isDuckAIURL, "The URL should not be identified as a DuckDuckGo AI URL due to missing query item.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIURLWithDifferentQueryItem() {
+        if let url = URL(string: "https://duckduckgo.com/?ia=search") {
+            XCTAssertFalse(url.isDuckAIURL, "The URL should not be identified as a DuckDuckGo AI URL due to different query item value.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIURLWithAdditionalQueryItems() {
+        if let url = URL(string: "https://duckduckgo.com/?ia=chat&other=param") {
+            XCTAssertTrue(url.isDuckAIURL, "The URL should be identified as a DuckDuckGo AI URL even with additional query items.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
     }
 }
 

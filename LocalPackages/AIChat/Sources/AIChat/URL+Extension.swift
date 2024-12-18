@@ -32,4 +32,17 @@ extension URL {
         urlComponents.queryItems = queryItems
         return urlComponents.url ?? self
     }
+
+    var isDuckAIURL: Bool {
+        guard let host = self.host, host == "duckduckgo.com" else {
+            return false
+        }
+
+        guard let urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false),
+              let queryItems = urlComponents.queryItems else {
+            return false
+        }
+
+        return queryItems.contains { $0.name == "ia" && $0.value == "chat" }
+    }
 }

@@ -1781,7 +1781,6 @@
 		7B1681042D10BC7B005EAE24 /* VPNIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNIntents.swift; sourceTree = "<group>"; };
 		7B16810B2D10CF44005EAE24 /* WidgetVPNIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetVPNIntents.swift; sourceTree = "<group>"; };
 		7B1C892B2CF714AA0008224E /* VPNTipsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNTipsModel.swift; sourceTree = "<group>"; };
-		7B1D7A912D0C723B00E48644 /* DesignResourcesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DesignResourcesKit; path = ../DesignResourcesKit; sourceTree = SOURCE_ROOT; };
 		7B4DC5BF2CB2A4A500EE5CC2 /* VPNStatusValueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNStatusValueProvider.swift; sourceTree = "<group>"; };
 		7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetKind.swift; sourceTree = "<group>"; };
 		7B4DC5E02CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNAutoShortcuts.swift; sourceTree = "<group>"; };
@@ -3920,7 +3919,6 @@
 		31E69A60280F4BAD00478327 /* LocalPackages */ = {
 			isa = PBXGroup;
 			children = (
-				7B1D7A912D0C723B00E48644 /* DesignResourcesKit */,
 				31794BFF2821DFB600F18633 /* DuckUI */,
 				85875B5F29912A2D00115F05 /* SyncUI */,
 				7B10FF282D11AA0D00F36BF2 /* VPNiOS */,
@@ -11873,8 +11871,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/DesignResourcesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 3.3.0;
+				kind = revision;
+				revision = 8449a35fd8c340fea4f837e2ebd19635cdd49d50;
 			};
 		};
 		F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
@@ -12004,14 +12002,6 @@
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Common;
 		};
-		7B2CCBA22D11ABB100FE5852 /* VPNWidgetSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = VPNWidgetSupport;
-		};
-		7B2CCBA42D11ABBA00FE5852 /* VPNWidgetSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = VPNWidgetSupport;
-		};
 		56D779392CFFC7E800B619EF /* PixelExperimentKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
@@ -12021,6 +12011,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = PixelKit;
+		};
+		7B2CCBA22D11ABB100FE5852 /* VPNWidgetSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VPNWidgetSupport;
+		};
+		7B2CCBA42D11ABBA00FE5852 /* VPNWidgetSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VPNWidgetSupport;
 		};
 		851481872A600EFC00ABC65F /* RemoteMessaging */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -141,6 +141,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 }
             }
         .store(in: &cancellables)
+       
     }
 
     @MainActor

@@ -24,7 +24,10 @@ extension Init {
 
     func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .launching(let application):
+        case .launching(let application, let isTesting):
+            if isTesting {
+                return Testing(application: application)
+            }
             return Launched(stateContext: makeStateContext(application: application))
         default:
             return handleUnexpectedEvent(event)
@@ -110,6 +113,12 @@ extension Background {
             return handleUnexpectedEvent(event)
         }
     }
+
+}
+
+extension Testing {
+
+    func apply(event: AppEvent) -> any AppState { self }
 
 }
 

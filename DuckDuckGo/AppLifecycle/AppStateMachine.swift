@@ -21,7 +21,7 @@ import UIKit
 
 enum AppEvent {
 
-    case launching(UIApplication)
+    case launching(UIApplication, isTesting: Bool)
     case activating
     case backgrounding
     case suspending

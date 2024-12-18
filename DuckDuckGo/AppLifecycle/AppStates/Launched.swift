@@ -38,9 +38,6 @@ import PixelExperimentKit
 @MainActor
 struct Launched: AppState {
 
-    @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
-    private var privacyConfigCustomURL: String?
-
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     private var didCrashDuringCrashHandlersSetUp: Bool
 
@@ -66,17 +63,18 @@ struct Launched: AppState {
     private let crashReportUploaderOnboarding: CrashCollectionOnboarding
 
     // These should ideally be let properties instead of force-unwrapped. However, due to various initialization paths, such as database completion blocks, setting them up in advance is currently not feasible. Refactoring will be done once this code is streamlined.
-    private var uiService: UIService!
-    private var unService: UNService!
-    private var syncDataProviders: SyncDataProviders!
-    private var autoClear: AutoClear!
-    private var syncService: DDGSync!
-    private var isSyncInProgressCancellable: AnyCancellable!
-    private var remoteMessagingClient: RemoteMessagingClient!
-    private var subscriptionCookieManager: SubscriptionCookieManaging!
-    private var autofillPixelReporter: AutofillPixelReporter!
-    private var mainViewController: MainViewController!
-    private var window: UIWindow?
+    private let uiService: UIService
+    private let unService: UNService
+    private let syncDataProviders: SyncDataProviders
+    private let syncService: DDGSync
+    private let isSyncInProgressCancellable: AnyCancellable
+    private let remoteMessagingClient: RemoteMessagingClient
+    private let subscriptionCookieManager: SubscriptionCookieManaging
+    private let autofillPixelReporter: AutofillPixelReporter
+    private let window: UIWindow
+
+    private var mainViewController: MainViewController?
+    private var autoClear: AutoClear?
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
@@ -85,6 +83,9 @@ struct Launched: AppState {
 
     // swiftlint:disable:next cyclomatic_complexity
     init(stateContext: Init.StateContext) {
+
+        @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
+        var privacyConfigCustomURL: String?
 
         application = stateContext.application
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
@@ -177,29 +178,6 @@ struct Launched: AppState {
         }
 
         _ = DefaultUserAgentManager.shared
-        if isTesting {
-            Pixel.isDryRun = true
-            _ = DefaultUserAgentManager.shared
-            Database.shared.loadStore { _, _ in }
-            _ = BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
-
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window!.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
-
-            let blockingDelegate = BlockingNavigationDelegate()
-            let webView = blockingDelegate.prepareWebView()
-            window!.rootViewController?.view.addSubview(webView)
-            window!.rootViewController?.view.backgroundColor = .red
-            webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
-
-            application.setWindow(window!)
-
-            let request = URLRequest(url: URL(string: "about:blank")!)
-            webView.load(request)
-
-            return
-        }
-
         removeEmailWaitlistState()
 
         func removeEmailWaitlistState() {
@@ -405,18 +383,14 @@ struct Launched: AppState {
         privacyProDataReporter.injectTabsModel(tabsModel)
 
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-
             window = UIWindow(frame: UIScreen.main.bounds)
-            window!.rootViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
+            window.rootViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
                                                                      voiceSearchHelper: voiceSearchHelper)
-            window!.makeKeyAndVisible()
+            window.makeKeyAndVisible()
             application.setWindow(window)
 
-            presentInsufficientDiskSpaceAlert()
-            func presentInsufficientDiskSpaceAlert() {
-                let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
-                window!.rootViewController?.present(alertController, animated: true, completion: nil)
-            }
+            let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
+            window.rootViewController?.present(alertController, animated: true, completion: nil)
         } else {
             let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
             let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
@@ -444,15 +418,15 @@ struct Launched: AppState {
                                                     websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
                                                     appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
-            mainViewController.loadViewIfNeeded()
+            mainViewController!.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = mainViewController
 
             window = UIWindow(frame: UIScreen.main.bounds)
-            window!.rootViewController = mainViewController
-            window!.makeKeyAndVisible()
-            application.setWindow(window!)
+            window.rootViewController = mainViewController
+            window.makeKeyAndVisible()
+            application.setWindow(window)
 
-            let autoClear = AutoClear(worker: mainViewController)
+            let autoClear = AutoClear(worker: mainViewController!)
             self.autoClear = autoClear
             let applicationState = application.applicationState
             let vpnWorkaround = vpnWorkaround
@@ -461,8 +435,8 @@ struct Launched: AppState {
                 await vpnWorkaround.installRedditSessionWorkaround()
             }
         }
-        unService = UNService(window: window!, accountManager: accountManager)
-        uiService = UIService(window: window!)
+        unService = UNService(window: window, accountManager: accountManager)
+        uiService = UIService(window: window)
 
         voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
@@ -472,8 +446,8 @@ struct Launched: AppState {
 
         UNUserNotificationCenter.current().delegate = unService
 
-        window!.windowScene?.screenshotService?.delegate = uiService
-        ThemeManager.shared.updateUserInterfaceStyle(window: window!)
+        window.windowScene?.screenshotService?.delegate = uiService
+        ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         // Temporary logic for rollout of Autofill as on by default for new installs only
         if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
@@ -521,7 +495,7 @@ struct Launched: AppState {
         _ = NotificationCenter.default.addObserver(forName: AppUserDefaults.Notifications.autofillEnabledChange,
                                                    object: nil,
                                                    queue: nil) { [autofillPixelReporter] _ in
-            autofillPixelReporter?.updateAutofillEnabledStatus(AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled)
+            autofillPixelReporter.updateAutofillEnabledStatus(AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled)
         }
 
         if stateContext.didCrashDuringCrashHandlersSetUp {
@@ -540,9 +514,9 @@ struct Launched: AppState {
             appSettings: appSettings,
             privacyStore: privacyStore,
             uiService: uiService,
-            mainViewController: mainViewController,
+            mainViewController: mainViewController!,
             voiceSearchHelper: voiceSearchHelper,
-            autoClear: autoClear,
+            autoClear: autoClear!,
             autofillLoginSession: autofillLoginSession,
             marketplaceAdPostbackManager: marketplaceAdPostbackManager,
             syncService: syncService,
@@ -647,7 +621,6 @@ extension Launched {
     struct StateContext {
 
         let application: UIApplication
-        let isTesting: Bool
         let didFinishLaunchingStartTime: CFAbsoluteTime
         let urlToOpen: URL?
         let shortcutItemToHandle: UIApplicationShortcutItem?
@@ -657,7 +630,6 @@ extension Launched {
 
     func makeStateContext() -> StateContext {
         .init(application: application,
-              isTesting: isTesting,
               didFinishLaunchingStartTime: didFinishLaunchingStartTime,
               urlToOpen: urlToOpen,
               shortcutItemToHandle: shortcutItemToHandle,

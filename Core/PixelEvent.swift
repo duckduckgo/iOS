@@ -1835,7 +1835,7 @@ extension Pixel.Event {
             return "m_aichat_no_remote_settings_found-\(settings.lowercased())"
 
         // MARK: Lifecycle
-        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state"
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-2"
 
         }
     }

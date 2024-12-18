@@ -70,7 +70,7 @@ final class TitleBarView: UIView {
             titleLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: handleBar.bottomAnchor, constant: 30),
 
-            closeButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            closeButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -8),
             closeButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             closeButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize),
             closeButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize)

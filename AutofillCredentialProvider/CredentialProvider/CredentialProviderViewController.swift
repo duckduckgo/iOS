@@ -22,6 +22,7 @@ import SwiftUI
 import BrowserServicesKit
 import Core
 import Common
+import os.log
 
 class CredentialProviderViewController: ASCredentialProviderViewController {
 
@@ -110,7 +111,9 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
         installChildViewController(hostingController)
 
         Task {
-            await credentialIdentityStoreManager.populateCredentialStore()
+            if let self = self, self.findKeychainItemsWithV4() {
+                await credentialIdentityStoreManager.populateCredentialStore()
+            }
         }
 
         Pixel.fire(pixel: .autofillExtensionEnabled)
@@ -202,5 +205,32 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
                 }
             }
         }
+    }
+
+    private func findKeychainItemsWithV4() -> Bool {
+        var itemsWithV4: [String] = []
+
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecReturnAttributes as String: kCFBooleanTrue!,
+            kSecMatchLimit as String: kSecMatchLimitAll
+        ]
+
+        var result: AnyObject?
+
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+
+        if status == errSecSuccess, let items = result as? [[String: Any]] {
+            for item in items {
+                if let service = item[kSecAttrService as String] as? String,
+                   service.contains("v4") {
+                    itemsWithV4.append(service)
+                }
+            }
+        } else {
+            Logger.autofill.debug("No items found or error: \(status)")
+        }
+
+        return !itemsWithV4.isEmpty
     }
 }

@@ -21,6 +21,7 @@ import Foundation
 import Combine
 import DDGSync
 import UIKit
+import Core
 
 struct Background: AppState {
 
@@ -70,6 +71,15 @@ struct Background: AppState {
         privacyProDataReporter.saveApplicationLastSessionEnded()
 
         resetAppStartTime()
+
+        // Kill switch for the new app delegate:
+        // If the .forceOldAppDelegate flag is set in the config, we mark a file as present.
+        // This switches the app to the old mode and silently crashes it in the background.
+        // When reopened, the app will reliably run the old flow.
+        if ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .forceOldAppDelegate) {
+            (UIApplication.shared.delegate as? AppDelegate)?.forceOldAppDelegate()
+            fatalError() // we silently crash in the background
+        }
     }
 
     private mutating func suspendSync(syncService: DDGSync) {

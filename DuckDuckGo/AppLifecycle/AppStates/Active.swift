@@ -121,6 +121,7 @@ struct Active: AppState {
     private func activateApp(isTesting: Bool = false) {
         guard !isTesting else { return } // Leaving this as is for now to ensure this code is never executed, regardless of where it's called from.
         // In the future, we may consider creating separate states specifically for testing purposes.
+
         StorageInconsistencyMonitor().didBecomeActive(isProtectedDataAvailable: application.isProtectedDataAvailable)
         appDependencies.syncService.initializeIfNeeded()
         appDependencies.syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: appDependencies.syncService)

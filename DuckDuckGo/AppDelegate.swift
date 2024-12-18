@@ -22,12 +22,12 @@ import Core
 
 enum AppBehavior: String {
 
-    case existing
-    case stateMachine
+    case old
+    case new
 
 }
 
-protocol DDGAppDelegate {
+protocol DDGApp {
 
     var privacyProDataReporter: PrivacyProDataReporting? { get }
     
@@ -51,18 +51,16 @@ protocol DDGAppDelegate {
         realDelegate.privacyProDataReporter
     }
 
+    func forceOldAppDelegate() {
+        BoolFileMarker(name: .forceOldAppDelegate)?.mark()
+    }
+
     private let appBehavior: AppBehavior = {
-        guard !ProcessInfo().arguments.contains("testing") else { return .existing }
-        if let appBehavior = AppDependencyProvider.shared.appSettings.appBehavior {
-            return appBehavior
-        }
-        let appBehavior: AppBehavior = Double.random(in: 0..<1) < 0.2 ? .stateMachine : .existing // 20% of users will run through new flow
-        AppDependencyProvider.shared.appSettings.appBehavior = appBehavior
-        return appBehavior
+        BoolFileMarker(name: .forceOldAppDelegate)?.isPresent == true ? .old : .new
     }()
 
-    private lazy var realDelegate: UIApplicationDelegate & DDGAppDelegate = {
-        if appBehavior == .existing {
+    private lazy var realDelegate: UIApplicationDelegate & DDGApp = {
+        if appBehavior == .old {
             return OldAppDelegate(with: self)
         } else {
             return NewAppDelegate()
@@ -159,5 +157,11 @@ extension Error {
         
         return false
     }
+
+}
+
+private extension BoolFileMarker.Name {
+
+    static let forceOldAppDelegate = BoolFileMarker.Name(rawValue: "force-old-app-delegate")
 
 }

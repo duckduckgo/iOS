@@ -19,12 +19,12 @@
 
 import UIKit
 
-final class NewAppDelegate: NSObject, UIApplicationDelegate, DDGAppDelegate {
+final class NewAppDelegate: NSObject, UIApplicationDelegate, DDGApp {
 
     private let appStateMachine: AppStateMachine = AppStateMachine()
 
     var privacyProDataReporter: PrivacyProDataReporting? {
-        (appStateMachine.currentState as? Active)?.appDependencies.privacyProDataReporter // just for now, we have to get rid of this antipattern
+        (appStateMachine.currentState as? Active)?.appDependencies.privacyProDataReporter // just for now, we have to get rid of this anti pattern
     }
 
     func initialize() { } // init code will happen inside AppStateMachine/Init state .init()
@@ -35,7 +35,9 @@ final class NewAppDelegate: NSObject, UIApplicationDelegate, DDGAppDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        appStateMachine.handle(.activating)
+        if !ProcessInfo().arguments.contains("testing") {
+            appStateMachine.handle(.activating)
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

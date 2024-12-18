@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  OldAppDelegate.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -42,7 +42,7 @@ import WebKit
 import os.log
 
 @MainActor
-final class OldAppDelegate: NSObject, UIApplicationDelegate, DDGAppDelegate {
+final class OldAppDelegate: NSObject, UIApplicationDelegate, DDGApp {
 
     private var testing = false
     var appIsLaunching = false

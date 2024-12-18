@@ -32,7 +32,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "723dbb9db3ca6852c2ebc92408c9893fe1c338de"
+        "revision" : "53e3c2866c106555f19862ea8780fb4c2c334661"
       }
     },
     {

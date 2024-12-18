@@ -46,8 +46,8 @@ extension ControlCenter {
 extension StaticControlConfiguration {
     @MainActor @preconcurrency
     init<Provider>(kind: ControlWidgetKind,
-                   provider: Provider, @ControlWidgetTemplateBuilder
-                   content: @escaping (Provider.Value) -> Content)
+                   provider: Provider,
+                   @ControlWidgetTemplateBuilder content: @escaping (Provider.Value) -> Content)
     where Provider: ControlValueProvider {
         self.init(kind: kind.rawValue, provider: provider, content: content)
     }

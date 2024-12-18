@@ -27,6 +27,7 @@ struct VPNControlStatusValueProvider: ControlValueProvider {
 
     func currentValue() async throws -> VPNStatus {
         guard let manager = try await NETunnelProviderManager.loadAllFromPreferences().first else {
+
             return .notConfigured
         }
 

@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import AppIntents
 import Common
 import WidgetKit
 import SwiftUI
@@ -27,6 +28,14 @@ import Bookmarks
 import Persistence
 import NetworkExtension
 import os.log
+import VPNAppIntents
+
+@available(iOS 17.0, *)
+public struct WidgetsExtension: AppIntentsPackage {
+    public static var includedPackages: [any AppIntentsPackage.Type] {
+       [VPNAppIntents.self]
+   }
+}
 
 struct Favorite {
 

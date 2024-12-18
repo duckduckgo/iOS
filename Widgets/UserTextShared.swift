@@ -1,5 +1,5 @@
 //
-//  VPNSnoozeActivityAttributes.swift
+//  UserTextShared.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,12 +18,7 @@
 //
 
 import Foundation
-import ActivityKit
 
-struct VPNSnoozeActivityAttributes: ActivityAttributes {
-    struct ContentState: Codable & Hashable {
-        let endDate: Date
-    }
-
-    var endDate: Date
+extension UserText {
+    static let vpnNeedsToBeEnabledFromApp = NSLocalizedString("intent.vpn.needs.to.be.enabled.from.app", value: "You need to enable the VPN from the DuckDuckGo App.", comment: "Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured")
 }

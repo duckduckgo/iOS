@@ -26,6 +26,8 @@ final class MockFeatureFlagger: FeatureFlagger {
 
     var enabledFeatureFlags: [FeatureFlag] = []
 
+    var cohortToReturn: (any FlagCohort)?
+
     init(enabledFeatureFlags: [FeatureFlag] = []) {
         self.enabledFeatureFlags = enabledFeatureFlags
     }
@@ -45,7 +47,7 @@ final class MockFeatureFlagger: FeatureFlagger {
     }
 
     func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag: FeatureFlagExperimentDescribing {
-        return nil
+        return cohortToReturn
     }
 
     func getAllActiveExperiments() -> Experiments {

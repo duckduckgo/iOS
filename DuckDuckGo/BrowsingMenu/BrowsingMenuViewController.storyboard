@@ -44,18 +44,18 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mqv-D2-X5j" userLabel="Container View">
                                                 <rect key="frame" x="0.0" y="0.0" width="345" height="85"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPw-NF-QvA">
-                                                        <rect key="frame" x="0.0" y="0.0" width="345" height="85"/>
+                                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="mPw-NF-QvA">
+                                                        <rect key="frame" x="8" y="0.0" width="329" height="85"/>
                                                     </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="mPw-NF-QvA" firstAttribute="top" secondItem="Mqv-D2-X5j" secondAttribute="top" id="7W4-LY-iKr"/>
-                                                    <constraint firstAttribute="trailing" secondItem="mPw-NF-QvA" secondAttribute="trailing" id="913-uj-1kR"/>
+                                                    <constraint firstAttribute="trailingMargin" secondItem="mPw-NF-QvA" secondAttribute="trailing" id="913-uj-1kR"/>
                                                     <constraint firstAttribute="height" priority="750" constant="85" id="BaI-hm-vyi"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="85" id="LIL-Vk-q1r"/>
                                                     <constraint firstAttribute="bottom" secondItem="mPw-NF-QvA" secondAttribute="bottom" id="WpZ-s9-r0A"/>
-                                                    <constraint firstItem="mPw-NF-QvA" firstAttribute="leading" secondItem="Mqv-D2-X5j" secondAttribute="leading" id="jPN-Pa-Qtz"/>
+                                                    <constraint firstItem="mPw-NF-QvA" firstAttribute="leading" secondItem="Mqv-D2-X5j" secondAttribute="leadingMargin" id="jPN-Pa-Qtz"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QrH-ru-nHf" userLabel="SeparatorView">

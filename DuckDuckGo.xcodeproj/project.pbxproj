@@ -388,8 +388,6 @@
 		7B1C892C2CF714AA0008224E /* VPNTipsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1C892B2CF714AA0008224E /* VPNTipsModel.swift */; };
 		7B2CCBA32D11ABB100FE5852 /* VPNWidgetSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 7B2CCBA22D11ABB100FE5852 /* VPNWidgetSupport */; };
 		7B2CCBA52D11ABBA00FE5852 /* VPNWidgetSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 7B2CCBA42D11ABBA00FE5852 /* VPNWidgetSupport */; };
-		7B2CCBA72D11F01F00FE5852 /* VPNAppIntents in Frameworks */ = {isa = PBXBuildFile; productRef = 7B2CCBA62D11F01F00FE5852 /* VPNAppIntents */; };
-		7B2CCBA92D11F02800FE5852 /* VPNAppIntents in Frameworks */ = {isa = PBXBuildFile; productRef = 7B2CCBA82D11F02800FE5852 /* VPNAppIntents */; };
 		7B4DC5C22CB2AE4600EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
 		7B4DC5C32CB2AF0700EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
 		7B4DC5C42CB2B1D000EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
@@ -3157,7 +3155,6 @@
 				3760DFED299315EF0045A446 /* Waitlist in Frameworks */,
 				F1D43AFA2B99C1D300BAB743 /* BareBonesBrowserKit in Frameworks */,
 				7B2CCBA52D11ABBA00FE5852 /* VPNWidgetSupport in Frameworks */,
-				7B2CCBA92D11F02800FE5852 /* VPNAppIntents in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
 				CB941A6E2B96AB08000F9E7A /* PrivacyDashboard in Frameworks */,
@@ -3192,7 +3189,6 @@
 			files = (
 				8512EA5124ED30D20073EE19 /* SwiftUI.framework in Frameworks */,
 				4BD96E062C4DBC93003BC32C /* NetworkExtension.framework in Frameworks */,
-				7B2CCBA72D11F01F00FE5852 /* VPNAppIntents in Frameworks */,
 				85DF714624F7FE6100C89288 /* Core.framework in Frameworks */,
 				7B2CCBA32D11ABB100FE5852 /* VPNWidgetSupport in Frameworks */,
 				8512EA4F24ED30D20073EE19 /* WidgetKit.framework in Frameworks */,
@@ -6778,7 +6774,6 @@
 				9F96F73A2C9144D5009E45D5 /* Onboarding */,
 				1E5918462CA422A7008ED2B3 /* Navigation */,
 				7B2CCBA42D11ABBA00FE5852 /* VPNWidgetSupport */,
-				7B2CCBA82D11F02800FE5852 /* VPNAppIntents */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -6829,7 +6824,6 @@
 			packageProductDependencies = (
 				4BBBBA862B02E85400D965DA /* DesignResourcesKit */,
 				7B2CCBA22D11ABB100FE5852 /* VPNWidgetSupport */,
-				7B2CCBA62D11F01F00FE5852 /* VPNAppIntents */,
 			);
 			productName = WidgetsExtension;
 			productReference = 8512EA4D24ED30D20073EE19 /* WidgetsExtension.appex */;
@@ -11537,14 +11531,6 @@
 		7B2CCBA42D11ABBA00FE5852 /* VPNWidgetSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VPNWidgetSupport;
-		};
-		7B2CCBA62D11F01F00FE5852 /* VPNAppIntents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = VPNAppIntents;
-		};
-		7B2CCBA82D11F02800FE5852 /* VPNAppIntents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = VPNAppIntents;
 		};
 		851481872A600EFC00ABC65F /* RemoteMessaging */ = {
 			isa = XCSwiftPackageProductDependency;

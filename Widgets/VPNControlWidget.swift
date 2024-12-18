@@ -19,7 +19,6 @@
 
 import Foundation
 import SwiftUI
-import VPNAppIntents
 import WidgetKit
 
 @available(iOSApplicationExtension 18.0, *)

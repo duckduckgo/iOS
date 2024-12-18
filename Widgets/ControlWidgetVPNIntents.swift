@@ -24,7 +24,6 @@ import WidgetKit
 import Core
 import OSLog
 import VPNWidgetSupport
-import VPNAppIntents
 
 // MARK: - Toggle
 
@@ -32,6 +31,10 @@ import VPNAppIntents
 /// from extensions.  This is the recommended workaround from:
 ///     https://mastodon.social/@mgorbach/110812347476671807
 ///
+//@available(iOS 17.0, *)
+//@available(iOSApplicationExtension, unavailable)
+//extension ControlWidgetToggleVPNIntent: ForegroundContinuableIntent {}
+
 @available(iOS 17.0, *)
 struct ControlWidgetToggleVPNIntent: SetValueIntent {
     static let title: LocalizedStringResource = "Toggle DuckDuckGo VPN from the Control Center Widget"
@@ -40,7 +43,11 @@ struct ControlWidgetToggleVPNIntent: SetValueIntent {
 
     @Parameter(title: "Enabled")
     var value: Bool
+}
 
+@available(iOS 17.0, *)
+@available(iOSApplicationExtension, unavailable)
+extension ControlWidgetToggleVPNIntent: ForegroundContinuableIntent {
     @MainActor
     func perform() async throws -> some IntentResult {
         if value {
@@ -67,7 +74,7 @@ struct ControlWidgetToggleVPNIntent: SetValueIntent {
             switch error {
             case VPNWidgetTunnelController.StartFailure.vpnNotConfigured:
                 DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectCancelled)
-                throw error
+                throw needsToContinueInForegroundError("Continue in foreground to enable VPN")
             default:
                 DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectFailure, error: error)
                 throw error

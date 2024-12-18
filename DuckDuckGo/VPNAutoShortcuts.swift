@@ -19,14 +19,6 @@
 
 import AppIntents
 import Foundation
-import VPNAppIntents
-/*
-@available(iOS 17.0, *)
-public struct VPNAppIntents: AppIntentsPackage {
-    public static var includedPackages: [any AppIntentsPackage.Type] {
-       [VPNAppIntents.self]
-   }
-}*/
 
 @available(iOS 17.0, *)
 struct VPNAutoShortcutsiOS17: AppShortcutsProvider {

@@ -244,6 +244,11 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         syncService.scheduler.requestSyncImmediately()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Pixel.fire(pixel: .settingsSyncOpen)
+    }
+
     func updateOptions() {
         syncService.scheduler.requestSyncImmediately()
     }

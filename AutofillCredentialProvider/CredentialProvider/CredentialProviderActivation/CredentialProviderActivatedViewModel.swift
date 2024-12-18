@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 struct CredentialProviderActivatedViewModel {
 
@@ -30,10 +31,12 @@ struct CredentialProviderActivatedViewModel {
     }
 
     func dismiss() {
+        Pixel.fire(pixel: .autofillExtensionWelcomeDismiss)
         completion?(false)
     }
 
     func launchDDGApp() {
+        Pixel.fire(pixel: .autofillExtensionWelcomeLaunchApp)
         completion?(true)
     }
 }

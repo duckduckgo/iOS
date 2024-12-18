@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Κλείσιμο";
+
+/* Done button title */
+"action.button.done" = "Ολοκληρώθηκε";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "Άνοιγμα του DuckDuckGo";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Η Αυτόματη συμπλήρωση κωδικών πρόσβασης ενεργοποιήθηκε!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "συσκευή";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Ακύρωση";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Ξεκλειδώστε τη συσκευή για πρόσβαση σε κωδικούς πρόσβασης";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "Διεύθυνση URL ιστότοπου";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "Αντιγραφή %@";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Η διεύθυνση αντιγράφηκε";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Οι σημειώσεις αντιγράφηκαν";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Ο κωδικός πρόσβασης αντιγράφηκε";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Το όνομα χρήστη αντιγράφηκε";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Απόκρυψη κωδικού πρόσβασης";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Τελευταία ενημέρωση %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Τίτλος";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Σημειώσεις";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Κωδικός πρόσβασης";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Εμφάνιση κωδικού πρόσβασης";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Όνομα χρήστη";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Οι κωδικοί πρόσβασης αποθηκεύονται με ασφάλεια στη συσκευή σας.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Δεν έχουν αποθηκευτεί ακόμα κωδικοί πρόσβασης";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Επιλέξτε έναν κωδικό πρόσβασης για χρήση στο «%@»";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Αναζήτηση κωδικών πρόσβασης";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "για '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Κανένα αποτέλεσμα";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Προτεινόμενο";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Κωδικός πρόσβασης";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Ορίστε έναν κωδικό πρόσβασης στο %@ για αυτόματη συμπλήρωση των κωδικών πρόσβασης DuckDuckGo.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Απαιτείται κωδικός πρόσβασης συσκευής";
+

@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Sluiten";
+
+/* Done button title */
+"action.button.done" = "Klaar";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "DuckDuckGo openen";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Automatisch invullen van wachtwoorden geactiveerd!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "apparaat";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Annuleren";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Ontgrendel het apparaat om toegang te krijgen tot wachtwoorden";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "URL van de website";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "%@ kopiëren";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Adres gekopieerd";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Opmerkingen gekopieerd";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Wachtwoord gekopieerd";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Gebruikersnaam gekopieerd";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Wachtwoord verbergen";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Laatst bijgewerkt op %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Titel";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Opmerkingen";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Wachtwoord";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Wachtwoord weergeven";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Gebruikersnaam";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Wachtwoorden worden veilig opgeslagen op je apparaat.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Nog geen wachtwoorden opgeslagen";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Kies een wachtwoord voor '%@'";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Wachtwoorden zoeken";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "voor '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Geen resultaten";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Aanbevolen";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Wachtwoorden";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Stel een toegangscode in op %@ om je DuckDuckGo-wachtwoorden automatisch in te vullen.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Toegangscode voor apparaat vereist";
+

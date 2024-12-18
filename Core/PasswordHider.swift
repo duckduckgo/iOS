@@ -1,8 +1,8 @@
 //
-//  AIChatPixelHandling.swift
+//  PasswordHider.swift
 //  DuckDuckGo
 //
-//  Copyright © 2024 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,11 +17,17 @@
 //  limitations under the License.
 //
 
-public enum AIChatPixel {
-    case openBefore10min
-    case openAfter10min
-}
+import Foundation
 
-public protocol AIChatPixelHandling {
-    func fire(pixel: AIChatPixel)
+public struct PasswordHider {
+    public let password: String
+    public var hiddenPassword: String {
+        let maximumPasswordDisplayCount = 22
+        let passwordCount = password.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : password.count
+        return String(repeating: "•", count: passwordCount)
+    }
+
+    public init(password: String) {
+        self.password = password
+    }
 }

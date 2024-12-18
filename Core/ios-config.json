@@ -1,15 +1,15 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1733157661102,
+    "version": 1734119755860,
     "features": {
         "adAttributionReporting": {
-            "state": "disabled",
+            "state": "enabled",
             "exceptions": [],
-            "minSupportedVersion": "7.145.0",
+            "minSupportedVersion": "7.146.0",
             "settings": {
                 "includeToken": false
             },
-            "hash": "1da4782852f0317459b4465d801eda1f"
+            "hash": "4c739e2de28deaaf9408f254041bf113"
         },
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -70,25 +70,31 @@
             "hash": "b813ade8472a097ffbd43a3331116fe1"
         },
         "additionalCampaignPixelParams": {
-            "state": "disabled",
+            "state": "enabled",
             "exceptions": [],
-            "hash": "c292bb627849854515cebbded288ef5a"
+            "settings": {
+                "origins": [
+                    "funnel_pro_iosrmf_announcement"
+                ]
+            },
+            "minSupportedVersion": "7.131.0",
+            "hash": "7616abe480cf4aecb67ffbaa71d17217"
         },
         "aiChat": {
-            "state": "enabled",
+            "state": "disabled",
             "exceptions": [],
             "features": {
                 "browsingToolbarShortcut": {
-                    "state": "enabled"
+                    "state": "disabled"
                 },
                 "addressBarShortcut": {
-                    "state": "enabled"
+                    "state": "disabled"
                 }
             },
             "settings": {
                 "aiChatURL": "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=4"
             },
-            "hash": "14908e76cd3a8b4919e03003fd201300"
+            "hash": "4b5209f8cbe489299641ea30ed9a2542"
         },
         "ampLinks": {
             "exceptions": [
@@ -155,6 +161,19 @@
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "apiManipulation": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
+        },
+        "auraExperiment": {
+            "exceptions": [],
+            "settings": {
+                "packages": []
+            },
+            "state": "disabled",
+            "hash": "527fd2e156c7669f001516ee2d3d7c0e"
         },
         "autocompleteTabs": {
             "state": "enabled",
@@ -602,6 +621,207 @@
                     "domain": "outlet46.de"
                 },
                 {
+                    "domain": "mytolino.de"
+                },
+                {
+                    "domain": "google.ae"
+                },
+                {
+                    "domain": "google.at"
+                },
+                {
+                    "domain": "google.be"
+                },
+                {
+                    "domain": "google.bg"
+                },
+                {
+                    "domain": "google.by"
+                },
+                {
+                    "domain": "google.ca"
+                },
+                {
+                    "domain": "google.ch"
+                },
+                {
+                    "domain": "google.cl"
+                },
+                {
+                    "domain": "google.co.id"
+                },
+                {
+                    "domain": "google.co.il"
+                },
+                {
+                    "domain": "google.co.in"
+                },
+                {
+                    "domain": "google.co.jp"
+                },
+                {
+                    "domain": "google.co.ke"
+                },
+                {
+                    "domain": "google.co.kr"
+                },
+                {
+                    "domain": "google.co.nz"
+                },
+                {
+                    "domain": "google.co.th"
+                },
+                {
+                    "domain": "google.co.uk"
+                },
+                {
+                    "domain": "google.co.ve"
+                },
+                {
+                    "domain": "google.co.za"
+                },
+                {
+                    "domain": "google.com"
+                },
+                {
+                    "domain": "google.com.ar"
+                },
+                {
+                    "domain": "google.com.au"
+                },
+                {
+                    "domain": "google.com.br"
+                },
+                {
+                    "domain": "google.com.co"
+                },
+                {
+                    "domain": "google.com.ec"
+                },
+                {
+                    "domain": "google.com.eg"
+                },
+                {
+                    "domain": "google.com.hk"
+                },
+                {
+                    "domain": "google.com.mx"
+                },
+                {
+                    "domain": "google.com.my"
+                },
+                {
+                    "domain": "google.com.pe"
+                },
+                {
+                    "domain": "google.com.ph"
+                },
+                {
+                    "domain": "google.com.pk"
+                },
+                {
+                    "domain": "google.com.py"
+                },
+                {
+                    "domain": "google.com.sa"
+                },
+                {
+                    "domain": "google.com.sg"
+                },
+                {
+                    "domain": "google.com.tr"
+                },
+                {
+                    "domain": "google.com.tw"
+                },
+                {
+                    "domain": "google.com.ua"
+                },
+                {
+                    "domain": "google.com.uy"
+                },
+                {
+                    "domain": "google.com.vn"
+                },
+                {
+                    "domain": "google.cz"
+                },
+                {
+                    "domain": "google.de"
+                },
+                {
+                    "domain": "google.dk"
+                },
+                {
+                    "domain": "google.dz"
+                },
+                {
+                    "domain": "google.ee"
+                },
+                {
+                    "domain": "google.es"
+                },
+                {
+                    "domain": "google.fi"
+                },
+                {
+                    "domain": "google.fr"
+                },
+                {
+                    "domain": "google.gr"
+                },
+                {
+                    "domain": "google.hr"
+                },
+                {
+                    "domain": "google.hu"
+                },
+                {
+                    "domain": "google.ie"
+                },
+                {
+                    "domain": "google.it"
+                },
+                {
+                    "domain": "google.lt"
+                },
+                {
+                    "domain": "google.lv"
+                },
+                {
+                    "domain": "google.nl"
+                },
+                {
+                    "domain": "google.no"
+                },
+                {
+                    "domain": "google.pl"
+                },
+                {
+                    "domain": "google.pt"
+                },
+                {
+                    "domain": "google.ro"
+                },
+                {
+                    "domain": "google.rs"
+                },
+                {
+                    "domain": "google.ru"
+                },
+                {
+                    "domain": "google.se"
+                },
+                {
+                    "domain": "google.sk"
+                },
+                {
+                    "domain": "serif.com"
+                },
+                {
+                    "domain": "wetransfer.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -643,7 +863,7 @@
                     }
                 }
             },
-            "hash": "2c73b04e22812bf92bc2a859e7540c3a"
+            "hash": "7a26ec675103d4e0dd106a46950156d0"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -724,9 +944,12 @@
                             }
                         ]
                     }
+                },
+                "partialFormSaves": {
+                    "state": "enabled"
                 }
             },
-            "hash": "28d4af98382248e184c4315bd49f4222"
+            "hash": "07b6b3bb0e6ddc4bf3dadbbbd0419478"
         },
         "backgroundAgentPixelTest": {
             "state": "enabled",
@@ -1639,6 +1862,9 @@
                     "domain": "instructure.com"
                 },
                 {
+                    "domain": "duckduckgo.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -1655,7 +1881,7 @@
                 }
             ],
             "state": "disabled",
-            "hash": "fce0a9ccd7ae060d25e7debe4d8905fb"
+            "hash": "d04093e35c2ea53300a62df3a8a2abea"
         },
         "customUserAgent": {
             "settings": {
@@ -2774,6 +3000,15 @@
                         ]
                     },
                     {
+                        "domain": "chase.com",
+                        "rules": [
+                            {
+                                "selector": ".browserupdate",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "cleartax.in",
                         "rules": [
                             {
@@ -2791,7 +3026,7 @@
                             },
                             {
                                 "selector": "[data-identity='billboard-ad']",
-                                "type": "hide-empty"
+                                "type": "hide"
                             },
                             {
                                 "selector": "[data-identity='leaderboard-ad']",
@@ -2995,6 +3230,23 @@
                         ]
                     },
                     {
+                        "domain": "e-chords.com",
+                        "rules": [
+                            {
+                                "selector": ".adscifra",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".banner",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "#banner",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "ebay.com",
                         "rules": [
                             {
@@ -3135,6 +3387,15 @@
                         "rules": [
                             {
                                 "type": "disable-default"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "facebook.com",
+                        "rules": [
+                            {
+                                "selector": ".xnw9j1v:has(div > a[href='https://www.facebook.com/help/597429858389632/'])",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -3459,6 +3720,26 @@
                             },
                             {
                                 "selector": "div:has(> iframe[src*='prid=19031780'])",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "div:has(> iframe[src*='prid=19044580'])",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "div:has(> iframe[src*='prid=19044578'])",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "div:has(> iframe[src*='prid=19044538'])",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "div:has(> iframe[src*='prid=19044687'])",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "div:has(> iframe[src*='prid=19044636'])",
                                 "type": "hide"
                             },
                             {
@@ -5210,7 +5491,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "16e64ea4c926bdf7c865a8b7cbde1b2b"
+            "hash": "e0632ffb8c02bf14874c33ccd66ee99a"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -5614,6 +5895,9 @@
                     "domain": "norton.com"
                 },
                 {
+                    "domain": "madewell.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -5638,7 +5922,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "501bbc6471eb079cb27fa8a2a47467a5"
+            "hash": "cc0c0adfc06919bb973a7636b59b2430"
         },
         "harmfulApis": {
             "settings": {
@@ -5837,11 +6121,6 @@
             },
             "exceptions": [],
             "hash": "429cea8d27316dc62af04159ec7c42b5"
-        },
-        "loadingBarExp": {
-            "exceptions": [],
-            "state": "disabled",
-            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "maliciousSiteProtection": {
             "state": "internal",
@@ -6052,7 +6331,7 @@
                     "minSupportedVersion": "7.136.0"
                 },
                 "setAccessTokenCookieForSubscriptionDomains": {
-                    "state": "disabled",
+                    "state": "enabled",
                     "rollout": {
                         "steps": [
                             {
@@ -6065,13 +6344,29 @@
                                 "percent": 100
                             }
                         ]
-                    }
+                    },
+                    "minSupportedVersion": "7.148.0"
                 },
-                "freeTrials": {
-                    "state": "internal"
+                "privacyProFreeTrialJan25": {
+                    "state": "internal",
+                    "targets": [
+                        {
+                            "localeCountry": "US"
+                        }
+                    ],
+                    "cohorts": [
+                        {
+                            "name": "control",
+                            "weight": 1
+                        },
+                        {
+                            "name": "treatment",
+                            "weight": 1
+                        }
+                    ]
                 }
             },
-            "hash": "c002a2f7b1299197657574c7328e8f88"
+            "hash": "c30e064d2aa8e0c9dd00c9ed051b98d3"
         },
         "privacyProtectionsPopup": {
             "state": "disabled",
@@ -7150,10 +7445,12 @@
                                 "domains": [
                                     "ah.nl",
                                     "applesfera.com",
+                                    "asuracomic.net",
                                     "goplay.be",
                                     "itsthevibe.com",
                                     "nytimes.com",
                                     "realmadrid.com",
+                                    "repretel.com",
                                     "rocketnews24.com",
                                     "solitaired.com",
                                     "stuff.co.nz",
@@ -7171,6 +7468,7 @@
                             {
                                 "rule": "securepubads.g.doubleclick.net/pagead/ppub_config",
                                 "domains": [
+                                    "repretel.com",
                                     "rocketnews24.com",
                                     "weather.com",
                                     "wunderground.com"
@@ -8836,6 +9134,7 @@
                             {
                                 "rule": "a.pub.network/core/prebid-universal-creative.js",
                                 "domains": [
+                                    "boingboing.net",
                                     "signupgenius.com",
                                     "smithsonianmag.com",
                                     "stockcharts.com",
@@ -9719,7 +10018,7 @@
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "f5b235ed3c5c9afdd44edfa3464235cf"
+            "hash": "fe0934622a089920211c50aaf246954c"
         },
         "trackingCookies1p": {
             "settings": {
@@ -10021,6 +10320,26 @@
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "experimentTest": {
+            "state": "enabled",
+            "exceptions": [],
+            "features": {
+                "experimentTestAA": {
+                    "state": "enabled",
+                    "cohorts": [
+                        {
+                            "name": "control",
+                            "weight": 1
+                        },
+                        {
+                            "name": "treatment",
+                            "weight": 1
+                        }
+                    ]
+                }
+            },
+            "hash": "0fe5af5a94e036bf5d78076df6dd771b"
         }
     },
     "unprotectedTemporary": []

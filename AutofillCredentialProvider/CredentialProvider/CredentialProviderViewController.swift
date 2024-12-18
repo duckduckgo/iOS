@@ -112,26 +112,39 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
         Task {
             await credentialIdentityStoreManager.populateCredentialStore()
         }
+
+        Pixel.fire(pixel: .autofillExtensionEnabled)
+    }
+
+    @available(iOSApplicationExtension 18.0, *)
+    override func prepareInterfaceForUserChoosingTextToInsert() {
+        loadCredentialsList(for: [], shouldProvideTextToInsert: true)
     }
 
     // MARK: - Private
 
-    private func loadCredentialsList(for serviceIdentifiers: [ASCredentialServiceIdentifier], returnString: Bool = false) {
+    private func loadCredentialsList(for serviceIdentifiers: [ASCredentialServiceIdentifier], shouldProvideTextToInsert: Bool = false) {
         let credentialProviderListViewController = CredentialProviderListViewController(serviceIdentifiers: serviceIdentifiers,
                                                                                         secureVault: secureVault,
                                                                                         credentialIdentityStoreManager: credentialIdentityStoreManager,
+                                                                                        shouldProvideTextToInsert: shouldProvideTextToInsert,
+                                                                                        tld: tld,
                                                                                         onRowSelected: { [weak self] item in
-                                                                                            guard let self = self else {
-                                                                                                self?.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain,
-                                                                                                                                                        code: ASExtensionError.failed.rawValue))
-                                                                                                return
-                                                                                            }
+            guard let self = self else {
+                self?.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain,
+                                                                        code: ASExtensionError.failed.rawValue))
+                return
+            }
 
-                                                                                            let credential = self.vaultCredentialManager.fetchCredential(for: item.account)
+            let credential = self.vaultCredentialManager.fetchCredential(for: item.account)
 
-                                                                                            self.extensionContext.completeRequest(withSelectedCredential: credential, completionHandler: nil)
+            self.extensionContext.completeRequest(withSelectedCredential: credential, completionHandler: nil)
 
-                                                                                        }, onDismiss: {
+        }, onTextProvided: { [weak self] text in
+            if #available(iOSApplicationExtension 18.0, *) {
+                self?.extensionContext.completeRequest(withTextToInsert: text)
+            }
+        }, onDismiss: {
             self.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain,
                                                                    code: ASExtensionError.userCanceled.rawValue))
         })
@@ -150,20 +163,24 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
         guard let passwordCredential = vaultCredentialManager.fetchCredential(for: credentialIdentity) else {
             self.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain,
                                                                    code: ASExtensionError.credentialIdentityNotFound.rawValue))
+            Pixel.fire(pixel: .autofillExtensionQuickTypeCancelled)
             return
         }
 
         self.extensionContext.completeRequest(withSelectedCredential: passwordCredential)
+        Pixel.fire(pixel: .autofillExtensionQuickTypeConfirmed)
     }
 
     private func provideCredential(for credentialIdentity: ASPasswordCredentialIdentity) {
         guard let passwordCredential = vaultCredentialManager.fetchCredential(for: credentialIdentity) else {
             self.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain,
                                                                    code: ASExtensionError.credentialIdentityNotFound.rawValue))
+            Pixel.fire(pixel: .autofillExtensionQuickTypeCancelled)
             return
         }
 
         self.extensionContext.completeRequest(withSelectedCredential: passwordCredential)
+        Pixel.fire(pixel: .autofillExtensionQuickTypeConfirmed)
     }
 
     private func authenticateAndHandleCredential(provideCredential: @escaping () -> Void) {

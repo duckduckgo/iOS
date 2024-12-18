@@ -192,8 +192,7 @@ class MainViewController: UIViewController {
         let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
         let aiChatViewController = AIChatViewController(settings: settings,
-                                                        webViewConfiguration: WKWebViewConfiguration.persistent(),
-                                                        pixelHandler: AIChatPixelHandler())
+                                                        webViewConfiguration: WKWebViewConfiguration.persistent())
         aiChatViewController.delegate = self
         return aiChatViewController
     }()
@@ -525,6 +524,7 @@ class MainViewController: UIViewController {
 
 
     var keyboardShowing = false
+    private var didSendGestureDismissPixel: Bool = false
 
     @objc
     private func keyboardDidShow() {
@@ -533,14 +533,16 @@ class MainViewController: UIViewController {
 
     @objc
     private func keyboardWillHide() {
-        if newTabPageViewController?.isDragging == true, keyboardShowing {
+        if !didSendGestureDismissPixel, newTabPageViewController?.isDragging == true, keyboardShowing {
             Pixel.fire(pixel: .addressBarGestureDismiss)
+            didSendGestureDismissPixel = true
         }
     }
 
     @objc
     private func keyboardDidHide() {
         keyboardShowing = false
+        didSendGestureDismissPixel = false
     }
 
     private func registerForPageRefreshPatterns() {
@@ -1716,7 +1718,8 @@ class MainViewController: UIViewController {
         let roundedPageSheet = RoundedPageSheetContainerViewController(
             contentViewController: aiChatViewController,
             logoImage: logoImage,
-            title: title)
+            title: title,
+            allowedOrientation: .portrait)
 
         present(roundedPageSheet, animated: true, completion: nil)
     }
@@ -2085,7 +2088,9 @@ extension MainViewController: OmniBarDelegate {
         switch accessoryType {
         case .chat:
             openAIChat()
+            Pixel.fire(pixel: .openAIChatFromAddressBar)
         case .share:
+            Pixel.fire(pixel: .addressBarShare)
             currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.accessoryButton)
         }
     }
@@ -2605,8 +2610,15 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher(_ button: TabSwitcherButton) {
-        Pixel.fire(pixel: .tabBarTabSwitcherPressed)
-        DailyPixel.fireDaily(.tabSwitcherOpenDaily, withAdditionalParameters: TabSwitcherOpenDailyPixel().parameters(with: tabManager.model.tabs))
+        Pixel.fire(pixel: .tabBarTabSwitcherOpened)
+        DailyPixel.fireDaily(.tabSwitcherOpenedDaily, withAdditionalParameters: TabSwitcherOpenDailyPixel().parameters(with: tabManager.model.tabs))
+        if currentTab?.url?.isDuckDuckGoSearch == true {
+            Pixel.fire(pixel: .tabSwitcherOpenedFromSerp)
+        } else if currentTab?.url != nil {
+            Pixel.fire(pixel: .tabSwitcherOpenedFromWebsite)
+        } else {
+            Pixel.fire(pixel: .tabSwitcherOpenedFromNewTabPage)
+        }
 
         performCancel()
         showTabSwitcher()

@@ -19,8 +19,8 @@
 
 import Foundation
 
-struct AutofillInterfaceEmailTruncator {
-    static func truncateEmail(_ email: String, maxLength: Int) -> String {
+public struct AutofillInterfaceEmailTruncator {
+    public static func truncateEmail(_ email: String, maxLength: Int) -> String {
         let emailComponents = email.components(separatedBy: "@")
         if emailComponents.count > 1 && email.count > maxLength {
             let ellipsis = "..."

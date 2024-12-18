@@ -111,7 +111,7 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
         installChildViewController(hostingController)
 
         Task {
-            if let self = self, self.findKeychainItemsWithV4() {
+            if findKeychainItemsWithV4() {
                 await credentialIdentityStoreManager.populateCredentialStore()
             }
         }

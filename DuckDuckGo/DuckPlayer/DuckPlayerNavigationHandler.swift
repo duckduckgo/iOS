@@ -954,7 +954,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Redirect to Youtube + DuckPlayer Overlay if Ask Mode
         if url.isYoutubeWatch && duckPlayerMode == .alwaysAsk && !isDuckPlayerRedirect(url: url) {
-            redirectToYouTubeVideo(url: url, webView: webView, allowFirstVideo: false)
+            redirectToYouTubeVideo(url: url, webView: webView, allowFirstVideo: false, disableNewTab: true)
             return true
         }
         

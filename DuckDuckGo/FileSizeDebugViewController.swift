@@ -67,6 +67,10 @@ class FileSizeDebugViewController: UITableViewController {
             rootModel.append(makeFileItem(for: url, name: "Shared Database Container"))
         }
         
+        if let url = sharedVaultContainerURL {
+            rootModel.append(makeFileItem(for: url, name: "Shared Vault Container"))
+        }
+        
         return rootModel
     }
     
@@ -82,6 +86,11 @@ class FileSizeDebugViewController: UITableViewController {
     
     private var sharedBookmarksContainerURL: URL? {
         let identifier = BookmarksDatabase.Constants.bookmarksGroupID
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier)
+    }
+    
+    private var sharedVaultContainerURL: URL? {
+        let identifier = "\(Global.groupIdPrefix).vault"
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier)
     }
     

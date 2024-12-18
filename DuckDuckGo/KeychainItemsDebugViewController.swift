@@ -144,4 +144,127 @@ class KeychainItemsDebugViewController: UITableViewController {
         return cell
     }
 
+    private var sharedVaultContainerURL: URL? {
+        let identifier = "\(Global.groupIdPrefix).vault"
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier)
+    }
+
+    @IBAction func clearKeychain(_ sender: Any) {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecReturnAttributes as String: kCFBooleanTrue!,
+            kSecMatchLimit as String: kSecMatchLimitAll
+        ]
+
+        var result: AnyObject?
+
+        // Search for all generic password items
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+
+        if status == errSecSuccess, let items = result as? [[String: Any]] {
+            for item in items {
+                if let service = item[kSecAttrService as String] as? String, service.contains("v4") {
+                    // Prepare a query to delete the specific item
+                    let deleteQuery: [String: Any] = [
+                        kSecClass as String: kSecClassGenericPassword,
+                        kSecAttrService as String: service
+                    ]
+
+                    // Delete the item
+                    let deleteStatus = SecItemDelete(deleteQuery as CFDictionary)
+                    if deleteStatus == errSecSuccess {
+                        print("Deleted item with service: \(service)")
+                    } else {
+                        print("Failed to delete item with service: \(service), error: \(deleteStatus)")
+                    }
+                }
+            }
+
+//            let fileManager = FileManager.default
+            if let vaultUrl = sharedVaultContainerURL {
+                deleteDirectoryRecursively(at: vaultUrl)
+            }
+////                try fileManager.removeItem(at: sharedVaultContainerURL)
+//                do {
+//                    try fileManager.removeItem(at: vaultUrl)
+////                    try fileManager.removeItem(atPath: vaultUrl.absoluteString)
+//                } catch {
+//                    print("Error removing vault directory: \(error)")
+//                }
+//
+//            }
+
+        } else {
+            print("No matching items found or error occurred: \(status)")
+        }
+    }
+
+//    func deleteDirectoryContents(at directoryURL: URL) {
+//        let fileManager = FileManager.default
+//
+//        do {
+//            // Get all items in the directory
+//            let fileURLs = try fileManager.contentsOfDirectory(at: directoryURL,
+//                                                              includingPropertiesForKeys: nil,
+//                                                              options: [.skipsHiddenFiles])
+//            // Recursively delete each item
+//            for fileURL in fileURLs {
+//                if fileManager.fileExists(atPath: fileURL.path, isDirectory: nil) {
+//                    // If it is a subdirectory, call the function recursively
+//                    deleteDirectoryRecursively(at: fileURL)
+//                }
+//                try fileManager.removeItem(at: fileURL)
+//            }
+//
+//            // Delete the directory itself after its contents are deleted
+//            try fileManager.removeItem(at: directoryURL)
+//            print("Directory and its contents deleted successfully: \(directoryURL.path)")
+//
+//        } catch {
+//            print("Error deleting directory or its contents: \(error.localizedDescription)")
+//        }
+////        do {
+////            let fileURLs = try fileManager.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil)
+////            for fileURL in fileURLs {
+////                try fileManager.removeItem(at: fileURL)
+////            }
+////            // Now delete the directory itself
+////            try fileManager.removeItem(at: directoryURL)
+////            print("Directory and its contents successfully deleted")
+////        } catch {
+////            print("Error deleting contents: \(error)")
+////        }
+//    }
+    func deleteDirectoryRecursively(at directoryURL: URL) {
+        let fileManager = FileManager.default
+
+        // Check if the directory exists
+        guard fileManager.fileExists(atPath: directoryURL.path) else {
+            print("Directory does not exist: \(directoryURL.path)")
+            return
+        }
+
+        do {
+            // Get all items in the directory
+            let fileURLs = try fileManager.contentsOfDirectory(at: directoryURL,
+                                                              includingPropertiesForKeys: nil,
+                                                              options: [.skipsHiddenFiles])
+            // Recursively delete each item
+            for fileURL in fileURLs {
+                if fileManager.fileExists(atPath: fileURL.path, isDirectory: nil) {
+                    // If it is a subdirectory, call the function recursively
+                    deleteDirectoryRecursively(at: fileURL)
+                }
+                try fileManager.removeItem(at: fileURL)
+            }
+
+            // Delete the directory itself after its contents are deleted
+            try fileManager.removeItem(at: directoryURL)
+            print("Directory and its contents deleted successfully: \(directoryURL.path)")
+
+        } catch {
+            print("Error deleting directory or its contents: \(error.localizedDescription)")
+        }
+    }
+
 }

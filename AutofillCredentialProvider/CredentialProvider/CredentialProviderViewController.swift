@@ -38,7 +38,11 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
                                                                                                                                       tld: tld)
 
     private lazy var secureVault: (any AutofillSecureVault)? = {
-        try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
+        if findKeychainItemsWithV4() {
+            return try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
+        } else {
+            return nil
+        }
     }()
 
     private lazy var tld: TLD = TLD()

@@ -119,9 +119,12 @@ extension NEVPNStatus {
 
 @available(iOSApplicationExtension 17.0, *)
 struct VPNStatusView: View {
+
     @Environment(\.widgetFamily) var family: WidgetFamily
+    @Environment(\.widgetRenderingMode) var widgetRenderingMode
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.openURL) private var openURL
+
     var entry: VPNStatusTimelineProvider.Entry
 
     private let dateFormatter: DateFormatter = {
@@ -152,7 +155,10 @@ struct VPNStatusView: View {
     private func connectionView(with status: NEVPNStatus) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 0) {
-                Image(headerImageName(with: status)).padding([.bottom], 7)
+                Image(headerImageName(with: status))
+                    .useFullColorRendering()
+                    .padding([.bottom], 7)
+                    .accessibilityHidden(true)
 
                 Text(title(with: status))
                     .font(.system(size: 16, weight: .semibold))
@@ -177,11 +183,12 @@ struct VPNStatusView: View {
                     let intent: any AppIntent = snoozeTimingStore.isSnoozing ? CancelSnoozeVPNIntent() : WidgetDisableVPNIntent()
 
                     Button(buttonTitle, intent: intent)
+                        .borderedStyle(widgetRenderingMode == .fullColor)
+                        .makeAccentable(status == .connected)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(snoozeTimingStore.isSnoozing ?
                                          connectButtonForegroundColor(isDisabled: false) :
                                          disconnectButtonForegroundColor(isDisabled: status != .connected))
-                        .buttonStyle(.borderedProminent)
                         .buttonBorderShape(.roundedRectangle(radius: 8))
                         .tint(snoozeTimingStore.isSnoozing ?
                               Color(designSystemColor: .accent) :
@@ -193,9 +200,10 @@ struct VPNStatusView: View {
                         .padding(.bottom, 16)
                 case .connecting, .reasserting:
                     Button(UserText.vpnWidgetDisconnectButton, intent: WidgetDisableVPNIntent())
+                        .borderedStyle(widgetRenderingMode == .fullColor)
+                        .makeAccentable(status == .connected)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(disconnectButtonForegroundColor(isDisabled: status != .connected))
-                        .buttonStyle(.borderedProminent)
                         .buttonBorderShape(.roundedRectangle(radius: 8))
                         .tint(disconnectButtonBackgroundColor(isDisabled: status != .connected))
                         .disabled(status != .connected)
@@ -204,9 +212,10 @@ struct VPNStatusView: View {
                         .padding(.bottom, 16)
                 case .disconnected, .disconnecting:
                     connectButton
+                        .borderedStyle(widgetRenderingMode == .fullColor)
+                        .makeAccentable(status == .disconnected)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(connectButtonForegroundColor(isDisabled: status != .disconnected))
-                        .buttonStyle(.borderedProminent)
                         .buttonBorderShape(.roundedRectangle(radius: 8))
                         .tint(Color(designSystemColor: .accent))
                         .disabled(status != .disconnected)
@@ -357,4 +366,17 @@ struct VPNStatusView_Previews: PreviewProvider {
             Text("iOS 17 required")
         }
     }
+}
+
+extension Button {
+
+    @ViewBuilder
+    func borderedStyle(_ isBordered: Bool) -> some View {
+        if isBordered {
+            self.buttonStyle(.borderedProminent)
+        } else {
+            self.buttonStyle(.automatic)
+        }
+    }
+
 }

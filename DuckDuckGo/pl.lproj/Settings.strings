@@ -10,9 +10,6 @@
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
 "5YD-Od-uDU.text" = "Automatyczne czyszczenie danych";
 
-/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "8YG-7Q-Czd"; */
-"8YG-7Q-Czd.normalTitle" = "Ustawienia";
-
 /* Class = "UILabel"; text = "App Exit, Inactive for 1 Hour"; ObjectID = "9EC-lx-77p"; */
 "9EC-lx-77p.text" = "Zamknięcie aplikacji, nieaktywna przez 1 godzinę";
 
@@ -75,9 +72,6 @@
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Niezabezpieczone witryny";
-
-/* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
-"ssa-zd-L3T.title" = "Rozmiar tekstu";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Pokaż klawiaturę";

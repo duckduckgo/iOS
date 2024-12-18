@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import BrowserServicesKit
 
 final class NewTabPageViewModel: ObservableObject {
 
@@ -39,6 +40,9 @@ final class NewTabPageViewModel: ObservableObject {
         isIntroMessageVisible = introDataStorage.newTabPageIntroMessageEnabled ?? false
         isOnboarding = false
         isShowingSettings = false
+
+        // This is just temporarily here to run an A/A test to check the new experiment framework works as expected
+        _ = AppDependencyProvider.shared.featureFlagger.getCohortIfEnabled(for: CredentialsSavingFlag())
     }
 
     func introMessageDisplayed() {
@@ -76,5 +80,21 @@ final class NewTabPageViewModel: ObservableObject {
 
     func endDragging() {
         isDragging = false
+    }
+}
+
+// This is just temporarily here to run an A/A test to check the new experiment framework works as expected
+public struct CredentialsSavingFlag: FeatureFlagExperimentDescribing {
+    public init() {}
+
+    public typealias CohortType = Cohort
+
+    public var rawValue = "credentialSaving"
+
+    public var source: FeatureFlagSource = .remoteReleasable(.subfeature(ExperimentTestSubfeatures.experimentTestAA))
+
+    public enum Cohort: String, FlagCohort {
+        case control
+        case blue
     }
 }

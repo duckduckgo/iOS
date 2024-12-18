@@ -55,7 +55,12 @@ class AutoClearSettingsViewController: UITableViewController {
 
         decorate()
     }
-    
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Pixel.fire(pixel: .settingsDataClearingClearDataOpen)
+    }
+
     private func loadClearDataSettings() -> AutoClearSettingsModel? {
         return AutoClearSettingsModel(settings: appSettings)
     }
@@ -152,6 +157,8 @@ class AutoClearSettingsViewController: UITableViewController {
     }
     
     @IBAction func onClearDataToggled(_ sender: UISwitch) {
+        Pixel.fire(pixel: sender.isOn ? .settingsAutomaticallyClearDataOn : .settingsAutomaticallyClearDataOff)
+
         if sender.isOn {
             clearDataSettings = AutoClearSettingsModel()
             tableView.insertSections(.init(integersIn: Sections.action.rawValue...Sections.timing.rawValue), with: .fade)

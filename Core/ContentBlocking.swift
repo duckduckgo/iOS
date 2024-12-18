@@ -116,9 +116,6 @@ public final class ContentBlocking {
 
             domainEvent = .contentBlockingCompilationFailed(listType: listType, component: component)
 
-        case .contentBlockingCompilationTime:
-            domainEvent = .contentBlockingCompilationTime
-            
         case .contentBlockingLookupRulesSucceeded:
             domainEvent = .contentBlockingLookupRulesSucceeded
             
@@ -130,6 +127,10 @@ public final class ContentBlocking {
             
         case .contentBlockingLRCMissing:
             domainEvent = .contentBlockingLRCMissing
+
+        case .contentBlockingCompilationTaskPerformance(let retryCount, let timeBucketAggregation):
+            domainEvent = .contentBlockingCompilationTaskPerformance(iterationCount: retryCount,
+                                                                     timeBucketAggregation: Pixel.Event.CompileTimeBucketAggregation(number: timeBucketAggregation))
         }
 
         if let error = error {

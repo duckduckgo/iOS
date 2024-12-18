@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>com.apple.developer.authentication-services.autofill-credential-provider</key>
+	<true/>
 	<key>com.apple.developer.browser.app-installation</key>
 	<true/>
 	<key>com.apple.developer.networking.networkextension</key>
@@ -20,9 +22,11 @@
 		<string>$(GROUP_ID_PREFIX).netp</string>
 		<string>$(GROUP_ID_PREFIX).statistics</string>
 		<string>group.com.duckduckgo.app-configuration</string>
+		<string>$(GROUP_ID_PREFIX).vault</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
+		<string>$(AppIdentifierPrefix)$(VAULT_APP_GROUP)</string>
 		<string>$(AppIdentifierPrefix)$(APP_ID)</string>
 		<string>$(AppIdentifierPrefix)$(SUBSCRIPTION_APP_GROUP)</string>
 	</array>

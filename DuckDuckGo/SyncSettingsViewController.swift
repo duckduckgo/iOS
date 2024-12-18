@@ -35,7 +35,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     let syncCredentialsAdapter: SyncCredentialsAdapter
     var connector: RemoteConnecting?
 
-    let userAuthenticator = UserAuthenticator(reason: UserText.syncUserUserAuthenticationReason)
+    let userAuthenticator = UserAuthenticator(reason: UserText.syncUserUserAuthenticationReason,
+                                              cancelTitle: UserText.autofillLoginListAuthenticationCancelButton)
     let userSession = UserSession()
 
     var recoveryCode: String {
@@ -241,6 +242,11 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         super.viewWillAppear(animated)
         connector = nil
         syncService.scheduler.requestSyncImmediately()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Pixel.fire(pixel: .settingsSyncOpen)
     }
 
     func updateOptions() {

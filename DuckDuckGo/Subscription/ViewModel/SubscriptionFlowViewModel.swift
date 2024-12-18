@@ -182,7 +182,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             isBackendError = true
             state.transactionError = .hasActiveSubscription
         case .cancelledByUser:
-            state.transactionError = nil
+            state.transactionError = .cancelledByUser
         case .accountCreationFailed:
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureAccountNotCreated,
                                          pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)

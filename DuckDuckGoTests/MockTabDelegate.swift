@@ -68,6 +68,8 @@ final class MockTabDelegate: TabDelegate {
 
     func tabDidRequestAutofillLogins(tab: DuckDuckGo.TabViewController) {}
 
+    func tabDidRequestAIChat(tab: TabViewController) {}
+    
     func tabDidRequestSettings(tab: DuckDuckGo.TabViewController) {}
 
     func tab(_ tab: DuckDuckGo.TabViewController, didRequestSettingsToLogins account: BrowserServicesKit.SecureVaultModels.WebsiteAccount) {}
@@ -146,7 +148,9 @@ extension TabViewController {
             urlCredentialCreator: MockCredentialCreator(),
             featureFlagger: featureFlagger,
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
-            textZoomCoordinator: MockTextZoomCoordinator()
+            textZoomCoordinator: MockTextZoomCoordinator(),
+            websiteDataManager: MockWebsiteDataManager(),
+            fireproofing: MockFireproofing()
         )
         tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false, customWebView: customWebView)
         return tab

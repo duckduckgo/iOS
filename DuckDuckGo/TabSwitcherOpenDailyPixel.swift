@@ -49,12 +49,7 @@ struct TabSwitcherOpenDailyPixel {
         case 21...40: return "21-40"
         case 41...60: return "41-60"
         case 61...80: return "61-80"
-        case 81...100: return "81-100"
-        case 101...125: return "101-125"
-        case 126...150: return "126-150"
-        case 151...250: return "151-250"
-        case 251...500: return "251-500"
-        default: return "501+"
+        default: return "81+"
         }
 
     }

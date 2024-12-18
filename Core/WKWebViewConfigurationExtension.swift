@@ -23,11 +23,11 @@ import Persistence
 extension WKWebViewConfiguration {
 
     @MainActor
-    public static func persistent(idManager: DataStoreIdManaging = DataStoreIdManager.shared) -> WKWebViewConfiguration {
+    public static func persistent(idManager: DataStoreIDManaging = DataStoreIDManager.shared) -> WKWebViewConfiguration {
         let config = configuration(persistsData: true)
 
-        // Only use a container if there's an id which will be allocated next time the fire button is used.
-        if #available(iOS 17, *), let containerId = idManager.currentId {
+        // Only use a container if there's an id.  We no longer allocate ids so this should not happen.
+        if #available(iOS 17, *), let containerId = idManager.currentID {
             config.websiteDataStore = WKWebsiteDataStore(forIdentifier: containerId)
         }
         return config
@@ -53,39 +53,6 @@ extension WKWebViewConfiguration {
         configuration.preferences.isFraudulentWebsiteWarningEnabled = false
 
         return configuration
-    }
-
-}
-
-public protocol DataStoreIdManaging {
-
-    var currentId: UUID? { get }
-
-    func invalidateCurrentIdAndAllocateNew()
-}
-
-public class DataStoreIdManager: DataStoreIdManaging {
-
-    enum Constants: String {
-        case currentWebContainerId = "com.duckduckgo.ios.webcontainer.id"
-    }
-
-    public static let shared = DataStoreIdManager()
-
-    private let store: KeyValueStoring
-    init(store: KeyValueStoring = UserDefaults.app) {
-        self.store = store
-    }
-
-    public var currentId: UUID? {
-        guard let uuidString = store.object(forKey: Constants.currentWebContainerId.rawValue) as? String else {
-            return nil
-        }
-        return UUID(uuidString: uuidString)
-    }
-
-    public func invalidateCurrentIdAndAllocateNew() {
-        store.set(UUID().uuidString, forKey: Constants.currentWebContainerId.rawValue)
     }
 
 }

@@ -56,39 +56,6 @@ final class OnboardingManager {
     }
 }
 
-// MARK: - Onboarding Highlights
-
-protocol OnboardingHighlightsManaging: AnyObject {
-    var isOnboardingHighlightsEnabled: Bool { get }
-}
-
-protocol OnboardingHighlightsDebugging: OnboardingHighlightsManaging {
-    var isOnboardingHighlightsLocalFlagEnabled: Bool { get set }
-    var isOnboardingHighlightsFeatureFlagEnabled: Bool { get }
-}
-
-
-extension OnboardingManager: OnboardingHighlightsManaging, OnboardingHighlightsDebugging {
-
-    var isOnboardingHighlightsEnabled: Bool {
-        variantManager.isOnboardingHighlightsExperiment || (isOnboardingHighlightsLocalFlagEnabled && isOnboardingHighlightsFeatureFlagEnabled)
-    }
-
-    var isOnboardingHighlightsLocalFlagEnabled: Bool {
-        get {
-            appDefaults.onboardingHighlightsEnabled
-        }
-        set {
-            appDefaults.onboardingHighlightsEnabled = newValue
-        }
-    }
-
-    var isOnboardingHighlightsFeatureFlagEnabled: Bool {
-        featureFlagger.isFeatureOn(.onboardingHighlights)
-    }
-
-}
-
 // MARK: - Add to Dock
 
 protocol OnboardingAddToDockManaging: AnyObject {
@@ -103,7 +70,14 @@ protocol OnboardingAddToDockDebugging: AnyObject {
 extension OnboardingManager: OnboardingAddToDockManaging, OnboardingAddToDockDebugging {
 
     var addToDockEnabledState: OnboardingAddToDockState {
-        // TODO: Add variant condition OR local conditions
+        // Check if the variant supports Add to Dock
+        if variantManager.isSupported(feature: .addToDockIntro) {
+            return .intro
+        } else if variantManager.isSupported(feature: .addToDockContextual) {
+            return .contextual
+        }
+
+        // If the variant does not support Add to Dock check if it's enabled for internal users.
         guard isAddToDockFeatureFlagEnabled && isIphone else { return .disabled }
 
         return addToDockLocalFlagState

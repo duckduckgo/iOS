@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Aizvērt";
+
+/* Done button title */
+"action.button.done" = "Gatavs";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "Atvērt DuckDuckGo";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Paroļu automātiskā aizpildīšana ir aktivizēta!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "ierīcē";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Atcelt";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Atbloķē ierīci, lai piekļūtu parolēm";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "Tīmekļa vietnes URL";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "Kopēt %@";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Adrese nokopēta";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Piezīmes nokopētas";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Parole nokopēta";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Lietotājvārds nokopēts";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Paslēpt paroli";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Pēdējoreiz atjaunināts %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Nosaukums";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Piezīmes";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Parole";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Rādīt paroli";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Lietotājvārds";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Paroles tiek droši glabātas tavā ierīcē.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Vēl nav saglabāta neviena parole";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Izvēlies paroli, ko izmantot \"%@\"";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Meklēt paroles";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "meklējumam \"%@\"";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Nav rezultātu";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Ieteikts";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Paroles";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Iestati piekļuves kodu %@, lai automātiski aizpildītu savas DuckDuckGo paroles.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Nepieciešams ierīces piekļuves kods";
+

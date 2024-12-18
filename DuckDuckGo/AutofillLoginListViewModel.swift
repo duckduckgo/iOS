@@ -27,28 +27,6 @@ import DDGSync
 import PrivacyDashboard
 import os.log
 
-internal enum AutofillLoginListSectionType: Comparable {
-    case enableAutofill
-    case suggestions(title: String, items: [AutofillLoginListItemViewModel])
-    case credentials(title: String, items: [AutofillLoginListItemViewModel])
-    
-    static func < (lhs: AutofillLoginListSectionType, rhs: AutofillLoginListSectionType) -> Bool {
-        if case .credentials(let leftTitle, _) = lhs,
-           case .credentials(let rightTitle, _) = rhs {
-            if leftTitle == miscSectionHeading {
-                return false
-            } else if rightTitle == miscSectionHeading {
-                return true
-            }
-            
-            return leftTitle.localizedCaseInsensitiveCompare(rightTitle) == .orderedAscending
-        }
-        return true
-    }
-    
-    static let miscSectionHeading = "#"
-}
-
 internal enum EnableAutofillRows: Int, CaseIterable {
     case toggleAutofill
     case resetNeverPromptWebsites
@@ -69,7 +47,8 @@ final class AutofillLoginListViewModel: ObservableObject {
         static let tabUid = "com.duckduckgo.autofill.tab-uid"
     }
 
-    let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason)
+    let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason,
+                                                       cancelTitle: UserText.autofillLoginListAuthenticationCancelButton)
     var isSearching: Bool = false
     var isEditing: Bool = false {
         didSet {
@@ -108,6 +87,8 @@ final class AutofillLoginListViewModel: ObservableObject {
         let settings = privacyConfig.settings(for: .autofillBreakageReporter)
         return settings["monitorIntervalDays"] as? Int ?? 42
     }()
+
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging = AutofillCredentialIdentityStoreManager(vault: secureVault, tld: tld)
 
     private lazy var syncPromoManager: SyncPromoManaging = SyncPromoManager(syncService: syncService)
 
@@ -401,7 +382,13 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
 
         do {
-            return try secureVault.accounts()
+            let accounts = try secureVault.accounts()
+
+            Task {
+                await credentialIdentityStoreManager.replaceCredentialStore(with: accounts)
+            }
+
+            return accounts
         } catch {
             Logger.autofill.error("Failed to fetch accounts \(error.localizedDescription, privacy: .public)")
             return []
@@ -437,22 +424,22 @@ final class AutofillLoginListViewModel: ObservableObject {
             }
 
             if !accountsToSuggest.isEmpty {
-                let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0,
-                                                                                          tld: tld,
-                                                                                          autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
-                                                                                          autofillDomainNameUrlSort: autofillDomainNameUrlSort)
+                let accountItems = accountsToSuggest.map { AutofillLoginItem(account: $0,
+                                                                             tld: tld,
+                                                                             autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
+                                                                             autofillDomainNameUrlSort: autofillDomainNameUrlSort)
                 }
                 newSections.append(.suggestions(title: UserText.autofillLoginListSuggested, items: accountItems))
             }
         }
 
-        let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(
+        let viewModelsGroupedByFirstLetter = accounts.groupedByFirstLetter(
                 tld: tld,
                 autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
                 autofillDomainNameUrlSort: autofillDomainNameUrlSort)
-        let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle(autofillDomainNameUrlSort,
-                                                                                                                 tld: tld)
-        
+        let accountSections = viewModelsGroupedByFirstLetter.sortedIntoSections(autofillDomainNameUrlSort,
+                                                                                tld: tld)
+
         newSections.append(contentsOf: accountSections)
         return newSections
     }
@@ -582,53 +569,5 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
 
         return true
-    }
-}
-
-extension AutofillLoginListItemViewModel: Comparable {
-    static func < (lhs: AutofillLoginListItemViewModel, rhs: AutofillLoginListItemViewModel) -> Bool {
-        lhs.title < rhs.title
-    }
-}
-
-internal extension Array where Element == SecureVaultModels.WebsiteAccount {
-    
-    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: TLD,
-                                                                        autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher,
-                                                                        autofillDomainNameUrlSort: AutofillDomainNameUrlSort)
-            -> [String: [AutofillLoginListItemViewModel]] {
-        reduce(into: [String: [AutofillLoginListItemViewModel]]()) { result, account in
-            
-            // Unfortunetly, folding doesn't produce perfect results despite respecting the system locale
-            // E.g. Romainian should treat letters with diacritics as seperate letters, but folding doesn't
-            // Apple's own apps (e.g. contacts) seem to suffer from the same problem
-            let key: String
-            if let firstChar = autofillDomainNameUrlSort.firstCharacterForGrouping(account, tld: tld),
-               let deDistinctionedChar = String(firstChar).folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil).first,
-               deDistinctionedChar.isLetter {
-                
-                key = String(deDistinctionedChar)
-            } else {
-                key = AutofillLoginListSectionType.miscSectionHeading
-            }
-            
-            return result[key, default: []].append(AutofillLoginListItemViewModel(account: account,
-                                                                                  tld: tld,
-                                                                                  autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
-                                                                                  autofillDomainNameUrlSort: autofillDomainNameUrlSort))
-        }
-    }
-}
-
-internal extension Dictionary where Key == String, Value == [AutofillLoginListItemViewModel] {
-    
-    func autofillLoginListSectionsForViewModelsSortedByTitle(_ autofillDomainNameUrlSort: AutofillDomainNameUrlSort, tld: TLD) -> [AutofillLoginListSectionType] {
-        map { dictionaryItem -> AutofillLoginListSectionType in
-            let sortedGroup = dictionaryItem.value.sorted(by: {
-                autofillDomainNameUrlSort.compareAccountsForSortingAutofill(lhs: $0.account, rhs: $1.account, tld: tld) == .orderedAscending
-            })
-            return AutofillLoginListSectionType.credentials(title: dictionaryItem.key,
-                                                            items: sortedGroup)
-        }.sorted()
     }
 }

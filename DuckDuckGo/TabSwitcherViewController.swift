@@ -331,18 +331,8 @@ class TabSwitcherViewController: UIViewController {
         }
 
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
-        let isNewOnboarding = DefaultVariantManager().isContextualDaxDialogsEnabled
-
-        if !isNewOnboarding
-            && DaxDialogs.shared.shouldShowFireButtonPulse {
-            let spec = DaxDialogs.shared.fireButtonEducationMessage()
-            performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
-        } else {
-            if isNewOnboarding {
-                ViewHighlighter.hideAll()
-            }
-            presentForgetDataAlert()
-        }
+        ViewHighlighter.hideAll()
+        presentForgetDataAlert()
     }
 
     private func forgetAll() {

@@ -64,6 +64,9 @@ struct WidgetEducationView: View {
         }
         .navigationBarTitle("")
         .background(Color.background)
+        .onFirstAppear {
+            Pixel.fire(pixel: .settingsNextStepsAddWidget)
+        }
     }
 }
 

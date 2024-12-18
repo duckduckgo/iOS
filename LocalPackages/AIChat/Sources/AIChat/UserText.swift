@@ -20,5 +20,5 @@
 import Foundation
 
 public struct UserText {
-    public static let aiChatTitle = NSLocalizedString("aichat.title", value: "DuckDuckGo AI Chat", comment: "Title for DuckDuckGo AI Chat. Should not be translated")
+    public static let aiChatTitle = NSLocalizedString("aichat.title", value: "Duck.ai", comment: "Title for DuckDuckGo AI Chat. Should not be translated")
 }

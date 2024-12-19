@@ -56,19 +56,24 @@ struct DoubleBackground: AppState {
         }
 
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            if let didReceiveMemoryWarningTimestamp = appDelegate.didReceiveMemoryWarningTimestamp, isValid(timestamp: didReceiveMemoryWarningTimestamp) {
+            if let didReceiveMemoryWarningTimestamp = appDelegate.didReceiveMemoryWarningTimestamp,
+                isValid(timestamp: didReceiveMemoryWarningTimestamp) {
                 parameters[PixelParameters.didReceiveMemoryWarningTimestamp] = dateFormatter.string(from: didReceiveMemoryWarningTimestamp)
             }
-            if let didReceiveMXPayloadTimestamp = appDelegate.didReceiveMXPayloadTimestamp, isValid(timestamp: didReceiveMXPayloadTimestamp) {
+            if let didReceiveMXPayloadTimestamp = appDelegate.didReceiveMXPayloadTimestamp,
+                isValid(timestamp: didReceiveMXPayloadTimestamp) {
                 parameters[PixelParameters.didReceiveMXPayloadTimestamp] = dateFormatter.string(from: didReceiveMXPayloadTimestamp)
             }
-            if let didReceiveUNNotification = appDelegate.didReceiveUNNotification, isValid(timestamp: didReceiveUNNotification) {
+            if let didReceiveUNNotification = appDelegate.didReceiveUNNotification,
+                isValid(timestamp: didReceiveUNNotification) {
                 parameters[PixelParameters.didReceiveUNNotification] = dateFormatter.string(from: didReceiveUNNotification)
             }
-            if let didStartRemoteMessagingClientBackgroundTask = appDelegate.didStartRemoteMessagingClientBackgroundTask, isValid(timestamp: didStartRemoteMessagingClientBackgroundTask) {
+            if let didStartRemoteMessagingClientBackgroundTask = appDelegate.didStartRemoteMessagingClientBackgroundTask,
+                isValid(timestamp: didStartRemoteMessagingClientBackgroundTask) {
                 parameters[PixelParameters.didStartRemoteMessagingClientBackgroundTask] = dateFormatter.string(from: didStartRemoteMessagingClientBackgroundTask)
             }
-            if let didStartAppConfigurationFetchBackgroundTask = appDelegate.didStartAppConfigurationFetchBackgroundTask, isValid(timestamp: didStartAppConfigurationFetchBackgroundTask) {
+            if let didStartAppConfigurationFetchBackgroundTask = appDelegate.didStartAppConfigurationFetchBackgroundTask,
+                isValid(timestamp: didStartAppConfigurationFetchBackgroundTask) {
                 parameters[PixelParameters.didStartAppConfigurationFetchBackgroundTask] = dateFormatter.string(from: didStartAppConfigurationFetchBackgroundTask)
             }
         }

@@ -2091,7 +2091,7 @@ extension MainViewController: OmniBarDelegate {
 
         switch accessoryType {
         case .chat:
-            let queryItem = currentTab?.url?.getQueryItems()?.filter{ $0.name == "q" }.first
+            let queryItem = currentTab?.url?.getQueryItems()?.filter { $0.name == "q" }.first
             openAIChat(queryItem)
             Pixel.fire(pixel: .openAIChatFromAddressBar)
         case .share:

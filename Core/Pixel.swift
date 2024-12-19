@@ -167,7 +167,7 @@ public struct PixelParameters {
     public static let appEvent = "event"
 
     public static let firstBackgroundTimestamp = "firstBackgroundTimestamp"
-    public static let secondBackgroundTimestamp = "secondBackgroundTimestamp"
+    public static let consecutiveBackgroundTimestamps = "consecutiveBackgroundTimestamps"
     public static let didReceiveMemoryWarningTimestamp = "didReceiveMemoryWarningTimestamp"
     public static let didReceiveMXPayloadTimestamp = "didReceiveMXPayloadTimestamp"
     public static let didReceiveUNNotification = "didReceiveUNNotification"

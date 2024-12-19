@@ -39,12 +39,13 @@ struct DoubleBackground: AppState {
     }()
 
     let firstTimeBackgroundTimestamp: Date
-    var consecutiveTimestamps: [Date]
+    var consecutiveTimestamps: [Date] = []
 
-    init(firstTimeBackgroundTimestamp: Date) {
+    init(firstTimeBackgroundTimestamp: Date, consecutiveTimestamps: [Date]) {
         self.firstTimeBackgroundTimestamp = firstTimeBackgroundTimestamp
+        self.consecutiveTimestamps = consecutiveTimestamps
         let lastTimestamp = Date()
-        consecutiveTimestamps.append(lastTimestamp)
+        self.consecutiveTimestamps.append(lastTimestamp)
 
         var parameters = [PixelParameters.firstBackgroundTimestamp: dateFormatter.string(from: firstTimeBackgroundTimestamp)]
 

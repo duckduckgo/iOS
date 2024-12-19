@@ -18,38 +18,20 @@
 //
 
 import Foundation
+import MaliciousSiteProtection
 
 final class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
 
     func evaluate(_ url: URL) async -> ThreatKind? {
         try? await Task.sleep(interval: 0.3)
-        return .none
-    }
 
-}
-
-// MARK: - To Remove
-
-// These entities are copied from BSK and they will be used to mock the library
-import SpecialErrorPages
-
-protocol MaliciousSiteDetecting {
-    func evaluate(_ url: URL) async -> ThreatKind?
-}
-
-public enum ThreatKind: String, CaseIterable, CustomStringConvertible {
-    public var description: String { rawValue }
-
-    case phishing
-    case malware
-}
-
-public extension ThreatKind {
-
-    var errorPageType: SpecialErrorKind {
-        switch self {
-        case .malware: .phishing // WIP in BSK
-        case .phishing: .phishing
+        switch url.absoluteString {
+        case "http://privacy-test-pages.site/security/badware/phishing.html":
+            return .phishing
+        case "http://privacy-test-pages.site/security/badware/malware.html":
+            return .malware
+        default:
+            return .none
         }
     }
 

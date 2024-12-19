@@ -17,16 +17,118 @@
 //  limitations under the License.
 //
 
+import Foundation
+import Combine
+import DDGSync
 import UIKit
+import Core
 
 struct Background: AppState {
 
-    init(application: UIApplication) {
+    private let lastBackgroundDate: Date = Date()
+    private let application: UIApplication
+    private var appDependencies: AppDependencies
 
+    var urlToOpen: URL?
+    var shortcutItemToHandle: UIApplicationShortcutItem?
+
+    init(stateContext: Inactive.StateContext) {
+        application = stateContext.application
+        appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
+
+        run()
+    }
+
+    init(stateContext: Launched.StateContext) {
+        application = stateContext.application
+        appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
+
+        run()
+    }
+
+    mutating func run() {
+        let autoClear = appDependencies.autoClear
+        let privacyStore = appDependencies.privacyStore
+        let privacyProDataReporter = appDependencies.privacyProDataReporter
+        let voiceSearchHelper = appDependencies.voiceSearchHelper
+        let appSettings = appDependencies.appSettings
+        let autofillLoginSession = appDependencies.autofillLoginSession
+        let syncService = appDependencies.syncService
+        let syncDataProviders = appDependencies.syncDataProviders
+        let uiService = appDependencies.uiService
+
+        if autoClear.isClearingEnabled || privacyStore.authenticationEnabled {
+            uiService.displayBlankSnapshotWindow(voiceSearchHelper: voiceSearchHelper,
+                                                 addressBarPosition: appSettings.currentAddressBarPosition)
+        }
+        autoClear.startClearingTimer()
+        autofillLoginSession.endSession()
+
+        suspendSync(syncService: syncService)
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
+        privacyProDataReporter.saveApplicationLastSessionEnded()
+
+        resetAppStartTime()
+
+        // Kill switch for the new app delegate:
+        // If the .forceOldAppDelegate flag is set in the config, we mark a file as present.
+        // This switches the app to the old mode and silently crashes it in the background.
+        // When reopened, the app will reliably run the old flow.
+        if ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .forceOldAppDelegate) {
+            (UIApplication.shared.delegate as? AppDelegate)?.forceOldAppDelegate()
+            fatalError("crash to ensure the app restarts using the old app delegate next time")
+        }
+    }
+
+    private mutating func suspendSync(syncService: DDGSync) {
+        if syncService.isSyncInProgress {
+            Logger.sync.debug("Sync is in progress. Starting background task to allow it to gracefully complete.")
+
+            var taskID: UIBackgroundTaskIdentifier!
+            taskID = UIApplication.shared.beginBackgroundTask(withName: "Cancelled Sync Completion Task") {
+                Logger.sync.debug("Forcing background task completion")
+                UIApplication.shared.endBackgroundTask(taskID)
+            }
+            appDependencies.syncDidFinishCancellable?.cancel()
+            appDependencies.syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
+                .prefix(1)
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    Logger.sync.debug("Ending background task")
+                    UIApplication.shared.endBackgroundTask(taskID)
+                }
+        }
+
+        syncService.scheduler.cancelSyncAndSuspendSyncQueue()
+    }
+
+    private func resetAppStartTime() {
+        appDependencies.mainViewController.appDidFinishLaunchingStartTime = nil
     }
 
 }
 
-struct DoubleBackground: AppState {
-    
+extension Background {
+
+    struct StateContext {
+
+        let application: UIApplication
+        let lastBackgroundDate: Date
+        let urlToOpen: URL?
+        let shortcutItemToHandle: UIApplicationShortcutItem?
+
+        let appDependencies: AppDependencies
+
+    }
+
+    func makeStateContext() -> StateContext {
+        .init(application: application,
+              lastBackgroundDate: lastBackgroundDate,
+              urlToOpen: urlToOpen,
+              shortcutItemToHandle: shortcutItemToHandle,
+              appDependencies: appDependencies)
+    }
+
 }

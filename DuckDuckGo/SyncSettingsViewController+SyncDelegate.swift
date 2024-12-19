@@ -189,16 +189,19 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             message: UserText.syncAlertSwitchAccountMessage,
             preferredStyle: .alert)
         alertController.addAction(title: UserText.syncAlertSwitchAccountButton, style: .default) { [weak self] in
-            self?.switchAccounts(recoveryKey: recoveryKey)
             Task {
+                Pixel.fire(pixel: .syncUserAcceptedSwitchingAccount)
                 await self?.switchAccounts(recoveryKey: recoveryKey)
             }
         }
-        alertController.addAction(title: UserText.actionCancel, style: .cancel)
+        alertController.addAction(title: UserText.actionCancel, style: .cancel) {
+            Pixel.fire(pixel: .syncUserCancelledSwitchingAccount)
+        }
         // Gives time to the is syncing view to appear
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.dismissPresentedViewController { [weak self] in
                 self?.present(alertController, animated: true, completion: nil)
+                Pixel.fire(pixel: .syncAskUserToSwitchAccount)
             }
         }
     }
@@ -208,15 +211,15 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             do {
                 try await self?.syncService.disconnect()
             } catch {
-                // TODO: Send sync_user_switched_logout_error pixel
+                Pixel.fire(pixel: .syncUserSwitchedLogoutError)
             }
 
             do {
                 try await self?.loginAndShowDeviceConnected(recoveryKey: recoveryKey)
             } catch {
-                // TODO: Send sync_user_switched_login_error pixel
+                Pixel.fire(pixel: .syncUserSwitchedLoginError)
             }
-            // TODO: Send sync_user_switched_account_pixel
+            Pixel.fire(pixel: .syncUserSwitchedAccount)
         }
     }
 

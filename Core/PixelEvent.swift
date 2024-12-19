@@ -682,6 +682,13 @@ extension Pixel {
         case syncSecureStorageDecodingError
         case syncAccountRemoved(reason: String)
 
+        case syncAskUserToSwitchAccount
+        case syncUserAcceptedSwitchingAccount
+        case syncUserCancelledSwitchingAccount
+        case syncUserSwitchedAccount
+        case syncUserSwitchedLogoutError
+        case syncUserSwitchedLoginError
+
         case syncGetOtherDevices
         case syncGetOtherDevicesCopy
         case syncGetOtherDevicesShare
@@ -1619,6 +1626,13 @@ extension Pixel.Event {
         case .syncSecureStorageReadError: return "m_d_sync_secure_storage_error"
         case .syncSecureStorageDecodingError: return "sync_secure_storage_decoding_error"
         case .syncAccountRemoved(let reason): return "sync_account_removed_reason_\(reason)"
+
+        case .syncAskUserToSwitchAccount: return "sync_ask_user_to_switch_account"
+        case .syncUserAcceptedSwitchingAccount: return "sync_user_accepted_switching_account"
+        case .syncUserCancelledSwitchingAccount: return "sync_user_cancelled_switching_account"
+        case .syncUserSwitchedAccount: return "sync_user_switched_account"
+        case .syncUserSwitchedLogoutError: return "sync_user_switched_logout_error"
+        case .syncUserSwitchedLoginError: return "sync_user_switched_login_error"
 
         case .syncGetOtherDevices: return "sync_get_other_devices"
         case .syncGetOtherDevicesCopy: return "sync_get_other_devices_copy"

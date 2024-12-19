@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "jjackson/crcid-send-receive-support",
-        "revision" : "88449bbcda989f3bd71dd7978b283328d0ab2234"
+        "revision" : "bcb85ec32898046701249fa3ad4d69160da0a369"
       }
     },
     {

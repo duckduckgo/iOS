@@ -364,7 +364,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     if rootView.model.devices.count > 1 {
                         promptToSwitchAccounts(recoveryKey: recoveryKey)
                     } else {
-                        switchAccounts(recoveryKey: recoveryKey)
+                        await switchAccounts(recoveryKey: recoveryKey)
                     }
                 } else {
                     handleError(.unableToSyncToServer, error: error, event: .syncLoginError)

@@ -190,6 +190,9 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             preferredStyle: .alert)
         alertController.addAction(title: UserText.syncAlertSwitchAccountButton, style: .default) { [weak self] in
             self?.switchAccounts(recoveryKey: recoveryKey)
+            Task {
+                await self?.switchAccounts(recoveryKey: recoveryKey)
+            }
         }
         alertController.addAction(title: UserText.actionCancel, style: .cancel)
         // Gives time to the is syncing view to appear
@@ -200,7 +203,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
     }
 
-    func switchAccounts(recoveryKey: SyncCode.RecoveryKey) {
+    func switchAccounts(recoveryKey: SyncCode.RecoveryKey) async {
         Task { [weak self] in
             do {
                 try await self?.syncService.disconnect()

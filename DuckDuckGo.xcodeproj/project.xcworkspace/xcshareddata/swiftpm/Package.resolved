@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "jjackson/crcid-send-receive-support",
-        "revision" : "bcb85ec32898046701249fa3ad4d69160da0a369"
+        "revision" : "5704d77e3b4c77c7387518d796d31a35f7a1ffcf",
+        "version" : "222.1.0"
       }
     },
     {

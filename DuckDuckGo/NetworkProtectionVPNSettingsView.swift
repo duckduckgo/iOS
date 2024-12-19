@@ -199,7 +199,7 @@ private extension WidgetEducationView {
 
     static var vpn: Self {
         WidgetEducationView(
-            navBarTitle: UserText.settingsAddWidgetTitle,
+            navBarTitle: UserText.settingsAddVPNWidget,
             thirdParagraphText: UserText.addVPNWidgetSettingsThirdParagraph,
             thirdParagraphDetail: .image(
                 Image("WidgetEducationVPNWidgetExample"),

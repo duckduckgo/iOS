@@ -136,6 +136,9 @@
 /* No comment provided by engineer. */
 "addWidget.settings.secondParagraph" = "Tap the **Edit** button, then choose **Add Widget**";
 
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Tap the plus %@ button.";
+
 /* No comment provided by engineer. */
 "addWidget.settings.title" = "Find and select **DuckDuckGo**. Then choose a widget.";
 
@@ -2205,7 +2208,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.add.widget" = "Add Widget to Home Screen";
 
 /* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
-"settings.add.widget.title" = "Add DuckDuckGo VPN Widget to Your Home Screen";
+"settings.add.widget.vpn" = "Add DuckDuckGo VPN Widget to Your Home Screen";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */

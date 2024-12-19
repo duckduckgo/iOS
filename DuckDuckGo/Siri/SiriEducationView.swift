@@ -41,15 +41,12 @@ struct SiriEducationView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    let navBarTitle: String
     let thirdParagraphText: String
     let thirdParagraphDetail: Detail
 
-    init(navBarTitle: String = UserText.settingsAddWidgetTitle,
-         thirdParagraphText: String = UserText.addWidgetSettingsThirdParagraph,
+    init(thirdParagraphText: String = UserText.addWidgetSettingsThirdParagraph,
          thirdParagraphDetail: Detail = .image(Image.widgetExample, maxWidth: Size.exampleImageWidth)) {
 
-        self.navBarTitle = navBarTitle
         self.thirdParagraphText = thirdParagraphText
         self.thirdParagraphDetail = thirdParagraphDetail
     }

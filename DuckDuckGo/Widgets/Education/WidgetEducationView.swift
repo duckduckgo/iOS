@@ -30,7 +30,16 @@ struct WidgetEducationView: View {
     let thirdParagraphText: String
     let thirdParagraphDetail: Detail
 
-    init(navBarTitle: String = UserText.settingsAddWidgetTitle,
+    var secondParagraphText: Text {
+        if #available(iOS 18, *) {
+            return Text(UserText.addWidgetSettingsSecondParagraph)
+        } else {
+            // Ref: https://stackoverflow.com/questions/62168292/what-s-the-equivalent-to-string-localizedstringwithformat-for-swiftuis-lo
+            return Text("addWidget.settings.secondParagraph.\(Image.add)")
+        }
+    }
+
+    init(navBarTitle: String = UserText.settingsAddWidget,
          thirdParagraphText: String = UserText.addWidgetSettingsThirdParagraph,
          thirdParagraphDetail: Detail = .image(Image.widgetExample, maxWidth: Const.Size.exampleImageWidth)) {
 
@@ -49,7 +58,7 @@ struct WidgetEducationView: View {
                     paragraphConfig: [
                         NumberedParagraphConfig(text: UserText.addWidgetSettingsFirstParagraph),
                         NumberedParagraphConfig(
-                            text: UserText.addWidgetSettingsSecondParagraph,
+                            text: secondParagraphText,
                             detail: .image(Image.homeScreen,
                                            maxWidth: Const.Size.exampleImageWidth)),
                         NumberedParagraphConfig(

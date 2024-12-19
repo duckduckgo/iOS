@@ -58,10 +58,15 @@ struct NumberedParagraphConfig {
                   maxWidth: CGFloat)
     }
 
-    let text: String
+    let text: Text
     let detail: Detail?
 
     init(text: String, detail: Detail? = nil) {
+        self.text = Text(text)
+        self.detail = detail
+    }
+
+    init(text: Text, detail: Detail? = nil) {
         self.text = text
         self.detail = detail
     }
@@ -77,7 +82,7 @@ private struct NumberedParagraph: View {
             VStack(alignment: .leading, spacing: Const.Spacing.textAndImage) {
                 HStack {
                     // The LocalizedStringKey wrapper is necessary to properly parse markdown
-                    Text(LocalizedStringKey(config.text))
+                    config.text
                         .foregroundStyle(Color(designSystemColor: .textPrimary))
                         .font(Font(uiFont: Const.Font.text))
                         .lineSpacing(Const.Spacing.line)

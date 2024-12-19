@@ -38,6 +38,10 @@ final class SpecialErrorPageNavigationHandler: SpecialErrorPageContextHandling {
     private let sslErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling & SpecialErrorPageActionHandler
     private let maliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling & SpecialErrorPageActionHandler
 
+    var currentThreatKind: ThreatKind? {
+        maliciousSiteProtectionNavigationHandler.currentThreatKind
+    }
+
     init(
         sslErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling & SpecialErrorPageActionHandler = SSLErrorPageNavigationHandler(),
         maliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling & SpecialErrorPageActionHandler = MaliciousSiteProtectionNavigationHandler()

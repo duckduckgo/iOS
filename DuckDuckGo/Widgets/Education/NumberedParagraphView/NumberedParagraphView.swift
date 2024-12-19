@@ -62,7 +62,8 @@ struct NumberedParagraphConfig {
     let detail: Detail?
 
     init(text: String, detail: Detail? = nil) {
-        self.text = Text(text)
+        // The LocalizedStringKey wrapper is necessary to properly parse markdown
+        self.text = Text(LocalizedStringKey(text))
         self.detail = detail
     }
 
@@ -81,7 +82,6 @@ private struct NumberedParagraph: View {
             NumberedCircle(number: number)
             VStack(alignment: .leading, spacing: Const.Spacing.textAndImage) {
                 HStack {
-                    // The LocalizedStringKey wrapper is necessary to properly parse markdown
                     config.text
                         .foregroundStyle(Color(designSystemColor: .textPrimary))
                         .font(Font(uiFont: Const.Font.text))

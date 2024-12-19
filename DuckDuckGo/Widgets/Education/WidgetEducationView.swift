@@ -32,7 +32,8 @@ struct WidgetEducationView: View {
 
     var secondParagraphText: Text {
         if #available(iOS 18, *) {
-            return Text(UserText.addWidgetSettingsSecondParagraph)
+            // The LocalizedStringKey wrapper is necessary to properly parse markdown
+            return Text(LocalizedStringKey(UserText.addWidgetSettingsSecondParagraph))
         } else {
             // Ref: https://stackoverflow.com/questions/62168292/what-s-the-equivalent-to-string-localizedstringwithformat-for-swiftuis-lo
             return Text("addWidget.settings.secondParagraph.\(Image.add)")
@@ -87,7 +88,13 @@ private extension Color {
 extension Image {
     static let add = Image("WidgetEducationAddIcon")
     static let widgetExample = Image("WidgetEducationWidgetExample")
-    static let homeScreen = Image("WidgetEducationHomeScreen")
+    static var homeScreen: Image {
+        if #available(iOS 18, *) {
+            Image("WidgetEducationHomeScreen")
+        } else {
+            Image("WidgetEducationHomeScreeniOS17")
+        }
+    }
 }
 
 private enum Const {

@@ -270,11 +270,21 @@ class TabViewController: UIViewController {
 
     lazy var vaultManager: SecureVaultManager = {
         let manager = SecureVaultManager(includePartialAccountMatches: true,
+                                         shouldAllowPartialFormSaves: featureFlagger.isFeatureOn(.autofillPartialFormSaves),
                                          tld: AppDependencyProvider.shared.storageCache.tld)
         manager.delegate = self
         return manager
     }()
-    
+
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager? = {
+        guard let vault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) else {
+            return nil
+        }
+
+        return AutofillCredentialIdentityStoreManager(vault: vault,
+                                                      tld: AppDependencyProvider.shared.storageCache.tld)
+    }()
+
     private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, onComplete in
         let domainEvent: Pixel.Event
         switch event {
@@ -591,6 +601,12 @@ class TabViewController: UIViewController {
         }
 
         instrumentation.didPrepareWebView()
+
+        // Initialize DuckPlayerNavigationHandler
+        if let handler = duckPlayerNavigationHandler,
+            let webView = webView {
+            handler.handleAttach(webView: webView)
+        }
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
@@ -613,12 +629,7 @@ class TabViewController: UIViewController {
                 // break a js-initiated popup request such as printing from a popup
                 guard self?.url != cleanURLRequest.url || loadingStopped || !loadingInitiatedByParentTab else { return }
                 self?.load(urlRequest: cleanURLRequest)
-                
-                
-                if let handler = self?.duckPlayerNavigationHandler,
-                    let webView = self?.webView {
-                    handler.handleAttach(webView: webView)
-                }
+
             })
         }
 
@@ -1007,7 +1018,7 @@ class TabViewController: UIViewController {
     }
 
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
-        showBars(animated: false)
+        showBars()
     }
 
     private func showBars(animated: Bool = true) {
@@ -1587,9 +1598,6 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if !DefaultVariantManager().isContextualDaxDialogsEnabled {
-            isShowingFullScreenDaxDialog = true
-        }
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
         let daxDialogSourceURL = self.url
         
@@ -2479,13 +2487,15 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 
     private func isShowBarsTap(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        let y = gestureRecognizer.location(in: webView).y
+        let y = gestureRecognizer.location(in: self.view).y
         return gestureRecognizer == showBarsTapGestureRecogniser && chromeDelegate?.isToolbarHidden == true && isBottom(yPosition: y)
     }
 
     private func isBottom(yPosition y: CGFloat) -> Bool {
-        guard let chromeDelegate = chromeDelegate else { return false }
-        return y > (view.frame.size.height - chromeDelegate.toolbarHeight)
+        let webViewFrameInTabView = webView.convert(webView.bounds, to: view)
+        let bottomOfWebViewInTabView = webViewFrameInTabView.maxY - webView.scrollView.contentInset.bottom
+
+        return y > bottomOfWebViewInTabView
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherRecognizer: UIGestureRecognizer) -> Bool {
@@ -2836,8 +2846,13 @@ extension TabViewController: SecureVaultManagerDelegate {
         if accounts.count > 0 {
             let accountMatches = autofillWebsiteAccountMatcher.findDeduplicatedSortedMatches(accounts: accounts, for: domain)
 
-            presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { account in
+            presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { [weak self] account in
                 onAccountSelected(account)
+
+                guard let domain = account?.domain else { return }
+                Task {
+                    await self?.credentialIdentityStoreManager?.updateCredentialStore(for: domain)
+                }
             } completionHandler: { account in
                 if account != nil {
                     NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
@@ -3030,6 +3045,11 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                         self.showLoginDetails(with: newCredential.account)
                     })
                     Favicons.shared.loadFavicon(forDomain: newCredential.account.domain, intoCache: .fireproof, fromCache: .tabs)
+                }
+
+                guard let domain = newCredential.account.domain else { return }
+                Task {
+                    await credentialIdentityStoreManager?.updateCredentialStore(for: domain)
                 }
             }
         } catch {

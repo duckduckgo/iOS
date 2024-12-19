@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Uždaryti";
+
+/* Done button title */
+"action.button.done" = "Atlikta";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "Atidaryti „DuckDuckGo“";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Automatinis slaptažodžių pildymas įjungtas!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "įrenginys";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Atšaukti";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Atrakinkite įrenginį, kad galėtumėte pasiekti slaptažodžius";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "Svetainės URL";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "Kopijuoti %@";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Adresas nukopijuotas";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Pastabos nukopijuotos";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Slaptažodis nukopijuotas";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Naudotojo vardas nukopijuotas";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Paslėpti slaptažodį";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Paskutinį kartą atnaujinta %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Pavadinimas";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Pastabos";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Slaptažodis";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Rodyti slaptažodį";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Naudotojo vardas";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Slaptažodžiai saugiai saugomi jūsų įrenginyje.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Dar nėra išsaugotų slaptažodžių";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Pasirinkite slaptažodį, kurį naudosite „%@“";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Ieškoti slaptažodžių";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "„%@“";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Rezultatų nerasta";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Siūloma";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Slaptažodžiai";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Nustatykite %@ prieigos kodą, kad automatiškai užpildytumėte „DuckDuckGo“ slaptažodžius.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Reikalingas įrenginio kodas";
+

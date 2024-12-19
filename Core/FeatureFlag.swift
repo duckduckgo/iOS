@@ -32,6 +32,7 @@ public enum FeatureFlag: String {
     case autofillFailureReporting
     case autofillOnForExistingUsers
     case autofillUnknownUsernameCategorization
+    case autofillPartialFormSaves
     case incontextSignup
     case autoconsentOnByDefault
     case history
@@ -56,6 +57,7 @@ public enum FeatureFlag: String {
     
     /// https://app.asana.com/0/1208592102886666/1208613627589762/f
     case crashReportOptInStatusResetting
+
     case isPrivacyProLaunchedROW
     case isPrivacyProLaunchedROWOverride
 
@@ -100,6 +102,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.subfeature(AutofillSubfeature.onForExistingUsers))
         case .autofillUnknownUsernameCategorization:
             return .remoteReleasable(.subfeature(AutofillSubfeature.unknownUsernameCategorization))
+        case .autofillPartialFormSaves:
+            return .remoteReleasable(.subfeature(AutofillSubfeature.partialFormSaves))
         case .incontextSignup:
             return .remoteReleasable(.feature(.incontextSignup))
         case .autoconsentOnByDefault:

@@ -89,5 +89,8 @@ struct SettingsGeneralView: View {
         .applySettingsListModifiers(title: UserText.general,
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onFirstAppear {
+            Pixel.fire(pixel: .settingsGeneralOpen)
+        }
     }
 }

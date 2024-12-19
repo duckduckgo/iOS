@@ -23,6 +23,7 @@ import Core
 import Combine
 import DDGSync
 import Persistence
+import Common
 
 final class SyncSettingsViewControllerErrorTests: XCTestCase {
 
@@ -53,7 +54,8 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
             faviconStoring: MockFaviconStore())
         let credentialsAdapter = SyncCredentialsAdapter(
             secureVaultErrorReporter: MockSecureVaultReporting(),
-            syncErrorHandler: CapturingAdapterErrorHandler())
+            syncErrorHandler: CapturingAdapterErrorHandler(),
+            tld: TLD())
         vc = SyncSettingsViewController(
             syncService: ddgSyncing,
             syncBookmarksAdapter: bookmarksAdapter,

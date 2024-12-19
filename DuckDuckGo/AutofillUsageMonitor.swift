@@ -18,13 +18,43 @@
 //
 
 import Core
+import AuthenticationServices
+import BrowserServicesKit
 
 final class AutofillUsageMonitor {
 
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager? = {
+        guard let vault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) else {
+            return nil
+        }
+
+        return AutofillCredentialIdentityStoreManager(vault: vault,
+                                                      tld: AppDependencyProvider.shared.storageCache.tld)
+    }()
+
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveSaveEvent), name: .autofillSaveEvent, object: nil)
+
+        ASCredentialIdentityStore.shared.getState({ [weak self] state in
+            if state.isEnabled {
+                if self?.autofillExtensionEnabled == nil {
+                    Task {
+                        await self?.credentialIdentityStoreManager?.populateCredentialStore()
+                    }
+                }
+                self?.autofillExtensionEnabled = true
+            } else {
+                if self?.autofillExtensionEnabled != nil {
+                    Pixel.fire(pixel: .autofillExtensionDisabled)
+                    self?.autofillExtensionEnabled = false
+                }
+            }
+        })
     }
-    
+
+    @UserDefaultsWrapper(key: .autofillExtensionEnabled, defaultValue: nil)
+    var autofillExtensionEnabled: Bool?
+
     @UserDefaultsWrapper(key: .autofillFirstTimeUser, defaultValue: true)
     private var autofillFirstTimeUser: Bool
 

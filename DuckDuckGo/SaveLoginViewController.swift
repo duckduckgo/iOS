@@ -77,9 +77,11 @@ class SaveLoginViewController: UIViewController {
         case .savePassword:
             Pixel.fire(pixel: .autofillLoginsSavePasswordModalDismissed)
         case .updateUsername:
-            Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalDismissed)
+            let isBackfilled = viewModel.isUpdatingEmptyUsername
+            Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalDismissed, withAdditionalParameters: [PixelParameters.backfilled: String(describing: isBackfilled)])
         case .updatePassword:
-            Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalDismissed)
+            let isBackfilled = viewModel.isUpdatingEmptyPassword
+            Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalDismissed, withAdditionalParameters: [PixelParameters.backfilled: String(describing: isBackfilled)])
         }
         
         viewModel.viewControllerDidDisappear()
@@ -103,9 +105,11 @@ class SaveLoginViewController: UIViewController {
         case .savePassword:
             Pixel.fire(pixel: .autofillLoginsSavePasswordModalDisplayed)
         case .updateUsername:
-            Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalDisplayed)
+            let isBackfilled = saveViewModel.isUpdatingEmptyUsername
+            Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalDisplayed, withAdditionalParameters: [PixelParameters.backfilled: String(describing: isBackfilled)])
         case .updatePassword:
-            Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalDisplayed)
+            let isBackfilled = saveViewModel.isUpdatingEmptyPassword
+            Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalDisplayed, withAdditionalParameters: [PixelParameters.backfilled: String(describing: isBackfilled)])
         }
     }
 }
@@ -124,9 +128,11 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
             delegate?.saveLoginViewController(self, didSaveCredentials: credentialManager.credentials)
         case .updatePassword, .updateUsername:
             if viewModel.layoutType == .updatePassword {
-                Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalConfirmed)
+                let isBackfilled = viewModel.isUpdatingEmptyPassword
+                Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalConfirmed, withAdditionalParameters: [PixelParameters.backfilled: String(describing: isBackfilled)])
             } else {
-                Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalConfirmed)
+                let isBackfilled = viewModel.isUpdatingEmptyUsername
+                Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalConfirmed, withAdditionalParameters: [PixelParameters.backfilled: String(describing: isBackfilled)])
             }
             delegate?.saveLoginViewController(self, didUpdateCredentials: credentialManager.credentials)
         }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DuckDuckGoGroupIdentifierPrefix</key>
+	<string>$(GROUP_ID_PREFIX)</string>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionAttributes</key>
+		<dict>
+			<key>ASCredentialProviderViewControllerClass</key>
+			<string>$(PRODUCT_MODULE_NAME).CredentialProviderViewController</string>
+            <key>ASCredentialProviderExtensionShowsConfigurationUI</key>
+            <true/>
+            <key>ASCredentialProviderExtensionCapabilities</key>
+            <dict>
+                <key>ProvidesPasswords</key>
+                <true/>
+                <key>ProvidesTextToInsert</key>
+                <true/>
+            </dict>
+        </dict>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.authentication-services-credential-provider-ui</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>$(PRODUCT_MODULE_NAME).CredentialProviderViewController</string>
+	</dict>
+	<key>VAULT_APP_GROUP</key>
+	<string>$(AppIdentifierPrefix)$(VAULT_APP_GROUP)</string>
+</dict>
+</plist>

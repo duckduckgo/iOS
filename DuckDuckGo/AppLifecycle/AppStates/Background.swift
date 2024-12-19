@@ -26,3 +26,7 @@ struct Background: AppState {
     }
 
 }
+
+struct DoubleBackground: AppState {
+    
+}

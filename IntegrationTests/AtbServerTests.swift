@@ -20,6 +20,8 @@
 import XCTest
 @testable import Core
 @testable import BrowserServicesKit
+import Combine
+import PixelKit
 
 class AtbServerTests: XCTestCase {
     
@@ -32,7 +34,7 @@ class AtbServerTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-
+        PixelKit.configureExperimentKit(featureFlagger: MockFeatureFlagger())
         store = MockStatisticsStore()
         loader = StatisticsLoader(statisticsStore: store, inconsistencyMonitoring: MockStatisticsStoreInconsistencyMonitoring())
 
@@ -134,5 +136,34 @@ class MockStatisticsStore: StatisticsStore {
 private struct MockStatisticsStoreInconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring {
     func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool) {
 
+    }
+}
+
+class MockFeatureFlagger: FeatureFlagger {
+    func isFeatureOn<Flag>(for featureFlag: Flag, allowOverride: Bool) -> Bool where Flag: FeatureFlagDescribing {
+        return false
+    }
+    
+    var internalUserDecider: any InternalUserDecider = MockInteranlUserDecider()
+
+    var localOverrides: (any BrowserServicesKit.FeatureFlagLocalOverriding)?
+    
+    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag: FeatureFlagExperimentDescribing {
+        return nil
+    }
+    
+    func getAllActiveExperiments() -> Experiments {
+        return [:]
+    }
+
+}
+
+class MockInteranlUserDecider: InternalUserDecider {
+    var isInternalUser: Bool = false
+
+    var isInternalUserPublisher: AnyPublisher<Bool, Never> = Just(false).eraseToAnyPublisher()
+
+    func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) -> Bool {
+        return false
     }
 }

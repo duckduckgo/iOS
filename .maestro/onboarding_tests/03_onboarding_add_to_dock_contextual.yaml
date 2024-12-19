@@ -1,0 +1,54 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - onboarding
+
+---
+
+# Set up
+- runFlow:
+    file: ../shared/setup.yaml
+    env:
+        ONBOARDING_COMPLETED: "false"
+        APP_VARIANT: "mo"
+
+# Handle Search Suggestions
+- assertVisible: "Ready to get started?\nTry a search!"
+- assertVisible: "Surprise Me!"
+- tapOn: "Surprise Me!"
+
+# Handle First Dax Dialog
+- assertVisible: "That’s DuckDuckGo Search. Private. Fast. Fewer ads."
+- assertVisible: "Got It!"
+- tapOn: "Got It!"
+
+# Handle Site Suggestions
+- assertVisible: "Next, try visiting a site!"
+- assertVisible: "Surprise Me!"
+- tapOn: "Surprise Me!"
+
+# Handle Privacy Dashboard
+- assertVisible: "Got It!"
+- tapOn:
+    point: "6%,10%" # Shield icon.
+- assertVisible:
+    text: "View Tracker Companies"
+- assertVisible:
+    text: "Done"
+- tapOn: "Done"
+
+# Handle Fire Message
+- assertVisible: "Got It!"
+- tapOn: "Got It!"
+- assertVisible: "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! 🔥"
+
+# Handle Fire Button
+- assertVisible: "Close Tabs and Clear Data"
+- tapOn: "Close Tabs and Clear Data"
+- tapOn: "Close Tabs and Clear Data"
+
+# Handle End of Journey Dialog
+- assertVisible: "Add me to your Dock!"
+- assertVisible: "Show Me How"
+- tapOn: "Start Browsing"
+
+

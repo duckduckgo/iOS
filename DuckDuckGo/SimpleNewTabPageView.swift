@@ -49,7 +49,7 @@ struct SimpleNewTabPageView: View {
                 .simultaneousGesture(
                     DragGesture()
                         .onChanged({ value in
-                            if value.translation.height > 0 {
+                            if value.translation.height != 0.0 {
                                 viewModel.beginDragging()
                             }
                         })
@@ -85,6 +85,8 @@ private extension SimpleNewTabPageView {
             }
             .withScrollKeyboardDismiss()
         }
+        // Prevent recreating geomery reader when keyboard is shown/hidden.
+        .ignoresSafeArea(.keyboard)
     }
 
     @ViewBuilder

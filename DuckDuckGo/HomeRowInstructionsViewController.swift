@@ -60,6 +60,7 @@ class HomeRowInstructionsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         HomeRowReminder().setShown()
+        Pixel.fire(pixel: .settingsNextStepsAddAppToDock)
     }
 
     @IBAction func dismiss() {

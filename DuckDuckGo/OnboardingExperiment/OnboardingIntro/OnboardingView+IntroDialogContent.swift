@@ -39,7 +39,7 @@ extension OnboardingView {
 
         var body: some View {
             VStack(spacing: 24.0) {
-                AnimatableTypingText(title) {
+                AnimatableTypingText(title, startAnimating: animateText) {
                     withAnimation {
                         showCTA.wrappedValue = true
                     }
@@ -48,7 +48,7 @@ extension OnboardingView {
                 .font(Font.system(size: 20, weight: .bold))
 
                 Button(action: action) {
-                    Text(UserText.DaxOnboardingExperiment.Intro.cta)
+                    Text(UserText.Onboarding.Intro.cta)
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 .visibility(showCTA.wrappedValue ? .visible : .invisible)

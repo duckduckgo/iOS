@@ -29,6 +29,7 @@ import Crashes
 
 import Subscription
 import NetworkProtection
+import AIChat
 
 final class SettingsViewModel: ObservableObject {
 
@@ -45,6 +46,7 @@ final class SettingsViewModel: ObservableObject {
     private let historyManager: HistoryManaging
     let privacyProDataReporter: PrivacyProDataReporting?
     let textZoomCoordinator: TextZoomCoordinating
+    let aiChatSettings: AIChatSettingsProvider
 
     // Subscription Dependencies
     let subscriptionManager: SubscriptionManager
@@ -108,6 +110,7 @@ final class SettingsViewModel: ObservableObject {
         Binding<ThemeName>(
             get: { self.state.appTheme },
             set: {
+                Pixel.fire(pixel: .settingsThemeSelectorPressed)
                 self.state.appTheme = $0
                 ThemeManager.shared.enableTheme(with: $0)
             }
@@ -117,6 +120,7 @@ final class SettingsViewModel: ObservableObject {
         Binding<FireButtonAnimationType>(
             get: { self.state.fireButtonAnimation },
             set: {
+                Pixel.fire(pixel: .settingsFireButtonSelectorPressed)
                 self.appSettings.currentFireButtonAnimation = $0
                 self.state.fireButtonAnimation = $0
                 NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: self)
@@ -137,6 +141,7 @@ final class SettingsViewModel: ObservableObject {
                 self.state.addressBar.position
             },
             set: {
+                Pixel.fire(pixel: $0 == .top ? .settingsAddressBarTopSelected : .settingsAddressBarBottomSelected)
                 self.appSettings.currentAddressBarPosition = $0
                 self.state.addressBar.position = $0
             }
@@ -147,6 +152,7 @@ final class SettingsViewModel: ObservableObject {
         Binding<Bool>(
             get: { self.state.showsFullURL },
             set: {
+                Pixel.fire(pixel: $0 ? .settingsShowFullURLOn : .settingsShowFullURLOff)
                 self.state.showsFullURL = $0
                 self.appSettings.showFullSiteAddress = $0
             }
@@ -256,6 +262,24 @@ final class SettingsViewModel: ObservableObject {
                 } else {
                     Pixel.fire(pixel: .settingsVoiceSearchOff)
                 }
+            }
+        )
+    }
+
+    var aiChatBrowsingMenuEnabledBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.aiChatSettings.isAIChatBrowsingMenuUserSettingsEnabled },
+            set: { newValue in
+                self.aiChatSettings.enableAIChatBrowsingMenuUserSettings(enable: newValue)
+            }
+        )
+    }
+
+    var aiChatAddressBarEnabledBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.aiChatSettings.isAIChatAddressBarUserSettingsEnabled },
+            set: { newValue in
+                self.aiChatSettings.enableAIChatAddressBarUserSettings(enable: newValue)
             }
         )
     }
@@ -391,7 +415,8 @@ final class SettingsViewModel: ObservableObject {
          historyManager: HistoryManaging,
          syncPausedStateManager: any SyncPausedStateManaging,
          privacyProDataReporter: PrivacyProDataReporting,
-         textZoomCoordinator: TextZoomCoordinating) {
+         textZoomCoordinator: TextZoomCoordinating,
+         aiChatSettings: AIChatSettingsProvider) {
 
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
@@ -403,6 +428,7 @@ final class SettingsViewModel: ObservableObject {
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.textZoomCoordinator = textZoomCoordinator
+        self.aiChatSettings = aiChatSettings
 
         setupNotificationObservers()
         updateRecentlyVisitedSitesVisibility()
@@ -452,8 +478,10 @@ extension SettingsViewModel {
             duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer) || shouldDisplayDuckPlayerContingencyMessage,
             duckPlayerMode: appSettings.duckPlayerMode,
             duckPlayerOpenInNewTab: appSettings.duckPlayerOpenInNewTab,
-            duckPlayerOpenInNewTabEnabled: featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab)
-            
+            duckPlayerOpenInNewTabEnabled: featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab),
+            aiChat: SettingsState.AIChat(enabled: aiChatSettings.isAIChatFeatureEnabled,
+                                         isAIChatBrowsingMenuFeatureFlagEnabled: aiChatSettings.isAIChatBrowsingMenubarShortcutFeatureEnabled,
+                                         isAIChatAddressBarFeatureFlagEnabled: aiChatSettings.isAIChatAddressBarShortcutFeatureEnabled)
         )
         
         updateRecentlyVisitedSitesVisibility()
@@ -579,6 +607,7 @@ extension SettingsViewModel {
     }
 
     func openMoreSearchSettings() {
+        Pixel.fire(pixel: .settingsMoreSearchSettings)
         UIApplication.shared.open(URL.searchSettings)
     }
 
@@ -670,6 +699,7 @@ extension SettingsViewModel {
         case subscriptionFlow(origin: String? = nil)
         case restoreFlow
         case duckPlayer
+        case aiChat
         // Add other cases as needed
 
         var id: String {
@@ -680,6 +710,7 @@ extension SettingsViewModel {
             case .subscriptionFlow: return "subscriptionFlow"
             case .restoreFlow: return "restoreFlow"
             case .duckPlayer: return "duckPlayer"
+            case .aiChat: return "aiChat"
             // Ensure all cases are covered
             }
         }
@@ -688,7 +719,7 @@ extension SettingsViewModel {
         // Default to .sheet, specify .push where needed
         var type: DeepLinkType {
             switch self {
-            case .netP, .dbp, .itr, .subscriptionFlow, .restoreFlow, .duckPlayer:
+            case .netP, .dbp, .itr, .subscriptionFlow, .restoreFlow, .duckPlayer, .aiChat:
                 return .navigationLink
             }
         }

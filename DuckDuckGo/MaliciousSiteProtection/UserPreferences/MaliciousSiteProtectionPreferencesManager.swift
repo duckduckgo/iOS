@@ -40,7 +40,7 @@ protocol MaliciousSiteProtectionPreferencesReading {
 
 typealias MaliciousSiteProtectionPreferencesProvider = MaliciousSiteProtectionPreferencesReading & MaliciousSiteProtectionPreferencesPublishing
 
-protocol MaliciousSiteProtectionPreferencesWriting {
+protocol MaliciousSiteProtectionPreferencesWriting: AnyObject {
     var isMaliciousSiteProtectionOn: Bool { get set }
 }
 

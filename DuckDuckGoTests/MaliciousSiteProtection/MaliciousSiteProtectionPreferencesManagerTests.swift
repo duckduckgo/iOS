@@ -44,7 +44,7 @@ final class MaliciousSiteProtectionPreferencesManagerTests {
         store.isEnabled = !value
 
         // WHEN
-        sut.isEnabled = value
+        sut.isMaliciousSiteProtectionOn = value
 
         // THEN
         #expect(store.isEnabled == value)
@@ -60,13 +60,13 @@ final class MaliciousSiteProtectionPreferencesManagerTests {
     func whenIsEnabledIsSet_ThenValueIsPublished(value: Bool) {
         // GIVEN
         var capturedIsEnabled: Bool?
-        sut.isEnabledPublisher.sink { isEnabled in
+        sut.isMaliciousSiteProtectionOnPublisher.sink { isEnabled in
             capturedIsEnabled = isEnabled
         }
         .store(in: &cancellables)
 
         // WHEN
-        sut.isEnabled = value
+        sut.isMaliciousSiteProtectionOn = value
 
         // THEN
         #expect(capturedIsEnabled == value)

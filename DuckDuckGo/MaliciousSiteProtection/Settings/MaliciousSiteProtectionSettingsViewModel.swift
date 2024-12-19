@@ -29,10 +29,10 @@ final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
     var maliciousSiteProtectionBinding: Binding<Bool> {
         Binding<Bool>(
             get: {
-                self.manager.isEnabled
+                self.manager.isMaliciousSiteProtectionOn
             },
             set: {
-                self.manager.isEnabled = $0
+                self.manager.isMaliciousSiteProtectionOn = $0
                 self.isMaliciousSiteProtectionEnabled = $0
             }
         )
@@ -43,15 +43,15 @@ final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
     private let urlOpener: URLOpener
 
     init(
-        manager: MaliciousSiteProtectionPreferencesManaging = MaliciousSiteProtectionPreferencesManager(),
-        featureFlagger: MaliciousSiteProtectionFeatureFlagger = MaliciousSiteProtectionFeatureFlags(),
+        manager: MaliciousSiteProtectionPreferencesManaging = AppDependencyProvider.shared.maliciousSiteProtectionPreferencesManager,
+        featureFlagger: MaliciousSiteProtectionFeatureFlagger = MaliciousSiteProtectionFeatureFlags(featureFlagger: AppDependencyProvider.shared.featureFlagger),
         urlOpener: URLOpener = UIApplication.shared
     ) {
         self.manager = manager
         self.featureFlagger = featureFlagger
         self.urlOpener = urlOpener
-        shouldShowMaliciousSiteProtectionSection = true //featureFlagger.isMaliciousSiteProtectionEnabled
-        isMaliciousSiteProtectionEnabled = manager.isEnabled
+        shouldShowMaliciousSiteProtectionSection = featureFlagger.isMaliciousSiteProtectionEnabled
+        isMaliciousSiteProtectionEnabled = manager.isMaliciousSiteProtectionOn
     }
 
     func learnMoreAction() {

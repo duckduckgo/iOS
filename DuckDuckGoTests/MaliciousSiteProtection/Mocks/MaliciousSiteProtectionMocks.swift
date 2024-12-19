@@ -189,5 +189,4 @@ final class MockMaliciousSiteDetector: MaliciousSiteProtection.MaliciousSiteDete
 
 final class MockMaliciousSiteProtectionPreferencesStore: MaliciousSiteProtectionPreferencesStorage {
     var isEnabled: Bool = true
-
 }

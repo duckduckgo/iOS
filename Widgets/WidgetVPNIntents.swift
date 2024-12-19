@@ -22,99 +22,90 @@ import NetworkExtension
 import NetworkProtection
 import WidgetKit
 import Core
+import VPNWidgetSupport
 
 // MARK: - Enable & Disable
 
+/// App intent to disable the VPN
+///
+/// This is used in our Widget only.
+/// This is very similar to ``DisableVPNAppIntent``, but this can run in both widget and app,
+/// does not support continuation in the app and does not provide any result dialog.
+///
 @available(iOS 17.0, *)
-struct DisableVPNIntent: AppIntent {
+struct WidgetDisableVPNIntent: AppIntent {
 
-    static let title: LocalizedStringResource = "Disable VPN"
+    private enum DisableAttemptFailure: CustomNSError {
+        case cancelled
+    }
+
+    static let title: LocalizedStringResource = "Disable DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Disables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
     static let isDiscoverable: Bool = false
+    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
 
     @MainActor
     func perform() async throws -> some IntentResult {
         do {
-            DailyPixel.fire(pixel: .networkProtectionWidgetDisconnectAttempt)
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectAttempt)
 
-            let managers = try await NETunnelProviderManager.loadAllFromPreferences()
-            guard let manager = managers.first else {
-                return .result()
-            }
+            let controller = VPNWidgetTunnelController()
+            try await controller.stop()
 
-            manager.isOnDemandEnabled = false
-            try await manager.saveToPreferences()
-            manager.connection.stopVPNTunnel()
-
-            WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
             await VPNSnoozeLiveActivityManager().endSnoozeActivity()
+            VPNReloadStatusWidgets()
 
-            var iterations = 0
-
-            while iterations <= 10 {
-                try? await Task.sleep(interval: .seconds(0.5))
-
-                if manager.connection.status == .disconnected {
-                    DailyPixel.fire(pixel: .networkProtectionWidgetDisconnectSuccess)
-                    return .result()
-                }
-
-                iterations += 1
-            }
-
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectSuccess)
+            return .result()
+        } catch VPNWidgetTunnelController.StopFailure.vpnNotConfigured {
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectCancelled)
             return .result()
         } catch {
-            return .result()
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectFailure, error: error)
+            throw error
         }
     }
-
 }
 
+/// App intent to disable the VPN
+///
+/// This is used in our Widget only.
+/// This is very similar to ``DisableVPNAppIntent``, but this can run in both widget and app,
+/// does not support continuation in the app and does not provide any result dialog.
+///
 @available(iOS 17.0, *)
-struct EnableVPNIntent: AppIntent {
-
-    static let title: LocalizedStringResource = "Enable VPN"
+struct WidgetEnableVPNIntent: AppIntent {
+    static let title: LocalizedStringResource = "Enable DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
     static let isDiscoverable: Bool = false
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
 
     @MainActor
     func perform() async throws -> some IntentResult {
         do {
-            DailyPixel.fire(pixel: .networkProtectionWidgetConnectAttempt)
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectAttempt)
 
-            let managers = try await NETunnelProviderManager.loadAllFromPreferences()
-            guard let manager = managers.first else {
-                return .result()
-            }
+            let controller = VPNWidgetTunnelController()
+            try await controller.start()
 
-            manager.isOnDemandEnabled = true
-            try await manager.saveToPreferences()
-            try manager.connection.startVPNTunnel()
-
-            WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
             await VPNSnoozeLiveActivityManager().endSnoozeActivity()
+            VPNReloadStatusWidgets()
 
-            var iterations = 0
-
-            while iterations <= 10 {
-                try? await Task.sleep(interval: .seconds(0.5))
-
-                if manager.connection.status == .connected {
-                    DailyPixel.fire(pixel: .networkProtectionWidgetConnectSuccess)
-                    return .result()
-                }
-
-                iterations += 1
-            }
-
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectSuccess)
             return .result()
         } catch {
-            return .result()
+            switch error {
+            case VPNWidgetTunnelController.StartFailure.vpnNotConfigured:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectCancelled)
+                throw error
+            default:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectFailure, error: error)
+                throw error
+            }
         }
     }
-
 }
 
 // MARK: - Snooze
@@ -136,7 +127,7 @@ struct CancelSnoozeVPNIntent: AppIntent {
             }
 
             try? await session.sendProviderMessage(.cancelSnooze)
-            WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+            VPNReloadStatusWidgets()
             await VPNSnoozeLiveActivityManager().endSnoozeActivity()
 
             return .result()
@@ -144,7 +135,6 @@ struct CancelSnoozeVPNIntent: AppIntent {
             return .result()
         }
     }
-
 }
 
 @available(iOS 17.0, *)
@@ -162,7 +152,7 @@ struct CancelSnoozeLiveActivityAppIntent: LiveActivityIntent {
 
         try? await session.sendProviderMessage(.cancelSnooze)
         await VPNSnoozeLiveActivityManager().endSnoozeActivity()
-        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+        VPNReloadStatusWidgets()
 
         return .result()
     }

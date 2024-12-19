@@ -158,9 +158,6 @@
 /* Settings screen cell text for AI Chat settings */
 "aichat.settings.title" = "AI Chat";
 
-/* Title for DuckDuckGo AI Chat. Should not be translated */
-"aichat.title" = "DuckDuckGo AI Chat";
-
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 

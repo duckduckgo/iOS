@@ -91,7 +91,7 @@ extension Background {
         case .openURL:
             return self
         case .backgrounding:
-            return DoubleBackground()
+            return DoubleBackground(firstTimeBackgroundTimestamp: timestamp, counter: 0)
         case .launching, .suspending:
             return handleUnexpectedEvent(event)
         }
@@ -110,7 +110,9 @@ extension DoubleBackground {
             return Active(application: application)
         case .suspending(let application):
             return Inactive(application: application)
-        case .launching, .backgrounding, .openURL:
+        case .backgrounding(let application):
+            return DoubleBackground(firstTimeBackgroundTimestamp: firstTimeBackgroundTimestamp, counter: counter)
+        case .launching, .openURL:
             return self
         }
 

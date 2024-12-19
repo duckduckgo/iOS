@@ -944,6 +944,7 @@ extension Pixel {
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
+        case appDidBackgroundTwice
     }
 
 }
@@ -1886,6 +1887,7 @@ extension Pixel.Event {
 
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state"
+        case .appDidBackgroundTwice: return "m_debug_app-did-background-twice"
 
         }
     }

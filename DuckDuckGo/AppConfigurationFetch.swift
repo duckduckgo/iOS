@@ -85,6 +85,8 @@ class AppConfigurationFetch {
         return Date().timeIntervalSince(Self.lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
 
+    static var didStartBackgroundTaskTimestamp: Date?
+
     enum BackgroundRefreshCompletionStatus {
         
         case expired
@@ -132,6 +134,7 @@ class AppConfigurationFetch {
 
     static func registerBackgroundRefreshTaskHandler() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundProcessingTaskIdentifier, using: nil) { (task) in
+            didStartBackgroundTaskTimestamp = Date()
             guard shouldRefresh else {
                 task.setTaskCompleted(success: true)
                 scheduleBackgroundRefreshTask()

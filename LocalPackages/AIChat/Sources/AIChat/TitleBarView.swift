@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 import UIKit
+import DesignResourcesKit
 
 final class TitleBarView: UIView {
     private let titleLabel: UILabel
@@ -49,11 +50,11 @@ final class TitleBarView: UIView {
 
         titleLabel.text = title
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        titleLabel.textColor = .label
+        titleLabel.textColor = UIColor(designSystemColor: .textPrimary)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
         closeButton.setImage(UIImage(named: "Close-24"), for: .normal)
-        closeButton.tintColor = .label
+        closeButton.tintColor = UIColor(designSystemColor: .icons)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
 

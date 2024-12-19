@@ -13,6 +13,9 @@ let package = Package(
             targets: ["AIChat"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "3.3.0")
+    ],
     targets: [
         .target(
             name: "AIChat",

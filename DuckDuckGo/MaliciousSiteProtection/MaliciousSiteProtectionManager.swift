@@ -46,7 +46,7 @@ final class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
         embeddedDataProvider: MaliciousSiteProtection.EmbeddedDataProviding = EmbeddedDataProvider(),
         dataManager: MaliciousSiteProtection.DataManager? = nil,
         detector: MaliciousSiteProtection.MaliciousSiteDetecting? = nil,
-        preferencesManager: MaliciousSiteProtectionPreferencesPublishing = MaliciousSiteProtectionPreferencesManager(),
+        preferencesManager: MaliciousSiteProtectionPreferencesPublishing = AppDependencyProvider.shared.maliciousSiteProtectionPreferencesManager,
         maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger = MaliciousSiteProtectionFeatureFlags(),
         updateIntervalProvider: UpdateManager.UpdateIntervalProvider? = nil
     ) {

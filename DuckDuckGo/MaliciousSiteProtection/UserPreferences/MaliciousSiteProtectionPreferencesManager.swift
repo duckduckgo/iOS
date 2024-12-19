@@ -19,22 +19,44 @@
 
 import Foundation
 import Combine
+import Core
 
-protocol MaliciousSiteProtectionPreferencesPublishing {
-    var isEnabled: Bool { get }
-    var isEnabledPublisher: AnyPublisher<Bool, Never> { get }
-}
-
-protocol MaliciousSiteProtectionPreferencesManaging {
+protocol MaliciousSiteProtectionPreferencesStorage: AnyObject {
     var isEnabled: Bool { get set }
 }
 
-final class MaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging, MaliciousSiteProtectionPreferencesPublishing {
-    @Published var isEnabled: Bool
+final class MaliciousSiteProtectionPreferencesUserDefaultsStore: MaliciousSiteProtectionPreferencesStorage {
+    @UserDefaultsWrapper(key: .maliciousSiteProtectionEnabled, defaultValue: false)
+    var isEnabled: Bool
+}
+
+protocol MaliciousSiteProtectionPreferencesReadable: AnyObject {
+    var isEnabled: Bool { get }
+}
+
+protocol MaliciousSiteProtectionPreferencesWritable: AnyObject {
+    var isEnabled: Bool { get set }
+}
+
+protocol MaliciousSiteProtectionPreferencesPublishing: MaliciousSiteProtectionPreferencesReadable {
+    var isEnabledPublisher: AnyPublisher<Bool, Never> { get }
+}
+
+typealias MaliciousSiteProtectionPreferencesManaging = MaliciousSiteProtectionPreferencesWritable & MaliciousSiteProtectionPreferencesPublishing
+
+final class MaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging {
+    @Published var isEnabled: Bool {
+        didSet {
+            store.isEnabled = isEnabled
+        }
+    }
 
     var isEnabledPublisher: AnyPublisher<Bool, Never> { $isEnabled.eraseToAnyPublisher() }
 
-    init() {
-        isEnabled = true
+    private let store: MaliciousSiteProtectionPreferencesStorage
+
+    init(store: MaliciousSiteProtectionPreferencesStorage = MaliciousSiteProtectionPreferencesUserDefaultsStore()) {
+        self.store = store
+        isEnabled = store.isEnabled
     }
 }

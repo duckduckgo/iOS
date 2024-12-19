@@ -52,6 +52,7 @@ protocol DependencyProvider {
     var serverInfoObserver: ConnectionServerInfoObserver { get }
     var vpnSettings: VPNSettings { get }
     var persistentPixel: PersistentPixelFiring { get }
+    var maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging { get }
 
 }
 
@@ -91,6 +92,7 @@ final class AppDependencyProvider: DependencyProvider {
     let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
     let persistentPixel: PersistentPixelFiring = PersistentPixel()
+    let maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging = MaliciousSiteProtectionPreferencesManager()
 
     private init() {
         let featureFlaggerOverrides = FeatureFlagLocalOverrides(keyValueStore: UserDefaults(suiteName: FeatureFlag.localOverrideStoreName)!,

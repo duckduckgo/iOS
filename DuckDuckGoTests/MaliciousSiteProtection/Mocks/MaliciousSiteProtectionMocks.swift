@@ -105,13 +105,14 @@ final class MockMaliciousSiteDetector: MaliciousSiteProtection.MaliciousSiteDete
     }
 }
 
-final class MockMaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging, MaliciousSiteProtectionPreferencesPublishing {
+final class MockMaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging {
 
     @Published var isEnabled: Bool = false
 
     var isEnabledPublisher: AnyPublisher<Bool, Never> {
         $isEnabled.eraseToAnyPublisher()
     }
+    
 }
 
 final class MockMaliciousSiteProtectionFeatureFlags: MaliciousSiteProtectionFeatureFlagger {
@@ -123,5 +124,10 @@ final class MockMaliciousSiteProtectionFeatureFlags: MaliciousSiteProtectionFeat
     func shouldDetectMaliciousThreat(forDomain domain: String?) -> Bool {
         shouldDetectMaliciousThreatForDomainResult
     }
+
+}
+
+final class MockMaliciousSiteProtectionPreferencesStore: MaliciousSiteProtectionPreferencesStorage {
+    var isEnabled: Bool = true
 
 }

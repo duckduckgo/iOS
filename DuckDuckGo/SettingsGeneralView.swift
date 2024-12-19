@@ -85,6 +85,9 @@ struct SettingsGeneralView: View {
                 SettingsCellView(label: UserText.settingsAssociatedApps,
                                  accessory: .toggle(isOn: viewModel.universalLinksBinding))
             }
+
+            SettingsMaliciousProtectionView()
+
         }
         .applySettingsListModifiers(title: UserText.general,
                                     displayMode: .inline,

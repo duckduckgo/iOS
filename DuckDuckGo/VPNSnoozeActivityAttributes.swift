@@ -19,7 +19,6 @@
 
 import Foundation
 import ActivityKit
-import SwiftUI
 
 struct VPNSnoozeActivityAttributes: ActivityAttributes {
     struct ContentState: Codable & Hashable {

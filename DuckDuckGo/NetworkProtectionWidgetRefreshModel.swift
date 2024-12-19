@@ -36,7 +36,7 @@ class NetworkProtectionWidgetRefreshModel {
     }
 
     public func refreshVPNWidget() {
-        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+        VPNReloadStatusWidgets()
     }
 
 }

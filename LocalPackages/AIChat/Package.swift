@@ -19,6 +19,9 @@ let package = Package(
     targets: [
         .target(
             name: "AIChat",
+            dependencies: [
+                "DesignResourcesKit",
+            ],
             resources: [
                 .process("Resources/Assets.xcassets")
             ]

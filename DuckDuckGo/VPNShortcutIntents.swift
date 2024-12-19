@@ -48,7 +48,7 @@ struct DisableVPNIntent: AppIntent {
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         do {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectAttempt)
+            DailyPixel.fireDailyAndCount(pixel: .vpnShortcutDisconnectAttempt)
 
             let controller = VPNWidgetTunnelController()
             try await controller.stop()
@@ -56,13 +56,13 @@ struct DisableVPNIntent: AppIntent {
             await VPNSnoozeLiveActivityManager().endSnoozeActivity()
             VPNReloadStatusWidgets()
 
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectSuccess)
+            DailyPixel.fireDailyAndCount(pixel: .vpnShortcutDisconnectSuccess)
             return .result(dialog: "DuckDuckGo VPN is disconnecting...")
         } catch VPNWidgetTunnelController.StopFailure.vpnNotConfigured {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectCancelled)
+            DailyPixel.fireDailyAndCount(pixel: .vpnShortcutDisconnectCancelled)
             return .result(dialog: "The DuckDuckGo VPN is not connected")
         } catch {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectFailure, error: error)
+            DailyPixel.fireDailyAndCount(pixel: .vpnShortcutDisconnectFailure, error: error)
             throw error
         }
     }
@@ -86,7 +86,7 @@ struct EnableVPNIntent: ForegroundContinuableIntent {
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         do {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectAttempt)
+            DailyPixel.fireDailyAndCount(pixel: .vpnShortcutConnectAttempt)
 
             let controller = VPNWidgetTunnelController()
             try await controller.start()
@@ -94,19 +94,19 @@ struct EnableVPNIntent: ForegroundContinuableIntent {
             await VPNSnoozeLiveActivityManager().endSnoozeActivity()
             VPNReloadStatusWidgets()
 
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectSuccess)
+            DailyPixel.fireDailyAndCount(pixel: .vpnShortcutConnectSuccess)
             return .result(dialog: "DuckDuckGo VPN is connecting...")
         } catch {
             switch error {
             case VPNWidgetTunnelController.StartFailure.vpnNotConfigured:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectCancelled)
+                DailyPixel.fireDailyAndCount(pixel: .vpnShortcutConnectCancelled)
 
                 let dialog = IntentDialog(stringLiteral: UserText.vpnNeedsToBeEnabledFromApp)
                 throw needsToContinueInForegroundError(dialog) {
                     await UIApplication.shared.open(AppDeepLinkSchemes.openVPN.url)
                 }
             default:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectFailure, error: error)
+                DailyPixel.fireDailyAndCount(pixel: .vpnShortcutConnectFailure, error: error)
 
                 throw error
             }

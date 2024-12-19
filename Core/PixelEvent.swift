@@ -500,6 +500,16 @@ extension Pixel {
         case vpnControlCenterDisconnectCancelled
         case vpnControlCenterDisconnectFailure
 
+        case vpnShortcutConnectAttempt
+        case vpnShortcutConnectSuccess
+        case vpnShortcutConnectCancelled
+        case vpnShortcutConnectFailure
+
+        case vpnShortcutDisconnectAttempt
+        case vpnShortcutDisconnectSuccess
+        case vpnShortcutDisconnectCancelled
+        case vpnShortcutDisconnectFailure
+
         case networkProtectionDNSUpdateCustom
         case networkProtectionDNSUpdateDefault
 
@@ -1785,6 +1795,16 @@ extension Pixel.Event {
         case .vpnControlCenterDisconnectSuccess: return "m_vpn_control-center_disconnect_success"
         case .vpnControlCenterDisconnectCancelled: return "m_vpn_control-center_disconnect_cancelled"
         case .vpnControlCenterDisconnectFailure: return "m_vpn_control-center_disconnect_failure"
+
+        case .vpnShortcutConnectAttempt: return "m_vpn_shortcut_connect_attempt"
+        case .vpnShortcutConnectSuccess: return "m_vpn_shortcut_connect_success"
+        case .vpnShortcutConnectCancelled: return "m_vpn_shortcut_connect_cancelled"
+        case .vpnShortcutConnectFailure: return "m_vpn_shortcut_connect_failure"
+
+        case .vpnShortcutDisconnectAttempt: return "m_vpn_shortcut_disconnect_attempt"
+        case .vpnShortcutDisconnectSuccess: return "m_vpn_shortcut_disconnect_success"
+        case .vpnShortcutDisconnectCancelled: return "m_vpn_shortuct_disconnect_cancelled"
+        case .vpnShortcutDisconnectFailure: return "m_vpn_shortcut_disconnect_failure"
 
         // MARK: Secure Vault
         case .secureVaultL1KeyMigration: return "m_secure-vault_keystore_event_l1-key-migration"

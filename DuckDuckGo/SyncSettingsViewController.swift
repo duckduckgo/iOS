@@ -402,7 +402,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         return false
     }
 
-    func handleTwoSyncAccountsFoundDuringRecovery(_ recoveryKey: SyncCode.RecoveryKey) async {
+    private func handleTwoSyncAccountsFoundDuringRecovery(_ recoveryKey: SyncCode.RecoveryKey) async {
         if rootView.model.devices.count > 1 {
             promptToSwitchAccounts(recoveryKey: recoveryKey)
         } else {

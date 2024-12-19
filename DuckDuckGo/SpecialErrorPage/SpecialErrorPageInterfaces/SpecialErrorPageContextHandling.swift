@@ -29,9 +29,6 @@ protocol SpecialErrorPageContextHandling: SpecialErrorPageThreatProvider {
     /// A Boolean value indicating whether the special error page is currently visible.
     var isSpecialErrorPageVisible: Bool { get }
 
-    /// The URL that failed to load, if any.
-    var failedURL: URL? { get }
-
     /// A boolean value indicating whether the WebView request requires showing a special error page.
     var isSpecialErrorPageRequest: Bool { get }
 

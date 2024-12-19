@@ -22,8 +22,10 @@ import Foundation
 
 final class SpySpecialErrorPageNavigationDelegate: SpecialErrorPageNavigationDelegate {
     private(set) var didCallCloseSpecialErrorPageTab: Bool = false
+    private(set) var capturedShouldCreateNewEmptyTab: Bool = false
 
-    func closeSpecialErrorPageTab() {
+    func closeSpecialErrorPageTab(shouldCreateNewEmptyTab: Bool) {
         didCallCloseSpecialErrorPageTab = true
+        capturedShouldCreateNewEmptyTab = shouldCreateNewEmptyTab
     }
 }

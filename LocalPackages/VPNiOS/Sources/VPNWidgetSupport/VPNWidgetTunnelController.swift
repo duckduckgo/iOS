@@ -79,18 +79,5 @@ public struct VPNWidgetTunnelController: Sendable {
                 break
             }
         }
-/*
-        for await notification in NotificationCenter.default.notifications(named: NSNotification.Name.NEVPNStatusDidChange) {
-
-            try Task.checkCancellation()
-
-            /// If there's no connection in the notification, or the connection status is no longer
-            /// `connecting` we just bail out here.
-            guard let connection = notification.object as? NEVPNConnection,
-                  connection.status == .connecting || connection.status == .disconnecting else {
-
-                break
-            }
-        }*/
     }
 }

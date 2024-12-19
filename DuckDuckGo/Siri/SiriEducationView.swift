@@ -74,7 +74,7 @@ struct SiriEducationView: View {
             .padding(.horizontal, Spacing.sidesToContent)
 
             VStack(alignment: .leading, spacing: 16) {
-                SiriBubbleView("Siri, snooze DuckDuckGo VPN.")
+                SiriBubbleView("Siri, start DuckDuckGo VPN.")
 
                 SiriBubbleView("Siri, enable DuckDuckGo VPN.")
 

@@ -179,7 +179,8 @@ import os.log
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        crashCollection.startAttachingCrashLogMessages { pixelParameters, payloads, sendReport in
+        crashCollection.startAttachingCrashLogMessages { [weak self] pixelParameters, payloads, sendReport in
+            self?.didReceiveMXPayloadTimestamp = Date()
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
 
@@ -196,11 +197,11 @@ import os.log
 
             // Async dispatch because rootViewController may otherwise be nil here
             DispatchQueue.main.async {
-                guard let viewController = self.window?.rootViewController else { return }
+                guard let viewController = self?.window?.rootViewController else { return }
 
                 let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
                 crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
-                self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
+                self?.crashReportUploaderOnboarding = crashReportUploaderOnboarding
             }
         }
 
@@ -1164,6 +1165,19 @@ import os.log
             UIApplication.shared.shortcutItems = nil
         }
     }
+
+    var didReceiveMemoryWarningTimestamp: Date?
+    func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
+        didReceiveMemoryWarningTimestamp = Date()
+    }
+    var didReceiveMXPayloadTimestamp: Date?
+    var didReceiveUNNotification: Date?
+    var didStartRemoteMessagingClientBackgroundTask: Date? {
+        remoteMessagingClient.didStartBackgroundTaskTimestamp
+    }
+    var didStartAppConfigurationFetchBackgroundTask: Date? {
+        AppConfigurationFetch.didStartBackgroundTaskTimestamp
+    }
 }
 
 extension AppDelegate: BlankSnapshotViewRecoveringDelegate {
@@ -1216,6 +1230,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
+        didReceiveUNNotification = Date()
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             let identifier = response.notification.request.identifier
 

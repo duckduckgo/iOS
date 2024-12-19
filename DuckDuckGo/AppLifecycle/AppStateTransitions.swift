@@ -91,7 +91,7 @@ extension Background {
         case .openURL:
             return self
         case .backgrounding:
-            return DoubleBackground()
+            return DoubleBackground(firstTimeBackgroundTimestamp: timestamp)
         case .launching, .suspending:
             return handleUnexpectedEvent(event)
         }

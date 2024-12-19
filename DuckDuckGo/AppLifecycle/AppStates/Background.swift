@@ -18,8 +18,11 @@
 //
 
 import UIKit
+import Core
 
 struct Background: AppState {
+
+    let timestamp = Date()
 
     init(application: UIApplication) {
 
@@ -28,5 +31,39 @@ struct Background: AppState {
 }
 
 struct DoubleBackground: AppState {
-    
+
+    private let dateFormatter: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        return formatter
+    }()
+
+    let timestamp = Date()
+
+    init(firstTimeBackgroundTimestamp: Date) {
+        var parameters = [
+            PixelParameters.firstBackgroundTimestamp: dateFormatter.string(from: firstTimeBackgroundTimestamp),
+            PixelParameters.secondBackgroundTimestamp: dateFormatter.string(from: timestamp)
+        ]
+
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            if let didReceiveMemoryWarningTimestamp = appDelegate.didReceiveMemoryWarningTimestamp {
+                parameters[PixelParameters.didReceiveMemoryWarningTimestamp] = dateFormatter.string(from: didReceiveMemoryWarningTimestamp)
+            }
+            if let didReceiveMXPayloadTimestamp = appDelegate.didReceiveMXPayloadTimestamp {
+                parameters[PixelParameters.didReceiveMXPayloadTimestamp] = dateFormatter.string(from: didReceiveMXPayloadTimestamp)
+            }
+            if let didReceiveUNNotification = appDelegate.didReceiveUNNotification {
+                parameters[PixelParameters.didReceiveUNNotification] = dateFormatter.string(from: didReceiveUNNotification)
+            }
+            if let didStartRemoteMessagingClientBackgroundTask = appDelegate.didStartRemoteMessagingClientBackgroundTask {
+                parameters[PixelParameters.didStartRemoteMessagingClientBackgroundTask] = dateFormatter.string(from: didStartRemoteMessagingClientBackgroundTask)
+            }
+            if let didStartAppConfigurationFetchBackgroundTask = appDelegate.didStartAppConfigurationFetchBackgroundTask {
+                parameters[PixelParameters.didStartAppConfigurationFetchBackgroundTask] = dateFormatter.string(from: didStartAppConfigurationFetchBackgroundTask)
+            }
+        }
+        Pixel.fire(pixel: .appDidBackgroundTwice, withAdditionalParameters: parameters)
+    }
+
 }

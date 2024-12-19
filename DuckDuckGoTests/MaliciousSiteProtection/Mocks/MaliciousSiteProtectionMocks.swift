@@ -105,13 +105,14 @@ final class MockMaliciousSiteDetector: MaliciousSiteProtection.MaliciousSiteDete
     }
 }
 
-final class MockMaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging, MaliciousSiteProtectionPreferencesPublishing {
+final class MockMaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging {
 
     @Published var isEnabled: Bool = false
 
     var isEnabledPublisher: AnyPublisher<Bool, Never> {
         $isEnabled.eraseToAnyPublisher()
     }
+    
 }
 
 final class MockMaliciousSiteProtectionFeatureFlags: MaliciousSiteProtectionFeatureFlagger {

@@ -30,16 +30,21 @@ final class MaliciousSiteProtectionPreferencesUserDefaultsStore: MaliciousSitePr
     var isEnabled: Bool
 }
 
-protocol MaliciousSiteProtectionPreferencesPublishing {
+protocol MaliciousSiteProtectionPreferencesReadable: AnyObject {
     var isEnabled: Bool { get }
-    var isEnabledPublisher: AnyPublisher<Bool, Never> { get }
 }
 
-protocol MaliciousSiteProtectionPreferencesManaging: AnyObject {
+protocol MaliciousSiteProtectionPreferencesWritable: AnyObject {
     var isEnabled: Bool { get set }
 }
 
-final class MaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging, MaliciousSiteProtectionPreferencesPublishing {
+protocol MaliciousSiteProtectionPreferencesPublishing: MaliciousSiteProtectionPreferencesReadable {
+    var isEnabledPublisher: AnyPublisher<Bool, Never> { get }
+}
+
+typealias MaliciousSiteProtectionPreferencesManaging = MaliciousSiteProtectionPreferencesWritable & MaliciousSiteProtectionPreferencesPublishing
+
+final class MaliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging {
     @Published var isEnabled: Bool {
         didSet {
             store.isEnabled = isEnabled

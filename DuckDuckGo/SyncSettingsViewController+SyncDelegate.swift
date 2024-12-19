@@ -207,20 +207,18 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func switchAccounts(recoveryKey: SyncCode.RecoveryKey) async {
-        Task { [weak self] in
-            do {
-                try await self?.syncService.disconnect()
-            } catch {
-                Pixel.fire(pixel: .syncUserSwitchedLogoutError)
-            }
-
-            do {
-                try await self?.loginAndShowDeviceConnected(recoveryKey: recoveryKey)
-            } catch {
-                Pixel.fire(pixel: .syncUserSwitchedLoginError)
-            }
-            Pixel.fire(pixel: .syncUserSwitchedAccount)
+        do {
+            try await syncService.disconnect()
+        } catch {
+            Pixel.fire(pixel: .syncUserSwitchedLogoutError)
         }
+
+        do {
+            try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
+        } catch {
+            Pixel.fire(pixel: .syncUserSwitchedLoginError)
+        }
+        Pixel.fire(pixel: .syncUserSwitchedAccount)
     }
 
     private func getErrorType(from errorString: String?) -> AsyncErrorType? {

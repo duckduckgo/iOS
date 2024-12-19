@@ -2032,8 +2032,8 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
-            delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true, inheritingAttribution: adClickAttributionLogic.state)
-            completion(.cancel)
+            // This will fallback to native WebView handling through webView(_:createWebViewWith:for:windowFeatures:)
+            completion(allowPolicy)
             return
         }
 

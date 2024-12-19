@@ -96,6 +96,11 @@ extension AIChatWebViewController {
         let request = URLRequest(url: chatModel.aiChatURL)
         webView.load(request)
     }
+
+    func loadQuery(_ query: URLQueryItem) {
+        let queryURL = chatModel.aiChatURL.addingOrReplacingQueryItem(query)
+        webView.load(URLRequest(url: queryURL))
+    }
 }
 
 // MARK: - WKNavigationDelegate
@@ -104,7 +109,7 @@ extension AIChatWebViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
         if let url = navigationAction.request.url {
-            if url == chatModel.aiChatURL || navigationAction.targetFrame?.isMainFrame == false {
+            if url.isDuckAIURL || navigationAction.targetFrame?.isMainFrame == false {
                 return .allow
             } else {
                 delegate?.aiChatWebViewController(self, didRequestToLoad: url)

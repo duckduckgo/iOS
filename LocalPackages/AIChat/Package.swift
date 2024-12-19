@@ -20,5 +20,9 @@ let package = Package(
                 .process("Resources/Assets.xcassets")
             ]
         ),
+        .testTarget(
+            name: "AIChatTests",
+            dependencies: ["AIChat"]
+        )
     ]
 )

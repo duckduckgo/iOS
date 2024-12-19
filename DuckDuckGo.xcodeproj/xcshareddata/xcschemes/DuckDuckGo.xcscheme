@@ -110,6 +110,16 @@
                ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AIChatTests"
+               BuildableName = "AIChatTests"
+               BlueprintName = "AIChatTests"
+               ReferencedContainer = "container:LocalPackages/AIChat">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

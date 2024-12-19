@@ -84,6 +84,17 @@ extension AIChatViewController {
     }
 }
 
+// MARK: - Public functions
+extension AIChatViewController {
+    public func loadQuery(_ query: URLQueryItem) {
+         // Ensure the webViewController is added before loading the query
+         if webViewController == nil {
+             addWebViewController()
+         }
+         webViewController?.loadQuery(query)
+     }
+}
+
 // MARK: - Views Setup
 extension AIChatViewController {
 

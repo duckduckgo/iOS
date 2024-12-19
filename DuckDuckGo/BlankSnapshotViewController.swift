@@ -36,15 +36,15 @@ class BlankSnapshotViewController: UIViewController {
     let menuButton = MenuButton()
 
     var tabSwitcherButton: TabSwitcherButton!
-    let appSettings: AppSettings
+    let addressBarPosition: AddressBarPosition
     let voiceSearchHelper: VoiceSearchHelperProtocol
 
     var viewCoordinator: MainViewCoordinator!
 
     weak var delegate: BlankSnapshotViewRecoveringDelegate?
 
-    init(appSettings: AppSettings, voiceSearchHelper: VoiceSearchHelperProtocol) {
-        self.appSettings = appSettings
+    init(addressBarPosition: AddressBarPosition, voiceSearchHelper: VoiceSearchHelperProtocol) {
+        self.addressBarPosition = addressBarPosition
         self.voiceSearchHelper = voiceSearchHelper
         super.init(nibName: nil, bundle: nil)
     }
@@ -59,7 +59,7 @@ class BlankSnapshotViewController: UIViewController {
         tabSwitcherButton = TabSwitcherButton()
 
         viewCoordinator = MainViewFactory.createViewHierarchy(view, voiceSearchHelper: voiceSearchHelper)
-        if appSettings.currentAddressBarPosition.isBottom {
+        if addressBarPosition.isBottom {
             viewCoordinator.moveAddressBarToPosition(.bottom)
             viewCoordinator.hideToolbarSeparator()
         }
@@ -231,7 +231,7 @@ extension BlankSnapshotViewController {
     private func updateStatusBarBackgroundColor() {
         let theme = ThemeManager.shared.currentTheme
 
-        if appSettings.currentAddressBarPosition == .bottom {
+        if addressBarPosition == .bottom {
             viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
         } else {
             if AppWidthObserver.shared.isPad && traitCollection.horizontalSizeClass == .regular {

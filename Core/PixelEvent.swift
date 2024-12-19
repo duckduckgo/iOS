@@ -1885,7 +1885,7 @@ extension Pixel.Event {
         case .openAIChatFromAddressBar: return "m_aichat_addressbar_icon"
 
         // MARK: Lifecycle
-        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state"
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-2"
 
         }
     }

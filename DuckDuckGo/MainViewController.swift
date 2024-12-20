@@ -1711,14 +1711,13 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    private func openAIChat() {
-        let logoImage = UIImage(named: "Logo")
-        let title = UserText.aiChatTitle
+    private func openAIChat(_ query: URLQueryItem? = nil) {
+        if let query = query {
+            aiChatViewController.loadQuery(query)
+        }
 
         let roundedPageSheet = RoundedPageSheetContainerViewController(
             contentViewController: aiChatViewController,
-            logoImage: logoImage,
-            title: title,
             allowedOrientation: .portrait)
 
         present(roundedPageSheet, animated: true, completion: nil)
@@ -2087,7 +2086,8 @@ extension MainViewController: OmniBarDelegate {
 
         switch accessoryType {
         case .chat:
-            openAIChat()
+            let queryItem = currentTab?.url?.getQueryItems()?.filter { $0.name == "q" }.first
+            openAIChat(queryItem)
             Pixel.fire(pixel: .openAIChatFromAddressBar)
         case .share:
             Pixel.fire(pixel: .addressBarShare)
@@ -2988,6 +2988,10 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
 extension MainViewController: AIChatViewControllerDelegate {
     func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
         loadUrlInNewTab(url, inheritedAttribution: nil)
+        viewController.dismiss(animated: true)
+    }
+
+    func aiChatViewControllerDidFinish(_ viewController: AIChatViewController) {
         viewController.dismiss(animated: true)
     }
 }

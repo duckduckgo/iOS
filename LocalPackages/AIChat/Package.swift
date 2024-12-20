@@ -14,14 +14,21 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "3.3.1"),
+        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "3.3.1")
     ],
     targets: [
         .target(
             name: "AIChat",
+            dependencies: [
+                "DesignResourcesKit",
+            ],
             resources: [
                 .process("Resources/Assets.xcassets")
             ]
         ),
+        .testTarget(
+            name: "AIChatTests",
+            dependencies: ["AIChat"]
+        )
     ]
 )

@@ -16,6 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+
 import UIKit
 import Combine
 import WebKit
@@ -28,12 +29,28 @@ public protocol AIChatViewControllerDelegate: AnyObject {
     ///   - viewController: The `AIChatViewController` instance making the request.
     ///   - url: The `URL` that is requested to be loaded.
     func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL)
+
+    /// Tells the delegate that the `AIChatViewController` has finished its task.
+    ///
+    /// - Parameter viewController: The `AIChatViewController` instance that has finished.
+    func aiChatViewControllerDidFinish(_ viewController: AIChatViewController)
 }
 
 public final class AIChatViewController: UIViewController {
     public weak var delegate: AIChatViewControllerDelegate?
     private let chatModel: AIChatViewModeling
     private var webViewController: AIChatWebViewController?
+
+    private lazy var titleBarView: TitleBarView = {
+        let title = UserText.aiChatTitle
+
+        let titleBarView = TitleBarView(title: UserText.aiChatTitle) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.aiChatViewControllerDidFinish(self)
+        }
+        return titleBarView
+    }()
+
 
     /// Initializes a new instance of `AIChatViewController` with the specified remote settings and web view configuration.
     ///
@@ -62,6 +79,7 @@ extension AIChatViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
+        setupTitleBar()
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -84,8 +102,31 @@ extension AIChatViewController {
     }
 }
 
+// MARK: - Public functions
+extension AIChatViewController {
+    public func loadQuery(_ query: URLQueryItem) {
+         // Ensure the webViewController is added before loading the query
+         if webViewController == nil {
+             addWebViewController()
+         }
+         webViewController?.loadQuery(query)
+     }
+}
+
 // MARK: - Views Setup
 extension AIChatViewController {
+
+    private func setupTitleBar() {
+        view.addSubview(titleBarView)
+        titleBarView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            titleBarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            titleBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            titleBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            titleBarView.heightAnchor.constraint(equalToConstant: 68)
+        ])
+    }
 
     private func addWebViewController() {
         guard webViewController == nil else { return }
@@ -99,7 +140,7 @@ extension AIChatViewController {
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            viewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            viewController.view.topAnchor.constraint(equalTo: titleBarView.bottomAnchor),
             viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             viewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             viewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)

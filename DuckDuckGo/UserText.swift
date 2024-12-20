@@ -1383,7 +1383,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let duckPlayerContingencyMessageCTA = NSLocalizedString("duck-player.video-contingency-cta", value: "Learn More", comment: "Button for the message explaining to the user that Duck Player is not available so the user can learn more")
 
     // MARK: - AI Chat
-    public static let aiChatTitle = NSLocalizedString("aichat.title", value: "DuckDuckGo AI Chat", comment: "Title for DuckDuckGo AI Chat. Should not be translated")
     public static let aiChatFeatureName = NSLocalizedString("aichat.settings.title", value: "AI Chat", comment: "Settings screen cell text for AI Chat settings")
 
     public static let aiChatSettingsEnableFooter = NSLocalizedString("aichat.settings.enable.footer", value: "Turning this off will hide the AI Chat feature in the DuckDuckGo app.", comment: "Footer text for AI Chat settings")

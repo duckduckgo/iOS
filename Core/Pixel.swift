@@ -173,6 +173,7 @@ public struct PixelParameters {
     public static let didReceiveUNNotification = "didReceiveUNNotification"
     public static let didStartRemoteMessagingClientBackgroundTask = "didStartRemoteMessagingClientBackgroundTask"
     public static let didStartAppConfigurationFetchBackgroundTask = "didStartAppConfigurationFetchBackgroundTask"
+    public static let didPerformFetchTimestamp = "didPerformFetchTimestamp"
     public static let numberOfBackgrounds = "numberOfBackgrounds"
 }
 

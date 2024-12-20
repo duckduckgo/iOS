@@ -58,7 +58,7 @@ struct ControlCenterWidgetEducationView: View {
             .foregroundStyle(Color.white)
             .frame(width: Size.widgetWidth, height: Size.widgetHeight)
             .padding(Padding.widgetBorder)
-            .background(Circle().fill(Color(.controlCenterWidgetBackground)))
+            .background(Circle().fill(Color.controlWidgetBackground))
             .frame(maxWidth: Size.widgetMaxWidth)
 
         self.widgetIconDetail = .view(AnyView(icon), maxWidth: Size.widgetMaxWidth)
@@ -95,6 +95,7 @@ struct ControlCenterWidgetEducationView: View {
 
 private extension Color {
     static let background = Color(designSystemColor: .background)
+    static let controlWidgetBackground = Color("controlWidgetBackground", bundle: DesignResourcesKit.bundle)
     static let font = Color("WidgetEducationFontColor")
 }
 

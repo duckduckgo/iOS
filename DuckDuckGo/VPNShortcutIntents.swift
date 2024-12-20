@@ -75,7 +75,6 @@ struct DisableVPNIntent: AppIntent {
 /// and provides a result dialog.
 ///
 @available(iOS 17.0, *)
-@available(iOSApplicationExtension, unavailable)
 struct EnableVPNIntent: ForegroundContinuableIntent {
     static let title: LocalizedStringResource = "Enable DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"

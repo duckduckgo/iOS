@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>youtube</string>
+	</array>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.duckduckgo.app.configurationRefresh</string>
@@ -150,16 +154,10 @@
 	<string>$(GROUP_ID_PREFIX)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>youtube</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
-	<key>NSAdvertisingAttributionReportEndpoint</key>
-	<string>https://duckduckgo.com</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -177,15 +175,10 @@
 	<string>Allows you to save images to your device</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>This is required to use voice search. DuckDuckGo never records what you say.</string>
-	<key>NSSupportsLiveActivities</key>
-	<true/>
 	<key>NSUserActivityTypes</key>
 	<array>
-		<string>CancelSnoozeLiveActivityAppIntentIntent</string>
 		<string>ConfigurationIntent</string>
 	</array>
-	<key>SUBSCRIPTION_APP_GROUP</key>
-	<string>$(AppIdentifierPrefix)$(SUBSCRIPTION_APP_GROUP)</string>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
@@ -220,6 +213,10 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
+	<key>SUBSCRIPTION_APP_GROUP</key>
+	<string>$(AppIdentifierPrefix)$(SUBSCRIPTION_APP_GROUP)</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
@@ -229,6 +226,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSAdvertisingAttributionReportEndpoint</key>
+	<string>https://duckduckgo.com</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>VAULT_APP_GROUP</key>

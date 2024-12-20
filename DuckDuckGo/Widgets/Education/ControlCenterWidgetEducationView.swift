@@ -103,10 +103,10 @@ private extension Image {
     static let controlCenterBottom = Image("ControlCenterBottom")
 }
 
-/*
+
 @available(iOS 18.0, *)
 struct ControlCenterWidgetEducationView_Previews: PreviewProvider {
     static var previews: some View {
-        ControlCenterWidgetEducationView(navBarTitle: "Control Center")
+        ControlCenterWidgetEducationView(navBarTitle: "Control Center", widget: .vpnToggle)
     }
-}*/
+}

@@ -70,11 +70,13 @@ public struct VPNWidgetTunnelController: Sendable {
 
     private func awaitUntilStatusIsNoLongerTransitioning(manager: NETunnelProviderManager) async throws {
 
+        let start = Date()
+
         while true {
             try await Task.sleep(for: .milliseconds(500))
 
-            if manager.connection.status != .connecting
-                && manager.connection.status != .disconnecting {
+            if start.timeIntervalSinceNow > 30
+                || (manager.connection.status != .connecting && manager.connection.status != .disconnecting) {
 
                 break
             }

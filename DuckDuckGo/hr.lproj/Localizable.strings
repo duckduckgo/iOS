@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Sinkronizacija je pauzirana";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Prebaci sinkronizaciju";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Ovaj je uređaj već sinkroniziran. Jesi li siguran da ga želiš sinkronizirati s drugom sigurnosnom kopijom ili uređajem? Prebacivanjem se neće ukloniti nijedan podatak koji je već sinkroniziran s ovim uređajem.";
 

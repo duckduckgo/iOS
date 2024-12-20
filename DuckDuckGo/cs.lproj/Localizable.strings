@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Synchronizace je pozastavená";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Přepnout synchronizaci";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Tohle zařízení už je synchronizované. Opravdu ho chceš synchronizovat s jinou zálohou nebo zařízením? Přepnutím se nesmažou žádná data, která už s tímto zařízením byla synchronizována.";
 

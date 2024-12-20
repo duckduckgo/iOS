@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "A szinkronizálás szünetel";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Váltás másik szinkronizálási lehetőségre";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Ez az eszköz már szinkronizálva van. Biztosan szinkronizálni szeretnéd egy másik biztonsági mentéssel vagy eszközzel? A váltás nem távolítja el ezzel az eszközzel már szinkronizált adatokat.";
 

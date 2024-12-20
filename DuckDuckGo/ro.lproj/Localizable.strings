@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Sincronizarea este întreruptă";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Comută sincronizarea";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Acest dispozitiv este deja sincronizat, sigur dorești să-l sincronizezi cu o altă copie de rezervă sau alt dispozitiv? Schimbarea nu va șterge datele deja sincronizate cu acest dispozitiv.";
 

@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Синхронизация приостановлена";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Переключить синхронизацию";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Это устройство уже синхронизировано. Действительно синхронизировать его с другой резервной копией или устройством? Переключение не приведет к удалению данных, синхронизированных с этим устройством ранее.";
 

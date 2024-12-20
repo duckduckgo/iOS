@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Synkronointi on keskeytetty";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Vaihda synkronointi";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Tämä laite on jo synkronoitu. Haluatko varmasti synkronoida sen toisen varmuuskopion tai laitteen kanssa? Vaihtaminen ei poista tähän laitteeseen jo synkronoituja tietoja.";
 

@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "La synchronisation est suspendue";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Changer de synchronisation";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Cet appareil est déjà synchronisé. Voulez-vous vraiment le synchroniser avec une autre sauvegarde ou un autre appareil ? Ce changement ne supprimera aucune donnée déjà synchronisée sur cet appareil.";
 

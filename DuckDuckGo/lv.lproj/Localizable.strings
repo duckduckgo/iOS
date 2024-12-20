@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Sinhronizācija ir apturēta";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Pārslēgt sinhronizāciju";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Šī ierīce jau ir sinhronizēta, vai tiešām vēlies to sinhronizēt ar citu dublēšanas sistēmu vai ierīci? Pārslēdzot netiks dzēsti dati, kas jau ir sinhronizēti ar šo ierīci.";
 

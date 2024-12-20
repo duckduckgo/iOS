@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Sünkroonimine on peatatud";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Synci lülitamine";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "See seade on juba sünkroonitud, kas soovid kindlasti seda sünkroonida teise varukoopia või seadmega? Vahetamine ei eemalda selle seadmega juba sünkroonitud andmeid.";
 

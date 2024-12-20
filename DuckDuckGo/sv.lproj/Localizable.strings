@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Synkroniseringen är pausad";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Byt synkronisering";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Den här enheten är redan synkroniserad. Är du säker på att du vill synkronisera den med en annan säkerhetskopia eller enhet? Att byta tar inte bort några data som redan har synkroniserats med den här enheten.";
 

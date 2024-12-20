@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Synkronisering er satt på pause";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Bytt synkronisering";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Denne enheten er allerede synkronisert. Er du sikker på at du vil synkronisere den med en annen sikkerhetskopi eller enhet? Data som allerede er synkronisert med denne enheten, fjernes ikke hvis du bytter.";
 

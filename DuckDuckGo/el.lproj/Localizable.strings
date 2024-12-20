@@ -181,6 +181,9 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Ο συγχρονισμός έχει τεθεί σε παύση";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Αλλαγή συγχρονισμού";
+
 /* Description for switching sync accounts when there's two */
 "alert.sync-switch-account-message" = "Η συσκευή αυτή είναι ήδη συγχρονισμένη. Θέλετε σίγουρα να τη συγχρονίσετε με ένα διαφορετικό αντίγραφο ασφαλείας ή συσκευή; Η αλλαγή δεν θα αφαιρέσει δεδομένα που έχουν ήδη συγχρονιστεί σε αυτήν τη συσκευή.";
 

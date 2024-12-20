@@ -699,6 +699,15 @@ public struct UserText {
 
     public static let addVPNWidgetSettingsThirdParagraph = NSLocalizedString("vpn.addWidget.settings.title", value: "Find and select **DuckDuckGo**, then swipe to **VPN** and select **Add Widget**", comment: "Title for the VPN widget onboarding screen")
 
+    // MARK: - VPN Control Widget
+
+    public static let vpnControlWidgetEnableVPNIntentTitle = NSLocalizedString("vpn.control-widget.enable.vpn.intent.title", value: "Enable DuckDuckGo VPN", comment: "Title for the intent to enable the DuckDuckGo VPN")
+    public static let vpnControlWidgetEnableVPNIntentDescription = NSLocalizedString("vpn.control-widget.enable.vpn.intent.description", value: "Enable DuckDuckGo VPN", comment: "Description for the intent to enable the DuckDuckGo VPN")
+    public static let vpnControlWidgetEnableVPNIntentSuccess = NSLocalizedString("vpn.control-widget.enable.vpn.intent.success", value: "DuckDuckGo VPN is connected", comment: "Message for success when running the intent to enable the DuckDuckGo VPN")
+    public static let vpnControlWidgetDisableVPNIntentTitle = NSLocalizedString("vpn.control-widget.disable.vpn.intent.title", value: "Disable DuckDuckGo VPN", comment: "Title for the intent to disable the DuckDuckGo VPN")
+    public static let vpnControlWidgetDisableVPNIntentDescription = NSLocalizedString("vpn.control-widget.disable.vpn.intent.description", value: "Disable DuckDuckGo VPN", comment: "Description for the intent to disable the DuckDuckGo VPN")
+    public static let vpnControlWidgetDisableVPNIntentSuccess = NSLocalizedString("vpn.control-widget.disable.vpn.intent.success", value: "DuckDuckGo VPN is connected", comment: "Message for success when running the intent to enable the DuckDuckGo VPN")
+
     // MARK: Custom DNS
 
     public static let vpnSettingDNSSectionHeader = NSLocalizedString("vpn.settings.dns.section-header", value: "DNS", comment: "Header text for the DNS section on the VPN Settings screen")

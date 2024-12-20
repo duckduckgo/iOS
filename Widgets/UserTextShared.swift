@@ -21,4 +21,6 @@ import Foundation
 
 extension UserText {
     static let vpnNeedsToBeEnabledFromApp = NSLocalizedString("intent.vpn.needs.to.be.enabled.from.app", value: "You need to enable the VPN from the DuckDuckGo App.", comment: "Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured")
+    static let vpnControlWidgetToggleIntentTitle = NSLocalizedString("intent.vpn.control.widget.toggle.intent.title", value: "Toggle DuckDuckGo VPN from the Control Center Widget", comment: "Title for the control widget toggle intent")
+    static let vpnControlWidgetToggleIntentDescription = NSLocalizedString("intent.vpn.control.widget.toggle.intent.description", value: "Toggles the DuckDuckGo VPN from the Control Center widget", comment: "Description for the control widget toggle intent")
 }

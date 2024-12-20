@@ -41,8 +41,8 @@ struct ControlWidgetToggleVPNIntent: SetValueIntent {
         }
     }
 
-    static let title: LocalizedStringResource = "Toggle DuckDuckGo VPN from the Control Center Widget"
-    static let description: LocalizedStringResource = "Toggles the DuckDuckGo VPN from the Control Center widget"
+    static let title = LocalizedStringResource(stringLiteral: UserText.vpnControlWidgetToggleIntentTitle)
+    static let description = LocalizedStringResource(stringLiteral: UserText.vpnControlWidgetToggleIntentDescription)
     static let isDiscoverable = false
 
     @Parameter(title: "Enabled")

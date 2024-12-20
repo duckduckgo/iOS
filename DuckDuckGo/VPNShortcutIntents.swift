@@ -39,8 +39,8 @@ struct DisableVPNIntent: AppIntent {
         case cancelled
     }
 
-    static let title: LocalizedStringResource = "Disable DuckDuckGo VPN"
-    static let description: LocalizedStringResource = "Disables the DuckDuckGo VPN"
+    static let title = LocalizedStringResource(stringLiteral: UserText.vpnControlWidgetDisableVPNIntentTitle)
+    static let description = LocalizedStringResource(stringLiteral: UserText.vpnControlWidgetDisableVPNIntentDescription)
     static let openAppWhenRun: Bool = false
     static let isDiscoverable: Bool = true
     static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
@@ -57,10 +57,10 @@ struct DisableVPNIntent: AppIntent {
             VPNReloadStatusWidgets()
 
             DailyPixel.fireDailyAndCount(pixel: .vpnShortcutDisconnectSuccess)
-            return .result(dialog: "DuckDuckGo VPN is disconnecting...")
+            return .result(dialog: IntentDialog(stringLiteral: UserText.vpnControlWidgetDisableVPNIntentSuccess))
         } catch VPNWidgetTunnelController.StopFailure.vpnNotConfigured {
             DailyPixel.fireDailyAndCount(pixel: .vpnShortcutDisconnectCancelled)
-            return .result(dialog: "The DuckDuckGo VPN is not connected")
+            throw VPNWidgetTunnelController.StopFailure.vpnNotConfigured
         } catch {
             DailyPixel.fireDailyAndCount(pixel: .vpnShortcutDisconnectFailure, error: error)
             throw error
@@ -76,8 +76,8 @@ struct DisableVPNIntent: AppIntent {
 ///
 @available(iOS 17.0, *)
 struct EnableVPNIntent: ForegroundContinuableIntent {
-    static let title: LocalizedStringResource = "Enable DuckDuckGo VPN"
-    static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
+    static let title = LocalizedStringResource(stringLiteral: UserText.vpnControlWidgetEnableVPNIntentTitle)
+    static let description = LocalizedStringResource(stringLiteral: UserText.vpnControlWidgetEnableVPNIntentTitle)
     static let openAppWhenRun: Bool = false
     static let isDiscoverable: Bool = true
     static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
@@ -94,7 +94,7 @@ struct EnableVPNIntent: ForegroundContinuableIntent {
             VPNReloadStatusWidgets()
 
             DailyPixel.fireDailyAndCount(pixel: .vpnShortcutConnectSuccess)
-            return .result(dialog: "DuckDuckGo VPN is connecting...")
+            return .result(dialog: IntentDialog(stringLiteral: UserText.vpnControlWidgetEnableVPNIntentSuccess))
         } catch {
             switch error {
             case VPNWidgetTunnelController.StartFailure.vpnNotConfigured,

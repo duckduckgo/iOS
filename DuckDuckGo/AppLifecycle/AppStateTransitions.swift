@@ -111,7 +111,7 @@ extension DoubleBackground {
         case .suspending(let application):
             return Inactive(application: application)
         case .backgrounding(let application):
-            return DoubleBackground(previousDidEnterBackgroundTimestamp: firstTimeBackgroundTimestamp, counter: counter)
+            return DoubleBackground(previousDidEnterBackgroundTimestamp: currentDidEnterBackgroundTimestamp, counter: counter)
         case .launching, .openURL:
             return self
         }

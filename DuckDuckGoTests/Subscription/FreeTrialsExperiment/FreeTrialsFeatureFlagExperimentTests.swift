@@ -26,7 +26,8 @@ import BrowserServicesKit
 final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     private var mockUserDefaults: UserDefaults!
-
+    private var mockFeatureFlagger: MockFeatureFlagger!
+    private var mockBucketer: MockBucketer!
     private var sut: FreeTrialsFeatureFlagExperiment!
 
     private var mockSuiteName: String {
@@ -38,13 +39,24 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         mockUserDefaults = UserDefaults(suiteName: mockSuiteName)
         mockUserDefaults.removePersistentDomain(forName: mockSuiteName)
 
-        sut = FreeTrialsFeatureFlagExperiment(storage: mockUserDefaults, experimentPixelFirer: MockExperimentPixelFirer.self)
+        mockFeatureFlagger = MockFeatureFlagger()
+        mockBucketer = MockBucketer()
+
+        sut = FreeTrialsFeatureFlagExperiment(
+            storage: mockUserDefaults,
+            experimentPixelFirer: MockExperimentPixelFirer.self,
+            bucketer: mockBucketer,
+            featureFlagger: mockFeatureFlagger
+        )
+
         MockExperimentPixelFirer.reset()
     }
 
     override func tearDown() {
         mockUserDefaults.removePersistentDomain(forName: mockSuiteName)
         mockUserDefaults = nil
+        mockFeatureFlagger = nil
+        mockBucketer = nil
         sut = nil
         super.tearDown()
     }
@@ -60,8 +72,9 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         XCTAssertEqual(mockUserDefaults.integer(forKey: FreeTrialsFeatureFlagExperiment.Constants.paywallViewCountKey), 1)
     }
 
-    func testFirePaywallImpressionPixel_triggersPixelWithCorrectValues() {
+    func testFirePaywallImpressionPixel_triggersPixelWithBucketedValue() {
         // Given
+        mockBucketer.mockBucket = "6-10"
         sut.incrementPaywallViewCount()
 
         // When
@@ -70,11 +83,12 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         // Then
         XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.count, 1)
         XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.metric, FreeTrialsFeatureFlagExperiment.Constants.metricPaywallImpressions)
-        XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.value, "1")
+        XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.value, "6-10")
     }
 
-    func testFireOfferSelectionMonthlyPixel_triggersPixelWithCorrectValues() {
+    func testFireOfferSelectionMonthlyPixel_triggersPixelWithBucketedValue() {
         // Given
+        mockBucketer.mockBucket = "6-10"
         sut.incrementPaywallViewCount()
 
         // When
@@ -83,11 +97,12 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         // Then
         XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.count, 1)
         XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.metric, FreeTrialsFeatureFlagExperiment.Constants.metricStartClickedMonthly)
-        XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.value, "1")
+        XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.value, "6-10")
     }
 
-    func testFireOfferSelectionYearlyPixel_triggersPixelWithCorrectValues() {
+    func testFireOfferSelectionYearlyPixel_triggersPixelWithBucketedValue() {
         // Given
+        mockBucketer.mockBucket = "11-15"
         sut.incrementPaywallViewCount()
 
         // When
@@ -96,11 +111,12 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         // Then
         XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.count, 1)
         XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.metric, FreeTrialsFeatureFlagExperiment.Constants.metricStartClickedYearly)
-        XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.value, "1")
+        XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.value, "11-15")
     }
 
-    func testFireSubscriptionStartedMonthlyPixel_triggersPixelWithCorrectValues() {
+    func testFireSubscriptionStartedMonthlyPixel_triggersPixelWithBucketedValue() {
         // Given
+        mockBucketer.mockBucket = "16-20"
         sut.incrementPaywallViewCount()
 
         // When
@@ -109,11 +125,12 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         // Then
         XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.count, 1)
         XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.metric, FreeTrialsFeatureFlagExperiment.Constants.metricSubscriptionStartedMonthly)
-        XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.value, "1")
+        XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.value, "16-20")
     }
 
-    func testFireSubscriptionStartedYearlyPixel_triggersPixelWithCorrectValues() {
+    func testFireSubscriptionStartedYearlyPixel_triggersPixelWithBucketedValue() {
         // Given
+        mockBucketer.mockBucket = "21-25"
         sut.incrementPaywallViewCount()
 
         // When
@@ -122,7 +139,72 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         // Then
         XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.count, 1)
         XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.metric, FreeTrialsFeatureFlagExperiment.Constants.metricSubscriptionStartedYearly)
-        XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.value, "1")
+        XCTAssertEqual(MockExperimentPixelFirer.firedMetrics.first?.value, "21-25")
+    }
+
+    func testFreeTrialParametersIfApplicable_returnsParametersWithinConversionWindow() {
+        // Given
+        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let enrollmentDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        mockFeatureFlagger.mockActiveExperiments = [
+            FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
+                parentID: "testParentID",
+                cohortID: cohort.rawValue,
+                enrollmentDate: enrollmentDate
+            )
+        ]
+
+        // When
+        let parameters = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+
+        // Then
+        XCTAssertEqual(parameters?[FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentName], FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier)
+        XCTAssertEqual(parameters?[FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentCohort], cohort.rawValue)
+    }
+
+    func testFreeTrialParametersIfApplicable_appendsOutsideWhenNotInConversionWindow() {
+        // Given
+        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let enrollmentDate = Calendar.current.date(byAdding: .day, value: -10, to: Date())!
+        mockFeatureFlagger.mockActiveExperiments = [
+            FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
+                parentID: "testParentID",
+                cohortID: cohort.rawValue,
+                enrollmentDate: enrollmentDate
+            )
+        ]
+
+        // When
+        let parameters = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+
+        // Then
+        XCTAssertEqual(parameters?[FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentCohort],
+                       "\(cohort.rawValue)_outside",
+                       "Cohort value should include '_outside' when not in conversion window")
+    }
+
+    func testFreeTrialParametersIfApplicable_doesNotReturnParametersIfAlreadyReturned() {
+        // Given
+        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        mockUserDefaults.set(true, forKey: FreeTrialsFeatureFlagExperiment.Constants.hasReturnedFreeTrialParametersKey)
+
+        // When
+        let parameters = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+
+        // Then
+        XCTAssertNil(parameters, "Parameters should not be returned if they have already been returned")
+    }
+
+    func testFreeTrialParametersIfApplicable_updatesUserDefaultsCorrectly() {
+        // Given
+        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+
+        // When
+        _ = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+
+        // Then
+        XCTAssertTrue(mockUserDefaults.bool(forKey: FreeTrialsFeatureFlagExperiment.Constants.hasReturnedFreeTrialParametersKey),
+                      "UserDefaults should indicate that parameters have been returned")
     }
 }
 
@@ -151,5 +233,13 @@ private final class MockExperimentPixelFirer: ExperimentPixelFiring {
 
     static func reset() {
         firedMetrics.removeAll()
+    }
+}
+
+private final class MockBucketer: Bucketer {
+    var mockBucket: String = "Unknown"
+
+    func bucket(for value: Int) -> String {
+        return mockBucket
     }
 }

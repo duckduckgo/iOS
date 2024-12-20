@@ -21,6 +21,7 @@ import Foundation
 import BrowserServicesKit
 import PixelExperimentKit
 import PixelKit
+import Persistence
 
 /// A protocol that defines a method for firing experiment-related analytics pixels.
 ///
@@ -49,6 +50,26 @@ extension PixelKit: ExperimentPixelFiring {}
 
 /// Protocol defining the functionality required for a feature flag experiment related to free trials.
 protocol FreeTrialsFeatureFlagExperimenting: FeatureFlagExperimentDescribing {
+
+    /// Retrieves the cohort assigned to the user for the experiment.
+    ///
+    /// This method determines the cohort for the experiment if it is enabled, allowing
+    /// for differentiation of behavior or configurations.
+    ///
+    /// - Returns: The user's cohort, or `nil` if the experiment is not enabled.
+    func getCohortIfEnabled() -> (any FlagCohort)?
+
+    /// Provides experiment-specific parameters if applicable.
+    ///
+    /// This method returns parameters associated with the experiment and cohort, based on
+    /// certain criteria. Implementations can use this to provide experiment-specific data
+    /// to be used for analytics or feature configuration.
+    ///
+    /// - Parameter cohort: The cohort assigned to the user.
+    /// - Returns: A dictionary of experiment-specific parameters, or `nil` if parameters
+    ///            are not applicable.
+    func freeTrialParametersIfNotPreviouslyReturned(for cohort: any FlagCohort) -> [String: String]?
+
     /// Increments the count of paywall views.
     func incrementPaywallViewCount()
 
@@ -97,6 +118,10 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
 
         /// Key used to store the paywall view count in persistent storage.
         static let paywallViewCountKey = "\(subfeatureIdentifier)_paywallViewCount"
+        static let hasReturnedFreeTrialParametersKey = "\(subfeatureIdentifier)_hasReturnedFreeTrialParameters"
+
+        static let freeTrialParameterExperimentName = "experimentName"
+        static let freeTrialParameterExperimentCohort = "experimentCohort"
     }
 
     /// Identifier for the experiment.
@@ -106,15 +131,72 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
     let source: FeatureFlagSource = .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
 
     /// Persistent storage for experiment-related data.
-    private let storage: UserDefaults
+    private let storage: KeyValueStoring
 
+    /// A type responsible for firing experiment-related analytics pixels.
     private let experimentPixelFirer: ExperimentPixelFiring.Type
+
+    /// A bucketer responsible for categorizing values into predefined ranges.
+    private let bucketer: any Bucketer
+
+    /// A feature flagging service for managing feature flag experiments.
+    private let featureFlagger: FeatureFlagger
 
     /// Initializes the experiment with the specified storage.
     /// - Parameter storage: The persistent storage to use. Defaults to `UserDefaults.standard`.
-    init(storage: UserDefaults = .standard, experimentPixelFirer: ExperimentPixelFiring.Type = PixelKit.self) {
+    init(storage: KeyValueStoring = UserDefaults.standard,
+         experimentPixelFirer: ExperimentPixelFiring.Type = PixelKit.self,
+         bucketer: any Bucketer = PaywallViewBucketer(),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.storage = storage
         self.experimentPixelFirer = experimentPixelFirer
+        self.bucketer = bucketer
+        self.featureFlagger = featureFlagger
+    }
+
+    /// Retrieves the cohort associated with the experiment if the feature flag is enabled.
+    ///
+    /// This method checks whether the feature flag for the experiment is enabled.
+    /// If enabled, it returns the cohort assigned to the user, allowing the experiment
+    /// to differentiate behavior or configurations based on the cohort.
+    ///
+    /// - Returns: The cohort assigned to the user, or `nil` if the feature flag is not enabled.
+    func getCohortIfEnabled() -> (any FlagCohort)? {
+        featureFlagger.getCohortIfEnabled(for: self)
+                as? FreeTrialsFeatureFlagExperiment.Cohort
+    }
+
+    /// Provides free trial experiment parameters if they haven't been returned before.
+    ///
+    /// This method checks whether the experiment parameters for the user's cohort have already been returned.
+    /// If not, it returns a dictionary of parameters containing the experiment name and cohort.
+    /// If the user is outside the conversion window, `_outside` is appended to the cohort name.
+    /// This ensures parameters are provided only once per user.
+    ///
+    /// - Parameter cohort: The cohort to which the user is assigned.
+    /// - Returns: A dictionary containing the experiment name and cohort, or `nil` if the parameters
+    ///            have already been returned.
+    func freeTrialParametersIfNotPreviouslyReturned(for cohort: any FlagCohort) -> [String: String]? {
+        let hasReturnedParameters = storage.object(forKey: Constants.hasReturnedFreeTrialParametersKey) as? Bool ?? false
+
+        // Return parameters only if they haven't been returned before
+        guard !hasReturnedParameters else {
+            return nil
+        }
+
+        storage.set(true, forKey: Constants.hasReturnedFreeTrialParametersKey)
+
+        let cohortValue: String
+        if isUserInConversionWindow {
+            cohortValue = cohort.rawValue
+        } else {
+            cohortValue = "\(cohort.rawValue)_outside"
+        }
+
+        return [
+            Constants.freeTrialParameterExperimentName: rawValue,
+            Constants.freeTrialParameterExperimentCohort: cohortValue
+        ]
     }
 
     /// Increments the paywall view count and logs the updated value.
@@ -124,42 +206,47 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
 
     /// Fires a pixel tracking the impression of the paywall.
     func firePaywallImpressionPixel() {
+        let bucket = bucketer.bucket(for: paywallViewCount)
         experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricPaywallImpressions,
                                      conversionWindowDays: Constants.conversionWindowDays,
-                                     value: "\(1)")
+                                     value: bucket)
     }
 
     /// Fires a pixel when the monthly subscription offer is selected.
     func fireOfferSelectionMonthlyPixel() {
+        let bucket = bucketer.bucket(for: paywallViewCount)
         experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricStartClickedMonthly,
                                      conversionWindowDays: Constants.conversionWindowDays,
-                                     value: "\(paywallViewCount)")
+                                     value: bucket)
     }
 
     /// Fires a pixel when the yearly subscription offer is selected.
     func fireOfferSelectionYearlyPixel() {
+        let bucket = bucketer.bucket(for: paywallViewCount)
         experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricStartClickedYearly,
                                      conversionWindowDays: Constants.conversionWindowDays,
-                                     value: "\(paywallViewCount)")
+                                     value: bucket)
     }
 
     /// Fires a pixel when a monthly subscription is started.
     func fireSubscriptionStartedMonthlyPixel() {
+        let bucket = bucketer.bucket(for: paywallViewCount)
         experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricSubscriptionStartedMonthly,
                                      conversionWindowDays: Constants.conversionWindowDays,
-                                     value: "\(paywallViewCount)")
+                                     value: bucket)
     }
 
     /// Fires a pixel when a yearly subscription is started.
     func fireSubscriptionStartedYearlyPixel() {
+        let bucket = bucketer.bucket(for: paywallViewCount)
         experimentPixelFirer.fireExperimentPixel(for: Constants.subfeatureIdentifier,
                                      metric: Constants.metricSubscriptionStartedYearly,
                                      conversionWindowDays: Constants.conversionWindowDays,
-                                     value: "\(paywallViewCount)")
+                                     value: bucket)
     }
 }
 
@@ -167,10 +254,38 @@ private extension FreeTrialsFeatureFlagExperiment {
     /// Computed property for managing the paywall view count in persistent storage.
     var paywallViewCount: Int {
         get {
-            return storage.integer(forKey: Constants.paywallViewCountKey)
+            storage.object(forKey: Constants.paywallViewCountKey) as? Int ?? 0
         }
         set {
             storage.set(newValue, forKey: Constants.paywallViewCountKey)
         }
+    }
+
+    /// Determines if the user is within the conversion window for the experiment.
+    var isUserInConversionWindow: Bool {
+        guard let enrollmentDate = featureFlagger.getAllActiveExperiments()[rawValue]?.enrollmentDate else {
+            return false
+        }
+
+        let startOfWindow = enrollmentDate.addingDays(Constants.conversionWindowDays.lowerBound)
+        let endOfWindow = enrollmentDate.addingDays(Constants.conversionWindowDays.upperBound)
+
+        let today = Date().startOfDay()
+        return today >= startOfWindow && today <= endOfWindow
+    }
+}
+
+private extension Date {
+    /// Returns a new `Date` by adding the specified number of days to the current date.
+    /// - Parameter days: The number of days to add. Negative values subtract days.
+    /// - Returns: A new `Date` instance.
+    func addingDays(_ days: Int) -> Date {
+        Calendar.current.date(byAdding: .day, value: days, to: self) ?? self
+    }
+
+    /// Returns the start of the day for the current date.
+    /// - Returns: A `Date` representing the beginning of the day.
+    func startOfDay() -> Date {
+        Calendar.current.startOfDay(for: self)
     }
 }

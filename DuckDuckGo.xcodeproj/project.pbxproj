@@ -951,6 +951,7 @@
 		C1CDA31E2AFBF811006D1476 /* AutofillNeverPromptWebsitesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CDA31D2AFBF811006D1476 /* AutofillNeverPromptWebsitesManagerTests.swift */; };
 		C1D21E2D293A5965006E5A05 /* AutofillLoginSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D21E2C293A5965006E5A05 /* AutofillLoginSession.swift */; };
 		C1D21E2F293A599C006E5A05 /* AutofillLoginSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D21E2E293A599C006E5A05 /* AutofillLoginSessionTests.swift */; };
+		C1E12B7A2D14B86A0079AD8F /* AutofillVaultKeychainMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E12B792D14B86A0079AD8F /* AutofillVaultKeychainMigrator.swift */; };
 		C1E42C7B2C5CD8AE00509204 /* AutofillCredentialsDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E42C7A2C5CD8AD00509204 /* AutofillCredentialsDebugViewController.swift */; };
 		C1E4E9A62D0861AD00AA39AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1E4E9A42D0861AD00AA39AF /* InfoPlist.strings */; };
 		C1E4E9A92D0861AD00AA39AF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1E4E9A72D0861AD00AA39AF /* Localizable.strings */; };
@@ -2833,6 +2834,7 @@
 		C1D21E2E293A599C006E5A05 /* AutofillLoginSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginSessionTests.swift; sourceTree = "<group>"; };
 		C1DCF3502D0862330055F8B0 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C1DCF3512D0862330055F8B0 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1E12B792D14B86A0079AD8F /* AutofillVaultKeychainMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillVaultKeychainMigrator.swift; sourceTree = "<group>"; };
 		C1E42C7A2C5CD8AD00509204 /* AutofillCredentialsDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutofillCredentialsDebugViewController.swift; sourceTree = "<group>"; };
 		C1E490582D08646400F86C5A /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C1E490592D08646400F86C5A /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -5474,6 +5476,7 @@
 				C19D90D02CFE3A7F00D17DF3 /* AutofillLoginListSectionType.swift */,
 				C1CAAA992CFCAD3E00C37EE6 /* AutofillLoginItem.swift */,
 				C1CAAA9B2CFCB39800C37EE6 /* AutofillLoginListSorting.swift */,
+				C1E12B792D14B86A0079AD8F /* AutofillVaultKeychainMigrator.swift */,
 			);
 			name = Autofill;
 			sourceTree = "<group>";
@@ -8750,6 +8753,7 @@
 				B652DF0D287C2A6300C12A9C /* PrivacyFeatures.swift in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				9F678B892C9BAA4800CA0E19 /* Debouncer.swift in Sources */,
+				C1E12B7A2D14B86A0079AD8F /* AutofillVaultKeychainMigrator.swift in Sources */,
 				85AB84C32CF624D8007E679F /* HTTPCookieExtension.swift in Sources */,
 				9887DC252354D2AA005C85F5 /* Database.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppURLs.swift in Sources */,

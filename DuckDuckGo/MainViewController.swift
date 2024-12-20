@@ -1711,8 +1711,10 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    private func openAIChat() {
-
+    private func openAIChat(_ query: URLQueryItem? = nil) {
+        if let query = query {
+            aiChatViewController.loadQuery(query)
+        }
 
         let roundedPageSheet = RoundedPageSheetContainerViewController(
             contentViewController: aiChatViewController,
@@ -2084,7 +2086,8 @@ extension MainViewController: OmniBarDelegate {
 
         switch accessoryType {
         case .chat:
-            openAIChat()
+            let queryItem = currentTab?.url?.getQueryItems()?.filter { $0.name == "q" }.first
+            openAIChat(queryItem)
             Pixel.fire(pixel: .openAIChatFromAddressBar)
         case .share:
             Pixel.fire(pixel: .addressBarShare)

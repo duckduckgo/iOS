@@ -483,8 +483,32 @@ extension Pixel {
 
         case networkProtectionWidgetConnectAttempt
         case networkProtectionWidgetConnectSuccess
+        case networkProtectionWidgetConnectCancelled
+        case networkProtectionWidgetConnectFailure
         case networkProtectionWidgetDisconnectAttempt
         case networkProtectionWidgetDisconnectSuccess
+        case networkProtectionWidgetDisconnectCancelled
+        case networkProtectionWidgetDisconnectFailure
+
+        case vpnControlCenterConnectAttempt
+        case vpnControlCenterConnectSuccess
+        case vpnControlCenterConnectCancelled
+        case vpnControlCenterConnectFailure
+
+        case vpnControlCenterDisconnectAttempt
+        case vpnControlCenterDisconnectSuccess
+        case vpnControlCenterDisconnectCancelled
+        case vpnControlCenterDisconnectFailure
+
+        case vpnShortcutConnectAttempt
+        case vpnShortcutConnectSuccess
+        case vpnShortcutConnectCancelled
+        case vpnShortcutConnectFailure
+
+        case vpnShortcutDisconnectAttempt
+        case vpnShortcutDisconnectSuccess
+        case vpnShortcutDisconnectCancelled
+        case vpnShortcutDisconnectFailure
 
         case networkProtectionDNSUpdateCustom
         case networkProtectionDNSUpdateDefault
@@ -1455,9 +1479,9 @@ extension Pixel.Event {
         case .remoteMessagePrimaryActionClicked: return "m_remote_message_primary_action_clicked"
         case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
         case .remoteMessageSheet: return "m_remote_message_sheet"
-            
+
             // MARK: debug pixels
-            
+
         case .dbCrashDetected: return "m_d_crash"
         case .dbCrashDetectedDaily: return "m_d_crash_daily"
         case .crashReportCRCIDMissing: return "m_crashreporting_crcid-missing"
@@ -1761,8 +1785,32 @@ extension Pixel.Event {
 
         case .networkProtectionWidgetConnectAttempt: return "m_netp_widget_connect_attempt"
         case .networkProtectionWidgetConnectSuccess: return "m_netp_widget_connect_success"
+        case .networkProtectionWidgetConnectCancelled: return "m_netp_widget_connect_cancelled"
+        case .networkProtectionWidgetConnectFailure: return "m_netp_widget_connect_failure"
         case .networkProtectionWidgetDisconnectAttempt: return "m_netp_widget_disconnect_attempt"
         case .networkProtectionWidgetDisconnectSuccess: return "m_netp_widget_disconnect_success"
+        case .networkProtectionWidgetDisconnectCancelled: return "m_netp_widget_disconnect_cancelled"
+        case .networkProtectionWidgetDisconnectFailure: return "m_netp_widget_disconnect_failure"
+
+        case .vpnControlCenterConnectAttempt: return "m_vpn_control-center_connect_attempt"
+        case .vpnControlCenterConnectSuccess: return "m_vpn_control-center_connect_success"
+        case .vpnControlCenterConnectCancelled: return "m_vpn_control-center_connect_cancelled"
+        case .vpnControlCenterConnectFailure: return "m_vpn_control-center_connect_failure"
+
+        case .vpnControlCenterDisconnectAttempt: return "m_vpn_control-center_disconnect_attempt"
+        case .vpnControlCenterDisconnectSuccess: return "m_vpn_control-center_disconnect_success"
+        case .vpnControlCenterDisconnectCancelled: return "m_vpn_control-center_disconnect_cancelled"
+        case .vpnControlCenterDisconnectFailure: return "m_vpn_control-center_disconnect_failure"
+
+        case .vpnShortcutConnectAttempt: return "m_vpn_shortcut_connect_attempt"
+        case .vpnShortcutConnectSuccess: return "m_vpn_shortcut_connect_success"
+        case .vpnShortcutConnectCancelled: return "m_vpn_shortcut_connect_cancelled"
+        case .vpnShortcutConnectFailure: return "m_vpn_shortcut_connect_failure"
+
+        case .vpnShortcutDisconnectAttempt: return "m_vpn_shortcut_disconnect_attempt"
+        case .vpnShortcutDisconnectSuccess: return "m_vpn_shortcut_disconnect_success"
+        case .vpnShortcutDisconnectCancelled: return "m_vpn_shortuct_disconnect_cancelled"
+        case .vpnShortcutDisconnectFailure: return "m_vpn_shortcut_disconnect_failure"
 
         // MARK: Secure Vault
         case .secureVaultL1KeyMigration: return "m_secure-vault_keystore_event_l1-key-migration"

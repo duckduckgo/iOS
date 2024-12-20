@@ -131,13 +131,16 @@
 "addWidget.description" = "Get quick access to private search and the sites you love.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
+"addWidget.settings.firstParagraph" = "Long-press anywhere on the Home Screen until the apps jiggle";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Tap the **Edit** button, then choose **Add Widget**";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tap the plus %@ button.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Find and select DuckDuckGo. Then choose a widget.";
+"addWidget.settings.title" = "Find and select **DuckDuckGo**. Then choose a widget.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "One tap to your favorite sites.";
@@ -875,6 +878,18 @@
 
 /* Title for a button that triggers an unknown search query for the user. */
 "contextual.onboarding.try-search.surprise-me-title" = "Surprise me!";
+
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Find **DuckDuckGo** in the list, then tap **VPN control** to add it";
+
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Swipe down from the top-right corner of the screen";
+
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Tap the **+** button at the top left of **Control Center**";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Tap **Add a Control** at the bottom of the screen";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Always Send Crash Reports";
@@ -1848,6 +1863,9 @@ https://duckduckgo.com/mac";
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Settings";
 
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Shortcuts";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Customize your Favorites and go-to features. Reorder things or hide them to keep it clean.";
 
@@ -2185,6 +2203,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Add Widget to Home Screen";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Add DuckDuckGo VPN Widget to Your Home Screen";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2837,7 +2858,28 @@ But if you *do* want a peek under the hood, you can find more information about 
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+"vpn.addWidget.settings.title" = "Find and select **DuckDuckGo**, then swipe to **VPN** and select **Add Widget**";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "DuckDuckGo VPN is connected";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Siri Shortcuts let you connect to your VPN with a quick voice command, like “Siri, turn on DuckDuckGo VPN”. It’s a fast, hands-free way to use your VPN.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, start DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, enable DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, protect my device with DuckDuckGo.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Control DuckDuckGo VPN with Siri!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "DuckDuckGo VPN is connected";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
@@ -2908,8 +2950,14 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Add VPN to Control Center";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Control VPN With Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";

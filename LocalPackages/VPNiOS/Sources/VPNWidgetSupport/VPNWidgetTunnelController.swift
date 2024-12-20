@@ -75,7 +75,7 @@ public struct VPNWidgetTunnelController: Sendable {
         while true {
             try await Task.sleep(for: .milliseconds(500))
 
-            if start.timeIntervalSinceNow > 30
+            if abs(start.timeIntervalSinceNow) > 30
                 || (manager.connection.status != .connecting && manager.connection.status != .disconnecting) {
 
                 break

@@ -86,7 +86,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     private let appStoreRestoreFlow: AppStoreRestoreFlow
     private let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
     private let privacyProDataReporter: PrivacyProDataReporting?
-    private let featureFlagger: FeatureFlagger
     private let freeTrialsExperiment: any FreeTrialsFeatureFlagExperimenting
 
     init(subscriptionManager: SubscriptionManager,
@@ -96,7 +95,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
          appStoreRestoreFlow: AppStoreRestoreFlow,
          appStoreAccountManagementFlow: AppStoreAccountManagementFlow,
          privacyProDataReporter: PrivacyProDataReporting? = nil,
-         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
          freeTrialsExperiment: any FreeTrialsFeatureFlagExperimenting = FreeTrialsFeatureFlagExperiment()) {
         self.subscriptionManager = subscriptionManager
         self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
@@ -105,7 +103,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         self.appStoreAccountManagementFlow = appStoreAccountManagementFlow
         self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
         self.privacyProDataReporter = subscriptionAttributionOrigin != nil ? privacyProDataReporter : nil
-        self.featureFlagger = featureFlagger
         self.freeTrialsExperiment = freeTrialsExperiment
     }
 
@@ -289,7 +286,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         // Free Trials Experiment Pixels
         fireFreeTrialSubscriptionPurchasePixelIfApplicable(for: subscriptionSelection.id)
 
-        switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
+        switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS, additionalParams: completeSubscriptionFreeTrialParameters) {
         case .success(let purchaseUpdate):
             Logger.subscription.debug("Subscription purchase completed successfully")
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess,
@@ -389,7 +386,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         Logger.subscription.debug("Web function called: \(#function)")
         Pixel.fire(pixel: .privacyProOfferMonthlyPriceClick)
 
-        if shouldFireFreeTrialPixel {
+        if userIsEnrolledInFreeTrialsExperiment {
             freeTrialsExperiment.fireOfferSelectionMonthlyPixel()
         }
 
@@ -400,7 +397,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         Logger.subscription.debug("Web function called: \(#function)")
         Pixel.fire(pixel: .privacyProOfferYearlyPriceClick)
 
-        if shouldFireFreeTrialPixel {
+        if userIsEnrolledInFreeTrialsExperiment {
             freeTrialsExperiment.fireOfferSelectionYearlyPixel()
         }
 
@@ -485,9 +482,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
 private extension SubscriptionPagesUseSubscriptionFeature {
 
-    /// Determines whether a free trial pixel should be fired.
+    var completeSubscriptionFreeTrialParameters: [String: String]? {
+        guard let cohort = freeTrialCohortIfApplicable() else { return nil }
+
+        let params = freeTrialsExperiment.freeTrialParametersIfNotPreviouslyReturned(for: FreeTrialsFeatureFlagExperiment.Cohort.treatment)
+        return params
+    }
+
+    /// Determines whether a user is enrolled in the Free Trials experiment
     /// - Returns: `true` if the user is part of a free trial cohort, otherwise `false`.
-    var shouldFireFreeTrialPixel: Bool {
+    var userIsEnrolledInFreeTrialsExperiment: Bool {
         freeTrialCohortIfApplicable() != nil
     }
 
@@ -499,7 +503,7 @@ private extension SubscriptionPagesUseSubscriptionFeature {
     /// - Parameter id: The subscription identifier used to determine the type of subscription.
     func fireFreeTrialSubscriptionPurchasePixelIfApplicable(for id: String) {
         // Check if the pixel should be fired; exit early if not applicable
-        guard shouldFireFreeTrialPixel else { return }
+        guard userIsEnrolledInFreeTrialsExperiment else { return }
 
         /*
          Logic based on strings is obviously not ideal, but acceptable for this temporary
@@ -525,8 +529,7 @@ private extension SubscriptionPagesUseSubscriptionFeature {
         guard subscriptionManager.canPurchase else { return nil }
 
         // Retrieve the cohort if the feature flag is enabled
-        guard let cohort = featureFlagger.getCohortIfEnabled(for: freeTrialsExperiment)
-                as? FreeTrialsFeatureFlagExperiment.Cohort else { return nil }
+        guard let cohort = freeTrialsExperiment.getCohortIfEnabled() as? FreeTrialsFeatureFlagExperiment.Cohort else { return nil }
 
         return cohort
     }

@@ -30,7 +30,6 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
     private var mockSubscriptionManager: SubscriptionManagerMock!
     private var mockAccountManager: AccountManagerMock!
-    private var mockFeatureFlagger: MockFeatureFlagger!
     private var mockStorePurchaseManager: StorePurchaseManagerMock!
     private var mockFreeTrialsFeatureFlagExperiment: MockFreeTrialsFeatureFlagExperiment!
     private var mockAppStorePurchaseFlow: AppStorePurchaseFlowMock!
@@ -47,7 +46,6 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
                                                       subscriptionFeatureMappingCache: SubscriptionFeatureMappingCacheMock())
 
         mockAppStorePurchaseFlow = AppStorePurchaseFlowMock()
-        mockFeatureFlagger = MockFeatureFlagger()
         mockFreeTrialsFeatureFlagExperiment = MockFreeTrialsFeatureFlagExperiment()
 
         sut = SubscriptionPagesUseSubscriptionFeature(subscriptionManager: mockSubscriptionManager,
@@ -56,7 +54,6 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
                                                       appStorePurchaseFlow: mockAppStorePurchaseFlow,
                                                       appStoreRestoreFlow: AppStoreRestoreFlowMock(),
                                                       appStoreAccountManagementFlow: AppStoreAccountManagementFlowMock(),
-                                                      featureFlagger: mockFeatureFlagger,
                                                       freeTrialsExperiment: mockFreeTrialsFeatureFlagExperiment)
     }
 
@@ -64,7 +61,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFeatureFlagger.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
         mockStorePurchaseManager.subscriptionOptionsResult = .mockStandard
 
         // When
@@ -80,7 +77,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFeatureFlagger.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
         mockStorePurchaseManager.freeTrialSubscriptionOptionsResult = .mockFreeTrial
 
         // When
@@ -126,7 +123,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFeatureFlagger.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
         mockStorePurchaseManager.subscriptionOptionsResult = nil
 
         // When
@@ -141,7 +138,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFeatureFlagger.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
 
@@ -159,7 +156,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFeatureFlagger.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
 
@@ -177,7 +174,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFeatureFlagger.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
 
@@ -195,7 +192,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFeatureFlagger.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
 
@@ -237,6 +234,7 @@ private extension SubscriptionOptions {
 }
 
 private final class MockFreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting {
+    
     typealias CohortType = FreeTrialsFeatureFlagExperiment.Cohort
     var rawValue: String = ""
     var source: FeatureFlagSource = .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
@@ -247,6 +245,15 @@ private final class MockFreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagEx
     var fireOfferSelectionYearlyPixelCalled = false
     var fireSubscriptionStartedMonthlyPixelCalled = false
     var fireSubscriptionStartedYearlyPixelCalled = false
+    var cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+
+    func getCohortIfEnabled() -> (any FlagCohort)? {
+        cohortToReturn
+    }
+
+    func freeTrialParametersIfNotPreviouslyReturned(for cohort: any FlagCohort) -> [String: String]? {
+        nil
+    }
 
     func incrementPaywallViewCount() {
         incrementPaywallViewCountCalled = true

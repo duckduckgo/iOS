@@ -24,6 +24,8 @@ final class MockFeatureFlagger: FeatureFlagger {
     var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider(store: MockInternalUserStoring())
     var localOverrides: FeatureFlagLocalOverriding?
 
+    var mockActiveExperiments: [String: ExperimentData] = [:]
+
     var enabledFeatureFlags: [FeatureFlag] = []
 
     var cohortToReturn: (any FlagCohort)?
@@ -51,6 +53,6 @@ final class MockFeatureFlagger: FeatureFlagger {
     }
 
     func getAllActiveExperiments() -> Experiments {
-        return [:]
+        mockActiveExperiments
     }
 }

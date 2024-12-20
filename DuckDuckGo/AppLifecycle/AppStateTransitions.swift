@@ -91,7 +91,7 @@ extension Background {
         case .openURL:
             return self
         case .backgrounding:
-            return DoubleBackground()
+            return DoubleBackground(previousDidEnterBackgroundTimestamp: timestamp, counter: 0)
         case .launching, .suspending:
             return handleUnexpectedEvent(event)
         }
@@ -102,15 +102,14 @@ extension Background {
 extension DoubleBackground {
 
     func apply(event: AppEvent) -> any AppState {
-        // report event so we know what events can be called at this moment, but do not let SM be stuck in this state just not to be flooded with these events
-        _ = handleUnexpectedEvent(event)
-
         switch event {
         case .activating(let application):
             return Active(application: application)
         case .suspending(let application):
             return Inactive(application: application)
-        case .launching, .backgrounding, .openURL:
+        case .backgrounding(let application):
+            return DoubleBackground(previousDidEnterBackgroundTimestamp: currentDidEnterBackgroundTimestamp, counter: counter)
+        case .launching, .openURL:
             return self
         }
 
@@ -121,9 +120,6 @@ extension DoubleBackground {
 extension InactiveBackground {
 
     func apply(event: AppEvent) -> any AppState {
-        // report event so we know what events can be called at this moment, but do not let SM be stuck in this state just not to be flooded with these events
-        _ = handleUnexpectedEvent(event)
-
         switch event {
         case .activating(let application):
             return Active(application: application)

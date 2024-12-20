@@ -1712,17 +1712,12 @@ class MainViewController: UIViewController {
     }
 
     private func openAIChat(_ query: URLQueryItem? = nil) {
-        let logoImage = UIImage(named: "Logo")
-        let title = UserText.aiChatTitle
-
         if let query = query {
             aiChatViewController.loadQuery(query)
         }
 
         let roundedPageSheet = RoundedPageSheetContainerViewController(
             contentViewController: aiChatViewController,
-            logoImage: logoImage,
-            title: title,
             allowedOrientation: .portrait)
 
         present(roundedPageSheet, animated: true, completion: nil)
@@ -2993,6 +2988,10 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
 extension MainViewController: AIChatViewControllerDelegate {
     func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
         loadUrlInNewTab(url, inheritedAttribution: nil)
+        viewController.dismiss(animated: true)
+    }
+
+    func aiChatViewControllerDidFinish(_ viewController: AIChatViewController) {
         viewController.dismiss(animated: true)
     }
 }

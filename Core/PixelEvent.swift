@@ -526,6 +526,9 @@ extension Pixel {
         case dbCrashDetectedDaily
         case crashOnCrashHandlersSetUp
 
+        case crashReportCRCIDMissing
+        case crashReportingSubmissionFailed
+
         case dbMigrationError
         case dbRemovalError
         case dbDestroyError
@@ -944,6 +947,7 @@ extension Pixel {
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
+        case appDidConsecutivelyBackground
     }
 
 }
@@ -1456,6 +1460,8 @@ extension Pixel.Event {
             
         case .dbCrashDetected: return "m_d_crash"
         case .dbCrashDetectedDaily: return "m_d_crash_daily"
+        case .crashReportCRCIDMissing: return "m_crashreporting_crcid-missing"
+        case .crashReportingSubmissionFailed: return "m_crashreporting_submission-failed"
         case .crashOnCrashHandlersSetUp: return "m_d_crash_on_handlers_setup"
         case .dbMigrationError: return "m_d_dbme"
         case .dbRemovalError: return "m_d_dbre"
@@ -1886,6 +1892,7 @@ extension Pixel.Event {
 
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state"
+        case .appDidConsecutivelyBackground: return "m_debug_app-did-consecutively-background"
 
         }
     }

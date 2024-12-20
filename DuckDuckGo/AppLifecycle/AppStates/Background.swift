@@ -67,17 +67,17 @@ struct DoubleBackground: AppState {
                 isValid(timestamp: didReceiveMXPayloadTimestamp) {
                 parameters[PixelParameters.didReceiveMXPayloadTimestamp] = dateFormatter.string(from: didReceiveMXPayloadTimestamp)
             }
-            if let didReceiveUNNotification = appDelegate.didReceiveUNNotification,
-                isValid(timestamp: didReceiveUNNotification) {
-                parameters[PixelParameters.didReceiveUNNotification] = dateFormatter.string(from: didReceiveUNNotification)
+            if let didReceiveUNNotificationTimestamp = appDelegate.didReceiveUNNotificationTimestamp,
+                isValid(timestamp: didReceiveUNNotificationTimestamp) {
+                parameters[PixelParameters.didReceiveUNNotification] = dateFormatter.string(from: didReceiveUNNotificationTimestamp)
             }
-            if let didStartRemoteMessagingClientBackgroundTask = appDelegate.didStartRemoteMessagingClientBackgroundTask,
-                isValid(timestamp: didStartRemoteMessagingClientBackgroundTask) {
-                parameters[PixelParameters.didStartRemoteMessagingClientBackgroundTask] = dateFormatter.string(from: didStartRemoteMessagingClientBackgroundTask)
+            if let didStartRemoteMessagingClientBackgroundTaskTimestamp = appDelegate.didStartRemoteMessagingClientBackgroundTaskTimestamp,
+                isValid(timestamp: didStartRemoteMessagingClientBackgroundTaskTimestamp) {
+                parameters[PixelParameters.didStartRemoteMessagingClientBackgroundTask] = dateFormatter.string(from: didStartRemoteMessagingClientBackgroundTaskTimestamp)
             }
-            if let didStartAppConfigurationFetchBackgroundTask = appDelegate.didStartAppConfigurationFetchBackgroundTask,
-                isValid(timestamp: didStartAppConfigurationFetchBackgroundTask) {
-                parameters[PixelParameters.didStartAppConfigurationFetchBackgroundTask] = dateFormatter.string(from: didStartAppConfigurationFetchBackgroundTask)
+            if let didStartAppConfigurationFetchBackgroundTaskTimestamp = appDelegate.didStartAppConfigurationFetchBackgroundTaskTimestamp,
+                isValid(timestamp: didStartAppConfigurationFetchBackgroundTaskTimestamp) {
+                parameters[PixelParameters.didStartAppConfigurationFetchBackgroundTask] = dateFormatter.string(from: didStartAppConfigurationFetchBackgroundTaskTimestamp)
             }
         }
         Pixel.fire(pixel: .appDidConsecutivelyBackground, withAdditionalParameters: parameters)

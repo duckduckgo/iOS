@@ -918,7 +918,7 @@ import os.log
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
         Logger.lifecycle.debug(#function)
-
+        didPerformFetchTimestamp = Date()
         AppConfigurationFetch().start(isBackgroundFetch: true) { result in
             switch result {
             case .noData:
@@ -1171,13 +1171,15 @@ import os.log
         didReceiveMemoryWarningTimestamp = Date()
     }
     var didReceiveMXPayloadTimestamp: Date?
-    var didReceiveUNNotification: Date?
-    var didStartRemoteMessagingClientBackgroundTask: Date? {
+    var didReceiveUNNotificationTimestamp: Date?
+    var didStartRemoteMessagingClientBackgroundTaskTimestamp: Date? {
         remoteMessagingClient.didStartBackgroundTaskTimestamp
     }
-    var didStartAppConfigurationFetchBackgroundTask: Date? {
+    var didStartAppConfigurationFetchBackgroundTaskTimestamp: Date? {
         AppConfigurationFetch.didStartBackgroundTaskTimestamp
     }
+
+    var didPerformFetchTimestamp: Date?
 }
 
 extension AppDelegate: BlankSnapshotViewRecoveringDelegate {
@@ -1230,7 +1232,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
-        didReceiveUNNotification = Date()
+        didReceiveUNNotificationTimestamp = Date()
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             let identifier = response.notification.request.identifier
 

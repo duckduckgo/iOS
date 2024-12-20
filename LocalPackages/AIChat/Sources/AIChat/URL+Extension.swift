@@ -20,6 +20,12 @@
 import Foundation
 
 extension URL {
+    enum Constants {
+        static let duckDuckGoHost = "duckduckgo.com"
+        static let chatQueryName = "ia"
+        static let chatQueryValue = "chat"
+    }
+
     func addingOrReplacingQueryItem(_ queryItem: URLQueryItem) -> URL {
         guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
             return self
@@ -34,7 +40,7 @@ extension URL {
     }
 
     var isDuckAIURL: Bool {
-        guard let host = self.host, host == "duckduckgo.com" else {
+        guard let host = self.host, host == Constants.duckDuckGoHost else {
             return false
         }
 
@@ -43,6 +49,6 @@ extension URL {
             return false
         }
 
-        return queryItems.contains { $0.name == "ia" && $0.value == "chat" }
+        return queryItems.contains { $0.name == Constants.chatQueryName && $0.value == Constants.chatQueryValue }
     }
 }

@@ -41,7 +41,9 @@ struct Launched: AppState {
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     private var didCrashDuringCrashHandlersSetUp: Bool
 
-    private let crashCollection = CrashCollection(platform: .iOS)
+    private let crashCollection = CrashCollection(crashReportSender: CrashReportSender(platform: .iOS,
+                                                                                       pixelEvents: CrashReportSender.pixelEvents),
+                                                  crashCollectionStorage: UserDefaults())
     private let bookmarksDatabase = BookmarksDatabase.make()
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     private let accountManager = AppDependencyProvider.shared.accountManager

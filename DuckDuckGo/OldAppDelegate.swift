@@ -84,7 +84,9 @@ final class OldAppDelegate: NSObject, UIApplicationDelegate, DDGApp {
     private var syncStateCancellable: AnyCancellable?
     private var isSyncInProgressCancellable: AnyCancellable?
 
-    private let crashCollection = CrashCollection(platform: .iOS)
+    private let crashCollection = CrashCollection(crashReportSender: CrashReportSender(platform: .iOS,
+                                                                                       pixelEvents: CrashReportSender.pixelEvents),
+                                                  crashCollectionStorage: UserDefaults())
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
     private var autofillPixelReporter: AutofillPixelReporter?

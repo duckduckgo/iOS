@@ -98,7 +98,11 @@ struct EnableVPNIntent: ForegroundContinuableIntent {
             return .result(dialog: "DuckDuckGo VPN is connecting...")
         } catch {
             switch error {
-            case VPNWidgetTunnelController.StartFailure.vpnNotConfigured:
+            case VPNWidgetTunnelController.StartFailure.vpnNotConfigured,
+                // On update the VPN configuration becomes disabled, until started manually from
+                // the app.
+                NEVPNError.configurationDisabled:
+
                 DailyPixel.fireDailyAndCount(pixel: .vpnShortcutConnectCancelled)
 
                 let dialog = IntentDialog(stringLiteral: UserText.vpnNeedsToBeEnabledFromApp)

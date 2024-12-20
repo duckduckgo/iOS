@@ -27,27 +27,27 @@ import VPNWidgetSupport
 
 // MARK: - Toggle
 
-/// `ForegroundContinuableIntent` isn't available for extensions, which makes it impossible to call
-/// from extensions.  This is the recommended workaround from:
-///     https://mastodon.social/@mgorbach/110812347476671807
-///
-//@available(iOS 17.0, *)
-//@available(iOSApplicationExtension, unavailable)
-//extension ControlWidgetToggleVPNIntent: ForegroundContinuableIntent {}
-
 @available(iOS 17.0, *)
 struct ControlWidgetToggleVPNIntent: SetValueIntent {
+
+    private enum EnableAttemptFailure: CustomNSError, LocalizedError {
+        case cancelled
+
+        var errorDescription: String? {
+            switch self {
+            case .cancelled:
+                return UserText.vpnNeedsToBeEnabledFromApp
+            }
+        }
+    }
+
     static let title: LocalizedStringResource = "Toggle DuckDuckGo VPN from the Control Center Widget"
     static let description: LocalizedStringResource = "Toggles the DuckDuckGo VPN from the Control Center widget"
     static let isDiscoverable = false
 
     @Parameter(title: "Enabled")
     var value: Bool
-}
 
-@available(iOS 17.0, *)
-@available(iOSApplicationExtension, unavailable)
-extension ControlWidgetToggleVPNIntent: ForegroundContinuableIntent {
     @MainActor
     func perform() async throws -> some IntentResult {
         if value {
@@ -72,9 +72,13 @@ extension ControlWidgetToggleVPNIntent: ForegroundContinuableIntent {
             DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectSuccess)
         } catch {
             switch error {
-            case VPNWidgetTunnelController.StartFailure.vpnNotConfigured:
+            case VPNWidgetTunnelController.StartFailure.vpnNotConfigured,
+                // On update the VPN configuration becomes disabled, until started manually from
+                // the app.
+                NEVPNError.configurationDisabled:
+
                 DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectCancelled)
-                throw needsToContinueInForegroundError("Continue in foreground to enable VPN")
+                throw EnableAttemptFailure.cancelled
             default:
                 DailyPixel.fireDailyAndCount(pixel: .vpnControlCenterConnectFailure, error: error)
                 throw error

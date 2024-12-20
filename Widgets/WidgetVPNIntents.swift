@@ -35,10 +35,6 @@ import VPNWidgetSupport
 @available(iOS 17.0, *)
 struct WidgetDisableVPNIntent: AppIntent {
 
-    private enum DisableAttemptFailure: CustomNSError {
-        case cancelled
-    }
-
     static let title: LocalizedStringResource = "Disable DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Disables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
@@ -58,7 +54,9 @@ struct WidgetDisableVPNIntent: AppIntent {
 
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectSuccess)
             return .result()
-        } catch VPNWidgetTunnelController.StopFailure.vpnNotConfigured {
+        } catch VPNWidgetTunnelController.StopFailure.vpnNotConfigured,
+                NEVPNError.configurationDisabled {
+
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetDisconnectCancelled)
             return .result()
         } catch {
@@ -76,6 +74,18 @@ struct WidgetDisableVPNIntent: AppIntent {
 ///
 @available(iOS 17.0, *)
 struct WidgetEnableVPNIntent: AppIntent {
+
+    private enum EnableAttemptFailure: CustomNSError, LocalizedError {
+        case cancelled
+
+        var errorDescription: String? {
+            switch self {
+            case .cancelled:
+                return UserText.vpnNeedsToBeEnabledFromApp
+            }
+        }
+    }
+
     static let title: LocalizedStringResource = "Enable DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
@@ -97,9 +107,11 @@ struct WidgetEnableVPNIntent: AppIntent {
             return .result()
         } catch {
             switch error {
-            case VPNWidgetTunnelController.StartFailure.vpnNotConfigured:
+            case VPNWidgetTunnelController.StartFailure.vpnNotConfigured,
+                NEVPNError.configurationDisabled:
+
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectCancelled)
-                throw error
+                throw EnableAttemptFailure.cancelled
             default:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionWidgetConnectFailure, error: error)
                 throw error

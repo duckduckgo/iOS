@@ -20,6 +20,7 @@
 import AppIntents
 import Foundation
 
+#if ALPHA || DEBUG
 @available(iOS 17.0, *)
 struct VPNAutoShortcutsiOS17: AppShortcutsProvider {
 
@@ -59,3 +60,4 @@ struct VPNAutoShortcutsiOS17: AppShortcutsProvider {
                     systemImageName: "globe")
     }
 }
+#endif

@@ -39,8 +39,8 @@ struct DisableVPNIntent: AppIntent {
         case cancelled
     }
 
-    static let title = LocalizedStringResource(stringLiteral: UserText.vpnControlWidgetDisableVPNIntentTitle)
-    static let description = LocalizedStringResource(stringLiteral: UserText.vpnControlWidgetDisableVPNIntentDescription)
+    static let title: LocalizedStringResource = "Disable DuckDuckGo VPN"
+    static let description: LocalizedStringResource = "Disable DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
     static let isDiscoverable: Bool = true
     static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
@@ -76,8 +76,8 @@ struct DisableVPNIntent: AppIntent {
 ///
 @available(iOS 17.0, *)
 struct EnableVPNIntent: ForegroundContinuableIntent {
-    static let title = LocalizedStringResource(stringLiteral: UserText.vpnControlWidgetEnableVPNIntentTitle)
-    static let description = LocalizedStringResource(stringLiteral: UserText.vpnControlWidgetEnableVPNIntentTitle)
+    static let title: LocalizedStringResource = "Enable DuckDuckGo VPN"
+    static let description: LocalizedStringResource = "Enable DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
     static let isDiscoverable: Bool = true
     static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed

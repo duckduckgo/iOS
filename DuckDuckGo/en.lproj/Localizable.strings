@@ -2863,6 +2863,39 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Title for the VPN widget onboarding screen */
 "vpn.addWidget.settings.title" = "Find and select **DuckDuckGo**, then swipe to **VPN** and select **Add Widget**";
 
+/* Description for the intent to disable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.description" = "Disable DuckDuckGo VPN";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "DuckDuckGo VPN is connected";
+
+/* Title for the intent to disable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.title" = "Disable DuckDuckGo VPN";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Siri Shortcuts let you connect to your VPN with a quick voice command, like “Siri, turn on DuckDuckGo VPN”. It’s a fast, hands-free way to use your VPN.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, start DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, enable DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, protect my device with DuckDuckGo.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Control DuckDuckGo VPN with Siri!";
+
+/* Description for the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.description" = "Enable DuckDuckGo VPN";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "DuckDuckGo VPN is connected";
+
+/* Title for the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.title" = "Enable DuckDuckGo VPN";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 

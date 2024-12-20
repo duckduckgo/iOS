@@ -78,7 +78,7 @@ struct DoubleBackground: AppState {
                 parameters[PixelParameters.didStartAppConfigurationFetchBackgroundTask] = dateFormatter.string(from: didStartAppConfigurationFetchBackgroundTask)
             }
         }
-        Pixel.fire(pixel: .appDidBackgroundTwice, withAdditionalParameters: parameters)
+        Pixel.fire(pixel: .appDidConsecutivelyBackground, withAdditionalParameters: parameters)
     }
 
 }

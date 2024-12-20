@@ -596,6 +596,13 @@ final class DuckPlayerNavigationHandler: NSObject {
         duckPlayerModeCancellable = nil
     }
     
+    /// Checks if a URL contains a hash
+    ///
+    /// - Parameter url: The `URL` used to determine the tab type.
+    private func urlContainsHash(_ url: URL) -> Bool {
+        return url.fragment != nil && !url.fragment!.isEmpty
+    }
+    
 }
 
 extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
@@ -937,13 +944,10 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
         
         // Allow Youtube's internal navigation when DuckPlayer is enabled and user is watching on Youtube
-        // This is to prevent DuckPlayer from interfering with Youtube's internal navigation for search and settings
-        // https://app.asana.com/0/1204099484721401/1208930843675395/f
-        if let (destinationVideoID, _) = url.youtubeVideoParams,
-           let (originVideoID, _) = webView.url?.youtubeVideoParams,
-            destinationVideoID == originVideoID,
-            duckPlayerMode == .enabled {
-                return false
+        // Youtube uses hashes to navigate within some settings
+        // This allows any navigation that includes a hash # (#searching, #bottom-sheet, etc)
+        if urlContainsHash(url), url.isYoutubeWatch {
+            return false
         }
         
         // Redirect to Duck Player if enabled

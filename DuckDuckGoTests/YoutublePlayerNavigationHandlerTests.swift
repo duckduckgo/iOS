@@ -583,20 +583,37 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     }
     
     @MainActor
-    func testHandleDelegateNavigation_YoutubeWatchURLWithDuckPlayerEnabledAndSameVideoNavigation_ReturnsFalse() async {
+    func testHandleDelegateNavigation_YoutubeInternalNavigation_ReturnsFalse() async {
         // Arrange
-        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
-        let youtubeInternalURL = URL(string: "https://www.youtube.com/watch?v=abc123&settings")!
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123#searching")!
         let request = URLRequest(url: youtubeURL)
         let mockFrameInfo = MockFrameInfo(isMainFrame: true)
         let navigationAction = MockNavigationAction(request: request, targetFrame: mockFrameInfo)
         playerSettings.mode = .enabled
         featureFlagger.enabledFeatures = [.duckPlayer, .duckPlayerOpenInNewTab]
 
-        mockWebView.setCurrentURL(youtubeInternalURL)
+        mockWebView.setCurrentURL(youtubeURL)
         
         // Act
-        let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+        var shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertFalse(shouldCancel, "Expected navigation NOT to be cancelled as it's Youtube Internal navigation")
+        
+        // Arrange
+        playerSettings.mode = .disabled
+        
+        // Act
+        shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertFalse(shouldCancel, "Expected navigation NOT to be cancelled as it's Youtube Internal navigation")
+        
+        // Arrange
+        featureFlagger.enabledFeatures = [.duckPlayer]
+        
+        // Act
+        shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
 
         // Assert
         XCTAssertFalse(shouldCancel, "Expected navigation NOT to be cancelled as it's Youtube Internal navigation")

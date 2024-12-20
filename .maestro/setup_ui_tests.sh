@@ -31,7 +31,7 @@ check_maestro() {
     else
       echo "‼️ maestro not found install using the following commands:"
       echo
-      echo "curl -Ls \"https://get.maestro.mobile.dev\" | bash"
+      echo "export MAESTRO_VERSION=$known_version; curl -Ls "https://get.maestro.mobile.dev" | bash"
       echo "brew tap facebook/fb"
       echo "brew install facebook/fb/idb-companion"
       echo
@@ -79,6 +79,8 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         --skip-build) 
             skip_build=1 ;;
+        --only-build) 
+            only_build=1 ;;
         --rebuild) 
             rebuild=1 ;;
         *)
@@ -90,6 +92,11 @@ if [ -n "$skip_build" ]; then
     echo "Skipping build"
 else
     build_app $rebuild
+fi
+
+if [ -n "$only_build" ]; then
+    echo "ℹ️ Only building the app. Exiting."
+    exit 0
 fi
 
 echo "ℹ️ Closing all simulators"
@@ -107,6 +114,7 @@ fi
 echo "📱 Using simulator $device_uuid"
 
 xcrun simctl boot $device_uuid
+xcrun simctl keychain booted add-root-cert  ../shared-web-tests/web-platform-tests/tools/certs/cacert.pem
 if [ $? -ne 0 ]; then
     echo "‼️ Unable to boot simulator"
     exit 1

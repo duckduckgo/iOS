@@ -952,6 +952,15 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func loadQuery(_ query: String) {
+        // Convert query to URL:
+        if let url = URL(string: query) {
+            if url.isBookmarklet() {
+                executeBookmarklet(url)
+                refreshOmniBar()
+                // self.currentTab.url
+                return
+            }
+        }
         guard let url = URL.makeSearchURL(query: query, queryContext: currentTab?.url) else {
             Logger.general.error("Couldn‘t form URL for query “\(query, privacy: .public)” with context “\(self.currentTab?.url?.absoluteString ?? "<nil>", privacy: .public)”")
             return
@@ -978,6 +987,16 @@ class MainViewController: UIViewController {
         if url.isBookmarklet() {
             currentTab?.executeBookmarklet(url: url)
         }
+    }
+    
+    func executeScript(_ javaScriptString: String,
+                       args: [String: Any] = [:],
+                       completionHandler: @escaping (Result<Any, any Error>) -> Void) {
+        currentTab?.executeScript(javaScriptString, args: args, completionHandler: completionHandler)
+    }
+
+    func currentUrl() -> String? {
+        return currentTab?.getUrl()
     }
     
     private func loadBackForwardItem(_ item: WKBackForwardListItem) {

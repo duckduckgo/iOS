@@ -360,6 +360,8 @@ import os.log
                                           subscriptionCookieManager: subscriptionCookieManager,
                                           textZoomCoordinator: makeTextZoomCoordinator())
 
+            AutomationServer(main: main)
+
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
 

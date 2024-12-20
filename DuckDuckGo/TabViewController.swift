@@ -676,6 +676,22 @@ class TabViewController: UIViewController {
             webView.evaluateJavaScript(js)
         }
     }
+    
+    public func executeScript(_ javaScriptString: String,
+                              args: [String: Any] = [:],
+                              completionHandler: @escaping (Result<Any, any Error>) -> Void) {
+        webView.callAsyncJavaScript(
+            javaScriptString,
+            arguments: args,
+            in: nil,
+            in: .defaultClient,
+            completionHandler: completionHandler
+        )
+    }
+
+    public func getUrl() -> String? {
+        return webView.url?.absoluteString
+    }
 
     public func load(url: URL) {
         wasLoadingStoppedExternally = false

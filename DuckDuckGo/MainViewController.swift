@@ -1506,27 +1506,30 @@ class MainViewController: UIViewController {
             }
             .store(in: &emailCancellables)
     }
-    
+
     private func subscribeToURLInterceptorNotifications() {
         NotificationCenter.default.publisher(for: .urlInterceptPrivacyPro)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] notification in
-                switch notification.name {
-                case .urlInterceptPrivacyPro:
-                    let deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection
-                    if let origin = notification.userInfo?[AttributionParameter.origin] as? String {
-                        deepLinkTarget = .subscriptionFlow(origin: origin)
-                    } else {
-                        deepLinkTarget = .subscriptionFlow()
-                    }
-                    self?.launchSettings(deepLinkTarget: deepLinkTarget)
-                default:
-                    return
+                let deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection
+                if let origin = notification.userInfo?[AttributionParameter.origin] as? String {
+                    deepLinkTarget = .subscriptionFlow(origin: origin)
+                } else {
+                    deepLinkTarget = .subscriptionFlow()
                 }
+                self?.launchSettings(deepLinkTarget: deepLinkTarget)
+
+            }
+            .store(in: &urlInterceptorCancellables)
+
+        NotificationCenter.default.publisher(for: .urlInterceptAIChat)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.openAIChat()
             }
             .store(in: &urlInterceptorCancellables)
     }
-    
+
     private func subscribeToSettingsDeeplinkNotifications() {
         NotificationCenter.default.publisher(for: .settingsDeepLinkNotification)
             .receive(on: DispatchQueue.main)

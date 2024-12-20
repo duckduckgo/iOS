@@ -21,9 +21,11 @@ import Foundation
 import BrowserServicesKit
 import Common
 import Subscription
+import AIChat
 
 enum InterceptedURL: String {
     case privacyPro
+    case aiChat
 }
 
 struct InterceptedURLInfo {
@@ -49,21 +51,19 @@ final class TabURLInterceptorDefault: TabURLInterceptor {
     ]
     
     func allowsNavigatingTo(url: URL) -> Bool {
-        
-        if !url.isPart(ofDomain: "duckduckgo.com") {
-            return true
+        if url.isDuckAIURL {
+            return handleURLInterception(interceptedURL: .aiChat, queryItems: nil)
         }
-        
-        guard let components = normalizeScheme(url.absoluteString) else {
-            return true
-        }
-        
-        guard let matchingURL = urlToIntercept(path: components.path) else {
+
+        guard url.isPart(ofDomain: "duckduckgo.com"),
+              let components = normalizeScheme(url.absoluteString),
+              let matchingURL = urlToIntercept(path: components.path) else {
             return true
         }
 
         return handleURLInterception(interceptedURL: matchingURL.id, queryItems: components.percentEncodedQueryItems)
     }
+
 }
 
 extension TabURLInterceptorDefault {
@@ -99,6 +99,13 @@ extension TabURLInterceptorDefault {
                 )
                 return false
             }
+        case .aiChat:
+            NotificationCenter.default.post(
+                name: .urlInterceptAIChat,
+                object: nil,
+                userInfo: nil
+            )
+            return false
         }
         return true
     }
@@ -106,4 +113,5 @@ extension TabURLInterceptorDefault {
 
 extension NSNotification.Name {
     static let urlInterceptPrivacyPro: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.urlInterceptPrivacyPro")
+    static let urlInterceptAIChat: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.urlInterceptAIChat")
 }

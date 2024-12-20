@@ -55,7 +55,7 @@ struct VPNAutoShortcutsiOS17: AppShortcutsProvider {
                         "Disable the \(.applicationName) VPN",
                         "Stop \(.applicationName) VPN",
                         "Stop the \(.applicationName) VPN",
-                        "Stop a VPN connection with \(.applicationName)"
+                        "Stop the VPN connection with \(.applicationName)"
                     ],
                     systemImageName: "globe")
     }

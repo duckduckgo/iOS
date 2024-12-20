@@ -1,5 +1,5 @@
 //
-//  NumberedParagraphListView.swift
+//  NumberedParagraphView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -41,8 +41,8 @@ struct NumberedParagraphListView: View {
     var body: some View {
         VStack(spacing: spacing) {
             ForEach(paragraphConfig.indices, id: \.self) { index in
-                NumberedParagraph(number: index + 1,
-                                  config: paragraphConfig[index])
+                NumberedParagraphView(number: index + 1,
+                                      config: paragraphConfig[index])
             }
         }
     }
@@ -73,7 +73,7 @@ struct NumberedParagraphConfig {
     }
 }
 
-private struct NumberedParagraph: View {
+private struct NumberedParagraphView: View {
     let number: Int
     let config: NumberedParagraphConfig
 
@@ -162,4 +162,3 @@ struct NumberedParagraphListView_Previews: PreviewProvider {
         ])
     }
 }
-

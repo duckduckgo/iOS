@@ -1,5 +1,5 @@
 //
-//  ControlWidgetToggleVPNIntent.swift
+//  ControlWidgetVPNIntents.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.

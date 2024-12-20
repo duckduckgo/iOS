@@ -58,12 +58,12 @@ struct SiriEducationView: View {
                     .resizable()
                     .frame(maxWidth: 128)
 
-                Text("Control DuckDuckGo VPN with Siri!")
+                Text(UserText.vpnControlWidgetEducationScreenTitle)
                     .font(.system(size: 22, weight: .bold, design: .default))
                     .kerning(0.35)
                     .multilineTextAlignment(.center)
 
-                Text("Siri Shortcuts let you connect to your VPN with a quick voice command, like “Siri, turn on DuckDuckGo VPN”. It’s a fast, hands-free way to use your VPN.")
+                Text(UserText.vpnControlWidgetEducationScreenDescription)
                     .font(.system(size: 16, weight: .regular))
                     .multilineTextAlignment(.center)
             }
@@ -71,11 +71,11 @@ struct SiriEducationView: View {
             .padding(.horizontal, Spacing.sidesToContent)
 
             VStack(alignment: .leading, spacing: 16) {
-                SiriBubbleView("Siri, start DuckDuckGo VPN.")
+                SiriBubbleView(UserText.vpnControlWidgetEducationScreenExample1)
 
-                SiriBubbleView("Siri, enable DuckDuckGo VPN.")
+                SiriBubbleView(UserText.vpnControlWidgetEducationScreenExample2)
 
-                SiriBubbleView("Siri, protect my device with DuckDuckGo.")
+                SiriBubbleView(UserText.vpnControlWidgetEducationScreenExample3)
             }
             .padding(.top, Spacing.headerToList)
             .padding(.horizontal, Spacing.sidesToContent)

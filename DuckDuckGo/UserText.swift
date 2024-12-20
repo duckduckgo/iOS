@@ -708,6 +708,14 @@ public struct UserText {
     public static let vpnControlWidgetDisableVPNIntentDescription = NSLocalizedString("vpn.control-widget.disable.vpn.intent.description", value: "Disable DuckDuckGo VPN", comment: "Description for the intent to disable the DuckDuckGo VPN")
     public static let vpnControlWidgetDisableVPNIntentSuccess = NSLocalizedString("vpn.control-widget.disable.vpn.intent.success", value: "DuckDuckGo VPN is connected", comment: "Message for success when running the intent to enable the DuckDuckGo VPN")
 
+    // MARK: - VPN Control Widget Education View
+
+    public static let vpnControlWidgetEducationScreenTitle = NSLocalizedString("vpn.control-widget.education.screen.title", value: "Control DuckDuckGo VPN with Siri!", comment: "Title for the VPN Control Widget education screen title")
+    public static let vpnControlWidgetEducationScreenDescription = NSLocalizedString("vpn.control-widget.education.screen.description", value: "Siri Shortcuts let you connect to your VPN with a quick voice command, like “Siri, turn on DuckDuckGo VPN”. It’s a fast, hands-free way to use your VPN.", comment: "")
+    public static let vpnControlWidgetEducationScreenExample1 = NSLocalizedString("vpn.control-widget.education.screen.example1", value: "Siri, start DuckDuckGo VPN.", comment: "Siri commands education screen: example 1")
+    public static let vpnControlWidgetEducationScreenExample2 = NSLocalizedString("vpn.control-widget.education.screen.example2", value: "Siri, enable DuckDuckGo VPN.", comment: "Siri commands education screen: example 2")
+    public static let vpnControlWidgetEducationScreenExample3 = NSLocalizedString("vpn.control-widget.education.screen.example3", value: "Siri, protect my device with DuckDuckGo.", comment: "Siri commands education screen: example 3")
+
     // MARK: Custom DNS
 
     public static let vpnSettingDNSSectionHeader = NSLocalizedString("vpn.settings.dns.section-header", value: "DNS", comment: "Header text for the DNS section on the VPN Settings screen")

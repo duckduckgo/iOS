@@ -38,22 +38,21 @@ struct DoubleBackground: AppState {
         return formatter
     }()
 
-    let firstTimeBackgroundTimestamp: Date
+    let currentDidEnterBackgroundTimestamp: Date
     var counter: Int
 
-    init(firstTimeBackgroundTimestamp: Date, counter: Int) {
-        let secondBackgroundTimestamp = Date()
-        self.firstTimeBackgroundTimestamp = secondBackgroundTimestamp
+    init(previousDidEnterBackgroundTimestamp: Date, counter: Int) {
+        self.currentDidEnterBackgroundTimestamp = Date()
         self.counter = counter + 1
 
         var parameters = [
-            PixelParameters.firstBackgroundTimestamp: dateFormatter.string(from: firstTimeBackgroundTimestamp),
-            PixelParameters.secondBackgroundTimestamp: dateFormatter.string(from: secondBackgroundTimestamp),
+            PixelParameters.firstBackgroundTimestamp: dateFormatter.string(from: previousDidEnterBackgroundTimestamp),
+            PixelParameters.secondBackgroundTimestamp: dateFormatter.string(from: currentDidEnterBackgroundTimestamp),
             PixelParameters.numberOfBackgrounds: String(counter)
         ]
 
         func isValid(timestamp: Date) -> Bool {
-            timestamp >= firstTimeBackgroundTimestamp && timestamp <= secondBackgroundTimestamp
+            timestamp >= previousDidEnterBackgroundTimestamp && timestamp <= currentDidEnterBackgroundTimestamp
         }
 
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {

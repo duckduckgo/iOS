@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "mgurgel/new-breakage-form-feedback",
-        "revision" : "eeecebefa54bf92c52497d91d8b10cc5c530b597"
+        "revision" : "5471d85b59d78395481c5c609f125c9f253e8d5f"
       }
     },
     {
@@ -123,7 +123,7 @@
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
         "branch" : "pr-releases/pr-196",
-        "revision" : "d23ffd8a76cc69810dc77e87c721a73ac0bd47fe"
+        "revision" : "fa283e42e493e0dae187720e4c402f1900c3af4d"
       }
     },
     {

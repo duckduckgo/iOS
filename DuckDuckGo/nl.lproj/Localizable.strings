@@ -181,6 +181,12 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Synchronisatie is gepauzeerd";
 
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "Dit apparaat is al gesynchroniseerd, weet je zeker dat je het met een andere back-up of een ander apparaat wilt synchroniseren? Als je overschakelt, worden er geen gegevens verwijderd die al met dit apparaat zijn gesynchroniseerd.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "Overschakelen naar een andere synchronisatie?";
+
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "'Synchronisatie en back-up' is tijdelijk niet beschikbaar.";
 

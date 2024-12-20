@@ -181,6 +181,12 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Synkronisering er sat på pause";
 
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "Denne enhed er allerede synkroniseret. Er du sikker på, at du vil synkronisere den med en anden sikkerhedskopi eller enhed? Et skifte fjerner ikke data, der allerede er synkroniseret til denne enhed.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "Skift til en anden synkronisering?";
+
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "Sync & Backup er midlertidigt utilgængelig.";
 

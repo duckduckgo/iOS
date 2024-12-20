@@ -47,9 +47,12 @@ struct DoubleBackground: AppState {
 
         var parameters = [
             PixelParameters.firstBackgroundTimestamp: dateFormatter.string(from: previousDidEnterBackgroundTimestamp),
-            PixelParameters.secondBackgroundTimestamp: dateFormatter.string(from: currentDidEnterBackgroundTimestamp),
-            PixelParameters.numberOfBackgrounds: String(counter)
+            PixelParameters.secondBackgroundTimestamp: dateFormatter.string(from: currentDidEnterBackgroundTimestamp)
         ]
+
+        if counter < 5 {
+            parameters[PixelParameters.numberOfBackgrounds] = String(counter)
+        }
 
         func isValid(timestamp: Date) -> Bool {
             timestamp >= previousDidEnterBackgroundTimestamp && timestamp <= currentDidEnterBackgroundTimestamp

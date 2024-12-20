@@ -102,9 +102,6 @@ extension Background {
 extension DoubleBackground {
 
     func apply(event: AppEvent) -> any AppState {
-        // report event so we know what events can be called at this moment, but do not let SM be stuck in this state just not to be flooded with these events
-        _ = handleUnexpectedEvent(event)
-
         switch event {
         case .activating(let application):
             return Active(application: application)
@@ -123,9 +120,6 @@ extension DoubleBackground {
 extension InactiveBackground {
 
     func apply(event: AppEvent) -> any AppState {
-        // report event so we know what events can be called at this moment, but do not let SM be stuck in this state just not to be flooded with these events
-        _ = handleUnexpectedEvent(event)
-
         switch event {
         case .activating(let application):
             return Active(application: application)

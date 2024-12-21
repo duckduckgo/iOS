@@ -35,6 +35,10 @@ final class AutofillUsageMonitor {
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveSaveEvent), name: .autofillSaveEvent, object: nil)
 
+        if autofillExtensionEnabled != nil {
+            AutofillVaultKeychainMigrator().resetVaultMigrationIfRequired()
+        }
+
         ASCredentialIdentityStore.shared.getState({ [weak self] state in
             if state.isEnabled {
                 if self?.autofillExtensionEnabled == nil {

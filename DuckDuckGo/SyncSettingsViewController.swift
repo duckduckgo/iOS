@@ -361,7 +361,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 return true
             } catch {
                 if self.rootView.model.isSyncEnabled {
-                    handleError(.unableToMergeTwoAccounts, error: error, event: .syncLoginExistingAccountError)
+                    await handleTwoSyncAccountsFoundDuringRecovery(recoveryKey)
                 } else {
                     handleError(.unableToSyncToServer, error: error, event: .syncLoginError)
                 }
@@ -400,6 +400,14 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             return true
         }
         return false
+    }
+
+    private func handleTwoSyncAccountsFoundDuringRecovery(_ recoveryKey: SyncCode.RecoveryKey) async {
+        if rootView.model.devices.count > 1 {
+            promptToSwitchAccounts(recoveryKey: recoveryKey)
+        } else {
+            await switchAccounts(recoveryKey: recoveryKey)
+        }
     }
 
     func dismissVCAndShowRecoveryPDF() {

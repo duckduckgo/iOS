@@ -48,8 +48,6 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
     let store: RemoteMessagingStoring
     let remoteMessagingAvailabilityProvider: RemoteMessagingAvailabilityProviding
 
-    var didStartBackgroundTaskTimestamp: Date?
-
     convenience init(
         bookmarksDatabase: CoreDataDatabase,
         appSettings: AppSettings,
@@ -116,7 +114,6 @@ extension RemoteMessagingClient {
         let store = store
 
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { [weak self] task in
-            self?.didStartBackgroundTaskTimestamp = Date()
             guard Self.shouldRefresh else {
                 task.setTaskCompleted(success: true)
                 Self.scheduleBackgroundRefreshTask()

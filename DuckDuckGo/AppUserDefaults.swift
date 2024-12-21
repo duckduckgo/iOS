@@ -80,6 +80,8 @@ public class AppUserDefaults: AppSettings {
         static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
         static let duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
         static let duckPlayerOpenInNewTab = "com.duckduckgo.ios.duckPlayerOpenInNewTab"
+
+        static let appBehavior = "com.duckduckgo.ios.appBehavior"
     }
 
     private struct DebugKeys {
@@ -146,7 +148,18 @@ public class AppUserDefaults: AppSettings {
         }
         
     }
-    
+
+    var appBehavior: AppBehavior? {
+        get {
+            let value = userDefaults?.string(forKey: Keys.appBehavior) ?? ""
+            return AppBehavior(rawValue: value)
+        }
+
+        set {
+            userDefaults?.setValue(newValue?.rawValue, forKey: Keys.appBehavior)
+        }
+    }
+
     var autoClearAction: AutoClearSettingsModel.Action {
         
         get {

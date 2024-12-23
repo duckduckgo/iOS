@@ -182,6 +182,45 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
     }
 
+    @MainActor
+    func promptToSwitchAccounts(recoveryKey: SyncCode.RecoveryKey) {
+        let alertController = UIAlertController(
+            title: UserText.syncAlertSwitchAccountTitle,
+            message: UserText.syncAlertSwitchAccountMessage,
+            preferredStyle: .alert)
+        alertController.addAction(title: UserText.syncAlertSwitchAccountButton, style: .default) { [weak self] in
+            Task {
+                Pixel.fire(pixel: .syncUserAcceptedSwitchingAccount)
+                await self?.switchAccounts(recoveryKey: recoveryKey)
+            }
+        }
+        alertController.addAction(title: UserText.actionCancel, style: .cancel) {
+            Pixel.fire(pixel: .syncUserCancelledSwitchingAccount)
+        }
+        // Gives time to the is syncing view to appear
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.dismissPresentedViewController { [weak self] in
+                self?.present(alertController, animated: true, completion: nil)
+                Pixel.fire(pixel: .syncAskUserToSwitchAccount)
+            }
+        }
+    }
+
+    func switchAccounts(recoveryKey: SyncCode.RecoveryKey) async {
+        do {
+            try await syncService.disconnect()
+        } catch {
+            Pixel.fire(pixel: .syncUserSwitchedLogoutError)
+        }
+
+        do {
+            try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
+        } catch {
+            Pixel.fire(pixel: .syncUserSwitchedLoginError)
+        }
+        Pixel.fire(pixel: .syncUserSwitchedAccount)
+    }
+
     private func getErrorType(from errorString: String?) -> AsyncErrorType? {
         guard let errorString = errorString else {
             return nil

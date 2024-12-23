@@ -199,7 +199,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         var subscriptionOptions: SubscriptionOptions?
 
         if let freeTrialsCohort = freeTrialCohortIfApplicable() {
-            freeTrialsExperiment.incrementPaywallViewCount()
+            freeTrialsExperiment.incrementPaywallViewCountIfWithinConversionWindow()
             freeTrialsExperiment.firePaywallImpressionPixel()
 
             subscriptionOptions = await freeTrialSubscriptionOptions(for: freeTrialsCohort)

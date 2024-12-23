@@ -70,8 +70,8 @@ protocol FreeTrialsFeatureFlagExperimenting: FeatureFlagExperimentDescribing {
     ///            are not applicable.
     func freeTrialParametersIfNotPreviouslyReturned(for cohort: any FlagCohort) -> [String: String]?
 
-    /// Increments the count of paywall views.
-    func incrementPaywallViewCount()
+    /// Increments the count of paywall views if the user's enrollment date is within the conversion window.
+    func incrementPaywallViewCountIfWithinConversionWindow()
 
     /// Fires a pixel tracking the impression of the paywall.
     func firePaywallImpressionPixel()
@@ -187,7 +187,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
         storage.set(true, forKey: Constants.hasReturnedFreeTrialParametersKey)
 
         let cohortValue: String
-        if isUserInConversionWindow {
+        if userIsInConversionWindow {
             cohortValue = cohort.rawValue
         } else {
             cohortValue = "\(cohort.rawValue)_outside"
@@ -199,8 +199,9 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
         ]
     }
 
-    /// Increments the paywall view count and logs the updated value.
-    func incrementPaywallViewCount() {
+    /// Increments the count of paywall views if the user's enrollment date is within the conversion window.
+    func incrementPaywallViewCountIfWithinConversionWindow() {
+        guard userIsInConversionWindow else { return }
         paywallViewCount += 1
     }
 
@@ -262,7 +263,7 @@ private extension FreeTrialsFeatureFlagExperiment {
     }
 
     /// Determines if the user is within the conversion window for the experiment.
-    var isUserInConversionWindow: Bool {
+    var userIsInConversionWindow: Bool {
         guard let enrollmentDate = featureFlagger.getAllActiveExperiments()[rawValue]?.enrollmentDate else {
             return false
         }

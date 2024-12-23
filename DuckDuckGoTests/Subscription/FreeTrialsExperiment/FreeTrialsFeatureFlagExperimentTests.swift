@@ -61,21 +61,50 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         super.tearDown()
     }
 
-    func testIncrementPaywallViewCount_incrementsCorrectly() {
+    func testIncrementPaywallViewCount_incrementsWhenInConversionWindow() {
         // Given
+        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let enrollmentDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        mockFeatureFlagger.mockActiveExperiments = [
+            FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
+                parentID: "testParentID",
+                cohortID: cohort.rawValue,
+                enrollmentDate: enrollmentDate
+            )
+        ]
         XCTAssertEqual(mockUserDefaults.integer(forKey: FreeTrialsFeatureFlagExperiment.Constants.paywallViewCountKey), 0)
 
         // When
-        sut.incrementPaywallViewCount()
+        sut.incrementPaywallViewCountIfWithinConversionWindow()
 
         // Then
         XCTAssertEqual(mockUserDefaults.integer(forKey: FreeTrialsFeatureFlagExperiment.Constants.paywallViewCountKey), 1)
     }
 
+    func testIncrementPaywallViewCount_doesNotIncrementWhenNotInConversionWindow() {
+        // Given
+        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let enrollmentDate = Calendar.current.date(byAdding: .day, value: -10, to: Date())!
+        mockFeatureFlagger.mockActiveExperiments = [
+            FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
+                parentID: "testParentID",
+                cohortID: cohort.rawValue,
+                enrollmentDate: enrollmentDate
+            )
+        ]
+        XCTAssertEqual(mockUserDefaults.integer(forKey: FreeTrialsFeatureFlagExperiment.Constants.paywallViewCountKey), 0)
+
+        // When
+        sut.incrementPaywallViewCountIfWithinConversionWindow()
+
+        // Then
+        XCTAssertEqual(mockUserDefaults.integer(forKey: FreeTrialsFeatureFlagExperiment.Constants.paywallViewCountKey), 0)
+    }
+
     func testFirePaywallImpressionPixel_triggersPixelWithBucketedValue() {
         // Given
         mockBucketer.mockBucket = "6-10"
-        sut.incrementPaywallViewCount()
+        sut.incrementPaywallViewCountIfWithinConversionWindow()
 
         // When
         sut.firePaywallImpressionPixel()
@@ -89,7 +118,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
     func testFireOfferSelectionMonthlyPixel_triggersPixelWithBucketedValue() {
         // Given
         mockBucketer.mockBucket = "6-10"
-        sut.incrementPaywallViewCount()
+        sut.incrementPaywallViewCountIfWithinConversionWindow()
 
         // When
         sut.fireOfferSelectionMonthlyPixel()
@@ -103,7 +132,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
     func testFireOfferSelectionYearlyPixel_triggersPixelWithBucketedValue() {
         // Given
         mockBucketer.mockBucket = "11-15"
-        sut.incrementPaywallViewCount()
+        sut.incrementPaywallViewCountIfWithinConversionWindow()
 
         // When
         sut.fireOfferSelectionYearlyPixel()
@@ -117,7 +146,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
     func testFireSubscriptionStartedMonthlyPixel_triggersPixelWithBucketedValue() {
         // Given
         mockBucketer.mockBucket = "16-20"
-        sut.incrementPaywallViewCount()
+        sut.incrementPaywallViewCountIfWithinConversionWindow()
 
         // When
         sut.fireSubscriptionStartedMonthlyPixel()
@@ -131,7 +160,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
     func testFireSubscriptionStartedYearlyPixel_triggersPixelWithBucketedValue() {
         // Given
         mockBucketer.mockBucket = "21-25"
-        sut.incrementPaywallViewCount()
+        sut.incrementPaywallViewCountIfWithinConversionWindow()
 
         // When
         sut.fireSubscriptionStartedYearlyPixel()

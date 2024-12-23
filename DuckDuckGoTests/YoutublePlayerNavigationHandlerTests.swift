@@ -283,7 +283,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let result2 = handler.handleURLChange(webView: mockWebView)
 
         // Assert
-        if case .handled = result1 {
+        if case .handled(.duckPlayerEnabled) = result1 {
             // Success
         } else {
             XCTFail("Expected first call to return .handled")
@@ -370,6 +370,26 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
             XCTFail("Expected .unhandled when feature flag is disabled")
         }
     }
+    
+    @MainActor
+    func testHandleURLChange_WithYoutubeEmbedURIParam_ReturnsHandled() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&&embeds_referring_euri=true")!
+        mockWebView.setCurrentURL(youtubeURL)
+        playerSettings.mode = .enabled
+        featureFlagger.enabledFeatures = [.duckPlayer, .duckPlayerOpenInNewTab]
+
+        // Act
+        let result = handler.handleURLChange(webView: mockWebView)
+        
+        // Assert
+        if case .handled(.allowFirstVideo) = result {
+            // Success
+        } else {
+            XCTFail("Expected first call to return .handled")
+        }
+    }
+
     
     @MainActor
     func testHandleDelegateNavigation_NotToMainFrame_ReturnsFalse() async {

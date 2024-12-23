@@ -255,7 +255,7 @@ private final class MockFreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagEx
         nil
     }
 
-    func incrementPaywallViewCount() {
+    func incrementPaywallViewCountIfWithinConversionWindow() {
         incrementPaywallViewCountCalled = true
     }
 

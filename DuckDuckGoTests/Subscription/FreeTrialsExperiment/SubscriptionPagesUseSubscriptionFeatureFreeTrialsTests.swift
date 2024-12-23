@@ -224,9 +224,9 @@ private extension SubscriptionOptions {
     static let mockFreeTrial = SubscriptionOptions(platform: .ios,
                                                     options: [
                                                         SubscriptionOption(id: "3",
-                                                                           cost: SubscriptionOptionCost(displayPrice: "0", recurrence: "monthly-free-trial"), offer: .init(type: .freeTrial, id: "1", displayPrice: "0.00", durationInDays: 4, isUserEligible: true)),
+                                                                           cost: SubscriptionOptionCost(displayPrice: "0", recurrence: "monthly-free-trial"), offer: .init(type: .freeTrial, id: "1", durationInDays: 4, isUserEligible: true)),
                                                         SubscriptionOption(id: "4",
-                                                                           cost: SubscriptionOptionCost(displayPrice: "0", recurrence: "yearly-free-trial"), offer: .init(type: .freeTrial, id: "1", displayPrice: "0.00", durationInDays: 4, isUserEligible: true))
+                                                                           cost: SubscriptionOptionCost(displayPrice: "0", recurrence: "yearly-free-trial"), offer: .init(type: .freeTrial, id: "1", durationInDays: 4, isUserEligible: true))
                                                     ],
                                                     features: [
                                                         SubscriptionFeature(name: .networkProtection)

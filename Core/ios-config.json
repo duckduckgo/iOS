@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1734119755860,
+    "version": 1734712666372,
     "features": {
         "adAttributionReporting": {
             "state": "enabled",
@@ -435,189 +435,6 @@
                     "domain": "manoloblahnik.com"
                 },
                 {
-                    "domain": "skyscanner.net"
-                },
-                {
-                    "domain": "skyscanner.ru"
-                },
-                {
-                    "domain": "skyscanner.fi"
-                },
-                {
-                    "domain": "skyscanner.no"
-                },
-                {
-                    "domain": "skyscanner.nl"
-                },
-                {
-                    "domain": "skyscanner.ro"
-                },
-                {
-                    "domain": "skyscanner.com.ni"
-                },
-                {
-                    "domain": "skyscanner.at"
-                },
-                {
-                    "domain": "skyscanner.com.sg"
-                },
-                {
-                    "domain": "skyscanner.es"
-                },
-                {
-                    "domain": "skyscanner.co.nz"
-                },
-                {
-                    "domain": "skyscanner.com.sa"
-                },
-                {
-                    "domain": "skyscanner.com.bo"
-                },
-                {
-                    "domain": "skyscanner.com.br"
-                },
-                {
-                    "domain": "skyscanner.mx"
-                },
-                {
-                    "domain": "skyscanner.it"
-                },
-                {
-                    "domain": "skyscanner.ae"
-                },
-                {
-                    "domain": "skyscanner.in"
-                },
-                {
-                    "domain": "skyscanner.com.sv"
-                },
-                {
-                    "domain": "skyscanner.ie"
-                },
-                {
-                    "domain": "skyscanner.co.kr"
-                },
-                {
-                    "domain": "skyscanner.com.pe"
-                },
-                {
-                    "domain": "skyscanner.com.ph"
-                },
-                {
-                    "domain": "skyscanner.com.pa"
-                },
-                {
-                    "domain": "skyscanner.hu"
-                },
-                {
-                    "domain": "skyscanner.com.gt"
-                },
-                {
-                    "domain": "skyscanner.com.co"
-                },
-                {
-                    "domain": "skyscanner.dk"
-                },
-                {
-                    "domain": "skyscanner.co.th"
-                },
-                {
-                    "domain": "skyscanner.com.hn"
-                },
-                {
-                    "domain": "skyscanner.pt"
-                },
-                {
-                    "domain": "skyscanner.tw"
-                },
-                {
-                    "domain": "skyscanner.de"
-                },
-                {
-                    "domain": "skyscanner.com.hk"
-                },
-                {
-                    "domain": "skyscanner.com.tw"
-                },
-                {
-                    "domain": "skyscanner.pl"
-                },
-                {
-                    "domain": "skyscanner.com.tr"
-                },
-                {
-                    "domain": "skyscanner.cz"
-                },
-                {
-                    "domain": "skyscanner.com"
-                },
-                {
-                    "domain": "skyscanner.cr"
-                },
-                {
-                    "domain": "skyscanner.com.py"
-                },
-                {
-                    "domain": "skyscanner.cl"
-                },
-                {
-                    "domain": "skyscanner.com.ua"
-                },
-                {
-                    "domain": "skyscanner.com.do"
-                },
-                {
-                    "domain": "skyscanner.kr"
-                },
-                {
-                    "domain": "skyscanner.co.id"
-                },
-                {
-                    "domain": "skyscanner.ch"
-                },
-                {
-                    "domain": "skyscanner.gg"
-                },
-                {
-                    "domain": "skyscanner.ca"
-                },
-                {
-                    "domain": "skyscanner.com.uy"
-                },
-                {
-                    "domain": "skyscanner.com.ec"
-                },
-                {
-                    "domain": "skyscanner.co.il"
-                },
-                {
-                    "domain": "skyscanner.co.in"
-                },
-                {
-                    "domain": "skyscanner.com.vn"
-                },
-                {
-                    "domain": "skyscanner.se"
-                },
-                {
-                    "domain": "skyscanner.com.ar"
-                },
-                {
-                    "domain": "skyscanner.com.au"
-                },
-                {
-                    "domain": "skyscanner.fr"
-                },
-                {
-                    "domain": "skyscanner.jp"
-                },
-                {
-                    "domain": "skyscanner.com.my"
-                },
-                {
-                    "domain": "skyscanner.com.mx"
-                },
-                {
                     "domain": "outlet46.de"
                 },
                 {
@@ -822,6 +639,9 @@
                     "domain": "wetransfer.com"
                 },
                 {
+                    "domain": "collectcheckout.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -863,7 +683,7 @@
                     }
                 }
             },
-            "hash": "7a26ec675103d4e0dd106a46950156d0"
+            "hash": "6915e538a751fdd791c8947087400afa"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -3982,6 +3802,14 @@
                         ]
                     },
                     {
+                        "domain": "kamus.net",
+                        "rules": [
+                            {
+                                "type": "disable-default"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "kbb.com",
                         "rules": [
                             {
@@ -5491,7 +5319,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "e0632ffb8c02bf14874c33ccd66ee99a"
+            "hash": "ecf5936832b4856f89f523db4d656e67"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -5898,6 +5726,9 @@
                     "domain": "madewell.com"
                 },
                 {
+                    "domain": "visible.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -5922,7 +5753,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "cc0c0adfc06919bb973a7636b59b2430"
+            "hash": "7bac9629b3b6d7cbe2e473c1273d31ee"
         },
         "harmfulApis": {
             "settings": {
@@ -6124,12 +5955,16 @@
         },
         "maliciousSiteProtection": {
             "state": "internal",
-            "exceptions": [],
+            "exceptions": [
+                {
+                    "domain": "broken.third-party.site"
+                }
+            ],
             "settings": {
                 "hashPrefixUpdateFrequency": 20,
                 "filterSetUpdateFrequency": 720
             },
-            "hash": "ca9942379aea7619f878337a2debdee8"
+            "hash": "8ceb05ed570765a54738b77c1deb1f64"
         },
         "marketplaceAdPostback": {
             "state": "enabled",
@@ -6331,7 +6166,7 @@
                     "minSupportedVersion": "7.136.0"
                 },
                 "setAccessTokenCookieForSubscriptionDomains": {
-                    "state": "enabled",
+                    "state": "disabled",
                     "rollout": {
                         "steps": [
                             {
@@ -6366,7 +6201,7 @@
                     ]
                 }
             },
-            "hash": "c30e064d2aa8e0c9dd00c9ed051b98d3"
+            "hash": "d7172cafbbb94f5407ef9ff4806fd8ba"
         },
         "privacyProtectionsPopup": {
             "state": "disabled",

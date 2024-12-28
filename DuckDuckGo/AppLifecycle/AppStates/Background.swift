@@ -17,74 +17,118 @@
 //  limitations under the License.
 //
 
+import Foundation
+import Combine
+import DDGSync
 import UIKit
 import Core
 
 struct Background: AppState {
 
-    let timestamp = Date()
+    private let lastBackgroundDate: Date = Date()
+    private let application: UIApplication
+    private var appDependencies: AppDependencies
 
-    init(application: UIApplication) {
+    var urlToOpen: URL?
+    var shortcutItemToHandle: UIApplicationShortcutItem?
 
+    init(stateContext: Inactive.StateContext) {
+        application = stateContext.application
+        appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
+
+        run()
+    }
+
+    init(stateContext: Launched.StateContext) {
+        application = stateContext.application
+        appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
+
+        run()
+    }
+
+    mutating func run() {
+        let autoClear = appDependencies.autoClear
+        let privacyStore = appDependencies.privacyStore
+        let privacyProDataReporter = appDependencies.privacyProDataReporter
+        let voiceSearchHelper = appDependencies.voiceSearchHelper
+        let appSettings = appDependencies.appSettings
+        let autofillLoginSession = appDependencies.autofillLoginSession
+        let syncService = appDependencies.syncService
+        let syncDataProviders = appDependencies.syncDataProviders
+        let uiService = appDependencies.uiService
+
+        if autoClear.isClearingEnabled || privacyStore.authenticationEnabled {
+            uiService.displayBlankSnapshotWindow(voiceSearchHelper: voiceSearchHelper,
+                                                 addressBarPosition: appSettings.currentAddressBarPosition)
+        }
+        autoClear.startClearingTimer()
+        autofillLoginSession.endSession()
+
+        suspendSync(syncService: syncService)
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
+        privacyProDataReporter.saveApplicationLastSessionEnded()
+
+        resetAppStartTime()
+
+        // Kill switch for the new app delegate:
+        // If the .forceOldAppDelegate flag is set in the config, we mark a file as present.
+        // This switches the app to the old mode and silently crashes it in the background.
+        // When reopened, the app will reliably run the old flow.
+        if ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .forceOldAppDelegate) {
+            (UIApplication.shared.delegate as? AppDelegate)?.forceOldAppDelegate()
+            fatalError("crash to ensure the app restarts using the old app delegate next time")
+        }
+    }
+
+    private mutating func suspendSync(syncService: DDGSync) {
+        if syncService.isSyncInProgress {
+            Logger.sync.debug("Sync is in progress. Starting background task to allow it to gracefully complete.")
+
+            var taskID: UIBackgroundTaskIdentifier!
+            taskID = UIApplication.shared.beginBackgroundTask(withName: "Cancelled Sync Completion Task") {
+                Logger.sync.debug("Forcing background task completion")
+                UIApplication.shared.endBackgroundTask(taskID)
+            }
+            appDependencies.syncDidFinishCancellable?.cancel()
+            appDependencies.syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
+                .prefix(1)
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    Logger.sync.debug("Ending background task")
+                    UIApplication.shared.endBackgroundTask(taskID)
+                }
+        }
+
+        syncService.scheduler.cancelSyncAndSuspendSyncQueue()
+    }
+
+    private func resetAppStartTime() {
+        appDependencies.mainViewController.appDidFinishLaunchingStartTime = nil
     }
 
 }
 
-struct DoubleBackground: AppState {
+extension Background {
 
-    private let dateFormatter: ISO8601DateFormatter = {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime]
-        return formatter
-    }()
+    struct StateContext {
 
-    let currentDidEnterBackgroundTimestamp: Date
-    var counter: Int
+        let application: UIApplication
+        let lastBackgroundDate: Date
+        let urlToOpen: URL?
+        let shortcutItemToHandle: UIApplicationShortcutItem?
 
-    init(previousDidEnterBackgroundTimestamp: Date, counter: Int) {
-        self.currentDidEnterBackgroundTimestamp = Date()
-        self.counter = counter + 1
+        let appDependencies: AppDependencies
 
-        var parameters = [
-            PixelParameters.firstBackgroundTimestamp: dateFormatter.string(from: previousDidEnterBackgroundTimestamp),
-            PixelParameters.secondBackgroundTimestamp: dateFormatter.string(from: currentDidEnterBackgroundTimestamp)
-        ]
+    }
 
-        if counter < 5 {
-            parameters[PixelParameters.numberOfBackgrounds] = String(counter)
-        }
-
-        func isValid(timestamp: Date) -> Bool {
-            timestamp >= previousDidEnterBackgroundTimestamp && timestamp <= currentDidEnterBackgroundTimestamp
-        }
-
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            if let didReceiveMemoryWarningTimestamp = appDelegate.didReceiveMemoryWarningTimestamp,
-               isValid(timestamp: didReceiveMemoryWarningTimestamp) {
-                parameters[PixelParameters.didReceiveMemoryWarningTimestamp] = dateFormatter.string(from: didReceiveMemoryWarningTimestamp)
-            }
-            if let didReceiveMXPayloadTimestamp = appDelegate.didReceiveMXPayloadTimestamp,
-               isValid(timestamp: didReceiveMXPayloadTimestamp) {
-                parameters[PixelParameters.didReceiveMXPayloadTimestamp] = dateFormatter.string(from: didReceiveMXPayloadTimestamp)
-            }
-            if let didReceiveUNNotificationTimestamp = appDelegate.didReceiveUNNotificationTimestamp,
-               isValid(timestamp: didReceiveUNNotificationTimestamp) {
-                parameters[PixelParameters.didReceiveUNNotification] = dateFormatter.string(from: didReceiveUNNotificationTimestamp)
-            }
-            if let didStartRemoteMessagingClientBackgroundTaskTimestamp = appDelegate.didStartRemoteMessagingClientBackgroundTaskTimestamp,
-               isValid(timestamp: didStartRemoteMessagingClientBackgroundTaskTimestamp) {
-                parameters[PixelParameters.didStartRemoteMessagingClientBackgroundTask] = dateFormatter.string(from: didStartRemoteMessagingClientBackgroundTaskTimestamp)
-            }
-            if let didStartAppConfigurationFetchBackgroundTaskTimestamp = appDelegate.didStartAppConfigurationFetchBackgroundTaskTimestamp,
-               isValid(timestamp: didStartAppConfigurationFetchBackgroundTaskTimestamp) {
-                parameters[PixelParameters.didStartAppConfigurationFetchBackgroundTask] = dateFormatter.string(from: didStartAppConfigurationFetchBackgroundTaskTimestamp)
-            }
-            if let didPerformFetchTimestamp = appDelegate.didPerformFetchTimestamp,
-               isValid(timestamp: didPerformFetchTimestamp) {
-                parameters[PixelParameters.didPerformFetchTimestamp] = dateFormatter.string(from: didPerformFetchTimestamp)
-            }
-        }
-        Pixel.fire(pixel: .appDidConsecutivelyBackground, withAdditionalParameters: parameters)
+    func makeStateContext() -> StateContext {
+        .init(application: application,
+              lastBackgroundDate: lastBackgroundDate,
+              urlToOpen: urlToOpen,
+              shortcutItemToHandle: shortcutItemToHandle,
+              appDependencies: appDependencies)
     }
 
 }

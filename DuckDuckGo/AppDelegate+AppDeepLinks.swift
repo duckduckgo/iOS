@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-extension AppDelegate {
+extension OldAppDelegate {
 
     func handleAppDeepLink(_ app: UIApplication, _ mainViewController: MainViewController?, _ url: URL) -> Bool {
         guard let mainViewController else { return false }

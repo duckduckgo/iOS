@@ -120,9 +120,13 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
         static let paywallViewCountKey = "\(subfeatureIdentifier)_paywallViewCount"
         static let hasReturnedFreeTrialParametersKey = "\(subfeatureIdentifier)_hasReturnedFreeTrialParameters"
 
+        /// Experiment name key included in the free trial parameters.
         static let freeTrialParameterExperimentName = "experimentName"
+
+        /// Cohort value key included in the free trial parameters.
         static let freeTrialParameterExperimentCohort = "experimentCohort"
 
+        /// Key used to store the override status for the feature flag in persistent storage.
         static let featureFlagOverrideKey = "\(subfeatureIdentifier)_featureFlagOverride"
     }
 

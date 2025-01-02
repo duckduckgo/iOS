@@ -86,8 +86,13 @@ final class SubscriptionDebugViewController: UITableViewController {
         case countryCode
     }
 
+    enum FeatureFlagRows: Int, CaseIterable {
+        case privacyProFreeTrialJan25
+    }
+
     private var storefrontID = "Loading"
     private var storefrontCountryCode = "Loading"
+    private let freeTrialKey = FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -178,6 +183,15 @@ final class SubscriptionDebugViewController: UITableViewController {
                 break
             }
 
+        case .featureFlags:
+            switch FeatureFlagRows(rawValue: indexPath.row) {
+            case .privacyProFreeTrialJan25:
+                cell.textLabel?.text = "privacyProFreeTrialJan25"
+                cell.accessoryType = UserDefaults.standard.bool(forKey: freeTrialKey) ? .checkmark : .none
+            case .none:
+                break
+            }
+
         case .none:
             break
         }
@@ -228,6 +242,11 @@ final class SubscriptionDebugViewController: UITableViewController {
             }
         case .metadata:
             break
+        case .featureFlags:
+            switch FeatureFlagRows(rawValue: indexPath.row) {
+            case .privacyProFreeTrialJan25: togglePrivacyProFreeTrialJan25Flag()
+            default: break
+            }
         case .none:
             break
         }
@@ -274,8 +293,6 @@ final class SubscriptionDebugViewController: UITableViewController {
             self.present(alertController, animated: true, completion: nil)
         }
     }
-
-//    func showAlert(title: String, message: String, alternativeAction)
 
     // MARK: Account Status Actions
 
@@ -334,6 +351,12 @@ final class SubscriptionDebugViewController: UITableViewController {
                 Randomized: \(reportedParameters.joined(separator: ", "))
                 """
         showAlert(title: "", message: message)
+    }
+
+    private func togglePrivacyProFreeTrialJan25Flag() {
+        let currentValue = UserDefaults.standard.bool(forKey: freeTrialKey)
+        UserDefaults.standard.set(!currentValue, forKey: freeTrialKey)
+        tableView.reloadData()
     }
 
     private func syncAppleIDAccount() {

@@ -235,6 +235,43 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         XCTAssertTrue(mockUserDefaults.bool(forKey: FreeTrialsFeatureFlagExperiment.Constants.hasReturnedFreeTrialParametersKey),
                       "UserDefaults should indicate that parameters have been returned")
     }
+
+    func testGetCohortIfEnabled_returnsTreatmentCohortWhenOverrideEnabled() {
+        // Given
+        mockUserDefaults.set(true, forKey: FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey)
+
+        // When
+        let cohort = sut.getCohortIfEnabled() as? FreeTrialsFeatureFlagExperiment.Cohort
+
+        // Then
+        XCTAssertEqual(cohort, .treatment, "Should return the 'treatment' cohort when the override is enabled.")
+    }
+
+    func testGetCohortIfEnabled_returnsNilWhenFeatureFlagDisabled() {
+        // Given
+        mockUserDefaults.set(false, forKey: FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey)
+        mockFeatureFlagger.mockActiveExperiments = [:]
+
+        // When
+        let cohort = sut.getCohortIfEnabled()
+
+        // Then
+        XCTAssertNil(cohort, "Should return nil when the feature flag is disabled and no override is present.")
+    }
+
+    func testGetCohortIfEnabled_returnsCohortFromFeatureFlaggerWhenEnabled() {
+        // Given
+        let expectedCohort: FreeTrialsFeatureFlagExperiment.Cohort = .control
+        let enrollmentDate = Date()
+        mockUserDefaults.set(false, forKey: FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey)
+        mockFeatureFlagger.cohortToReturn = expectedCohort
+
+        // When
+        let cohort = sut.getCohortIfEnabled() as? FreeTrialsFeatureFlagExperiment.Cohort
+
+        // Then
+        XCTAssertEqual(cohort, expectedCohort, "Should return the cohort from the feature flagger when the feature flag is enabled.")
+    }
 }
 
 private final class MockExperimentPixelFirer: ExperimentPixelFiring {

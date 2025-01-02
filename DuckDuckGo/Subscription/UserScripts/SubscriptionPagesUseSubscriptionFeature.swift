@@ -482,13 +482,18 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
 private extension SubscriptionPagesUseSubscriptionFeature {
 
+    /// Retrieves the parameters for completing a subscription free trial if applicable.
+    ///
+    /// This property checks if the user is part of a valid free trial cohort. If the user is in a cohort,
+    /// it returns the associated free trial parameters, provided these parameters have not been returned previously.
+    /// If the user is not in a cohort or the parameters have already been returned, the property returns `nil`.
+    ///
+    /// - Returns: A dictionary of free trial parameters (`[String: String]`) if applicable, or `nil` otherwise.
     var completeSubscriptionFreeTrialParameters: [String: String]? {
         guard let cohort = freeTrialCohortIfApplicable() else { return nil }
-
-        let params = freeTrialsExperiment.freeTrialParametersIfNotPreviouslyReturned(for: FreeTrialsFeatureFlagExperiment.Cohort.treatment)
-        return params
+        return freeTrialsExperiment.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
     }
-
+    
     /// Determines whether a user is enrolled in the Free Trials experiment
     /// - Returns: `true` if the user is part of a free trial cohort, otherwise `false`.
     var userIsEnrolledInFreeTrialsExperiment: Bool {
@@ -546,6 +551,14 @@ private extension SubscriptionPagesUseSubscriptionFeature {
             subscriptionOptions = await subscriptionManager.storePurchaseManager().subscriptionOptions()
         case .treatment:
             subscriptionOptions = await subscriptionManager.storePurchaseManager().freeTrialSubscriptionOptions()
+
+            /*
+                Fallback to standard subscription options if nil.
+                This could occur if the Free Trial offer in AppStoreConnect had an end date in the past.
+             */
+            if subscriptionOptions == nil {
+                subscriptionOptions = await subscriptionManager.storePurchaseManager().subscriptionOptions()
+            }
         }
 
         return subscriptionOptions

@@ -122,6 +122,8 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
 
         static let freeTrialParameterExperimentName = "experimentName"
         static let freeTrialParameterExperimentCohort = "experimentCohort"
+
+        static let featureFlagOverrideKey = "\(subfeatureIdentifier)_featureFlagOverride"
     }
 
     /// Identifier for the experiment.
@@ -154,15 +156,22 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
         self.featureFlagger = featureFlagger
     }
 
-    /// Retrieves the cohort associated with the experiment if the feature flag is enabled.
+    /// Retrieves the cohort associated with the experiment if the feature flag is enabled or if the override is active.
     ///
-    /// This method checks whether the feature flag for the experiment is enabled.
-    /// If enabled, it returns the cohort assigned to the user, allowing the experiment
-    /// to differentiate behavior or configurations based on the cohort.
+    /// This method determines whether the feature flag for the experiment is enabled
+    /// or overridden. If the override flag stored in persistent storage is set to `true`,
+    /// it forces the method to return the `treatment` cohort regardless of the feature flag's actual state.
+    /// If no override is active, it checks the feature flag and returns the cohort assigned to the user
+    /// based on the feature flag configuration.
     ///
-    /// - Returns: The cohort assigned to the user, or `nil` if the feature flag is not enabled.
+    /// - Returns: The `treatment` cohort if the override is enabled, the assigned cohort if the feature flag is enabled, or `nil` otherwise.
     func getCohortIfEnabled() -> (any FlagCohort)? {
-        featureFlagger.getCohortIfEnabled(for: self)
+        let isFlagOverrideEnabled = storage.object(forKey: Constants.featureFlagOverrideKey) as? Bool ?? false
+        if isFlagOverrideEnabled {
+            return FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        }
+
+        return featureFlagger.getCohortIfEnabled(for: self)
                 as? FreeTrialsFeatureFlagExperiment.Cohort
     }
 

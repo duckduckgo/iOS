@@ -104,7 +104,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         XCTAssertFalse(mockFreeTrialsFeatureFlagExperiment.firePaywallImpressionPixelCalled)
     }
 
-    func testWhenUserCannoPurchase_thenStandardSubscriptionOptionsAreReturned() async throws {
+    func testWhenUserCannotPurchase_thenStandardSubscriptionOptionsAreReturned() async throws {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = false
@@ -132,6 +132,23 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Then
         XCTAssertEqual(result as? SubscriptionOptions, .empty)
         XCTAssertEqual(sut.transactionError, .failedToGetSubscriptionOptions)
+    }
+
+    func testWhenFreeTrialsCohortIsTreatmentAndFreeTrialOptionsAreNil_thenFallbackToStandardOptions() async throws {
+        // Given
+        mockAccountManager.accessToken = nil
+        mockSubscriptionManager.canPurchase = true
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockStorePurchaseManager.freeTrialSubscriptionOptionsResult = nil
+        mockStorePurchaseManager.subscriptionOptionsResult = .mockStandard
+
+        // When
+        let result = await sut.getSubscriptionOptions(params: "", original: MockWKScriptMessage(name: "", body: ""))
+
+        // Then
+        XCTAssertEqual(result as? SubscriptionOptions, .mockStandard, "Should return standard subscription options as a fallback when free trial options are nil.")
+        XCTAssertTrue(mockFreeTrialsFeatureFlagExperiment.incrementPaywallViewCountCalled, "Paywall view count should be incremented.")
+        XCTAssertTrue(mockFreeTrialsFeatureFlagExperiment.firePaywallImpressionPixelCalled, "Paywall impression pixel should be fired.")
     }
 
     func testWhenMonthlySubscribeSucceedsForTreatment_thenSubscriptionPurchasedMonthlyPixelFired() async throws {

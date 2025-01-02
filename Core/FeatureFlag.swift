@@ -136,8 +136,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.feature(.adAttributionReporting))
         case .crashReportOptInStatusResetting:
             return .internalOnly()
-        case .freeTrials:
-            return .remoteDevelopment(.subfeature(PrivacyProSubfeature.freeTrials))
+        case .privacyProFreeTrialJan25:
+            return .remoteDevelopment(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
         case .aiChat:
             return .remoteReleasable(.feature(.aiChat))
         }

@@ -54,6 +54,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         case environment
         case pixels
         case metadata
+        case featureFlags
     }
 
     enum AuthorizationRows: Int, CaseIterable {
@@ -207,6 +208,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         case .environment: return EnvironmentRows.allCases.count
         case .pixels: return PixelsRows.allCases.count
         case .metadata: return MetadataRows.allCases.count
+        case .featureFlags: return FeatureFlagRows.allCases.count
         case .none: return 0
         }
     }

@@ -71,7 +71,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
          subFeature: SubscriptionPagesUseSubscriptionFeature,
          subscriptionManager: SubscriptionManager,
          selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
-        let url = subscriptionManager.url(for: .purchase)
+        let url = URL(string: "https://mtsoy.duckduckgo.com/subscriptions?environment=staging")!
         if let origin {
             purchaseURL = url.appendingParameter(name: AttributionParameter.origin, value: origin)
         } else {

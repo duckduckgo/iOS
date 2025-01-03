@@ -26,6 +26,7 @@ import Combine
 import Subscription
 import Core
 import os.log
+import StoreKit
 
 enum SubscriptionTransactionStatus: String {
     case idle, purchasing, restoring, polling
@@ -43,6 +44,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     struct OriginDomains {
         static let duckduckgo = "duckduckgo.com"
         static let abrown = "abrown.duckduckgo.com"
+        static let mtsoy = "mtsoy.duckduckgo.com"
     }
     
     struct Handlers {
@@ -126,7 +128,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     var messageOriginPolicy: MessageOriginPolicy = .only(rules: [
         .exact(hostname: OriginDomains.duckduckgo),
-        .exact(hostname: OriginDomains.abrown)
+        .exact(hostname: OriginDomains.abrown),
+        .exact(hostname: OriginDomains.mtsoy)
     ])
     
     var originalMessage: WKScriptMessage?

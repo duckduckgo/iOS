@@ -36,7 +36,7 @@ struct AsyncHeadlessWebViewSettings {
          contentBlocking: Bool = true) {
         self.bounces = bounces
         self.javascriptEnabled = javascriptEnabled
-        self.allowedDomains = allowedDomains
+        self.allowedDomains = []
         self.contentBlocking = contentBlocking
     }
 }

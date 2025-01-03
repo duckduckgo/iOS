@@ -174,14 +174,14 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
         lastURL = url
         
         // Validate the URL against allowed domains list, if present
-        if let allowedDomains = settings.allowedDomains, !allowedDomains.isEmpty {
-            let isURLAllowed = allowedDomains.contains { domain in
-                url.isPart(ofDomain: domain)
-            }
-
-            decisionHandler(isURLAllowed ? .allow : .cancel)
-            return
-        }
+//        if let allowedDomains = settings.allowedDomains, !allowedDomains.isEmpty {
+//            let isURLAllowed = allowedDomains.contains { domain in
+//                url.isPart(ofDomain: domain)
+//            }
+//
+//            decisionHandler(isURLAllowed ? .allow : .cancel)
+//            return
+//        }
         
         // Default policy: allow navigation
         decisionHandler(.allow)

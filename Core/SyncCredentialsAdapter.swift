@@ -47,8 +47,7 @@ public final class SyncCredentialsAdapter {
             secureVaultErrorReporter: secureVaultErrorReporter,
             errorEvents: CredentialsCleanupErrorHandling()
         )
-        credentialIdentityStoreManager = AutofillCredentialIdentityStoreManager(
-            vault: try? secureVaultFactory.makeVault(reporter: secureVaultErrorReporter), tld: tld)
+        credentialIdentityStoreManager = AutofillCredentialIdentityStoreManager(reporter: secureVaultErrorReporter, tld: tld)
     }
 
     public func cleanUpDatabaseAndUpdateSchedule(shouldEnable: Bool) {

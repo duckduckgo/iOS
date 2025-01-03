@@ -33,9 +33,11 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
     private lazy var authenticator = UserAuthenticator(reason: UserText.credentialProviderListAuthenticationReason,
                                                        cancelTitle: UserText.credentialProviderListAuthenticationCancelButton)
 
-    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging = AutofillCredentialIdentityStoreManager(credentialStore: ASCredentialIdentityStore.shared,
-                                                                                                                                      vault: secureVault,
-                                                                                                                                      tld: tld)
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging = AutofillCredentialIdentityStoreManager(
+        credentialStore: ASCredentialIdentityStore.shared,
+        vault: secureVault,
+        reporter: SecureVaultReporter(),
+        tld: tld)
 
     private lazy var secureVault: (any AutofillSecureVault)? = {
         if findKeychainItemsWithV4() {

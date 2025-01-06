@@ -35,7 +35,6 @@ struct NetworkProtectionRootView: View {
                                                            statusObserver: AppDependencyProvider.shared.connectionObserver,
                                                            serverInfoObserver: AppDependencyProvider.shared.serverInfoObserver,
                                                            locationListRepository: locationListRepository,
-                                                           enablesUnifiedFeedbackForm: accountManager.isUserAuthenticated,
                                                            subscriptionManager: subscriptionManager)
     }
 

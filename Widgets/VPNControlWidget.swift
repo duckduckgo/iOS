@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Core
 import Foundation
 import SwiftUI
 import WidgetKit
@@ -26,6 +27,7 @@ import WidgetKit
 public struct VPNControlWidget: ControlWidget {
     static let displayName = LocalizedStringResource(stringLiteral: "DuckDuckGo\nVPN")
     static let description = LocalizedStringResource(stringLiteral: "View and manage your VPN connection. Requires a Privacy Pro subscription.")
+    static let unknownLocation = "Unknown Location"
 
     public init() {}
 
@@ -33,9 +35,9 @@ public struct VPNControlWidget: ControlWidget {
         StaticControlConfiguration(kind: .vpn,
                                    provider: VPNControlStatusValueProvider()) { status in
 
-            ControlWidgetToggle("DuckDuckGo\nVPN", isOn: status.isConnected, action: ControlWidgetToggleVPNIntent()) { isOn in
+            ControlWidgetToggle(title(status: status), isOn: status.isConnected, action: ControlWidgetToggleVPNIntent()) { isOn in
                 if isOn {
-                    Label("Connected", image: "ControlCenter-VPN-on")
+                    Label(location(status: status), image: "ControlCenter-VPN-on")
                 } else {
                     Label("Not Connected", image: "ControlCenter-VPN-off")
                 }
@@ -43,6 +45,26 @@ public struct VPNControlWidget: ControlWidget {
             .tint(.green)
         }.displayName(Self.displayName)
             .description(Self.description)
+    }
+
+    private func title(status: VPNStatus) -> String {
+        if status.isConnected {
+            return "VPN is ON"
+        } else {
+            return "VPN is OFF"
+        }
+    }
+
+    private func location(status: VPNStatus) -> String {
+        if status.isConnecting {
+            return "Connecting..."
+        } else if status.isDisconnecting {
+            return "Disconnecting..."
+        } else if status.isConnected {
+            return UserDefaults.networkProtectionGroupDefaults.string(forKey: NetworkProtectionUserDefaultKeys.lastSelectedServerCity) ?? Self.unknownLocation
+        } else {
+            return Self.unknownLocation
+        }
     }
 }
 #endif

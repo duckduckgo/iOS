@@ -22,17 +22,15 @@ import Foundation
 
 public final class SubscriptionFeatureAvailabilityMock: SubscriptionFeatureAvailability {
     static var enabled: SubscriptionFeatureAvailabilityMock {
-        return SubscriptionFeatureAvailabilityMock(isFeatureAvailable: true, isSubscriptionPurchaseAllowed: true, usesUnifiedFeedbackForm: true)
+        return SubscriptionFeatureAvailabilityMock(isFeatureAvailable: true, isSubscriptionPurchaseAllowed: true)
     }
 
     public var isFeatureAvailable: Bool
     public var isSubscriptionPurchaseAllowed: Bool
-    public var usesUnifiedFeedbackForm: Bool
 
-    public init(isFeatureAvailable: Bool, isSubscriptionPurchaseAllowed: Bool, usesUnifiedFeedbackForm: Bool) {
+    public init(isFeatureAvailable: Bool, isSubscriptionPurchaseAllowed: Bool) {
         self.isFeatureAvailable = isFeatureAvailable
         self.isSubscriptionPurchaseAllowed = isSubscriptionPurchaseAllowed
-        self.usesUnifiedFeedbackForm = usesUnifiedFeedbackForm
     }
 
 }

@@ -400,8 +400,8 @@ final class SettingsViewModel: ObservableObject {
         legacyViewProvider.syncService.authState != .inactive ? .on : .off
     }
 
-    var usesUnifiedFeedbackForm: Bool {
-        subscriptionManager.accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
+    var enablesUnifiedFeedbackForm: Bool {
+        subscriptionManager.accountManager.isUserAuthenticated
     }
 
     // MARK: Default Init

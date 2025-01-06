@@ -1,1 +1,1 @@
- - If you use dark mode, you'll notice the app icon has an improved look, whether you've stuck with the classic orange or picked a custom icon color.
+- Bug fixes and other improvements.

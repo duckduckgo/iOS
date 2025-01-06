@@ -84,9 +84,16 @@ class ShareViewController: SLComposeServiceViewController {
         let deepLink = URL(string: AppDeepLinkSchemes.quickLink.appending(url.absoluteString))!
         var responder = self as UIResponder?
         while responder != nil {
-            if responder!.responds(to: selector) {
-                _ = responder?.perform(selector, with: deepLink, with: {})
-                break
+            if #available(iOS 18.0, *) {
+                if let application = responder as? UIApplication {
+                    application.open(deepLink, options: [:], completionHandler: nil)
+                    break
+                }
+            } else {
+                if responder!.responds(to: selector) {
+                    _ = responder?.perform(selector, with: deepLink, with: {})
+                    break
+                }
             }
             responder = responder!.next
         }

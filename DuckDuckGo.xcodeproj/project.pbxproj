@@ -917,6 +917,7 @@
 		C1BF0BA529B63D7200482B73 /* AutofillLoginPromptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BF0BA429B63D7200482B73 /* AutofillLoginPromptHelper.swift */; };
 		C1BF0BA929B63E2200482B73 /* AutofillLoginPromptViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BF0BA729B63E1A00482B73 /* AutofillLoginPromptViewModelTests.swift */; };
 		C1BF26152C74D10F00F6405E /* SyncPromoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BF26142C74D10F00F6405E /* SyncPromoManager.swift */; };
+		C1BF4BAA2D26E0B300A83C77 /* AutofillVaultKeychainMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BF4BA92D26E0B300A83C77 /* AutofillVaultKeychainMigratorTests.swift */; };
 		C1C1FF452D085A280017ACCE /* CredentialProviderListDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C1FF412D085A280017ACCE /* CredentialProviderListDetailsView.swift */; };
 		C1C1FF462D085A280017ACCE /* CredentialProviderListDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C1FF422D085A280017ACCE /* CredentialProviderListDetailsViewController.swift */; };
 		C1C1FF472D085A280017ACCE /* CredentialProviderListDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C1FF432D085A280017ACCE /* CredentialProviderListDetailsViewModel.swift */; };
@@ -2798,6 +2799,7 @@
 		C1BF0BA429B63D7200482B73 /* AutofillLoginPromptHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutofillLoginPromptHelper.swift; sourceTree = "<group>"; };
 		C1BF0BA729B63E1A00482B73 /* AutofillLoginPromptViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutofillLoginPromptViewModelTests.swift; sourceTree = "<group>"; };
 		C1BF26142C74D10F00F6405E /* SyncPromoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPromoManager.swift; sourceTree = "<group>"; };
+		C1BF4BA92D26E0B300A83C77 /* AutofillVaultKeychainMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillVaultKeychainMigratorTests.swift; sourceTree = "<group>"; };
 		C1C1FF412D085A280017ACCE /* CredentialProviderListDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviderListDetailsView.swift; sourceTree = "<group>"; };
 		C1C1FF422D085A280017ACCE /* CredentialProviderListDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviderListDetailsViewController.swift; sourceTree = "<group>"; };
 		C1C1FF432D085A280017ACCE /* CredentialProviderListDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviderListDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -3660,13 +3662,6 @@
 				3161D13127AC161B00285CF6 /* DownloadMetadata.swift */,
 			);
 			name = Downloads;
-			sourceTree = "<group>";
-		};
-		310EEA2C2CFFCD9B0043CA1A /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		310EEA2D2CFFCDB60043CA1A /* AIChat */ = {
@@ -5391,6 +5386,14 @@
 			name = AutofillLoginUI;
 			sourceTree = "<group>";
 		};
+		C1BF4BA82D26E08F00A83C77 /* Autofill */ = {
+			isa = PBXGroup;
+			children = (
+				C1BF4BA92D26E0B300A83C77 /* AutofillVaultKeychainMigratorTests.swift */,
+			);
+			name = Autofill;
+			sourceTree = "<group>";
+		};
 		C1C1FF442D085A280017ACCE /* CredentialProviderListDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -6657,7 +6660,7 @@
 		F1E092B31E92A6B900732CCC /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				310EEA2C2CFFCD9B0043CA1A /* New Group */,
+				C1BF4BA82D26E08F00A83C77 /* Autofill */,
 				316790E32C9350980090B0A2 /* MarketplaceAdPostback */,
 				858479CA2B8795BF00D156C1 /* History */,
 				EA7EFE662677F5BD0075464E /* PrivacyReferenceTests */,
@@ -8316,6 +8319,7 @@
 				9FE05CF12C36468A00D9046B /* OnboardingPixelReporterTests.swift in Sources */,
 				9FDEC7B42C8FD62F00C7A692 /* OnboardingAddressBarPositionPickerViewModelTests.swift in Sources */,
 				85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */,
+				C1BF4BAA2D26E0B300A83C77 /* AutofillVaultKeychainMigratorTests.swift in Sources */,
 				F1134EBC1F40D45700B73467 /* MockStatisticsStore.swift in Sources */,
 				9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */,
 				983C52E72C2C0ACB007B5747 /* BookmarkStateRepairTests.swift in Sources */,

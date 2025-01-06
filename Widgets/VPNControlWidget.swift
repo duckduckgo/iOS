@@ -22,7 +22,6 @@ import Foundation
 import SwiftUI
 import WidgetKit
 
-#if ALPHA || DEBUG
 @available(iOSApplicationExtension 18.0, *)
 public struct VPNControlWidget: ControlWidget {
     static let displayName = LocalizedStringResource(stringLiteral: "DuckDuckGo\nVPN")
@@ -67,4 +66,3 @@ public struct VPNControlWidget: ControlWidget {
         }
     }
 }
-#endif

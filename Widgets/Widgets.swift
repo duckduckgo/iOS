@@ -259,11 +259,9 @@ struct VPNBundle: WidgetBundle {
             VPNSnoozeLiveActivity()
         }
 
-        #if ALPHA || DEBUG
         if #available(iOS 18, *) {
             VPNControlWidget()
         }
-        #endif
     }
 }
 

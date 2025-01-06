@@ -162,7 +162,6 @@ struct NetworkProtectionVPNSettingsView: View {
                     }.daxBodyRegular()
                 }
 
-                #if ALPHA || DEBUG
                 if #available(iOS 18.0, *) {
                     NavigationLink {
                         ControlCenterWidgetEducationView(navBarTitle: "Add DuckDuckGo VPN Shortcut to Your Control Center",
@@ -187,7 +186,6 @@ struct NetworkProtectionVPNSettingsView: View {
                             .frame(width: 24, height: 24)
                     }.daxBodyRegular()
                 }
-                #endif
             } header: {
                 Text(UserText.netPVPNShortcutsSectionHeader)
             }

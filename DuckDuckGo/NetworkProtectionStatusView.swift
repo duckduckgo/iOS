@@ -297,10 +297,6 @@ struct NetworkProtectionStatusView: View {
                 NavigationLink(UserText.subscriptionFeedback, destination: UnifiedFeedbackRootView(viewModel: viewModel))
                     .daxBodyRegular()
                     .foregroundColor(.init(designSystemColor: .textPrimary))
-            } else {
-                NavigationLink(UserText.netPVPNSettingsShareFeedback, destination: VPNFeedbackFormCategoryView())
-                    .daxBodyRegular()
-                    .foregroundColor(.init(designSystemColor: .textPrimary))
             }
         } header: {
             Text(UserText.vpnAbout).foregroundColor(.init(designSystemColor: .textSecondary))

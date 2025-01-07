@@ -31,6 +31,24 @@ enum VPNStatus {
     case error
     case notConfigured
 
+    var isConnecting: Bool {
+        switch self {
+        case .status(let status):
+            return status == .connecting
+        default:
+            return false
+        }
+    }
+
+    var isDisconnecting: Bool {
+        switch self {
+        case .status(let status):
+            return status == .disconnecting
+        default:
+            return false
+        }
+    }
+
     var isConnected: Bool {
         switch self {
         case .status(let status):

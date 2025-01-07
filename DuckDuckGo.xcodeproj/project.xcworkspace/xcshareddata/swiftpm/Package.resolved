@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "shane/dashboard-flicker",
-        "revision" : "9c188655248943998cb24f1420315be28ca808ee"
+        "revision" : "eea5c7cb7578e771727aa2fd9120950a166e02b2",
+        "version" : "223.0.1"
       }
     },
     {

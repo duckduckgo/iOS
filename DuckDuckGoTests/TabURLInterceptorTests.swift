@@ -28,9 +28,7 @@ class TabURLInterceptorDefaultTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        urlInterceptor = TabURLInterceptorDefault(canPurchase: {
-            true
-        })
+        urlInterceptor = TabURLInterceptorDefault(featureFlagger: MockFeatureFlagger(), canPurchase: { true })
     }
     
     override func tearDown() {
@@ -98,4 +96,34 @@ class TabURLInterceptorDefaultTests: XCTestCase {
         waitForExpectations(timeout: 1)
         XCTAssertNil(capturedNotification?.userInfo?[AttributionParameter.origin] as? String)
     }
+
+    func testAllowsNavigationForNonAIChatURL() {
+        let url = URL(string: "https://www.example.com")!
+        XCTAssertTrue(urlInterceptor.allowsNavigatingTo(url: url))
+    }
+
+    func testNotificationForInterceptedAIChatPathWhenFeatureFlagIsOn() {
+        urlInterceptor = TabURLInterceptorDefault(featureFlagger: MockFeatureFlagger(enabledFeatureFlags: [.aiChat]), canPurchase: { true })
+
+        _ = self.expectation(forNotification: .urlInterceptAIChat, object: nil, handler: nil)
+
+        let url = URL(string: "https://duckduckgo.com/?ia=chat")!
+        let canNavigate = urlInterceptor.allowsNavigatingTo(url: url)
+
+        XCTAssertFalse(canNavigate)
+
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("Notification expectation failed: \(error)")
+            }
+        }
+    }
+
+    func testAllowsNavigationForAIChatPathWhenFeatureFlagIsOff() {
+        urlInterceptor = TabURLInterceptorDefault(featureFlagger: MockFeatureFlagger(enabledFeatureFlags: []), canPurchase: { true })
+
+        let url = URL(string: "https://duckduckgo.com/?ia=chat")!
+        XCTAssertTrue(urlInterceptor.allowsNavigatingTo(url: url))
+    }
+
 }

@@ -359,7 +359,10 @@ extension Pixel {
         
         // Replacing secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded with data protection check
         case secureVaultIsEnabledCheckedWhenEnabledAndDataProtected
-        
+
+        case secureVaultV4Migration
+        case secureVaultV4MigrationSkipped
+
         // MARK: Ad Click Attribution pixels
         
         case adClickAttributionDetected
@@ -1344,7 +1347,10 @@ extension Pixel.Event {
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
             
         case .secureVaultIsEnabledCheckedWhenEnabledAndDataProtected: return "m_secure-vault_is-enabled-checked_when-enabled-and-data-protected"
-            
+
+        case .secureVaultV4Migration: return "m_secure-vault_v4-migration"
+        case .secureVaultV4MigrationSkipped: return "m_secure-vault_v4-migration-skipped"
+
             // MARK: Ad Click Attribution pixels
             
         case .adClickAttributionDetected: return "m_ad_click_detected"

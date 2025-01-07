@@ -132,9 +132,7 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
-    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault {
-        return AppDependencyProvider.shared.subscriptionManager.canPurchase
-    }
+    private var tabURLInterceptor: TabURLInterceptor
     private var currentlyLoadedURL: URL?
 
     private let netPConnectionObserver: ConnectionStatusObserver = AppDependencyProvider.shared.connectionObserver
@@ -427,6 +425,10 @@ class TabViewController: UIViewController {
         self.textZoomCoordinator = textZoomCoordinator
         self.fireproofing = fireproofing
         self.websiteDataManager = websiteDataManager
+
+        self.tabURLInterceptor = TabURLInterceptorDefault(featureFlagger: featureFlagger) {
+            return AppDependencyProvider.shared.subscriptionManager.canPurchase
+        }
 
         super.init(coder: aDecoder)
         

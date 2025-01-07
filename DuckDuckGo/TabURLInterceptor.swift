@@ -41,9 +41,11 @@ final class TabURLInterceptorDefault: TabURLInterceptor {
     
     typealias CanPurchaseUpdater = () -> Bool
     private let canPurchase: CanPurchaseUpdater
+    private let featureFlagger: FeatureFlagger
 
-    init(canPurchase: @escaping CanPurchaseUpdater) {
+    init(featureFlagger: FeatureFlagger, canPurchase: @escaping CanPurchaseUpdater) {
         self.canPurchase = canPurchase
+        self.featureFlagger = featureFlagger
     }
 
     static let interceptedURLs: [InterceptedURLInfo] = [
@@ -100,12 +102,14 @@ extension TabURLInterceptorDefault {
                 return false
             }
         case .aiChat:
-            NotificationCenter.default.post(
-                name: .urlInterceptAIChat,
-                object: nil,
-                userInfo: nil
-            )
-            return false
+            if featureFlagger.isFeatureOn(.aiChat) {
+                NotificationCenter.default.post(
+                    name: .urlInterceptAIChat,
+                    object: nil,
+                    userInfo: nil
+                )
+                return false
+            }
         }
         return true
     }

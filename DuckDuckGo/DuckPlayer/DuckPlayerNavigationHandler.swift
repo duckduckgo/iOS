@@ -438,11 +438,11 @@ final class DuckPlayerNavigationHandler: NSObject {
         let referrerValue = queryItems.first(where: { $0.name == Constants.duckPlayerReferrerParameter })?.value
         let allowFirstVideoValue = queryItems.first(where: { $0.name == Constants.allowFirstVideoParameter })?.value
         let isNewTabValue = queryItems.first(where: { $0.name == Constants.newTabParameter })?.value
-        let youtubeEmbedURI = queryItems.first(where: { $0.name == Constants.youtubeEmbedURI })?.value
+        let youtubeEmbedURI = queryItems.first(where: { $0.name == Constants.youtubeEmbedURI })?.value ?? ""
         
         // Use the from(string:) method to parse referrer
         let referrer = DuckPlayerReferrer(string: referrerValue ?? "")
-        let allowFirstVideo = allowFirstVideoValue == "1" || youtubeEmbedURI.map(\.isEmpty) ?? false
+        let allowFirstVideo = allowFirstVideoValue == "1" || !youtubeEmbedURI.isEmpty
         let isNewTab = isNewTabValue == "1"
         
         return DuckPlayerParameters(referrer: referrer, isNewTap: isNewTab, allowFirstVideo: allowFirstVideo)
@@ -596,6 +596,13 @@ final class DuckPlayerNavigationHandler: NSObject {
         duckPlayerModeCancellable = nil
     }
     
+    /// Checks if a URL contains a hash
+    ///
+    /// - Parameter url: The `URL` used to determine the tab type.
+    private func urlContainsHash(_ url: URL) -> Bool {
+        return url.fragment != nil && !url.fragment!.isEmpty
+    }
+    
 }
 
 extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
@@ -713,16 +720,19 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         guard videoID != lastWatchInYoutubeVideo else {
             lastURLChangeHandling = Date()
-            return .handled
+            return .handled(.newVideo)
         }
         
         let parameters = getDuckPlayerParameters(url: url)
+        
+        // If this is an internal Youtube Link (i.e Clicking in youtube logo in the player)
+        // Do not handle it
         
         // If the URL has the allow first video, we just don't handle it
         if parameters.allowFirstVideo {
             lastWatchInYoutubeVideo = videoID
             lastURLChangeHandling = Date()
-            return .handled
+            return .handled(.allowFirstVideo)
         }
         
         guard duckPlayerMode == .enabled else {
@@ -736,7 +746,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             })
             lastURLChangeHandling = Date()
             Logger.duckPlayer.debug("Handling URL change for \(webView.url?.absoluteString ?? "")")
-            return .handled
+            return .handled(.duckPlayerEnabled)
         } else {
             
         }
@@ -937,13 +947,10 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
         
         // Allow Youtube's internal navigation when DuckPlayer is enabled and user is watching on Youtube
-        // This is to prevent DuckPlayer from interfering with Youtube's internal navigation for search and settings
-        // https://app.asana.com/0/1204099484721401/1208930843675395/f
-        if let (destinationVideoID, _) = url.youtubeVideoParams,
-           let (originVideoID, _) = webView.url?.youtubeVideoParams,
-            destinationVideoID == originVideoID,
-            duckPlayerMode == .enabled {
-                return false
+        // Youtube uses hashes to navigate within some settings
+        // This allows any navigation that includes a hash # (#searching, #bottom-sheet, etc)
+        if urlContainsHash(url), url.isYoutubeWatch {
+            return false
         }
         
         // Redirect to Duck Player if enabled

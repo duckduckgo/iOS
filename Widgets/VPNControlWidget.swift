@@ -38,7 +38,7 @@ public struct VPNControlWidget: ControlWidget {
                 if isOn {
                     Label(location(status: status), image: "ControlCenter-VPN-on")
                 } else {
-                    Label("Not Connected", image: "ControlCenter-VPN-off")
+                    Label(UserText.vpnControlWidgetNotConnected, image: "ControlCenter-VPN-off")
                 }
             }
             .tint(.green)
@@ -48,17 +48,17 @@ public struct VPNControlWidget: ControlWidget {
 
     private func title(status: VPNStatus) -> String {
         if status.isConnected {
-            return "VPN is ON"
+            return UserText.vpnControlWidgetOn
         } else {
-            return "VPN is OFF"
+            return UserText.vpnControlWidgetOff
         }
     }
 
     private func location(status: VPNStatus) -> String {
         if status.isConnecting {
-            return "Connecting..."
+            return UserText.vpnControlWidgetConnecting
         } else if status.isDisconnecting {
-            return "Disconnecting..."
+            return UserText.vpnControlWidgetDisconnecting
         } else if status.isConnected {
             return UserDefaults.networkProtectionGroupDefaults.string(forKey: NetworkProtectionUserDefaultKeys.lastSelectedServerCity) ?? Self.unknownLocation
         } else {

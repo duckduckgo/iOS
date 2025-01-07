@@ -1375,7 +1375,7 @@ extension TabViewController: WKNavigationDelegate {
         Task { @MainActor in
             if
                 !specialErrorPageNavigationHandler.isSpecialErrorPageRequest,
-                await specialErrorPageNavigationHandler.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView) {
+                await specialErrorPageNavigationHandler.handleDecidePolicy(for: navigationResponse, webView: webView) {
                 decisionHandler(.cancel)
             } else {
                 // Important: Order of these checks matter!
@@ -1866,7 +1866,7 @@ extension TabViewController: WKNavigationDelegate {
             // If navigating to the URL is allowed and the URL request is not sideloaded ask the specialErrorPageNavigationHandler forward the event to
             // the SpecialErrorPageNavigationHandler.
             if let self, decision == .allow, !self.specialErrorPageNavigationHandler.isSpecialErrorPageRequest {
-                self.specialErrorPageNavigationHandler.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+                self.specialErrorPageNavigationHandler.handleDecidePolicy(for: navigationAction, webView: webView)
             }
             decisionHandler(decision)
         }

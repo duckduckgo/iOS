@@ -27,8 +27,15 @@ import SpecialErrorPages
 /// advanced information related to the error.
 protocol SpecialErrorPageActionHandler {
     /// Handles the action of navigating to the site associated with the error page
+    /// - Parameters:
+    ///  - url: The URL that the user wants to visit.
+    ///  - errorData: The special error information.
     @MainActor
     func visitSite(url: URL, errorData: SpecialErrorData)
+
+    /// Handles the action of navigating to the site associated with the error page
+    @MainActor
+    func visitSite()
 
     /// Handles the action of leaving the site associated with the error page
     @MainActor
@@ -37,4 +44,12 @@ protocol SpecialErrorPageActionHandler {
     /// Handles the action of requesting more detailed information about the error
     @MainActor
     func advancedInfoPresented()
+}
+
+extension SpecialErrorPageActionHandler {
+
+    func visitSite(url: URL, errorData: SpecialErrorData) { }
+
+    func visitSite() { }
+
 }

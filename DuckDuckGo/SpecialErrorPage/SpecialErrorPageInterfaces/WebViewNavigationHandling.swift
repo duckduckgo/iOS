@@ -43,7 +43,7 @@ protocol WebViewNavigationHandling: AnyObject {
     ///   - navigationAction: Details about the action that triggered the navigation request.
     ///   - webView: The web view from which the navigation request began.
     @MainActor
-    func handleDecidePolicyFor(navigationAction: WKNavigationAction, webView: WKWebView)
+    func handleDecidePolicy(for navigationAction: WKNavigationAction, webView: WKWebView)
 
     /// Decides whether to to navigate to new content after the response to the navigation request is known or cancel the navigation and show a special error page based on the specified action information.
     /// - Parameters:
@@ -51,7 +51,7 @@ protocol WebViewNavigationHandling: AnyObject {
     ///   - webView: The web view from which the navigation request began.
     /// - Returns: A Boolean value that indicates whether to cancel or allow the navigation.
     @MainActor
-    func handleDecidePolicyfor(navigationResponse: WKNavigationResponse, webView: WKWebView) async -> Bool
+    func handleDecidePolicy(for navigationResponse: WKNavigationResponse, webView: WKWebView) async -> Bool
 
     /// Handles authentication challenges received by the web view.
     ///

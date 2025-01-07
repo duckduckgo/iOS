@@ -138,8 +138,7 @@ final class SSLSpecialErrorPageTests {
         let protectionSpace = URLProtectionSpace(host: "", port: 4, protocol: nil, realm: nil, authenticationMethod: NSURLAuthenticationMethodServerTrust)
         let challenge = URLAuthenticationChallenge(protectionSpace: protectionSpace, proposedCredential: nil, previousFailureCount: 0, failureResponse: nil, error: nil, sender: ChallengeSender())
         var expectedCredential: URLCredential?
-        let dummyURL = try #require(URL(string: "https://example.com"))
-        sut.visitSite(url: dummyURL, errorData: .ssl(type: .invalid, domain: "", eTldPlus1: nil))
+        sut.visitSite()
 
         // WHEN
         sut.handleServerTrustChallenge(challenge) { _, credential in

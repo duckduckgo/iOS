@@ -61,12 +61,12 @@ final class SpecialErrorPageNavigationHandler: SpecialErrorPageContextHandling {
 extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
 
     @MainActor
-    func handleDecidePolicyFor(navigationAction: WKNavigationAction, webView: WKWebView) {
-        maliciousSiteProtectionNavigationHandler.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+    func handleDecidePolicy(for navigationAction: WKNavigationAction, webView: WKWebView) {
+        maliciousSiteProtectionNavigationHandler.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
     }
 
     @MainActor
-    func handleDecidePolicyfor(navigationResponse: WKNavigationResponse, webView: WKWebView) async -> Bool {
+    func handleDecidePolicy(for navigationResponse: WKNavigationResponse, webView: WKWebView) async -> Bool {
         guard let task = maliciousSiteProtectionNavigationHandler.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView) else {
             return false
         }
@@ -165,7 +165,7 @@ extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate 
 
         switch errorData {
         case .ssl:
-            sslErrorPageNavigationHandler.visitSite(url: url, errorData: errorData)
+            sslErrorPageNavigationHandler.visitSite()
         case .maliciousSite:
             maliciousSiteProtectionNavigationHandler.visitSite(url: url, errorData: errorData)
         }

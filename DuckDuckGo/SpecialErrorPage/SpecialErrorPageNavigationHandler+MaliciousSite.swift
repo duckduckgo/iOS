@@ -42,7 +42,7 @@ protocol MaliciousSiteProtectionNavigationHandling: AnyObject {
     ///     the navigation event.
     ///   - webView: The web view from which the navigation request began.
     @MainActor
-    func createMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView)
+    func makeMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView)
 
     /// Retrieves a task for detecting malicious sites based on the provided navigation response.
     ///
@@ -79,13 +79,12 @@ final class MaliciousSiteProtectionNavigationHandler {
 extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling {
 
     @MainActor
-    func createMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
+    func makeMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
 
-        guard let url = navigationAction.request.url else {
-            return
-        }
-
-        if let aboutBlankURL = URL(string: "about:blank"), url == aboutBlankURL {
+        guard
+            let url = navigationAction.request.url,
+            url != URL(string: "about:blank")
+        else {
             return
         }
 
@@ -95,20 +94,18 @@ extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavig
             return
         }
 
-        let threatDetectionTask: Task<MaliciousSiteProtectionNavigationResult, Never> = Task.detached { [weak self] in
-            guard let self else { return .navigationNotHandled }
-
-            guard let threatKind = await self.maliciousSiteProtectionManager.evaluate(url) else {
+        let threatDetectionTask: Task<MaliciousSiteProtectionNavigationResult, Never> = Task {
+            guard let threatKind = await maliciousSiteProtectionManager.evaluate(url) else {
                 return .navigationNotHandled
             }
 
-            if await navigationAction.isTargetingMainFrame {
+            if navigationAction.isTargetingMainFrame {
                 let errorData = SpecialErrorData.maliciousSite(kind: threatKind, url: url)
                 let response = MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)
                 return .navigationHandled(.mainFrame(response))
             } else {
                 // Extract the URL of the source frame (the iframe) that initiated the navigation action
-                let iFrameTopURL = await navigationAction.sourceFrame.safeRequest?.url ?? url
+                let iFrameTopURL = navigationAction.sourceFrame.safeRequest?.url ?? url
                 let errorData = SpecialErrorData.maliciousSite(kind: threatKind, url: iFrameTopURL)
                 return .navigationHandled(.iFrame(maliciousURL: url, error: errorData))
             }

@@ -57,7 +57,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
 
         // WHEN
-        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        sut.handleDecidePolicy(for: navigationAction, webView: webView)
 
         // THEN
         #expect(maliciousSiteProtectionNavigationHandler.didCallHandleMaliciousSiteProtectionForNavigationAction)
@@ -73,7 +73,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         let navigationResponse = MockNavigationResponse.with(url: url)
 
         // WHEN
-        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        _ = await sut.handleDecidePolicy(for: navigationResponse, webView: webView)
 
         // THEN
         #expect(maliciousSiteProtectionNavigationHandler.didCallHandleMaliciousSiteProtectionForNavigationResponse)
@@ -90,7 +90,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         maliciousSiteProtectionNavigationHandler.task = nil
 
         // WHEN
-        let result = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        let result = await sut.handleDecidePolicy(for: navigationResponse, webView: webView)
 
         // THEN
         #expect(result == false)
@@ -120,7 +120,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         }
 
         // WHEN
-        let result = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        let result = await sut.handleDecidePolicy(for: navigationResponse, webView: webView)
 
         // THEN
         #expect(sut.isSpecialErrorPageRequest)
@@ -154,7 +154,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         }
 
         // WHEN
-        let result = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        let result = await sut.handleDecidePolicy(for: navigationResponse, webView: webView)
 
         // THEN
         #expect(sut.isSpecialErrorPageRequest)
@@ -186,7 +186,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         }
 
         // WHEN
-        let result = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        let result = await sut.handleDecidePolicy(for: navigationResponse, webView: webView)
 
         // THEN
         #expect(sut.isSpecialErrorPageRequest == false)
@@ -241,7 +241,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         maliciousSiteProtectionNavigationHandler.task = Task {
             .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
         }
-        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        _ = await sut.handleDecidePolicy(for: navigationResponse, webView: webView)
 
         #expect(!maliciousSiteProtectionNavigationHandler.didCallLeaveSite)
 
@@ -305,7 +305,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         maliciousSiteProtectionNavigationHandler.task = Task {
             .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
         }
-        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        _ = await sut.handleDecidePolicy(for: navigationResponse, webView: webView)
         let delegate = SpySpecialErrorPageNavigationDelegate()
         sut.delegate = delegate
         #expect(!delegate.didCallCloseSpecialErrorPageTab)
@@ -354,7 +354,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         maliciousSiteProtectionNavigationHandler.task = Task {
             .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
         }
-        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        _ = await sut.handleDecidePolicy(for: navigationResponse, webView: webView)
 
         #expect(!maliciousSiteProtectionNavigationHandler.didCallVisitSite)
 
@@ -412,7 +412,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         maliciousSiteProtectionNavigationHandler.task = Task {
             .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
         }
-        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        _ = await sut.handleDecidePolicy(for: navigationResponse, webView: webView)
 
         #expect(!maliciousSiteProtectionNavigationHandler.didCallAdvancedInfoPresented)
 

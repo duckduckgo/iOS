@@ -51,7 +51,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
 
         // WHEN
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
 
         // THEN
         #expect(sut.maliciousSiteDetectionTasks[url] == nil)
@@ -66,7 +66,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
 
         // WHEN
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
 
         // THEN
         #expect(sut.maliciousSiteDetectionTasks[url] != nil)
@@ -88,7 +88,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
 
         // WHEN
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
 
         // THEN
         #expect(sut.maliciousSiteDetectionTasks[url] == nil)
@@ -100,7 +100,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
         let navigationResponse = MockNavigationResponse.with(url: url)
         #expect(sut.maliciousSiteDetectionTasks[url] != nil)
 
@@ -117,9 +117,9 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
-        let navigationResponse = MockNavigationResponse.with(url: url)
         mockMaliciousSiteProtectionManager.threatKind = nil
+        sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        let navigationResponse = MockNavigationResponse.with(url: url)
 
         // WHEN
         let result = try #require(sut.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView))
@@ -140,9 +140,9 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
-        let navigationResponse = MockNavigationResponse.with(url: url)
         mockMaliciousSiteProtectionManager.threatKind = threat
+        sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        let navigationResponse = MockNavigationResponse.with(url: url)
 
         // WHEN
         let result = try #require(sut.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView))
@@ -163,9 +163,9 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: false))
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
-        let navigationResponse = MockNavigationResponse.with(url: url)
         mockMaliciousSiteProtectionManager.threatKind = threat
+        sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        let navigationResponse = MockNavigationResponse.with(url: url)
 
         // WHEN
         let result = try #require(sut.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView))

@@ -26,7 +26,7 @@ import WidgetKit
 public struct VPNControlWidget: ControlWidget {
     static let displayName = LocalizedStringResource(stringLiteral: "DuckDuckGo\nVPN")
     static let description = LocalizedStringResource(stringLiteral: "View and manage your VPN connection. Requires a Privacy Pro subscription.")
-    static let unknownLocation = "Unknown Location"
+    static let unknownLocation = UserText.vpnControlWidgetLocationUnknown
 
     public init() {}
 

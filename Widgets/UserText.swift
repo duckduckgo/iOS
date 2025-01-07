@@ -126,6 +126,11 @@ struct UserText {
         value: "VPN is OFF",
         comment: "Title for the control widget when disabled")
 
+    static let vpnControlWidgetLocationUnknown = NSLocalizedString(
+        "vpn.control.widget.location-unknown",
+        value: "Unknown Location",
+        comment: "Description for the control widget when the location is unknown")
+
     static let vpnControlWidgetConnecting = NSLocalizedString(
         "vpn.control.widget.connecting",
         value: "Connecting...",

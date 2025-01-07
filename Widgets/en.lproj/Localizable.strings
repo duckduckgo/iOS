@@ -43,6 +43,9 @@
 /* Description for the control widget when disconnecting */
 "vpn.control.widget.disconnecting" = "Disconnecting...";
 
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Unknown Location";
+
 /* Description for the control widget when not connected */
 "vpn.control.widget.not-connected" = "Not Connected";
 

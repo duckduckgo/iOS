@@ -319,8 +319,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         // Given
         let subscriptionFeatureAvailabilityWithoutPurchaseAllowed = SubscriptionFeatureAvailabilityMock(
             isFeatureAvailable: true,
-            isSubscriptionPurchaseAllowed: false,
-            usesUnifiedFeedbackForm: true
+            isSubscriptionPurchaseAllowed: false
         )
 
         feature = SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,

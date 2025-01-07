@@ -868,11 +868,7 @@
 		BD10B8AA2C7629740033115D /* Logger+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10B8A92C7629740033115D /* Logger+Subscription.swift */; };
 		BD15DB852B959CFD00821457 /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD15DB842B959CFD00821457 /* BundleExtension.swift */; };
 		BD2F39EB2C19F955005B19E7 /* NetworkProtectionDNSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2F39EA2C19F955005B19E7 /* NetworkProtectionDNSSettingsView.swift */; };
-		BD862E032B30DA170073E2EE /* VPNFeedbackFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E022B30DA170073E2EE /* VPNFeedbackFormViewModel.swift */; };
-		BD862E052B30DB250073E2EE /* VPNFeedbackCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E042B30DB250073E2EE /* VPNFeedbackCategory.swift */; };
-		BD862E072B30F5E30073E2EE /* VPNFeedbackSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E062B30F5E30073E2EE /* VPNFeedbackSender.swift */; };
 		BD862E092B30F63E0073E2EE /* VPNMetadataCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E082B30F63E0073E2EE /* VPNMetadataCollector.swift */; };
-		BD862E0B2B30F9300073E2EE /* VPNFeedbackFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E0A2B30F9300073E2EE /* VPNFeedbackFormView.swift */; };
 		BDC234F72B27F51100D3C798 /* UniquePixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC234F62B27F51100D3C798 /* UniquePixel.swift */; };
 		BDD3B3552B8EF8DB005857A8 /* NetworkProtectionUNNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */; };
 		BDE219E62C406D19005D5884 /* PrivacyProDataReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE219E52C406D19005D5884 /* PrivacyProDataReporting.swift */; };
@@ -2741,11 +2737,7 @@
 		BD10B8A92C7629740033115D /* Logger+Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Logger+Subscription.swift"; sourceTree = "<group>"; };
 		BD15DB842B959CFD00821457 /* BundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = "<group>"; };
 		BD2F39EA2C19F955005B19E7 /* NetworkProtectionDNSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionDNSSettingsView.swift; sourceTree = "<group>"; };
-		BD862E022B30DA170073E2EE /* VPNFeedbackFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNFeedbackFormViewModel.swift; sourceTree = "<group>"; };
-		BD862E042B30DB250073E2EE /* VPNFeedbackCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNFeedbackCategory.swift; sourceTree = "<group>"; };
-		BD862E062B30F5E30073E2EE /* VPNFeedbackSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNFeedbackSender.swift; sourceTree = "<group>"; };
 		BD862E082B30F63E0073E2EE /* VPNMetadataCollector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNMetadataCollector.swift; sourceTree = "<group>"; };
-		BD862E0A2B30F9300073E2EE /* VPNFeedbackFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNFeedbackFormView.swift; sourceTree = "<group>"; };
 		BDC234F62B27F51100D3C798 /* UniquePixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniquePixel.swift; sourceTree = "<group>"; };
 		BDE219E52C406D19005D5884 /* PrivacyProDataReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProDataReporting.swift; sourceTree = "<group>"; };
 		BDE219E92C457B46005D5884 /* PrivacyProDataReporterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyProDataReporterTests.swift; sourceTree = "<group>"; };
@@ -5305,18 +5297,6 @@
 			name = ContentBlocking;
 			sourceTree = "<group>";
 		};
-		BD862E012B30D9FB0073E2EE /* Feedback */ = {
-			isa = PBXGroup;
-			children = (
-				BD862E022B30DA170073E2EE /* VPNFeedbackFormViewModel.swift */,
-				BD862E042B30DB250073E2EE /* VPNFeedbackCategory.swift */,
-				BD862E062B30F5E30073E2EE /* VPNFeedbackSender.swift */,
-				BD862E082B30F63E0073E2EE /* VPNMetadataCollector.swift */,
-				BD862E0A2B30F9300073E2EE /* VPNFeedbackFormView.swift */,
-			);
-			path = Feedback;
-			sourceTree = "<group>";
-		};
 		BDE91CD42C6292BF0005CB74 /* Feedback */ = {
 			isa = PBXGroup;
 			children = (
@@ -5324,6 +5304,7 @@
 				BDE91CD72C629A910005CB74 /* UnifiedFeedbackSender.swift */,
 				BDE91CD92C62A70B0005CB74 /* UnifiedMetadataCollector.swift */,
 				BDE91CDB2C62AA3A0005CB74 /* DefaultMetadataCollector.swift */,
+				BD862E082B30F63E0073E2EE /* VPNMetadataCollector.swift */,
 				BDE91CDD2C62B90F0005CB74 /* UnifiedFeedbackRootView.swift */,
 				BDE91CDF2C6515410005CB74 /* UnifiedFeedbackFormViewModel.swift */,
 			);
@@ -5997,7 +5978,6 @@
 				EE458D122ABB651500FC651A /* Debug */,
 				EE0153E22A6FE031002A8B26 /* Root */,
 				EE0153DF2A6EABAF002A8B26 /* Helpers */,
-				BD862E012B30D9FB0073E2EE /* Feedback */,
 				EECD94B32A28B96C0085C66E /* Status */,
 				4B5C46282AF2A6DB002A4432 /* Intents */,
 				4B274F5E2AFEAEB3003F0745 /* Widget */,
@@ -7981,7 +7961,6 @@
 				859DB8152CE6263C001F7210 /* TextZoomEditorModel.swift in Sources */,
 				D668D9292B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift in Sources */,
 				D64648AD2B59936B0033090B /* SubscriptionEmailView.swift in Sources */,
-				BD862E032B30DA170073E2EE /* VPNFeedbackFormViewModel.swift in Sources */,
 				F4147354283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift in Sources */,
 				6FE1273A2C204BD000EB5724 /* NewTabPageView.swift in Sources */,
 				986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */,
@@ -8126,7 +8105,6 @@
 				9F7CFF762C86BB8F0012833E /* OnboardingView+AppIconPickerContent.swift in Sources */,
 				D68A21442B7EC08500BB372E /* SubscriptionExternalLinkView.swift in Sources */,
 				BDD3B3552B8EF8DB005857A8 /* NetworkProtectionUNNotificationPresenter.swift in Sources */,
-				BD862E0B2B30F9300073E2EE /* VPNFeedbackFormView.swift in Sources */,
 				850365F323DE087800D0F787 /* UIImageViewExtension.swift in Sources */,
 				56D060262C359D2E003BAEB5 /* ContextualOnboardingDialogs.swift in Sources */,
 				9F8E0F382CCFAA8A001EA7C5 /* AddToDockPromoView.swift in Sources */,
@@ -8171,7 +8149,6 @@
 				CBAD0F102D0062A7006267B8 /* UIService.swift in Sources */,
 				8598D2E32CEB98B500C45685 /* FaviconUserScript.swift in Sources */,
 				8598D2E42CEB98B500C45685 /* FaviconSourcesProvider.swift in Sources */,
-				BD862E052B30DB250073E2EE /* VPNFeedbackCategory.swift in Sources */,
 				317DF60B2D01E7D600DE0145 /* RoundedPageSheetPresentationAnimator.swift in Sources */,
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
 				BDE91CE02C6515420005CB74 /* UnifiedFeedbackFormViewModel.swift in Sources */,
@@ -8257,7 +8234,6 @@
 				6F655BE22BAB289E00AC3597 /* DefaultTheme.swift in Sources */,
 				6FE1274B2C20943500EB5724 /* ShortcutItemView.swift in Sources */,
 				7B4F87EA2D0738F90010B18F /* SiriEducationView.swift in Sources */,
-				BD862E072B30F5E30073E2EE /* VPNFeedbackSender.swift in Sources */,
 				AA4D6A6A23DB87B1007E8790 /* AppIconManager.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
 				317DF6082D01E7B900DE0145 /* RoundedPageSheetContainerViewController.swift in Sources */,
@@ -11864,8 +11840,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 223.0.0;
+				kind = revision;
+				revision = 6ed78b04baed8a02248b23c6b796573ac020ee70;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

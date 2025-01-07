@@ -67,14 +67,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state: State
 
-    public let usesUnifiedFeedbackForm: Bool
+    public let enablesUnifiedFeedbackForm: Bool
 
     init(subscriptionManager: SubscriptionManager = AppDependencyProvider.shared.subscriptionManager) {
         self.subscriptionManager = subscriptionManager
         let subscriptionFAQURL = subscriptionManager.url(for: .faq)
         let learnMoreURL = subscriptionFAQURL.appendingPathComponent("adding-email")
         self.state = State(faqURL: subscriptionFAQURL, learnMoreURL: learnMoreURL)
-        self.usesUnifiedFeedbackForm = subscriptionManager.accountManager.isUserAuthenticated
+        self.enablesUnifiedFeedbackForm = subscriptionManager.accountManager.isUserAuthenticated
 
         setupNotificationObservers()
     }

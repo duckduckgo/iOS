@@ -34,7 +34,7 @@ struct SettingsOthersView: View {
             }
 
             // Share Feedback
-            if viewModel.usesUnifiedFeedbackForm {
+            if viewModel.enablesUnifiedFeedbackForm {
                 let formViewModel = UnifiedFeedbackFormViewModel(subscriptionManager: viewModel.subscriptionManager,
                                                                  apiService: DefaultAPIService(),
                                                                  vpnMetadataCollector: DefaultVPNMetadataCollector(),

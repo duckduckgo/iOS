@@ -6174,10 +6174,6 @@
                 "allowPurchase": {
                     "state": "enabled"
                 },
-                "useUnifiedFeedback": {
-                    "state": "enabled",
-                    "minSupportedVersion": "7.136.0"
-                },
                 "setAccessTokenCookieForSubscriptionDomains": {
                     "state": "disabled",
                     "rollout": {

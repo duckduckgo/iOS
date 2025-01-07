@@ -54,7 +54,6 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
                                                      statusObserver: statusObserver,
                                                      serverInfoObserver: serverInfoObserver,
                                                      locationListRepository: MockNetworkProtectionLocationListRepository(),
-                                                     usesUnifiedFeedbackForm: false,
                                                      subscriptionManager: subscriptionManager)
     }
 

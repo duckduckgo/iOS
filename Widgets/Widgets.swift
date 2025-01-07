@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import AppIntents
 import Common
 import WidgetKit
 import SwiftUI
@@ -257,6 +258,12 @@ struct VPNBundle: WidgetBundle {
             VPNStatusWidget()
             VPNSnoozeLiveActivity()
         }
+
+        #if ALPHA || DEBUG
+        if #available(iOS 18, *) {
+            VPNControlWidget()
+        }
+        #endif
     }
 }
 

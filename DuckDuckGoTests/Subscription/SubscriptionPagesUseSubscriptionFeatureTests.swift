@@ -82,7 +82,6 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
     var subscriptionEnvironment: SubscriptionEnvironment!
 
     var subscriptionFeatureMappingCache: SubscriptionFeatureMappingCacheMock!
-    var subscriptionFeatureFlagger: FeatureFlaggerMapping<SubscriptionFeatureFlags>!
 
     var appStorePurchaseFlow: AppStorePurchaseFlow!
     var appStoreRestoreFlow: AppStoreRestoreFlow!
@@ -134,7 +133,6 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
                                                              settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
 
         subscriptionFeatureMappingCache = SubscriptionFeatureMappingCacheMock()
-        subscriptionFeatureFlagger = FeatureFlaggerMapping<SubscriptionFeatureFlags>(mapping: { $0.defaultState })
 
         // Real AccountManager
         accountManager = DefaultAccountManager(storage: accountStorage,
@@ -164,8 +162,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
                                                          subscriptionEndpointService: subscriptionService,
                                                          authEndpointService: authService,
                                                          subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
-                                                         subscriptionEnvironment: subscriptionEnvironment,
-                                                         subscriptionFeatureFlagger: subscriptionFeatureFlagger)
+                                                         subscriptionEnvironment: subscriptionEnvironment)
 
         feature = SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
                                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,

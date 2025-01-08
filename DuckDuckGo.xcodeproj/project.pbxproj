@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -3209,6 +3209,10 @@
 		F4F7F10925813FE200045D62 /* 03_Airstream_divided_by_four.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 03_Airstream_divided_by_four.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		31F6A99E2D2EBC5600126453 /* UserScript */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UserScript; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		0202565F298818B100E694E7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -3730,6 +3734,7 @@
 		311C79E22CF790270021196A /* AIChat */ = {
 			isa = PBXGroup;
 			children = (
+				31F6A99E2D2EBC5600126453 /* UserScript */,
 				311711902D00E53A0063AC3D /* OmnibarAccessoryHandling.swift */,
 				316AA4592CF8E31F00A2ED28 /* AIChatSettings.swift */,
 			);
@@ -6969,6 +6974,9 @@
 				8512EA5C24ED30D30073EE19 /* PBXTargetDependency */,
 				02FFD7BC2A1FC8BE007BD7D1 /* PBXTargetDependency */,
 				C1EF5B2D2CC0457B002980E6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				31F6A99E2D2EBC5600126453 /* UserScript */,
 			);
 			name = DuckDuckGo;
 			packageProductDependencies = (

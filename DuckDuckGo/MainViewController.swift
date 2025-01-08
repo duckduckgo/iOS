@@ -40,6 +40,19 @@ import PageRefreshMonitor
 import BrokenSitePrompt
 import AIChat
 
+//@MainActor
+//public class MockUserScriptsProvider: UserScriptsProvider {
+//    public var userScripts: [UserScript] = [ ]
+//
+//    public func loadWKUserScripts() async -> [WKUserScript] {
+//        let mockScript1 = WKUserScript(source: "console.log('Hello, World!');", injectionTime: .atDocumentStart, forMainFrameOnly: true)
+//        let mockScript2 = WKUserScript(source: "console.log('Another script');", injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+//        return [mockScript1, mockScript2]
+//    }
+//
+//    public init() {
+//    }
+//}
 class MainViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

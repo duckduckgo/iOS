@@ -40,19 +40,6 @@ import PageRefreshMonitor
 import BrokenSitePrompt
 import AIChat
 
-//@MainActor
-//public class MockUserScriptsProvider: UserScriptsProvider {
-//    public var userScripts: [UserScript] = [ ]
-//
-//    public func loadWKUserScripts() async -> [WKUserScript] {
-//        let mockScript1 = WKUserScript(source: "console.log('Hello, World!');", injectionTime: .atDocumentStart, forMainFrameOnly: true)
-//        let mockScript2 = WKUserScript(source: "console.log('Another script');", injectionTime: .atDocumentEnd, forMainFrameOnly: false)
-//        return [mockScript1, mockScript2]
-//    }
-//
-//    public init() {
-//    }
-//}
 class MainViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -201,13 +188,10 @@ class MainViewController: UIViewController {
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
 
-    private lazy var aiChatViewController: AIChatViewController = {
-        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
-        let aiChatViewController = AIChatViewController(settings: settings,
-                                                        webViewConfiguration: WKWebViewConfiguration.persistent())
-        aiChatViewController.delegate = self
-        return aiChatViewController
+    private lazy var aiChatViewControllerManager: AIChatViewControllerManager = {
+        let manager = AIChatViewControllerManager()
+        manager.delegate = self
+        return manager
     }()
 
     private var omnibarAccessoryHandler: OmnibarAccessoryHandler = {
@@ -1728,15 +1712,7 @@ class MainViewController: UIViewController {
     }
 
     private func openAIChat(_ query: URLQueryItem? = nil) {
-        if let query = query {
-            aiChatViewController.loadQuery(query)
-        }
-
-        let roundedPageSheet = RoundedPageSheetContainerViewController(
-            contentViewController: aiChatViewController,
-            allowedOrientation: .portrait)
-
-        present(roundedPageSheet, animated: true, completion: nil)
+        aiChatViewControllerManager.openAIChat(query, on: self)
     }
 }
 
@@ -3000,14 +2976,9 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     }
 }
 
-// MARK: - AIChatViewControllerDelegate
-extension MainViewController: AIChatViewControllerDelegate {
-    func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
+// MARK: - AIChatViewControllerManagerDelegate
+extension MainViewController: AIChatViewControllerManagerDelegate {
+    func aiChatViewControllerManager(_ manager: AIChatViewControllerManager, didRequestToLoad url: URL) {
         loadUrlInNewTab(url, inheritedAttribution: nil)
-        viewController.dismiss(animated: true)
-    }
-
-    func aiChatViewControllerDidFinish(_ viewController: AIChatViewController) {
-        viewController.dismiss(animated: true)
     }
 }

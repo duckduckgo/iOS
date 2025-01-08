@@ -757,9 +757,6 @@ extension SettingsViewModel {
             state.subscription = SettingsState.defaults.subscription
         }
 
-        // Update visibility based on Feature flag
-        state.subscription.enabled = subscriptionFeatureAvailability.isFeatureAvailable
-
         // Update if can purchase based on App Store product availability
         state.subscription.canPurchase = subscriptionManager.canPurchase
 

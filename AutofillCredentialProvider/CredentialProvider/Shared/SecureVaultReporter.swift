@@ -29,7 +29,8 @@ final class SecureVaultReporter: SecureVaultReporting {
         guard !ProcessInfo().arguments.contains("testing") else { return }
 #endif
         let pixelParams = [PixelParameters.isBackgrounded: "false",
-                           PixelParameters.appVersion: AppVersion.shared.versionAndBuildNumber]
+                           PixelParameters.appVersion: AppVersion.shared.versionAndBuildNumber,
+                           PixelParameters.isExtension: "true"]
 
         switch error {
         case .initFailed(let error):

@@ -114,6 +114,40 @@ struct UserText {
         return localized.format(arguments: endDate)
     }
 
+    // MARK: - Control Center Widget
+
+    static let vpnControlWidgetOn = NSLocalizedString(
+        "vpn.control.widget.on",
+        value: "VPN is ON",
+        comment: "Title for the control widget when enabled")
+
+    static let vpnControlWidgetOff = NSLocalizedString(
+        "vpn.control.widget.off",
+        value: "VPN is OFF",
+        comment: "Title for the control widget when disabled")
+
+    static let vpnControlWidgetLocationUnknown = NSLocalizedString(
+        "vpn.control.widget.location-unknown",
+        value: "Unknown Location",
+        comment: "Description for the control widget when the location is unknown")
+
+    static let vpnControlWidgetConnecting = NSLocalizedString(
+        "vpn.control.widget.connecting",
+        value: "Connecting...",
+        comment: "Description for the control widget when connecting")
+
+    static let vpnControlWidgetDisconnecting = NSLocalizedString(
+        "vpn.control.widget.disconnecting",
+        value: "Disconnecting...",
+        comment: "Description for the control widget when disconnecting")
+
+    static let vpnControlWidgetNotConnected = NSLocalizedString(
+        "vpn.control.widget.not-connected",
+        value: "Not Connected",
+        comment: "Description for the control widget when not connected")
+
+    // MARK: - Misc...
+
     static let lockScreenSearchTitle = NSLocalizedString(
         "lock.screen.widget.search.title",
         value: "Private Search",

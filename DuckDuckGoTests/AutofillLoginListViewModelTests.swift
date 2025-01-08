@@ -25,7 +25,7 @@ import Combine
 @testable import Core
 @testable import BrowserServicesKit
 @testable import Common
-@testable import TestUtils
+import PersistenceTestingUtils
 
 class AutofillLoginListViewModelTests: XCTestCase {
 

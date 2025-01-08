@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "fcappelli/subscription_oauth_api_v2",
-        "revision" : "d1998cae838ac33584b24c99662dd898e2eca0f0"
+        "revision" : "9d679f8292188a03f7635d4110ffe1c2e42aa31a"
       }
     },
     {
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/DesignResourcesKit",
       "state" : {
-        "revision" : "ad133f76501edcb2bfa841e33aebc0da5f92bb5c",
-        "version" : "3.3.0"
+        "revision" : "a35414a0b07da7fb79255370edfe845b7a22558c",
+        "version" : "3.3.1"
       }
     },
     {
@@ -147,7 +147,7 @@
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
         "revision" : "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
         "version" : "1.4.0"

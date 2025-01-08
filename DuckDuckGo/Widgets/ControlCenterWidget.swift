@@ -1,5 +1,5 @@
 //
-//  AIChatPixelHandler.swift
+//  ControlCenterWidget.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,16 +17,17 @@
 //  limitations under the License.
 //
 
-import AIChat
-import Core
+import SwiftUICore
 
-struct AIChatPixelHandler: AIChatPixelHandling {
-    func fire(pixel: AIChatPixel) {
-        switch pixel {
-        case .openAfter10min:
-            Pixel.fire(pixel: .openAIChatAfter10min)
-        case .openBefore10min:
-            Pixel.fire(pixel: .openAIChatBefore10min)
-        }
+/// Our Control Center Widgets
+///
+/// This isn't strictly necessary right now, but it allows us an opportunity to write cleaner code in
+/// perparation of having more widgets.
+///
+enum ControlCenterWidget {
+    case vpnToggle
+
+    var image: Image {
+        Image("ControlCenter-VPN-off")
     }
 }

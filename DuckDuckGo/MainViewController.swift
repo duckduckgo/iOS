@@ -192,8 +192,7 @@ class MainViewController: UIViewController {
         let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
         let aiChatViewController = AIChatViewController(settings: settings,
-                                                        webViewConfiguration: WKWebViewConfiguration.persistent(),
-                                                        pixelHandler: AIChatPixelHandler())
+                                                        webViewConfiguration: WKWebViewConfiguration.persistent())
         aiChatViewController.delegate = self
         return aiChatViewController
     }()
@@ -1714,14 +1713,14 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    private func openAIChat() {
-        let logoImage = UIImage(named: "Logo")
-        let title = UserText.aiChatTitle
+    private func openAIChat(_ query: URLQueryItem? = nil) {
+        if let query = query {
+            aiChatViewController.loadQuery(query)
+        }
 
         let roundedPageSheet = RoundedPageSheetContainerViewController(
             contentViewController: aiChatViewController,
-            logoImage: logoImage,
-            title: title)
+            allowedOrientation: .portrait)
 
         present(roundedPageSheet, animated: true, completion: nil)
     }
@@ -2089,8 +2088,11 @@ extension MainViewController: OmniBarDelegate {
 
         switch accessoryType {
         case .chat:
-            openAIChat()
+            let queryItem = currentTab?.url?.getQueryItems()?.filter { $0.name == "q" }.first
+            openAIChat(queryItem)
+            Pixel.fire(pixel: .openAIChatFromAddressBar)
         case .share:
+            Pixel.fire(pixel: .addressBarShare)
             currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.accessoryButton)
         }
     }
@@ -2610,8 +2612,15 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher(_ button: TabSwitcherButton) {
-        Pixel.fire(pixel: .tabBarTabSwitcherPressed)
-        DailyPixel.fireDaily(.tabSwitcherOpenDaily, withAdditionalParameters: TabSwitcherOpenDailyPixel().parameters(with: tabManager.model.tabs))
+        Pixel.fire(pixel: .tabBarTabSwitcherOpened)
+        DailyPixel.fireDaily(.tabSwitcherOpenedDaily, withAdditionalParameters: TabSwitcherOpenDailyPixel().parameters(with: tabManager.model.tabs))
+        if currentTab?.url?.isDuckDuckGoSearch == true {
+            Pixel.fire(pixel: .tabSwitcherOpenedFromSerp)
+        } else if currentTab?.url != nil {
+            Pixel.fire(pixel: .tabSwitcherOpenedFromWebsite)
+        } else {
+            Pixel.fire(pixel: .tabSwitcherOpenedFromNewTabPage)
+        }
 
         performCancel()
         showTabSwitcher()
@@ -2981,6 +2990,10 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
 extension MainViewController: AIChatViewControllerDelegate {
     func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
         loadUrlInNewTab(url, inheritedAttribution: nil)
+        viewController.dismiss(animated: true)
+    }
+
+    func aiChatViewControllerDidFinish(_ viewController: AIChatViewController) {
         viewController.dismiss(animated: true)
     }
 }

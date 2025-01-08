@@ -148,6 +148,7 @@ public struct PixelParameters {
     // Autofill
     public static let countBucket = "count_bucket"
     public static let backfilled = "backfilled"
+    public static let isExtension = "is_extension"
 
     // Privacy Dashboard
     public static let daysSinceInstall = "daysSinceInstall"

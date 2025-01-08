@@ -29,7 +29,8 @@ import OHHTTPStubs
 import OHHTTPStubsSwift
 import os.log
 import Networking
-import TestUtils
+import NetworkingTestingUtils
+import PersistenceTestingUtils
 
 final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 

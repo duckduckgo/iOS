@@ -583,7 +583,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
         activationDateStore.setActivationDateIfNecessary()
         activationDateStore.updateLastActiveDate()
-        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+
+        VPNReloadStatusWidgets()
     }
 }
 

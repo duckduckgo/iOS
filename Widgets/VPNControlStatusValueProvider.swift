@@ -1,5 +1,5 @@
 //
-//  AIChatPixelHandling.swift
+//  VPNControlStatusValueProvider.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,11 +17,20 @@
 //  limitations under the License.
 //
 
-public enum AIChatPixel {
-    case openBefore10min
-    case openAfter10min
-}
+import Foundation
+import NetworkExtension
+import WidgetKit
 
-public protocol AIChatPixelHandling {
-    func fire(pixel: AIChatPixel)
+struct VPNControlStatusValueProvider: ControlValueProvider {
+
+    let previewValue: VPNStatus = .notConfigured
+
+    func currentValue() async throws -> VPNStatus {
+        guard let manager = try await NETunnelProviderManager.loadAllFromPreferences().first else {
+
+            return .notConfigured
+        }
+
+        return .status(manager.connection.status)
+    }
 }

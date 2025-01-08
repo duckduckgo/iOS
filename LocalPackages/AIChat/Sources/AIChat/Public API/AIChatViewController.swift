@@ -16,6 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+
 import UIKit
 import Combine
 import WebKit
@@ -28,30 +29,41 @@ public protocol AIChatViewControllerDelegate: AnyObject {
     ///   - viewController: The `AIChatViewController` instance making the request.
     ///   - url: The `URL` that is requested to be loaded.
     func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL)
+
+    /// Tells the delegate that the `AIChatViewController` has finished its task.
+    ///
+    /// - Parameter viewController: The `AIChatViewController` instance that has finished.
+    func aiChatViewControllerDidFinish(_ viewController: AIChatViewController)
 }
 
 public final class AIChatViewController: UIViewController {
     public weak var delegate: AIChatViewControllerDelegate?
     private let chatModel: AIChatViewModeling
     private var webViewController: AIChatWebViewController?
-    private var cleanupCancellable: AnyCancellable?
-    private var didCleanup: Bool = false
-    private let timerPixelHandler: TimerPixelHandler
+
+    private lazy var titleBarView: TitleBarView = {
+        let title = UserText.aiChatTitle
+
+        let titleBarView = TitleBarView(title: UserText.aiChatTitle) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.aiChatViewControllerDidFinish(self)
+        }
+        return titleBarView
+    }()
+
 
     /// Initializes a new instance of `AIChatViewController` with the specified remote settings and web view configuration.
     ///
     /// - Parameters:
     ///   - remoteSettings: An object conforming to `AIChatSettingsProvider` that provides remote settings.
     ///   - webViewConfiguration: A `WKWebViewConfiguration` object used to configure the web view.
-    ///   - pixelHandler: A `AIChatPixelHandling` object used to send pixel events.
-    public convenience init(settings: AIChatSettingsProvider, webViewConfiguration: WKWebViewConfiguration, pixelHandler: AIChatPixelHandling) {
+    public convenience init(settings: AIChatSettingsProvider, webViewConfiguration: WKWebViewConfiguration) {
         let chatModel = AIChatViewModel(webViewConfiguration: webViewConfiguration, settings: settings)
-        self.init(chatModel: chatModel, pixelHandler: pixelHandler)
+        self.init(chatModel: chatModel)
     }
 
-    internal init(chatModel: AIChatViewModeling, pixelHandler: AIChatPixelHandling) {
+    internal init(chatModel: AIChatViewModeling) {
         self.chatModel = chatModel
-        self.timerPixelHandler = TimerPixelHandler(pixelHandler: pixelHandler)
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -67,7 +79,7 @@ extension AIChatViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
-        subscribeToCleanupPublisher()
+        setupTitleBar()
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -75,29 +87,46 @@ extension AIChatViewController {
         addWebViewController()
     }
 
-    public override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        timerPixelHandler.sendOpenPixel()
-        chatModel.cancelTimer()
-    }
-
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        chatModel.startCleanupTimer()
+        /// Clean up the previous conversation and prepare duck.ai for future presentation
+        webViewController?.reload()
     }
     
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
 
         if viewIfLoaded?.window == nil {
-            chatModel.cancelTimer()
             removeWebViewController()
         }
     }
 }
 
+// MARK: - Public functions
+extension AIChatViewController {
+    public func loadQuery(_ query: URLQueryItem) {
+         // Ensure the webViewController is added before loading the query
+         if webViewController == nil {
+             addWebViewController()
+         }
+         webViewController?.loadQuery(query)
+     }
+}
+
 // MARK: - Views Setup
 extension AIChatViewController {
+
+    private func setupTitleBar() {
+        view.addSubview(titleBarView)
+        titleBarView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            titleBarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            titleBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            titleBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            titleBarView.heightAnchor.constraint(equalToConstant: 68)
+        ])
+    }
 
     private func addWebViewController() {
         guard webViewController == nil else { return }
@@ -111,7 +140,7 @@ extension AIChatViewController {
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            viewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            viewController.view.topAnchor.constraint(equalTo: titleBarView.bottomAnchor),
             viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             viewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             viewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
@@ -124,19 +153,6 @@ extension AIChatViewController {
         webViewController?.removeFromParent()
         webViewController?.view.removeFromSuperview()
         webViewController = nil
-    }
-}
-
-// MARK: - Event handling
-extension AIChatViewController {
-
-    private func subscribeToCleanupPublisher() {
-        cleanupCancellable = chatModel.cleanupPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.webViewController?.reload()
-                self?.timerPixelHandler.markCleanup()
-            }
     }
 }
 

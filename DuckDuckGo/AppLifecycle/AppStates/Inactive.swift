@@ -21,8 +21,41 @@ import UIKit
 
 struct Inactive: AppState {
 
-    init(application: UIApplication) {
+    private let application: UIApplication
+    private let appDependencies: AppDependencies
 
+    var urlToOpen: URL?
+
+    init(stateContext: Active.StateContext) {
+        application = stateContext.application
+        appDependencies = stateContext.appDependencies
+
+        let vpnFeatureVisibility = appDependencies.vpnFeatureVisibility
+        let subscriptionManager = appDependencies.subscriptionManager
+        let vpnWorkaround = appDependencies.vpnWorkaround
+        Task { @MainActor [application] in
+            await application.refreshVPNShortcuts(vpnFeatureVisibility: vpnFeatureVisibility,
+                                                  subscriptionManager: subscriptionManager)
+            await vpnWorkaround.removeRedditSessionWorkaround()
+        }
+    }
+
+}
+
+extension Inactive {
+
+    struct StateContext {
+
+        let application: UIApplication
+        let urlToOpen: URL?
+        let appDependencies: AppDependencies
+
+    }
+
+    func makeStateContext() -> StateContext {
+        .init(application: application,
+              urlToOpen: urlToOpen,
+              appDependencies: appDependencies)
     }
 
 }

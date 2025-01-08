@@ -128,7 +128,10 @@ extension TabViewController {
             }))
         }
 
-        entries.append(.separator)
+        // Do not add separator if there are no entries so far
+        if entries.count > 0 {
+            entries.append(.separator)
+        }
 
         let shortcutsEntries = buildShortcutsEntries(includeBookmarks: false)
         entries.append(contentsOf: shortcutsEntries)

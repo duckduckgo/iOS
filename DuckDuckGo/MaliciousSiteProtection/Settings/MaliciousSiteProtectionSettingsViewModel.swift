@@ -21,6 +21,7 @@ import Foundation
 import Combine
 import Core
 import SwiftUI
+import PixelKit
 import MaliciousSiteProtection
 
 final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
@@ -51,4 +52,8 @@ final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
         urlOpener.open(URL.maliciousSiteProtectionLearnMore)
     }
 
+    private func updateMaliciousSiteProtection(enabled isEnabled: Bool) {
+        isMaliciousSiteProtectionOn = isEnabled
+        PixelKit.fire(MaliciousSiteProtection.Event.settingToggled(to: isEnabled))
+    }
 }

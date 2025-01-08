@@ -23,12 +23,8 @@ import BrowserServicesKit
 
 final class AutofillUsageMonitor {
 
-    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager? = {
-        guard let vault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) else {
-            return nil
-        }
-
-        return AutofillCredentialIdentityStoreManager(vault: vault,
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager = {
+        return AutofillCredentialIdentityStoreManager(reporter: SecureVaultReporter(),
                                                       tld: AppDependencyProvider.shared.storageCache.tld)
     }()
 
@@ -43,7 +39,7 @@ final class AutofillUsageMonitor {
             if state.isEnabled {
                 if self?.autofillExtensionEnabled == nil {
                     Task {
-                        await self?.credentialIdentityStoreManager?.populateCredentialStore()
+                        await self?.credentialIdentityStoreManager.populateCredentialStore()
                     }
                 }
                 self?.autofillExtensionEnabled = true

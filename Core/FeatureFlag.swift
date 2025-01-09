@@ -48,6 +48,7 @@ public enum FeatureFlag: String {
     case autcompleteTabs
     case textZoom
     case adAttributionReporting
+    case aiChat
 
     /// https://app.asana.com/0/72649045549333/1208231259093710/f
     case networkProtectionUserTips
@@ -137,6 +138,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .internalOnly()
         case .freeTrials:
             return .remoteDevelopment(.subfeature(PrivacyProSubfeature.freeTrials))
+        case .aiChat:
+            return .remoteReleasable(.feature(.aiChat))
         }
     }
 }

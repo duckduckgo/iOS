@@ -33,7 +33,7 @@ final class URLExtensionTests: XCTestCase {
         static let duckDuckGoWithMissingQuery = "\(duckDuckGoDomain)/"
         static let duckDuckGoDifferentQuery = "\(duckDuckGoDomain)/?ia=search"
         static let duckDuckGoAdditionalQueryItems = "\(duckDuckGoDomain)/?ia=chat&other=param"
-        static let privacyPro = "\(duckDuckGoDomain)/privacypro
+        static let privacyPro = "\(duckDuckGoDomain)/privacypro"
     }
 
     func testAddingQueryItemToEmptyURL() {

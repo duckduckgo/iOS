@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "michal/international-pp-cleanup",
-        "revision" : "84d2f7e4206707f5198a1ba669290d8ff86da22b"
+        "revision" : "a87790835c140e4399ac85bb5b3c39d4c5f4ff03",
+        "version" : "223.0.0-1"
       }
     },
     {

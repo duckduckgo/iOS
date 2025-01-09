@@ -300,7 +300,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         webView.setCurrentURL(url)
         sut.attachWebView(webView)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
-        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        sut.handleDecidePolicy(for: navigationAction, webView: webView)
         let response = MockNavigationResponse.with(url: url)
 
         await confirmation(expectedCount: 0) { receivedHTML in
@@ -309,7 +309,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            let result = await sut.handleDecidePolicyfor(navigationResponse: response, webView: webView)
+            let result = await sut.handleDecidePolicy(for: response, webView: webView)
 
             // THEN
             #expect(!result)
@@ -324,7 +324,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         webView.setCurrentURL(url)
         sut.attachWebView(webView)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
-        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        sut.handleDecidePolicy(for: navigationAction, webView: webView)
         let response = MockNavigationResponse.with(url: url)
 
         var expectedHTML: String?
@@ -336,7 +336,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            let result = await sut.handleDecidePolicyfor(navigationResponse: response, webView: webView)
+            let result = await sut.handleDecidePolicy(for: response, webView: webView)
 
             // THEN
             #expect(result)
@@ -345,7 +345,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             #expect(sut.isSpecialErrorPageRequest)
             #expect(sut.isSpecialErrorPageVisible)
             let html = try #require(expectedHTML)
-            #expect(html.contains("Warning: This site puts your personal information at risk"))
+            #expect(html.contains("Warning: This site may put your personal information at risk"))
             #expect(html.contains("This website may be impersonating a legitimate site in order to trick you into providing personal information, such as passwords or credit card numbers."))
         }
     }
@@ -359,7 +359,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         webView.setCurrentURL(url)
         sut.attachWebView(webView)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
-        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        sut.handleDecidePolicy(for: navigationAction, webView: webView)
         let response = MockNavigationResponse.with(url: url)
 
         await confirmation(expectedCount: 0) { receivedHTML in
@@ -368,7 +368,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            let result = await sut.handleDecidePolicyfor(navigationResponse: response, webView: webView)
+            let result = await sut.handleDecidePolicy(for: response, webView: webView)
 
             // THEN
             #expect(!result)
@@ -385,7 +385,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         let maliciousURL = try #require(URL(string: "http://privacy-test-pages.site/security/badware/phishing.html"))
         webView.setCurrentURL(maliciousURL)
         let maliciousSiteNavigationAction = MockNavigationAction(request: URLRequest(url: maliciousURL))
-        sut.handleDecidePolicyFor(navigationAction: maliciousSiteNavigationAction, webView: webView)
+        sut.handleDecidePolicy(for: maliciousSiteNavigationAction, webView: webView)
         let maliciousSiteResponse = MockNavigationResponse.with(url: maliciousURL)
 
         await confirmation { receivedHTML in
@@ -394,7 +394,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            let maliciousResult = await sut.handleDecidePolicyfor(navigationResponse: maliciousSiteResponse, webView: webView)
+            let maliciousResult = await sut.handleDecidePolicy(for: maliciousSiteResponse, webView: webView)
 
             // THEN
             #expect(maliciousResult)
@@ -410,7 +410,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         let safeURL = try #require(URL(string: "http://broken.third-party.site/"))
         webView.setCurrentURL(safeURL)
         let safeSiteNavigationAction = MockNavigationAction(request: URLRequest(url: safeURL))
-        sut.handleDecidePolicyFor(navigationAction: safeSiteNavigationAction, webView: webView)
+        sut.handleDecidePolicy(for: safeSiteNavigationAction, webView: webView)
         let safeSiteResponse = MockNavigationResponse.with(url: safeURL)
 
         await confirmation(expectedCount: 0) { receivedHTML in
@@ -419,7 +419,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            let result = await sut.handleDecidePolicyfor(navigationResponse: safeSiteResponse, webView: webView)
+            let result = await sut.handleDecidePolicy(for: safeSiteResponse, webView: webView)
 
             // THEN
             #expect(!result)
@@ -436,7 +436,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         let maliciousURL = try #require(URL(string: "http://privacy-test-pages.site/security/badware/phishing.html"))
         webView.setCurrentURL(maliciousURL)
         let maliciousSiteNavigationAction = MockNavigationAction(request: URLRequest(url: maliciousURL))
-        sut.handleDecidePolicyFor(navigationAction: maliciousSiteNavigationAction, webView: webView)
+        sut.handleDecidePolicy(for: maliciousSiteNavigationAction, webView: webView)
         let maliciousSiteResponse = MockNavigationResponse.with(url: maliciousURL)
 
         await confirmation { receivedHTML in
@@ -445,7 +445,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            let maliciousResult = await sut.handleDecidePolicyfor(navigationResponse: maliciousSiteResponse, webView: webView)
+            let maliciousResult = await sut.handleDecidePolicy(for: maliciousSiteResponse, webView: webView)
 
             // THEN
             #expect(maliciousResult)
@@ -461,7 +461,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         let safeURL = try #require(URL(string: "http://duckduckgo.com/"))
         webView.setCurrentURL(safeURL)
         let safeSiteNavigationAction = MockNavigationAction(request: URLRequest(url: safeURL))
-        sut.handleDecidePolicyFor(navigationAction: safeSiteNavigationAction, webView: webView)
+        sut.handleDecidePolicy(for: safeSiteNavigationAction, webView: webView)
         let safeSiteResponse = MockNavigationResponse.with(url: safeURL)
 
         await confirmation(expectedCount: 0) { receivedHTML in
@@ -470,7 +470,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            let result = await sut.handleDecidePolicyfor(navigationResponse: safeSiteResponse, webView: webView)
+            let result = await sut.handleDecidePolicy(for: safeSiteResponse, webView: webView)
 
             // THEN
             #expect(!result)

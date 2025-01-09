@@ -77,7 +77,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         maliciousSiteProtectionNavigationHandler.task = Task {
             .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: maliciousNavigationAction, errorData: errorData)))
         }
-        _ = await sut.handleDecidePolicyfor(navigationResponse: maliciousNavigationResponse, webView: webView)
+        _ = await sut.handleDecidePolicy(for: maliciousNavigationResponse, webView: webView)
         #expect(sut.errorData == errorData)
         #expect(sut.failedURL == maliciousURL)
 
@@ -86,7 +86,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
 
         // WHEN
-        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        sut.handleDecidePolicy(for: navigationAction, webView: webView)
 
         // THEN
         #expect(sut.errorData == nil)

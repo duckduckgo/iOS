@@ -1,6 +1,9 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
+# Workaround - for some reason Tab Switcher button is not found by maestro at this point.
+- tapOn: "Refresh Page"
+
 - assertVisible: "Tab Switcher"
 - tapOn: "Tab Switcher"
 - assertVisible: ${TITLE}

@@ -32,8 +32,7 @@ final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
                 self.manager.isMaliciousSiteProtectionOn
             },
             set: {
-                self.manager.isMaliciousSiteProtectionOn = $0
-                self.isMaliciousSiteProtectionEnabled = $0
+                self.updateMaliciousSiteProtection(enabled: $0)
             }
         )
     }
@@ -57,4 +56,10 @@ final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
     func learnMoreAction() {
         urlOpener.open(URL.maliciousSiteProtectionLearnMore)
     }
+
+    private func updateMaliciousSiteProtection(enabled isEnabled: Bool) {
+        manager.isMaliciousSiteProtectionOn = isEnabled
+        isMaliciousSiteProtectionEnabled = isEnabled
+    }
+
 }

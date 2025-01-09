@@ -269,9 +269,9 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         webView.setCurrentURL(url)
         sut.attachWebView(webView)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
-        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        sut.handleDecidePolicy(for: navigationAction, webView: webView)
         let response = MockNavigationResponse.with(url: url)
-        _ = await sut.handleDecidePolicyfor(navigationResponse: response, webView: webView)
+        _ = await sut.handleDecidePolicy(for: response, webView: webView)
         sut.visitSiteAction()
 
         // WHEN

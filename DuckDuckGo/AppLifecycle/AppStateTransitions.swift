@@ -26,7 +26,7 @@ extension Init {
         switch event {
         case .launching(let application, let isTesting):
             if isTesting {
-                return Testing(application: application)
+                return AppTesting(application: application)
             }
             return Launched(stateContext: makeStateContext(application: application))
         default:
@@ -116,7 +116,7 @@ extension Background {
 
 }
 
-extension Testing {
+extension AppTesting {
 
     func apply(event: AppEvent) -> any AppState { self }
 

@@ -44,8 +44,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         Sections.appstore: "App Store",
         Sections.environment: "Environment",
         Sections.pixels: "Promo Pixel Parameters",
-        Sections.metadata: "StoreKit Metadata",
-        Sections.featureFlags: "Feature flags"
+        Sections.metadata: "StoreKit Metadata"
     ]
 
     enum Sections: Int, CaseIterable {
@@ -55,7 +54,6 @@ final class SubscriptionDebugViewController: UITableViewController {
         case environment
         case pixels
         case metadata
-        case featureFlags
     }
 
     enum AuthorizationRows: Int, CaseIterable {
@@ -86,10 +84,6 @@ final class SubscriptionDebugViewController: UITableViewController {
     enum MetadataRows: Int, CaseIterable {
         case storefrontID
         case countryCode
-    }
-
-    enum FeatureFlagRows: Int, CaseIterable {
-        case isLaunchedROW
     }
 
     private var storefrontID = "Loading"
@@ -184,15 +178,6 @@ final class SubscriptionDebugViewController: UITableViewController {
                 break
             }
 
-        case .featureFlags:
-            switch FeatureFlagRows(rawValue: indexPath.row) {
-            case .isLaunchedROW:
-                cell.textLabel?.text = "isPrivacyProLaunchedROWOverride"
-                cell.accessoryType = featureFlagger.isFeatureOn(.isPrivacyProLaunchedROWOverride) ? .checkmark : .none
-            case .none:
-                break
-            }
-
         case .none:
             break
         }
@@ -208,7 +193,6 @@ final class SubscriptionDebugViewController: UITableViewController {
         case .environment: return EnvironmentRows.allCases.count
         case .pixels: return PixelsRows.allCases.count
         case .metadata: return MetadataRows.allCases.count
-        case .featureFlags: return FeatureFlagRows.allCases.count
         case .none: return 0
         }
     }
@@ -244,11 +228,6 @@ final class SubscriptionDebugViewController: UITableViewController {
             }
         case .metadata:
             break
-        case .featureFlags:
-            switch FeatureFlagRows(rawValue: indexPath.row) {
-            case .isLaunchedROW: toggleIsLaunchedROWFlag()
-            default: break
-            }
         case .none:
             break
         }
@@ -355,16 +334,6 @@ final class SubscriptionDebugViewController: UITableViewController {
                 Randomized: \(reportedParameters.joined(separator: ", "))
                 """
         showAlert(title: "", message: message)
-    }
-
-    private func toggleIsLaunchedROWFlag() {
-        let flag = FeatureFlag.isPrivacyProLaunchedROWOverride
-        if featureFlagger.localOverrides?.override(for: flag) == nil {
-            featureFlagger.localOverrides?.toggleOverride(for: flag)
-        } else {
-            featureFlagger.localOverrides?.clearOverride(for: flag)
-        }
-        tableView.reloadData()
     }
 
     private func syncAppleIDAccount() {

@@ -117,17 +117,7 @@ final class AppDependencyProvider: DependencyProvider {
 
         let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
         let theFeatureFlagger = featureFlagger
-        let subscriptionFeatureFlagger: FeatureFlaggerMapping<SubscriptionFeatureFlags> = FeatureFlaggerMapping { feature in
-            switch feature {
-            case .isLaunchedROW:
-                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROW)
-            case .isLaunchedROWOverride:
-                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROWOverride)
-            default:
-                return feature.defaultState
-            }
-        }
-
+        
         // keychain storage
         let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
         let tokenStorage = SubscriptionTokenKeychainStorageV2(keychainType: .dataProtection(.named(subscriptionAppGroup)))
@@ -164,7 +154,6 @@ final class AppDependencyProvider: DependencyProvider {
                                                              oAuthClient: authClient,
                                                              subscriptionEndpointService: subscriptionEndpointService,
                                                              subscriptionEnvironment: subscriptionEnvironment,
-                                                             subscriptionFeatureFlagger: subscriptionFeatureFlagger,
                                                              pixelHandler: pixelHandler)
         self.subscriptionManager = subscriptionManager
         networkProtectionTunnelController = NetworkProtectionTunnelController(tokenProvider: subscriptionManager,

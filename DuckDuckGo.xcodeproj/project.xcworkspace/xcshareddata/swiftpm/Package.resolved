@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "fcappelli/subscription_oauth_api_v2",
-        "revision" : "9d679f8292188a03f7635d4110ffe1c2e42aa31a"
+        "revision" : "351dc80d2364cce863cc10c1ed753a55bbcca7a2"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "bc808eb735d9eb72d5c54cf2452b104b6a370e25",
-        "version" : "6.43.0"
+        "revision" : "a539758027d9fd37d9d26213399ac156ca9fb81c",
+        "version" : "7.1.0"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "88982a3802ac504e2f1a118a73bfdf2d8f4a7735",
-        "version" : "16.0.0"
+        "revision" : "47c26dc32b94cdbcef3e6157497147917678c25c",
+        "version" : "16.1.0"
       }
     },
     {

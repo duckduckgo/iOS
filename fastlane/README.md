@@ -13,114 +13,116 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-### sync_signing
+## iOS
+
+### ios sync_signing
 
 ```sh
-[bundle exec] fastlane sync_signing
+[bundle exec] fastlane ios sync_signing
 ```
 
 Fetches and updates certificates and provisioning profiles for App Store distribution
 
-### sync_signing_adhoc
+### ios sync_signing_adhoc
 
 ```sh
-[bundle exec] fastlane sync_signing_adhoc
+[bundle exec] fastlane ios sync_signing_adhoc
 ```
 
 Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution
 
-### sync_signing_alpha
+### ios sync_signing_alpha
 
 ```sh
-[bundle exec] fastlane sync_signing_alpha
+[bundle exec] fastlane ios sync_signing_alpha
 ```
 
 Fetches and updates certificates and provisioning profiles for Alpha distribution
 
-### sync_signing_alpha_adhoc
+### ios sync_signing_alpha_adhoc
 
 ```sh
-[bundle exec] fastlane sync_signing_alpha_adhoc
+[bundle exec] fastlane ios sync_signing_alpha_adhoc
 ```
 
 Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution
 
-### adhoc
+### ios adhoc
 
 ```sh
-[bundle exec] fastlane adhoc
+[bundle exec] fastlane ios adhoc
 ```
 
 Makes Ad-Hoc build with a specified name and alpha bundle ID in a given directory
 
-### release_adhoc
+### ios release_adhoc
 
 ```sh
-[bundle exec] fastlane release_adhoc
+[bundle exec] fastlane ios release_adhoc
 ```
 
 Makes Ad-Hoc build with a specified name and release bundle ID in a given directory
 
-### alpha_adhoc
+### ios alpha_adhoc
 
 ```sh
-[bundle exec] fastlane alpha_adhoc
+[bundle exec] fastlane ios alpha_adhoc
 ```
 
 Makes Ad-Hoc build for alpha with a specified name and alpha bundle ID in a given directory
 
-### promote_latest_testflight_to_appstore
+### ios promote_latest_testflight_to_appstore
 
 ```sh
-[bundle exec] fastlane promote_latest_testflight_to_appstore
+[bundle exec] fastlane ios promote_latest_testflight_to_appstore
 ```
 
 Promotes the latest TestFlight build to App Store without submitting for review
 
-### release_appstore
+### ios release_appstore
 
 ```sh
-[bundle exec] fastlane release_appstore
+[bundle exec] fastlane ios release_appstore
 ```
 
 Makes App Store release build and uploads it to App Store Connect
 
-### upload_metadata
+### ios upload_metadata
 
 ```sh
-[bundle exec] fastlane upload_metadata
+[bundle exec] fastlane ios upload_metadata
 ```
 
 Updates App Store metadata
 
-### release_testflight
+### ios release_testflight
 
 ```sh
-[bundle exec] fastlane release_testflight
+[bundle exec] fastlane ios release_testflight
 ```
 
 Makes App Store release build and uploads it to TestFlight
 
-### release_alpha
+### ios release_alpha
 
 ```sh
-[bundle exec] fastlane release_alpha
+[bundle exec] fastlane ios release_alpha
 ```
 
 Makes Alpha release build and uploads it to TestFlight
 
-### latest_build_number_for_version
+### ios latest_build_number_for_version
 
 ```sh
-[bundle exec] fastlane latest_build_number_for_version
+[bundle exec] fastlane ios latest_build_number_for_version
 ```
 
 Latest build number for version
 
-### increment_build_number_for_version
+### ios increment_build_number_for_version
 
 ```sh
-[bundle exec] fastlane increment_build_number_for_version
+[bundle exec] fastlane ios increment_build_number_for_version
 ```
 
 Increment build number based on version in App Store Connect

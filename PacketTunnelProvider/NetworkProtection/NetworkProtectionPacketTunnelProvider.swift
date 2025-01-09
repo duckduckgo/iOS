@@ -501,7 +501,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                                              oAuthClient: authClient,
                                                              subscriptionEndpointService: subscriptionEndpointService,
                                                              subscriptionEnvironment: subscriptionEnvironment,
-                                                             subscriptionFeatureFlagger: nil,
                                                              pixelHandler: pixelHandler)
         self.subscriptionManager = subscriptionManager
         let errorStore = NetworkProtectionTunnelErrorStore()
@@ -617,18 +616,3 @@ final class DefaultWireGuardInterface: WireGuardInterface {
         wgSetLogger(context, logFunction)
     }
 }
-
-// extension NetworkProtectionPacketTunnelProvider: AccountManagerKeychainAccessDelegate {
-//
-//    public func accountManagerKeychainAccessFailed(accessType: AccountKeychainAccessType, error: AccountKeychainAccessError) {
-//        let parameters = [
-//            PixelParameters.privacyProKeychainAccessType: accessType.rawValue,
-//            PixelParameters.privacyProKeychainError: error.errorDescription,
-//            PixelParameters.source: "vpn"
-//        ]
-//
-// DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
-//                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
-//                             withAdditionalParameters: parameters)
-//    }
-// }

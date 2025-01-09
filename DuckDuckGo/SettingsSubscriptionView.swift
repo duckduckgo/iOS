@@ -273,7 +273,7 @@ struct SettingsSubscriptionView: View {
             }
         }
         .onReceive(settingsViewModel.$state) { state in
-            isShowingPrivacyPro = state.subscription.enabled && (state.subscription.subscriptionExist || state.subscription.canPurchase)
+            isShowingPrivacyPro = state.subscription.subscriptionExist || state.subscription.canPurchase
         }
     }
 }

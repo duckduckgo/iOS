@@ -24,9 +24,12 @@ import RemoteMessaging
 protocol AIChatUserScriptHandling {
     func handleGetUserValues(params: Any, message: UserScriptMessage) -> Encodable?
     func openAIChat(params: Any, message: UserScriptMessage) async -> Encodable?
+    func setPayloadHandler(_ payloadHandler: (any AIChatPayloadHandling)?)
 }
 
-struct AIChatUserScriptHandler: AIChatUserScriptHandling {
+final class AIChatUserScriptHandler: AIChatUserScriptHandling {
+    private var payloadHandler: (any AIChatPayloadHandling)?
+
     enum AIChatKeys {
         static let aiChatPayload = "aiChatPayload"
     }
@@ -36,13 +39,14 @@ struct AIChatUserScriptHandler: AIChatUserScriptHandling {
     /// This function stores the payload and triggers a notification to handle the AI Chat opening process.
     @MainActor
     func openAIChat(params: Any, message: UserScriptMessage) async -> Encodable? {
-        if let paramsDict = params as? [String: Any] {
-            AIChatPayloadHolder.shared.payload = paramsDict[AIChatKeys.aiChatPayload] as? [String: Any]
+        var payload: AIChatPayload?
+        if let paramsDict = params as? AIChatPayload {
+            payload = paramsDict[AIChatKeys.aiChatPayload] as? AIChatPayload
         }
 
         NotificationCenter.default.post(
             name: .urlInterceptAIChat,
-            object: params,
+            object: payload,
             userInfo: nil
         )
 
@@ -51,15 +55,12 @@ struct AIChatUserScriptHandler: AIChatUserScriptHandling {
 
     /// Called when the AI Chat view is displayed. If a payload exists, it retrieves and clears it from storage.
     public func handleGetUserValues(params: Any, message: UserScriptMessage) -> Encodable? {
-        let userValues = AIChatScriptUserValues(isAIChatEnabled: true,
-                   platform: "iOS",
-                   aiChatPayload: AIChatPayloadHolder.shared.payload)
-        AIChatPayloadHolder.shared.payload = nil
-        return userValues
+        AIChatScriptUserValues(isAIChatEnabled: true,
+                               platform: "iOS",
+                               aiChatPayload: payloadHandler?.consumePayload() as? AIChatPayload)
     }
-}
 
-private final class AIChatPayloadHolder {
-    static let shared = AIChatPayloadHolder()
-    var payload: [String: Any]?
+    func setPayloadHandler(_ payloadHandler: (any AIChatPayloadHandling)?) {
+        self.payloadHandler = payloadHandler
+    }
 }

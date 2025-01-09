@@ -22,7 +22,7 @@ import Foundation
 public struct AIChatScriptUserValues: Codable {
     let isAIChatEnabled: Bool
     let platform: String
-    let aiChatPayload: [String: Any]?
+    let aiChatPayload: AIChatPayload?
 
     enum CodingKeys: String, CodingKey {
         case isAIChatEnabled
@@ -42,7 +42,7 @@ public struct AIChatScriptUserValues: Codable {
         platform = try container.decode(String.self, forKey: .platform)
 
         if let aiChatPayloadData = try? container.decodeIfPresent(Data.self, forKey: .aiChatPayload) {
-            aiChatPayload = try JSONSerialization.jsonObject(with: aiChatPayloadData, options: []) as? [String: Any]
+            aiChatPayload = try JSONSerialization.jsonObject(with: aiChatPayloadData, options: []) as? AIChatPayload
         } else {
             aiChatPayload = nil
         }

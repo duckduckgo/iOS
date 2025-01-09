@@ -173,6 +173,7 @@
 		317DF60B2D01E7D600DE0145 /* RoundedPageSheetPresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317DF60A2D01E7D600DE0145 /* RoundedPageSheetPresentationAnimator.swift */; };
 		317F5F982C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F5F972C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift */; };
 		31860A5B2C57ED2D005561F5 /* DuckPlayerStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */; };
+		318C5B492D3022FE00DAA5FC /* AIChatPayloadHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C5B482D3022FE00DAA5FC /* AIChatPayloadHandling.swift */; };
 		31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */; };
 		319A37152829A55F0079FBCE /* AutofillListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A37142829A55F0079FBCE /* AutofillListItemTableViewCell.swift */; };
 		319A37172829C8AD0079FBCE /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A37162829C8AD0079FBCE /* UITableViewExtension.swift */; };
@@ -1583,6 +1584,7 @@
 		317DF60A2D01E7D600DE0145 /* RoundedPageSheetPresentationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPageSheetPresentationAnimator.swift; sourceTree = "<group>"; };
 		317F5F972C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceAdPostbackStorage.swift; sourceTree = "<group>"; };
 		31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuckPlayerStorage.swift; sourceTree = "<group>"; };
+		318C5B482D3022FE00DAA5FC /* AIChatPayloadHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatPayloadHandling.swift; sourceTree = "<group>"; };
 		31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginDetailsHeaderView.swift; sourceTree = "<group>"; };
 		319A37142829A55F0079FBCE /* AutofillListItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillListItemTableViewCell.swift; sourceTree = "<group>"; };
 		319A37162829C8AD0079FBCE /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
@@ -3912,6 +3914,7 @@
 		31C314A32D2EF9DF009A412A /* UserScript */ = {
 			isa = PBXGroup;
 			children = (
+				318C5B482D3022FE00DAA5FC /* AIChatPayloadHandling.swift */,
 				31C3149B2D2EEB44009A412A /* AIChatScriptUserValues.swift */,
 				31C3149C2D2EEB44009A412A /* AIChatUserScript.swift */,
 				31C3149D2D2EEB44009A412A /* AIChatUserScriptHandling.swift */,
@@ -8419,6 +8422,7 @@
 				6FEC0B882C999961006B4F6E /* FavoritesListInteractingAdapter.swift in Sources */,
 				F4F6DFB626E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift in Sources */,
 				8586A11024CCCD040049720E /* TabsBarViewController.swift in Sources */,
+				318C5B492D3022FE00DAA5FC /* AIChatPayloadHandling.swift in Sources */,
 				6FEC0B852C999352006B4F6E /* FavoriteItem.swift in Sources */,
 				9F8E0F2D2CCA618E001EA7C5 /* VideoPlayerView.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,

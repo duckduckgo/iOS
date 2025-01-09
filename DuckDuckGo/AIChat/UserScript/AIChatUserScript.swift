@@ -30,7 +30,7 @@ final class AIChatUserScript: NSObject, Subfeature {
         case getUserValues
     }
 
-    private let handler: AIChatUserScriptHandling
+    private var handler: AIChatUserScriptHandling
     public let featureName: String = "aiChat"
     weak var broker: UserScriptMessageBroker?
     private(set) var messageOriginPolicy: MessageOriginPolicy
@@ -54,5 +54,9 @@ final class AIChatUserScript: NSObject, Subfeature {
         default:
             return nil
         }
+    }
+
+    func setPayloadHandler(_ payloadHandler: any AIChatPayloadHandling) {
+        self.handler.setPayloadHandler(payloadHandler)
     }
 }

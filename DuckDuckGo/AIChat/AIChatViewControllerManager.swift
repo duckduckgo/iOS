@@ -29,9 +29,9 @@ protocol AIChatViewControllerManagerDelegate: AnyObject {
 }
 
 final class AIChatViewControllerManager {
-
-    
     weak var delegate: AIChatViewControllerManagerDelegate?
+    private var aiChatUserScript: AIChatUserScript?
+    private var payloadHandler = AIChatPayloadHandler()
 
     @MainActor
      lazy var aiChatViewController: AIChatViewController = {
@@ -51,19 +51,21 @@ final class AIChatViewControllerManager {
 
     @MainActor
     func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil, on viewController: UIViewController) {
+        let roundedPageSheet = RoundedPageSheetContainerViewController(
+            contentViewController: aiChatViewController,
+            allowedOrientation: .portrait)
+        print("batata view")
+
         if let query = query {
             aiChatViewController.loadQuery(query)
         }
 
         // Force a reload to trigger the user script getUserValues
-        if payload != nil {
+        if let payload = payload as? AIChatPayload {
+            print("batata PAYLOAD SET \(payload)")
+            payloadHandler.setPayload(payload)
             aiChatViewController.reload()
         }
-
-        let roundedPageSheet = RoundedPageSheetContainerViewController(
-            contentViewController: aiChatViewController,
-            allowedOrientation: .portrait)
-
         viewController.present(roundedPageSheet, animated: true, completion: nil)
     }
 }
@@ -73,7 +75,13 @@ extension AIChatViewControllerManager: UserContentControllerDelegate {
     func userContentController(_ userContentController: UserContentController,
                                didInstallContentRuleLists contentRuleLists: [String: WKContentRuleList],
                                userScripts: UserScriptsProvider,
-                               updateEvent: ContentBlockerRulesManager.UpdateEvent) { }
+                               updateEvent: ContentBlockerRulesManager.UpdateEvent) {
+
+        guard let userScripts = userScripts as? UserScripts else { fatalError("Unexpected UserScripts") }
+        self.aiChatUserScript = userScripts.aiChatUserScript
+        self.aiChatUserScript?.setPayloadHandler(self.payloadHandler)
+        print("batata SCRIPT SET")
+    }
 }
 
 // MARK: - AIChatViewControllerDelegate

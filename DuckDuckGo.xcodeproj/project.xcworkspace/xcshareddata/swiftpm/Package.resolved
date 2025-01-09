@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "alessandro/malicious-site-protection-address-bar-and-privacy-dashboard",
-        "revision" : "5bc2e8b352103675dcc038d450d936d34a4101d6"
+        "revision" : "ed36daf7bf939669a27711c3113937db06d64a41"
       }
     },
     {
@@ -123,7 +123,7 @@
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
         "branch" : "pr-releases/pr-252",
-        "revision" : "8b9ae746ea7bb2e46588fd4b1a81efabf69c20a4"
+        "revision" : "38ffba856dcc8cebcb21b4e0c49f512fe695e576"
       }
     },
     {

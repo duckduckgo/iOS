@@ -18,6 +18,8 @@
 //
 import UserScript
 import Foundation
+import BrowserServicesKit
+import RemoteMessaging
 
 protocol AIChatUserScriptHandling {
     func handleGetUserValues(params: Any, message: UserScriptMessage) -> Encodable?
@@ -25,14 +27,39 @@ protocol AIChatUserScriptHandling {
 }
 
 struct AIChatUserScriptHandler: AIChatUserScriptHandling {
-    @MainActor func openAIChat(params: Any, message: UserScriptMessage) async -> Encodable? {
-    //    WindowControllersManager.shared.showTab(with: .settings(pane: .aiChat))
+    enum AIChatKeys {
+        static let aiChatPayload = "aiChatPayload"
+    }
+
+    /// Invoked by the front-end code when it intends to open the AI Chat interface.
+    /// The front-end can provide a payload that will be used the next time the AI Chat view is displayed.
+    /// This function stores the payload and triggers a notification to handle the AI Chat opening process.
+    @MainActor
+    func openAIChat(params: Any, message: UserScriptMessage) async -> Encodable? {
+        if let paramsDict = params as? [String: Any] {
+            AIChatPayloadHolder.shared.payload = paramsDict[AIChatKeys.aiChatPayload] as? [String: Any]
+        }
+
+        NotificationCenter.default.post(
+            name: .urlInterceptAIChat,
+            object: params,
+            userInfo: nil
+        )
+
         return nil
     }
 
+    /// Called when the AI Chat view is displayed. If a payload exists, it retrieves and clears it from storage.
     public func handleGetUserValues(params: Any, message: UserScriptMessage) -> Encodable? {
-        AIChatScriptUserValues(isAIChatEnabled: true,
+        let userValues = AIChatScriptUserValues(isAIChatEnabled: true,
                    platform: "iOS",
-                   aiChatPayload: nil)
+                   aiChatPayload: AIChatPayloadHolder.shared.payload)
+        AIChatPayloadHolder.shared.payload = nil
+        return userValues
     }
+}
+
+private final class AIChatPayloadHolder {
+    static let shared = AIChatPayloadHolder()
+    var payload: [String: Any]?
 }

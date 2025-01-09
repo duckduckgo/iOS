@@ -29,6 +29,8 @@ protocol AIChatViewControllerManagerDelegate: AnyObject {
 }
 
 final class AIChatViewControllerManager {
+
+    
     weak var delegate: AIChatViewControllerManagerDelegate?
 
     @MainActor
@@ -48,9 +50,14 @@ final class AIChatViewControllerManager {
     }()
 
     @MainActor
-    func openAIChat(_ query: URLQueryItem? = nil, on viewController: UIViewController) {
+    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil, on viewController: UIViewController) {
         if let query = query {
             aiChatViewController.loadQuery(query)
+        }
+
+        // Force a reload to trigger the user script getUserValues
+        if payload != nil {
+            aiChatViewController.reload()
         }
 
         let roundedPageSheet = RoundedPageSheetContainerViewController(
@@ -62,11 +69,11 @@ final class AIChatViewControllerManager {
 }
 
 extension AIChatViewControllerManager: UserContentControllerDelegate {
+    @MainActor
     func userContentController(_ userContentController: UserContentController,
                                didInstallContentRuleLists contentRuleLists: [String: WKContentRuleList],
                                userScripts: UserScriptsProvider,
-                               updateEvent: ContentBlockerRulesManager.UpdateEvent) {
-    }
+                               updateEvent: ContentBlockerRulesManager.UpdateEvent) { }
 }
 
 // MARK: - AIChatViewControllerDelegate
@@ -78,5 +85,6 @@ extension AIChatViewControllerManager: AIChatViewControllerDelegate {
 
     func aiChatViewControllerDidFinish(_ viewController: AIChatViewController) {
         viewController.dismiss(animated: true)
+        
     }
 }

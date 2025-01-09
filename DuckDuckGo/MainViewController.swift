@@ -1521,8 +1521,8 @@ class MainViewController: UIViewController {
 
         NotificationCenter.default.publisher(for: .urlInterceptAIChat)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.openAIChat()
+            .sink { [weak self] notification in
+                self?.openAIChat(payload: notification.object)
             }
             .store(in: &urlInterceptorCancellables)
     }
@@ -1711,8 +1711,8 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    private func openAIChat(_ query: URLQueryItem? = nil) {
-        aiChatViewControllerManager.openAIChat(query, on: self)
+    private func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
+        aiChatViewControllerManager.openAIChat(query, payload: payload, on: self)
     }
 }
 
@@ -2981,4 +2981,5 @@ extension MainViewController: AIChatViewControllerManagerDelegate {
     func aiChatViewControllerManager(_ manager: AIChatViewControllerManager, didRequestToLoad url: URL) {
         loadUrlInNewTab(url, inheritedAttribution: nil)
     }
+    
 }

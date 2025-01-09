@@ -30,7 +30,7 @@ public struct AIChatScriptUserValues: Codable {
         case aiChatPayload
     }
 
-    public init(isAIChatEnabled: Bool, platform: String, aiChatPayload: [String: Any]?) {
+    init(isAIChatEnabled: Bool, platform: String, aiChatPayload: [String: Any]?) {
         self.isAIChatEnabled = isAIChatEnabled
         self.platform = platform
         self.aiChatPayload = aiChatPayload
@@ -53,9 +53,10 @@ public struct AIChatScriptUserValues: Codable {
         try container.encode(isAIChatEnabled, forKey: .isAIChatEnabled)
         try container.encode(platform, forKey: .platform)
 
-        if let aiChatPayload = aiChatPayload {
-            let data = try JSONSerialization.data(withJSONObject: aiChatPayload, options: [])
-            try container.encode(data, forKey: .aiChatPayload)
+        if let aiChatPayload = aiChatPayload,
+           let data = try? JSONSerialization.data(withJSONObject: aiChatPayload, options: []),
+           let jsonString = String(data: data, encoding: .utf8) {
+            try container.encode(jsonString, forKey: .aiChatPayload)
         } else {
             try container.encodeNil(forKey: .aiChatPayload)
         }

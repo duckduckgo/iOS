@@ -109,4 +109,39 @@ final class MaliciousSiteProtectionFeatureFlagsTests {
         #expect(!result)
     }
 
+    @Test("Feature Settings Return Remote Values")
+    func whenSettingIsDefinedReturnValue() throws {
+        // GIVEN
+        let privacyConfigMock = try #require(configurationManagerMock.privacyConfig as? PrivacyConfigurationMock)
+        privacyConfigMock.settings[.maliciousSiteProtection] = [
+            MaliciousSiteProtectionFeatureSettings.hashPrefixUpdateFrequency.rawValue: 10,
+            MaliciousSiteProtectionFeatureSettings.filterSetUpdateFrequency.rawValue: 50
+        ]
+        sut = MaliciousSiteProtectionFeatureFlags(featureFlagger: featureFlaggerMock, privacyConfigManager: configurationManagerMock)
+
+        // WHEN
+        let hashPrefixUpdateFrequency = sut.hashPrefixUpdateFrequency
+        let filterSetUpdateFrequency = sut.filterSetUpdateFrequency
+
+        // THEN
+        #expect(hashPrefixUpdateFrequency == 10)
+        #expect(filterSetUpdateFrequency == 50)
+    }
+
+    @Test("Feature Settings Return Default Values")
+    func whenSettingIsNotDefinedReturnDefaultValue() throws {
+        // GIVEN
+        let privacyConfigMock = try #require(configurationManagerMock.privacyConfig as? PrivacyConfigurationMock)
+        privacyConfigMock.settings[.maliciousSiteProtection] = [:]
+        sut = MaliciousSiteProtectionFeatureFlags(featureFlagger: featureFlaggerMock, privacyConfigManager: configurationManagerMock)
+
+        // WHEN
+        let hashPrefixUpdateFrequency = sut.hashPrefixUpdateFrequency
+        let filterSetUpdateFrequency = sut.filterSetUpdateFrequency
+
+        // THEN
+        #expect(hashPrefixUpdateFrequency == 20)
+        #expect(filterSetUpdateFrequency == 720)
+    }
+
 }

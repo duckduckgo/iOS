@@ -32,9 +32,35 @@ protocol MaliciousSiteProtectionFeatureFlagger {
     func shouldDetectMaliciousThreat(forDomain domain: String?) -> Bool
 }
 
+protocol MaliciousSiteProtectionFeatureFlagsSettingsProvider {
+    /// The frequency, in minutes, at which the hash prefix should be updated.
+    var hashPrefixUpdateFrequency: Int { get }
+    /// The frequency, in minutes, at which the filter set should be updated.
+    var filterSetUpdateFrequency: Int { get }
+}
+
+/// An enum representing the different settings for malicious site protection feature flags.
+enum MaliciousSiteProtectionFeatureSettings: String {
+    /// The setting for hash prefix update frequency.
+    case hashPrefixUpdateFrequency
+    /// The setting for filter set update frequency.
+    case filterSetUpdateFrequency
+
+    var defaultValue: Int {
+        switch self {
+        case .hashPrefixUpdateFrequency: return 20 // Default frequency for hash prefix updates is 20 minutes.
+        case .filterSetUpdateFrequency: return 720 // Default frequency for filter set updates is 720 minutes (12 hours).
+        }
+    }
+}
+
 final class MaliciousSiteProtectionFeatureFlags {
     private let featureFlagger: FeatureFlagger
     private let privacyConfigManager: PrivacyConfigurationManaging
+
+    private var remoteSettings: PrivacyConfigurationData.PrivacyFeature.FeatureSettings {
+        privacyConfigManager.privacyConfig.settings(for: .maliciousSiteProtection)
+    }
 
     init(
         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
@@ -54,7 +80,25 @@ extension MaliciousSiteProtectionFeatureFlags: MaliciousSiteProtectionFeatureFla
     }
 
     func shouldDetectMaliciousThreat(forDomain domain: String?) -> Bool {
-        privacyConfigManager.privacyConfig.isFeature(.maliciousSiteProtection, enabledForDomain: domain)
+        isMaliciousSiteProtectionEnabled && privacyConfigManager.privacyConfig.isFeature(.maliciousSiteProtection, enabledForDomain: domain)
+    }
+
+}
+
+// MARK: - MaliciousSiteProtectionFeatureFlagsSettingsProvider
+
+extension MaliciousSiteProtectionFeatureFlags: MaliciousSiteProtectionFeatureFlagsSettingsProvider {
+
+    var hashPrefixUpdateFrequency: Int {
+        getSettings(MaliciousSiteProtectionFeatureSettings.hashPrefixUpdateFrequency)
+    }
+    
+    var filterSetUpdateFrequency: Int {
+        getSettings(MaliciousSiteProtectionFeatureSettings.filterSetUpdateFrequency)
+    }
+
+    private func getSettings(_ value: MaliciousSiteProtectionFeatureSettings) -> Int {
+        remoteSettings[value.rawValue] as? Int ?? value.defaultValue
     }
 
 }

@@ -274,12 +274,8 @@ class TabViewController: UIViewController {
         return manager
     }()
 
-    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager? = {
-        guard let vault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) else {
-            return nil
-        }
-
-        return AutofillCredentialIdentityStoreManager(vault: vault,
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager = {
+        return AutofillCredentialIdentityStoreManager(reporter: SecureVaultReporter(),
                                                       tld: AppDependencyProvider.shared.storageCache.tld)
     }()
 
@@ -2853,7 +2849,7 @@ extension TabViewController: SecureVaultManagerDelegate {
 
                 guard let domain = account?.domain else { return }
                 Task {
-                    await self?.credentialIdentityStoreManager?.updateCredentialStore(for: domain)
+                    await self?.credentialIdentityStoreManager.updateCredentialStore(for: domain)
                 }
             } completionHandler: { account in
                 if account != nil {
@@ -3051,7 +3047,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
                 guard let domain = newCredential.account.domain else { return }
                 Task {
-                    await credentialIdentityStoreManager?.updateCredentialStore(for: domain)
+                    await credentialIdentityStoreManager.updateCredentialStore(for: domain)
                 }
             }
         } catch {

@@ -1523,6 +1523,7 @@ class MainViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] notification in
                 self?.openAIChat(payload: notification.object)
+
             }
             .store(in: &urlInterceptorCancellables)
     }

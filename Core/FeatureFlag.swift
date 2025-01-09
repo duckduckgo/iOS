@@ -59,9 +59,6 @@ public enum FeatureFlag: String {
     /// https://app.asana.com/0/1208592102886666/1208613627589762/f
     case crashReportOptInStatusResetting
 
-    case isPrivacyProLaunchedROW
-    case isPrivacyProLaunchedROWOverride
-
     /// https://app.asana.com/0/0/1208767141940869/f
     case freeTrials
 }
@@ -72,8 +69,6 @@ extension FeatureFlag: FeatureFlagDescribing {
 
     public var supportsLocalOverriding: Bool {
         switch self {
-        case .isPrivacyProLaunchedROWOverride:
-            return true
         default:
             return false
         }
@@ -141,10 +136,6 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.feature(.adAttributionReporting))
         case .crashReportOptInStatusResetting:
             return .internalOnly()
-        case .isPrivacyProLaunchedROW:
-            return .remoteReleasable(.subfeature(PrivacyProSubfeature.isLaunchedROW))
-        case .isPrivacyProLaunchedROWOverride:
-            return .remoteReleasable(.subfeature(PrivacyProSubfeature.isLaunchedROWOverride))
         case .freeTrials:
             return .remoteDevelopment(.subfeature(PrivacyProSubfeature.freeTrials))
         case .aiChat:

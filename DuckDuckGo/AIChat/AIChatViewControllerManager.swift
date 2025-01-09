@@ -54,7 +54,6 @@ final class AIChatViewControllerManager {
         let roundedPageSheet = RoundedPageSheetContainerViewController(
             contentViewController: aiChatViewController,
             allowedOrientation: .portrait)
-        print("batata view")
 
         if let query = query {
             aiChatViewController.loadQuery(query)
@@ -62,7 +61,6 @@ final class AIChatViewControllerManager {
 
         // Force a reload to trigger the user script getUserValues
         if let payload = payload as? AIChatPayload {
-            print("batata PAYLOAD SET \(payload)")
             payloadHandler.setPayload(payload)
             aiChatViewController.reload()
         }
@@ -80,7 +78,6 @@ extension AIChatViewControllerManager: UserContentControllerDelegate {
         guard let userScripts = userScripts as? UserScripts else { fatalError("Unexpected UserScripts") }
         self.aiChatUserScript = userScripts.aiChatUserScript
         self.aiChatUserScript?.setPayloadHandler(self.payloadHandler)
-        print("batata SCRIPT SET")
     }
 }
 

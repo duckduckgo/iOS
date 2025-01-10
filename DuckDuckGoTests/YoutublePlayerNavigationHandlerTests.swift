@@ -241,6 +241,23 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     }
     
     @MainActor
+    func testHandleNavigation_WithReferrerInURL_UpdatesDuckPlayerReferrer() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&dp_referrer=serp")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
+        playerSettings.mode = .alwaysAsk
+        playerSettings.openInNewTab = true
+        featureFlagger.enabledFeatures = [.duckPlayer, .duckPlayerOpenInNewTab]
+
+        // Act
+        handler.handleDuckNavigation(navigationAction, webView: mockWebView)
+        
+        // Assert
+        XCTAssertEqual(handler.referrer, .serp)
+        
+    }
+    
+    @MainActor
     func testHandleDelegateNavigation_DuckPlayerURL_CancelNavigationAndLoadsDuckPlayerWithParamsInTab() async {
         // Arrange
         let duckPlayerURL = URL(string: "duck://player/abc123")!

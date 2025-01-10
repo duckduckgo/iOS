@@ -31,13 +31,6 @@ extension MaliciousSiteProtectionManager {
         }
     }
 
-    static func updateInterval(for dataKind: MaliciousSiteProtection.DataManager.StoredDataType) -> TimeInterval {
-        switch dataKind {
-        case .hashPrefixSet: .minutes(20)
-        case .filterSet: .hours(12)
-        }
-    }
-
     struct EmbeddedDataProvider: MaliciousSiteProtection.EmbeddedDataProviding {
 
         // swiftlint:disable:next nesting

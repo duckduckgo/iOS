@@ -114,11 +114,15 @@ final class MockMaliciousSiteProtectionPreferencesManager: MaliciousSiteProtecti
     }
 }
 
-final class MockMaliciousSiteProtectionFeatureFlags: MaliciousSiteProtectionFeatureFlagger {
+final class MockMaliciousSiteProtectionFeatureFlags: MaliciousSiteProtectionFeatureFlagger, MaliciousSiteProtectionFeatureFlagsSettingsProvider {
 
     var shouldDetectMaliciousThreatForDomainResult = false
 
     var isMaliciousSiteProtectionEnabled: Bool = false
+
+    var hashPrefixUpdateFrequency: Int = 10
+
+    var filterSetUpdateFrequency: Int = 20
 
     func shouldDetectMaliciousThreat(forDomain domain: String?) -> Bool {
         shouldDetectMaliciousThreatForDomainResult

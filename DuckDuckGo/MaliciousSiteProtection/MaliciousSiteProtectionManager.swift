@@ -47,7 +47,7 @@ final class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
         dataManager: MaliciousSiteProtection.DataManager? = nil,
         detector: MaliciousSiteProtection.MaliciousSiteDetecting? = nil,
         preferencesManager: MaliciousSiteProtectionPreferencesPublishing = MaliciousSiteProtectionPreferencesManager(),
-        maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger = MaliciousSiteProtectionFeatureFlags(),
+        maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger & MaliciousSiteProtectionFeatureFlagsSettingsProvider = MaliciousSiteProtectionFeatureFlags(),
         updateIntervalProvider: UpdateManager.UpdateIntervalProvider? = nil
     ) {
         let embeddedDataProvider = EmbeddedDataProvider()
@@ -71,11 +71,18 @@ final class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
             eventMapping: Self.debugEvents
         )
 
+        let remoteIntervalProvider: (MaliciousSiteProtection.DataManager.StoredDataType) -> TimeInterval = { dataKind in
+            switch dataKind {
+            case .hashPrefixSet: .minutes(maliciousSiteProtectionFeatureFlagger.hashPrefixUpdateFrequency)
+            case .filterSet: .minutes(maliciousSiteProtectionFeatureFlagger.filterSetUpdateFrequency)
+            }
+        }
+
         self.updateManager = MaliciousSiteProtection.UpdateManager(
             apiEnvironment: apiEnvironment,
             service: apiService,
             dataManager: dataManager,
-            updateIntervalProvider: updateIntervalProvider ?? Self.updateInterval
+            updateIntervalProvider: updateIntervalProvider ?? remoteIntervalProvider
         )
 
         self.preferencesManager = preferencesManager

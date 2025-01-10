@@ -103,7 +103,7 @@ class TabURLInterceptorDefaultTests: XCTestCase {
     }
 
     func testNotificationForInterceptedAIChatPathWhenFeatureFlagIsOn() {
-        urlInterceptor = TabURLInterceptorDefault(featureFlagger: MockFeatureFlagger(enabledFeatureFlags: [.aiChat]), canPurchase: { true })
+        urlInterceptor = TabURLInterceptorDefault(featureFlagger: MockFeatureFlagger(enabledFeatureFlags: [.aiChatDeepLink]), canPurchase: { true })
 
         _ = self.expectation(forNotification: .urlInterceptAIChat, object: nil, handler: nil)
 

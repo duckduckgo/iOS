@@ -339,7 +339,21 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
         }
     }
-    
+
+    @MainActor
+    func cancelAppstoreTransaction() {
+        clearTransactionError()
+        Task {
+            do {
+                try await subFeature.cancelRestoreAccountFromAppStorePurchase()
+            } catch let error {
+                if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
+                    handleTransactionError(error: specificError)
+                }
+            }
+        }
+    }
+
     @MainActor
     func navigateBack() async {
         await webViewModel.navigationCoordinator.goBack()

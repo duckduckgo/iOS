@@ -296,7 +296,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case .failure(let error):
             Logger.subscription.error("App store complete subscription purchase error: \(error, privacy: .public)")
 
-            await subscriptionManager.signOut()
+            await subscriptionManager.signOut(notifyUI: true)
 
             setTransactionStatus(.idle)
             setTransactionError(.missingEntitlements)
@@ -316,7 +316,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         // Clear subscription Cache
-        await subscriptionManager.signOut()
+        await subscriptionManager.signOut(notifyUI: false)
 
         let authToken = subscriptionValues.token
         do {
@@ -452,7 +452,13 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             throw mappedError
         }
     }
-    
+
+    func cancelRestoreAccountFromAppStorePurchase() async throws {
+        setTransactionStatus(.idle)
+        await subscriptionManager.signOut(notifyUI: false)
+    }
+
+
     // MARK: Utility Methods
     
     func mapAppStoreRestoreErrorToTransactionError(_ error: AppStoreRestoreFlowError) -> UseSubscriptionError {

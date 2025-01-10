@@ -151,7 +151,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .freeTrials:
             return .remoteDevelopment(.subfeature(PrivacyProSubfeature.freeTrials))
         case .maliciousSiteProtection:
-            return .internalOnly()
+            return .remoteDevelopment(.subfeature(MaliciousSiteProtectionSubfeature.onByDefault))
         }
     }
 }

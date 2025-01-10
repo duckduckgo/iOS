@@ -603,6 +603,17 @@ final class DuckPlayerNavigationHandler: NSObject {
         return url.fragment != nil && !url.fragment!.isEmpty
     }
     
+    /// Checks a URL and updates the referer if present
+    ///
+    /// - Parameter url: The 'URL' with referrer parameters (current URL)
+    private func updateReferrerIfNeeded(url: URL) {
+        // Get the referrer from the URL if present
+        let urlReferrer = getDuckPlayerParameters(url: url).referrer
+        if urlReferrer != .other && urlReferrer != .undefined {
+            referrer = urlReferrer
+        }
+    }
+    
 }
 
 extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
@@ -642,6 +653,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Determine navigation type
         let shouldOpenInNewTab = isOpenInNewTabEnabled && !isNewTab(navigationAction)
+        
+        // Update referrer if needed
+        updateReferrerIfNeeded(url: url)
         
         // Handle duck:// scheme URLs (Or direct navigation to duck player)
         if url.isDuckURLScheme {

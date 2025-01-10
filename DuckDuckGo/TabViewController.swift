@@ -1353,82 +1353,82 @@ extension TabViewController: WKNavigationDelegate {
         duckPlayerNavigationHandler?.handleDidStartLoading(webView: webView)
     }
 
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationResponse: WKNavigationResponse,
-                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-
-        let mimeType = MIMEType(from: navigationResponse.response.mimeType, fileExtension: navigationResponse.response.url?.pathExtension)
-        let urlSchemeType = navigationResponse.response.url.map { SchemeHandler.schemeType(for: $0) } ?? .unknown
-        let urlNavigationalScheme = navigationResponse.response.url?.scheme.map { URL.NavigationalScheme(rawValue: $0) }
-
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse) async -> WKNavigationResponsePolicy {
         let httpResponse = navigationResponse.response as? HTTPURLResponse
-        let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
-        lastHttpStatusCode = httpResponse?.statusCode
-
         let didMarkAsInternal = internalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
         if didMarkAsInternal {
             Pixel.fire(pixel: .featureFlaggingInternalUserAuthenticated)
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.didVerifyInternalUser))
         }
 
-        // If the navigation has been handled by the special error page handler cancel navigating to new content as the special error page will be shown.
-        Task { @MainActor in
-            if
-                !specialErrorPageNavigationHandler.isSpecialErrorPageRequest,
-                await specialErrorPageNavigationHandler.handleDecidePolicy(for: navigationResponse, webView: webView) {
-                decisionHandler(.cancel)
-            } else {
-                // Important: Order of these checks matter!
-                if urlSchemeType == .blob {
-                    // 1. To properly handle BLOB we need to trigger its download, if temporaryDownloadForPreviewedFile is set we allow its load in the web view
-                    if let temporaryDownloadForPreviewedFile, temporaryDownloadForPreviewedFile.url == navigationResponse.response.url {
-                        // BLOB already has a temporary downloaded so and we can allow loading it
-                        blobDownloadTargetFrame = nil
-                        decisionHandler(.allow)
-                    } else {
-                        // First we need to trigger download to handle it then in webView:navigationAction:didBecomeDownload
-                        decisionHandler(.download)
-                    }
-                } else if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-                    // 2. For this MIME type we are able to provide a better custom preview via FilePreviewHelper so it takes priority
-                    let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-                    mostRecentAutoPreviewDownloadID = download?.id
-                    Pixel.fire(pixel: .downloadStarted,
-                               withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
-                } else if shouldTriggerDownloadAction(for: navigationResponse),
-                          let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
-                    // 3a. We know it is a download, but allow WebKit handle the "data" scheme natively
-                    if urlNavigationalScheme == .data {
-                        decisionHandler(.download)
-                        return
-                    }
+        // If the navigation has been handled by the special error page handler, cancel navigating to the new content as the special error page will be shown.
+        if !specialErrorPageNavigationHandler.isSpecialErrorPageRequest, await specialErrorPageNavigationHandler.handleDecidePolicy(for: navigationResponse, webView: webView) {
+            return .cancel
+        } else {
+            return await handleNavigationResponse(navigationResponse)
+        }
+    }
 
-                    // 3b. We know the response should trigger the file download prompt
-                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
-                        self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-                    } cancelHandler: {
-                        decisionHandler(.cancel)
-                    }
-                } else if navigationResponse.canShowMIMEType {
-                    // 4. WebView can preview the MIME type and it is not to be handled by our custom FilePreviewHelper
-                    url = webView.url
-                    if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
-                        // Loading a file preview in web view
-                        decisionHandler(decision)
-                    } else {
-                        // Loading HTML
-                        if navigationResponse.isForMainFrame && isSuccessfulResponse {
-                            adClickAttributionDetection.on2XXResponse(url: url)
-                        }
-                        adClickAttributionLogic.onProvisionalNavigation {
-                            decisionHandler(.allow)
-                        }
-                    }
-                } else {
-                    // Fallback
-                    decisionHandler(.allow)
-                }
+    private func handleNavigationResponse(_ navigationResponse: WKNavigationResponse) async -> WKNavigationResponsePolicy {
+        let httpResponse = navigationResponse.response as? HTTPURLResponse
+        let mimeType = MIMEType(from: navigationResponse.response.mimeType, fileExtension: navigationResponse.response.url?.pathExtension)
+        let urlSchemeType = navigationResponse.response.url.map { SchemeHandler.schemeType(for: $0) } ?? .unknown
+        let urlNavigationalScheme = navigationResponse.response.url?.scheme.map { URL.NavigationalScheme(rawValue: $0) }
+
+        let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
+        lastHttpStatusCode = httpResponse?.statusCode
+
+        // Important: Order of these checks matter!
+        if urlSchemeType == .blob {
+            // 1. To properly handle BLOB we need to trigger its download, if temporaryDownloadForPreviewedFile is set we allow its load in the web view
+            if let temporaryDownloadForPreviewedFile, temporaryDownloadForPreviewedFile.url == navigationResponse.response.url {
+                // BLOB already has a temporary downloaded so and we can allow loading it
+                blobDownloadTargetFrame = nil
+                return .allow
+            } else {
+                // First we need to trigger download to handle it then in webView:navigationAction:didBecomeDownload
+                return .download
             }
+        } else if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+            // 2. For this MIME type we are able to provide a better custom preview via FilePreviewHelper so it takes priority
+            let (policy, download) = await startDownload(with: navigationResponse)
+            mostRecentAutoPreviewDownloadID = download?.id
+            Pixel.fire(pixel: .downloadStarted,
+                       withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
+            return policy
+        } else if shouldTriggerDownloadAction(for: navigationResponse),
+                  let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
+            // 3a. We know it is a download, but allow WebKit handle the "data" scheme natively
+            if urlNavigationalScheme == .data {
+                return .download
+            }
+
+            // 3b. We know the response should trigger the file download prompt
+            switch await presentSaveToDownloadsAlert(with: downloadMetadata) {
+            case .success:
+                let (policy, _) = await startDownload(with: navigationResponse)
+                return policy
+            case .cancelled:
+                return .cancel
+            }
+        } else if navigationResponse.canShowMIMEType {
+            // 4. WebView can preview the MIME type and it is not to be handled by our custom FilePreviewHelper
+            url = webView.url
+            if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
+                // Loading a file preview in web view
+                return decision
+            } else {
+                // Loading HTML
+                if navigationResponse.isForMainFrame && isSuccessfulResponse {
+                    adClickAttributionDetection.on2XXResponse(url: url)
+                }
+                await adClickAttributionLogic.onProvisionalNavigation()
+
+                return .allow
+            }
+        } else {
+            // Fallback
+            return .allow
         }
     }
 
@@ -2137,26 +2137,19 @@ extension TabViewController {
         completion(.allow)
     }
 
-    @discardableResult
-    private func startDownload(with navigationResponse: WKNavigationResponse,
-                               decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) -> Download? {
+    private func startDownload(with navigationResponse: WKNavigationResponse) async -> (responsePolicy: WKNavigationResponsePolicy, download: Download?) {
         let downloadManager = AppDependencyProvider.shared.downloadManager
         let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
         let url = navigationResponse.response.url!
 
         if case .blob = SchemeHandler.schemeType(for: url) {
-            decisionHandler(.download)
-
-            return nil
+            return (.download, nil)
         } else if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
             downloadManager.startDownload(download)
-            decisionHandler(.cancel)
-
-            return download
+            return (.cancel, download)
         }
 
-        decisionHandler(.cancel)
-        return nil
+        return (.cancel, nil)
     }
 
     /**
@@ -2287,6 +2280,23 @@ extension TabViewController {
         }
     }
 
+    enum SaveToDownloadsResult {
+        case success
+        case cancelled
+    }
+
+    private func presentSaveToDownloadsAlert(with downloadMetadata: DownloadMetadata) async -> SaveToDownloadsResult {
+        await withCheckedContinuation { continuation in
+            presentSaveToDownloadsAlert(
+                with: downloadMetadata,
+                saveToDownloadsHandler: {
+                    continuation.resume(returning: .success)
+                }, cancelHandler: {
+                    continuation.resume(returning: .cancelled)
+                }
+            )
+        }
+    }
 
     private func registerForDownloadsNotifications() {
         NotificationCenter.default.addObserver(self,

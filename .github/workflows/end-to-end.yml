@@ -104,6 +104,12 @@ jobs:
     - name: Process Robin Results
       if: always()
       run: |
+        echo "Debug: MAESTRO_CLOUD_UPLOAD_STATUS = "
+        echo "${{ steps.upload.outputs.MAESTRO_CLOUD_UPLOAD_STATUS }}"
+
+        echo "Debug: MAESTRO_CLOUD_FLOW_RESULTS = "
+        echo "${{ steps.upload.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}"
+
         # Parse the JSON string
         RESULTS='${{ steps.upload.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}'
           

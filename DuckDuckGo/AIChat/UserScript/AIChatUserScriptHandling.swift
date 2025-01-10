@@ -29,6 +29,11 @@ protocol AIChatUserScriptHandling {
 
 final class AIChatUserScriptHandler: AIChatUserScriptHandling {
     private var payloadHandler: (any AIChatPayloadHandling)?
+    private let featureFlagger: FeatureFlagger
+
+    init(featureFlagger: FeatureFlagger) {
+        self.featureFlagger = featureFlagger
+    }
 
     enum AIChatKeys {
         static let aiChatPayload = "aiChatPayload"
@@ -55,7 +60,7 @@ final class AIChatUserScriptHandler: AIChatUserScriptHandling {
 
     /// Called when the AI Chat view is displayed. If a payload exists, it retrieves and clears it from storage.
     public func handleGetUserValues(params: Any, message: UserScriptMessage) -> Encodable? {
-        AIChatScriptUserValues(isAIChatEnabled: true,
+        AIChatScriptUserValues(isAIChatEnabled: featureFlagger.isFeatureOn(.aiChatDeepLink),
                                platform: "iOS",
                                aiChatPayload: payloadHandler?.consumePayload() as? AIChatPayload)
     }

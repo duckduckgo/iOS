@@ -1,4 +1,4 @@
-import AutoConsent from '@duckduckgo/autoconsent';
+import AutoConsent from '@duckduckgo/autoconsent/extra';
 import * as rules from '@duckduckgo/autoconsent/rules/rules.json';
 
 const autoconsent = new AutoConsent(

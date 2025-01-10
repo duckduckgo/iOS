@@ -266,7 +266,8 @@ extension AutoconsentUserScript {
                 "enablePrehide": true,
                 "enableCosmeticRules": true,
                 "detectRetries": 20,
-                "isMainWorld": false
+                "isMainWorld": false,
+                "enableFilterList": true
             ] as [String: Any?]
         ] as [String: Any?], nil)
     }

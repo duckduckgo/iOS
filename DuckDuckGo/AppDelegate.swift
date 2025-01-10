@@ -67,6 +67,8 @@ protocol DDGApp {
         }
     }()
 
+    var didCallWillEnterForeground: Bool = false
+
     override init() {
         super.init()
         realDelegate.initialize()
@@ -77,6 +79,7 @@ protocol DDGApp {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        didCallWillEnterForeground = false
         realDelegate.applicationDidBecomeActive?(application)
     }
 
@@ -85,6 +88,7 @@ protocol DDGApp {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        didCallWillEnterForeground = true
         realDelegate.applicationWillEnterForeground?(application)
     }
 

@@ -23,7 +23,6 @@ import UserScript
 import Foundation
 
 final class AIChatUserScript: NSObject, Subfeature {
-    private let testURL = URL(string: "https://674a-2001-818-ddd2-cb00-4063-2985-12ff-d946.ngrok-free.app/")!
 
     enum MessageNames: String, CaseIterable {
         case openAIChat
@@ -40,7 +39,9 @@ final class AIChatUserScript: NSObject, Subfeature {
         var rules = [HostnameMatchingRule]()
 
         /// Default rule for DuckDuckGo AI Chat
-        rules.append(.exact(hostname: "674a-2001-818-ddd2-cb00-4063-2985-12ff-d946.ngrok-free.app"))
+        if let ddgDomain = URL.ddg.host {
+            rules.append(.exact(hostname: ddgDomain))
+        }
 
         self.messageOriginPolicy = .only(rules: rules)
     }

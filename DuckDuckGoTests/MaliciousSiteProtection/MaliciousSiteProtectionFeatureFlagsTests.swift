@@ -33,12 +33,6 @@ final class MaliciousSiteProtectionFeatureFlagsTests {
         sut = MaliciousSiteProtectionFeatureFlags(featureFlagger: featureFlaggerMock, privacyConfigManager: configurationManagerMock)
     }
 
-    deinit {
-        featureFlaggerMock = nil
-        configurationManagerMock = nil
-        sut = nil
-    }
-
     // MARK: - Web Error Page
 
     @Test("Check Threat Detection Enabled")

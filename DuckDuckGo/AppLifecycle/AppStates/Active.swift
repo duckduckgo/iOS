@@ -179,11 +179,11 @@ struct Active: AppState {
             }
         }
 
-        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscription { isSubscriptionActive in
-            if isSubscriptionActive {
-                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-            }
-        }
+//        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscription { isSubscriptionActive in
+//            if isSubscriptionActive {
+//                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+//            }
+//        }
 
         Task {
             await appDependencies.subscriptionService.subscriptionCookieManager.refreshSubscriptionCookie()

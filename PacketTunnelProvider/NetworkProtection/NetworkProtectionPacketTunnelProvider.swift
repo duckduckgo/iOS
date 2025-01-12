@@ -495,6 +495,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             switch type {
             case .deadToken:
                 Pixel.fire(pixel: .privacyProDeadTokenDetected)
+            case .subscriptionIsActive, .v1MigrationFailed, .v1MigrationSuccessful: // handled by the main app only
+                break
             }
         }
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
@@ -526,7 +528,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    snoozeTimingStore: NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults),
                    wireGuardInterface: DefaultWireGuardInterface(),
                    keychainType: .dataProtection(.unspecified),
-                   tokenProvider: subscriptionManager,
+                   subscriptionManager: subscriptionManager,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,

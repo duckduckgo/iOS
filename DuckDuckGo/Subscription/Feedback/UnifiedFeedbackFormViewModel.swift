@@ -158,25 +158,26 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
         self.defaultMetadataCollector = defaultMetadatCollector
         self.feedbackSender = feedbackSender
         self.source = source.rawValue
+    }
 
-        Task {
-            let features = await subscriptionManager.currentSubscriptionFeatures(forceRefresh: false)
-            let vpnFeature = features.first { $0.entitlement == .networkProtection }
-            let dbpFeature = features.first { $0.entitlement == .dataBrokerProtection }
-            let itrFeature = features.first { $0.entitlement == .identityTheftRestoration }
-            let itrgFeature = features.first { $0.entitlement == .identityTheftRestorationGlobal }
+    @MainActor
+    func updateCategories() async {
+        let features = await subscriptionManager.currentSubscriptionFeatures(forceRefresh: false)
+        let vpnFeature = features.first { $0.entitlement == .networkProtection }
+        let dbpFeature = features.first { $0.entitlement == .dataBrokerProtection }
+        let itrFeature = features.first { $0.entitlement == .identityTheftRestoration }
+        let itrgFeature = features.first { $0.entitlement == .identityTheftRestorationGlobal }
 
-            if vpnFeature?.enabled ?? false {
-                availableCategories.append(.vpn)
-            }
-            if dbpFeature?.enabled ?? false {
-                availableCategories.append(.pir)
-            }
-            let idpEnabled = itrFeature?.enabled ?? false
-            let idpgEnabled = itrgFeature?.enabled ?? false
-            if idpEnabled || idpgEnabled {
-                availableCategories.append(.itr)
-            }
+        if vpnFeature?.enabled ?? false {
+            availableCategories.append(.vpn)
+        }
+        if dbpFeature?.enabled ?? false {
+            availableCategories.append(.pir)
+        }
+        let idpEnabled = itrFeature?.enabled ?? false
+        let idpgEnabled = itrgFeature?.enabled ?? false
+        if idpEnabled || idpgEnabled {
+            availableCategories.append(.itr)
         }
     }
 

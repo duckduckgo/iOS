@@ -805,6 +805,8 @@ extension Pixel {
         case privacyProSubscriptionCookieRefreshedWithEmptyValue
         case privacyProSubscriptionCookieFailedToSetSubscriptionCookie
         case privacyProDeadTokenDetected
+        case authV1MigrationFailed
+        case authV1MigrationSucceeded
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
@@ -1756,6 +1758,8 @@ extension Pixel.Event {
         case .privacyProSubscriptionCookieRefreshedWithEmptyValue: return "m_privacy-pro_subscription-cookie-refreshed_with_empty_value"
         case .privacyProSubscriptionCookieFailedToSetSubscriptionCookie: return "m_privacy-pro_subscription-cookie-failed_to_set_subscription_cookie"
         case .privacyProDeadTokenDetected: return "m_privacy-pro_dead_token_detected"
+        case .authV1MigrationFailed: return "m_privacy-pro_v1migration_failed"
+        case .authV1MigrationSucceeded: return "m_privacy-pro_v1migration_succeeded"
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"

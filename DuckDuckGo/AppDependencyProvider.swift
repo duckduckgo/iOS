@@ -148,6 +148,12 @@ final class AppDependencyProvider: DependencyProvider {
             switch type {
             case .deadToken:
                 Pixel.fire(pixel: .privacyProDeadTokenDetected)
+            case .subscriptionIsActive:
+                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+            case .v1MigrationFailed:
+                Pixel.fire(pixel: .authV1MigrationFailed)
+            case .v1MigrationSuccessful:
+                Pixel.fire(pixel: .authV1MigrationSucceeded)
             }
         }
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,

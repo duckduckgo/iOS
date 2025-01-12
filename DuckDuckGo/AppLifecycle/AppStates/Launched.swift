@@ -90,6 +90,10 @@ struct Launched: AppState {
         @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
         var privacyConfigCustomURL: String?
 
+        Task {
+            await AppDependencyProvider.shared.subscriptionManager.loadInitialData()
+        }
+
         application = stateContext.application
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
         vpnWorkaround = VPNRedditSessionWorkaround(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
@@ -459,8 +463,6 @@ struct Launched: AppState {
         NewTabPageIntroMessageSetup().perform()
 
         widgetRefreshModel.beginObservingVPNStatus()
-
-        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
         let autofillUsageMonitor = AutofillUsageMonitor()
         autofillPixelReporter = AutofillPixelReporter(

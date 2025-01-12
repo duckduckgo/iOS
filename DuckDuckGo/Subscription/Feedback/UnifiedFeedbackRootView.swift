@@ -46,6 +46,7 @@ struct UnifiedFeedbackRootView: View {
         }
         .onFirstAppear {
             Task {
+                await viewModel.updateCategories()
                 await viewModel.process(action: .reportActions)
             }
         }

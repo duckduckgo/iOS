@@ -79,13 +79,17 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         setupNotificationObservers()
     }
     
-    private var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
+    private var dateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+#if DEBUG
+        dateFormatter.timeStyle = .medium
+#else
+        dateFormatter.timeStyle = .none
+#endif
+        return dateFormatter
     }()
-    
+
     func onFirstAppear() {
         Task {
             // Load initial state from the cache

@@ -452,6 +452,10 @@ final class OldAppDelegate: NSObject, UIApplicationDelegate, DDGApp {
 
         self.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
+        Task {
+            await AppDependencyProvider.shared.subscriptionManager.loadInitialData()
+        }
+
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
@@ -474,8 +478,6 @@ final class OldAppDelegate: NSObject, UIApplicationDelegate, DDGApp {
         NewTabPageIntroMessageSetup().perform()
 
         widgetRefreshModel.beginObservingVPNStatus()
-
-        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
         setUpAutofillPixelReporter()
 
@@ -717,11 +719,11 @@ final class OldAppDelegate: NSObject, UIApplicationDelegate, DDGApp {
             }
         }
 
-        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscription { isSubscriptionActive in
-            if isSubscriptionActive {
-                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-            }
-        }
+//        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscription { isSubscriptionActive in
+//            if isSubscriptionActive {
+//                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+//            }
+//        }
 
         Task {
             await subscriptionCookieManager.refreshSubscriptionCookie()

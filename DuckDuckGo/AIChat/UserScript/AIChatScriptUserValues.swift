@@ -20,25 +20,25 @@
 import Foundation
 
 public struct AIChatScriptUserValues: Codable {
-    let isAIChatEnabled: Bool
+    let isAIChatHandoffEnabled: Bool
     let platform: String
     let aiChatPayload: AIChatPayload?
 
     enum CodingKeys: String, CodingKey {
-        case isAIChatEnabled
+        case isAIChatHandoffEnabled
         case platform
         case aiChatPayload
     }
 
-    init(isAIChatEnabled: Bool, platform: String, aiChatPayload: [String: Any]?) {
-        self.isAIChatEnabled = isAIChatEnabled
+    init(isAIChatHandoffEnabled: Bool, platform: String, aiChatPayload: [String: Any]?) {
+        self.isAIChatHandoffEnabled = isAIChatHandoffEnabled
         self.platform = platform
         self.aiChatPayload = aiChatPayload
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        isAIChatEnabled = try container.decode(Bool.self, forKey: .isAIChatEnabled)
+        isAIChatHandoffEnabled = try container.decode(Bool.self, forKey: .isAIChatHandoffEnabled)
         platform = try container.decode(String.self, forKey: .platform)
 
         if let aiChatPayloadData = try? container.decodeIfPresent(Data.self, forKey: .aiChatPayload) {
@@ -50,7 +50,7 @@ public struct AIChatScriptUserValues: Codable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(isAIChatEnabled, forKey: .isAIChatEnabled)
+        try container.encode(isAIChatHandoffEnabled, forKey: .isAIChatHandoffEnabled)
         try container.encode(platform, forKey: .platform)
 
         if let aiChatPayload = aiChatPayload,

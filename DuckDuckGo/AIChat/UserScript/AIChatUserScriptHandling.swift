@@ -60,7 +60,7 @@ final class AIChatUserScriptHandler: AIChatUserScriptHandling {
 
     /// Called when the AI Chat view is displayed. If a payload exists, it retrieves and clears it from storage.
     public func handleGetUserValues(params: Any, message: UserScriptMessage) -> Encodable? {
-        AIChatScriptUserValues(isAIChatEnabled: featureFlagger.isFeatureOn(.aiChatDeepLink),
+        AIChatScriptUserValues(isAIChatHandoffEnabled: featureFlagger.isFeatureOn(.aiChatDeepLink),
                                platform: "iOS",
                                aiChatPayload: payloadHandler?.consumePayload() as? AIChatPayload)
     }

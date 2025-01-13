@@ -46,6 +46,7 @@ struct SettingsState {
         var entitlements: [Entitlement.ProductName]
         var platform: DDGSubscription.Platform
         var isShowingStripeView: Bool
+        var isTrial: Bool
     }
 
     struct AIChat: Codable {
@@ -143,7 +144,8 @@ struct SettingsState {
                                        subscriptionFeatures: [],
                                        entitlements: [],
                                        platform: .unknown,
-                                       isShowingStripeView: false),
+                                       isShowingStripeView: false,
+                                       isTrial: false),
             sync: SyncSettings(enabled: false, title: ""),
             syncSource: nil,
             duckPlayerEnabled: false,

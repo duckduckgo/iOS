@@ -177,6 +177,7 @@ struct SettingsSubscriptionView: View {
     private var subscriptionDetailsView: some View {
         let subscriptionFeatures = settingsViewModel.state.subscription.subscriptionFeatures
         let userEntitlements = settingsViewModel.state.subscription.entitlements
+        let isTrial = settingsViewModel.state.subscription.isTrial
 
         if subscriptionFeatures.contains(.networkProtection) {
             let hasVPNEntitlement = userEntitlements.contains(.networkProtection)
@@ -221,7 +222,7 @@ struct SettingsSubscriptionView: View {
             .disabled(!hasITREntitlement)
         }
         
-        NavigationLink(destination: LazyView(SubscriptionSettingsView(configuration: .subscribed, settingsViewModel: settingsViewModel))
+        NavigationLink(destination: LazyView(SubscriptionSettingsView(configuration: isTrial ? .trial : .subscribed, settingsViewModel: settingsViewModel))
             .environmentObject(subscriptionNavigationCoordinator)
         ) {
             SettingsCustomCell(content: { manageSubscriptionView })

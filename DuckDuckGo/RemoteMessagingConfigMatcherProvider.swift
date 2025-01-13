@@ -95,7 +95,7 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
                 privacyProPurchasePlatform = subscription.platform.rawValue
 
                 switch subscription.status {
-                case .autoRenewable, .gracePeriod:
+                case .autoRenewable, .gracePeriod, .trial:
                     isPrivacyProSubscriptionActive = true
                 case .notAutoRenewable:
                     isPrivacyProSubscriptionExpiring = true

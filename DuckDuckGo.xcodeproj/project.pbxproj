@@ -6360,7 +6360,6 @@
 			children = (
 				6F98573F2CD2933B001BE9A0 /* StorageInconsistencyMonitor.swift */,
 				6F9857332CD27F98001BE9A0 /* BoolFileMarker.swift */,
-				6F395BB92CD2C84300B92FC3 /* BoolFileMarkerTests.swift */,
 				9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */,
 				B603974829C19F6F00902A34 /* Assertions.swift */,
 				CBAA195927BFE15600A4BD49 /* NSManagedObjectContextExtension.swift */,
@@ -6540,6 +6539,7 @@
 				1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */,
 				4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */,
 				9F16230A2CA0F0190093C4FC /* DebouncerTests.swift */,
+				6F395BB92CD2C84300B92FC3 /* BoolFileMarkerTests.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";

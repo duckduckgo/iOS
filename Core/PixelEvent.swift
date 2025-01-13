@@ -967,6 +967,9 @@ extension Pixel {
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
 
+        // MARK: TabInteractionStateSource debug pixels
+        case tabInteractionStateSourceMissingRootDirectory
+        case tabInteractionStateSourceFailedToWrite
     }
 
 }
@@ -1566,6 +1569,13 @@ extension Pixel.Event {
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
         case .debugWebsiteDataStoresCleared: return "m_d_wkwebsitedatastorescleared"
+
+            // MARK: TabInteractionStateSource debug pixels
+
+        case .tabInteractionStateSourceMissingRootDirectory:
+            return "m_d_tab-interaction-state-source_missing-root-directory"
+        case .tabInteractionStateSourceFailedToWrite:
+            return "m_d_tab-interaction-state-source_failed-to-write"
 
             // MARK: Ad Attribution
             

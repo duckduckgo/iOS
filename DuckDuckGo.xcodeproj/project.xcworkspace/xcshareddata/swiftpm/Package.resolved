@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/add-persistence-dependency-to-crashes-module",
-        "revision" : "93e72b565f5331a13deac01b944a5087352fd908"
+        "revision" : "58efae813cae03d71af87aab863af5c25a3a8a6e",
+        "version" : "224.6.1"
       }
     },
     {

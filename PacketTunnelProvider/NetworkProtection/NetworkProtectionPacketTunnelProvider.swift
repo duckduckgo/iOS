@@ -487,8 +487,16 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             }
         }
 
+#if DEBUG
+        let cacheExpiration: Int = 1
+#else
+        let cacheExpiration: Int = 120
+#endif
+        let subscriptionCache = UserDefaultsCache<PrivacyProSubscription>(key: UserDefaultsCacheKey.subscription,
+                                                                          settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(cacheExpiration)))
         let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
-                                                                             baseURL: subscriptionEnvironment.serviceEnvironment.url)
+                                                                             baseURL: subscriptionEnvironment.serviceEnvironment.url,
+                                                                             subscriptionCache: subscriptionCache)
         let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionEndpointService)
 
         let pixelHandler: SubscriptionManager.PixelHandler = { type in
@@ -516,7 +524,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         notificationsPresenter.requestAuthorization()
 
         let entitlementsCheck: (() async -> Result<Bool, Error>) = {
-            Logger.networkProtection.log("Entitlements check...")
+            Logger.networkProtection.log("Subscription Entitlements check...")
             let isNetworkProtectionEnabled = await subscriptionManager.isFeatureActive(.networkProtection)
             Logger.networkProtection.log("NetworkProtectionEnabled if: \( isNetworkProtectionEnabled ? "Enabled" : "Disabled", privacy: .public)")
             return .success(isNetworkProtectionEnabled)

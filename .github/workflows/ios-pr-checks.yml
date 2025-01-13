@@ -1,4 +1,4 @@
-name: PR Checks
+name: PR Checks (iOS)
 
 on:
   push:

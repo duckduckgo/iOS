@@ -1,4 +1,4 @@
-name: Nightly Test and Deploy
+name: Nightly Test and Deploy (iOS)
 
 on:
   schedule:
@@ -100,7 +100,7 @@ jobs:
 
   deploy-alpha:
     name: Deploy Nightly Alpha Build
-    uses: ./.github/workflows/alpha.yml
+    uses: ./.github/workflows/ios-alpha.yml
     with:
       destination: "Nightly Alpha Group"
     secrets:

@@ -1,4 +1,4 @@
-name: Make TestFlight Alpha Build
+name: Make TestFlight Alpha Build (iOS)
 
 on:
   workflow_dispatch:

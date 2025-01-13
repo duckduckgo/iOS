@@ -89,7 +89,7 @@ jobs:
 
     - name: End to End tests
       id: upload
-      uses: mobile-dev-inc/action-maestro-cloud@v1.9.7
+      uses: loremattei/action-maestro-cloud@fix-timeout-handling
       with:
         api-key: ${{ secrets.ROBIN_API_KEY }}
         project-id: ${{ secrets.ROBIN_PROJECT_KEY }}
@@ -100,44 +100,6 @@ jobs:
         include-tags: ${{ matrix.test-tag }}
         env: ONBOARDING_COMPLETED=true
         ios-version: 17
-
-    - name: Process Robin Results
-      if: always()
-      run: |
-        echo "Debug: MAESTRO_CLOUD_UPLOAD_STATUS = "
-        echo "${{ steps.upload.outputs.MAESTRO_CLOUD_UPLOAD_STATUS }}"
-
-        echo "Debug: MAESTRO_CLOUD_FLOW_RESULTS = "
-        echo "${{ steps.upload.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}"
-
-        # Parse the JSON string
-        RESULTS='${{ steps.upload.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}'
-          
-        # Check if RESULTS is empty or null
-        if [ -z "$RESULTS" ]; then
-          echo "Error: No results found"
-          exit 1
-        fi
-    
-        # Check if any flow was not successful
-        NON_SUCCESS_FLOWS=$(echo "$RESULTS" | jq -r '[.[] | select(.status != "SUCCESS")]')
-        NON_SUCCESS_COUNT=$(echo "$NON_SUCCESS_FLOWS" | jq -r 'length')
-    
-        # Check if NON_SUCCESS_COUNT is a number
-        if ! [[ "$NON_SUCCESS_COUNT" =~ ^[0-9]+$ ]]; then
-          echo "Error: Invalid non-success count"
-          exit 1
-        fi
-    
-        if [ "$NON_SUCCESS_COUNT" -gt 0 ]; then
-          echo "Error: Some flows were not successful"
-          echo "Details of non-successful flows:"
-          echo "$NON_SUCCESS_FLOWS" | jq '.'
-          exit 1
-        else
-          echo "All flows were successful"
-        fi
-      shell: bash
   
   # notify-failure:
   #   name: Notify on failure

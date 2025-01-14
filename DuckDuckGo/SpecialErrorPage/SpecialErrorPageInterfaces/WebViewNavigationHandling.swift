@@ -19,6 +19,7 @@
 
 import Foundation
 import WebKit
+import MaliciousSiteProtection
 
 // MARK: - WebViewNavigation
 
@@ -41,8 +42,16 @@ protocol WebViewNavigationHandling: AnyObject {
     /// - Parameters:
     ///   - navigationAction: Details about the action that triggered the navigation request.
     ///   - webView: The web view from which the navigation request began.
-    /// - Returns: A Boolean value that indicates whether the navigation action was handled.
-    func handleSpecialErrorNavigation(navigationAction: WKNavigationAction, webView: WKWebView) async -> Bool
+    @MainActor
+    func handleDecidePolicy(for navigationAction: WKNavigationAction, webView: WKWebView)
+
+    /// Decides whether to to navigate to new content after the response to the navigation request is known or cancel the navigation and show a special error page based on the specified action information.
+    /// - Parameters:
+    ///   - navigationResponse: Descriptive information about the navigation response.
+    ///   - webView: The web view from which the navigation request began.
+    /// - Returns: A Boolean value that indicates whether to cancel or allow the navigation.
+    @MainActor
+    func handleDecidePolicy(for navigationResponse: WKNavigationResponse, webView: WKWebView) async -> Bool
 
     /// Handles authentication challenges received by the web view.
     ///
@@ -50,6 +59,7 @@ protocol WebViewNavigationHandling: AnyObject {
     ///   - webView: The web view that receives the authentication challenge.
     ///   - challenge: The authentication challenge.
     ///   - completionHandler: A completion handler block to execute with the response.
+    @MainActor
     func handleWebView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
 
     /// Handles failures during provisional navigation.
@@ -58,6 +68,7 @@ protocol WebViewNavigationHandling: AnyObject {
     ///   - webView: The `WKWebView` instance that failed the navigation.
     ///   - navigation: The navigation object for the operation.
     ///   - error: The error that occurred.
+    @MainActor
     func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WebViewNavigation, withError error: NSError)
 
     /// Handles the successful completion of a navigation in the web view.
@@ -65,5 +76,6 @@ protocol WebViewNavigationHandling: AnyObject {
     /// - Parameters:
     ///   - webView: The web view that loaded the content.
     ///   - navigation: The navigation object that finished.
+    @MainActor
     func handleWebView(_ webView: WKWebView, didFinish navigation: WebViewNavigation)
 }

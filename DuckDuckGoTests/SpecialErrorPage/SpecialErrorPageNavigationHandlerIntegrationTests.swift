@@ -36,7 +36,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         sslErrorPageNavigationHandler = SSLErrorPageNavigationHandler(featureFlagger: featureFlagger)
         sut = SpecialErrorPageNavigationHandler(
             sslErrorPageNavigationHandler: sslErrorPageNavigationHandler,
-            maliciousSiteProtectionNavigationHandler: DummyMaliciousSiteProtectionNavigationHandler()
+            maliciousSiteProtectionNavigationHandler: MockMaliciousSiteProtectionNavigationHandler()
         )
     }
 
@@ -50,7 +50,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
     @Test
     func whenCertificateExpiredThenExpectedErrorPageIsShown() async throws {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLCertExpired,
                                        NSURLErrorFailingURLErrorKey: try #require(URL(string: "https://expired.badssl.com"))])
@@ -84,7 +84,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
     @Test
     func whenCertificateWrongHostThenExpectedErrorPageIsShown() async throws {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLHostNameMismatch,
                                        NSURLErrorFailingURLErrorKey: try #require(URL(string: "https://wrong.host.badssl.com"))])
@@ -118,7 +118,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
     @Test
     func whenCertificateSelfSignedThenExpectedErrorPageIsShown() async throws {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLXCertChainInvalid,
                                        NSURLErrorFailingURLErrorKey: try #require(URL(string: "https://self-signed.badssl.com"))])
@@ -152,7 +152,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
     @Test
     func whenOtherCertificateIssueThenExpectedErrorPageIsShown() async throws {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLUnknownRootCert,
                                        NSURLErrorFailingURLErrorKey: try #require(URL(string: "https://untrusted-root.badssl.com"))])
@@ -203,7 +203,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
     @Test
     func whenNavigationEndedIfSSLFailureButURLIsDifferentFromNavigationURLThenSSLUserScriptIsNotEnabled() throws {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLUnknownRootCert,
                                        NSURLErrorFailingURLErrorKey: try #require(URL(string: "https://untrusted-root.badssl.com"))])
@@ -234,7 +234,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         sut.attachWebView(webView)
         let navigation = DummyWKNavigation()
         let error = NSError(
-            domain: "test",
+            domain: NSURLErrorDomain,
             code: NSURLErrorServerCertificateUntrusted,
             userInfo: [
                 "_kCFStreamErrorCodeKey": errSSLCertExpired,
@@ -249,5 +249,4 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         // THEN
         #expect(script.isEnabled)
     }
-
 }

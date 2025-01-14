@@ -46,7 +46,7 @@ struct AppTesting: AppState {
 
 }
 
-extension Testing {
+extension AppTesting {
 
     mutating func handle(action: AppAction) { }
 

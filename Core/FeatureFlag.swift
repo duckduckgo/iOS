@@ -66,6 +66,10 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/1206226850447395/1206307878076518
     case webViewStateRestoration
+
+    /// Feature flag to enable / disable phishing and malware protection
+    /// https://app.asana.com/0/1206329551987282/1207149365636877/f
+    case maliciousSiteProtection
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
@@ -151,6 +155,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .internalOnly()
         case .webViewStateRestoration:
             return .remoteReleasable(.feature(.webViewStateRestoration))
+        case .maliciousSiteProtection:
+            return .remoteDevelopment(.subfeature(MaliciousSiteProtectionSubfeature.onByDefault))
         }
     }
 }

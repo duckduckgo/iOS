@@ -1,4 +1,4 @@
-name: Make ad-hoc build (iOS)
+name: iOS - Make ad-hoc build
 
 on:
   workflow_dispatch:

@@ -1,4 +1,4 @@
-name: Asana PR Task URL
+name: iOS - Asana PR Task URL
 
 on:
   pull_request:

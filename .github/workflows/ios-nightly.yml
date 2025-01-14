@@ -1,4 +1,4 @@
-name: Nightly Test and Deploy (iOS)
+name: iOS - Nightly Test and Deploy
 
 on:
   schedule:

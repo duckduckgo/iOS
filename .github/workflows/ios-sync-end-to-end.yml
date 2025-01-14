@@ -1,4 +1,4 @@
-name: Sync-End-to-End tests (iOS)
+name: iOS - Sync-End-to-End tests
 
 on:
   schedule:

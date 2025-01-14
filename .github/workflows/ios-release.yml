@@ -1,4 +1,4 @@
-name: Make App Store Connect Release (iOS)
+name: iOS - Make App Store Connect Release
 
 on:
   workflow_dispatch:

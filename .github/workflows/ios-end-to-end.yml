@@ -1,4 +1,4 @@
-name: End-to-End tests (iOS)
+name: iOS - End-to-End tests
 
 on:
   schedule:

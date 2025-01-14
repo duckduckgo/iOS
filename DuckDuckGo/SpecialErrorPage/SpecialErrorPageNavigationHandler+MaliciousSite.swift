@@ -22,25 +22,48 @@ import BrowserServicesKit
 import Core
 import SpecialErrorPages
 import WebKit
+import MaliciousSiteProtection
 
 enum MaliciousSiteProtectionNavigationResult: Equatable {
-    case navigationHandled(SpecialErrorModel)
+    case navigationHandled(NavigationType)
     case navigationNotHandled
+
+    enum NavigationType: Equatable {
+        case mainFrame(MaliciousSiteDetectionNavigationResponse)
+        case iFrame(maliciousURL: URL, error: SpecialErrorData)
+    }
 }
 
 protocol MaliciousSiteProtectionNavigationHandling: AnyObject {
-    /// Decides whether to cancel navigation to prevent opening the YouTube app from the web view.
+    /// Creates a task for detecting malicious sites based on the provided navigation action.
     ///
     /// - Parameters:
-    ///   - navigationAction: The navigation action to evaluate.
-    ///   - webView: The web view where navigation is occurring.
-    /// - Returns: `true` if the navigation should be canceled, `false` otherwise.
-    func handleMaliciousSiteProtectionNavigation(for navigationAction: WKNavigationAction, webView: WKWebView) async -> MaliciousSiteProtectionNavigationResult
+    ///   - navigationAction: The `WKNavigationAction` object that contains information about
+    ///     the navigation event.
+    ///   - webView: The web view from which the navigation request began.
+    @MainActor
+    func makeMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView)
+
+    /// Retrieves a task for detecting malicious sites based on the provided navigation response.
+    ///
+    /// - Parameters:
+    ///   - navigationResponse: The `WKNavigationResponse` object that contains information about
+    ///     the navigation event.
+    ///   - webView: The web view from which the navigation request began.
+    /// - Returns: A `Task<MaliciousSiteProtectionNavigationResult, Never>?` that represents the
+    ///   asynchronous operation for detecting malicious sites. If the task cannot be found,
+    ///   the function returns `nil`.
+    @MainActor
+    func getMaliciousSiteDectionTask(for navigationResponse: WKNavigationResponse, webView: WKWebView) -> Task<MaliciousSiteProtectionNavigationResult, Never>?
 }
 
 final class MaliciousSiteProtectionNavigationHandler {
     private let maliciousSiteProtectionManager: MaliciousSiteDetecting
     private let storageCache: StorageCache
+
+    @MainActor private(set) var maliciousURLExemptions: [URL: ThreatKind] = [:]
+    @MainActor private(set) var bypassedMaliciousSiteThreatKind: ThreatKind?
+    @MainActor private(set) var maliciousSiteDetectionTasks: [URL: Task<MaliciousSiteProtectionNavigationResult, Never>] = [:]
 
     init(
         maliciousSiteProtectionManager: MaliciousSiteDetecting = MaliciousSiteProtectionManager(),
@@ -56,10 +79,50 @@ final class MaliciousSiteProtectionNavigationHandler {
 extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling {
 
     @MainActor
-    func handleMaliciousSiteProtectionNavigation(for navigationAction: WKNavigationAction, webView: WKWebView) async -> MaliciousSiteProtectionNavigationResult {
-        // Implement logic to use `maliciousSiteProtectionManager.evaluate(url)`
-        // Return navigationNotHandled for the time being
-        return .navigationNotHandled
+    func makeMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
+
+        guard
+            let url = navigationAction.request.url,
+            url != URL(string: "about:blank")
+        else {
+            return
+        }
+
+        handleMaliciousExemptions(for: navigationAction.navigationType, url: url)
+
+        guard !shouldBypassMaliciousSiteProtection(for: url) else {
+            return
+        }
+
+        let threatDetectionTask: Task<MaliciousSiteProtectionNavigationResult, Never> = Task {
+            guard let threatKind = await maliciousSiteProtectionManager.evaluate(url) else {
+                return .navigationNotHandled
+            }
+
+            if navigationAction.isTargetingMainFrame {
+                let errorData = SpecialErrorData.maliciousSite(kind: threatKind, url: url)
+                let response = MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)
+                return .navigationHandled(.mainFrame(response))
+            } else {
+                // Extract the URL of the source frame (the iframe) that initiated the navigation action
+                let iFrameTopURL = navigationAction.sourceFrame.safeRequest?.url ?? url
+                let errorData = SpecialErrorData.maliciousSite(kind: threatKind, url: iFrameTopURL)
+                return .navigationHandled(.iFrame(maliciousURL: url, error: errorData))
+            }
+        }
+
+        maliciousSiteDetectionTasks[url] = threatDetectionTask
+    }
+
+    @MainActor
+    func getMaliciousSiteDectionTask(for navigationResponse: WKNavigationResponse, webView: WKWebView) -> Task<MaliciousSiteProtectionNavigationResult, Never>? {
+
+        guard let url = navigationResponse.response.url else {
+            assertionFailure("Could not find Malicious Site Detection Task for URL")
+            return nil
+        }
+
+        return maliciousSiteDetectionTasks.removeValue(forKey: url)
     }
 
 }
@@ -68,7 +131,10 @@ extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavig
 
 extension MaliciousSiteProtectionNavigationHandler: SpecialErrorPageActionHandler {
 
-    func visitSite() {
+    func visitSite(url: URL, errorData: SpecialErrorData) {
+        maliciousURLExemptions[url] = errorData.threatKind
+        bypassedMaliciousSiteThreatKind = errorData.threatKind
+
         // Fire Pixel
     }
 
@@ -78,6 +144,39 @@ extension MaliciousSiteProtectionNavigationHandler: SpecialErrorPageActionHandle
 
     func advancedInfoPresented() {
         // Fire Pixel
+    }
+
+}
+
+// MARK: - Private
+
+private extension MaliciousSiteProtectionNavigationHandler {
+
+    @MainActor
+    func handleMaliciousExemptions(for navigationType: WKNavigationType, url: URL) {
+        // TODO: check storing redirects
+        // Re-set the flag every time we load a web page
+        bypassedMaliciousSiteThreatKind = maliciousURLExemptions[url]
+    }
+
+    @MainActor
+    func shouldBypassMaliciousSiteProtection(for url: URL) -> Bool {
+        bypassedMaliciousSiteThreatKind != .none || url.isDuckDuckGo || url.isDuckURLScheme
+    }
+
+}
+
+// MARK: - Helpers
+
+private extension SpecialErrorData {
+
+    var threatKind: ThreatKind? {
+        switch self {
+        case .ssl:
+            return nil
+        case let .maliciousSite(threatKind, _):
+            return threatKind
+        }
     }
 
 }

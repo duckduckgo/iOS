@@ -785,14 +785,15 @@
 		9F254ACE2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ACD2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift */; };
 		9F254AD22CF5D3A80063B308 /* MockSpecialErrorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD12CF5D3A20063B308 /* MockSpecialErrorWebView.swift */; };
 		9F254AD32CF5D3A80063B308 /* MockSpecialErrorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD12CF5D3A20063B308 /* MockSpecialErrorWebView.swift */; };
-		9F254AD52CF5E5B10063B308 /* DummyMaliciousSiteProtectionNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD42CF5E5B10063B308 /* DummyMaliciousSiteProtectionNavigationHandler.swift */; };
-		9F254AD62CF5E5B10063B308 /* DummyMaliciousSiteProtectionNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD42CF5E5B10063B308 /* DummyMaliciousSiteProtectionNavigationHandler.swift */; };
+		9F254AD52CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD42CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift */; };
+		9F254AD62CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD42CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift */; };
 		9F254AD82CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD72CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift */; };
 		9F254AD92CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD72CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift */; };
 		9F254ADB2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADA2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift */; };
 		9F254ADC2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADA2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift */; };
 		9F254ADE2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */; };
 		9F254ADF2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */; };
+		9F254AF12CF8D5250063B308 /* MaliciousSiteProtection in Frameworks */ = {isa = PBXBuildFile; productRef = 9F254AF02CF8D5250063B308 /* MaliciousSiteProtection */; };
 		9F254AFF2CF9FA1B0063B308 /* WebViewNavigationHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AFE2CF9FA1B0063B308 /* WebViewNavigationHandling.swift */; };
 		9F254B012CF9FA8D0063B308 /* SpecialErrorPageActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B002CF9FA8D0063B308 /* SpecialErrorPageActionHandler.swift */; };
 		9F254B032CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B022CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift */; };
@@ -843,6 +844,9 @@
 		9FB027192C26BC29009EA190 /* BrowsersComparisonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */; };
 		9FB0271B2C2927D0009EA190 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271A2C2927D0009EA190 /* OnboardingView.swift */; };
 		9FB0271D2C293619009EA190 /* OnboardingIntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */; };
+		9FBC76672CFE33B5008B21E7 /* MaliciousSiteProtectionNavigationHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBC76662CFE33B5008B21E7 /* MaliciousSiteProtectionNavigationHandlerTests.swift */; };
+		9FBC766A2CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBC76692CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift */; };
+		9FBC766B2CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBC76692CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift */; };
 		9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */; };
 		9FCFCD812C6B020D006EB7A0 /* LaunchOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */; };
 		9FCFCD852C75C91A006EB7A0 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD842C75C91A006EB7A0 /* ProgressBarView.swift */; };
@@ -1057,7 +1061,7 @@
 		CBD4F140279EBFB300B20FD7 /* SwiftUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1AEFB02799AA940031AE3D /* SwiftUICollectionViewCell.swift */; };
 		CBD79F482D1061DA00DBB45A /* NewAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD79F472D1061D500DBB45A /* NewAppDelegate.swift */; };
 		CBD79F4A2D1061E200DBB45A /* OldAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD79F492D1061DF00DBB45A /* OldAppDelegate.swift */; };
-		CBD79F4D2D130F6500DBB45A /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD79F4C2D130F6300DBB45A /* Testing.swift */; };
+		CBD79F4D2D130F6500DBB45A /* AppTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD79F4C2D130F6300DBB45A /* AppTesting.swift */; };
 		CBDD5DDF29A6736A00832877 /* APIHeadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDD5DDE29A6736A00832877 /* APIHeadersTests.swift */; };
 		CBDD5DE129A6741300832877 /* MockBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDD5DE029A6741300832877 /* MockBundle.swift */; };
 		CBECDB6F2CD3DFBE005B8B87 /* PageRefreshMonitor in Frameworks */ = {isa = PBXBuildFile; productRef = CBECDB6E2CD3DFBE005B8B87 /* PageRefreshMonitor */; };
@@ -2681,7 +2685,7 @@
 		9F254ACA2CF5CDC60063B308 /* SpecialErrorPageNavigationHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageNavigationHandlerTests.swift; sourceTree = "<group>"; };
 		9F254ACD2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageNavigationHandlerIntegrationTests.swift; sourceTree = "<group>"; };
 		9F254AD12CF5D3A20063B308 /* MockSpecialErrorWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSpecialErrorWebView.swift; sourceTree = "<group>"; };
-		9F254AD42CF5E5B10063B308 /* DummyMaliciousSiteProtectionNavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyMaliciousSiteProtectionNavigationHandler.swift; sourceTree = "<group>"; };
+		9F254AD42CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMaliciousSiteProtectionNavigationHandler.swift; sourceTree = "<group>"; };
 		9F254AD72CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSSLErrorPageNavigationHandler.swift; sourceTree = "<group>"; };
 		9F254ADA2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSpecialErrorPageNavigationDelegate.swift; sourceTree = "<group>"; };
 		9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyWKNavigation.swift; sourceTree = "<group>"; };
@@ -2733,6 +2737,8 @@
 		9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsersComparisonModel.swift; sourceTree = "<group>"; };
 		9FB0271A2C2927D0009EA190 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIntroViewModel.swift; sourceTree = "<group>"; };
+		9FBC76662CFE33B5008B21E7 /* MaliciousSiteProtectionNavigationHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionNavigationHandlerTests.swift; sourceTree = "<group>"; };
+		9FBC76692CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMaliciousSiteProtectionManager.swift; sourceTree = "<group>"; };
 		9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchOptionsHandler.swift; path = ../DuckDuckGo/LaunchOptionsHandler.swift; sourceTree = "<group>"; };
 		9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchOptionsHandlerTests.swift; sourceTree = "<group>"; };
 		9FCFCD842C75C91A006EB7A0 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
@@ -2997,7 +3003,7 @@
 		CBD4F13B279EBF4A00B20FD7 /* HomeMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessage.swift; sourceTree = "<group>"; };
 		CBD79F472D1061D500DBB45A /* NewAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAppDelegate.swift; sourceTree = "<group>"; };
 		CBD79F492D1061DF00DBB45A /* OldAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldAppDelegate.swift; sourceTree = "<group>"; };
-		CBD79F4C2D130F6300DBB45A /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
+		CBD79F4C2D130F6300DBB45A /* AppTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTesting.swift; sourceTree = "<group>"; };
 		CBD7AE812AF6D5B6009052FD /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CBDD5DDE29A6736A00832877 /* APIHeadersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHeadersTests.swift; sourceTree = "<group>"; };
 		CBDD5DE029A6741300832877 /* MockBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBundle.swift; sourceTree = "<group>"; };
@@ -3291,6 +3297,7 @@
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
 				CB941A6E2B96AB08000F9E7A /* PrivacyDashboard in Frameworks */,
 				F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */,
+				9F254AF12CF8D5250063B308 /* MaliciousSiteProtection in Frameworks */,
 				1E5918472CA422A7008ED2B3 /* Navigation in Frameworks */,
 				85875B6129912A9900115F05 /* SyncUI in Frameworks */,
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
@@ -5198,6 +5205,7 @@
 				CBC88EE22C7F8B1700F0F8C5 /* SSLErrorPageNavigationHandlerTests.swift */,
 				9F254ACA2CF5CDC60063B308 /* SpecialErrorPageNavigationHandlerTests.swift */,
 				9F254ACD2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift */,
+				9FBC76662CFE33B5008B21E7 /* MaliciousSiteProtectionNavigationHandlerTests.swift */,
 			);
 			path = SpecialErrorPage;
 			sourceTree = "<group>";
@@ -5206,10 +5214,11 @@
 			isa = PBXGroup;
 			children = (
 				9F254AD12CF5D3A20063B308 /* MockSpecialErrorWebView.swift */,
-				9F254AD42CF5E5B10063B308 /* DummyMaliciousSiteProtectionNavigationHandler.swift */,
+				9F254AD42CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift */,
 				9F254AD72CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift */,
 				9F254ADA2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift */,
 				9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */,
+				9FBC76692CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift */,
 			);
 			path = TestDoubles;
 			sourceTree = "<group>";
@@ -5802,7 +5811,7 @@
 				CBAD0EFC2CFE1D48006267B8 /* Active.swift */,
 				CBAD0EFE2CFE1D4E006267B8 /* Inactive.swift */,
 				CBAD0F002CFE1D54006267B8 /* Background.swift */,
-				CBD79F4C2D130F6300DBB45A /* Testing.swift */,
+				CBD79F4C2D130F6300DBB45A /* AppTesting.swift */,
 			);
 			path = AppStates;
 			sourceTree = "<group>";
@@ -7090,6 +7099,7 @@
 				1E5918462CA422A7008ED2B3 /* Navigation */,
 				7B2CCBA42D11ABBA00FE5852 /* VPNWidgetSupport */,
 				315C77812CFA41A400699683 /* AIChat */,
+				9F254AF02CF8D5250063B308 /* MaliciousSiteProtection */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -8299,7 +8309,7 @@
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				F1D43AFC2B99C56000BAB743 /* RootDebugViewController+VanillaBrowser.swift in Sources */,
 				C159DF072A430B60007834BB /* EmailSignupViewController.swift in Sources */,
-				CBD79F4D2D130F6500DBB45A /* Testing.swift in Sources */,
+				CBD79F4D2D130F6500DBB45A /* AppTesting.swift in Sources */,
 				37A6A8FE2AFD0208008580A3 /* FaviconsFetcherOnboarding.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,
 				CBD4F13D279EBFA000B20FD7 /* HomeMessageCollectionViewCell.swift in Sources */,
@@ -8597,7 +8607,7 @@
 				569437342BE4E41500C0881B /* SyncErrorHandlerSyncErrorsAlertsTests.swift in Sources */,
 				CBC88EE32C7F8B1700F0F8C5 /* SSLErrorPageNavigationHandlerTests.swift in Sources */,
 				85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */,
-				9F254AD52CF5E5B10063B308 /* DummyMaliciousSiteProtectionNavigationHandler.swift in Sources */,
+				9F254AD52CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift in Sources */,
 				F1134ECE1F40EA9C00B73467 /* AtbParserTests.swift in Sources */,
 				F189AEE41F18FDAF001EBAE1 /* LinkTests.swift in Sources */,
 				6F7FB8E12C660B3E00867DA7 /* NewTabPageFavoritesModelTests.swift in Sources */,
@@ -8637,6 +8647,7 @@
 				9F254ADF2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */,
 				6F7BACD42CEE084B00F561D8 /* OmniBarEqualityCheckTests.swift in Sources */,
 				6F7FB8E72C66197E00867DA7 /* NewTabPageSectionsSettingsModelTests.swift in Sources */,
+				9FBC766A2CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift in Sources */,
 				851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */,
 				569437362BE5160600C0881B /* SyncSettingsViewControllerErrorTests.swift in Sources */,
 				EEC02C162B065BE00045CE11 /* NetworkProtectionVPNLocationViewModelTests.swift in Sources */,
@@ -8710,6 +8721,7 @@
 				9F4CC51F2C48D758006A96EB /* ContextualDaxDialogsFactoryTests.swift in Sources */,
 				8521FDE6238D414B00A44CC3 /* FileStoreTests.swift in Sources */,
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
+				9FBC76672CFE33B5008B21E7 /* MaliciousSiteProtectionNavigationHandlerTests.swift in Sources */,
 				9F23B8062C2BE22700950875 /* OnboardingIntroViewModelTests.swift in Sources */,
 				9F69331D2C5A191400CD6A5D /* MockTutorialSettings.swift in Sources */,
 				85D2187424BF25CD004373D2 /* FaviconsTests.swift in Sources */,
@@ -8816,8 +8828,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F254AD62CF5E5B10063B308 /* DummyMaliciousSiteProtectionNavigationHandler.swift in Sources */,
+				9F254AD62CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift in Sources */,
 				85F21DB0210F5E32002631A6 /* AtbIntegrationTests.swift in Sources */,
+				9FBC766B2CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift in Sources */,
 				9F254AD22CF5D3A80063B308 /* MockSpecialErrorWebView.swift in Sources */,
 				9F254ADE2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */,
 				8551912724746EDC0010FDD0 /* SnapshotHelper.swift in Sources */,
@@ -12267,6 +12280,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Bookmarks;
+		};
+		9F254AF02CF8D5250063B308 /* MaliciousSiteProtection */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MaliciousSiteProtection;
 		};
 		9F8FE9482BAE50E50071E372 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

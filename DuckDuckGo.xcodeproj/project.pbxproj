@@ -12007,7 +12007,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "alessandro/malicious-site-protection-address-bar-and-privacy-dashboard";
+				branch = "alessandro/malicious-site-protection-ios";
 				kind = branch;
 			};
 		};

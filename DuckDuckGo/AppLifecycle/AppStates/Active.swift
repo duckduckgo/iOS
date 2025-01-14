@@ -25,6 +25,7 @@ import WidgetKit
 import BackgroundTasks
 import Subscription
 import NetworkProtection
+import DDGSync
 
 struct Active: AppState {
 
@@ -70,7 +71,7 @@ struct Active: AppState {
         // onApplicationLaunch code
         Task { @MainActor [self] in
             await beginAuthentication()
-            // TODO: await autoClearService.waitUntilFinished()
+            await autoClearService.waitUntilFinished() // TODO: perhaps we don't need that service after all if we decide to move clearDataIfEnabled from Launched
             initialiseBackgroundFetch(application)
             applyAppearanceChanges()
             refreshRemoteMessages(remoteMessagingClient: appDependencies.remoteMessagingClient)
@@ -78,15 +79,11 @@ struct Active: AppState {
             if let url = stateContext.urlToOpen {
                 openURL(url)
             } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
-                handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
+                handleShortcutItem(shortcutItemToHandle)
             }
         }
 
-
-
         activateApp()
-
-
     }
 
     // MARK: handle applicationWillEnterForeground(_:) logic here
@@ -101,6 +98,9 @@ struct Active: AppState {
         let autoClear = appDependencies.autoClear
         Task { @MainActor [self] in
             await beginAuthentication(lastBackgroundDate: stateContext.lastBackgroundDate)
+        }
+
+        Task { @MainActor [self] in
             await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
             uiService.showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
@@ -108,7 +108,7 @@ struct Active: AppState {
             if let url = stateContext.urlToOpen {
                 openURL(url)
             } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
-                handleShortcutItem(shortcutItemToHandle, appIsLaunching: false)
+                handleShortcutItem(shortcutItemToHandle)
             }
         }
 
@@ -223,14 +223,10 @@ struct Active: AppState {
              mainViewController.clearNavigationStack()
          }
 
-         Task { @MainActor in
-             // Autoclear should have happened by now
-             appDependencies.uiService.showKeyboardIfSettingOn = false
-
-             if !handleAppDeepLink(application, mainViewController, url) {
-                 mainViewController.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil, fromExternalLink: true)
-             }
-         }
+        appDependencies.uiService.showKeyboardIfSettingOn = false
+        if !handleAppDeepLink(application, mainViewController, url) {
+            mainViewController.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil, fromExternalLink: true)
+        }
     }
 
     @MainActor
@@ -465,9 +461,8 @@ struct Active: AppState {
         }
     }
 
-    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, appIsLaunching: Bool = false) {
+    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
-        let autoClear = appDependencies.autoClear
         if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainViewController.clearNavigationStack()
             mainViewController.loadQueryInNewTab(query)

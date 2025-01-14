@@ -55,4 +55,6 @@ struct AppDependencies {
 
     var syncDidFinishCancellable: AnyCancellable?
 
+    let autoClearService: AutoClearService
+
 }

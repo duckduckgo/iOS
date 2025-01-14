@@ -82,6 +82,7 @@ struct Launched: AppState {
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
     private let application: UIApplication
+    private let runningTasks: RunningTasks
 
     // swiftlint:disable:next cyclomatic_complexity
     init(stateContext: Init.StateContext) {
@@ -432,8 +433,12 @@ struct Launched: AppState {
             self.autoClear = autoClear
             let applicationState = application.applicationState
             let vpnWorkaround = vpnWorkaround
+
+            let autoClearService = AutoClearService(autoClear: autoClear)
+            autoClearService.onLaunched()
+
             Task {
-                await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
+                await autoClearService.waitUntilDone()
                 await vpnWorkaround.installRedditSessionWorkaround()
             }
         }

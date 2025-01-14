@@ -92,7 +92,7 @@ extension Resuming {
 
 }
 
-extension Testing {
+extension AppTesting {
 
     func apply(event: AppEvent) -> any AppState { self }
 

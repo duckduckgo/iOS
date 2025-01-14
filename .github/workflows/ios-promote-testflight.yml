@@ -1,6 +1,6 @@
-name: Promote TestFlight to App Store
+name: iOS - Promote TestFlight to App Store
 
-on: 
+on:
   workflow_dispatch: {}
 
 jobs:

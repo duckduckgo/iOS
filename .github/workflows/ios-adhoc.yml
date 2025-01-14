@@ -1,4 +1,4 @@
-name: Make ad-hoc build
+name: iOS - Make ad-hoc build
 
 on:
   workflow_dispatch:
@@ -53,7 +53,7 @@ jobs:
           if [[ "${{ github.event.inputs.build-type }}" == "Release" ]]; then
             lane_to_use="release_adhoc"
           fi
-          
+
           if [[ -n "${{ github.event.inputs.suffix }}" ]]; then
             bundle exec fastlane ${lane_to_use} suffix:${{ github.event.inputs.suffix }}
           else
@@ -81,7 +81,7 @@ jobs:
         with:
           name: ${{ env.dsyms_filename }}
           path: ${{ env.dsyms_path }}
-      
+
       - name: Get Asana Task ID
         id: get-task-id
         if: github.event.inputs.asana-task-url

@@ -69,7 +69,7 @@ final class UserScripts: UserScriptsProvider {
                                                                 properties: sourceProvider.contentScopeProperties,
                                                                 isIsolated: true)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
-        aiChatUserScript = AIChatUserScript(handler: AIChatUserScriptHandler(featureFlagger: AppDependencyProvider.shared.featureFlagger))
+        aiChatUserScript = AIChatUserScript(handler: AIChatUserScriptHandler(featureFlagger: featureFlagger))
         contentScopeUserScriptIsolated.registerSubfeature(delegate: aiChatUserScript)
 
         // Special pages - Such as Duck Player

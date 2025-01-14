@@ -771,6 +771,8 @@
 		98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D7217B37010011A0D4 /* Theme.swift */; };
 		98F6EA472863124100720957 /* ContentBlockerRulesLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F6EA462863124100720957 /* ContentBlockerRulesLists.swift */; };
 		98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */; };
+		9F06EB752D09E8D200905426 /* MaliciousSiteProtectionFeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB732D09E8D200905426 /* MaliciousSiteProtectionFeatureFlags.swift */; };
+		9F06EB7B2D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB792D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift */; };
 		9F16230B2CA0F0190093C4FC /* DebouncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F16230A2CA0F0190093C4FC /* DebouncerTests.swift */; };
 		9F1798572CD2443F0073018B /* AddToDockPromoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1798562CD2443F0073018B /* AddToDockPromoViewModelTests.swift */; };
 		9F23B8012C2BC94400950875 /* OnboardingBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F23B8002C2BC94400950875 /* OnboardingBackground.swift */; };
@@ -2673,6 +2675,8 @@
 		98F3A1D7217B37010011A0D4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		98F6EA462863124100720957 /* ContentBlockerRulesLists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesLists.swift; sourceTree = "<group>"; };
 		98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemableNavigationController.swift; sourceTree = "<group>"; };
+		9F06EB732D09E8D200905426 /* MaliciousSiteProtectionFeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionFeatureFlags.swift; sourceTree = "<group>"; };
+		9F06EB792D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionFeatureFlagsTests.swift; sourceTree = "<group>"; };
 		9F16230A2CA0F0190093C4FC /* DebouncerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebouncerTests.swift; sourceTree = "<group>"; };
 		9F1798562CD2443F0073018B /* AddToDockPromoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDockPromoViewModelTests.swift; sourceTree = "<group>"; };
 		9F23B8002C2BC94400950875 /* OnboardingBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBackground.swift; sourceTree = "<group>"; };
@@ -5140,6 +5144,22 @@
 			name = Themes;
 			sourceTree = "<group>";
 		};
+		9F06EB742D09E8D200905426 /* FeatureFlags */ = {
+			isa = PBXGroup;
+			children = (
+				9F06EB732D09E8D200905426 /* MaliciousSiteProtectionFeatureFlags.swift */,
+			);
+			path = FeatureFlags;
+			sourceTree = "<group>";
+		};
+		9F06EB7A2D09EC2000905426 /* MaliciousSiteProtection */ = {
+			isa = PBXGroup;
+			children = (
+				9F06EB792D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift */,
+			);
+			path = MaliciousSiteProtection;
+			sourceTree = "<group>";
+		};
 		9F23B7FF2C2BABE000950875 /* OnboardingIntro */ = {
 			isa = PBXGroup;
 			children = (
@@ -5194,6 +5214,7 @@
 		9F254AA92CF47CD30063B308 /* MaliciousSiteProtection */ = {
 			isa = PBXGroup;
 			children = (
+				9F06EB742D09E8D200905426 /* FeatureFlags */,
 				9F254AAA2CF47DD50063B308 /* MaliciousSiteProtectionManager.swift */,
 			);
 			path = MaliciousSiteProtection;
@@ -6280,6 +6301,7 @@
 				83134D7F20E2E013006CE65D /* Feedback */,
 				8588026724E4249800C24AB6 /* iPad */,
 				851DFD88212C5ED600D95F20 /* Main */,
+				9F06EB7A2D09EC2000905426 /* MaliciousSiteProtection */,
 				EE56DE3A2A6038F500375C41 /* NetworkProtection */,
 				6F03CAFF2C32ED22004179A8 /* NewTabPage */,
 				F1D477C71F2139210031ED49 /* OmniBar */,
@@ -8292,6 +8314,7 @@
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				8598D2E02CEB98B500C45685 /* Favicons.swift in Sources */,
 				8598D2E12CEB98B500C45685 /* NotFoundCachingDownloader.swift in Sources */,
+				9F06EB752D09E8D200905426 /* MaliciousSiteProtectionFeatureFlags.swift in Sources */,
 				8598D2E22CEB98B500C45685 /* FaviconRequestModifier.swift in Sources */,
 				CBAD0F102D0062A7006267B8 /* UIService.swift in Sources */,
 				8598D2E32CEB98B500C45685 /* FaviconUserScript.swift in Sources */,
@@ -8577,6 +8600,7 @@
 				83EDCC411F86B89C005CDFCD /* StatisticsLoaderTests.swift in Sources */,
 				564DE4572C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift in Sources */,
 				C14882E327F20D9A00D59F0C /* BookmarksExporterTests.swift in Sources */,
+				9F06EB7B2D09EC2000905426 /* MaliciousSiteProtectionFeatureFlagsTests.swift in Sources */,
 				85C29708247BDD060063A335 /* DaxDialogsBrowsingSpecTests.swift in Sources */,
 				9FE05CF12C36468A00D9046B /* OnboardingPixelReporterTests.swift in Sources */,
 				9FDEC7B42C8FD62F00C7A692 /* OnboardingAddressBarPositionPickerViewModelTests.swift in Sources */,

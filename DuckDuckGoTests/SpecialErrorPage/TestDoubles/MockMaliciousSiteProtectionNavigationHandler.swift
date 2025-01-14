@@ -20,9 +20,11 @@
 import Foundation
 import WebKit
 import SpecialErrorPages
+import MaliciousSiteProtection
 @testable import DuckDuckGo
 
 final class MockMaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling & SpecialErrorPageActionHandler {
+    private(set) var didCallCurrentThreatKind = false
     private(set) var didCallHandleMaliciousSiteProtectionForNavigationAction = false
     private(set) var capturedNavigationAction: WKNavigationAction?
     private(set) var capturedWebView: WKWebView?
@@ -39,6 +41,17 @@ final class MockMaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectio
     private(set) var didCallAdvancedInfoPresented = false
 
     var task: Task<MaliciousSiteProtectionNavigationResult, Never>?
+
+    private var _currentThreatKind: ThreatKind?
+    var currentThreatKind: ThreatKind? {
+        get {
+            didCallCurrentThreatKind = true
+            return _currentThreatKind
+        }
+        set {
+            _currentThreatKind = newValue
+        }
+    }
 
     func makeMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
         didCallHandleMaliciousSiteProtectionForNavigationAction = true

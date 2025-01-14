@@ -34,7 +34,7 @@ enum MaliciousSiteProtectionNavigationResult: Equatable {
     }
 }
 
-protocol MaliciousSiteProtectionNavigationHandling: AnyObject {
+protocol MaliciousSiteProtectionNavigationHandling: SpecialErrorPageThreatProvider {
     /// Creates a task for detecting malicious sites based on the provided navigation action.
     ///
     /// - Parameters:
@@ -77,6 +77,11 @@ final class MaliciousSiteProtectionNavigationHandler {
 // MARK: - MaliciousSiteProtectionNavigationHandling
 
 extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling {
+
+    @MainActor
+    var currentThreatKind: ThreatKind? {
+        bypassedMaliciousSiteThreatKind
+    }
 
     @MainActor
     func makeMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {

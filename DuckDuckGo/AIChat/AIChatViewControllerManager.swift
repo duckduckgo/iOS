@@ -32,12 +32,20 @@ final class AIChatViewControllerManager {
     weak var delegate: AIChatViewControllerManagerDelegate?
     private var aiChatUserScript: AIChatUserScript?
     private var payloadHandler = AIChatPayloadHandler()
-
+    private let privacyConfigurationManager: PrivacyConfigurationManaging
+    private let internalUserDecider: InternalUserDecider
+    
+    init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider) {
+        self.privacyConfigurationManager = privacyConfigurationManager
+        self.internalUserDecider = internalUserDecider
+    }
+    
     @MainActor
-     lazy var aiChatViewController: AIChatViewController = {
-        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
-
+    lazy var aiChatViewController: AIChatViewController = {
+        let settings = AIChatSettings(privacyConfigurationManager: privacyConfigurationManager,
+                                      internalUserDecider: internalUserDecider)
+        
         let webviewConfiguration = WKWebViewConfiguration.persistent()
         let userContentController = UserContentController()
         userContentController.delegate = self

@@ -53,7 +53,9 @@ final class UserScripts: UserScriptsProvider {
     private(set) var printingUserScript = PrintingUserScript()
     private(set) var debugScript = DebugUserScript()
 
-    init(with sourceProvider: ScriptSourceProviding, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+    init(with sourceProvider: ScriptSourceProviding,
+         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
 
         contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
         surrogatesScript = SurrogatesUserScript(configuration: sourceProvider.surrogatesConfig)

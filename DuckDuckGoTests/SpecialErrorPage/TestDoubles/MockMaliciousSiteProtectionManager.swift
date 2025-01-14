@@ -1,5 +1,5 @@
 //
-//  DummyMaliciousSiteProtectionNavigationHandler.swift
+//  MockMaliciousSiteProtectionManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,17 +18,15 @@
 //
 
 import Foundation
-import WebKit
+import MaliciousSiteProtection
 @testable import DuckDuckGo
 
-class DummyMaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling & SpecialErrorPageActionHandler {
-    func handleMaliciousSiteProtectionNavigation(for navigationAction: WKNavigationAction, webView: WKWebView) async -> DuckDuckGo.MaliciousSiteProtectionNavigationResult {
-        .navigationNotHandled
+final class MockMaliciousSiteProtectionManager: MaliciousSiteDetecting {
+
+    var threatKind: ThreatKind?
+
+    func evaluate(_ url: URL) async -> MaliciousSiteProtection.ThreatKind? {
+        threatKind
     }
 
-    func visitSite() {}
-
-    func leaveSite() {}
-
-    func advancedInfoPresented() {}
 }

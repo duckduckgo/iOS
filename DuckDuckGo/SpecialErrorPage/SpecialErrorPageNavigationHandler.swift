@@ -21,17 +21,19 @@ import Foundation
 import WebKit
 import SpecialErrorPages
 import Core
+import MaliciousSiteProtection
 
 typealias SpecialErrorPageManaging = SpecialErrorPageContextHandling & WebViewNavigationHandling & SpecialErrorPageUserScriptDelegate
 
 final class SpecialErrorPageNavigationHandler: SpecialErrorPageContextHandling {
     private var webView: WKWebView?
-    private(set) var errorData: SpecialErrorData?
-    private var errorPageType: SpecialErrorKind?
-    private(set) var isSpecialErrorPageVisible = false
-    private(set) var failedURL: URL?
     private weak var userScript: SpecialErrorPageUserScript?
     weak var delegate: SpecialErrorPageNavigationDelegate?
+
+    @MainActor private(set) var errorData: SpecialErrorData?
+    @MainActor private(set) var isSpecialErrorPageVisible = false
+    @MainActor private(set) var failedURL: URL?
+    @MainActor private(set) var isSpecialErrorPageRequest = false
 
     private let sslErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling & SpecialErrorPageActionHandler
     private let maliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling & SpecialErrorPageActionHandler
@@ -58,41 +60,61 @@ final class SpecialErrorPageNavigationHandler: SpecialErrorPageContextHandling {
 
 extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
 
-    func handleSpecialErrorNavigation(navigationAction: WKNavigationAction, webView: WKWebView) async -> Bool {
-        let result = await maliciousSiteProtectionNavigationHandler.handleMaliciousSiteProtectionNavigation(for: navigationAction, webView: webView)
+    @MainActor
+    func handleDecidePolicy(for navigationAction: WKNavigationAction, webView: WKWebView) {
+        maliciousSiteProtectionNavigationHandler.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+    }
 
-        return await MainActor.run {
-            switch result {
-            case let .navigationHandled(model):
-                var request = navigationAction.request
-                request.url = model.url
-                failedURL = model.url
-                errorData = model.errorData
-                errorPageType = .phishing
-                loadSpecialErrorPage(request: request)
-                return true
-            case .navigationNotHandled:
-                return false
-            }
+    @MainActor
+    func handleDecidePolicy(for navigationResponse: WKNavigationResponse, webView: WKWebView) async -> Bool {
+        guard let task = maliciousSiteProtectionNavigationHandler.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView) else {
+            return false
+        }
+
+        let result = await task.value
+
+        switch result {
+        case let .navigationHandled(.mainFrame(response)):
+            // Re-use the same request to avoid that the new sideload request is intercepted and cancelled
+            // due to parameters added to the header.
+            var request = response.navigationAction.request
+            request.url = response.errorData.url
+            isSpecialErrorPageRequest = true
+            failedURL = response.errorData.url
+            errorData = response.errorData
+            loadSpecialErrorPage(request: request)
+            return true
+        case let .navigationHandled(.iFrame(maliciousURL, error)):
+            isSpecialErrorPageRequest = true
+            failedURL = maliciousURL
+            errorData = error
+            loadSpecialErrorPage(url: maliciousURL)
+            return true
+        case .navigationNotHandled:
+            isSpecialErrorPageRequest = false
+            return false
         }
     }
-    
+
+    @MainActor
     func handleWebView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         guard challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust else { return }
 
         sslErrorPageNavigationHandler.handleServerTrustChallenge(challenge, completionHandler: completionHandler)
     }
-    
+
+    @MainActor
     func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WebViewNavigation, withError error: NSError) {
         guard let sslSpecialError = sslErrorPageNavigationHandler.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error) else { return }
         failedURL = sslSpecialError.error.url
         sslErrorPageNavigationHandler.errorPageVisited(errorType: sslSpecialError.type)
         errorData = sslSpecialError.error.errorData
-        errorPageType = .ssl
         loadSpecialErrorPage(url: sslSpecialError.error.url)
     }
-    
+
+    @MainActor
     func handleWebView(_ webView: WKWebView, didFinish navigation: WebViewNavigation) {
+        isSpecialErrorPageRequest = false
         userScript?.isEnabled = webView.url == failedURL
         if webView.url != failedURL {
             isSpecialErrorPageVisible = false
@@ -105,45 +127,59 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
 
 extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate {
 
+    @MainActor
     func leaveSiteAction() {
-        switch errorPageType {
-        case .ssl:
-            sslErrorPageNavigationHandler.leaveSite()
-        case .phishing:
-            maliciousSiteProtectionNavigationHandler.leaveSite()
-        default:
-            break
+
+        func navigateBackIfPossible() {
+            if webView?.canGoBack == true {
+                _ = webView?.goBack()
+            } else {
+                closeTab()
+            }
         }
 
-        if webView?.canGoBack == true {
-            _ = webView?.goBack()
-        } else {
+        func closeTab() {
             delegate?.closeSpecialErrorPageTab()
         }
+
+        guard let errorData else { return }
+
+        switch errorData {
+        case .ssl:
+            sslErrorPageNavigationHandler.leaveSite()
+            navigateBackIfPossible()
+        case .maliciousSite:
+            maliciousSiteProtectionNavigationHandler.leaveSite()
+            closeTab()
+        }
     }
 
+    @MainActor
     func visitSiteAction() {
-        switch errorPageType {
-        case .ssl:
-            sslErrorPageNavigationHandler.visitSite()
-        case .phishing:
-            maliciousSiteProtectionNavigationHandler.visitSite()
-        default:
-            break
+        defer {
+            isSpecialErrorPageVisible = false
+            _ = webView?.reload()
         }
 
-        isSpecialErrorPageVisible = false
-        _ = webView?.reload()
+        guard let errorData, let url = webView?.url else { return }
+
+        switch errorData {
+        case .ssl:
+            sslErrorPageNavigationHandler.visitSite()
+        case .maliciousSite:
+            maliciousSiteProtectionNavigationHandler.visitSite(url: url, errorData: errorData)
+        }
     }
 
+    @MainActor
     func advancedInfoPresented() {
-        switch errorPageType {
+        guard let errorData else { return }
+
+        switch errorData {
         case .ssl:
             sslErrorPageNavigationHandler.advancedInfoPresented()
-        case .phishing:
+        case .maliciousSite:
             maliciousSiteProtectionNavigationHandler.advancedInfoPresented()
-        default:
-            break
         }
     }
 }
@@ -152,14 +188,31 @@ extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate 
 
 private extension SpecialErrorPageNavigationHandler {
 
+    @MainActor
     func loadSpecialErrorPage(url: URL) {
         loadSpecialErrorPage(request: URLRequest(url: url))
     }
 
+    @MainActor
     func loadSpecialErrorPage(request: URLRequest) {
         let html = SpecialErrorPageHTMLTemplate.htmlFromTemplate
         webView?.loadSimulatedRequest(request, responseHTML: html)
         isSpecialErrorPageVisible = true
+    }
+
+}
+
+// MARK: - Helpers
+
+private extension SpecialErrorData {
+
+    var url: URL? {
+        switch self {
+        case .ssl:
+            return nil
+        case let .maliciousSite(_, url):
+            return url
+        }
     }
 
 }

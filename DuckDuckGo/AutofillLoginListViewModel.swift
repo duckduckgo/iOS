@@ -88,7 +88,9 @@ final class AutofillLoginListViewModel: ObservableObject {
         return settings["monitorIntervalDays"] as? Int ?? 42
     }()
 
-    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging = AutofillCredentialIdentityStoreManager(vault: secureVault, tld: tld)
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging = AutofillCredentialIdentityStoreManager(vault: secureVault,
+                                                                                                                                      reporter: SecureVaultReporter(),
+                                                                                                                                      tld: tld)
 
     private lazy var syncPromoManager: SyncPromoManaging = SyncPromoManager(syncService: syncService)
 

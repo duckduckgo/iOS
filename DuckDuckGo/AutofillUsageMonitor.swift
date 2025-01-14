@@ -23,23 +23,23 @@ import BrowserServicesKit
 
 final class AutofillUsageMonitor {
 
-    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager? = {
-        guard let vault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) else {
-            return nil
-        }
-
-        return AutofillCredentialIdentityStoreManager(vault: vault,
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager = {
+        return AutofillCredentialIdentityStoreManager(reporter: SecureVaultReporter(),
                                                       tld: AppDependencyProvider.shared.storageCache.tld)
     }()
 
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveSaveEvent), name: .autofillSaveEvent, object: nil)
 
+        if autofillExtensionEnabled != nil {
+            AutofillVaultKeychainMigrator().resetVaultMigrationIfRequired()
+        }
+
         ASCredentialIdentityStore.shared.getState({ [weak self] state in
             if state.isEnabled {
                 if self?.autofillExtensionEnabled == nil {
                     Task {
-                        await self?.credentialIdentityStoreManager?.populateCredentialStore()
+                        await self?.credentialIdentityStoreManager.populateCredentialStore()
                     }
                 }
                 self?.autofillExtensionEnabled = true

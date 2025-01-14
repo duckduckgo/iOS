@@ -24,8 +24,11 @@ extension Init {
 
     func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .launching(let application, let launchOptions):
-            return Launched(application: application, launchOptions: launchOptions)
+        case .launching(let application, let isTesting):
+            if isTesting {
+                return Testing(application: application)
+            }
+            return Launched(stateContext: makeStateContext(application: application))
         default:
             return handleUnexpectedEvent(event)
         }
@@ -35,14 +38,18 @@ extension Init {
 
 extension Launched {
 
-    func apply(event: AppEvent) -> any AppState {
+    mutating func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .activating(let application):
-            return Active(application: application)
-        case .openURL:
+        case .activating:
+            return Active(stateContext: makeStateContext())
+        case .openURL(let url):
+            urlToOpen = url
+            return self
+        case .handleShortcutItem(let shortcutItem):
+            shortcutItemToHandle = shortcutItem
             return self
         case .backgrounding:
-            return InactiveBackground()
+            return Background(stateContext: makeStateContext())
         case .launching, .suspending:
             return handleUnexpectedEvent(event)
         }
@@ -54,9 +61,13 @@ extension Active {
 
     func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .suspending(let application):
-            return Inactive(application: application)
-        case .openURL:
+        case .suspending:
+            return Inactive(stateContext: makeStateContext())
+        case .openURL(let url):
+            openURL(url)
+            return self
+        case .handleShortcutItem(let shortcutItem):
+            handleShortcutItem(shortcutItem)
             return self
         case .launching, .activating, .backgrounding:
             return handleUnexpectedEvent(event)
@@ -67,15 +78,16 @@ extension Active {
 
 extension Inactive {
 
-    func apply(event: AppEvent) -> any AppState {
+    mutating func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .backgrounding(let application):
-            return Background(application: application)
-        case .activating(let application):
-            return Active(application: application)
-        case .openURL:
+        case .backgrounding:
+            return Background(stateContext: makeStateContext())
+        case .activating:
+            return Active(stateContext: makeStateContext())
+        case .openURL(let url):
+            urlToOpen = url
             return self
-        case .launching, .suspending:
+        case .launching, .suspending, .handleShortcutItem:
             return handleUnexpectedEvent(event)
         }
     }
@@ -84,14 +96,25 @@ extension Inactive {
 
 extension Background {
 
-    func apply(event: AppEvent) -> any AppState {
+    mutating func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .activating(let application):
-            return Active(application: application)
-        case .openURL:
+        case .activating:
+            return Active(stateContext: makeStateContext())
+        case .openURL(let url):
+            urlToOpen = url
             return self
         case .backgrounding:
-            return DoubleBackground(previousDidEnterBackgroundTimestamp: timestamp, counter: 0)
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                Pixel.fire(pixel: .appDidConsecutivelyBackground, withAdditionalParameters: [
+                    PixelParameters.didCallWillEnterForeground: appDelegate.didCallWillEnterForeground.description
+                ])
+                appDelegate.didCallWillEnterForeground = false
+            }
+            run()
+            return self
+        case .handleShortcutItem(let shortcutItem):
+            shortcutItemToHandle = shortcutItem
+            return self
         case .launching, .suspending:
             return handleUnexpectedEvent(event)
         }
@@ -99,36 +122,9 @@ extension Background {
 
 }
 
-extension DoubleBackground {
+extension Testing {
 
-    func apply(event: AppEvent) -> any AppState {
-        switch event {
-        case .activating(let application):
-            return Active(application: application)
-        case .suspending(let application):
-            return Inactive(application: application)
-        case .backgrounding(let application):
-            return DoubleBackground(previousDidEnterBackgroundTimestamp: currentDidEnterBackgroundTimestamp, counter: counter)
-        case .launching, .openURL:
-            return self
-        }
-
-    }
-
-}
-
-extension InactiveBackground {
-
-    func apply(event: AppEvent) -> any AppState {
-        switch event {
-        case .activating(let application):
-            return Active(application: application)
-        case .suspending(let application):
-            return Inactive(application: application)
-        case .launching, .backgrounding, .openURL:
-            return self
-        }
-    }
+    func apply(event: AppEvent) -> any AppState { self }
 
 }
 
@@ -141,6 +137,7 @@ extension AppEvent {
         case .backgrounding: return "backgrounding"
         case .suspending: return "suspending"
         case .openURL: return "openURL"
+        case .handleShortcutItem: return "handleShortcutItem"
         }
     }
 

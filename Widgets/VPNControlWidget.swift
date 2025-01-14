@@ -17,15 +17,16 @@
 //  limitations under the License.
 //
 
+import Core
 import Foundation
 import SwiftUI
 import WidgetKit
 
-#if ALPHA || DEBUG
 @available(iOSApplicationExtension 18.0, *)
 public struct VPNControlWidget: ControlWidget {
     static let displayName = LocalizedStringResource(stringLiteral: "DuckDuckGo\nVPN")
     static let description = LocalizedStringResource(stringLiteral: "View and manage your VPN connection. Requires a Privacy Pro subscription.")
+    static let unknownLocation = UserText.vpnControlWidgetLocationUnknown
 
     public init() {}
 
@@ -33,16 +34,35 @@ public struct VPNControlWidget: ControlWidget {
         StaticControlConfiguration(kind: .vpn,
                                    provider: VPNControlStatusValueProvider()) { status in
 
-            ControlWidgetToggle("DuckDuckGo\nVPN", isOn: status.isConnected, action: ControlWidgetToggleVPNIntent()) { isOn in
+            ControlWidgetToggle(title(status: status), isOn: status.isConnected, action: ControlWidgetToggleVPNIntent()) { isOn in
                 if isOn {
-                    Label("Connected", image: "ControlCenter-VPN-on")
+                    Label(location(status: status), image: "ControlCenter-VPN-on")
                 } else {
-                    Label("Not Connected", image: "ControlCenter-VPN-off")
+                    Label(UserText.vpnControlWidgetNotConnected, image: "ControlCenter-VPN-off")
                 }
             }
             .tint(.green)
         }.displayName(Self.displayName)
             .description(Self.description)
     }
+
+    private func title(status: VPNStatus) -> String {
+        if status.isConnected {
+            return UserText.vpnControlWidgetOn
+        } else {
+            return UserText.vpnControlWidgetOff
+        }
+    }
+
+    private func location(status: VPNStatus) -> String {
+        if status.isConnecting {
+            return UserText.vpnControlWidgetConnecting
+        } else if status.isDisconnecting {
+            return UserText.vpnControlWidgetDisconnecting
+        } else if status.isConnected {
+            return UserDefaults.networkProtectionGroupDefaults.string(forKey: NetworkProtectionUserDefaultKeys.lastSelectedServerCity) ?? Self.unknownLocation
+        } else {
+            return Self.unknownLocation
+        }
+    }
 }
-#endif

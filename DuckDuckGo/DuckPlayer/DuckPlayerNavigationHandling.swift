@@ -42,7 +42,7 @@ extension DuckPlayerReferrer {
 enum DuckPlayerNavigationHandlerURLChangeResult {
     
     /// Possible reasons for not handling a URL change.
-    enum HandlingResult {
+    enum NotHandledResult {
         case featureOff
         case invalidURL
         case duckPlayerDisabled
@@ -50,9 +50,16 @@ enum DuckPlayerNavigationHandlerURLChangeResult {
         case disabledForVideo
         case duplicateNavigation
     }
+    
+    /// Possible reasons for handling a URL change.
+    enum HandledResult {
+        case newVideo
+        case allowFirstVideo
+        case duckPlayerEnabled
+    }
 
-    case handled
-    case notHandled(HandlingResult)
+    case handled(HandledResult)
+    case notHandled(NotHandledResult)
 }
 
 /// Represents the direction of navigation in the Duck Player.

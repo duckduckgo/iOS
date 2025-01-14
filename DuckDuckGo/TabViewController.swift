@@ -132,9 +132,7 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
-    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault {
-        return AppDependencyProvider.shared.subscriptionManager.canPurchase
-    }
+    private var tabURLInterceptor: TabURLInterceptor
     private var currentlyLoadedURL: URL?
 
     private let netPConnectionObserver: ConnectionStatusObserver = AppDependencyProvider.shared.connectionObserver
@@ -276,12 +274,8 @@ class TabViewController: UIViewController {
         return manager
     }()
 
-    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager? = {
-        guard let vault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) else {
-            return nil
-        }
-
-        return AutofillCredentialIdentityStoreManager(vault: vault,
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager = {
+        return AutofillCredentialIdentityStoreManager(reporter: SecureVaultReporter(),
                                                       tld: AppDependencyProvider.shared.storageCache.tld)
     }()
 
@@ -427,6 +421,10 @@ class TabViewController: UIViewController {
         self.textZoomCoordinator = textZoomCoordinator
         self.fireproofing = fireproofing
         self.websiteDataManager = websiteDataManager
+
+        self.tabURLInterceptor = TabURLInterceptorDefault(featureFlagger: featureFlagger) {
+            return AppDependencyProvider.shared.subscriptionManager.canPurchase
+        }
 
         super.init(coder: aDecoder)
         
@@ -2851,7 +2849,7 @@ extension TabViewController: SecureVaultManagerDelegate {
 
                 guard let domain = account?.domain else { return }
                 Task {
-                    await self?.credentialIdentityStoreManager?.updateCredentialStore(for: domain)
+                    await self?.credentialIdentityStoreManager.updateCredentialStore(for: domain)
                 }
             } completionHandler: { account in
                 if account != nil {
@@ -3049,7 +3047,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
                 guard let domain = newCredential.account.domain else { return }
                 Task {
-                    await credentialIdentityStoreManager?.updateCredentialStore(for: domain)
+                    await credentialIdentityStoreManager.updateCredentialStore(for: domain)
                 }
             }
         } catch {

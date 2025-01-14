@@ -44,7 +44,7 @@ final class AutofillUsageMonitor {
                 }
                 self?.autofillExtensionEnabled = true
             } else {
-                if self?.autofillExtensionEnabled != nil {
+                if self?.autofillExtensionEnabled == true {
                     Pixel.fire(pixel: .autofillExtensionDisabled)
                     self?.autofillExtensionEnabled = false
                 }

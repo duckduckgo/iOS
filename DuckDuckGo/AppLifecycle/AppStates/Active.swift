@@ -70,18 +70,23 @@ struct Active: AppState {
         // onApplicationLaunch code
         Task { @MainActor [self] in
             await beginAuthentication()
+            // TODO: await autoClearService.waitUntilFinished()
             initialiseBackgroundFetch(application)
             applyAppearanceChanges()
             refreshRemoteMessages(remoteMessagingClient: appDependencies.remoteMessagingClient)
+
+            if let url = stateContext.urlToOpen {
+                openURL(url)
+            } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
+                handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
+            }
         }
 
-        if let url = stateContext.urlToOpen {
-            openURL(url)
-        } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
-            handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
-        }
+
 
         activateApp()
+
+
     }
 
     // MARK: handle applicationWillEnterForeground(_:) logic here
@@ -99,12 +104,12 @@ struct Active: AppState {
             await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
             uiService.showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
-        }
 
-        if let url = stateContext.urlToOpen {
-            openURL(url)
-        } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
-            handleShortcutItem(shortcutItemToHandle, appIsLaunching: false)
+            if let url = stateContext.urlToOpen {
+                openURL(url)
+            } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
+                handleShortcutItem(shortcutItemToHandle, appIsLaunching: false)
+            }
         }
 
         activateApp()
@@ -463,35 +468,24 @@ struct Active: AppState {
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, appIsLaunching: Bool = false) {
         Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
         let autoClear = appDependencies.autoClear
-        Task { @MainActor in
+        if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+            mainViewController.clearNavigationStack()
+            mainViewController.loadQueryInNewTab(query)
+            return
+        }
 
-            // This if/else could potentially be removed by ensuring previous autoClear calls (triggered during both Launch and Active states) are completed before proceeding. To be looked at in next milestones
-            if appIsLaunching {
-                await autoClear.clearDataIfEnabled()
-            } else {
-                await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
+        if shortcutItem.type == AppDelegate.ShortcutKey.passwords {
+            mainViewController.clearNavigationStack()
+            // Give the `clearNavigationStack` call time to complete.
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [application] in
+                (application.window?.rootViewController as? MainViewController)?.launchAutofillLogins(openSearch: true, source: .appIconShortcut)
             }
+            Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
+            return
+        }
 
-            if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
-                mainViewController.clearNavigationStack()
-                mainViewController.loadQueryInNewTab(query)
-                return
-            }
-
-            if shortcutItem.type == AppDelegate.ShortcutKey.passwords {
-                mainViewController.clearNavigationStack()
-                // Give the `clearNavigationStack` call time to complete.
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [application] in
-                    (application.window?.rootViewController as? MainViewController)?.launchAutofillLogins(openSearch: true, source: .appIconShortcut)
-                }
-                Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
-                return
-            }
-
-            if shortcutItem.type == AppDelegate.ShortcutKey.openVPNSettings {
-                presentNetworkProtectionStatusSettingsModal()
-            }
-
+        if shortcutItem.type == AppDelegate.ShortcutKey.openVPNSettings {
+            presentNetworkProtectionStatusSettingsModal()
         }
     }
 

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "5704d77e3b4c77c7387518d796d31a35f7a1ffcf",
-        "version" : "222.1.0"
+        "branch" : "alex/open-tab-ranking",
+        "revision" : "d3422fa0fcb231a050eeafff6515a1b276df9ca3"
       }
     },
     {

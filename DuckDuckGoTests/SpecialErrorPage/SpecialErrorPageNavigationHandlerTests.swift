@@ -422,6 +422,26 @@ final class SpecialErrorPageNavigationHandlerTests {
         // THEN
         #expect(maliciousSiteProtectionNavigationHandler.didCallAdvancedInfoPresented)
     }
+
+    @MainActor
+    @Test(
+        "Test Current Threat Kind asks Malicous forward event to Malicious Site Protection Navigation Handler",
+        arguments: [
+            ThreatKind.phishing,
+            .malware,
+            nil
+        ]
+    )
+    func whenCurrentThreatKindIsCalledThenAskMaliciousSiteProtectionNavigationHandlerForThreatKind(threat: ThreatKind?) throws {
+        // GIVEN
+        #expect(!maliciousSiteProtectionNavigationHandler.didCallCurrentThreatKind)
+
+        // WHEN
+        let result = sut.currentThreatKind
+
+        // THEN
+        #expect(maliciousSiteProtectionNavigationHandler.didCallCurrentThreatKind)
+    }
 }
 
 private extension NSError {

@@ -19,6 +19,7 @@
 
 import Foundation
 import SpecialErrorPages
+import WebKit
 
 struct SpecialErrorModel: Equatable {
     let url: URL
@@ -28,4 +29,9 @@ struct SpecialErrorModel: Equatable {
 struct SSLSpecialError {
     let type: SSLErrorType
     let error: SpecialErrorModel
+}
+
+struct MaliciousSiteDetectionNavigationResponse: Equatable {
+    let navigationAction: WKNavigationAction
+    let errorData: SpecialErrorData
 }

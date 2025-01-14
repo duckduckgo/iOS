@@ -22,7 +22,7 @@ import WebKit
 import SpecialErrorPages
 
 /// A type that defines the base functionality for handling navigation related to special error pages.
-protocol SpecialErrorPageContextHandling: AnyObject {
+protocol SpecialErrorPageContextHandling: SpecialErrorPageThreatProvider {
     /// The delegate that handles navigation actions for special error pages.
     var delegate: SpecialErrorPageNavigationDelegate? { get set }
 

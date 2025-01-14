@@ -1083,6 +1083,7 @@ class TabViewController: UIViewController {
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
                                       protectionStatus: makeProtectionStatus(for: host),
+                                      malicousSiteThreatKind: specialErrorPageNavigationHandler.currentThreatKind,
                                       shouldCheckServerTrust: shouldCheckServerTrust)
         let isValid = certificateTrustEvaluator.evaluateCertificateTrust(trust: webView.serverTrust)
         if let isValid {

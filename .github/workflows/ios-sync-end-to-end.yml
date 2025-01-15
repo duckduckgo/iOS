@@ -69,7 +69,7 @@ jobs:
     name: Sync End To End Tests
     needs: build-for-sync-end-to-end-tests
     runs-on: macos-15
-    timeout-minutes: 240
+    timeout-minutes: 2400
     strategy:
       matrix:
         os-version: [17] #[15, 16, 17]
@@ -92,21 +92,30 @@ jobs:
         name: duckduckgo-ios-app
         path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
 
-    - name: Install Maestro
-      run: |
-        export MAESTRO_VERSION=1.39.1; curl -Ls "https://get.maestro.mobile.dev" | bash
-
     - name: Overwrite default config with sync one
       run: |
         cp .maestro/config-sync .maestro/config.yaml
 
     - name: Sync e2e tests
-      run: |
-        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.ROBIN_API_KEY }} --project-id ${{ secrets.ROBIN_PROJECT_KEY }} -e ONBOARDING_COMPLETED=true --env=CODE=${{ steps.sync-recovery-code.outputs.recovery-code }} --fail-on-timeout=true --fail-on-cancellation=true --timeout=150 --ios-version=${{ matrix.os-version }} --include-tags=sync --app-file DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app --flows .maestro/
+      id: upload
+      uses: loremattei/action-maestro-cloud@fix-timeout-handling
+      with:
+        api-key: ${{ secrets.ROBIN_API_KEY }}
+        project-id: ${{ vars.ROBIN_PROJECT_KEY }}
+        name: sync_${{ github.sha }}
+        timeout: 240
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        workspace: .maestro
+        include-tags: sync
+        env: ONBOARDING_COMPLETED=true
+        ios-version: ${{ matrix.os-version }}
+        fail-on-timeout: true
 
     - name: Reset config
       run: |
         git checkout .maestro/config.yaml
+
+    
 
   # notify-failure:
   #   name: Notify on failure

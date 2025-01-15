@@ -947,11 +947,6 @@ extension Pixel {
         // MARK: WebView Error Page Shown
         case webViewErrorPageShown
 
-        // MARK: UserDefaults incositency monitoring
-        case protectedDataUnavailableWhenBecomeActive
-        case statisticsLoaderATBStateMismatch
-        case adAttributionReportStateMismatch
-
         // MARK: Browsing
         case stopPageLoad
         
@@ -1918,11 +1913,6 @@ extension Pixel.Event {
 
         // MARK: - DuckPlayer FE Application Telemetry
         case .duckPlayerLandscapeLayoutImpressions: return "duckplayer_landscape_layout_impressions"
-
-        // MARK: UserDefaults incositency monitoring
-        case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
-        case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
-        case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
 
         // MARK: Browsing
         case .stopPageLoad: return "m_stop-page-load"

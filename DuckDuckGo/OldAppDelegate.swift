@@ -650,7 +650,6 @@ final class OldAppDelegate: NSObject, UIApplicationDelegate, DDGApp {
             }
         }
 
-        StorageInconsistencyMonitor().didBecomeActive(isProtectedDataAvailable: application.isProtectedDataAvailable)
         syncService.initializeIfNeeded()
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 

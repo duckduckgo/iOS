@@ -100,7 +100,7 @@ jobs:
         include-tags: ${{ matrix.test-tag }}
         env: ONBOARDING_COMPLETED=true
         ios-version: 17
-        strict-success: true
+        fail-on-timeout: true
   
   # notify-failure:
   #   name: Notify on failure

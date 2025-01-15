@@ -23,12 +23,8 @@ import Core
 extension Initializing {
 
     func apply(event: AppEvent) -> any AppState {
-        switch event {
-        case .didFinishLaunching(let application, let isTesting):
-            return isTesting ? Testing(application: application) : Launching(stateContext: makeStateContext(application: application))
-        default:
-            return handleUnexpectedEvent(event)
-        }
+        guard case .didFinishLaunching(let application, let isTesting) = event else { return handleUnexpectedEvent(event) }
+        return isTesting ? Testing(application: application) : Launching(stateContext: makeStateContext(application: application))
     }
 
 }
@@ -51,12 +47,8 @@ extension Launching {
 extension Foreground {
 
     func apply(event: AppEvent) -> any AppState {
-        switch event {
-        case .willResignActive:
-            return Suspending(stateContext: makeStateContext())
-        default:
-            return handleUnexpectedEvent(event)
-        }
+        guard case .willResignActive = event else { return handleUnexpectedEvent(event) }
+        return Suspending(stateContext: makeStateContext())
     }
 
 }
@@ -79,12 +71,8 @@ extension Suspending {
 extension Background {
 
     func apply(event: AppEvent) -> any AppState {
-        switch event {
-        case .willEnterForeground:
-            return Resuming(stateContext: makeStateContext())
-        default:
-            return handleUnexpectedEvent(event)
-        }
+        guard case .willEnterForeground = event else { return handleUnexpectedEvent(event) }
+        return Resuming(stateContext: makeStateContext())
     }
 
 }

@@ -64,7 +64,7 @@ struct AppConfigurationURLProvider: ConfigurationURLProviding {
                 return URL(string: URL.staticBase + "/trackerblocking/" + urlString)!
             }
         } catch {
-            print("Failed to parse JSON: \(error)")
+            Logger.config.info("privacyConfiguration: Failed to parse subfeature settings JSON: \(error)")
         }
         return nil
     }

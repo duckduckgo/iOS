@@ -27,6 +27,10 @@ enum AppEvent {
     case willResignActive
     case willEnterForeground
 
+}
+
+enum AppAction {
+
     case openURL(URL)
     case handleShortcutItem(UIApplicationShortcutItem)
 
@@ -34,14 +38,16 @@ enum AppEvent {
 
 protocol AppState {
 
-    mutating func apply(event: AppEvent) -> any AppState
+    func apply(event: AppEvent) -> any AppState
+    mutating func handle(action: AppAction)
 
 }
 
+@MainActor
 protocol AppEventHandler {
 
-    @MainActor
     func handle(_ event: AppEvent)
+    func handle(_ action: AppAction)
 
 }
 
@@ -52,6 +58,10 @@ final class AppStateMachine: AppEventHandler {
 
     func handle(_ event: AppEvent) {
         currentState = currentState.apply(event: event)
+    }
+
+    func handle(_ action: AppAction) {
+        currentState.handle(action: action)
     }
 
 }

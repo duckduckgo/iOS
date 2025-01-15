@@ -52,3 +52,10 @@ extension Initializing {
     }
 
 }
+
+
+extension Initializing {
+
+    mutating func handle(action: AppAction) { }
+
+}

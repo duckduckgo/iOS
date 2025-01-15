@@ -38,18 +38,12 @@ extension Initializing {
 
 extension Launching {
 
-    mutating func apply(event: AppEvent) -> any AppState {
+    func apply(event: AppEvent) -> any AppState {
         switch event {
         case .didBecomeActive:
             return Foreground(stateContext: makeStateContext())
         case .didEnterBackground:
             return Background(stateContext: makeStateContext())
-        case .openURL(let url):
-            urlToOpen = url
-            return self
-        case .handleShortcutItem(let shortcutItem):
-            shortcutItemToHandle = shortcutItem
-            return self
         case .didFinishLaunching, .willResignActive, .willEnterForeground:
             return handleUnexpectedEvent(event)
         }
@@ -63,12 +57,6 @@ extension Foreground {
         switch event {
         case .willResignActive:
             return Suspending(stateContext: makeStateContext())
-        case .openURL(let url):
-            openURL(url)
-            return self
-        case .handleShortcutItem(let shortcutItem):
-            handleShortcutItem(shortcutItem)
-            return self
         case .didFinishLaunching, .didBecomeActive, .didEnterBackground, .willEnterForeground:
             return handleUnexpectedEvent(event)
         }
@@ -78,18 +66,12 @@ extension Foreground {
 
 extension Suspending {
 
-    mutating func apply(event: AppEvent) -> any AppState {
+    func apply(event: AppEvent) -> any AppState {
         switch event {
         case .didEnterBackground:
             return Background(stateContext: makeStateContext())
         case .didBecomeActive:
             return Foreground(stateContext: makeStateContext())
-        case .openURL(let url):
-            urlToOpen = url
-            return self
-        case .handleShortcutItem(let shortcutItem):
-            shortcutItemToHandle = shortcutItem
-            return self
         case .didFinishLaunching, .willResignActive, .willEnterForeground:
             return handleUnexpectedEvent(event)
         }
@@ -99,16 +81,10 @@ extension Suspending {
 
 extension Background {
 
-    mutating func apply(event: AppEvent) -> any AppState {
+    func apply(event: AppEvent) -> any AppState {
         switch event {
         case .willEnterForeground:
             return Resuming(stateContext: makeStateContext())
-        case .openURL(let url):
-            urlToOpen = url
-            return self
-        case .handleShortcutItem(let shortcutItem):
-            shortcutItemToHandle = shortcutItem
-            return self
         case .didFinishLaunching, .didBecomeActive, .willResignActive, .didEnterBackground:
             return handleUnexpectedEvent(event)
         }
@@ -118,18 +94,12 @@ extension Background {
 
 extension Resuming {
 
-    mutating func apply(event: AppEvent) -> any AppState {
+    func apply(event: AppEvent) -> any AppState {
         switch event {
         case .didBecomeActive:
             return Foreground(stateContext: makeStateContext())
         case .didEnterBackground:
             return Background(stateContext: makeStateContext())
-        case .openURL(let url):
-            urlToOpen = url
-            return self
-        case .handleShortcutItem(let shortcutItem):
-            shortcutItemToHandle = shortcutItem
-            return self
         case .didFinishLaunching, .willResignActive, .willEnterForeground:
             return handleUnexpectedEvent(event)
         }
@@ -152,8 +122,6 @@ extension AppEvent {
         case .didEnterBackground: return "backgrounding"
         case .willResignActive: return "suspending"
         case .willEnterForeground: return "resuming"
-        case .openURL: return "openURL"
-        case .handleShortcutItem: return "handleShortcutItem"
         }
     }
 

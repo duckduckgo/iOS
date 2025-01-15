@@ -509,3 +509,16 @@ extension Foreground {
     }
 
 }
+
+extension Foreground {
+
+    mutating func handle(action: AppAction) {
+        switch action {
+        case .openURL(let url):
+            openURL(url)
+        case .handleShortcutItem(let shortcutItem):
+            handleShortcutItem(shortcutItem)
+        }
+    }
+
+}

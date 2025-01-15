@@ -105,3 +105,17 @@ extension Resuming {
 
 }
 
+extension Resuming {
+
+    mutating func handle(action: AppAction) {
+        switch action {
+        case .openURL(let url):
+            urlToOpen = url
+        case .handleShortcutItem(let shortcutItem):
+            shortcutItemToHandle = shortcutItem
+        }
+    }
+
+}
+
+

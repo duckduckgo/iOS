@@ -1,5 +1,5 @@
 appId: com.duckduckgo.mobile.ios
-#tags:
+tags:
 #    - securityTest
 ---
 
@@ -22,7 +22,7 @@ appId: com.duckduckgo.mobile.ios
 - tapOn: "Cancel"
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText == "spreadprivacy.com"} # Should navigate directly here.
+- assertTrue: ${maestro.copiedText == "privacy-test-pages.site"} 
 - assertNotVisible: "Not DDG." # HTML content shouldn't be spoofed.
 - tapOn:
     id: "searchEntry"

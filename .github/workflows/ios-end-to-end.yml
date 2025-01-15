@@ -92,7 +92,7 @@ jobs:
       uses: loremattei/action-maestro-cloud@fix-timeout-handling
       with:
         api-key: ${{ secrets.ROBIN_API_KEY }}
-        project-id: ${{ secrets.ROBIN_PROJECT_KEY }}
+        project-id: ${{ vars.ROBIN_PROJECT_KEY }}
         name: ${{ matrix.test-tag }}_${{ github.sha }}
         timeout: 300
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app

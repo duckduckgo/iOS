@@ -1,4 +1,4 @@
-name: Sync-End-to-End tests
+name: iOS - Sync-End-to-End tests
 
 on:
   schedule:
@@ -54,7 +54,7 @@ jobs:
       with:
         name: duckduckgo-ios-app
         path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-    
+
     - name: Upload logs when workflow failed
       uses: actions/upload-artifact@v4
       if: failure() || cancelled()
@@ -64,7 +64,7 @@ jobs:
           xcodebuild.log
           DerivedData/Logs/Test/*.xcresult
         retention-days: 7
-    
+
   sync-end-to-end-tests:
     name: Sync End To End Tests
     needs: build-for-sync-end-to-end-tests
@@ -73,9 +73,9 @@ jobs:
     strategy:
       matrix:
         os-version: [17] #[15, 16, 17]
-      max-parallel: 1 # Uncomment this line to run tests sequentially. 
+      max-parallel: 1 # Uncomment this line to run tests sequentially.
       fail-fast: false
-    
+
     steps:
     - name: Check out the code
       uses: actions/checkout@v3 # Don't need submodules here as this is only for the tests folder
@@ -85,7 +85,7 @@ jobs:
       id: sync-recovery-code
       with:
         debug: true
-    
+
     - name: Retrieve Binary
       uses: actions/download-artifact@v4
       with:
@@ -95,19 +95,19 @@ jobs:
     - name: Install Maestro
       run: |
         export MAESTRO_VERSION=1.39.1; curl -Ls "https://get.maestro.mobile.dev" | bash
-        
+
     - name: Overwrite default config with sync one
       run: |
         cp .maestro/config-sync .maestro/config.yaml
-        
-    - name: Sync e2e tests 
+
+    - name: Sync e2e tests
       run: |
         export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.ROBIN_API_KEY }} --project-id ${{ secrets.ROBIN_PROJECT_KEY }} -e ONBOARDING_COMPLETED=true --env=CODE=${{ steps.sync-recovery-code.outputs.recovery-code }} --fail-on-timeout=true --fail-on-cancellation=true --timeout=150 --ios-version=${{ matrix.os-version }} --include-tags=sync --app-file DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app --flows .maestro/
 
     - name: Reset config
       run: |
         git checkout .maestro/config.yaml
-    
+
   # notify-failure:
   #   name: Notify on failure
   #   if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.ref_name == 'main' }}
@@ -122,7 +122,3 @@ jobs:
   #           --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
   #           --header "Content-Type: application/json" \
   #           --data ' { "data": { "name": "GH Workflow Failure - Sync End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" } }'
-
-    
-    
-    

@@ -1,4 +1,4 @@
-name: Close Stale Pull Requests
+name: iOS - Close Stale Pull Requests
 
 on:
   schedule:

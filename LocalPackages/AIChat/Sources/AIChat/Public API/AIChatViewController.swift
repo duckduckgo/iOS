@@ -111,6 +111,10 @@ extension AIChatViewController {
          }
          webViewController?.loadQuery(query)
      }
+
+    public func reload() {
+        webViewController?.reload()
+    }
 }
 
 // MARK: - Views Setup

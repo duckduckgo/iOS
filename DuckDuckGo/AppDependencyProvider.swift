@@ -124,28 +124,14 @@ final class AppDependencyProvider: DependencyProvider {
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
 
-        let theFeatureFlagger = featureFlagger
-        let subscriptionFeatureFlagger: FeatureFlaggerMapping<SubscriptionFeatureFlags> = FeatureFlaggerMapping { feature in
-            switch feature {
-            case .isLaunchedROW:
-                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROW)
-            case .isLaunchedROWOverride:
-                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROWOverride)
-            default:
-                return feature.defaultState
-            }
-        }
-
-        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
-                                                               subscriptionFeatureFlagger: subscriptionFeatureFlagger)
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
 
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
                                                              accountManager: accountManager,
                                                              subscriptionEndpointService: subscriptionService,
                                                              authEndpointService: authService,
                                                              subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
-                                                             subscriptionEnvironment: subscriptionEnvironment,
-                                                             subscriptionFeatureFlagger: subscriptionFeatureFlagger)
+                                                             subscriptionEnvironment: subscriptionEnvironment)
         accountManager.delegate = subscriptionManager
 
         self.subscriptionManager = subscriptionManager

@@ -44,8 +44,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         Sections.appstore: "App Store",
         Sections.environment: "Environment",
         Sections.pixels: "Promo Pixel Parameters",
-        Sections.metadata: "StoreKit Metadata",
-        Sections.featureFlags: "Feature flags"
+        Sections.metadata: "StoreKit Metadata"
     ]
 
     enum Sections: Int, CaseIterable {
@@ -89,11 +88,12 @@ final class SubscriptionDebugViewController: UITableViewController {
     }
 
     enum FeatureFlagRows: Int, CaseIterable {
-        case isLaunchedROW
+        case privacyProFreeTrialJan25
     }
 
     private var storefrontID = "Loading"
     private var storefrontCountryCode = "Loading"
+    private let freeTrialKey = FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -186,9 +186,9 @@ final class SubscriptionDebugViewController: UITableViewController {
 
         case .featureFlags:
             switch FeatureFlagRows(rawValue: indexPath.row) {
-            case .isLaunchedROW:
-                cell.textLabel?.text = "isPrivacyProLaunchedROWOverride"
-                cell.accessoryType = featureFlagger.isFeatureOn(.isPrivacyProLaunchedROWOverride) ? .checkmark : .none
+            case .privacyProFreeTrialJan25:
+                cell.textLabel?.text = "privacyProFreeTrialJan25"
+                cell.accessoryType = UserDefaults.standard.bool(forKey: freeTrialKey) ? .checkmark : .none
             case .none:
                 break
             }
@@ -246,7 +246,7 @@ final class SubscriptionDebugViewController: UITableViewController {
             break
         case .featureFlags:
             switch FeatureFlagRows(rawValue: indexPath.row) {
-            case .isLaunchedROW: toggleIsLaunchedROWFlag()
+            case .privacyProFreeTrialJan25: togglePrivacyProFreeTrialJan25Flag()
             default: break
             }
         case .none:
@@ -295,8 +295,6 @@ final class SubscriptionDebugViewController: UITableViewController {
             self.present(alertController, animated: true, completion: nil)
         }
     }
-
-//    func showAlert(title: String, message: String, alternativeAction)
 
     // MARK: Account Status Actions
 
@@ -357,13 +355,9 @@ final class SubscriptionDebugViewController: UITableViewController {
         showAlert(title: "", message: message)
     }
 
-    private func toggleIsLaunchedROWFlag() {
-        let flag = FeatureFlag.isPrivacyProLaunchedROWOverride
-        if featureFlagger.localOverrides?.override(for: flag) == nil {
-            featureFlagger.localOverrides?.toggleOverride(for: flag)
-        } else {
-            featureFlagger.localOverrides?.clearOverride(for: flag)
-        }
+    private func togglePrivacyProFreeTrialJan25Flag() {
+        let currentValue = UserDefaults.standard.bool(forKey: freeTrialKey)
+        UserDefaults.standard.set(!currentValue, forKey: freeTrialKey)
         tableView.reloadData()
     }
 

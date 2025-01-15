@@ -1,4 +1,4 @@
-name: End-to-End tests
+name: iOS - End-to-End tests
 
 on:
   schedule:
@@ -10,7 +10,7 @@ jobs:
     name: Build End to End Tests
     runs-on: macos-15-xlarge
     timeout-minutes: 30
-    
+
     steps:
     - name: Check out the code
       uses: actions/checkout@v3
@@ -54,7 +54,7 @@ jobs:
       with:
         name: duckduckgo-ios-app
         path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-    
+
     - name: Upload logs when workflow failed
       uses: actions/upload-artifact@v4
       if: failure() || cancelled()
@@ -73,7 +73,7 @@ jobs:
     strategy:
       matrix:
         test-tag: [release, privacy, securityTest, adClick]
-      max-parallel: 1 # Uncomment this line to run tests sequentially. 
+      max-parallel: 1 # Uncomment this line to run tests sequentially.
       fail-fast: false
 
     steps:

@@ -34,13 +34,17 @@ final class AIChatUserScript: NSObject, Subfeature {
     weak var broker: UserScriptMessageBroker?
     private(set) var messageOriginPolicy: MessageOriginPolicy
 
-    init(handler: AIChatUserScriptHandling) {
+    init(handler: AIChatUserScriptHandling, debugSettings: AIChatDebugSettingsHandling) {
         self.handler = handler
         var rules = [HostnameMatchingRule]()
 
         /// Default rule for DuckDuckGo AI Chat
         if let ddgDomain = URL.ddg.host {
             rules.append(.exact(hostname: ddgDomain))
+        }
+
+        if let debugHostname = debugSettings.messagePolicyHostname {
+            rules.append(.exact(hostname: debugHostname))
         }
 
         self.messageOriginPolicy = .only(rules: rules)

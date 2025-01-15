@@ -25,10 +25,7 @@ extension Initializing {
     func apply(event: AppEvent) -> any AppState {
         switch event {
         case .didFinishLaunching(let application, let isTesting):
-            if isTesting {
-                return Testing(application: application)
-            }
-            return Launching(stateContext: makeStateContext(application: application))
+            return isTesting ? Testing(application: application) : Launching(stateContext: makeStateContext(application: application))
         default:
             return handleUnexpectedEvent(event)
         }
@@ -44,7 +41,7 @@ extension Launching {
             return Foreground(stateContext: makeStateContext())
         case .didEnterBackground:
             return Background(stateContext: makeStateContext())
-        case .didFinishLaunching, .willResignActive, .willEnterForeground:
+        default:
             return handleUnexpectedEvent(event)
         }
     }
@@ -57,7 +54,7 @@ extension Foreground {
         switch event {
         case .willResignActive:
             return Suspending(stateContext: makeStateContext())
-        case .didFinishLaunching, .didBecomeActive, .didEnterBackground, .willEnterForeground:
+        default:
             return handleUnexpectedEvent(event)
         }
     }
@@ -72,7 +69,7 @@ extension Suspending {
             return Background(stateContext: makeStateContext())
         case .didBecomeActive:
             return Foreground(stateContext: makeStateContext())
-        case .didFinishLaunching, .willResignActive, .willEnterForeground:
+        default:
             return handleUnexpectedEvent(event)
         }
     }
@@ -85,7 +82,7 @@ extension Background {
         switch event {
         case .willEnterForeground:
             return Resuming(stateContext: makeStateContext())
-        case .didFinishLaunching, .didBecomeActive, .willResignActive, .didEnterBackground:
+        default:
             return handleUnexpectedEvent(event)
         }
     }
@@ -100,7 +97,7 @@ extension Resuming {
             return Foreground(stateContext: makeStateContext())
         case .didEnterBackground:
             return Background(stateContext: makeStateContext())
-        case .didFinishLaunching, .willResignActive, .willEnterForeground:
+        default:
             return handleUnexpectedEvent(event)
         }
     }
@@ -113,27 +110,13 @@ extension Testing {
 
 }
 
-extension AppEvent {
-
-    var rawValue: String {
-        switch self {
-        case .didFinishLaunching: return "launching"
-        case .didBecomeActive: return "activating"
-        case .didEnterBackground: return "backgrounding"
-        case .willResignActive: return "suspending"
-        case .willEnterForeground: return "resuming"
-        }
-    }
-
-}
-
 extension AppState {
 
     func handleUnexpectedEvent(_ event: AppEvent) -> Self {
-        Logger.lifecycle.error("Invalid transition (\(event.rawValue)) for state (\(type(of: self)))")
+        Logger.lifecycle.error("🔴 Unexpected [\(String(describing: event))] event while in [\(type(of: self))] state!")
         DailyPixel.fireDailyAndCount(pixel: .appDidTransitionToUnexpectedState,
                                      withAdditionalParameters: [PixelParameters.appState: String(describing: type(of: self)),
-                                                                PixelParameters.appEvent: event.rawValue])
+                                                                PixelParameters.appEvent: String(describing: event)])
         return self
     }
 

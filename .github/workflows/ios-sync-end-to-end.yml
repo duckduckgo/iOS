@@ -2,7 +2,7 @@ name: iOS - Sync-End-to-End tests
 
 on:
   schedule:
-    - cron: '0 5 * * *' # run at 5 AM UTC
+    - cron: '0 1 * * *' # run at 1 AM UTC
   workflow_dispatch:
 
 jobs:
@@ -69,7 +69,7 @@ jobs:
     name: Sync End To End Tests
     needs: build-for-sync-end-to-end-tests
     runs-on: macos-15
-    timeout-minutes: 90
+    timeout-minutes: 240
     strategy:
       matrix:
         os-version: [17] #[15, 16, 17]

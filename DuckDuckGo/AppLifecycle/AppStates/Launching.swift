@@ -1,5 +1,5 @@
 //
-//  Launched.swift
+//  Launching.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -36,7 +36,7 @@ import PixelKit
 import PixelExperimentKit
 
 @MainActor
-struct Launched: AppState {
+struct Launching: AppState {
 
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     private var didCrashDuringCrashHandlersSetUp: Bool
@@ -84,7 +84,7 @@ struct Launched: AppState {
     private let application: UIApplication
 
     // swiftlint:disable:next cyclomatic_complexity
-    init(stateContext: Init.StateContext) {
+    init(stateContext: Initializing.StateContext) {
 
         @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
         var privacyConfigCustomURL: String?
@@ -618,7 +618,7 @@ struct Launched: AppState {
 
 }
 
-extension Launched {
+extension Launching {
 
     struct StateContext {
 

@@ -1,5 +1,5 @@
 //
-//  Init.swift
+//  Initializing.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -22,7 +22,7 @@ import Crashes
 import UIKit
 
 @MainActor
-struct Init: AppState {
+struct Initializing: AppState {
 
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     var didCrashDuringCrashHandlersSetUp: Bool
@@ -37,7 +37,7 @@ struct Init: AppState {
 
 }
 
-extension Init {
+extension Initializing {
 
     struct StateContext {
 

@@ -21,10 +21,11 @@ import UIKit
 
 enum AppEvent {
 
-    case launching(UIApplication, isTesting: Bool)
-    case activating
-    case backgrounding
-    case suspending
+    case didFinishLaunching(UIApplication, isTesting: Bool)
+    case didBecomeActive
+    case didEnterBackground
+    case willResignActive
+    case willEnterForeground
 
     case openURL(URL)
     case handleShortcutItem(UIApplicationShortcutItem)
@@ -47,7 +48,7 @@ protocol AppEventHandler {
 @MainActor
 final class AppStateMachine: AppEventHandler {
 
-    private(set) var currentState: any AppState = Init()
+    private(set) var currentState: any AppState = Initializing()
 
     func handle(_ event: AppEvent) {
         currentState = currentState.apply(event: event)

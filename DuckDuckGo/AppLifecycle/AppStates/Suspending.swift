@@ -1,5 +1,5 @@
 //
-//  Inactive.swift
+//  Suspending.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,14 +19,15 @@
 
 import UIKit
 
-struct Inactive: AppState {
+struct Suspending: AppState {
 
     private let application: UIApplication
     private let appDependencies: AppDependencies
 
     var urlToOpen: URL?
+    var shortcutItemToHandle: UIApplicationShortcutItem?
 
-    init(stateContext: Active.StateContext) {
+    init(stateContext: Foreground.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
@@ -42,12 +43,13 @@ struct Inactive: AppState {
 
 }
 
-extension Inactive {
+extension Suspending {
 
     struct StateContext {
 
         let application: UIApplication
         let urlToOpen: URL?
+        let shortcutItemToHandle: UIApplicationShortcutItem?
         let appDependencies: AppDependencies
 
     }
@@ -55,6 +57,7 @@ extension Inactive {
     func makeStateContext() -> StateContext {
         .init(application: application,
               urlToOpen: urlToOpen,
+              shortcutItemToHandle: shortcutItemToHandle,
               appDependencies: appDependencies)
     }
 

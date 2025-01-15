@@ -1,5 +1,5 @@
 //
-//  Active.swift
+//  Foreground.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -26,7 +26,7 @@ import BackgroundTasks
 import Subscription
 import NetworkProtection
 
-struct Active: AppState {
+struct Foreground: AppState {
 
     let application: UIApplication
     let appDependencies: AppDependencies
@@ -43,7 +43,7 @@ struct Active: AppState {
     }
 
     // MARK: handle one-time (after launch) logic here
-    init(stateContext: Launched.StateContext) {
+    init(stateContext: Launching.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
@@ -75,6 +75,7 @@ struct Active: AppState {
             refreshRemoteMessages(remoteMessagingClient: appDependencies.remoteMessagingClient)
         }
 
+        // TODO: it should happen after autoclear
         if let url = stateContext.urlToOpen {
             openURL(url)
         } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
@@ -84,23 +85,11 @@ struct Active: AppState {
         activateApp()
     }
 
-    // MARK: handle applicationWillEnterForeground(_:) logic here
-    init(stateContext: Background.StateContext) {
+    init(stateContext: Resuming.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
-        ThemeManager.shared.updateUserInterfaceStyle()
-
-        let uiService = appDependencies.uiService
-        let syncService = appDependencies.syncService
-        let autoClear = appDependencies.autoClear
-        Task { @MainActor [self] in
-            await beginAuthentication(lastBackgroundDate: stateContext.lastBackgroundDate)
-            await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
-            uiService.showKeyboardIfSettingOn = true
-            syncService.scheduler.resumeSyncQueue()
-        }
-
+        // TODO: it should happen after autoclear
         if let url = stateContext.urlToOpen {
             openURL(url)
         } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
@@ -110,9 +99,15 @@ struct Active: AppState {
         activateApp()
     }
 
-    init(stateContext: Inactive.StateContext) {
+    init(stateContext: Suspending.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
+
+        if let url = stateContext.urlToOpen {
+            openURL(url)
+        } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
+            handleShortcutItem(shortcutItemToHandle, appIsLaunching: false)
+        }
 
         activateApp()
     }
@@ -497,7 +492,7 @@ struct Active: AppState {
 
 }
 
-extension Active {
+extension Foreground {
 
     struct StateContext {
 

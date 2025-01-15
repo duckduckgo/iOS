@@ -32,7 +32,7 @@ struct Background: AppState {
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
-    init(stateContext: Inactive.StateContext) {
+    init(stateContext: Suspending.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
@@ -40,7 +40,15 @@ struct Background: AppState {
         run()
     }
 
-    init(stateContext: Launched.StateContext) {
+    init(stateContext: Launching.StateContext) {
+        application = stateContext.application
+        appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
+
+        run()
+    }
+
+    init(stateContext: Resuming.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
@@ -71,15 +79,6 @@ struct Background: AppState {
         privacyProDataReporter.saveApplicationLastSessionEnded()
 
         resetAppStartTime()
-
-        // Kill switch for the new app delegate:
-        // If the .forceOldAppDelegate flag is set in the config, we mark a file as present.
-        // This switches the app to the old mode and silently crashes it in the background.
-        // When reopened, the app will reliably run the old flow.
-        if ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .forceOldAppDelegate) {
-            (UIApplication.shared.delegate as? AppDelegate)?.forceOldAppDelegate()
-            fatalError("crash to ensure the app restarts using the old app delegate next time")
-        }
     }
 
     private mutating func suspendSync(syncService: DDGSync) {

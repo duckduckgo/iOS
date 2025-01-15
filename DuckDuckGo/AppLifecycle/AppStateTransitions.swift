@@ -20,15 +20,15 @@
 import os.log
 import Core
 
-extension Init {
+extension Initializing {
 
     func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .launching(let application, let isTesting):
+        case .didFinishLaunching(let application, let isTesting):
             if isTesting {
                 return Testing(application: application)
             }
-            return Launched(stateContext: makeStateContext(application: application))
+            return Launching(stateContext: makeStateContext(application: application))
         default:
             return handleUnexpectedEvent(event)
         }
@@ -36,58 +36,61 @@ extension Init {
 
 }
 
-extension Launched {
+extension Launching {
 
     mutating func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .activating:
-            return Active(stateContext: makeStateContext())
+        case .didBecomeActive:
+            return Foreground(stateContext: makeStateContext())
+        case .didEnterBackground:
+            return Background(stateContext: makeStateContext())
         case .openURL(let url):
             urlToOpen = url
             return self
         case .handleShortcutItem(let shortcutItem):
             shortcutItemToHandle = shortcutItem
             return self
-        case .backgrounding:
-            return Background(stateContext: makeStateContext())
-        case .launching, .suspending:
+        case .didFinishLaunching, .willResignActive, .willEnterForeground:
             return handleUnexpectedEvent(event)
         }
     }
 
 }
 
-extension Active {
+extension Foreground {
 
     func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .suspending:
-            return Inactive(stateContext: makeStateContext())
+        case .willResignActive:
+            return Suspending(stateContext: makeStateContext())
         case .openURL(let url):
             openURL(url)
             return self
         case .handleShortcutItem(let shortcutItem):
             handleShortcutItem(shortcutItem)
             return self
-        case .launching, .activating, .backgrounding:
+        case .didFinishLaunching, .didBecomeActive, .didEnterBackground, .willEnterForeground:
             return handleUnexpectedEvent(event)
         }
     }
 
 }
 
-extension Inactive {
+extension Suspending {
 
     mutating func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .backgrounding:
+        case .didEnterBackground:
             return Background(stateContext: makeStateContext())
-        case .activating:
-            return Active(stateContext: makeStateContext())
+        case .didBecomeActive:
+            return Foreground(stateContext: makeStateContext())
         case .openURL(let url):
             urlToOpen = url
             return self
-        case .launching, .suspending, .handleShortcutItem:
+        case .handleShortcutItem(let shortcutItem):
+            shortcutItemToHandle = shortcutItem
+            return self
+        case .didFinishLaunching, .willResignActive, .willEnterForeground:
             return handleUnexpectedEvent(event)
         }
     }
@@ -98,24 +101,36 @@ extension Background {
 
     mutating func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .activating:
-            return Active(stateContext: makeStateContext())
+        case .willEnterForeground:
+            return Resuming(stateContext: makeStateContext())
         case .openURL(let url):
             urlToOpen = url
-            return self
-        case .backgrounding:
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                Pixel.fire(pixel: .appDidConsecutivelyBackground, withAdditionalParameters: [
-                    PixelParameters.didCallWillEnterForeground: appDelegate.didCallWillEnterForeground.description
-                ])
-                appDelegate.didCallWillEnterForeground = false
-            }
-            run()
             return self
         case .handleShortcutItem(let shortcutItem):
             shortcutItemToHandle = shortcutItem
             return self
-        case .launching, .suspending:
+        case .didFinishLaunching, .didBecomeActive, .willResignActive, .didEnterBackground:
+            return handleUnexpectedEvent(event)
+        }
+    }
+
+}
+
+extension Resuming {
+
+    mutating func apply(event: AppEvent) -> any AppState {
+        switch event {
+        case .didBecomeActive:
+            return Foreground(stateContext: makeStateContext())
+        case .didEnterBackground:
+            return Background(stateContext: makeStateContext())
+        case .openURL(let url):
+            urlToOpen = url
+            return self
+        case .handleShortcutItem(let shortcutItem):
+            shortcutItemToHandle = shortcutItem
+            return self
+        case .didFinishLaunching, .willResignActive, .willEnterForeground:
             return handleUnexpectedEvent(event)
         }
     }
@@ -132,10 +147,11 @@ extension AppEvent {
 
     var rawValue: String {
         switch self {
-        case .launching: return "launching"
-        case .activating: return "activating"
-        case .backgrounding: return "backgrounding"
-        case .suspending: return "suspending"
+        case .didFinishLaunching: return "launching"
+        case .didBecomeActive: return "activating"
+        case .didEnterBackground: return "backgrounding"
+        case .willResignActive: return "suspending"
+        case .willEnterForeground: return "resuming"
         case .openURL: return "openURL"
         case .handleShortcutItem: return "handleShortcutItem"
         }

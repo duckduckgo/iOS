@@ -1,5 +1,5 @@
 //
-//  ImportPasswordsViewController.swift
+//  ImportPasswordsViaSyncViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -22,18 +22,18 @@ import SwiftUI
 import Core
 import DDGSync
 
-protocol ImportPasswordsViewControllerDelegate: AnyObject {
-    func importPasswordsViewControllerDidRequestOpenSync(_ viewController: ImportPasswordsViewController)
+protocol ImportPasswordsViaSyncViewControllerDelegate: AnyObject {
+    func importPasswordsViaSyncViewControllerDidRequestOpenSync(_ viewController: ImportPasswordsViaSyncViewController)
 }
 
-final class ImportPasswordsViewController: UIViewController {
+final class ImportPasswordsViaSyncViewController: UIViewController {
 
-    weak var delegate: ImportPasswordsViewControllerDelegate?
+    weak var delegate: ImportPasswordsViaSyncViewControllerDelegate?
 
-    private let viewModel = ImportPasswordsViewModel()
+    private let viewModel = ImportPasswordsViaSyncViewModel()
 
     init(syncService: DDGSyncing) {
-        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
+        let importPasswordsStatusHandler = ImportPasswordsViaSyncStatusHandler(syncService: syncService)
         importPasswordsStatusHandler.setImportViaSyncStartDateIfRequired()
 
         super.init(nibName: nil, bundle: nil)
@@ -59,17 +59,17 @@ final class ImportPasswordsViewController: UIViewController {
 
     private func setupView() {
         viewModel.delegate = self
-        let controller = UIHostingController(rootView: ImportPasswordsView(viewModel: viewModel))
+        let controller = UIHostingController(rootView: ImportPasswordsViaSyncView(viewModel: viewModel))
         controller.view.backgroundColor = .clear
         installChildViewController(controller)
     }
 
 }
 
-extension ImportPasswordsViewController: ImportPasswordsViewModelDelegate {
+extension ImportPasswordsViaSyncViewController: ImportPasswordsViaSyncViewModelDelegate {
 
-    func importPasswordsViewModelDidRequestOpenSync(_ viewModel: ImportPasswordsViewModel) {
-        delegate?.importPasswordsViewControllerDidRequestOpenSync(self)
+    func importPasswordsViaSyncViewModelDidRequestOpenSync(_ viewModel: ImportPasswordsViaSyncViewModel) {
+        delegate?.importPasswordsViaSyncViewControllerDidRequestOpenSync(self)
     }
 
 }

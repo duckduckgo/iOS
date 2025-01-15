@@ -323,40 +323,40 @@
 "autofill.hide-password" = "Hide Password";
 
 /* Button label to get link to download the desktop browser */
-"autofill.import.passwords.get-browser-button" = "Get Desktop Browser";
+"autofill.import.passwords.via.sync.get-browser-button" = "Get Desktop Browser";
 
 /* Step 1 for instructions to import passwords */
-"autofill.import.passwords.instructions.step1" = "Open DuckDuckGo on Mac or Windows";
+"autofill.import.passwords.via.sync.instructions.step1" = "Open DuckDuckGo on Mac or Windows";
 
 /* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
-"autofill.import.passwords.instructions.step2" = "Go to %1$@ > %2$@";
+"autofill.import.passwords.via.sync.instructions.step2" = "Go to %1$@ > %2$@";
 
 /* second parameter for autofill.import.passwords.instructions.step2 */
-"autofill.import.passwords.instructions.step2.passwords" = "Passwords";
+"autofill.import.passwords.via.sync.instructions.step2.passwords" = "Passwords";
 
 /* first parameter for autofill.import.passwords.instructions.step2 */
-"autofill.import.passwords.instructions.step2.settings" = "Settings";
+"autofill.import.passwords.via.sync.instructions.step2.settings" = "Settings";
 
 /* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
-"autofill.import.passwords.instructions.step3" = "Select %@ and follow the steps to import";
+"autofill.import.passwords.via.sync.instructions.step3" = "Select %@ and follow the steps to import";
 
 /* Parameter for autofill.import.passwords.instructions.step3 */
-"autofill.import.passwords.instructions.step3.import" = "Import Passwords...";
+"autofill.import.passwords.via.sync.instructions.step3.import" = "Import Passwords...";
 
 /* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
-"autofill.import.passwords.instructions.step4" = "Once imported on your computer you can set up sync on this %@";
+"autofill.import.passwords.via.sync.instructions.step4" = "Once imported on your computer you can set up sync on this %@";
 
 /* Title for section with instructions to import passwords */
-"autofill.import.passwords.instructions.title" = "Import from the desktop browser:";
+"autofill.import.passwords.via.sync.instructions.title" = "Import from the desktop browser:";
 
 /* Subtitle for screen to import passwords */
-"autofill.import.passwords.subtitle" = "Import passwords in the desktop version of the DuckDuckGo browser, then sync across devices.";
+"autofill.import.passwords.via.sync.subtitle" = "Import passwords in the desktop version of the DuckDuckGo browser, then sync across devices.";
 
 /* Button label to sync passwords with desktop browser */
-"autofill.import.passwords.sync-button" = "Sync With Desktop";
+"autofill.import.passwords.via.sync.sync-button" = "Sync With Desktop";
 
 /* Title for screen to import passwords */
-"autofill.import.passwords.title" = "How To Import Passwords";
+"autofill.import.passwords.via.sync.title" = "How To Import Passwords";
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Disable";
@@ -456,6 +456,9 @@
 
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Import Passwords";
+
+/* Title for button to sync with the desktop app to fetch your passwords when autofill has no items */
+"autofill.logins.empty-view.import-via-sync.button.title" = "Sync Desktop Passwords";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
 "autofill.logins.empty-view.subtitle.first.paragraph" = "You can import saved passwords from another browser into DuckDuckGo.";

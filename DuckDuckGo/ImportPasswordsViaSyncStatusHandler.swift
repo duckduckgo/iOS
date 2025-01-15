@@ -1,5 +1,5 @@
 //
-//  ImportPasswordsStatusHandler.swift
+//  ImportPasswordsViaSyncStatusHandler.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import Foundation
 import Core
 import DDGSync
 
-class ImportPasswordsStatusHandler {
+class ImportPasswordsViaSyncStatusHandler {
 
     private let appSettings: AppSettings
     private let syncService: DDGSyncing

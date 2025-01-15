@@ -53,10 +53,12 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     weak var detailsViewController: AutofillLoginDetailsViewController?
     private let viewModel: AutofillLoginListViewModel
     private lazy var emptyView: UIView = {
-        let emptyView = AutofillItemsEmptyView { [weak self] in
+        let emptyView = AutofillItemsEmptyView(importButtonAction: { [weak self] in
+            // TODO
+        }, importViaSyncButtonAction: { [weak self] in
             self?.segueToImport()
             Pixel.fire(pixel: .autofillLoginsImportNoPasswords)
-        }
+        })
 
         let hostingController = UIHostingController(rootView: emptyView)
         var size = hostingController.sizeThatFits(in: UIScreen.main.bounds.size)
@@ -405,14 +407,20 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     private func importAction() -> UIAction {
-        return UIAction(title: UserText.autofillEmptyViewButtonTitle) { [weak self] _ in
+        return UIAction(title: UserText.autofillEmptyViewImportButtonTitle) { [weak self] _ in
             self?.segueToImport()
             Pixel.fire(pixel: .autofillLoginsImport)
         }
     }
 
     private func segueToImport() {
-        let importController = ImportPasswordsViewController(syncService: syncService)
+        let importController = ImportPasswordsViaSyncViewController(syncService: syncService)
+        importController.delegate = self
+        navigationController?.pushViewController(importController, animated: true)
+    }
+
+    private func segueToImportViaSync() {
+        let importController = ImportPasswordsViaSyncViewController(syncService: syncService)
         importController.delegate = self
         navigationController?.pushViewController(importController, animated: true)
     }
@@ -1047,11 +1055,11 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
     }
 }
 
-// MARK: ImportPasswordsViewControllerDelegate
+// MARK: ImportPasswordsViaSyncViewControllerDelegate
 
-extension AutofillLoginSettingsListViewController: ImportPasswordsViewControllerDelegate {
+extension AutofillLoginSettingsListViewController: ImportPasswordsViaSyncViewControllerDelegate {
 
-    func importPasswordsViewControllerDidRequestOpenSync(_ viewController: ImportPasswordsViewController) {
+    func importPasswordsViaSyncViewControllerDidRequestOpenSync(_ viewController: ImportPasswordsViaSyncViewController) {
         segueToSync()
     }
 

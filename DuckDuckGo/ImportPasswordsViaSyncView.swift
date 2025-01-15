@@ -1,5 +1,5 @@
 //
-//  ImportPasswordsView.swift
+//  ImportPasswordsViaSyncView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -22,9 +22,9 @@ import DesignResourcesKit
 import Core
 import DuckUI
 
-struct ImportPasswordsView: View {
+struct ImportPasswordsViaSyncView: View {
 
-    var viewModel: ImportPasswordsViewModel
+    var viewModel: ImportPasswordsViaSyncViewModel
 
     var body: some View {
 
@@ -53,20 +53,20 @@ struct ImportPasswordsView: View {
 
     private struct ImportOverview: View {
 
-        var viewModel: ImportPasswordsViewModel
+        var viewModel: ImportPasswordsViaSyncViewModel
 
         @State private var navigate = false
 
         var body: some View {
             Image(.syncDesktopNew128)
 
-            Text(UserText.autofillImportPasswordsTitle)
+            Text(UserText.autofillImportPasswordsViaSyncTitle)
                 .daxTitle2()
                 .foregroundColor(Color(designSystemColor: .textPrimary))
                 .multilineTextAlignment(.center)
                 .padding(.top, 16)
 
-            Text(UserText.autofillImportPasswordsSubtitle)
+            Text(UserText.autofillImportPasswordsViaSyncSubtitle)
                 .daxBodyRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)
@@ -76,7 +76,7 @@ struct ImportPasswordsView: View {
                 viewModel.buttonPressed(.getBrowser)
                 self.navigate = true
             } label: {
-                Text(ImportPasswordsViewModel.ButtonType.getBrowser.title)
+                Text(ImportPasswordsViaSyncViewModel.ButtonType.getBrowser.title)
                     .frame(width: viewModel.maxButtonWidth())
             }
             .buttonStyle(PrimaryButtonStyle(fullWidth: false))
@@ -85,7 +85,7 @@ struct ImportPasswordsView: View {
             Button {
                 viewModel.buttonPressed(.sync)
             } label: {
-                Text(ImportPasswordsViewModel.ButtonType.sync.title)
+                Text(ImportPasswordsViaSyncViewModel.ButtonType.sync.title)
                     .frame(width: viewModel.maxButtonWidth())
             }
             .buttonStyle(SecondaryFillButtonStyle(fullWidth: false))
@@ -99,16 +99,16 @@ struct ImportPasswordsView: View {
     }
 
     private struct StepByStepInstructions: View {
-        var viewModel: ImportPasswordsViewModel
+        var viewModel: ImportPasswordsViaSyncViewModel
 
         var body: some View {
 
             VStack(alignment: .leading) {
-                Text(UserText.autofillImportPasswordsInstructionsTitle)
+                Text(UserText.autofillImportPasswordsViaSyncInstructionsTitle)
                     .daxHeadline()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
 
-                ForEach(ImportPasswordsViewModel.InstructionStep.allCases, id: \.self) { step in
+                ForEach(ImportPasswordsViaSyncViewModel.InstructionStep.allCases, id: \.self) { step in
 
                     if step == .step2 || step == .step3 {
                         Instruction(step: step.rawValue, instructionText: attributedText(viewModel.attributedInstructionsForStep(step)))
@@ -166,9 +166,9 @@ struct NumberBadge: View {
     }
 }
 
-struct ImportPasswordsView_Previews: PreviewProvider {
+struct ImportPasswordsViaSyncView_Previews: PreviewProvider {
     static var previews: some View {
-        ImportPasswordsView(viewModel: ImportPasswordsViewModel()).preferredColorScheme(.light)
-        ImportPasswordsView(viewModel: ImportPasswordsViewModel()).preferredColorScheme(.dark)
+        ImportPasswordsViaSyncView(viewModel: ImportPasswordsViaSyncViewModel()).preferredColorScheme(.light)
+        ImportPasswordsViaSyncView(viewModel: ImportPasswordsViaSyncViewModel()).preferredColorScheme(.dark)
     }
 }

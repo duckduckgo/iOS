@@ -24,6 +24,7 @@ import DuckUI
 struct AutofillItemsEmptyView: View {
 
     var importButtonAction: (() -> Void)?
+    var importViaSyncButtonAction: (() -> Void)?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -46,13 +47,31 @@ struct AutofillItemsEmptyView: View {
                 .padding(.top, 8)
                 .lineLimit(nil)
 
-            Button {
-                importButtonAction?()
-            } label: {
-                Text(UserText.autofillEmptyViewButtonTitle)
+            if #available(iOS 18.2, *) {
+                Button {
+                    importButtonAction?()
+                } label: {
+                    Text(UserText.autofillEmptyViewImportButtonTitle)
+                }
+                .buttonStyle(PrimaryButtonStyle(fullWidth: false))
+                .padding(.top, 24)
+
+                Button {
+                    importViaSyncButtonAction?()
+                } label: {
+                    Text(UserText.autofillEmptyViewImportViaSyncButtonTitle)
+                }
+                .buttonStyle(SecondaryFillButtonStyle(fullWidth: false))
+                .padding(.top, 8)
+            } else {
+                Button {
+                    importViaSyncButtonAction?()
+                } label: {
+                    Text(UserText.autofillEmptyViewImportButtonTitle)
+                }
+                .buttonStyle(PrimaryButtonStyle(fullWidth: false))
+                .padding(.top, 24)
             }
-            .buttonStyle(PrimaryButtonStyle(fullWidth: false))
-            .padding(.top, 24)
         }
         .frame(maxWidth: 300.0)
         .padding(.top, 16)

@@ -1,5 +1,5 @@
 //
-//  ImportPasswordsStatusHandlerTests.swift
+//  ImportPasswordsViaSyncStatusHandlerTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -24,7 +24,7 @@ import XCTest
 @testable import BrowserServicesKit
 @testable import Common
 
-final class ImportPasswordsStatusHandlerTests: XCTestCase {
+final class ImportPasswordsViaSyncStatusHandlerTests: XCTestCase {
 
     private let appSettings = AppSettingsMock()
     private let scheduler = CapturingScheduler()
@@ -42,7 +42,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         appSettings.autofillImportViaSyncStart = nil
         syncService.authState = .inactive
 
-        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(appSettings: appSettings, syncService: syncService)
+        let importPasswordsStatusHandler = ImportPasswordsViaSyncStatusHandler(appSettings: appSettings, syncService: syncService)
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
 
         importPasswordsStatusHandler.setImportViaSyncStartDateIfRequired()
@@ -61,7 +61,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         syncService.authState = .active
         syncService.registeredDevices = []
 
-        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(appSettings: appSettings, syncService: syncService)
+        let importPasswordsStatusHandler = ImportPasswordsViaSyncStatusHandler(appSettings: appSettings, syncService: syncService)
         
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
 
@@ -81,7 +81,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         syncService.authState = .active
         syncService.registeredDevices = [RegisteredDevice(id: "1", name: "Device 1", type: "desktop")]
 
-        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(appSettings: appSettings, syncService: syncService)
+        let importPasswordsStatusHandler = ImportPasswordsViaSyncStatusHandler(appSettings: appSettings, syncService: syncService)
 
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
         
@@ -98,7 +98,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
 
     func testWhenNeverStartedImportThenNoPixelFired() async {
 
-        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let importPasswordsStatusHandler = TestImportPasswordsViaSyncStatusHandler.init(appSettings: appSettings, syncService: syncService)
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
 
         importPasswordsStatusHandler.checkSyncSuccessStatus()
@@ -118,7 +118,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         syncService.authState = .active
         syncService.registeredDevices = [RegisteredDevice(id: "1", name: "Device 1", type: "desktop")]
 
-        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let importPasswordsStatusHandler = TestImportPasswordsViaSyncStatusHandler.init(appSettings: appSettings, syncService: syncService)
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
 
         importPasswordsStatusHandler.checkSyncSuccessStatus()
@@ -139,7 +139,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         syncService.authState = .active
         syncService.registeredDevices = []
 
-        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let importPasswordsStatusHandler = TestImportPasswordsViaSyncStatusHandler.init(appSettings: appSettings, syncService: syncService)
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
 
         importPasswordsStatusHandler.checkSyncSuccessStatus()
@@ -159,7 +159,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         appSettings.autofillImportViaSyncStart = Date()
         syncService.authState = .inactive
 
-        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let importPasswordsStatusHandler = TestImportPasswordsViaSyncStatusHandler.init(appSettings: appSettings, syncService: syncService)
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
 
         importPasswordsStatusHandler.checkSyncSuccessStatus()
@@ -180,7 +180,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         syncService.authState = .active
         syncService.registeredDevices = [RegisteredDevice(id: "1", name: "Device 1", type: "desktop")]
 
-        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let importPasswordsStatusHandler = TestImportPasswordsViaSyncStatusHandler.init(appSettings: appSettings, syncService: syncService)
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
 
         importPasswordsStatusHandler.checkSyncSuccessStatus()
@@ -201,7 +201,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         syncService.authState = .active
         syncService.registeredDevices = []
 
-        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let importPasswordsStatusHandler = TestImportPasswordsViaSyncStatusHandler.init(appSettings: appSettings, syncService: syncService)
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
 
         importPasswordsStatusHandler.checkSyncSuccessStatus()
@@ -221,7 +221,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         appSettings.autofillImportViaSyncStart = Date().addingTimeInterval(-60 * 60 * 49)
         syncService.authState = .inactive
 
-        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let importPasswordsStatusHandler = TestImportPasswordsViaSyncStatusHandler.init(appSettings: appSettings, syncService: syncService)
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
 
         importPasswordsStatusHandler.checkSyncSuccessStatus()
@@ -237,7 +237,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
     }
 }
 
-class TestImportPasswordsStatusHandler: ImportPasswordsStatusHandler {
+class TestImportPasswordsViaSyncStatusHandler: ImportPasswordsViaSyncStatusHandler {
     var lastFiredPixel: Pixel.Event?
 
     override func clearSettingAndFirePixel(_ type: Pixel.Event) {

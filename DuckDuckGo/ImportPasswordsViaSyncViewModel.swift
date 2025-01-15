@@ -1,5 +1,5 @@
 //
-//  ImportPasswordsViewModel.swift
+//  ImportPasswordsViaSyncViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,11 +21,11 @@ import Foundation
 import SwiftUI
 import Core
 
-protocol ImportPasswordsViewModelDelegate: AnyObject {
-    func importPasswordsViewModelDidRequestOpenSync(_ viewModel: ImportPasswordsViewModel)
+protocol ImportPasswordsViaSyncViewModelDelegate: AnyObject {
+    func importPasswordsViaSyncViewModelDidRequestOpenSync(_ viewModel: ImportPasswordsViaSyncViewModel)
 }
 
-final class ImportPasswordsViewModel {
+final class ImportPasswordsViaSyncViewModel {
 
     enum ButtonType: String {
         case getBrowser
@@ -34,9 +34,9 @@ final class ImportPasswordsViewModel {
         var title: String {
             switch self {
             case .getBrowser:
-                return UserText.autofillImportPasswordsGetBrowserButton
+                return UserText.autofillImportPasswordsViaSyncGetBrowserButton
             case .sync:
-                return UserText.autofillImportPasswordsSyncButton
+                return UserText.autofillImportPasswordsViaSyncSyncButton
             }
         }
     }
@@ -61,21 +61,21 @@ final class ImportPasswordsViewModel {
         func instructions() -> String {
             switch self {
             case .step1:
-                return UserText.autofillImportPasswordsInstructionsStep1
+                return UserText.autofillImportPasswordsViaSyncInstructionsStep1
             case .step2:
-                return String(format: UserText.autofillImportPasswordsInstructionsStep2,
-                              UserText.autofillImportPasswordsInstructionsStep2Settings,
-                              UserText.autofillImportPasswordsInstructionsStep2Autofill)
+                return String(format: UserText.autofillImportPasswordsViaSyncInstructionsStep2,
+                              UserText.autofillImportPasswordsViaSyncInstructionsStep2Settings,
+                              UserText.autofillImportPasswordsViaSyncInstructionsStep2Autofill)
             case .step3:
-                return String(format: UserText.autofillImportPasswordsInstructionsStep3,
-                              UserText.autofillImportPasswordsInstructionsStep3Import)
+                return String(format: UserText.autofillImportPasswordsViaSyncInstructionsStep3,
+                              UserText.autofillImportPasswordsViaSyncInstructionsStep3Import)
             case .step4:
-                return String(format: UserText.autofillImportPasswordsInstructionsStep4, deviceType)
+                return String(format: UserText.autofillImportPasswordsViaSyncInstructionsStep4, deviceType)
             }
         }
     }
 
-    weak var delegate: ImportPasswordsViewModelDelegate?
+    weak var delegate: ImportPasswordsViaSyncViewModelDelegate?
 
     /// Keeping track on whether or not either button was pressed on this screen
     /// so that a pixel can be fired if the user navigates away without taking any action
@@ -107,12 +107,12 @@ final class ImportPasswordsViewModel {
         var attributedString = AttributedString(step.instructions())
 
         if case .step2 = step {
-            attributedString.applyFontStyle(forSubstring: UserText.autofillImportPasswordsInstructionsStep2Settings,
+            attributedString.applyFontStyle(forSubstring: UserText.autofillImportPasswordsViaSyncInstructionsStep2Settings,
                                             withFont: semiboldFont)
-            attributedString.applyFontStyle(forSubstring: UserText.autofillImportPasswordsInstructionsStep2Autofill,
+            attributedString.applyFontStyle(forSubstring: UserText.autofillImportPasswordsViaSyncInstructionsStep2Autofill,
                                             withFont: semiboldFont)
         } else if case .step3 = step {
-            attributedString.applyFontStyle(forSubstring: UserText.autofillImportPasswordsInstructionsStep3Import,
+            attributedString.applyFontStyle(forSubstring: UserText.autofillImportPasswordsViaSyncInstructionsStep3Import,
                                             withFont: semiboldFont)
         }
 
@@ -120,7 +120,7 @@ final class ImportPasswordsViewModel {
     }
 
     private func openSync() {
-        delegate?.importPasswordsViewModelDidRequestOpenSync(self)
+        delegate?.importPasswordsViaSyncViewModelDidRequestOpenSync(self)
     }
 
     private func maxWidthFor(title1: String, title2: String) -> CGFloat {

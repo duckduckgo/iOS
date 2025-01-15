@@ -64,6 +64,7 @@ class TabViewController: UIViewController {
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     private let instrumentation = TabInstrumentation()
+    private let tabInteractionStateSource = TabInteractionStateSource()
 
     var isLinkPreview = false
 
@@ -454,7 +455,20 @@ class TabViewController: UIViewController {
 
         observeNetPConnectionStatusChanges()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        registerForResignActive()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        unregisterFromResignActive()
+        tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
+    }
+
     private func registerForAddressBarLocationNotifications() {
         NotificationCenter.default.addObserver(self, selector:
                                                 #selector(onAddressBarPositionChanged),
@@ -541,6 +555,8 @@ class TabViewController: UIViewController {
         
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
+
+        tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
     }
     
     func applyInheritedAttribution(_ attribution: AdClickAttributionLogic.State?) {
@@ -550,6 +566,7 @@ class TabViewController: UIViewController {
     // The `consumeCookies` is legacy behaviour from the previous Fireproofing implementation. Cookies no longer need to be consumed after invocations
     // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
     func attachWebView(configuration: WKWebViewConfiguration,
+                       interactionStateData: Data? = nil,
                        andLoadRequest request: URLRequest?,
                        consumeCookies: Bool,
                        loadingInitiatedByParentTab: Bool = false,
@@ -600,6 +617,16 @@ class TabViewController: UIViewController {
 
         instrumentation.didPrepareWebView()
 
+        var didRestoreWebViewState = false
+        if let interactionStateData {
+            webView.interactionState = interactionStateData
+            if webView.url != nil {
+                self.url = tabModel.link?.url
+                didRestoreWebViewState = true
+                tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
+            }
+        }
+
         // Initialize DuckPlayerNavigationHandler
         if let handler = duckPlayerNavigationHandler,
             let webView = webView {
@@ -608,7 +635,7 @@ class TabViewController: UIViewController {
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
-        } else if let urlRequest = request {
+        } else if !didRestoreWebViewState, let urlRequest = request {
             var loadingStopped = false
             linkProtection.getCleanURLRequest(from: urlRequest, onStartExtracting: { [weak self] in
                 if loadingInitiatedByParentTab {
@@ -625,7 +652,7 @@ class TabViewController: UIViewController {
                 // the check is here to let an (about:blank) popup which has its loading
                 // initiated by its parent to keep its active request, otherwise we would
                 // break a js-initiated popup request such as printing from a popup
-                guard self?.url != cleanURLRequest.url || loadingStopped || !loadingInitiatedByParentTab else { return }
+                guard self?.url != cleanURLRequest.url || loadingStopped || loadingInitiatedByParentTab else { return }
                 self?.load(urlRequest: cleanURLRequest)
 
             })
@@ -1554,6 +1581,8 @@ extension TabViewController: WKNavigationDelegate {
                 inferredOpenerContext = .serp
             }
         }
+        
+        tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
     }
 
     func trackSecondSiteVisitIfNeeded(url: URL?) {
@@ -2124,6 +2153,23 @@ extension TabViewController: WKNavigationDelegate {
                                                selector: #selector(autofillBreakageReport),
                                                name: .autofillFailureReport,
                                                object: nil)
+    }
+
+    private func registerForResignActive() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onApplicationWillResignActive),
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
+    }
+
+    private func unregisterFromResignActive() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
     }
 
     @objc private func autofillBreakageReport(_ notification: Notification) {

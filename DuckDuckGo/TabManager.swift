@@ -91,13 +91,16 @@ class TabManager {
     }
 
     @MainActor
-    private func buildController(forTab tab: Tab, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
+    private func buildController(forTab tab: Tab, inheritedAttribution: AdClickAttributionLogic.State?, interactionState: Data?) -> TabViewController {
         let url = tab.link?.url
-        return buildController(forTab: tab, url: url, inheritedAttribution: inheritedAttribution)
+        return buildController(forTab: tab, url: url, inheritedAttribution: inheritedAttribution, interactionState: interactionState)
     }
 
     @MainActor
-    private func buildController(forTab tab: Tab, url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
+    private func buildController(forTab tab: Tab,
+                                 url: URL?,
+                                 inheritedAttribution: AdClickAttributionLogic.State?,
+                                 interactionState: Data?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
 
         let controller = TabViewController.loadFromStoryboard(model: tab,
@@ -116,6 +119,7 @@ class TabManager {
                                                               fireproofing: fireproofing)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
+                                 interactionStateData: interactionState,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
                                  consumeCookies: !model.hasActiveTabs)
         controller.delegate = delegate
@@ -132,7 +136,9 @@ class TabManager {
             return controller
         } else if createIfNeeded {
             Logger.general.debug("Tab not in cache, creating")
-            let controller = buildController(forTab: tab, inheritedAttribution: nil)
+            let interactionStateSource = TabInteractionStateSource()
+            let tabInteractionState = interactionStateSource?.popLastStateForTab(tab)
+            let controller = buildController(forTab: tab, inheritedAttribution: nil, interactionState: tabInteractionState)
             tabControllerCache.append(controller)
             return controller
         } else {
@@ -252,7 +258,7 @@ class TabManager {
 
         let link = url == nil ? nil : Link(title: nil, url: url!)
         let tab = Tab(link: link)
-        let controller = buildController(forTab: tab, url: url, inheritedAttribution: inheritedAttribution)
+        let controller = buildController(forTab: tab, url: url, inheritedAttribution: inheritedAttribution, interactionState: nil)
         tabControllerCache.append(controller)
 
         let index = model.currentIndex

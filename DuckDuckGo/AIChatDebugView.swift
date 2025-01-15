@@ -66,19 +66,18 @@ private struct AIChatDebugHostnameEntryView: View {
                     .autocorrectionDisabled(true)
                     .textInputAutocapitalization(.never)
             }
-
-            Button(action: {
+            Button {
                 viewModel.enteredHostname = policyHostname
                 presentationMode.wrappedValue.dismiss()
-            }) {
+            } label: {
                 Text("Confirm")
             }
 
-            Button(action: {
+            Button {
                 viewModel.resetHostname()
                 policyHostname = ""
                 presentationMode.wrappedValue.dismiss()
-            }) {
+            } label: {
                 Text("Reset")
             }
         }

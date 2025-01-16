@@ -41,11 +41,11 @@ final class ConfigurationManagerTests: XCTestCase {
         mockPrivacyConfigManager = MockPrivacyConfigurationManagerWithLogs(operationLog: operationLog, fetchedETag: nil, fetchedData: nil, embeddedDataProvider: MockEmbeddedDataProvider(data: Data(), etag: "etag"), localProtection: MockDomainsProtectionStore(), internalUserDecider: DefaultInternalUserDecider())
         mockPrivacyConfigManager.operationLog = operationLog
         mockTrackerDataManager = MockTrackerDataManager(operationLog: operationLog, etag: nil, data: nil, embeddedDataProvider: MockEmbeddedDataProvider(data: Data(), etag: "etag"))
-        configManager = ConfigurationManager(fetcher: mockFetcher, store: mockStore, defaults: userDefaults)
-        configManager.setContentBlockingManagers(
-            trackerDataManager: mockTrackerDataManager,
-            privacyConfigurationManager: mockPrivacyConfigManager
-        )
+        configManager = ConfigurationManager(fetcher: mockFetcher,
+                                             store: mockStore,
+                                             defaults: userDefaults,
+                                             trackerDataManager: mockTrackerDataManager,
+                                             privacyConfigurationManager: mockPrivacyConfigManager)
     }
 
     override func tearDownWithError() throws {

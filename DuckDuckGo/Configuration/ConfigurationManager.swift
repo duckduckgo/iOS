@@ -27,8 +27,8 @@ import os.log
 
 final class ConfigurationManager: DefaultConfigurationManager {
 
-    private lazy var trackerDataManager = ContentBlocking.shared.trackerDataManager
-    private lazy var privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
+    private let trackerDataManager: TrackerDataManager
+    private let privacyConfigurationManager: PrivacyConfigurationManaging
 
     private enum Constants {
         static let lastConfigurationInstallDateKey = "config.last.installed"
@@ -74,9 +74,14 @@ final class ConfigurationManager: DefaultConfigurationManager {
         }
     }
 
-    override init(fetcher: ConfigurationFetching = ConfigurationFetcher(store: ConfigurationStore(), eventMapping: configurationDebugEvents),
-                  store: ConfigurationStoring = AppDependencyProvider.shared.configurationStore,
-                  defaults: KeyValueStoring = UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) {
+    init(fetcher: ConfigurationFetching = ConfigurationFetcher(store: ConfigurationStore(), eventMapping: configurationDebugEvents),
+         store: ConfigurationStoring = AppDependencyProvider.shared.configurationStore,
+         defaults: KeyValueStoring = UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults(),
+         trackerDataManager: TrackerDataManager = ContentBlocking.shared.trackerDataManager,
+         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         contentBlockingManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager) {
+        self.trackerDataManager = trackerDataManager
+        self.privacyConfigurationManager = privacyConfigurationManager
         super.init(fetcher: fetcher, store: store, defaults: defaults)
         subscribeToLifecycleNotifications()
     }
@@ -244,13 +249,3 @@ extension ConfigurationManager {
         NSFileCoordinator.removeFilePresenter(self)
     }
 }
-
-#if DEBUG
-extension ConfigurationManager {
-    func setContentBlockingManagers(trackerDataManager: TrackerDataManager,
-                                    privacyConfigurationManager: PrivacyConfigurationManager) {
-        self.trackerDataManager = trackerDataManager
-        self.privacyConfigurationManager = privacyConfigurationManager
-    }
-}
-#endif

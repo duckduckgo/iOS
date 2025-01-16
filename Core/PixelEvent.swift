@@ -950,11 +950,6 @@ extension Pixel {
         // MARK: WebView Error Page Shown
         case webViewErrorPageShown
 
-        // MARK: UserDefaults incositency monitoring
-        case protectedDataUnavailableWhenBecomeActive
-        case statisticsLoaderATBStateMismatch
-        case adAttributionReportStateMismatch
-
         // MARK: Browsing
         case stopPageLoad
         
@@ -977,6 +972,8 @@ extension Pixel {
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
+        case appDidConsecutivelyBackground
+
     }
 
 }
@@ -1923,11 +1920,6 @@ extension Pixel.Event {
         // MARK: - DuckPlayer FE Application Telemetry
         case .duckPlayerLandscapeLayoutImpressions: return "duckplayer_landscape_layout_impressions"
 
-        // MARK: UserDefaults incositency monitoring
-        case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
-        case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
-        case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
-
         // MARK: Browsing
         case .stopPageLoad: return "m_stop-page-load"
                         
@@ -1951,6 +1943,7 @@ extension Pixel.Event {
 
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-2"
+        case .appDidConsecutivelyBackground: return "m_debug_app-did-consecutively-background-2"
 
         }
     }

@@ -62,17 +62,6 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         XCTAssertTrue(result)
     }
 
-    func testDoesNotReportIfOnlyFileMarkerIsPresent() async throws {
-        let sut = createSUT()
-        fileMarker.mark()
-        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
-
-        let result = await sut.reportAttributionIfNeeded()
-
-        XCTAssertNil(PixelFiringMock.lastPixelName)
-        XCTAssertFalse(result)
-    }
-
     func testReportsOnce() async {
         let sut = createSUT()
         attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
@@ -241,8 +230,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
                                    featureFlagger: featureFlagger,
                                    privacyConfigurationManager: privacyConfigurationManager,
                                    variantManager: MockVariantManager(isSupportedReturns: false, currentVariant: variant),
-                                   pixelFiring: PixelFiringMock.self,
-                                   inconsistencyMonitoring: MockAdAttributionReporterInconsistencyMonitoring())
+                                   pixelFiring: PixelFiringMock.self)
     }
 }
 
@@ -261,12 +249,6 @@ private class AdAttributionFetcherMock: AdAttributionFetcher {
     func fetch() async -> (String, AdServicesAttributionResponse)? {
         wasFetchCalled = true
         return fetchResponse
-    }
-}
-
-private struct MockAdAttributionReporterInconsistencyMonitoring: AdAttributionReporterInconsistencyMonitoring {
-    func addAttributionReporter(hasFileMarker: Bool, hasCompletedFlag: Bool) {
-
     }
 }
 

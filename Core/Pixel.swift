@@ -166,6 +166,8 @@ public struct PixelParameters {
 
     public static let appState = "state"
     public static let appEvent = "event"
+
+    public static let didCallWillEnterForeground = "didCallWillEnterForeground"
 }
 
 public struct PixelValues {

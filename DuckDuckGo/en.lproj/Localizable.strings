@@ -146,20 +146,8 @@
 "addWidget.title" = "One tap to your favorite sites.";
 
 /* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
-"ai-chat.preferences.text.markdown" = "AI Chat is an optional feature available at [duck.ai](ddgquicklink://duck.ai) that lets you have private conversations with popular 3rd-party AI chat models. Your chats are not used to train chat models.
+"ai-chat.preferences.text.markdown" = "Duck.ai is an optional feature that lets you have private conversations with popular 3rd-party Al chat models. Your chats are not used to train chat models.
 [Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
-
-/* Toggle text to enable/disable AI Chat in the address bar */
-"aichat.settings.enable.address-bar-toggle" = "Show AI Chat While Searching";
-
-/* Toggle text to enable/disable AI Chat in the browsing menu */
-"aichat.settings.enable.browsing-menu-toggle" = "Show AI Chat in Browser Menu";
-
-/* Footer text for AI Chat settings */
-"aichat.settings.enable.footer" = "Turning this off will hide the AI Chat feature in the DuckDuckGo app.";
-
-/* Settings screen cell text for AI Chat settings */
-"aichat.settings.title" = "AI Chat";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
@@ -1070,6 +1058,15 @@
 
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "Duck Player's functionality has been affected by recent changes to YouTube. We’re working to fix these issues and appreciate your understanding.";
+
+/* Toggle text to enable/disable AI Chat in the address bar */
+"duckai.settings.enable.address-bar-toggle" = "Show Duck.ai While Searching";
+
+/* Toggle text to enable/disable AI Chat in the browsing menu */
+"duckai.settings.enable.browsing-menu-toggle" = "Show Duck.ai in Browser Menu";
+
+/* Settings screen cell text for AI Chat settings */
+"duckai.settings.title" = "Duck.ai";
 
 /* Text displayed when DuckPlayer is always enabled */
 "duckPlayer.alwaysEnabled.label" = "Always";

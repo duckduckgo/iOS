@@ -36,7 +36,7 @@ class AtbServerTests: XCTestCase {
         super.setUp()
         PixelKit.configureExperimentKit(featureFlagger: MockFeatureFlagger())
         store = MockStatisticsStore()
-        loader = StatisticsLoader(statisticsStore: store, inconsistencyMonitoring: MockStatisticsStoreInconsistencyMonitoring())
+        loader = StatisticsLoader(statisticsStore: store)
 
     }
      
@@ -131,12 +131,6 @@ class MockStatisticsStore: StatisticsStore {
     var searchRetentionAtb: String?
 
     var variant: String?
-}
-
-private struct MockStatisticsStoreInconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring {
-    func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool) {
-
-    }
 }
 
 class MockFeatureFlagger: FeatureFlagger {

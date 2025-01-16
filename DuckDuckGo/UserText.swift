@@ -1383,16 +1383,15 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let duckPlayerContingencyMessageCTA = NSLocalizedString("duck-player.video-contingency-cta", value: "Learn More", comment: "Button for the message explaining to the user that Duck Player is not available so the user can learn more")
 
     // MARK: - AI Chat
-    public static let aiChatFeatureName = NSLocalizedString("aichat.settings.title", value: "AI Chat", comment: "Settings screen cell text for AI Chat settings")
+    public static let aiChatFeatureName = NSLocalizedString("duckai.settings.title", value: "Duck.ai", comment: "Settings screen cell text for AI Chat settings")
 
-    public static let aiChatSettingsEnableFooter = NSLocalizedString("aichat.settings.enable.footer", value: "Turning this off will hide the AI Chat feature in the DuckDuckGo app.", comment: "Footer text for AI Chat settings")
     static let aiChatSettingsCaptionWithLinkMarkdown = NSLocalizedString("ai-chat.preferences.text.markdown", value: """
-AI Chat is an optional feature available at [duck.ai](ddgquicklink://duck.ai) that lets you have private conversations with popular 3rd-party AI chat models. Your chats are not used to train chat models.
+Duck.ai is an optional feature that lets you have private conversations with popular 3rd-party Al chat models. Your chats are not used to train chat models.
 [Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)
 """, comment: "Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and ()")
-    public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("aichat.settings.enable.browsing-menu-toggle", value: "Show AI Chat in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
+    public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("duckai.settings.enable.browsing-menu-toggle", value: "Show Duck.ai in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
 
-    public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("aichat.settings.enable.address-bar-toggle", value: "Show AI Chat While Searching", comment: "Toggle text to enable/disable AI Chat in the address bar")
+    public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("duckai.settings.enable.address-bar-toggle", value: "Show Duck.ai While Searching", comment: "Toggle text to enable/disable AI Chat in the address bar")
 
     // MARK: - New Tab Page
 

@@ -104,6 +104,12 @@ extension Background {
             urlToOpen = url
             return self
         case .backgrounding:
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                Pixel.fire(pixel: .appDidConsecutivelyBackground, withAdditionalParameters: [
+                    PixelParameters.didCallWillEnterForeground: appDelegate.didCallWillEnterForeground.description
+                ])
+                appDelegate.didCallWillEnterForeground = false
+            }
             run()
             return self
         case .handleShortcutItem(let shortcutItem):

@@ -120,7 +120,9 @@ final class AppDependencyProvider: DependencyProvider {
         
         // keychain storage
         let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
-        let tokenStorage = SubscriptionTokenKeychainStorageV2(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+        let tokenStorage = SubscriptionTokenKeychainStorageV2(keychainType: .dataProtection(.named(subscriptionAppGroup))) { keychainType, error in
+            Pixel.fire(.privacyProKeychainAccessError, withAdditionalParameters: ["type": keychainType.rawValue, "error": error.errorDescription])
+        }
         let legacyAccountStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
 
         let authClient = DefaultOAuthClient(tokensStorage: tokenStorage,

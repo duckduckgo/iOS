@@ -39,7 +39,7 @@ extension URL {
         return urlComponents.url ?? self
     }
 
-    var isDuckAIURL: Bool {
+    public var isDuckAIURL: Bool {
         guard let host = self.host, host == Constants.duckDuckGoHost else {
             return false
         }

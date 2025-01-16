@@ -486,17 +486,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 return tokenContainer.accessToken
             }
         }
-
-#if DEBUG
-        let cacheExpiration: Int = 1
-#else
-        let cacheExpiration: Int = 120
-#endif
-        let subscriptionCache = UserDefaultsCache<PrivacyProSubscription>(key: UserDefaultsCacheKey.subscription,
-                                                                          settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(cacheExpiration)))
         let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
-                                                                             baseURL: subscriptionEnvironment.serviceEnvironment.url,
-                                                                             subscriptionCache: subscriptionCache)
+                                                                             baseURL: subscriptionEnvironment.serviceEnvironment.url)
         let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionEndpointService)
 
         let pixelHandler: SubscriptionManager.PixelHandler = { type in

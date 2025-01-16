@@ -116,10 +116,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionCachePolicy, loadingIndicator: Bool) async -> Bool {
         Logger.subscription.log("Fetch and update subscription details")
 
-        if loadingIndicator { displaySubscriptionLoader(true) }
+        DispatchQueue.main.async {
+            if loadingIndicator { self.displaySubscriptionLoader(true) }
+        }
 
-        if let subscription = try? await self.subscriptionManager.getSubscription(cachePolicy: cachePolicy) {
-            Task { @MainActor in
+        do {
+            let subscription = try await self.subscriptionManager.getSubscription(cachePolicy: cachePolicy)
+            DispatchQueue.main.async {
                 self.state.subscriptionInfo = subscription
                 if loadingIndicator { self.displaySubscriptionLoader(false) }
             }
@@ -127,8 +130,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                                    date: subscription.expiresOrRenewsAt,
                                                    product: subscription.productId,
                                                    billingPeriod: subscription.billingPeriod)
+            return true
+        } catch {
+            Logger.subscription.error("\(#function) error: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                if loadingIndicator { self.displaySubscriptionLoader(true) }
+            }
+            return false
         }
-        return true
     }
 
     func fetchAndUpdateAccountEmail(cachePolicy: SubscriptionCachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
@@ -175,6 +184,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         case .stripe:
             Task { await manageStripeSubscription() }
         default:
+            assertionFailure("Invalid subscription platform")
             return
         }
     }

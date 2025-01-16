@@ -115,10 +115,6 @@ class TabSwitcherViewController: UIViewController {
             tabSwitcherSettings.hasSeenNewLayout = true
         }
 
-//        displayModeButton.isPointerInteractionEnabled = true
-//        topFireButton.isPointerInteractionEnabled = true
-//        topPlusButton.isPointerInteractionEnabled = true
-//        topDoneButton.isPointerInteractionEnabled = true
     }
 
     override func viewDidLayoutSubviews() {
@@ -155,44 +151,9 @@ class TabSwitcherViewController: UIViewController {
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if DaxDialogs.shared.shouldShowFireButtonPulse {
-            DaxDialogs.shared.fireButtonPulseStarted()
-            guard let window = view.window else { return }
-
-            // TODO
-//            let fireButtonView: UIView?
-//            if !topFireButton.isHidden {
-//                fireButtonView = topFireButton
-//            } else {
-//                fireButtonView = fireButton.value(forKey: "view") as? UIView
-//            }
-//            guard let view = fireButtonView else { return }
-//
-//            if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
-//                ViewHighlighter.hideAll()
-//                ViewHighlighter.showIn(window, focussedOnView: view)
-//            }
-        }
-    }
-
     func prepareForPresentation() {
         view.layoutIfNeeded()
         self.scrollToInitialTab()
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        ViewHighlighter.hideAll()
-
-        if let controller = segue.destination as? ActionSheetDaxDialogViewController {
-            let spec = sender as? DaxDialogs.ActionSheetSpec
-            controller.spec = spec
-            controller.delegate = self
-        }
-
     }
 
     @objc func handleTap(gesture: UITapGestureRecognizer) {
@@ -230,8 +191,6 @@ class TabSwitcherViewController: UIViewController {
     }
 
     private func refreshTitle() {
-        // TODO
-        // titleView.text = UserText.numberOfTabs(tabsModel.count)
         topBarModel.title = UserText.numberOfTabs(tabsModel.count)
     }
 
@@ -357,8 +316,10 @@ extension TabSwitcherViewController: TabSwitcherTopBarModel.Delegate {
 
             if !toolbar.isHidden {
                 self.present(controller: alert, fromView: toolbar)
-            } else {
-                // TODO find the fire button to anchor from
+            } else if let fireButtonFrame = topBarModel.fireButtonFrame {
+                let point = Point(x: Int(fireButtonFrame.midX),
+                                  y: Int(fireButtonFrame.midY))
+                self.present(controller: alert, fromView: topBarContainerView, atPoint: point)
             }
         }
 
@@ -562,10 +523,6 @@ extension TabSwitcherViewController {
         refreshDisplayModeButton()
         
         topBarContainerView.tintColor = theme.barTintColor
-//        titleView.textColor = theme.barTintColor
-//        topDoneButton.tintColor = theme.barTintColor
-//        topPlusButton.tintColor = theme.barTintColor
-//        topFireButton.tintColor = theme.barTintColor
 
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor
@@ -619,7 +576,16 @@ struct TabSwitcherTopBarView: View {
             Image("Fire")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(height: 22)
+                .frame(height: 22) // make it look closer to size on parent screen
+                .background {
+                    GeometryReader { geo in
+                        Color
+                            .clear
+                            .onAppear {
+                                model.locationOfFireButton(geo.frame(in: .global))
+                            }
+                    }
+                }
         }
     }
 
@@ -690,6 +656,7 @@ class TabSwitcherTopBarModel: ObservableObject {
     }
 
     weak var delegate: Delegate?
+    var fireButtonFrame: CGRect?
 
     @Published var uiModel: UIMode = .singleSelectNormal
     @Published var title = ""
@@ -718,6 +685,10 @@ class TabSwitcherTopBarModel: ObservableObject {
 
     func onFirePressed() {
         delegate?.burn()
+    }
+
+    func locationOfFireButton(_ point: CGRect) {
+        fireButtonFrame = point
     }
 
 }

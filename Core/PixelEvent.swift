@@ -969,7 +969,6 @@ extension Pixel {
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
-        case appDidConsecutivelyBackground
 
     }
 
@@ -1936,8 +1935,7 @@ extension Pixel.Event {
         case .openAIChatFromAddressBar: return "m_aichat_addressbar_icon"
 
         // MARK: Lifecycle
-        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-2"
-        case .appDidConsecutivelyBackground: return "m_debug_app-did-consecutively-background-2"
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
 
         }
     }

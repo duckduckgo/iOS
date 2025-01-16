@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-extension OldAppDelegate {
+extension AppDelegate {
 
     func handleAppDeepLink(_ app: UIApplication, _ mainViewController: MainViewController?, _ url: URL) -> Bool {
         guard let mainViewController else { return false }
@@ -51,7 +51,7 @@ extension OldAppDelegate {
             mainViewController.newEmailAddress()
 
         case .openVPN:
-            presentNetworkProtectionStatusSettingsModal()
+            mainViewController.presentNetworkProtectionStatusSettingsModal()
 
         case .openPasswords:
             var source: AutofillSettingsSource = .homeScreenWidget

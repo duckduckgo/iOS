@@ -21,10 +21,15 @@ import UIKit
 
 enum AppEvent {
 
-    case launching(UIApplication, isTesting: Bool)
-    case activating
-    case backgrounding
-    case suspending
+    case didFinishLaunching(UIApplication, isTesting: Bool)
+    case didBecomeActive
+    case didEnterBackground
+    case willResignActive
+    case willEnterForeground
+
+}
+
+enum AppAction {
 
     case openURL(URL)
     case handleShortcutItem(UIApplicationShortcutItem)
@@ -33,24 +38,30 @@ enum AppEvent {
 
 protocol AppState {
 
-    mutating func apply(event: AppEvent) -> any AppState
+    func apply(event: AppEvent) -> any AppState
+    mutating func handle(action: AppAction)
 
 }
 
+@MainActor
 protocol AppEventHandler {
 
-    @MainActor
     func handle(_ event: AppEvent)
+    func handle(_ action: AppAction)
 
 }
 
 @MainActor
 final class AppStateMachine: AppEventHandler {
 
-    private(set) var currentState: any AppState = Init()
+    private(set) var currentState: any AppState = Initializing()
 
     func handle(_ event: AppEvent) {
         currentState = currentState.apply(event: event)
+    }
+
+    func handle(_ action: AppAction) {
+        currentState.handle(action: action)
     }
 
 }

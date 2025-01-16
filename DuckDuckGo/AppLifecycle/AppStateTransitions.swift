@@ -20,15 +20,23 @@
 import os.log
 import Core
 
-extension Init {
+extension Initializing {
+
+    func apply(event: AppEvent) -> any AppState {
+        guard case .didFinishLaunching(let application, let isTesting) = event else { return handleUnexpectedEvent(event) }
+        return isTesting ? Testing(application: application) : Launching(stateContext: makeStateContext(application: application))
+    }
+
+}
+
+extension Launching {
 
     func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .launching(let application, let isTesting):
-            if isTesting {
-                return Testing(application: application)
-            }
-            return Launched(stateContext: makeStateContext(application: application))
+        case .didBecomeActive:
+            return Foreground(stateContext: makeStateContext())
+        case .didEnterBackground:
+            return Background(stateContext: makeStateContext())
         default:
             return handleUnexpectedEvent(event)
         }
@@ -36,58 +44,24 @@ extension Init {
 
 }
 
-extension Launched {
+extension Foreground {
 
-    mutating func apply(event: AppEvent) -> any AppState {
-        switch event {
-        case .activating:
-            return Active(stateContext: makeStateContext())
-        case .openURL(let url):
-            urlToOpen = url
-            return self
-        case .handleShortcutItem(let shortcutItem):
-            shortcutItemToHandle = shortcutItem
-            return self
-        case .backgrounding:
-            return Background(stateContext: makeStateContext())
-        case .launching, .suspending:
-            return handleUnexpectedEvent(event)
-        }
+    func apply(event: AppEvent) -> any AppState {
+        guard case .willResignActive = event else { return handleUnexpectedEvent(event) }
+        return Suspending(stateContext: makeStateContext())
     }
 
 }
 
-extension Active {
+extension Suspending {
 
     func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .suspending:
-            return Inactive(stateContext: makeStateContext())
-        case .openURL(let url):
-            openURL(url)
-            return self
-        case .handleShortcutItem(let shortcutItem):
-            handleShortcutItem(shortcutItem)
-            return self
-        case .launching, .activating, .backgrounding:
-            return handleUnexpectedEvent(event)
-        }
-    }
-
-}
-
-extension Inactive {
-
-    mutating func apply(event: AppEvent) -> any AppState {
-        switch event {
-        case .backgrounding:
+        case .didEnterBackground:
             return Background(stateContext: makeStateContext())
-        case .activating:
-            return Active(stateContext: makeStateContext())
-        case .openURL(let url):
-            urlToOpen = url
-            return self
-        case .launching, .suspending, .handleShortcutItem:
+        case .didBecomeActive:
+            return Foreground(stateContext: makeStateContext())
+        default:
             return handleUnexpectedEvent(event)
         }
     }
@@ -96,26 +70,22 @@ extension Inactive {
 
 extension Background {
 
-    mutating func apply(event: AppEvent) -> any AppState {
+    func apply(event: AppEvent) -> any AppState {
+        guard case .willEnterForeground = event else { return handleUnexpectedEvent(event) }
+        return Resuming(stateContext: makeStateContext())
+    }
+
+}
+
+extension Resuming {
+
+    func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .activating:
-            return Active(stateContext: makeStateContext())
-        case .openURL(let url):
-            urlToOpen = url
-            return self
-        case .backgrounding:
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                Pixel.fire(pixel: .appDidConsecutivelyBackground, withAdditionalParameters: [
-                    PixelParameters.didCallWillEnterForeground: appDelegate.didCallWillEnterForeground.description
-                ])
-                appDelegate.didCallWillEnterForeground = false
-            }
-            run()
-            return self
-        case .handleShortcutItem(let shortcutItem):
-            shortcutItemToHandle = shortcutItem
-            return self
-        case .launching, .suspending:
+        case .didBecomeActive:
+            return Foreground(stateContext: makeStateContext())
+        case .didEnterBackground:
+            return Background(stateContext: makeStateContext())
+        default:
             return handleUnexpectedEvent(event)
         }
     }
@@ -128,28 +98,13 @@ extension Testing {
 
 }
 
-extension AppEvent {
-
-    var rawValue: String {
-        switch self {
-        case .launching: return "launching"
-        case .activating: return "activating"
-        case .backgrounding: return "backgrounding"
-        case .suspending: return "suspending"
-        case .openURL: return "openURL"
-        case .handleShortcutItem: return "handleShortcutItem"
-        }
-    }
-
-}
-
 extension AppState {
 
     func handleUnexpectedEvent(_ event: AppEvent) -> Self {
-        Logger.lifecycle.error("Invalid transition (\(event.rawValue)) for state (\(type(of: self)))")
+        Logger.lifecycle.error("🔴 Unexpected [\(String(describing: event))] event while in [\(type(of: self))] state!")
         DailyPixel.fireDailyAndCount(pixel: .appDidTransitionToUnexpectedState,
                                      withAdditionalParameters: [PixelParameters.appState: String(describing: type(of: self)),
-                                                                PixelParameters.appEvent: event.rawValue])
+                                                                PixelParameters.appEvent: String(describing: event)])
         return self
     }
 

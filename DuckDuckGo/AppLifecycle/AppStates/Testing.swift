@@ -45,3 +45,9 @@ struct Testing: AppState {
     }
 
 }
+
+extension Testing {
+
+    mutating func handle(action: AppAction) { }
+
+}

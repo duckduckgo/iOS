@@ -23,6 +23,18 @@ import DDGSync
 import UIKit
 import Core
 
+/// Represents the state where the app is fully in the background and not visible to the user.
+/// - Usage:
+///   - This state is typically associated with the `applicationDidEnterBackground(_:)` method.
+///   - The app transitions to this state when it is no longer in the foreground, either due to the user
+///     minimizing the app, switching to another app, or locking the device.
+/// - Transitions:
+///   - `Resuming`: The app transitions to the `Resuming` state when the user brings the app back to the foreground.
+/// - Notes:
+///   - This is one of the app's two long-lived states, alongside `Foreground`.
+///   - Background tasks, such as saving data or refreshing content, should be handled in this state.
+///   - Use this state to ensure that the app's current state is saved and any necessary cleanup is performed
+///     to release resources or prepare for a potential termination.
 struct Background: AppState {
 
     private let lastBackgroundDate: Date = Date()
@@ -32,7 +44,10 @@ struct Background: AppState {
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
-    init(stateContext: Inactive.StateContext) {
+    // MARK: Handle logic when transitioning from Launching to Background
+    // This transition can occur if the app is protected by FaceID (e.g., the app is launched, but the user doesn't authenticate).
+    // Note: In this case, the Foreground state was never shown to the user, so you may want to avoid ending sessions that were never started, etc.
+    init(stateContext: Launching.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
@@ -40,7 +55,19 @@ struct Background: AppState {
         run()
     }
 
-    init(stateContext: Launched.StateContext) {
+    // MARK: Handle logic when transitioning from Suspending to Background
+    // This transition occurs when the app moves from foreground to the background.
+    init(stateContext: Suspending.StateContext) {
+        application = stateContext.application
+        appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
+
+        run()
+    }
+
+    // MARK: Handle logic when transitioning from Resuming to Background
+    // This transition can occur when the app returns to the background after being in the background (e.g., user doesn't authenticate on a locked app).
+    init(stateContext: Resuming.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
@@ -71,15 +98,6 @@ struct Background: AppState {
         privacyProDataReporter.saveApplicationLastSessionEnded()
 
         resetAppStartTime()
-
-        // Kill switch for the new app delegate:
-        // If the .forceOldAppDelegate flag is set in the config, we mark a file as present.
-        // This switches the app to the old mode and silently crashes it in the background.
-        // When reopened, the app will reliably run the old flow.
-        if ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .forceOldAppDelegate) {
-            (UIApplication.shared.delegate as? AppDelegate)?.forceOldAppDelegate()
-            fatalError("crash to ensure the app restarts using the old app delegate next time")
-        }
     }
 
     private mutating func suspendSync(syncService: DDGSync) {
@@ -129,6 +147,19 @@ extension Background {
               urlToOpen: urlToOpen,
               shortcutItemToHandle: shortcutItemToHandle,
               appDependencies: appDependencies)
+    }
+
+}
+
+extension Background {
+
+    mutating func handle(action: AppAction) {
+        switch action {
+        case .openURL(let url):
+            urlToOpen = url
+        case .handleShortcutItem(let shortcutItem):
+            shortcutItemToHandle = shortcutItem
+        }
     }
 
 }

@@ -230,7 +230,8 @@ struct Widgets: WidgetBundle {
                                                   FireButtonLockScreenWidget(),
                                                   FavoritesLockScreenWidget(),
                                                   PasswordsLockScreenWidget(),
-                                                  VPNBundle().body)
+                                                  VPNBundle().body,
+                                                  QuickActionsWidget())
         }
 
         if #available(iOS 16.0, *) {
@@ -242,11 +243,13 @@ struct Widgets: WidgetBundle {
                                                   EmailProtectionLockScreenWidget(),
                                                   FireButtonLockScreenWidget(),
                                                   FavoritesLockScreenWidget(),
-                                                  PasswordsLockScreenWidget())
+                                                  PasswordsLockScreenWidget(),
+                                                  QuickActionsWidget())
         } else {
             return WidgetBundleBuilder.buildBlock(SearchWidget(),
                                                   PasswordsWidget(),
-                                                  FavoritesWidget())
+                                                  FavoritesWidget(),
+                                                  QuickActionsWidget())
         }
     }
 }

@@ -182,6 +182,7 @@
 		319A37172829C8AD0079FBCE /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A37162829C8AD0079FBCE /* UITableViewExtension.swift */; };
 		31A42564285A09E800049386 /* FaviconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A42563285A09E800049386 /* FaviconView.swift */; };
 		31A42566285A0A6300049386 /* FaviconViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A42565285A0A6300049386 /* FaviconViewModel.swift */; };
+		31B0B2BF2D390CF400A702D4 /* QuickActionsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B0B2BE2D390CF000A702D4 /* QuickActionsWidget.swift */; };
 		31B1FA87286EFC5C00CA3C1C /* XCTestCaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1FA86286EFC5C00CA3C1C /* XCTestCaseExtension.swift */; };
 		31B2F10F2C92FECC00CD30E3 /* MarketplaceAdPostbackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B2F10E2C92FECC00CD30E3 /* MarketplaceAdPostbackManager.swift */; };
 		31B2F1112C92FEE000CD30E3 /* MarketplaceAdPostback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B2F1102C92FEE000CD30E3 /* MarketplaceAdPostback.swift */; };
@@ -1600,6 +1601,7 @@
 		319A37162829C8AD0079FBCE /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		31A42563285A09E800049386 /* FaviconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconView.swift; sourceTree = "<group>"; };
 		31A42565285A0A6300049386 /* FaviconViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconViewModel.swift; sourceTree = "<group>"; };
+		31B0B2BE2D390CF000A702D4 /* QuickActionsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionsWidget.swift; sourceTree = "<group>"; };
 		31B1FA86286EFC5C00CA3C1C /* XCTestCaseExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCaseExtension.swift; sourceTree = "<group>"; };
 		31B2F10E2C92FECC00CD30E3 /* MarketplaceAdPostbackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceAdPostbackManager.swift; sourceTree = "<group>"; };
 		31B2F1102C92FEE000CD30E3 /* MarketplaceAdPostback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceAdPostback.swift; sourceTree = "<group>"; };
@@ -4655,6 +4657,7 @@
 				7B4DC5BF2CB2A4A500EE5CC2 /* VPNControlStatusValueProvider.swift */,
 				7B16810B2D10CF44005EAE24 /* WidgetVPNIntents.swift */,
 				4BB7CBAF2AF59C310014A35F /* VPNWidget.swift */,
+				31B0B2BE2D390CF000A702D4 /* QuickActionsWidget.swift */,
 				7BFC32AF2CB291BB007A8E17 /* VPNControlWidget.swift */,
 			);
 			path = Widgets;
@@ -8732,6 +8735,7 @@
 				7B4DC5C22CB2AE4600EE5CC2 /* WidgetKind.swift in Sources */,
 				853273B424FFB36100E3C778 /* UIColorExtension.swift in Sources */,
 				853273AB24FEF27500E3C778 /* WidgetViews.swift in Sources */,
+				31B0B2BF2D390CF400A702D4 /* QuickActionsWidget.swift in Sources */,
 				7B1681092D10C678005EAE24 /* VPNControlStatusValueProvider.swift in Sources */,
 				7B16810D2D10CF44005EAE24 /* WidgetVPNIntents.swift in Sources */,
 				4BB7CBB02AF59C310014A35F /* VPNWidget.swift in Sources */,

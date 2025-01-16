@@ -53,7 +53,9 @@ struct Foreground: AppState {
         appDependencies.mainViewController
     }
 
-    // MARK: handle one-time (after launch) logic here
+    // MARK: Handle logic when transitioning from Launched to Foreground
+    // This transition occurs when the app has completed its launch process and becomes active.
+    // Note: You want to add here code that will happen one-time per app lifecycle, but you need the UI to be active at this point!
     init(stateContext: Launching.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
@@ -96,6 +98,8 @@ struct Foreground: AppState {
         activateApp()
     }
 
+    // MARK: Handle logic when transitioning from Resuming to Foreground
+    // This transition occurs when the app returns to the foreground after being backgrounded (e.g., after unlocking the app).
     init(stateContext: Resuming.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
@@ -110,6 +114,8 @@ struct Foreground: AppState {
         activateApp()
     }
 
+    // MARK: Handle logic when transitioning from Suspending to Foreground
+    // This transition occurs when the app returns to the foreground after briefly being suspended (e.g., user dismisses a notification).
     init(stateContext: Suspending.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies

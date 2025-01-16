@@ -36,7 +36,58 @@ struct QuickActionsWidget: Widget {
 struct QuickActionsWidgetView: View {
 
     var body: some View {
-        Text("Hello, World!")
+        VStack {
+            Link(destination: DeepLinks.newSearch) {
+                SearchBoxView()
+            }
+            Spacer()
+            HStack {
+                Link(destination: DeepLinks.openAIChat) {
+                    IconView(image: Image(.aiChat24))
+                }
+                Link(destination: DeepLinks.openPasswords) {
+                    IconView(image: Image(.key24))
+                }
+            }
+        }
+        .widgetContainerBackground(color: Color(designSystemColor: .backgroundSheets))
+    }
+}
+
+private struct SearchBoxView: View {
+    var body: some View {
+        HStack {
+            Image(.duckDuckGoColor24)
+                .resizable()
+                .useFullColorRendering()
+                .frame(width: 28, height: 28, alignment: .leading)
+
+            Text("Search")
+                .daxBodyRegular()
+        }
+        .frame(height: 52)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: 46)
+                .fill(Color(designSystemColor: .container))
+        )
+    }
+}
+
+private struct IconView: View {
+    let image: Image
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(designSystemColor: .container))
+            image
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+
+        }
+        .frame(width: 60, height: 60)
     }
 }
 

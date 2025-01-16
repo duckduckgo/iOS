@@ -27,7 +27,7 @@ import Persistence
 import os.log
 
 class TabSwitcherViewController: UIViewController {
-    
+
     struct Constants {
         static let preferredMinNumberOfRows: CGFloat = 2.7
 
@@ -39,43 +39,45 @@ class TabSwitcherViewController: UIViewController {
         let newCount: Int
         let existingCount: Int
     }
-    
-    @IBOutlet weak var titleView: UILabel!
+
+    @IBOutlet weak var topBarContainerView: UIView!
+
+//    @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
-    
-    @IBOutlet weak var displayModeButton: UIButton!
-    @IBOutlet weak var bookmarkAllButton: UIButton!
-    
+
+//    @IBOutlet weak var displayModeButton: UIButton!
+
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
-    
-    @IBOutlet weak var topFireButton: UIButton!
-    @IBOutlet weak var topPlusButton: UIButton!
-    @IBOutlet weak var topDoneButton: UIButton!
 
-    @IBOutlet var displayModeTrailingConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var topFireButton: UIButton!
+//    @IBOutlet weak var topPlusButton: UIButton!
+//    @IBOutlet weak var topDoneButton: UIButton!
+
+//    @IBOutlet var displayModeTrailingConstraint: NSLayoutConstraint!
 
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
     weak var previewsSource: TabPreviewsSource!
-    
+
     private var bookmarksDatabase: CoreDataDatabase
     private let syncService: DDGSyncing
-    
+
     weak var reorderGestureRecognizer: UIGestureRecognizer?
-    
+
     override var canBecomeFirstResponder: Bool { return true }
-    
+
     var currentSelection: Int?
-    
+
     private var tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
     private(set) var isProcessingUpdates = false
     private var canUpdateCollection = true
 
     let favicons = Favicons.shared
-    
+    let topBarModel = TabSwitcherTopBarModel()
+
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
                    syncService: DDGSyncing) {
@@ -83,57 +85,68 @@ class TabSwitcherViewController: UIViewController {
         self.syncService = syncService
         super.init(coder: coder)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }
 
+    fileprivate func createTopBar() {
+        topBarModel.delegate = self
+        let hosting = UIHostingController(rootView: TabSwitcherTopBarView(model: topBarModel))
+        hosting.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        hosting.view.frame = .init(origin: .zero, size: topBarContainerView.frame.size)
+        hosting.view.backgroundColor = nil
+        topBarContainerView.addSubview(hosting.view)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        createTopBar()
+
         refreshTitle()
         setupBackgroundView()
         currentSelection = tabsModel.currentIndex
         decorate()
         becomeFirstResponder()
-        
+
         if !tabSwitcherSettings.hasSeenNewLayout {
             Pixel.fire(pixel: .tabSwitcherNewLayoutSeen)
             tabSwitcherSettings.hasSeenNewLayout = true
         }
-        
-        displayModeButton.isPointerInteractionEnabled = true
-        bookmarkAllButton.isPointerInteractionEnabled = true
-        topFireButton.isPointerInteractionEnabled = true
-        topPlusButton.isPointerInteractionEnabled = true
-        topDoneButton.isPointerInteractionEnabled = true
+
+//        displayModeButton.isPointerInteractionEnabled = true
+//        topFireButton.isPointerInteractionEnabled = true
+//        topPlusButton.isPointerInteractionEnabled = true
+//        topDoneButton.isPointerInteractionEnabled = true
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+
+        // TODO support feature flag
+        if AppWidthObserver.shared.isLargeWidth {
+            topBarModel.uiModel = .multiSelectLarge
+        } else {
+            topBarModel.uiModel = .multiSelectNormal
+        }
+
         toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
-        displayModeTrailingConstraint.isActive = !AppWidthObserver.shared.isLargeWidth
-        topFireButton.isHidden = !AppWidthObserver.shared.isLargeWidth
-        topDoneButton.isHidden = !AppWidthObserver.shared.isLargeWidth
-        topPlusButton.isHidden = !AppWidthObserver.shared.isLargeWidth
-    }
-    
+   }
+
     private func setupBackgroundView() {
         let view = UIView(frame: collectionView.frame)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(gesture:))))
         collectionView.backgroundView = view
     }
-    
+
     private func refreshDisplayModeButton() {
-        if tabSwitcherSettings.isGridViewEnabled {
-            displayModeButton.setImage(UIImage(named: "tabsToggleGrid"), for: .normal)
-        } else {
-            displayModeButton.setImage(UIImage(named: "tabsToggleList"), for: .normal)
-        }
+        topBarModel.tabsStyle = tabSwitcherSettings.isGridViewEnabled ? .grid : .list
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         if reorderGestureRecognizer == nil {
             let recognizer = UILongPressGestureRecognizer(target: self,
                                                           action: #selector(handleLongPress(gesture:)))
@@ -141,38 +154,39 @@ class TabSwitcherViewController: UIViewController {
             reorderGestureRecognizer = recognizer
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             DaxDialogs.shared.fireButtonPulseStarted()
             guard let window = view.window else { return }
-            
-            let fireButtonView: UIView?
-            if !topFireButton.isHidden {
-                fireButtonView = topFireButton
-            } else {
-                fireButtonView = fireButton.value(forKey: "view") as? UIView
-            }
-            guard let view = fireButtonView else { return }
-            
-            if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
-                ViewHighlighter.hideAll()
-                ViewHighlighter.showIn(window, focussedOnView: view)
-            }
+
+            // TODO
+//            let fireButtonView: UIView?
+//            if !topFireButton.isHidden {
+//                fireButtonView = topFireButton
+//            } else {
+//                fireButtonView = fireButton.value(forKey: "view") as? UIView
+//            }
+//            guard let view = fireButtonView else { return }
+//
+//            if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
+//                ViewHighlighter.hideAll()
+//                ViewHighlighter.showIn(window, focussedOnView: view)
+//            }
         }
     }
-    
+
     func prepareForPresentation() {
         view.layoutIfNeeded()
         self.scrollToInitialTab()
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         ViewHighlighter.hideAll()
-        
+
         if let controller = segue.destination as? ActionSheetDaxDialogViewController {
             let spec = sender as? DaxDialogs.ActionSheetSpec
             controller.spec = spec
@@ -180,7 +194,7 @@ class TabSwitcherViewController: UIViewController {
         }
 
     }
-    
+
     @objc func handleTap(gesture: UITapGestureRecognizer) {
         dismiss()
     }
@@ -190,24 +204,24 @@ class TabSwitcherViewController: UIViewController {
         case .began:
             guard let path = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { return }
             collectionView.beginInteractiveMovementForItem(at: path)
-            
+
         case .changed:
             collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: collectionView))
-            
+
         case .ended:
             collectionView.endInteractiveMovement()
-            
+
         default:
             collectionView.cancelInteractiveMovement()
         }
-        
+
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         collectionView.collectionViewLayout.invalidateLayout()
     }
-    
+
     private func scrollToInitialTab() {
         let index = tabsModel.currentIndex
         guard index < collectionView.numberOfItems(inSection: 0) else { return }
@@ -216,9 +230,11 @@ class TabSwitcherViewController: UIViewController {
     }
 
     private func refreshTitle() {
-        titleView.text = UserText.numberOfTabs(tabsModel.count)
+        // TODO
+        // titleView.text = UserText.numberOfTabs(tabsModel.count)
+        topBarModel.title = UserText.numberOfTabs(tabsModel.count)
     }
-    
+
     fileprivate func displayBookmarkAllStatusMessage(with results: BookmarkAllResult, openTabsCount: Int) {
         if results.newCount == openTabsCount {
             ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
@@ -228,9 +244,9 @@ class TabSwitcherViewController: UIViewController {
             ActionMessageView.present(message: UserText.bookmarkAllTabsFailedToSave)
         }
     }
-   
+
     @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
-         
+
         let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
                                       message: UserText.alertBookmarkAllMessage,
                                       preferredStyle: .alert)
@@ -241,7 +257,7 @@ class TabSwitcherViewController: UIViewController {
             let result = self.bookmarkAll(viewModel: model)
             self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
         }
-        
+
         present(alert, animated: true, completion: nil)
     }
 
@@ -258,8 +274,50 @@ class TabSwitcherViewController: UIViewController {
         }
         return .init(newCount: newCount, existingCount: tabs.count - newCount)
     }
+
+    @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
+        addNewTab()
+    }
+
+    @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
+        dismiss()
+    }
     
-    @IBAction func onDisplayModeButtonPressed(_ sender: UIButton) {
+    func markCurrentAsViewedAndDismiss() {
+        // Will be dismissed, so no need to process incoming updates
+        canUpdateCollection = false
+
+        if let current = currentSelection {
+            let tab = tabsModel.get(tabAt: current)
+            tab.viewed = true
+            tabsModel.save()
+            delegate?.tabSwitcher(self, didSelectTab: tab)
+        }
+        dismiss()
+    }
+
+    @IBAction func onFirePressed(sender: AnyObject) {
+        burn()
+    }
+
+    private func forgetAll() {
+        self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
+    }
+
+    func dismiss() {
+        dismiss(animated: true, completion: nil)
+    }
+
+    override func dismiss(animated: Bool, completion: (() -> Void)? = nil) {
+        canUpdateCollection = false
+        tabsModel.tabs.forEach { $0.removeObserver(self) }
+        super.dismiss(animated: animated, completion: completion)
+    }
+}
+
+extension TabSwitcherViewController: TabSwitcherTopBarModel.Delegate {
+
+    func onTabStyleChange() {
         guard isProcessingUpdates == false else { return }
 
         isProcessingUpdates = true
@@ -291,42 +349,16 @@ class TabSwitcherViewController: UIViewController {
         }
     }
 
-    @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
-        guard !isProcessingUpdates else { return }
-
-        Pixel.fire(pixel: .tabSwitcherNewTab)
-        delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
-        dismiss()
-    }
-
-    @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
-        dismiss()
-    }
-    
-    func markCurrentAsViewedAndDismiss() {
-        // Will be dismissed, so no need to process incoming updates
-        canUpdateCollection = false
-
-        if let current = currentSelection {
-            let tab = tabsModel.get(tabAt: current)
-            tab.viewed = true
-            tabsModel.save()
-            delegate?.tabSwitcher(self, didSelectTab: tab)
-        }
-        dismiss()
-    }
-
-    @IBAction func onFirePressed(sender: AnyObject) {
-        
+    func burn() {
         func presentForgetDataAlert() {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 self?.forgetAll()
             })
 
-            if let anchor = sender as? UIView {
-                self.present(controller: alert, fromView: anchor)
-            } else {
+            if !toolbar.isHidden {
                 self.present(controller: alert, fromView: toolbar)
+            } else {
+                // TODO find the fire button to anchor from
             }
         }
 
@@ -335,19 +367,18 @@ class TabSwitcherViewController: UIViewController {
         presentForgetDataAlert()
     }
 
-    private func forgetAll() {
-        self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
+    func startEditing() {
+        // TODO
     }
 
-    func dismiss() {
-        dismiss(animated: true, completion: nil)
+    func addNewTab() {
+        guard !isProcessingUpdates else { return }
+
+        Pixel.fire(pixel: .tabSwitcherNewTab)
+        delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
+        dismiss()
     }
 
-    override func dismiss(animated: Bool, completion: (() -> Void)? = nil) {
-        canUpdateCollection = false
-        tabsModel.tabs.forEach { $0.removeObserver(self) }
-        super.dismiss(animated: animated, completion: completion)
-    }
 }
 
 extension TabSwitcherViewController: TabViewCellDelegate {
@@ -530,15 +561,163 @@ extension TabSwitcherViewController {
         
         refreshDisplayModeButton()
         
-        titleView.textColor = theme.barTintColor
-        bookmarkAllButton.tintColor = theme.barTintColor
-        topDoneButton.tintColor = theme.barTintColor
-        topPlusButton.tintColor = theme.barTintColor
-        topFireButton.tintColor = theme.barTintColor
-        
+        topBarContainerView.tintColor = theme.barTintColor
+//        titleView.textColor = theme.barTintColor
+//        topDoneButton.tintColor = theme.barTintColor
+//        topPlusButton.tintColor = theme.barTintColor
+//        topFireButton.tintColor = theme.barTintColor
+
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor
                 
         collectionView.reloadData()
     }
+}
+
+import SwiftUI
+
+struct TabSwitcherTopBarView: View {
+
+    @ObservedObject var model: TabSwitcherTopBarModel
+
+    @ViewBuilder func modeButton() -> some View {
+        Button {
+            model.toggleTabsStyle()
+        } label: {
+            Image(model.tabsStyle.rawValue)
+        }
+    }
+
+    @ViewBuilder func editButton() -> some View {
+        Button {
+            model.onEditPressed()
+        } label: {
+            Text("Edit")
+        }
+    }
+
+    @ViewBuilder func doneButton() -> some View {
+        Button {
+            model.onDonePressed()
+        } label: {
+            Text("Done")
+        }
+    }
+
+    @ViewBuilder func plusButton() -> some View {
+        Button {
+            model.onPlusPressed()
+        } label: {
+            Image("Add-24")
+        }
+    }
+
+    @ViewBuilder func fireButton() -> some View {
+        Button {
+            model.onFirePressed()
+        } label: {
+            Image("Fire")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 22)
+        }
+    }
+
+    var body: some View {
+        HStack(spacing: 24) {
+
+            switch model.uiModel {
+            case .singleSelectNormal:
+                EmptyView()
+            case .singleSelectLarge:
+                EmptyView()
+            case .multiSelectNormal:
+                EmptyView()
+            case .multiSelectLarge:
+                editButton()
+            }
+
+            modeButton()
+
+            Text(model.title)
+                .frame(maxWidth: .infinity)
+                .font(.headline)
+
+            switch model.uiModel {
+            case .singleSelectNormal:
+                EmptyView()
+            case .singleSelectLarge:
+                EmptyView()
+            case .multiSelectNormal:
+                editButton()
+            case .multiSelectLarge:
+                plusButton()
+                fireButton()
+                doneButton()
+            }
+        }
+        .padding(.horizontal, 16)
+    }
+
+}
+
+class TabSwitcherTopBarModel: ObservableObject {
+
+    protocol Delegate: AnyObject {
+
+        func onTabStyleChange()
+        func burn()
+        func startEditing()
+        func dismiss()
+        func addNewTab()
+
+    }
+
+    enum UIMode {
+
+        case singleSelectNormal
+        case singleSelectLarge
+        case multiSelectNormal
+        case multiSelectLarge
+
+    }
+
+    enum TabsStyleToggle: String {
+
+        case list = "tabsToggleList"
+        case grid = "tabsToggleGrid"
+
+    }
+
+    weak var delegate: Delegate?
+
+    @Published var uiModel: UIMode = .singleSelectNormal
+    @Published var title = ""
+    @Published var tabsStyle: TabsStyleToggle = .grid
+
+    func toggleTabsStyle() {
+        if tabsStyle == .grid {
+            tabsStyle = .list
+        } else {
+            tabsStyle = .grid
+        }
+        delegate?.onTabStyleChange()
+    }
+
+    func onEditPressed() {
+        delegate?.startEditing()
+    }
+
+    func onDonePressed() {
+        delegate?.dismiss()
+    }
+
+    func onPlusPressed() {
+        delegate?.addNewTab()
+    }
+
+    func onFirePressed() {
+        delegate?.burn()
+    }
+
 }

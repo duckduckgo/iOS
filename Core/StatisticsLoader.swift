@@ -35,8 +35,6 @@ public class StatisticsLoader {
     private let returnUserMeasurement: ReturnUserMeasurement
     private let usageSegmentation: UsageSegmenting
     private let parser = AtbParser()
-    private let atbPresenceFileMarker = BoolFileMarker(name: .isATBPresent)
-    private let inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring
     private let fireSearchExperimentPixels: () -> Void
     private let fireAppRetentionExperimentPixels: () -> Void
     private let pixelFiring: PixelFiring.Type
@@ -44,29 +42,19 @@ public class StatisticsLoader {
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement(),
          usageSegmentation: UsageSegmenting = UsageSegmentation(),
-         inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring = StorageInconsistencyMonitor(),
          fireAppRetentionExperimentPixels: @escaping () -> Void = PixelKit.fireAppRetentionExperimentPixels,
          fireSearchExperimentPixels: @escaping () -> Void = PixelKit.fireSearchExperimentPixels,
          pixelFiring: PixelFiring.Type = Pixel.self) {
         self.statisticsStore = statisticsStore
         self.returnUserMeasurement = returnUserMeasurement
         self.usageSegmentation = usageSegmentation
-        self.inconsistencyMonitoring = inconsistencyMonitoring
         self.fireSearchExperimentPixels = fireSearchExperimentPixels
         self.fireAppRetentionExperimentPixels = fireAppRetentionExperimentPixels
         self.pixelFiring = pixelFiring
     }
 
     public func load(completion: @escaping Completion = {}) {
-        let hasFileMarker = atbPresenceFileMarker?.isPresent ?? false
-        let hasInstallStatistics = statisticsStore.hasInstallStatistics
-
-        inconsistencyMonitoring.statisticsDidLoad(hasFileMarker: hasFileMarker, hasInstallStatistics: hasInstallStatistics)
-
-        if hasInstallStatistics {
-            // Synchronize file marker with current state
-            createATBFileMarker()
-
+        if statisticsStore.hasInstallStatistics {
             completion()
             return
         }
@@ -109,7 +97,6 @@ public class StatisticsLoader {
             self.statisticsStore.installDate = Date()
             self.statisticsStore.atb = atb.version
             self.returnUserMeasurement.installCompletedWithATB(atb)
-            self.createATBFileMarker()
             completion()
         }
     }
@@ -126,10 +113,6 @@ public class StatisticsLoader {
                 Logger.general.error("Install pixel failed with error: \(error.localizedDescription, privacy: .public)")
             }
         })
-    }
-
-    private func createATBFileMarker() {
-        atbPresenceFileMarker?.mark()
     }
 
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {

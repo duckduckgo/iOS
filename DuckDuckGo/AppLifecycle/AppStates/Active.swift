@@ -119,7 +119,6 @@ struct Active: AppState {
 
     // MARK: handle applicationDidBecomeActive(_:) logic here
     private func activateApp(isTesting: Bool = false) {
-        StorageInconsistencyMonitor().didBecomeActive(isProtectedDataAvailable: application.isProtectedDataAvailable)
         appDependencies.syncService.initializeIfNeeded()
         appDependencies.syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: appDependencies.syncService)
 

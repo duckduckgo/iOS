@@ -23,7 +23,7 @@ import Foundation
 public extension URL {
 
     private static let base: String = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
-    static let staticBase: String = "https://staticcdn.duckduckgo.com"
+    private static let staticBase: String = "https://staticcdn.duckduckgo.com"
 
     static let ddg = URL(string: URL.base)!
 

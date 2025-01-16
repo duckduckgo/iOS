@@ -85,7 +85,7 @@ jobs:
         app_version="$(cut -d ' ' -f 3 < Configuration/Version.xcconfig)"
         bundle exec fastlane increment_build_number_for_version version:$app_version app_identifier:"com.duckduckgo.mobile.ios.alpha"
         bundle exec fastlane release_alpha groups:["${{ env.destination }}"]
-        build_version="$(xcodebuild -configuration Alpha -showBuildSettings | grep CURRENT_PROJECT_VERSION | tr -d 'CURRENT_PROJECT_VERSION =')"
+        build_version=$(grep 'CURRENT_PROJECT_VERSION' Configuration/BuildNumber.xcconfig | cut -d '=' -f2 | tr -d ' ')
         echo "dsyms_path=${{ github.workspace }}/DuckDuckGo-Alpha.app.dSYM.zip" >> $GITHUB_ENV
         echo "app_version=${app_version}" >> $GITHUB_ENV
         echo "build_version=${build_version}" >> $GITHUB_ENV

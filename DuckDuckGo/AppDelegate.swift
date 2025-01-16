@@ -33,10 +33,6 @@ import Core
 
     var window: UIWindow?
 
-    var privacyProDataReporter: PrivacyProDataReporting? {
-        (appStateMachine.currentState as? Foreground)?.appDependencies.privacyProDataReporter // just for now, we have to get rid of this anti pattern
-    }
-
     /// See: Launching.swift
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let isTesting: Bool = ProcessInfo().arguments.contains("testing")
@@ -93,9 +89,18 @@ import Core
         true
     }
 
+    var privacyProDataReporter: PrivacyProDataReporting? {
+        (appStateMachine.currentState as? Foreground)?.appDependencies.privacyProDataReporter // just for now, we have to get rid of this anti pattern
+    }
+
     /// It's public in order to allow refreshing on demand via Debug menu. Otherwise it shouldn't be called from outside.
+    /// we have to get rid of this anti pattern
     func refreshRemoteMessages() {
-        // part of debug menu, let's not support it in the first iteration
+        Task {
+            if let remoteMessagingClient = (appStateMachine.currentState as? Foreground)?.appDependencies.remoteMessagingClient {
+                try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingClient.store)
+            }
+        }
     }
 
 }

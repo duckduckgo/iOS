@@ -48,11 +48,11 @@ struct FavoriteView: View {
                                     .resizable()
                                     .useFullColorRendering()
                                     .aspectRatio(contentMode: .fit)
-                                    .cornerRadius(cornerRaidus)
+                                    .cornerRadius(10)
                             } else {
                                 Image(uiImage: image)
                                     .useFullColorRendering()
-                                    .cornerRadius(cornerRaidus)
+                                    .cornerRadius(10)
                             }
                             
                         } else if favorite.isDuckDuckGo {

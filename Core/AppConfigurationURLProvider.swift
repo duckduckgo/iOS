@@ -33,7 +33,7 @@ struct AppConfigurationURLProvider: ConfigurationURLProviding {
     }
 
     /// Initializer for injecting a custom TrackerDataURLProvider.
-    init (trackerDataUrlProvider: TrackerDataURLProviding) {
+    internal init (trackerDataUrlProvider: TrackerDataURLProviding) {
         self.trackerDataUrlProvider = trackerDataUrlProvider
     }
 

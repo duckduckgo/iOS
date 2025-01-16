@@ -63,7 +63,6 @@ final class AppConfigurationURLProviderTests: XCTestCase {
         XCTAssertEqual(url, expectedURL)
     }
 
-
 }
 
 class MockTrackerDataURLProvider: TrackerDataURLProviding {

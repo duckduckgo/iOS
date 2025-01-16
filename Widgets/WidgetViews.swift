@@ -26,63 +26,54 @@ struct FavoriteView: View {
     var favorite: Favorite?
     var isPreview: Bool
 
+    private let cornerRaidus: CGFloat = 14
+
     var body: some View {
 
         ZStack {
-            RoundedRectangle(cornerRadius: 8)
+            RoundedRectangle(cornerRadius: cornerRaidus)
                 .fill(Color(designSystemColor: .container))
 
             if let favorite = favorite {
 
                 Link(destination: favorite.url) {
-
                     ZStack {
-                        
-                        RoundedRectangle(cornerRadius: 8)
+                        RoundedRectangle(cornerRadius: cornerRaidus)
                             .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color(designSystemColor: .container))
                             .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
                         
                         if let image = favorite.favicon {
-
                             if image.size.width > 60 {
                                 Image(uiImage: image)
                                     .resizable()
                                     .useFullColorRendering()
                                     .aspectRatio(contentMode: .fit)
-                                    .cornerRadius(10)
+                                    .cornerRadius(cornerRaidus)
                             } else {
                                 Image(uiImage: image)
                                     .useFullColorRendering()
-                                    .cornerRadius(10)
+                                    .cornerRadius(cornerRaidus)
                             }
                             
                         } else if favorite.isDuckDuckGo {
-                            
                             Image(.duckDuckGoColor24)
                                 .resizable()
                                 .useFullColorRendering()
                                 .frame(width: 45, height: 45, alignment: .center)
                             
                         } else {
-                            
                             Text(favorite.domain.first?.uppercased() ?? "")
                                 .foregroundColor(Color.white)
                                 .font(.system(size: 42))
                             
                         }
-
                     }
-
                 }
                 .accessibilityLabel(Text(favorite.title))
-
             }
-
         }
         .frame(width: 60, height: 60, alignment: .center)
-
     }
-
 }
 
 struct LargeSearchFieldView: View {
@@ -90,29 +81,25 @@ struct LargeSearchFieldView: View {
     var body: some View {
         Link(destination: DeepLinks.newSearch) {
             ZStack {
-
-                RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
+                RoundedRectangle(cornerRadius: 23)
                     .fill(Color(designSystemColor: .container))
                     .frame(minHeight: 46, maxHeight: 46)
                     .padding(.vertical, 16)
 
                 HStack {
-
-                    Image(.duckDuckGoColor24)
+                    Image(.duckDuckGoColor28)
+                        .resizable()
                         .useFullColorRendering()
-                        .frame(width: 24, height: 24, alignment: .leading)
+                        .frame(width: 28, height: 28, alignment: .leading)
+                        .padding(.leading, 12)
 
                     Text(UserText.searchDuckDuckGo)
                         .daxBodyRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .makeAccentable()
 
                     Spacer()
 
-                    Image(.findSearch20)
-                        .useFullColorRendering()
-                        .foregroundColor(Color(designSystemColor: .textPrimary).opacity(0.5))
-
-                }.padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                }
 
             }.unredacted()
         }
@@ -180,9 +167,12 @@ struct FavoritesWidgetView: View {
         ZStack {
 
             VStack(alignment: .center, spacing: 0) {
-
-                LargeSearchFieldView()
-
+                HStack(spacing: 12) {
+                    LargeSearchFieldView()
+                    Link(destination: DeepLinks.openAIChat) {
+                        CircleIconView(image: Image(.aiChat24))
+                    }
+                }
                 if entry.favorites.isEmpty, !entry.isPreview {
                     Link(destination: DeepLinks.addFavorite) {
                         FavoritesGridView(entry: entry).accessibilityLabel(Text(UserText.noFavoritesCTA))
@@ -217,6 +207,23 @@ struct FavoritesWidgetView: View {
 
         }
         .widgetContainerBackground(color: Color(designSystemColor: .backgroundSheets))
+    }
+}
+
+private struct CircleIconView: View {
+    let image: Image
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 23)
+                .fill(Color(designSystemColor: .container))
+            image
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+                .makeAccentable()
+        }
+        .frame(width: 46, height: 46)
     }
 }
 

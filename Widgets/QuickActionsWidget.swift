@@ -60,11 +60,13 @@ private struct SearchBoxView: View {
             Image(.duckDuckGoColor28)
                 .resizable()
                 .useFullColorRendering()
-                .frame(width: 28, height: 28, alignment: .leading)
+                .frame(width: 28, height: 28)
                 .padding(.leading, 12)
 
             Text("Search")
                 .daxBodyRegular()
+                .makeAccentable()
+
             Spacer()
         }
         .frame(height: 52)
@@ -87,7 +89,7 @@ private struct IconView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 24, height: 24)
-
+                .makeAccentable()
         }
         .frame(width: 60, height: 60)
     }

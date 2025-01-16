@@ -57,13 +57,15 @@ struct QuickActionsWidgetView: View {
 private struct SearchBoxView: View {
     var body: some View {
         HStack {
-            Image(.duckDuckGoColor24)
+            Image(.duckDuckGoColor28)
                 .resizable()
                 .useFullColorRendering()
                 .frame(width: 28, height: 28, alignment: .leading)
+                .padding(.leading, 12)
 
             Text("Search")
                 .daxBodyRegular()
+            Spacer()
         }
         .frame(height: 52)
         .frame(maxWidth: .infinity)

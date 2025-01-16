@@ -63,7 +63,12 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
 
     init(config: PrivacyConfiguration, preferences: AutoconsentPreferences = AppUserDefaults(), ignoreNonHTTPURLs: Bool = true) {
         Logger.autoconsent.debug("Initialising autoconsent userscript")
-        source = Self.loadJS("autoconsent-bundle", from: .main, withReplacements: [:])
+        let isFilterListExperimentEnabled = config.isSubfeatureEnabled(AutoconsentSubfeature.filterlist)
+        if isFilterListExperimentEnabled {
+            source = Self.loadJS("autoconsent-bundle-exp", from: .main, withReplacements: [:])
+        } else {
+            source = Self.loadJS("autoconsent-bundle", from: .main, withReplacements: [:])
+        }
         self.config = config
         self.preferences = preferences
         self.ignoreNonHTTPURLs = ignoreNonHTTPURLs

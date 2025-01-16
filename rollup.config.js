@@ -16,5 +16,20 @@ export default [
             json(),
             terser(),
         ]
+    },
+    {
+        input: 'DuckDuckGo/Autoconsent/userscript-exp.js',
+        output: [
+            {
+                file: 'DuckDuckGo/Autoconsent/autoconsent-bundle-exp.js',
+                format: 'iife'
+            }
+        ],
+        plugins: [
+            nodeResolve(),
+            json(),
+            terser(),
+        ]
     }
+
 ]

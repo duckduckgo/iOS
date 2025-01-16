@@ -55,7 +55,7 @@ struct Foreground: AppState {
 
     // MARK: Handle logic when transitioning from Launched to Foreground
     // This transition occurs when the app has completed its launch process and becomes active.
-    // Note: You want to add here code that will happen one-time per app lifecycle, but you need the UI to be active at this point!
+    // Note: You want to add here code that will happen one-time per app lifecycle, but you require the UI to be active at this point!
     init(stateContext: Launching.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies

@@ -26,6 +26,17 @@ import BackgroundTasks
 import Subscription
 import NetworkProtection
 
+/// Represents the state where the app is active and available for user interaction.
+/// - Usage:
+///   - This state is typically associated with the `applicationDidBecomeActive(_:)` method.
+///   - The app transitions to this state after completing the launch process or resuming from the background.
+///   - During this state, the app is fully interactive, and the user can engage with the app's UI.
+/// - Transitions:
+///   - `Suspending`: The app transitions to this state when it begins the process of moving to the background,
+///     typically triggered by the `applicationWillResignActive(_:)` method, e.g.:
+///     - When the user presses the home button, swipes up to the App Switcher, or receives a system interruption.
+/// - Notes:
+///   - This is one of the two long-living states in the app's lifecycle (along with `Background`).
 struct Foreground: AppState {
 
     let application: UIApplication
@@ -512,7 +523,7 @@ extension Foreground {
 
 extension Foreground {
 
-    mutating func handle(action: AppAction) {
+    func handle(action: AppAction) {
         switch action {
         case .openURL(let url):
             openURL(url)

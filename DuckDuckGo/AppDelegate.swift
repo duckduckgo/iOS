@@ -37,24 +37,29 @@ import Core
         (appStateMachine.currentState as? Foreground)?.appDependencies.privacyProDataReporter // just for now, we have to get rid of this anti pattern
     }
 
+    /// See: Launching.swift
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let isTesting: Bool = ProcessInfo().arguments.contains("testing")
         appStateMachine.handle(.didFinishLaunching(application, isTesting: isTesting))
         return true
     }
 
+    /// See: Foreground.swift
     func applicationDidBecomeActive(_ application: UIApplication) {
         appStateMachine.handle(.didBecomeActive)
     }
 
+    /// See: Suspending.swift
     func applicationWillResignActive(_ application: UIApplication) {
         appStateMachine.handle(.willResignActive)
     }
 
+    /// See: Resuming.swift
     func applicationWillEnterForeground(_ application: UIApplication) {
         appStateMachine.handle(.willEnterForeground)
     }
 
+    /// See: Background.swift
     func applicationDidEnterBackground(_ application: UIApplication) {
         appStateMachine.handle(.didEnterBackground)
     }

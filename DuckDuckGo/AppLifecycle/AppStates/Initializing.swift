@@ -21,6 +21,10 @@ import Core
 import Crashes
 import UIKit
 
+/// The initial setup phase of the app, where basic services or components are initialized.
+/// This state can be invoked when the system prewarms the app but does not fully launch it.
+/// - Transitions:
+///   - `Launching` after initialization is complete.
 @MainActor
 struct Initializing: AppState {
 

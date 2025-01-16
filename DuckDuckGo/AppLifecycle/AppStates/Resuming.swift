@@ -19,6 +19,15 @@
 
 import UIKit
 
+/// Represents the transient state where the app is resuming after being backgrounded, preparing to return to the foreground.
+/// - Usage:
+///   - This state is typically associated with the `applicationWillEnterForeground(_:)` method.
+///   - The app transitions to this state when the system sends the `willEnterForeground` event,
+///     indicating that the app is about to become active again.
+/// - Transitions:
+///   - `Foreground`: The app transitions to the `Foreground` state when the app is fully active and visible to the user after resuming.
+///   - `Background`: The app can transition to the `Background` state if,
+///     e.g. the app is protected by a FaceID lock mechanism (introduced in iOS 18.0) and the user does not authenticate and then leaves.
 struct Resuming: AppState {
 
     private let application: UIApplication

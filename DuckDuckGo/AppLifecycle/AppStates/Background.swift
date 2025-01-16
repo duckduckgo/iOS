@@ -23,6 +23,18 @@ import DDGSync
 import UIKit
 import Core
 
+/// Represents the state where the app is fully in the background and not visible to the user.
+/// - Usage:
+///   - This state is typically associated with the `applicationDidEnterBackground(_:)` method.
+///   - The app transitions to this state when it is no longer in the foreground, either due to the user
+///     minimizing the app, switching to another app, or locking the device.
+/// - Transitions:
+///   - `Resuming`: The app transitions to the `Resuming` state when the user brings the app back to the foreground.
+/// - Notes:
+///   - This is one of the app's two long-lived states, alongside `Foreground`.
+///   - Background tasks, such as saving data or refreshing content, should be handled in this state.
+///   - Use this state to ensure that the app's current state is saved and any necessary cleanup is performed
+///     to release resources or prepare for a potential termination.
 struct Background: AppState {
 
     private let lastBackgroundDate: Date = Date()

@@ -19,9 +19,9 @@ jobs:
 
     - name: Set cache key hash
       run: |
-         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo-iOS.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
          if [[ "$has_only_tags" == "true" ]]; then
-           echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
+           echo "cache_key_hash=${{ hashFiles('DuckDuckGo-iOS.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
          else
            echo "Package.resolved contains dependencies specified by branch or commit, skipping cache."
          fi

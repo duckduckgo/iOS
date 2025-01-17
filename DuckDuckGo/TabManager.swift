@@ -37,6 +37,7 @@ class TabManager {
     private let historyManager: HistoryManaging
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
+    private let interactionStateSource: TabInteractionStateSource?
     private var duckPlayer: DuckPlayerControlling
     private var privacyProDataReporter: PrivacyProDataReporting
     private let contextualOnboardingPresenter: ContextualOnboardingPresenting
@@ -57,6 +58,7 @@ class TabManager {
     @MainActor
     init(model: TabsModel,
          previewsSource: TabPreviewsSource,
+         interactionStateSource: TabInteractionStateSource?,
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManaging,
          syncService: DDGSyncing,
@@ -73,6 +75,7 @@ class TabManager {
          fireproofing: Fireproofing) {
         self.model = model
         self.previewsSource = previewsSource
+        self.interactionStateSource = interactionStateSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
@@ -136,7 +139,7 @@ class TabManager {
             return controller
         } else if createIfNeeded {
             Logger.general.debug("Tab not in cache, creating")
-            let interactionStateSource = TabInteractionStateSource()
+            let interactionStateSource = TabInteractionStateDiskSource()
             let tabInteractionState = interactionStateSource?.popLastStateForTab(tab)
             let controller = buildController(forTab: tab, inheritedAttribution: nil, interactionState: tabInteractionState)
             tabControllerCache.append(controller)
@@ -279,6 +282,7 @@ class TabManager {
         if let controller = controller(for: tab) {
             removeFromCache(controller)
         }
+        interactionStateSource?.removeStateForTab(tab)
         save()
     }
 
@@ -295,7 +299,12 @@ class TabManager {
         for controller in tabControllerCache {
             removeFromCache(controller)
         }
+        interactionStateSource?.removeAll(excluding: [])
         save()
+    }
+
+    func removeLeftoverInteractionStates() {
+        interactionStateSource?.removeAll(excluding: model.tabs)
     }
 
     @MainActor

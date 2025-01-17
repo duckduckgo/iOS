@@ -1,5 +1,5 @@
 //
-//  TabInteractionStateSourceTests.swift
+//  TabInteractionStateDiskSourceTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -22,13 +22,13 @@ import Core
 
 @testable import DuckDuckGo
 
-final class TabInteractionStateSourceTests: XCTestCase {
+final class TabInteractionStateDiskSourceTests: XCTestCase {
 
-    var sut: TabInteractionStateSource!
+    var sut: TabInteractionStateDiskSource!
     private let mockFileManager = MockFileManager()
 
     override func setUp() {
-        sut = TabInteractionStateSource(fileManager: mockFileManager)
+        sut = TabInteractionStateDiskSource(fileManager: mockFileManager)
     }
 
     override func tearDown() {
@@ -38,7 +38,6 @@ final class TabInteractionStateSourceTests: XCTestCase {
     func testSaveStateWritesInCacheLocation() {
         let state = Data.random()
         let tab = Tab.mock()
-        let sut = TabInteractionStateSource(fileManager: mockFileManager)
 
         sut.saveState(state, for: tab)
 
@@ -85,7 +84,7 @@ final class TabInteractionStateSourceTests: XCTestCase {
             sut.saveState(state, for: tab)
         }
 
-        sut.cleanUp(excluding: [])
+        sut.removeAll(excluding: [])
 
         XCTAssertTrue(try FileManager.default.contentsOfDirectory(atPath: testDirectory()).isEmpty)
     }
@@ -104,7 +103,7 @@ final class TabInteractionStateSourceTests: XCTestCase {
             }
         }
 
-        sut.cleanUp(excluding: excludedTabs)
+        sut.removeAll(excluding: excludedTabs)
 
         let directoryContents = try FileManager.default.contentsOfDirectory(atPath: testDirectory())
 

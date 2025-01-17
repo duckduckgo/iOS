@@ -64,7 +64,7 @@ class TabViewController: UIViewController {
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     private let instrumentation = TabInstrumentation()
-    private let tabInteractionStateSource = TabInteractionStateSource()
+    private let tabInteractionStateSource = TabInteractionStateDiskSource()
 
     var isLinkPreview = false
 

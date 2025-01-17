@@ -21,7 +21,14 @@ import os.log
 
 import Core
 
-public final class TabInteractionStateSource {
+public protocol TabInteractionStateSource {
+    func saveState(_ state: Any?, for tab: Tab)
+    func popLastStateForTab(_ tab: Tab) -> Data?
+    func removeStateForTab(_ tab: Tab)
+    func removeAll(excluding excludedTabs: [Tab])
+}
+
+public final class TabInteractionStateDiskSource: TabInteractionStateSource {
     private let fileManager: FileManager
     private let interactionStateCacheLocation: URL
     private let pixelFiring: PixelFiring.Type
@@ -101,7 +108,7 @@ public final class TabInteractionStateSource {
         try? fileManager.removeItem(at: tabCacheLocation)
     }
 
-    public func cleanUp(excluding excludedTabs: [Tab]) {
+    public func removeAll(excluding excludedTabs: [Tab]) {
         guard let allCacheFiles = try? fileManager.contentsOfDirectory(at: interactionStateCacheLocation, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) else {
             return
         }

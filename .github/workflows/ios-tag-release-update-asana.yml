@@ -1,4 +1,4 @@
-name: Publish Release
+name: iOS - Tag Release and Update Asana
 
 on:
   workflow_dispatch:

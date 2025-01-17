@@ -42,7 +42,6 @@ class StatisticsLoaderTests: XCTestCase {
         mockUsageSegmentation = MockUsageSegmentation()
         testee = StatisticsLoader(statisticsStore: mockStatisticsStore,
                                   usageSegmentation: mockUsageSegmentation,
-                                  inconsistencyMonitoring: MockStatisticsStoreInconsistencyMonitoring(),
                                   fireAppRetentionExperimentPixels: { self.fireAppRetentionExperimentPixelsCalled = true },
                                   fireSearchExperimentPixels: { self.fireSearchExperimentPixelsCalled = true },
                                   pixelFiring: mockPixelFiring)
@@ -336,10 +335,4 @@ class StatisticsLoaderTests: XCTestCase {
         }
     }
 
-}
-
-private struct MockStatisticsStoreInconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring {
-    func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool) {
-
-    }
 }

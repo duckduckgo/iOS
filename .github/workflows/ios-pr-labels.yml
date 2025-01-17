@@ -1,4 +1,4 @@
-name: PR Labels
+name: iOS - PR Labels
 
 on:
   push:

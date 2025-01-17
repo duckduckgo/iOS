@@ -89,16 +89,12 @@ extension AIChatViewController {
 
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        /// Clean up the previous conversation and prepare duck.ai for future presentation
-        webViewController?.reload()
+        removeWebViewController()
     }
     
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
-        if viewIfLoaded?.window == nil {
-            removeWebViewController()
-        }
+        removeWebViewController()
     }
 }
 
@@ -111,6 +107,10 @@ extension AIChatViewController {
          }
          webViewController?.loadQuery(query)
      }
+
+    public func reload() {
+        webViewController?.reload()
+    }
 }
 
 // MARK: - Views Setup
@@ -150,9 +150,11 @@ extension AIChatViewController {
     }
 
     private func removeWebViewController() {
-        webViewController?.removeFromParent()
-        webViewController?.view.removeFromSuperview()
-        webViewController = nil
+        if viewIfLoaded?.window == nil {
+            webViewController?.removeFromParent()
+            webViewController?.view.removeFromSuperview()
+            webViewController = nil
+        }
     }
 }
 

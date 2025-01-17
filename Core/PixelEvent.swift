@@ -216,9 +216,6 @@ extension Pixel {
         case bookmarkAddFavoriteBySwipe
         case bookmarkDeletedFromBookmark
 
-        case bookmarksUIFavoritesAction
-        case bookmarksUIFavoritesManage
-
         case bookmarkImportSuccess
         case bookmarkImportFailure
         case bookmarkImportFailureParsingDL
@@ -947,11 +944,6 @@ extension Pixel {
         // MARK: WebView Error Page Shown
         case webViewErrorPageShown
 
-        // MARK: UserDefaults incositency monitoring
-        case protectedDataUnavailableWhenBecomeActive
-        case statisticsLoaderATBStateMismatch
-        case adAttributionReportStateMismatch
-
         // MARK: Browsing
         case stopPageLoad
         
@@ -974,7 +966,6 @@ extension Pixel {
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
-        case appDidConsecutivelyBackground
 
     }
 
@@ -1110,9 +1101,6 @@ extension Pixel.Event {
         case .bookmarkRemoveFavoriteFromBookmark: return "m_remove_favorite_from_bookmark"
         case .bookmarkAddFavoriteBySwipe: return "m_add_favorite_by_swipe"
         case .bookmarkDeletedFromBookmark: return "m_bookmark_deleted_from_bookmark"
-
-        case .bookmarksUIFavoritesAction: return "m_bookmarks_ui_favorites_action_daily"
-        case .bookmarksUIFavoritesManage: return "m_bookmarks_ui_favorites_manage_daily"
 
         case .homeScreenShown: return "mh"
         case .homeScreenEditFavorite: return "mh_ef"
@@ -1919,11 +1907,6 @@ extension Pixel.Event {
         // MARK: - DuckPlayer FE Application Telemetry
         case .duckPlayerLandscapeLayoutImpressions: return "duckplayer_landscape_layout_impressions"
 
-        // MARK: UserDefaults incositency monitoring
-        case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
-        case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
-        case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
-
         // MARK: Browsing
         case .stopPageLoad: return "m_stop-page-load"
                         
@@ -1946,8 +1929,7 @@ extension Pixel.Event {
         case .openAIChatFromAddressBar: return "m_aichat_addressbar_icon"
 
         // MARK: Lifecycle
-        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-2"
-        case .appDidConsecutivelyBackground: return "m_debug_app-did-consecutively-background-2"
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
 
         }
     }

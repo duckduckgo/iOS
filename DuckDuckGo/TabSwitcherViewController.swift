@@ -317,7 +317,7 @@ extension TabSwitcherViewController: TabSwitcherTopBarModel.Delegate {
     }
 
     func startEditing() {
-        // TODO
+        // This will come in future PR.
     }
 
     func addNewTab() {

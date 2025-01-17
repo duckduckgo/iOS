@@ -21,7 +21,6 @@ import Foundation
 import Core
 import Networking
 import Configuration
-import Crashes
 import UIKit
 import Persistence
 import BrowserServicesKit
@@ -51,12 +50,6 @@ import PixelExperimentKit
 @MainActor
 struct Launching: AppState {
 
-    @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
-    private var didCrashDuringCrashHandlersSetUp: Bool
-
-    private let crashCollection = CrashCollection(crashReportSender: CrashReportSender(platform: .iOS,
-                                                                                       pixelEvents: CrashReportSender.pixelEvents),
-                                                  crashCollectionStorage: UserDefaults())
     private let bookmarksDatabase = BookmarksDatabase.make()
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     private let accountManager = AppDependencyProvider.shared.accountManager
@@ -75,7 +68,6 @@ struct Launching: AppState {
     private let privacyProDataReporter: PrivacyProDataReporting
     private let isTesting = ProcessInfo().arguments.contains("testing")
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
-    private let crashReportUploaderOnboarding: CrashCollectionOnboarding
 
     // These should ideally be let properties instead of force-unwrapped. However, due to various initialization paths, such as database completion blocks, setting them up in advance is currently not feasible. Refactoring will be done once this code is streamlined.
     private let uiService: UIService
@@ -95,6 +87,7 @@ struct Launching: AppState {
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
     private let application: UIApplication
+    private let crashService: CrashService
 
     // swiftlint:disable:next cyclomatic_complexity
     init(stateContext: Initializing.StateContext) {
@@ -103,9 +96,10 @@ struct Launching: AppState {
         var privacyConfigCustomURL: String?
 
         application = stateContext.application
+        crashService = stateContext.crashService
+
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
         vpnWorkaround = VPNRedditSessionWorkaround(accountManager: accountManager, tunnelController: tunnelController)
-        crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
 
         defer {
             let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
@@ -159,27 +153,7 @@ struct Launching: AppState {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        crashCollection.startAttachingCrashLogMessages { [application, crashReportUploaderOnboarding] pixelParameters, payloads, sendReport in
-            pixelParameters.forEach { params in
-                Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
-
-                // Each crash comes with an `appVersion` parameter representing the version that the crash occurred on.
-                // This is to disambiguate the situation where a crash occurs, but isn't sent until the next update.
-                // If for some reason the parameter can't be found, fall back to the current version.
-                if let crashAppVersion = params[PixelParameters.appVersion] {
-                    let dailyParameters = [PixelParameters.appVersion: crashAppVersion]
-                    DailyPixel.fireDaily(.dbCrashDetectedDaily, withAdditionalParameters: dailyParameters)
-                } else {
-                    DailyPixel.fireDaily(.dbCrashDetectedDaily)
-                }
-            }
-
-            // Async dispatch because rootViewController may otherwise be nil here
-            DispatchQueue.main.async {
-                guard let viewController = application.window?.rootViewController else { return }
-                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
-            }
-        }
+        crashService.startAttachingCrashLogMessages(application: application)
 
         clearTmp()
 
@@ -513,10 +487,7 @@ struct Launching: AppState {
             autofillPixelReporter.updateAutofillEnabledStatus(AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled)
         }
 
-        if stateContext.didCrashDuringCrashHandlersSetUp {
-            Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
-            didCrashDuringCrashHandlersSetUp = false
-        }
+        crashService.handleCrashDuringCrashHandlersSetup()
 
         tipKitAppEventsHandler.appDidFinishLaunching()
     }
@@ -544,7 +515,7 @@ struct Launching: AppState {
             onboardingPixelReporter: onboardingPixelReporter,
             widgetRefreshModel: widgetRefreshModel,
             autofillPixelReporter: autofillPixelReporter,
-            crashReportUploaderOnboarding: crashReportUploaderOnboarding
+            crashService: crashService
         )
     }
 

@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-import Core
-import Crashes
 import UIKit
 
 /// The initial setup phase of the app, where basic services or components are initialized.
@@ -28,15 +26,10 @@ import UIKit
 @MainActor
 struct Initializing: AppState {
 
-    @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
-    var didCrashDuringCrashHandlersSetUp: Bool
+    private let crashService = CrashService()
 
     init() {
-        if !didCrashDuringCrashHandlersSetUp {
-            didCrashDuringCrashHandlersSetUp = true
-            CrashLogMessageExtractor.setUp(swapCxaThrow: false)
-            didCrashDuringCrashHandlersSetUp = false
-        }
+        crashService.setupCrashHandlers()
     }
 
 }
@@ -46,13 +39,13 @@ extension Initializing {
     struct StateContext {
 
         let application: UIApplication
-        let didCrashDuringCrashHandlersSetUp: Bool
+        let crashService: CrashService
 
     }
 
     func makeStateContext(application: UIApplication) -> StateContext {
         .init(application: application,
-              didCrashDuringCrashHandlersSetUp: didCrashDuringCrashHandlersSetUp)
+              crashService: crashService)
     }
 
 }

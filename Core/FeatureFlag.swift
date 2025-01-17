@@ -145,7 +145,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .aiChatDeepLink:
             return .remoteReleasable(.subfeature(AIChatSubfeature.deepLink))
         case .tabManagerMultiSelection:
-            return .remoteDevelopment(.subfeature(TabManagerSubfeature.multiSelection))
+            return .internalOnly()
         }
     }
 }

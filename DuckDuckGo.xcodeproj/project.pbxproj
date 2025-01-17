@@ -189,6 +189,9 @@
 		31B2F1132C92FEF500CD30E3 /* MarketplaceAdPostbackUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B2F1122C92FEF500CD30E3 /* MarketplaceAdPostbackUpdater.swift */; };
 		31B2F11F287846320040427A /* NoMicPermissionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B2F11E287846320040427A /* NoMicPermissionAlert.swift */; };
 		31B524572715BB23002225AB /* WebJSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B524562715BB23002225AB /* WebJSAlert.swift */; };
+		31BB23A42D3A661E00809ABF /* AIChatControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BB23A32D3A661A00809ABF /* AIChatControlWidget.swift */; };
+		31BB23A52D3A969400809ABF /* AIChatControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BB23A32D3A661A00809ABF /* AIChatControlWidget.swift */; };
+		31BB23A62D3A96F000809ABF /* DeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853273B124FF114700E3C778 /* DeepLinks.swift */; };
 		31BC5F412C2B0B540004DF37 /* DuckPlayer.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31BC5F402C2B0B540004DF37 /* DuckPlayer.xcassets */; };
 		31C138A427A3352600FFD4B2 /* DownloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138A227A3350A00FFD4B2 /* DownloadTests.swift */; };
 		31C138A827A3E9C900FFD4B2 /* URLDownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138A727A3E9C900FFD4B2 /* URLDownloadSession.swift */; };
@@ -1607,6 +1610,7 @@
 		31B2F1122C92FEF500CD30E3 /* MarketplaceAdPostbackUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceAdPostbackUpdater.swift; sourceTree = "<group>"; };
 		31B2F11E287846320040427A /* NoMicPermissionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoMicPermissionAlert.swift; sourceTree = "<group>"; };
 		31B524562715BB23002225AB /* WebJSAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebJSAlert.swift; sourceTree = "<group>"; };
+		31BB23A32D3A661A00809ABF /* AIChatControlWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatControlWidget.swift; sourceTree = "<group>"; };
 		31BC5F402C2B0B540004DF37 /* DuckPlayer.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DuckPlayer.xcassets; sourceTree = "<group>"; };
 		31C138A227A3350A00FFD4B2 /* DownloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTests.swift; sourceTree = "<group>"; };
 		31C138A727A3E9C900FFD4B2 /* URLDownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDownloadSession.swift; sourceTree = "<group>"; };
@@ -4657,6 +4661,7 @@
 				4BB7CBAF2AF59C310014A35F /* VPNWidget.swift */,
 				31B0B2BE2D390CF000A702D4 /* QuickActionsWidget.swift */,
 				7BFC32AF2CB291BB007A8E17 /* VPNControlWidget.swift */,
+				31BB23A32D3A661A00809ABF /* AIChatControlWidget.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -8265,6 +8270,7 @@
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
 				F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */,
 				7BFD5FD52C9DA310000FF959 /* VPNAddWidgetTip.swift in Sources */,
+				31BB23A62D3A96F000809ABF /* DeepLinks.swift in Sources */,
 				C17B595A2A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* UnprotectedSitesViewController.swift in Sources */,
 				CBD4F13C279EBF4A00B20FD7 /* HomeMessage.swift in Sources */,
@@ -8446,6 +8452,7 @@
 				C1FFBD482C7749A90073622B /* SyncSettingsViewController+PlatformLinks.swift in Sources */,
 				3151F0EA27357FBA00226F58 /* SpeechRecognizer.swift in Sources */,
 				85B9814E2B5EB618009AC9A6 /* SwipeTabsCoordinator.swift in Sources */,
+				31BB23A52D3A969400809ABF /* AIChatControlWidget.swift in Sources */,
 				985AAE4524899369007A43EC /* HomeScreenTransition.swift in Sources */,
 				85E58C2C28FDA94F006A801A /* FavoritesViewController.swift in Sources */,
 				1E8AD1CF27C000A000ABA377 /* CompleteDownloadRow.swift in Sources */,
@@ -8739,6 +8746,7 @@
 				85DB12EB2A1FE2A4000A4A72 /* LockScreenWidgets.swift in Sources */,
 				4BD96E0E2C4DCFD7003BC32C /* VPNSnoozeLiveActivityWidget.swift in Sources */,
 				8544C37C250B827300A0FE73 /* UserText.swift in Sources */,
+				31BB23A42D3A661E00809ABF /* AIChatControlWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

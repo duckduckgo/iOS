@@ -243,13 +243,11 @@ struct Widgets: WidgetBundle {
                                                   EmailProtectionLockScreenWidget(),
                                                   FireButtonLockScreenWidget(),
                                                   FavoritesLockScreenWidget(),
-                                                  PasswordsLockScreenWidget(),
-                                                  QuickActionsWidget())
+                                                  PasswordsLockScreenWidget())
         } else {
             return WidgetBundleBuilder.buildBlock(SearchWidget(),
                                                   PasswordsWidget(),
-                                                  FavoritesWidget(),
-                                                  QuickActionsWidget())
+                                                  FavoritesWidget())
         }
     }
 }
@@ -264,6 +262,7 @@ struct VPNBundle: WidgetBundle {
 
         if #available(iOS 18, *) {
             VPNControlWidget()
+            AIChatControlWidget()
         }
     }
 }

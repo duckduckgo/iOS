@@ -108,10 +108,6 @@ extension MainViewController {
             return
         }
 
-        if entryPoint == .report {
-            fireBrokenSiteReportShown()
-        }
-
         let storyboard = UIStoryboard(name: "PrivacyDashboard", bundle: nil)
         let controller = storyboard.instantiateInitialViewController { coder in
             PrivacyDashboardViewController(coder: coder,
@@ -139,13 +135,6 @@ extension MainViewController {
         }
         
         present(controller, animated: true)
-    }
-
-    private func fireBrokenSiteReportShown() {
-        let parameters = [
-            PrivacyDashboardEvents.Parameters.source: BrokenSiteReport.Source.appMenu.rawValue
-        ]
-        Pixel.fire(pixel: .reportBrokenSiteShown, withAdditionalParameters: parameters)
     }
 
     func segueToNegativeFeedbackForm() {

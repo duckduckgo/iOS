@@ -652,7 +652,7 @@ class TabViewController: UIViewController {
                 // the check is here to let an (about:blank) popup which has its loading
                 // initiated by its parent to keep its active request, otherwise we would
                 // break a js-initiated popup request such as printing from a popup
-                guard self?.url != cleanURLRequest.url || loadingStopped || loadingInitiatedByParentTab else { return }
+                guard self?.url != cleanURLRequest.url || loadingStopped || !loadingInitiatedByParentTab else { return }
                 self?.load(urlRequest: cleanURLRequest)
 
             })

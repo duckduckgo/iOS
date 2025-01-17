@@ -22,7 +22,6 @@ import BrowserServicesKit
 import Bookmarks
 import Configuration
 import DDGSync
-import NetworkProtection
 
 extension Pixel {
     
@@ -416,7 +415,7 @@ extension Pixel {
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
 
-        case networkProtectionLatency(quality: NetworkProtectionLatencyMonitor.ConnectionQuality)
+        case networkProtectionLatency(quality: String)
         case networkProtectionLatencyError
         
         case networkProtectionEnabledOnSearch
@@ -1387,7 +1386,7 @@ extension Pixel.Event {
         case .networkProtectionConnectionTesterExtendedFailureRecovered: return "m_netp_connection_tester_extended_failure_recovered"
         case .networkProtectionTunnelFailureDetected: return "m_netp_ev_tunnel_failure"
         case .networkProtectionTunnelFailureRecovered: return "m_netp_ev_tunnel_failure_recovered"
-        case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality.rawValue)_latency"
+        case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality)_latency"
         case .networkProtectionLatencyError: return "m_netp_ev_latency_error_d"
         case .networkProtectionRekeyAttempt: return "m_netp_rekey_attempt"
         case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"

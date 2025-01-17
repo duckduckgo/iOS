@@ -20,7 +20,8 @@
 import XCTest
 
 @testable import DuckDuckGo
-@testable import TestUtils
+import PersistenceTestingUtils
+import NetworkingTestingUtils
 
 final class AdAttributionFetcherTests: XCTestCase {
 

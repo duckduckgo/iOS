@@ -645,7 +645,9 @@ extension Pixel {
         case debugWebsiteDataStoresCleared
 
         case debugBookmarksMigratedMoreThanOnce
-        
+
+        case debugBreakageExperiment
+
         // Return user measurement
         case debugReturnUserAddATB
         case debugReturnUserUpdateATB
@@ -1937,6 +1939,7 @@ extension Pixel.Event {
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
 
+        case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
         }
     }
 }

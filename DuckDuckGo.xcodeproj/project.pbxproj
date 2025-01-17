@@ -278,6 +278,7 @@
 		563A3CFE2D37B8FA001966FD /* ConfigurationManagerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563A3CFD2D37B8FA001966FD /* ConfigurationManagerIntegrationTests.swift */; };
 		563A3D012D37BF83001966FD /* ConfigurationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563A3D002D37BF83001966FD /* ConfigurationManagerTests.swift */; };
 		563A3D032D37C363001966FD /* AppConfigurationURLProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563A3D022D37C363001966FD /* AppConfigurationURLProviderTests.swift */; };
+		563A3D062D3A7D18001966FD /* PixelExperimentKitCutomMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563A3D042D3A6D2C001966FD /* PixelExperimentKitCutomMetrics.swift */; };
 		564DE4532C3ED1B700D23241 /* NewTabDaxDialogFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */; };
 		564DE4552C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4542C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift */; };
 		564DE4572C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4562C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift */; };
@@ -1684,6 +1685,7 @@
 		563A3CFD2D37B8FA001966FD /* ConfigurationManagerIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManagerIntegrationTests.swift; sourceTree = "<group>"; };
 		563A3D002D37BF83001966FD /* ConfigurationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManagerTests.swift; sourceTree = "<group>"; };
 		563A3D022D37C363001966FD /* AppConfigurationURLProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationURLProviderTests.swift; sourceTree = "<group>"; };
+		563A3D042D3A6D2C001966FD /* PixelExperimentKitCutomMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelExperimentKitCutomMetrics.swift; sourceTree = "<group>"; };
 		564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabDaxDialogFactory.swift; sourceTree = "<group>"; };
 		564DE4542C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingNewTabDialogFactoryTests.swift; sourceTree = "<group>"; };
 		564DE4562C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageControllerDaxDialogTests.swift; sourceTree = "<group>"; };
@@ -5729,6 +5731,7 @@
 			children = (
 				CB84C7C029A3F0280088A5B8 /* ConfigurationStore.swift */,
 				CB258D0F29A4D0FD00DEBA24 /* ConfigurationManager.swift */,
+				563A3D042D3A6D2C001966FD /* PixelExperimentKitCutomMetrics.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -8042,6 +8045,7 @@
 				C185ED612BD4329700BAE9DC /* ImportPasswordsStatusHandler.swift in Sources */,
 				F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */,
 				7B4DC5E22CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift in Sources */,
+				563A3D062D3A7D18001966FD /* PixelExperimentKitCutomMetrics.swift in Sources */,
 				6F5041C92CC11A5100989E48 /* SimpleNewTabPageView.swift in Sources */,
 				D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */,
 				D664C7CC2B289AA200CBFA76 /* SubscriptionPagesUserScript.swift in Sources */,

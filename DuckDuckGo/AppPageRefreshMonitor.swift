@@ -20,11 +20,13 @@
 import Core
 import Common
 import PageRefreshMonitor
+import PixelKit
 
 extension PageRefreshMonitor {
 
     static let onDidDetectRefreshPattern: () -> Void = {
         Pixel.fire(pixel: .pageRefreshThreeTimesWithin20Seconds)
+        PixelKit.fireTdsExperimentMetric3XRefresh()
     }
 
 }

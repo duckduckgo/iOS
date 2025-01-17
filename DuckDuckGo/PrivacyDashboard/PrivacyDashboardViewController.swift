@@ -25,6 +25,7 @@ import BrowserServicesKit
 import PrivacyDashboard
 import Common
 import os.log
+import PixelKit
 
 protocol PrivacyDashboardViewControllerDelegate: AnyObject {
 
@@ -155,6 +156,7 @@ final class PrivacyDashboardViewController: UIViewController {
                 ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
             }
             Pixel.fire(pixel: .dashboardProtectionAllowlistAdd, withAdditionalParameters: pixelParam)
+            PixelKit.fireTdsExperimentMetricPrivacyToggleUsed()
         }
         
         contentBlockingManager.scheduleCompilation()

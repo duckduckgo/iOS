@@ -21,36 +21,51 @@ import Foundation
 import PixelExperimentKit
 import PixelKit
 import Configuration
-
-//class BreakageExperimentMetrics {
-//    func fireExperimentMetricPrivacyToggleUsed() {
-//        for experiment in TdsExperimentType.allCases {
-//            for day in 0...5 {
-//                PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: "privacyToggleUsed", conversionWindowDays: day...day, value: "1")
-//                UniquePixel.fireDebugBreakageExperiment()
-//            }
-//        }
-//    }
-//
-//    
-//}
+import Core
 
 public extension PixelKit {
-    static func fireExperimentMetricPrivacyToggleUsed() {
+    static func fireTdsExperimentMetricPrivacyToggleUsed() {
         for experiment in TdsExperimentType.allCases {
             for day in 0...5 {
                 PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: "privacyToggleUsed", conversionWindowDays: day...day, value: "1")
-                UniquePixel.fireDebugBreakageExperiment()
+                UniquePixel.fireDebugBreakageExperiment(experimentType: experiment)
+            }
+        }
+    }
+
+    static func fireTdsExperimentMetric2XRefresh() {
+        for experiment in TdsExperimentType.allCases {
+            for day in 0...5 {
+                PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: "privacyToggleUsed", conversionWindowDays: day...day, value: "1")
+                UniquePixel.fireDebugBreakageExperiment(experimentType: experiment)
+            }
+        }
+    }
+
+    static func fireTdsExperimentMetric3XRefresh() {
+        for experiment in TdsExperimentType.allCases {
+            for day in 0...5 {
+                PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: "privacyToggleUsed", conversionWindowDays: day...day, value: "1")
+                UniquePixel.fireDebugBreakageExperiment(experimentType: experiment)
             }
         }
     }
 }
 
-public extension UniquePixel {
-    static func fireDebugBreakageExperiment(experiment: TdsExperimentType) {
+private extension UniquePixel {
+    static func fireDebugBreakageExperiment(experimentType: TdsExperimentType) {
+        let featureFlagger = AppDependencyProvider.shared.featureFlagger
+        let subfeatureID = experimentType.subfeature.rawValue
+        let wasCohortAssigned = featureFlagger.getAllActiveExperiments().contains(where: { $0.key == subfeatureID })
+        guard let experimentData = featureFlagger.getAllActiveExperiments()[subfeatureID] else { return }
+        guard wasCohortAssigned else { return }
+        let experimentName: String = subfeatureID + experimentData.cohortID
+        let enrolmentDate = experimentData.enrollmentDate.toYYYYMMDDInET()
         let parameters = [
-            "experiment": experiment.subfeature.rawValue + AppDependencyProvider.shared.featureFlagger
+            "experiment": experimentName,
+            "enrolmentDate": enrolmentDate,
+            "tdsEtag": ConfigurationStore().loadEtag(for: .trackerDataSet) ?? ""
         ]
-        UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: <#T##[String : String]#>)
+        UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
     }
 }

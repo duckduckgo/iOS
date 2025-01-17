@@ -25,6 +25,9 @@ import simd
 import WidgetKit
 import Common
 import PrivacyDashboard
+import PixelExperimentKit
+import PixelKit
+import Configuration
 
 extension TabViewController {
 
@@ -505,6 +508,7 @@ extension TabViewController {
             togglePrivacyProtection(domain: domain)
         }
         Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
+        PixelKit.fireTdsExperimentMetricPrivacyToggleUsed()
     }
 
     private func togglePrivacyProtection(domain: String, didSendReport: Bool = false) {

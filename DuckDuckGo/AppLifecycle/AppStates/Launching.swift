@@ -323,7 +323,7 @@ struct Launching: AppState {
 
             let url = URL.pixelUrl(forPixelNamed: pixelName)
             let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
-            guard let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders) else {
+            guard let request = APIRequestV2(url: url, method: .get, queryItems: parameters.map({ item in (key: item.key, value: item.value) }), headers: apiHeaders) else {
                 assertionFailure("Invalid request Pixel request")
                 onComplete(false, nil)
                 return

@@ -89,9 +89,12 @@ struct TabSwitcherTopBarView: View {
 
             switch model.uiModel {
 
-            case .singleSelectNormal,
-                    .singleSelectLarge:
+            case .singleSelectNormal:
                 bookmarkAllButton()
+
+            case .singleSelectLarge:
+                bookmarkAllButton()
+                modeButton()
 
             case .multiSelectNormal:
                 modeButton()

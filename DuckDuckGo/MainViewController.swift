@@ -504,7 +504,18 @@ class MainViewController: UIViewController {
         segueToDaxOnboarding()
 
     }
-    
+
+    func presentNetworkProtectionStatusSettingsModal() {
+        Task {
+            let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
+            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
+                segueToVPN()
+            } else {
+                segueToPrivacyPro()
+            }
+        }
+    }
+
     private func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillChangeFrame),

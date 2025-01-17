@@ -1,5 +1,5 @@
 //
-//  Init.swift
+//  Initializing.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,8 +21,12 @@ import Core
 import Crashes
 import UIKit
 
+/// The initial setup phase of the app, where basic services or components are initialized.
+/// This state can be invoked when the system prewarms the app but does not fully launch it.
+/// - Transitions:
+///   - `Launching` after initialization is complete.
 @MainActor
-struct Init: AppState {
+struct Initializing: AppState {
 
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     var didCrashDuringCrashHandlersSetUp: Bool
@@ -37,7 +41,7 @@ struct Init: AppState {
 
 }
 
-extension Init {
+extension Initializing {
 
     struct StateContext {
 
@@ -50,5 +54,12 @@ extension Init {
         .init(application: application,
               didCrashDuringCrashHandlersSetUp: didCrashDuringCrashHandlersSetUp)
     }
+
+}
+
+
+extension Initializing {
+
+    mutating func handle(action: AppAction) { }
 
 }

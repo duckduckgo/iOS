@@ -134,12 +134,7 @@ struct Launching: AppState {
         _ = ContentBlockingUpdating.shared
 
         // Can be removed after a couple of versions
-        cleanUpMacPromoExperiment2()
         cleanUpIncrementalRolloutPixelTest()
-
-        func cleanUpMacPromoExperiment2() {
-            UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
-        }
 
         func cleanUpIncrementalRolloutPixelTest() {
             UserDefaults.standard.removeObject(forKey: "network-protection.incremental-feature-flag-test.has-sent-pixel")

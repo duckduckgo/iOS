@@ -54,9 +54,16 @@ final class ConfigurationManagerIntegrationTests: XCTestCase {
         await configManager.fetchAndUpdateTrackerBlockingDependencies()
 
         // THEN
-        let newEtag = ContentBlocking.shared.trackerDataManager.fetchedData?.etag
+        var newEtag = ContentBlocking.shared.trackerDataManager.fetchedData?.etag
         XCTAssertNotEqual(etag, newEtag)
         XCTAssertEqual(newEtag, "\"2ce60c57c3d384f986ccbe2c422aac44\"")
+
+        // RESET
+        customURLProvider.customPrivacyConfigurationURL = URL.privacyConfig
+        Configuration.setURLProvider(customURLProvider)
+        await configManager.fetchAndUpdateTrackerBlockingDependencies()
+        newEtag = ContentBlocking.shared.trackerDataManager.fetchedData?.etag
+        XCTAssertEqual(etag, newEtag)
     }
 
 }

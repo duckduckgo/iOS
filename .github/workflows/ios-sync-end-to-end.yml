@@ -107,7 +107,9 @@ jobs:
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro
         include-tags: sync
-        env: ONBOARDING_COMPLETED=true
+        env: | 
+          ONBOARDING_COMPLETED=true
+          CODE=${{ steps.sync-recovery-code.outputs.recovery-code }}
         ios-version: ${{ matrix.os-version }}
         fail-on-timeout: true
 

@@ -40,9 +40,7 @@ struct AppDependencies {
     let autoClear: AutoClear
     let autofillLoginSession: AutofillLoginSession
     let marketplaceAdPostbackManager: MarketplaceAdPostbackManaging
-    let syncService: DDGSync
-    let syncDataProviders: SyncDataProviders
-    let isSyncInProgressCancellable: AnyCancellable
+    let syncService: SyncService
     let privacyProDataReporter: PrivacyProDataReporting
     let remoteMessagingClient: RemoteMessagingClient
 
@@ -52,7 +50,5 @@ struct AppDependencies {
     let widgetRefreshModel: NetworkProtectionWidgetRefreshModel
     let autofillPixelReporter: AutofillPixelReporter
     let crashService: CrashService
-
-    var syncDidFinishCancellable: AnyCancellable?
 
 }

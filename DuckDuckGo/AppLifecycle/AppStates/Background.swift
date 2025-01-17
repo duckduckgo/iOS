@@ -83,7 +83,6 @@ struct Background: AppState {
         let appSettings = appDependencies.appSettings
         let autofillLoginSession = appDependencies.autofillLoginSession
         let syncService = appDependencies.syncService
-        let syncDataProviders = appDependencies.syncDataProviders
         let uiService = appDependencies.uiService
 
         if autoClear.isClearingEnabled || privacyStore.authenticationEnabled {
@@ -93,34 +92,14 @@ struct Background: AppState {
         autoClear.startClearingTimer()
         autofillLoginSession.endSession()
 
-        suspendSync(syncService: syncService)
-        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
+        syncService.suspendSync()
+        syncService.cancelFaviconsFetching(application: application)
+
         privacyProDataReporter.saveApplicationLastSessionEnded()
 
         resetAppStartTime()
     }
 
-    private mutating func suspendSync(syncService: DDGSync) {
-        if syncService.isSyncInProgress {
-            Logger.sync.debug("Sync is in progress. Starting background task to allow it to gracefully complete.")
-
-            var taskID: UIBackgroundTaskIdentifier!
-            taskID = UIApplication.shared.beginBackgroundTask(withName: "Cancelled Sync Completion Task") {
-                Logger.sync.debug("Forcing background task completion")
-                UIApplication.shared.endBackgroundTask(taskID)
-            }
-            appDependencies.syncDidFinishCancellable?.cancel()
-            appDependencies.syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
-                .prefix(1)
-                .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    Logger.sync.debug("Ending background task")
-                    UIApplication.shared.endBackgroundTask(taskID)
-                }
-        }
-
-        syncService.scheduler.cancelSyncAndSuspendSyncQueue()
-    }
 
     private func resetAppStartTime() {
         appDependencies.mainViewController.appDidFinishLaunchingStartTime = nil

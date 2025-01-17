@@ -49,7 +49,7 @@ struct Resuming: AppState {
             await beginAuthentication(lastBackgroundDate: stateContext.lastBackgroundDate)
             await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
             uiService.showKeyboardIfSettingOn = true
-            syncService.scheduler.resumeSyncQueue()
+            syncService.sync.scheduler.resumeSyncQueue()
         }
 
     }

@@ -46,7 +46,7 @@ struct Foreground: AppState {
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
 
     private var window: UIWindow {
-        appDependencies.uiService.window
+        appDependencies.uiService.window // should it be application.window?
     }
 
     private var mainViewController: MainViewController {
@@ -132,7 +132,7 @@ struct Foreground: AppState {
     // MARK: handle applicationDidBecomeActive(_:) logic here
     private func activateApp(isTesting: Bool = false) {
         appDependencies.syncService.initializeIfNeeded()
-        appDependencies.syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: appDependencies.syncService)
+        appDependencies.syncService.setUpDatabaseCleanersIfNeeded()
 
         if !(appDependencies.uiService.overlayWindow?.rootViewController is AuthenticationViewController) {
             appDependencies.uiService.removeOverlay()
@@ -165,9 +165,8 @@ struct Foreground: AppState {
             }
         }
 
-        appDependencies.syncService.scheduler.notifyAppLifecycleEvent()
-
-        appDependencies.privacyProDataReporter.injectSyncService(appDependencies.syncService)
+        appDependencies.syncService.notifyAppLifecycleEvent()
+        appDependencies.privacyProDataReporter.injectSyncService(appDependencies.syncService.sync)
 
         fireFailedCompilationsPixelIfNeeded()
 
@@ -200,7 +199,7 @@ struct Foreground: AppState {
             await appDependencies.subscriptionService.subscriptionCookieManager.refreshSubscriptionCookie()
         }
 
-        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: appDependencies.syncService)
+        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: appDependencies.syncService.sync)
         importPasswordsStatusHandler.checkSyncSuccessStatus()
 
         Task {

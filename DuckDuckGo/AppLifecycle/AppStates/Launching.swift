@@ -25,7 +25,6 @@ import UIKit
 import Persistence
 import BrowserServicesKit
 import WidgetKit
-import DDGSync
 import RemoteMessaging
 import Subscription
 import WebKit
@@ -72,9 +71,8 @@ struct Launching: AppState {
     // These should ideally be let properties instead of force-unwrapped. However, due to various initialization paths, such as database completion blocks, setting them up in advance is currently not feasible. Refactoring will be done once this code is streamlined.
     private let uiService: UIService
     private let unService: UNService
-    private let syncDataProviders: SyncDataProviders
-    private let syncService: DDGSync
-    private let isSyncInProgressCancellable: AnyCancellable
+    private let syncService: SyncService
+
     private let remoteMessagingClient: RemoteMessagingClient
     private let subscriptionCookieManager: SubscriptionCookieManaging
     private let autofillPixelReporter: AutofillPixelReporter
@@ -264,20 +262,6 @@ struct Launching: AppState {
             }
         }
 
-        // MARK: Sync initialisation
-#if DEBUG
-        let defaultEnvironment = ServerEnvironment.development
-#else
-        let defaultEnvironment = ServerEnvironment.production
-#endif
-
-        let environment = ServerEnvironment(
-            UserDefaultsWrapper(
-                key: .syncEnvironment,
-                defaultValue: defaultEnvironment.description
-            ).wrappedValue
-        ) ?? defaultEnvironment
-
         var dryRun = false
 #if DEBUG
         dryRun = true
@@ -305,35 +289,7 @@ struct Launching: AppState {
         PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger,
                                         eventTracker: ExperimentEventTracker(store: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()))
 
-        let syncErrorHandler = SyncErrorHandler()
-
-        syncDataProviders = SyncDataProviders(
-            bookmarksDatabase: bookmarksDatabase,
-            secureVaultErrorReporter: SecureVaultReporter(),
-            settingHandlers: [FavoritesDisplayModeSyncHandler()],
-            favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
-            syncErrorHandler: syncErrorHandler,
-            faviconStoring: Favicons.shared,
-            tld: AppDependencyProvider.shared.storageCache.tld
-        )
-
-        syncService = DDGSync(
-            dataProvidersSource: syncDataProviders,
-            errorEvents: SyncErrorHandler(),
-            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            environment: environment
-        )
-        syncService.initializeIfNeeded()
-        isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
-            .filter { $0 }
-            .sink { [weak syncService] _ in
-                DailyPixel.fire(pixel: .syncDaily, includedParameters: [.appVersion])
-                syncService?.syncDailyStats.sendStatsIfNeeded(handler: { params in
-                    Pixel.fire(pixel: .syncSuccessRateDaily,
-                               withAdditionalParameters: params,
-                               includedParameters: [.appVersion])
-                })
-            }
+        syncService = SyncService(bookmarksDatabase: bookmarksDatabase)
 
         remoteMessagingClient = RemoteMessagingClient(
             bookmarksDatabase: bookmarksDatabase,
@@ -379,15 +335,15 @@ struct Launching: AppState {
             let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
             let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
             mainViewController = MainViewController(bookmarksDatabase: bookmarksDatabase,
-                                                    bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                                    bookmarksDatabaseCleaner: syncService.syncDataProviders.bookmarksAdapter.databaseCleaner,
                                                     historyManager: historyManager,
                                                     homePageConfiguration: homePageConfiguration,
-                                                    syncService: syncService,
-                                                    syncDataProviders: syncDataProviders,
+                                                    syncService: syncService.sync,
+                                                    syncDataProviders: syncService.syncDataProviders,
                                                     appSettings: AppDependencyProvider.shared.appSettings,
                                                     previewsSource: previewsSource,
                                                     tabsModel: tabsModel,
-                                                    syncPausedStateManager: syncErrorHandler,
+                                                    syncPausedStateManager: syncService.syncErrorHandler,
                                                     privacyProDataReporter: privacyProDataReporter,
                                                     variantManager: variantManager,
                                                     contextualOnboardingPresenter: contextualOnboardingPresenter,
@@ -403,7 +359,7 @@ struct Launching: AppState {
                                                     appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
             mainViewController!.loadViewIfNeeded()
-            syncErrorHandler.alertPresenter = mainViewController
+            syncService.syncErrorHandler.alertPresenter = mainViewController
 
             window = UIWindow(frame: UIScreen.main.bounds)
             window.rootViewController = mainViewController
@@ -501,8 +457,6 @@ struct Launching: AppState {
             autofillLoginSession: autofillLoginSession,
             marketplaceAdPostbackManager: marketplaceAdPostbackManager,
             syncService: syncService,
-            syncDataProviders: syncDataProviders,
-            isSyncInProgressCancellable: isSyncInProgressCancellable,
             privacyProDataReporter: privacyProDataReporter,
             remoteMessagingClient: remoteMessagingClient,
             subscriptionService: SubscriptionService(subscriptionCookieManager: subscriptionCookieManager,

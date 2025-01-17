@@ -107,7 +107,9 @@ final class AppDependencyProvider: DependencyProvider {
 
         // MARK: - Configure Subscription
         let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
-        let subscriptionEnvironment = DefaultSubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        // Temp change for the build to fix the environment to staging
+        let subscriptionEnvironment = SubscriptionEnvironment(serviceEnvironment: .staging, purchasePlatform: .appStore)
+        // DefaultSubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
         vpnSettings.alignTo(subscriptionEnvironment: subscriptionEnvironment)
 
         let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,

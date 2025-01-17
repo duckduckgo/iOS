@@ -25,6 +25,8 @@ import WebKit
 import Bookmarks
 import Persistence
 import os.log
+import SwiftUI
+import BrowserServicesKit
 
 class TabSwitcherViewController: UIViewController {
 
@@ -42,21 +44,12 @@ class TabSwitcherViewController: UIViewController {
 
     @IBOutlet weak var topBarContainerView: UIView!
 
-//    @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
-
-//    @IBOutlet weak var displayModeButton: UIButton!
 
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
-
-//    @IBOutlet weak var topFireButton: UIButton!
-//    @IBOutlet weak var topPlusButton: UIButton!
-//    @IBOutlet weak var topDoneButton: UIButton!
-
-//    @IBOutlet var displayModeTrailingConstraint: NSLayoutConstraint!
 
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -78,11 +71,15 @@ class TabSwitcherViewController: UIViewController {
     let favicons = Favicons.shared
     let topBarModel = TabSwitcherTopBarModel()
 
+    let featureFlagger: FeatureFlagger
+
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
-                   syncService: DDGSyncing) {
+                   syncService: DDGSyncing,
+                   featureFlagger: FeatureFlagger) {
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
+        self.featureFlagger = featureFlagger
         super.init(coder: coder)
     }
 
@@ -120,11 +117,18 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        // TODO support feature flag
-        if AppWidthObserver.shared.isLargeWidth {
-            topBarModel.uiModel = .multiSelectLarge
+        if featureFlagger.isFeatureOn(.tabManagerMultiSelection) {
+            if AppWidthObserver.shared.isLargeWidth {
+                topBarModel.uiModel = .multiSelectLarge
+            } else {
+                topBarModel.uiModel = .multiSelectNormal
+            }
         } else {
-            topBarModel.uiModel = .multiSelectNormal
+            if AppWidthObserver.shared.isLargeWidth {
+                topBarModel.uiModel = .singleSelectLarge
+            } else {
+                topBarModel.uiModel = .singleSelectNormal
+            }
         }
 
         toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
@@ -202,22 +206,6 @@ class TabSwitcherViewController: UIViewController {
             Logger.general.debug("Failed to save \(failedToSaveCount) tabs")
             ActionMessageView.present(message: UserText.bookmarkAllTabsFailedToSave)
         }
-    }
-
-    @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
-
-        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
-                                      message: UserText.alertBookmarkAllMessage,
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        alert.addAction(title: UserText.actionBookmark, style: .default) {
-            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
-            model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-            let result = self.bookmarkAll(viewModel: model)
-            self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
-        }
-
-        present(alert, animated: true, completion: nil)
     }
 
     private func bookmarkAll(viewModel: MenuBookmarksInteracting) -> BookmarkAllResult {
@@ -338,6 +326,23 @@ extension TabSwitcherViewController: TabSwitcherTopBarModel.Delegate {
         Pixel.fire(pixel: .tabSwitcherNewTab)
         delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
         dismiss()
+    }
+
+    func bookmarkAll() {
+
+        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
+                                      message: UserText.alertBookmarkAllMessage,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        alert.addAction(title: UserText.actionBookmark, style: .default) {
+            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
+            model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+            let result = self.bookmarkAll(viewModel: model)
+            self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
+        }
+
+        present(alert, animated: true, completion: nil)
+
     }
 
 }
@@ -529,166 +534,4 @@ extension TabSwitcherViewController {
                 
         collectionView.reloadData()
     }
-}
-
-import SwiftUI
-
-struct TabSwitcherTopBarView: View {
-
-    @ObservedObject var model: TabSwitcherTopBarModel
-
-    @ViewBuilder func modeButton() -> some View {
-        Button {
-            model.toggleTabsStyle()
-        } label: {
-            Image(model.tabsStyle.rawValue)
-        }
-    }
-
-    @ViewBuilder func editButton() -> some View {
-        Button {
-            model.onEditPressed()
-        } label: {
-            Text("Edit")
-        }
-    }
-
-    @ViewBuilder func doneButton() -> some View {
-        Button {
-            model.onDonePressed()
-        } label: {
-            Text("Done")
-        }
-    }
-
-    @ViewBuilder func plusButton() -> some View {
-        Button {
-            model.onPlusPressed()
-        } label: {
-            Image("Add-24")
-        }
-    }
-
-    @ViewBuilder func fireButton() -> some View {
-        Button {
-            model.onFirePressed()
-        } label: {
-            Image("Fire")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 22) // make it look closer to size on parent screen
-                .background {
-                    GeometryReader { geo in
-                        Color
-                            .clear
-                            .onAppear {
-                                model.locationOfFireButton(geo.frame(in: .global))
-                            }
-                    }
-                }
-        }
-    }
-
-    var body: some View {
-        HStack(spacing: 24) {
-
-            switch model.uiModel {
-            case .singleSelectNormal:
-                EmptyView()
-            case .singleSelectLarge:
-                EmptyView()
-            case .multiSelectNormal:
-                EmptyView()
-            case .multiSelectLarge:
-                editButton()
-            }
-
-            modeButton()
-
-            Text(model.title)
-                .frame(maxWidth: .infinity)
-                .font(.headline)
-
-            switch model.uiModel {
-            case .singleSelectNormal:
-                EmptyView()
-            case .singleSelectLarge:
-                EmptyView()
-            case .multiSelectNormal:
-                editButton()
-            case .multiSelectLarge:
-                plusButton()
-                fireButton()
-                doneButton()
-            }
-        }
-        .padding(.horizontal, 16)
-    }
-
-}
-
-class TabSwitcherTopBarModel: ObservableObject {
-
-    protocol Delegate: AnyObject {
-
-        func onTabStyleChange()
-        func burn()
-        func startEditing()
-        func dismiss()
-        func addNewTab()
-
-    }
-
-    enum UIMode {
-
-        case singleSelectNormal
-        case singleSelectLarge
-        case multiSelectNormal
-        case multiSelectLarge
-
-    }
-
-    enum TabsStyleToggle: String {
-
-        case list = "tabsToggleList"
-        case grid = "tabsToggleGrid"
-
-    }
-
-    weak var delegate: Delegate?
-    var fireButtonFrame: CGRect?
-
-    @Published var uiModel: UIMode = .singleSelectNormal
-    @Published var title = ""
-    @Published var tabsStyle: TabsStyleToggle = .grid
-
-    func toggleTabsStyle() {
-        if tabsStyle == .grid {
-            tabsStyle = .list
-        } else {
-            tabsStyle = .grid
-        }
-        delegate?.onTabStyleChange()
-    }
-
-    func onEditPressed() {
-        delegate?.startEditing()
-    }
-
-    func onDonePressed() {
-        delegate?.dismiss()
-    }
-
-    func onPlusPressed() {
-        delegate?.addNewTab()
-    }
-
-    func onFirePressed() {
-        delegate?.burn()
-    }
-
-    func locationOfFireButton(_ point: CGRect) {
-        fireButtonFrame = point
-    }
-
 }

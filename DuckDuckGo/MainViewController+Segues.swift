@@ -185,7 +185,8 @@ extension MainViewController {
         guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
             TabSwitcherViewController(coder: coder,
                                       bookmarksDatabase: self.bookmarksDatabase,
-                                      syncService: self.syncService)
+                                      syncService: self.syncService,
+                                      featureFlagger: self.featureFlagger)
         }) else {
             assertionFailure()
             return

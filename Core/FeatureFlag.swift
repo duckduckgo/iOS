@@ -50,6 +50,7 @@ public enum FeatureFlag: String {
     case adAttributionReporting
     case aiChat
     case aiChatDeepLink
+    case tabManagerMultiSelection
 
     /// https://app.asana.com/0/72649045549333/1208231259093710/f
     case networkProtectionUserTips
@@ -143,6 +144,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.feature(.aiChat))
         case .aiChatDeepLink:
             return .remoteReleasable(.subfeature(AIChatSubfeature.deepLink))
+        case .tabManagerMultiSelection:
+            return .remoteDevelopment(.subfeature(TabManagerSubfeature.multiSelection))
         }
     }
 }

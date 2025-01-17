@@ -180,8 +180,9 @@ struct FavoritesWidgetView: View {
                 } else {
                     FavoritesGridView(entry: entry)
                 }
-
-            }.padding(.bottom, 8)
+            }
+            .padding(hasSystemPadding ? 0 : 16)
+            .padding(.bottom, 8)
 
             VStack(spacing: 4) {
                 Text(UserText.noFavoritesMessage)
@@ -207,6 +208,15 @@ struct FavoritesWidgetView: View {
 
         }
         .widgetContainerBackground(color: Color(designSystemColor: .backgroundSheets))
+    }
+
+    /// iOS 17+ automatically added extra padding for the views inside the widget.
+    private var hasSystemPadding: Bool {
+        if #available(iOS 17, *) {
+            return true
+        } else {
+            return false
+        }
     }
 }
 

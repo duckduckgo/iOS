@@ -69,7 +69,7 @@ jobs:
     name: Sync End To End Tests
     needs: build-for-sync-end-to-end-tests
     runs-on: macos-15
-    timeout-minutes: 2400
+    timeout-minutes: 240
     strategy:
       matrix:
         os-version: [17] #[15, 16, 17]

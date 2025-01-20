@@ -44,7 +44,7 @@ struct TabSwitcherTopBarView: View {
         Button {
             model.onEditPressed()
         } label: {
-            Text("Edit")
+            Text(UserText.navigationTitleEdit)
         }
     }
 
@@ -52,7 +52,7 @@ struct TabSwitcherTopBarView: View {
         Button {
             model.onDonePressed()
         } label: {
-            Text("Done")
+            Text(UserText.navigationTitleDone)
         }
     }
 

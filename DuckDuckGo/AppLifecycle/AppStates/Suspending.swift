@@ -48,14 +48,8 @@ struct Suspending: AppState {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
-        let vpnFeatureVisibility = appDependencies.vpnFeatureVisibility
-        let accountManager = appDependencies.accountManager
-        let vpnWorkaround = appDependencies.vpnWorkaround
-        Task { @MainActor [application] in
-            await application.refreshVPNShortcuts(vpnFeatureVisibility: vpnFeatureVisibility,
-                                                  accountManager: accountManager)
-            await vpnWorkaround.removeRedditSessionWorkaround()
-        }
+        let vpnService = appDependencies.vpnService
+        vpnService.onSuspending()
     }
 
 }

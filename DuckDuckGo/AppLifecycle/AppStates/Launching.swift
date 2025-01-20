@@ -52,18 +52,14 @@ struct Launching: AppState {
     private let bookmarksDatabase = BookmarksDatabase.make()
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     private let accountManager = AppDependencyProvider.shared.accountManager
-    private let tunnelController = AppDependencyProvider.shared.networkProtectionTunnelController
-    private let vpnFeatureVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
     private let appSettings = AppDependencyProvider.shared.appSettings
     private let privacyStore = PrivacyUserDefaults()
     private let voiceSearchHelper = VoiceSearchHelper()
     private let autofillLoginSession = AppDependencyProvider.shared.autofillLoginSession
     private let onboardingPixelReporter = OnboardingPixelReporter()
-    private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tipKitAppEventsHandler = TipKitAppEventHandler()
     private let fireproofing = UserDefaultsFireproofing.xshared
 
-    private let vpnWorkaround: VPNRedditSessionWorkaround
     private let privacyProDataReporter: PrivacyProDataReporting
     private let isTesting = ProcessInfo().arguments.contains("testing")
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
@@ -72,6 +68,7 @@ struct Launching: AppState {
     private let uiService: UIService
     private let unService: UNService
     private let syncService: SyncService
+    private let vpnService: VPNService = VPNService()
 
     private let remoteMessagingClient: RemoteMessagingClient
     private let subscriptionCookieManager: SubscriptionCookieManaging
@@ -97,7 +94,6 @@ struct Launching: AppState {
         crashService = stateContext.crashService
 
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
-        vpnWorkaround = VPNRedditSessionWorkaround(accountManager: accountManager, tunnelController: tunnelController)
 
         defer {
             let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
@@ -369,10 +365,9 @@ struct Launching: AppState {
             let autoClear = AutoClear(worker: mainViewController!)
             self.autoClear = autoClear
             let applicationState = application.applicationState
-            let vpnWorkaround = vpnWorkaround
-            Task {
+            Task { [vpnService] in
                 await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
-                await vpnWorkaround.installRedditSessionWorkaround()
+                await vpnService.installRedditSessionWorkaround()
             }
         }
         unService = UNService(window: window, accountManager: accountManager)
@@ -396,7 +391,7 @@ struct Launching: AppState {
 
         NewTabPageIntroMessageSetup().perform()
 
-        widgetRefreshModel.beginObservingVPNStatus()
+        vpnService.beginObservingVPNStatus()
 
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
@@ -446,8 +441,7 @@ struct Launching: AppState {
     private var appDependencies: AppDependencies {
         AppDependencies(
             accountManager: accountManager,
-            vpnWorkaround: vpnWorkaround,
-            vpnFeatureVisibility: vpnFeatureVisibility,
+            vpnService: vpnService,
             appSettings: appSettings,
             privacyStore: privacyStore,
             uiService: uiService,
@@ -462,7 +456,6 @@ struct Launching: AppState {
             subscriptionService: SubscriptionService(subscriptionCookieManager: subscriptionCookieManager,
                                                      privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager),
             onboardingPixelReporter: onboardingPixelReporter,
-            widgetRefreshModel: widgetRefreshModel,
             autofillPixelReporter: autofillPixelReporter,
             crashService: crashService
         )

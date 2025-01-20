@@ -27,8 +27,7 @@ import BrowserServicesKit
 struct AppDependencies {
 
     let accountManager: AccountManager
-    let vpnWorkaround: VPNRedditSessionWorkaround
-    let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
+    let vpnService: VPNService
 
     let appSettings: AppSettings
     let privacyStore: PrivacyUserDefaults
@@ -47,7 +46,6 @@ struct AppDependencies {
     let subscriptionService: SubscriptionService
 
     let onboardingPixelReporter: OnboardingPixelReporter
-    let widgetRefreshModel: NetworkProtectionWidgetRefreshModel
     let autofillPixelReporter: AutofillPixelReporter
     let crashService: CrashService
 

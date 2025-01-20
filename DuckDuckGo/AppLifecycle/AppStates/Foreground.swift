@@ -43,7 +43,6 @@ struct Foreground: AppState {
     let appDependencies: AppDependencies
 
     private let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
-    private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
 
     private var window: UIWindow {
         appDependencies.uiService.window // should it be application.window?
@@ -170,24 +169,7 @@ struct Foreground: AppState {
 
         fireFailedCompilationsPixelIfNeeded()
 
-        appDependencies.widgetRefreshModel.refreshVPNWidget()
-
-        if tunnelDefaults.showEntitlementAlert {
-            presentExpiredEntitlementAlert()
-        }
-
-        presentExpiredEntitlementNotificationIfNeeded()
-
-        Task {
-            await stopAndRemoveVPNIfNotAuthenticated()
-            await application.refreshVPNShortcuts(vpnFeatureVisibility: appDependencies.vpnFeatureVisibility,
-                                                  accountManager: appDependencies.accountManager)
-            await appDependencies.vpnWorkaround.installRedditSessionWorkaround()
-
-            if #available(iOS 17.0, *) {
-                await VPNSnoozeLiveActivityManager().endSnoozeActivityIfNecessary()
-            }
-        }
+        appDependencies.vpnService.onForeground(mainViewController: mainViewController)
 
         AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscriptionAndEntitlements { isSubscriptionActive in
             if isSubscriptionActive {
@@ -346,15 +328,6 @@ struct Foreground: AppState {
         }
     }
 
-    private func presentExpiredEntitlementAlert() {
-        let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak mainViewController] in
-            mainViewController?.segueToPrivacyPro()
-        }
-        window.rootViewController?.present(alertController, animated: true) { [weak tunnelDefaults] in
-            tunnelDefaults?.showEntitlementAlert = false
-        }
-    }
-
     private func handleEmailSignUpDeepLink(_ url: URL) -> Bool {
         guard url.absoluteString.starts(with: URL.emailProtection.absoluteString),
               let navViewController = mainViewController.presentedViewController as? UINavigationController,
@@ -374,26 +347,6 @@ struct Foreground: AppState {
             }
         }
     }
-
-    private func stopAndRemoveVPNIfNotAuthenticated() async {
-        // Only remove the VPN if the user is not authenticated, and it's installed:
-        guard !appDependencies.accountManager.isUserAuthenticated, await AppDependencyProvider.shared.networkProtectionTunnelController.isInstalled else {
-            return
-        }
-
-        await AppDependencyProvider.shared.networkProtectionTunnelController.stop()
-        await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN(reason: .didBecomeActiveCheck)
-    }
-
-    private func presentExpiredEntitlementNotificationIfNeeded() {
-        let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
-            settings: AppDependencyProvider.shared.vpnSettings,
-            defaults: .networkProtectionGroupDefaults,
-            wrappee: NetworkProtectionUNNotificationPresenter()
-        )
-        presenter.showEntitlementNotification()
-    }
-
 
     @MainActor
     func handleAppDeepLink(_ app: UIApplication, _ mainViewController: MainViewController?, _ url: URL) -> Bool {

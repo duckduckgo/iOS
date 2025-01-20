@@ -51,7 +51,6 @@ struct Resuming: AppState {
             uiService.showKeyboardIfSettingOn = true
             syncService.sync.scheduler.resumeSyncQueue()
         }
-
     }
 
     // duplicated from Foreground just for now

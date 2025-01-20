@@ -35,9 +35,6 @@ final class MaliciousSiteProtectionDatasetsFetcher: MaliciousSiteProtectionDatas
     private let updateManager: MaliciousSiteUpdateManaging
     private let backgroundTaskScheduler: BGTaskScheduling
 
-    private var hashPrefixSetsUpdateTask: Task<Void, any Error>?
-    private var filterSetsUpdateTask: Task<Void, any Error>?
-
     private var preferencesManagerCancellable: AnyCancellable?
 
     private var shouldUpdateHashPrefixSets: Bool {
@@ -50,16 +47,6 @@ final class MaliciousSiteProtectionDatasetsFetcher: MaliciousSiteProtectionDatas
 
     private var canFetchDatasets: Bool {
         featureFlagger.isMaliciousSiteProtectionEnabled && userPreferencesManager.isMaliciousSiteProtectionOn
-    }
-
-    // Used for testing pursposes
-    var isUpdatingHashPrefixSets: Bool {
-        hashPrefixSetsUpdateTask != nil
-    }
-
-    // Used for testing pursposes
-    var isUpdatingFilterSets: Bool {
-        filterSetsUpdateTask != nil
     }
 
     init(
@@ -88,12 +75,12 @@ extension MaliciousSiteProtectionDatasetsFetcher {
 
         // If hashPrefix Sets need to be updated fetch them
         if shouldUpdateHashPrefixSets {
-            hashPrefixSetsUpdateTask = updateManager.updateData(datasetType: .hashPrefixSet)
+            _ = updateManager.updateData(datasetType: .hashPrefixSet)
         }
 
         // If hashPrefix Sets need to be updated fetch them
         if shouldUpdateFilterSets {
-            filterSetsUpdateTask = updateManager.updateData(datasetType: .filterSet)
+            _ = updateManager.updateData(datasetType: .filterSet)
         }
     }
 
@@ -159,13 +146,6 @@ private extension MaliciousSiteProtectionDatasetsFetcher {
     }
 
     func stopUpdateTasks() {
-        // Cancel any in-flight tasks
-        hashPrefixSetsUpdateTask?.cancel()
-        hashPrefixSetsUpdateTask = nil
-
-        filterSetsUpdateTask?.cancel()
-        filterSetsUpdateTask = nil
-
         // Cancel scheduled background tasks
         DataManager.StoredDataType.Kind.allCases.forEach {
             backgroundTaskScheduler.cancel(taskRequestWithIdentifier: $0.backgroundTaskIdentifier)

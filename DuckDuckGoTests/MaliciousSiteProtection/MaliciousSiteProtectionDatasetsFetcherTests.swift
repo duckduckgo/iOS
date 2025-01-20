@@ -64,13 +64,13 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         // GIVEN
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == false)
 
         // WHEN
         sut.startFetching()
 
         // THEN
-        #expect(sut.isUpdatingHashPrefixSets)
-        #expect(sut.isUpdatingFilterSets)
         #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == true)
         #expect(updateManagerMock.updateDatasets[.filterSet] == true)
     }
@@ -80,13 +80,13 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         // GIVEN
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = false
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == false)
 
         // WHEN
         sut.startFetching()
 
         // THEN
-        #expect(!sut.isUpdatingHashPrefixSets)
-        #expect(!sut.isUpdatingFilterSets)
         #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
         #expect(updateManagerMock.updateDatasets[.filterSet] == false)
     }
@@ -96,13 +96,13 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         // GIVEN
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = false
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == false)
 
         // WHEN
         sut.startFetching()
 
         // THEN
-        #expect(!sut.isUpdatingHashPrefixSets)
-        #expect(!sut.isUpdatingFilterSets)
         #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
         #expect(updateManagerMock.updateDatasets[.filterSet] == false)
     }
@@ -118,13 +118,15 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         featureFlaggerMock.filterSetUpdateFrequency = 10 // Value expressed in minutes
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == false)
 
         // WHEN
         sut.startFetching()
 
         // THEN
-        #expect(sut.isUpdatingHashPrefixSets)
-        #expect(!sut.isUpdatingFilterSets)
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == true)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == false)
     }
 
     @Test("Fetch Filter Dataset When Start Fetching Is Called And Last Update Date Is Greater Than Update Interval")
@@ -138,13 +140,15 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         featureFlaggerMock.filterSetUpdateFrequency = 10 // Value expressed in minutes
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == false)
 
         // WHEN
         sut.startFetching()
 
         // THEN
-        #expect(!sut.isUpdatingHashPrefixSets)
-        #expect(sut.isUpdatingFilterSets)
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == true)
     }
 
     @Test("Fetch Datasets When Update Interval Becomes Grather Than Last Update Interval")
@@ -157,16 +161,16 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
         sut.startFetching()
-        #expect(!sut.isUpdatingHashPrefixSets)
-        #expect(!sut.isUpdatingFilterSets)
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == false)
 
         // WHEN
         timeTraveller.advanceBy(.minutes(16))
         sut.startFetching()
 
         // THEN
-        #expect(sut.isUpdatingHashPrefixSets)
-        #expect(sut.isUpdatingFilterSets)
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == true)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == true)
     }
 
     // MARK: - Events Upon User Preference Subscription
@@ -181,8 +185,6 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         setupSUT(featureFlaggerMock: featureFlaggerMock, userPreferencesManagerMock: userPreferencesManagerMock)
 
         // THEN
-        #expect(!sut.isUpdatingHashPrefixSets)
-        #expect(!sut.isUpdatingFilterSets)
         #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
         #expect(updateManagerMock.updateDatasets[.filterSet] == false)
     }
@@ -195,15 +197,15 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = false
         setupSUT(updateManagerMock: updateManagerMock, featureFlaggerMock: featureFlaggerMock, userPreferencesManagerMock: userPreferencesManagerMock)
-        #expect(!sut.isUpdatingHashPrefixSets)
-        #expect(!sut.isUpdatingFilterSets)
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == false)
 
         // WHEN
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
 
         // TRUE
-        #expect(sut.isUpdatingHashPrefixSets)
-        #expect(sut.isUpdatingFilterSets)
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == true)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == true)
     }
 
     @Test("Do Not Start Fetching Datasets When User Turns On the Feature and Last Update Is Smaller Than Update Interval")
@@ -215,32 +217,15 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = false
         setupSUT(updateManagerMock: updateManagerMock, featureFlaggerMock: featureFlaggerMock, userPreferencesManagerMock: userPreferencesManagerMock)
-        #expect(!sut.isUpdatingHashPrefixSets)
-        #expect(!sut.isUpdatingFilterSets)
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == false)
 
         // WHEN
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
 
         // TRUE
-        #expect(!sut.isUpdatingHashPrefixSets)
-        #expect(!sut.isUpdatingFilterSets)
-    }
-
-    @Test("Stop Fetching Datasets When User Turns Off the Feature")
-    func whenPreferencesDisabledThenStopUpdateTask() async throws {
-        // GIVEN
-        featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
-        setupSUT(featureFlaggerMock: featureFlaggerMock)
-        userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
-        #expect(sut.isUpdatingHashPrefixSets)
-        #expect(sut.isUpdatingFilterSets)
-
-        // WHEN
-        userPreferencesManagerMock.isMaliciousSiteProtectionOn = false
-
-        // TRUE
-        #expect(!sut.isUpdatingHashPrefixSets)
-        #expect(!sut.isUpdatingFilterSets)
+        #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
+        #expect(updateManagerMock.updateDatasets[.filterSet] == false)
     }
 
     // MARK: - Background Tasks

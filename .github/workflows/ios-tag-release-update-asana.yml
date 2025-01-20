@@ -16,13 +16,40 @@ on:
         required: true
         type: choice
         options:
+        - internal
         - public
         - hotfix
+  workflow_call:
+    inputs:
+      asana-task-url:
+        description: "Asana release task URL"
+        required: true
+        type: string
+      base-branch:
+        description: "Base branch name (defaults to main, only override for testing)"
+        required: false
+        type: string
+      branch:
+        description: "Branch name"
+        required: false
+        type: string
+      release-type:
+        description: "Release type"
+        required: true
+        type: string
+      internal-release-bump:
+        description: "Is this an internal release bump? (the subsequent internal release of the current week)"
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      ASANA_ACCESS_TOKEN:
+        required: true
+      GHA_ELEVATED_PERMISSIONS_TOKEN:
+        required: true
 
 jobs:
 
-  # This is only run for public and hotfix releases, so only when it's triggered manually.
-  # Internal release has been tagged as part of code_freeze or bump_interal_release workflows
   tag-public-release:
 
     name: Tag public release
@@ -30,7 +57,9 @@ jobs:
     uses: ./.github/workflows/tag_release.yml
     with:
       asana-task-url: ${{ inputs.asana-task-url || github.event.inputs.asana-task-url }}
+      base-branch: ${{ github.event.inputs.base-branch || 'main' }}
       branch: ${{ github.ref_name }}
+      internal-release-bump: ${{ github.event.inputs.internal-release-bump || 'false' }}
       prerelease: false
     secrets:
       ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
@@ -42,6 +71,7 @@ jobs:
 
     env:
       RELEASE_TYPE: ${{ github.event.inputs.release-type || 'internal' }}
+      TAG: ${{ github.event.inputs.tag }}
       asana-task-url: ${{ inputs.asana-task-url || github.event.inputs.asana-task-url }}
 
     needs: [ tag-public-release ]
@@ -50,24 +80,6 @@ jobs:
     timeout-minutes: 10
 
     steps:
-
-      - name: Download tag artifact
-        id: download-tag
-        # Only look for the tag artifact when the tag input is empty
-        if: github.event.inputs.tag == null || github.event.inputs.tag == ''
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: tag
-          path: .github
-
-      - name: Set tag variable
-        run: |
-          if [[ "${{ steps.download-tag.outcome }}" == 'success' ]]; then
-            echo "TAG=$(<.github/tag)" >> $GITHUB_ENV
-          else
-            echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
-          fi
 
       - name: Verify the tag
         id: verify-tag
@@ -133,7 +145,7 @@ jobs:
           ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          tasks="$(./scripts/update_asana_for_release.sh list-tasks-in-last-internal-release)"
+          tasks="$(./scripts/get_tasks_in_last_internal_release.sh)"
           echo "WORKFLOW_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
           echo "TASKS_SINCE_LAST_INTERNAL_RELEASE=$tasks" >> $GITHUB_ENV
           if [[ -n "${TASKS_SINCE_LAST_INTERNAL_RELEASE}" ]]; then

@@ -88,12 +88,11 @@ jobs:
   tag_and_merge:
     name: Tag and Merge Branch
     needs: [ create_release_branch, prepare_release ]
-    uses: ./.github/workflows/ios-tag-release.yml
+    uses: ./.github/workflows/ios-tag-release-update-asana.yml
     with:
       asana-task-url: ${{ needs.create_release_branch.outputs.asana_task_url }}
-      base-branch: ${{ github.ref_name }}
       branch: ${{ needs.create_release_branch.outputs.release_branch_name }}
-      prerelease: true
+      release-type: internal
     secrets:
       ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
       GHA_ELEVATED_PERMISSIONS_TOKEN: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }}

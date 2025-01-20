@@ -133,8 +133,7 @@ class TabManager {
 
     @MainActor
     func current(createIfNeeded: Bool = false) -> TabViewController? {
-        let index = model.currentIndex
-        let tab = model.tabs[index]
+        guard let tab = model.currentTab else { return nil }
 
         if let controller = controller(for: tab) {
             return controller

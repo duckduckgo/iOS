@@ -20,8 +20,22 @@
 import Foundation
 import Configuration
 import Core
+import BrowserServicesKit
 
 struct AppConfigurationURLProvider: ConfigurationURLProviding {
+
+    private let trackerDataUrlProvider: TrackerDataURLProviding
+
+    /// Default initializer using shared dependencies.
+    init (privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
+        self.trackerDataUrlProvider = TrackerDataURLOverrider(privacyConfigurationManager: privacyConfigurationManager, featureFlagger: featureFlagger)
+    }
+
+    /// Initializer for injecting a custom TrackerDataURLProvider.
+    internal init (trackerDataUrlProvider: TrackerDataURLProviding) {
+        self.trackerDataUrlProvider = trackerDataUrlProvider
+    }
 
     func url(for configuration: Configuration) -> URL {
         switch configuration {
@@ -29,10 +43,9 @@ struct AppConfigurationURLProvider: ConfigurationURLProviding {
         case .bloomFilterBinary: return URL.bloomFilter
         case .bloomFilterExcludedDomains: return URL.bloomFilterExcludedDomains
         case .privacyConfiguration: return URL.privacyConfig
-        case .trackerDataSet: return URL.trackerDataSet
+        case .trackerDataSet: return trackerDataUrlProvider.trackerDataURL ?? URL.trackerDataSet
         case .surrogates: return URL.surrogates
         case .remoteMessagingConfig: return RemoteMessagingClient.Constants.endpoint
         }
     }
-
 }

@@ -369,18 +369,7 @@ final class DuckPlayer: DuckPlayerControlling {
     ///   - message: The script message containing the parameters.
     @MainActor
         public func telemetryEvent(params: Any, message: WKScriptMessage) async -> Encodable? {
-            guard let event: TelemetryEvent = DecodableHelper.decode(from: params) else {
-                return nil
-            }
-
-            switch event.attributes {
-            case .impression(let attrs):
-                switch attrs.value {
-                case .landscape:
-                    Pixel.fire(pixel: .duckPlayerLandscapeLayoutImpressions)
-                }
-            }
-
+            // Not currently accepting any telemetry events
             return nil
         }
     

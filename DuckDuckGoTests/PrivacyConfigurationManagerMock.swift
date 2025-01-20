@@ -98,6 +98,10 @@ class PrivacyConfigurationMock: PrivacyConfiguration {
         return settings[feature] ?? [:]
     }
 
+    func settings(for subfeature: any BrowserServicesKit.PrivacySubfeature) -> PrivacyConfigurationData.PrivacyFeature.SubfeatureSettings? {
+        return nil
+    }
+
     var userUnprotected = Set<String>()
     func userEnabledProtection(forDomain domain: String) {
         userUnprotected.remove(domain)

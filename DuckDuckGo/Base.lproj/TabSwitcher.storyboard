@@ -56,19 +56,43 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="puo-AS-QV7" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="327" height="206"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G2C-qh-g3T">
-                                                            <rect key="frame" x="297" y="0.0" width="30" height="38"/>
-                                                            <accessibility key="accessibilityConfiguration" label="Close Tab"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="38" id="J5n-rB-XtL"/>
-                                                                <constraint firstAttribute="width" constant="30" id="qo9-0B-8Av"/>
-                                                            </constraints>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
-                                                            <state key="normal" image="Remove"/>
-                                                            <connections>
-                                                                <action selector="deleteTab" destination="Mdh-yg-dRH" eventType="touchUpInside" id="NiJ-Kn-E29"/>
-                                                            </connections>
-                                                        </button>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Og-aa-efh">
+                                                            <rect key="frame" x="273" y="0.0" width="48" height="38"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OHa-Ni-Kxf">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="38"/>
+                                                                    <subviews>
+                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q09-Zc-YX5">
+                                                                            <rect key="frame" x="0.0" y="7" width="24" height="24"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="24" id="34q-Ja-o2s"/>
+                                                                                <constraint firstAttribute="height" constant="24" id="B1W-gV-eii"/>
+                                                                            </constraints>
+                                                                        </imageView>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="38" id="DdB-UJ-g59"/>
+                                                                        <constraint firstAttribute="width" constant="24" id="XSt-ib-cpJ"/>
+                                                                        <constraint firstItem="q09-Zc-YX5" firstAttribute="centerY" secondItem="OHa-Ni-Kxf" secondAttribute="centerY" id="cwR-sC-B5n"/>
+                                                                        <constraint firstItem="q09-Zc-YX5" firstAttribute="centerX" secondItem="OHa-Ni-Kxf" secondAttribute="centerX" id="l8W-dv-n8f"/>
+                                                                    </constraints>
+                                                                </view>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G2C-qh-g3T">
+                                                                    <rect key="frame" x="24" y="0.0" width="24" height="38"/>
+                                                                    <accessibility key="accessibilityConfiguration" label="Close Tab"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="38" id="J5n-rB-XtL"/>
+                                                                        <constraint firstAttribute="width" constant="24" id="qo9-0B-8Av"/>
+                                                                    </constraints>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
+                                                                    <state key="normal" image="Remove"/>
+                                                                    <connections>
+                                                                        <action selector="deleteTab" destination="Mdh-yg-dRH" eventType="touchUpInside" id="NiJ-Kn-E29"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="ucs-Dd-y53">
                                                             <rect key="frame" x="12" y="11" width="16" height="16"/>
                                                             <constraints>
@@ -87,7 +111,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1GE-Nf-lKM">
-                                                            <rect key="frame" x="36" y="13" width="261" height="16"/>
+                                                            <rect key="frame" x="36" y="13" width="229" height="16"/>
                                                             <accessibility key="accessibilityConfiguration">
                                                                 <accessibilityTraits key="traits" button="YES" staticText="YES"/>
                                                                 <bool key="isElement" value="YES"/>
@@ -107,19 +131,19 @@
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
                                                     <constraints>
+                                                        <constraint firstItem="8Og-aa-efh" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" id="1Ek-Vx-oyl"/>
                                                         <constraint firstItem="ucs-Dd-y53" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="11" id="3IY-uM-gPd"/>
                                                         <constraint firstItem="ucs-Dd-y53" firstAttribute="leading" secondItem="puo-AS-QV7" secondAttribute="leading" constant="12" id="9TI-0l-IbA"/>
                                                         <constraint firstItem="Gyy-py-IOg" firstAttribute="centerY" secondItem="ucs-Dd-y53" secondAttribute="centerY" constant="7" id="FB6-bG-p5f"/>
                                                         <constraint firstAttribute="bottom" secondItem="iu2-rk-hOZ" secondAttribute="bottom" id="FtQ-fl-Drb"/>
-                                                        <constraint firstItem="G2C-qh-g3T" firstAttribute="leading" secondItem="1GE-Nf-lKM" secondAttribute="trailing" id="It8-W3-QMz"/>
                                                         <constraint firstItem="1GE-Nf-lKM" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="13" id="JfL-bR-9EK"/>
                                                         <constraint firstItem="iu2-rk-hOZ" firstAttribute="leading" secondItem="puo-AS-QV7" secondAttribute="leading" id="Lay-Q3-CNq"/>
+                                                        <constraint firstAttribute="trailing" secondItem="8Og-aa-efh" secondAttribute="trailing" constant="6" id="Ode-i9-Wdm"/>
                                                         <constraint firstItem="Gyy-py-IOg" firstAttribute="centerX" secondItem="ucs-Dd-y53" secondAttribute="centerX" constant="7" id="Sj1-BA-6cV"/>
-                                                        <constraint firstItem="G2C-qh-g3T" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" id="Xgy-LU-aab"/>
-                                                        <constraint firstAttribute="trailing" secondItem="G2C-qh-g3T" secondAttribute="trailing" id="ZhN-JG-uru"/>
                                                         <constraint firstItem="1GE-Nf-lKM" firstAttribute="leading" secondItem="ucs-Dd-y53" secondAttribute="trailing" constant="8" id="ggq-Lj-06V"/>
                                                         <constraint firstAttribute="trailing" secondItem="iu2-rk-hOZ" secondAttribute="trailing" id="hDl-N2-yKQ"/>
                                                         <constraint firstItem="iu2-rk-hOZ" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="38" id="vkb-Yq-CNN"/>
+                                                        <constraint firstItem="1GE-Nf-lKM" firstAttribute="trailing" secondItem="8Og-aa-efh" secondAttribute="leading" constant="-8" id="zpb-HK-bIh"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
@@ -157,6 +181,7 @@
                                             <outlet property="previewTopConstraint" destination="vkb-Yq-CNN" id="JVm-Nd-rkf"/>
                                             <outlet property="previewTrailingConstraint" destination="hDl-N2-yKQ" id="LeS-Xz-Jsg"/>
                                             <outlet property="removeButton" destination="G2C-qh-g3T" id="b0U-a4-JPU"/>
+                                            <outlet property="selectionIndicator" destination="q09-Zc-YX5" id="fgL-Fu-RRi"/>
                                             <outlet property="title" destination="1GE-Nf-lKM" id="UpH-Y5-3en"/>
                                             <outlet property="unread" destination="Gyy-py-IOg" id="9Ow-2Z-BPg"/>
                                         </connections>

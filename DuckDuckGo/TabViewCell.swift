@@ -31,6 +31,10 @@ protocol TabViewCellDelegate: AnyObject {
 class TabViewCell: UICollectionViewCell {
     
     struct Constants {
+
+        static let selectedBorderWidth: CGFloat = 2.0
+        static let unselectedBorderWidth: CGFloat = 0.0
+        
         static let swipeToDeleteAlpha: CGFloat = 0.5
     }
 
@@ -43,7 +47,8 @@ class TabViewCell: UICollectionViewCell {
     var isCurrent = false
     var isDeleting = false
     var canDelete = false
-    
+    var isSelectionModeEnabled = false
+
     weak var collectionReorderRecognizer: UIGestureRecognizer?
 
     override func awakeFromNib() {
@@ -140,6 +145,7 @@ class TabViewCell: UICollectionViewCell {
     }
 
     func update(withTab tab: Tab,
+                isSelectionModeEnabled: Bool,
                 preview: UIImage?,
                 reorderRecognizer: UIGestureRecognizer?) {}
     
@@ -159,6 +165,27 @@ class TabViewCell: UICollectionViewCell {
         let inactiveStates: [UIGestureRecognizer.State] = [.possible, .failed, .cancelled, .ended]
         return inactiveStates.contains(gestureRecognizer.state)
     }
+
+    func updateSelectionIndicator(_ image: UIImageView) {
+        if !isSelected {
+            image.image = UIImage(systemName: "circle")
+        } else {
+            image.image = UIImage(systemName: "checkmark.circle.fill")
+            let symbolColorConfiguration = UIImage.SymbolConfiguration(paletteColors: [
+                UIColor(designSystemColor: .textPrimary),
+                .clear, // This does nothing in this palette
+                UIColor(designSystemColor: .accent),
+            ])
+            image.image = UIImage(systemName: "checkmark.circle.fill")?.applyingSymbolConfiguration(symbolColorConfiguration)
+        }
+    }
+
+    func updateCurrentTabBorder(_ border: UIView) {
+        let showBorder = isSelectionModeEnabled ? isSelected : isCurrent
+        border.layer.borderColor = UIColor(designSystemColor: isSelectionModeEnabled ? .accent : .textPrimary).cgColor
+        border.layer.borderWidth = showBorder ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
+    }
+    
 }
 
 extension TabViewCell: UIGestureRecognizerDelegate {

@@ -25,8 +25,6 @@ class TabViewListCell: TabViewCell {
 
     struct Constants {
         
-        static let selectedBorderWidth: CGFloat = 2.0
-        static let unselectedBorderWidth: CGFloat = 0.0
         static let selectedAlpha: CGFloat = 1.0
         static let unselectedAlpha: CGFloat = 0.92
         static let swipeToDeleteAlpha: CGFloat = 0.5
@@ -43,11 +41,13 @@ class TabViewListCell: TabViewCell {
     @IBOutlet weak var unread: UIView!
 
     override func update(withTab tab: Tab,
+                         isSelectionModeEnabled: Bool,
                          preview: UIImage?,
                          reorderRecognizer: UIGestureRecognizer?) {
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         self.tab = tab
+        self.isSelectionModeEnabled = isSelectionModeEnabled
         self.collectionReorderRecognizer = reorderRecognizer
         
         if !isDeleting {
@@ -55,6 +55,8 @@ class TabViewListCell: TabViewCell {
         }
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
         decorate()
+
+        updateCurrentTabBorder(background)
 
         if let link = tab.link {
             removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle, atAddress: link.url.host ?? "")
@@ -91,6 +93,11 @@ class TabViewListCell: TabViewCell {
             favicon.loadFavicon(forDomain: tab.link?.url.host, usingCache: .tabs)
             
         }
+
+        if isSelectionModeEnabled {
+            removeButton.isHidden = true
+        }
+
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -103,8 +110,7 @@ class TabViewListCell: TabViewCell {
 
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
-        
-        background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
+
         background.layer.borderColor = theme.tabSwitcherCellBorderColor.cgColor
         background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
         

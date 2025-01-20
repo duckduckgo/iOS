@@ -68,6 +68,8 @@ class TabSwitcherViewController: UIViewController {
     private(set) var isProcessingUpdates = false
     private var canUpdateCollection = true
 
+    var selectedTabs = Set<Int>()
+
     let favicons = Favicons.shared
     let topBarModel = TabSwitcherTopBarModel()
 
@@ -320,10 +322,6 @@ extension TabSwitcherViewController: TabSwitcherTopBarModel.Delegate {
         presentForgetDataAlert()
     }
 
-    func startEditing() {
-        // This will come in future PR.
-    }
-
     func addNewTab() {
         guard !isProcessingUpdates else { return }
 
@@ -350,6 +348,9 @@ extension TabSwitcherViewController: TabSwitcherTopBarModel.Delegate {
     }
 
     func transitionToMultiSelect() {
+        self.isEditing = true
+        selectedTabs = Set<Int>()
+        collectionView.reloadData()
     }
 
     func closeAllTabs() {
@@ -429,7 +430,9 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         if indexPath.row < tabsModel.count {
             let tab = tabsModel.get(tabAt: indexPath.row)
             tab.addObserver(self)
+            cell.isSelected = selectedTabs.contains(indexPath.row)
             cell.update(withTab: tab,
+                        isSelectionModeEnabled: self.isEditing,
                         preview: previewsSource.preview(for: tab),
                         reorderRecognizer: reorderGestureRecognizer)
         }
@@ -443,9 +446,16 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         Pixel.fire(pixel: .tabSwitcherSwitchTabs)
         currentSelection = indexPath.row
-        markCurrentAsViewedAndDismiss()
+        if isEditing {
+            if !selectedTabs.insert(indexPath.row).inserted {
+                selectedTabs.remove(indexPath.row)
+            }
+            collectionView.reloadItems(at: [indexPath])
+        } else {
+            markCurrentAsViewedAndDismiss()
+        }
     }
-   
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }

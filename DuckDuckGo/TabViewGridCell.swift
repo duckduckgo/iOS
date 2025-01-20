@@ -25,8 +25,6 @@ class TabViewGridCell: TabViewCell {
 
     struct Constants {
         
-        static let selectedBorderWidth: CGFloat = 2.0
-        static let unselectedBorderWidth: CGFloat = 0.0
         static let swipeToDeleteAlpha: CGFloat = 0.5
         
         static let cellCornerRadius: CGFloat = 8.0
@@ -44,7 +42,8 @@ class TabViewGridCell: TabViewCell {
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unread: UIImageView!
     @IBOutlet weak var preview: UIImageView!
-    
+    @IBOutlet weak var selectionIndicator: UIImageView!
+
     weak var previewAspectRatio: NSLayoutConstraint?
     @IBOutlet var previewTopConstraint: NSLayoutConstraint?
     @IBOutlet var previewBottomConstraint: NSLayoutConstraint?
@@ -120,11 +119,13 @@ class TabViewGridCell: TabViewCell {
     }()
     
     override func update(withTab tab: Tab,
+                         isSelectionModeEnabled: Bool,
                          preview: UIImage?,
                          reorderRecognizer: UIGestureRecognizer?) {
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         self.tab = tab
+        self.isSelectionModeEnabled = isSelectionModeEnabled
         self.collectionReorderRecognizer = reorderRecognizer
         
         if !isDeleting {
@@ -133,8 +134,8 @@ class TabViewGridCell: TabViewCell {
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
         
         decorate()
-        
-        border.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
+
+        updateCurrentTabBorder(border)
 
         if let link = tab.link {
             removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle, atAddress: link.url.host ?? "")
@@ -177,6 +178,14 @@ class TabViewGridCell: TabViewCell {
             removeButton.isHidden = false
             
         }
+
+        if isSelectionModeEnabled {
+            removeButton.isHidden = true
+            selectionIndicator.isHidden = false
+            updateSelectionIndicator(selectionIndicator)
+        } else {
+            selectionIndicator.isHidden = true
+        }
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -199,4 +208,5 @@ class TabViewGridCell: TabViewCell {
     private func setBorderColor() {
         border.layer.borderColor = ThemeManager.shared.currentTheme.tabSwitcherCellBorderColor.cgColor
     }
+
 }

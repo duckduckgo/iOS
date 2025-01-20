@@ -75,7 +75,7 @@ public class TabsModel: NSObject, NSCoding {
 
     var currentTab: Tab? {
         let index = currentIndex
-        return tabs[index]
+        return tabs.indices.contains(index) ? tabs[index] : nil
     }
 
     var count: Int {

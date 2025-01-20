@@ -69,7 +69,7 @@ jobs:
     name: End to end Tests
     needs: build-end-to-end-tests
     runs-on: macos-15
-    timeout-minutes: 90
+    timeout-minutes: 300
     strategy:
       matrix:
         test-tag: [release, privacy, securityTest, adClick]
@@ -87,14 +87,21 @@ jobs:
         name: duckduckgo-ios-app
         path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
 
-    - name: Install Maestro
-      run: |
-        export MAESTRO_VERSION=1.39.1; curl -Ls "https://get.maestro.mobile.dev" | bash
-
     - name: End to End tests
-      run: |
-        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.ROBIN_API_KEY }} --project-id ${{ secrets.ROBIN_PROJECT_KEY }} -e ONBOARDING_COMPLETED=true --fail-on-timeout=true --fail-on-cancellation=true --timeout=150 --ios-version=17 --include-tags=${{ matrix.test-tag }} DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
-
+      id: upload
+      uses: loremattei/action-maestro-cloud@fix-timeout-handling
+      with:
+        api-key: ${{ secrets.ROBIN_API_KEY }}
+        project-id: ${{ vars.ROBIN_PROJECT_KEY }}
+        name: ${{ matrix.test-tag }}_${{ github.sha }}
+        timeout: 300
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        workspace: .maestro
+        include-tags: ${{ matrix.test-tag }}
+        env: ONBOARDING_COMPLETED=true
+        ios-version: 17
+        fail-on-timeout: true
+  
   # notify-failure:
   #   name: Notify on failure
   #   if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.ref_name == 'main' }}

@@ -128,3 +128,16 @@ final class MockBGTask: BGTaskInterface {
         capturedTaskCompletedSuccess = success
     }
 }
+
+final class MockMaliciousSiteProtectionDataFetcher: MaliciousSiteProtectionDatasetsFetching {
+    private(set) var didCallStartFetching = false
+    private(set) var didCallRegisterBackgroundRefreshTaskHandler = false
+
+    func startFetching() {
+        didCallStartFetching = true
+    }
+    
+    func registerBackgroundRefreshTaskHandler() {
+        didCallRegisterBackgroundRefreshTaskHandler = true
+    }
+}

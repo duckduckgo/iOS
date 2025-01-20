@@ -507,9 +507,10 @@ extension TabViewController {
         } else {
             togglePrivacyProtection(domain: domain)
         }
-        Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
-        PixelKit.fireTdsExperimentMetricPrivacyToggleUsed(fireDebugExperiment: { parameters in
+        let tdsEtag = AppDependencyProvider.shared.configurationStore.loadEtag(for: .trackerDataSet)
+        TDSOverrideExperimentMetrics.fireTdsExperimentMetricPrivacyToggleUsed(etag: tdsEtag ?? "", featureFlagger: AppDependencyProvider.shared.featureFlagger, fireDebugExperiment: { parameters in
             UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
+
         })
     }
 

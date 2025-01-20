@@ -40,8 +40,6 @@ jobs:
 
       - name: Check out the code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Fetch all history and tags in order to extract Asana task URLs from git log
 
       - name: Set up fastlane
         run: bundle install

@@ -58,7 +58,7 @@ jobs:
     with:
       asana-task-url: ${{ inputs.asana-task-url || github.event.inputs.asana-task-url }}
       base-branch: ${{ github.event.inputs.base-branch || 'main' }}
-      branch: ${{ github.ref_name }}
+      branch: ${{ github.event.inputs.branch || github.ref_name }}
       internal-release-bump: ${{ github.event.inputs.internal-release-bump || false }}
       prerelease: ${{ github.event.inputs.release-type == 'internal' }}
     secrets:
@@ -148,36 +148,12 @@ jobs:
           tasks="$(./scripts/get_tasks_in_last_internal_release.sh)"
           echo "WORKFLOW_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
           echo "TASKS_SINCE_LAST_INTERNAL_RELEASE=$tasks" >> $GITHUB_ENV
-          if [[ -n "${TASKS_SINCE_LAST_INTERNAL_RELEASE}" ]]; then
+          if [[ -n "$tasks" ]]; then
             echo "release-task-comment-template=internal-release-complete-with-tasks" >> $GITHUB_OUTPUT
           else
             echo "release-task-comment-template=internal-release-complete" >> $GITHUB_OUTPUT
           fi
       
-      - name: Add a comment to the release task
-        if: success()
-        env:
-          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
-          WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          bundle exec fastlane run asana_add_comment \
-            task_url:"${{ env.asana-task-url }}" \
-            template_name:"${{ steps.asana-templates.outputs.release-task-comment-template }}"
-
-      - name: Report status
-        if: always()
-        env:
-          ANNOUNCEMENT_TASK_ID: ${{ steps.update-asana.outputs.asana_new_task_id }}
-          ASSIGNEE_ID: ${{ steps.create-task.outputs.asana_assignee_id }}
-          TASK_ID: ${{ steps.create-task.outputs.asana_new_task_id }}
-          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
-        run: |
-          bundle exec fastlane run asana_log_message \
-            task_url:"${{ env.asana-task-url }}" \
-            template_name:"${{ steps.asana-templates.outputs.comment-template }}" \
-            github_handle:"${{ github.actor }}" \
-            is_scheduled_release:"${{ github.event_name == 'schedule' }}"
-
       - name: Add a comment to the release task
         if: success()
         env:

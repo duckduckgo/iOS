@@ -36,7 +36,7 @@ public extension PixelKit {
     static func fireTdsExperimentMetric2XRefresh() {
         for experiment in TdsExperimentType.allCases {
             for day in 0...5 {
-                PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: "privacyToggleUsed", conversionWindowDays: day...day, value: "1")
+                PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: "2XRefresh", conversionWindowDays: day...day, value: "1")
                 UniquePixel.fireDebugBreakageExperiment(experimentType: experiment)
             }
         }
@@ -45,7 +45,7 @@ public extension PixelKit {
     static func fireTdsExperimentMetric3XRefresh() {
         for experiment in TdsExperimentType.allCases {
             for day in 0...5 {
-                PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: "privacyToggleUsed", conversionWindowDays: day...day, value: "1")
+                PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: "3XRefresh", conversionWindowDays: day...day, value: "1")
                 UniquePixel.fireDebugBreakageExperiment(experimentType: experiment)
             }
         }

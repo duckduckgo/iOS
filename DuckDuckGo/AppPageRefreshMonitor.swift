@@ -24,9 +24,16 @@ import PixelKit
 
 extension PageRefreshMonitor {
 
-    static let onDidDetectRefreshPattern: () -> Void = {
-        Pixel.fire(pixel: .pageRefreshThreeTimesWithin20Seconds)
-        PixelKit.fireTdsExperimentMetric3XRefresh()
+    static let onDidDetectRefreshPattern: (Int) -> Void = { refreshCount in
+        switch refreshCount {
+        case 2:
+            PixelKit.fireTdsExperimentMetric2XRefresh()
+        case 3:
+            Pixel.fire(pixel: .pageRefreshThreeTimesWithin20Seconds)
+            PixelKit.fireTdsExperimentMetric3XRefresh()
+        default:
+            return
+        }
     }
 
 }

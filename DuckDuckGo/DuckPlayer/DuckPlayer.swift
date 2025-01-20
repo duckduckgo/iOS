@@ -128,7 +128,7 @@ protocol DuckPlayerControlling: AnyObject {
     var settings: DuckPlayerSettings { get }
     
     /// The host view controller, if any.
-    var hostView: UIViewController? { get }
+    var hostView: TabViewController? { get }
     
     /// Initializes a new instance of DuckPlayer with the provided settings and feature flagger.
     ///
@@ -200,7 +200,7 @@ protocol DuckPlayerControlling: AnyObject {
     /// Sets the host view controller for presenting modals.
     ///
     /// - Parameter vc: The view controller to set as host.
-    func setHostViewController(_ vc: UIViewController)
+    func setHostViewController(_ vc: TabViewController)
     
     /// Removes the host view controller.
     func removeHostView()
@@ -221,7 +221,7 @@ final class DuckPlayer: DuckPlayerControlling {
     
     
     private(set) var settings: DuckPlayerSettings
-    private(set) weak var hostView: UIViewController?
+    private(set) weak var hostView: TabViewController?
     
     private var featureFlagger: FeatureFlagger
     
@@ -255,12 +255,13 @@ final class DuckPlayer: DuckPlayerControlling {
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.settings = settings
         self.featureFlagger = featureFlagger
+        registerOrientationSubscriber()
     }
     
     /// Sets the host view controller for presenting modals.
     ///
     /// - Parameter vc: The view controller to set as host.
-    public func setHostViewController(_ vc: UIViewController) {
+    public func setHostViewController(_ vc: TabViewController) {
         hostView = vc
     }
     
@@ -299,6 +300,39 @@ final class DuckPlayer: DuckPlayerControlling {
     private func updateSettings(userValues: UserValues) async {
         settings.setMode(userValues.duckPlayerMode)
         settings.setAskModeOverlayHidden(userValues.askModeOverlayHidden)
+    }
+    
+    /// Registers an Nootification observer for orientation changes
+    private func registerOrientationSubscriber() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(orientationDidChange),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+    }
+
+    /// Called when the Orientation notification is changed
+    @objc private func orientationDidChange() {
+        let orientation = UIDevice.current.orientation
+        if let url = hostView?.url, url.isDuckPlayer {
+            handleOrientationChange(orientation)
+        }
+    }
+    
+    /// Handles UI Updates based on orientation.  When switching to landscape, we hide
+    /// Navigation and Tabbar to enable "Fake" full screen
+    private func handleOrientationChange(_ orientation: UIDeviceOrientation) {
+        switch orientation {
+        case .portrait, .portraitUpsideDown:
+            hostView?.chromeDelegate?.omniBar.resignFirstResponder()
+            hostView?.chromeDelegate?.setBarsHidden(false, animated: true)
+        case .landscapeLeft, .landscapeRight:
+            hostView?.chromeDelegate?.omniBar.resignFirstResponder()
+            hostView?.chromeDelegate?.setBarsHidden(true, animated: true)
+        case .unknown, .faceUp, .faceDown:
+            return
+        @unknown default:
+            return
+        }
     }
     
     /// Retrieves user values to send to the web content.
@@ -382,7 +416,9 @@ final class DuckPlayer: DuckPlayerControlling {
             }
 
             return nil
-        }
+    }
+    
+    
     
     /// Opens Duck Player information modal.
     ///

@@ -127,13 +127,6 @@ struct Launching: AppState {
         // Explicitly prepare ContentBlockingUpdating instance before Tabs are created
         _ = ContentBlockingUpdating.shared
 
-        // Can be removed after a couple of versions
-        cleanUpIncrementalRolloutPixelTest()
-
-        func cleanUpIncrementalRolloutPixelTest() {
-            UserDefaults.standard.removeObject(forKey: "network-protection.incremental-feature-flag-test.has-sent-pixel")
-        }
-
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
 
         if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {

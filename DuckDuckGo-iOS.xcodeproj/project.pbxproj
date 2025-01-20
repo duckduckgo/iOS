@@ -791,6 +791,9 @@
 		9F0949A02D372AE60079291B /* MaliciousSiteProtectionDatasetsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F09499F2D372ADB0079291B /* MaliciousSiteProtectionDatasetsFetcher.swift */; };
 		9F0949A52D3898FF0079291B /* MaliciousSiteProtectionPreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0949A42D3898F80079291B /* MaliciousSiteProtectionPreferencesManager.swift */; };
 		9F0949A72D389F1E0079291B /* MaliciousSiteProtectionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0949A62D389F180079291B /* MaliciousSiteProtectionAPI.swift */; };
+		9F0949A92D3A01D40079291B /* MaliciousSiteProtectionDatasetsFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0949A82D3A01CB0079291B /* MaliciousSiteProtectionDatasetsFetcherTests.swift */; };
+		9F0949AC2D3A08300079291B /* MaliciousSiteProtectionMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0949AB2D3A08290079291B /* MaliciousSiteProtectionMocks.swift */; };
+		9F14C1DF2D3E366F00C12DB0 /* TimeTraveller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F14C1DE2D3E366C00C12DB0 /* TimeTraveller.swift */; };
 		9F16230B2CA0F0190093C4FC /* DebouncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F16230A2CA0F0190093C4FC /* DebouncerTests.swift */; };
 		9F1798572CD2443F0073018B /* AddToDockPromoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1798562CD2443F0073018B /* AddToDockPromoViewModelTests.swift */; };
 		9F23B8012C2BC94400950875 /* OnboardingBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F23B8002C2BC94400950875 /* OnboardingBackground.swift */; };
@@ -2712,6 +2715,9 @@
 		9F09499F2D372ADB0079291B /* MaliciousSiteProtectionDatasetsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionDatasetsFetcher.swift; sourceTree = "<group>"; };
 		9F0949A42D3898F80079291B /* MaliciousSiteProtectionPreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionPreferencesManager.swift; sourceTree = "<group>"; };
 		9F0949A62D389F180079291B /* MaliciousSiteProtectionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionAPI.swift; sourceTree = "<group>"; };
+		9F0949A82D3A01CB0079291B /* MaliciousSiteProtectionDatasetsFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionDatasetsFetcherTests.swift; sourceTree = "<group>"; };
+		9F0949AB2D3A08290079291B /* MaliciousSiteProtectionMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionMocks.swift; sourceTree = "<group>"; };
+		9F14C1DE2D3E366C00C12DB0 /* TimeTraveller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTraveller.swift; sourceTree = "<group>"; };
 		9F16230A2CA0F0190093C4FC /* DebouncerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebouncerTests.swift; sourceTree = "<group>"; };
 		9F1798562CD2443F0073018B /* AddToDockPromoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDockPromoViewModelTests.swift; sourceTree = "<group>"; };
 		9F23B8002C2BC94400950875 /* OnboardingBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBackground.swift; sourceTree = "<group>"; };
@@ -5229,6 +5235,8 @@
 		9F06EB7A2D09EC2000905426 /* MaliciousSiteProtection */ = {
 			isa = PBXGroup;
 			children = (
+				9F0949AA2D3A08210079291B /* Mocks */,
+				9F0949A82D3A01CB0079291B /* MaliciousSiteProtectionDatasetsFetcherTests.swift */,
 			);
 			path = MaliciousSiteProtection;
 			sourceTree = "<group>";
@@ -5248,6 +5256,15 @@
 				9F0949A42D3898F80079291B /* MaliciousSiteProtectionPreferencesManager.swift */,
 			);
 			path = UserPreferences;
+			sourceTree = "<group>";
+		};
+		9F0949AA2D3A08210079291B /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				9F14C1DE2D3E366C00C12DB0 /* TimeTraveller.swift */,
+				9F0949AB2D3A08290079291B /* MaliciousSiteProtectionMocks.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		9F23B7FF2C2BABE000950875 /* OnboardingIntro */ = {
@@ -8720,6 +8737,7 @@
 				8590CB632684F10F0089F6BF /* ContentBlockerProtectionStoreTests.swift in Sources */,
 				83EDCC411F86B89C005CDFCD /* StatisticsLoaderTests.swift in Sources */,
 				564DE4572C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift in Sources */,
+				9F14C1DF2D3E366F00C12DB0 /* TimeTraveller.swift in Sources */,
 				C14882E327F20D9A00D59F0C /* BookmarksExporterTests.swift in Sources */,
 				85C29708247BDD060063A335 /* DaxDialogsBrowsingSpecTests.swift in Sources */,
 				9FE05CF12C36468A00D9046B /* OnboardingPixelReporterTests.swift in Sources */,
@@ -8774,6 +8792,7 @@
 				9FDEC7B62C8FDFD600C7A692 /* OnboardingManagerMock.swift in Sources */,
 				F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */,
 				9FDEC7BA2C9006E000C7A692 /* BrowserComparisonModelTests.swift in Sources */,
+				9F0949A92D3A01D40079291B /* MaliciousSiteProtectionDatasetsFetcherTests.swift in Sources */,
 				31B1FA87286EFC5C00CA3C1C /* XCTestCaseExtension.swift in Sources */,
 				D62EC3BC2C2470E000FC9D04 /* DuckPlayerTests.swift in Sources */,
 				1E8146AE28C8ABF400D1AF63 /* PrivacyIconLogicTests.swift in Sources */,
@@ -8789,6 +8808,7 @@
 				6F395BBB2CD2C87D00B92FC3 /* BoolFileMarkerTests.swift in Sources */,
 				8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */,
 				98AAF8E4292EB46000DBDF06 /* BookmarksMigrationTests.swift in Sources */,
+				9F0949AC2D3A08300079291B /* MaliciousSiteProtectionMocks.swift in Sources */,
 				85D2187224BF24F2004373D2 /* NotFoundCachingDownloaderTests.swift in Sources */,
 				C1935A242C89CC6D001AD72D /* AutofillHeaderViewFactoryTests.swift in Sources */,
 				C111B26927F579EF006558B1 /* BookmarkOrFolderTests.swift in Sources */,

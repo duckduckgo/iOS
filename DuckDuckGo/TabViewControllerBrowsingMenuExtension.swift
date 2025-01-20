@@ -508,7 +508,9 @@ extension TabViewController {
             togglePrivacyProtection(domain: domain)
         }
         Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
-        PixelKit.fireTdsExperimentMetricPrivacyToggleUsed()
+        PixelKit.fireTdsExperimentMetricPrivacyToggleUsed(fireDebugExperiment: { parameters in
+            UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
+        })
     }
 
     private func togglePrivacyProtection(domain: String, didSendReport: Bool = false) {

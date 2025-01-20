@@ -27,10 +27,14 @@ extension PageRefreshMonitor {
     static let onDidDetectRefreshPattern: (Int) -> Void = { refreshCount in
         switch refreshCount {
         case 2:
-            PixelKit.fireTdsExperimentMetric2XRefresh()
+            PixelKit.fireTdsExperimentMetric2XRefresh(fireDebugExperiment: {parameters in 
+                UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
+            })
         case 3:
             Pixel.fire(pixel: .pageRefreshThreeTimesWithin20Seconds)
-            PixelKit.fireTdsExperimentMetric3XRefresh()
+            PixelKit.fireTdsExperimentMetric3XRefresh(fireDebugExperiment: { parameters in
+                UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
+            })
         default:
             return
         }

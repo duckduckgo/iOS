@@ -156,7 +156,9 @@ final class PrivacyDashboardViewController: UIViewController {
                 ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
             }
             Pixel.fire(pixel: .dashboardProtectionAllowlistAdd, withAdditionalParameters: pixelParam)
-            PixelKit.fireTdsExperimentMetricPrivacyToggleUsed()
+            PixelKit.fireTdsExperimentMetricPrivacyToggleUsed(fireDebugExperiment: { parameters in
+                UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
+            })
         }
         
         contentBlockingManager.scheduleCompilation()

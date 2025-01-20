@@ -3244,12 +3244,18 @@ private extension TabViewController {
     func restoreInteractionStateToWebView(_ interactionStateData: Data?) -> Bool {
         var didRestoreWebViewState = false
         if let interactionStateData {
+            let startTime = CFAbsoluteTimeGetCurrent()
             webView.interactionState = interactionStateData
             if webView.url != nil {
                 self.url = tabModel.link?.url
                 didRestoreWebViewState = true
                 tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
+            } else {
+                Pixel.fire(pixel: .tabInteractionStateFailedToRestore)
             }
+
+            let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+            Pixel.fire(pixel: .tabInteractionStateRestorationTime(Pixel.Event.BucketAggregation(number: timeElapsed)))
         }
 
         return didRestoreWebViewState

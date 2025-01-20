@@ -119,7 +119,8 @@ class TabManager {
                                                               subscriptionCookieManager: subscriptionCookieManager,
                                                               textZoomCoordinator: textZoomCoordinator,
                                                               websiteDataManager: websiteDataManager,
-                                                              fireproofing: fireproofing)
+                                                              fireproofing: fireproofing,
+                                                              tabInteractionStateSource: interactionStateSource)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  interactionStateData: interactionState,
@@ -139,7 +140,6 @@ class TabManager {
             return controller
         } else if createIfNeeded {
             Logger.general.debug("Tab not in cache, creating")
-            let interactionStateSource = TabInteractionStateDiskSource()
             let tabInteractionState = interactionStateSource?.popLastStateForTab(tab)
             let controller = buildController(forTab: tab, inheritedAttribution: nil, interactionState: tabInteractionState)
             tabControllerCache.append(controller)
@@ -204,7 +204,8 @@ class TabManager {
                                                               subscriptionCookieManager: subscriptionCookieManager,
                                                               textZoomCoordinator: textZoomCoordinator,
                                                               websiteDataManager: websiteDataManager,
-                                                              fireproofing: fireproofing)
+                                                              fireproofing: fireproofing,
+                                                              tabInteractionStateSource: interactionStateSource)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

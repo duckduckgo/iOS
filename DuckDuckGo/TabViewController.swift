@@ -64,7 +64,7 @@ class TabViewController: UIViewController {
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     private let instrumentation = TabInstrumentation()
-    private let tabInteractionStateSource = TabInteractionStateDiskSource()
+    let tabInteractionStateSource: TabInteractionStateSource?
 
     var isLinkPreview = false
 
@@ -339,7 +339,8 @@ class TabViewController: UIViewController {
                                    subscriptionCookieManager: SubscriptionCookieManaging,
                                    textZoomCoordinator: TextZoomCoordinating,
                                    websiteDataManager: WebsiteDataManaging,
-                                   fireproofing: Fireproofing) -> TabViewController {
+                                   fireproofing: Fireproofing,
+                                   tabInteractionStateSource: TabInteractionStateSource?) -> TabViewController {
 
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -359,7 +360,8 @@ class TabViewController: UIViewController {
                               subscriptionCookieManager: subscriptionCookieManager,
                               textZoomCoordinator: textZoomCoordinator,
                               fireproofing: fireproofing,
-                              websiteDataManager: websiteDataManager
+                              websiteDataManager: websiteDataManager,
+                              tabInteractionStateSource: tabInteractionStateSource
             )
         })
         return controller
@@ -399,7 +401,8 @@ class TabViewController: UIViewController {
                    subscriptionCookieManager: SubscriptionCookieManaging,
                    textZoomCoordinator: TextZoomCoordinating,
                    fireproofing: Fireproofing,
-                   websiteDataManager: WebsiteDataManaging) {
+                   websiteDataManager: WebsiteDataManaging,
+                   tabInteractionStateSource: TabInteractionStateSource?) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -422,6 +425,7 @@ class TabViewController: UIViewController {
         self.textZoomCoordinator = textZoomCoordinator
         self.fireproofing = fireproofing
         self.websiteDataManager = websiteDataManager
+        self.tabInteractionStateSource = tabInteractionStateSource
 
         self.tabURLInterceptor = TabURLInterceptorDefault(featureFlagger: featureFlagger) {
             return AppDependencyProvider.shared.subscriptionManager.canPurchase

@@ -19,21 +19,29 @@
 import Foundation
 import os.log
 
+import BrowserServicesKit
 import Core
 
-public protocol TabInteractionStateSource {
+protocol TabInteractionStateSource {
     func saveState(_ state: Any?, for tab: Tab)
     func popLastStateForTab(_ tab: Tab) -> Data?
     func removeStateForTab(_ tab: Tab)
     func removeAll(excluding excludedTabs: [Tab])
 }
 
-public final class TabInteractionStateDiskSource: TabInteractionStateSource {
+final class TabInteractionStateDiskSource: TabInteractionStateSource {
     private let fileManager: FileManager
     private let interactionStateCacheLocation: URL
     private let pixelFiring: PixelFiring.Type
 
-    public init?(fileManager: FileManager = .default, pixelFiring: PixelFiring.Type = Pixel.self) {
+    init?(fileManager: FileManager = .default,
+          pixelFiring: PixelFiring.Type = Pixel.self,
+          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
+
+        guard featureFlagger.isFeatureOn(.webViewStateRestoration) else {
+            return nil
+        }
+
         self.fileManager = fileManager
         self.pixelFiring = pixelFiring
 
@@ -61,7 +69,7 @@ public final class TabInteractionStateDiskSource: TabInteractionStateSource {
         self.interactionStateCacheLocation = interactionStateLocation
     }
 
-    public func saveState(_ state: Any?, for tab: Tab) {
+    func saveState(_ state: Any?, for tab: Tab) {
         guard let state,
               let stateData = state as? Data
         else { return }
@@ -87,7 +95,7 @@ public final class TabInteractionStateDiskSource: TabInteractionStateSource {
         }
     }
 
-    public func popLastStateForTab(_ tab: Tab) -> Data? {
+    func popLastStateForTab(_ tab: Tab) -> Data? {
         let tabCacheLocation = cacheLocationForTab(tab)
 
         guard let stateData = try? Data(contentsOf: tabCacheLocation) else {
@@ -102,13 +110,13 @@ public final class TabInteractionStateDiskSource: TabInteractionStateSource {
         return stateData
     }
 
-    public func removeStateForTab(_ tab: Tab) {
+    func removeStateForTab(_ tab: Tab) {
         let tabCacheLocation = cacheLocationForTab(tab)
 
         try? fileManager.removeItem(at: tabCacheLocation)
     }
 
-    public func removeAll(excluding excludedTabs: [Tab]) {
+    func removeAll(excluding excludedTabs: [Tab]) {
         guard let allCacheFiles = try? fileManager.contentsOfDirectory(at: interactionStateCacheLocation, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) else {
             return
         }

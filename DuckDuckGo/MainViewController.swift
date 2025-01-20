@@ -240,7 +240,7 @@ class MainViewController: UIViewController {
 
         self.previewsSource = previewsSource
 
-        let interactionStateSource = TabInteractionStateDiskSource()
+        let interactionStateSource = featureFlagger.isFeatureOn(.webViewStateRestoration) ? TabInteractionStateDiskSource() : nil
         self.tabManager = TabManager(model: tabsModel,
                                      previewsSource: previewsSource,
                                      interactionStateSource: interactionStateSource,

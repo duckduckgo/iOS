@@ -52,6 +52,7 @@ struct AppDependencies {
     let widgetRefreshModel: NetworkProtectionWidgetRefreshModel
     let autofillPixelReporter: AutofillPixelReporter
     let crashReportUploaderOnboarding: CrashCollectionOnboarding
+    let maliciousSiteProtectionManager: MaliciousSiteProtectionManaging
 
     var syncDidFinishCancellable: AnyCancellable?
 

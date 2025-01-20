@@ -76,6 +76,7 @@ struct Launching: AppState {
     private let isTesting = ProcessInfo().arguments.contains("testing")
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
     private let crashReportUploaderOnboarding: CrashCollectionOnboarding
+    private let maliciousSiteProtectionManager = AppDependencyProvider.shared.maliciousSiteProtectionManager
 
     // These should ideally be let properties instead of force-unwrapped. However, due to various initialization paths, such as database completion blocks, setting them up in advance is currently not feasible. Refactoring will be done once this code is streamlined.
     private let uiService: UIService
@@ -528,6 +529,9 @@ struct Launching: AppState {
         }
 
         tipKitAppEventsHandler.appDidFinishLaunching()
+
+        // Register Malicious Site Protection background tasks to fetch datasets
+        maliciousSiteProtectionManager.registerBackgroundRefreshTaskHandler()
     }
 
     private var appDependencies: AppDependencies {
@@ -553,7 +557,8 @@ struct Launching: AppState {
             onboardingPixelReporter: onboardingPixelReporter,
             widgetRefreshModel: widgetRefreshModel,
             autofillPixelReporter: autofillPixelReporter,
-            crashReportUploaderOnboarding: crashReportUploaderOnboarding
+            crashReportUploaderOnboarding: crashReportUploaderOnboarding,
+            maliciousSiteProtectionManager: maliciousSiteProtectionManager
         )
     }
 

@@ -52,7 +52,6 @@ on:
 
 jobs:
   make-release:
-    if: github.event.action == 0 || (github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'Merge triggers release')) # empty string returns 0; for case when workflow is triggered manually
     runs-on: macos-15-xlarge
     name: Make App Store Connect Release
 
@@ -143,31 +142,6 @@ jobs:
         if [[ -f ${{ env.dsyms_path }} ]]; then
           aws s3 cp "${{ env.dsyms_path }}" ${{ env.DSYM_S3_PATH }}
         fi
-    
-    - name: Get tasks since last internal release and set vars
-      id: asana-templates
-      env:
-        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        tasks="$(./scripts/update_asana_for_release.sh list-tasks-in-last-internal-release)"
-        echo "WORKFLOW_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
-        echo "TASKS_SINCE_LAST_INTERNAL_RELEASE=$tasks" >> $GITHUB_ENV
-        if [[ -n "${TASKS_SINCE_LAST_INTERNAL_RELEASE}" ]]; then
-          echo "release-task-comment-template=internal-release-complete-with-tasks" >> $GITHUB_OUTPUT
-        else
-          echo "release-task-comment-template=internal-release-complete" >> $GITHUB_OUTPUT
-        fi
-
-    - name: Add a comment to the release task
-      if: success()
-      env:
-        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
-        WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      run: |
-        bundle exec fastlane run asana_add_comment \
-          task_url:"${{ env.asana-task-url }}" \
-          template_name:"${{ steps.asana-templates.outputs.release-task-comment-template }}"
 
     - name: Send Mattermost message
       if: success() || failure()

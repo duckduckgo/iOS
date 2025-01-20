@@ -46,7 +46,7 @@ jobs:
       - name: Set up fastlane
         run: bundle install
 
-      - name: Prepare release bump #KS update is_scheduled_release
+      - name: Prepare release bump
         id: prepare-release-bump
         env:
           ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}

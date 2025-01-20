@@ -1,5 +1,5 @@
 //
-//  Active.swift
+//  Foreground.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -26,7 +26,18 @@ import BackgroundTasks
 import Subscription
 import NetworkProtection
 
-struct Active: AppState {
+/// Represents the state where the app is active and available for user interaction.
+/// - Usage:
+///   - This state is typically associated with the `applicationDidBecomeActive(_:)` method.
+///   - The app transitions to this state after completing the launch process or resuming from the background.
+///   - During this state, the app is fully interactive, and the user can engage with the app's UI.
+/// - Transitions:
+///   - `Suspending`: The app transitions to this state when it begins the process of moving to the background,
+///     typically triggered by the `applicationWillResignActive(_:)` method, e.g.:
+///     - When the user presses the home button, swipes up to the App Switcher, or receives a system interruption.
+/// - Notes:
+///   - This is one of the two long-living states in the app's lifecycle (along with `Background`).
+struct Foreground: AppState {
 
     let application: UIApplication
     let appDependencies: AppDependencies
@@ -42,8 +53,10 @@ struct Active: AppState {
         appDependencies.mainViewController
     }
 
-    // MARK: handle one-time (after launch) logic here
-    init(stateContext: Launched.StateContext) {
+    // MARK: Handle logic when transitioning from Launched to Foreground
+    // This transition occurs when the app has completed its launch process and becomes active.
+    // Note: You want to add here code that will happen one-time per app lifecycle, but you need the UI to be active at this point!
+    init(stateContext: Launching.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
@@ -75,6 +88,7 @@ struct Active: AppState {
             refreshRemoteMessages(remoteMessagingClient: appDependencies.remoteMessagingClient)
         }
 
+        // TODO: it should happen after autoclear
         if let url = stateContext.urlToOpen {
             openURL(url)
         } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
@@ -84,23 +98,13 @@ struct Active: AppState {
         activateApp()
     }
 
-    // MARK: handle applicationWillEnterForeground(_:) logic here
-    init(stateContext: Background.StateContext) {
+    // MARK: Handle logic when transitioning from Resuming to Foreground
+    // This transition occurs when the app returns to the foreground after being backgrounded (e.g., after unlocking the app).
+    init(stateContext: Resuming.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
-        ThemeManager.shared.updateUserInterfaceStyle()
-
-        let uiService = appDependencies.uiService
-        let syncService = appDependencies.syncService
-        let autoClear = appDependencies.autoClear
-        Task { @MainActor [self] in
-            await beginAuthentication(lastBackgroundDate: stateContext.lastBackgroundDate)
-            await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
-            uiService.showKeyboardIfSettingOn = true
-            syncService.scheduler.resumeSyncQueue()
-        }
-
+        // TODO: it should happen after autoclear
         if let url = stateContext.urlToOpen {
             openURL(url)
         } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
@@ -110,9 +114,17 @@ struct Active: AppState {
         activateApp()
     }
 
-    init(stateContext: Inactive.StateContext) {
+    // MARK: Handle logic when transitioning from Suspending to Foreground
+    // This transition occurs when the app returns to the foreground after briefly being suspended (e.g., user dismisses a notification).
+    init(stateContext: Suspending.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
+
+        if let url = stateContext.urlToOpen {
+            openURL(url)
+        } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
+            handleShortcutItem(shortcutItemToHandle, appIsLaunching: false)
+        }
 
         activateApp()
     }
@@ -501,7 +513,7 @@ struct Active: AppState {
 
 }
 
-extension Active {
+extension Foreground {
 
     struct StateContext {
 
@@ -515,6 +527,19 @@ extension Active {
             application: application,
             appDependencies: appDependencies
         )
+    }
+
+}
+
+extension Foreground {
+
+    func handle(action: AppAction) {
+        switch action {
+        case .openURL(let url):
+            openURL(url)
+        case .handleShortcutItem(let shortcutItem):
+            handleShortcutItem(shortcutItem)
+        }
     }
 
 }

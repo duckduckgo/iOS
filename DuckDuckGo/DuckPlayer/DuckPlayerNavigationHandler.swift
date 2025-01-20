@@ -813,13 +813,13 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Reset DuckPlayer status
         duckPlayer.settings.allowFirstVideo = false
-        
-        guard isDuckPlayerFeatureEnabled else {
-            webView.reload()
+                
+        guard let url = webView.url else {
             return
         }
         
-        guard let url = webView.url else {
+        guard isDuckPlayerFeatureEnabled else {
+            webView.reload()
             return
         }
         

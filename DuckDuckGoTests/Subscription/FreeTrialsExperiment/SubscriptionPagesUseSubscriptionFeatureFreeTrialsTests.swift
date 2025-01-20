@@ -21,6 +21,8 @@ import XCTest
 import BrowserServicesKit
 import SubscriptionTestingUtilities
 @testable import Subscription
+@testable import Networking
+import NetworkingTestingUtils
 @testable import DuckDuckGo
 
 
@@ -29,21 +31,16 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
     private var sut: SubscriptionPagesUseSubscriptionFeature!
 
     private var mockSubscriptionManager: SubscriptionManagerMock!
-    private var mockAccountManager: AccountManagerMock!
     private var mockStorePurchaseManager: StorePurchaseManagerMock!
     private var mockFreeTrialsFeatureFlagExperiment: MockFreeTrialsFeatureFlagExperiment!
     private var mockAppStorePurchaseFlow: AppStorePurchaseFlowMock!
 
+    let mostRecentTransactionJWS = "dGhpcyBpcyBub3QgYSByZWFsIEFw(...)cCBTdG9yZSB0cmFuc2FjdGlvbiBKV1M="
+
     override func setUpWithError() throws {
-        mockAccountManager = AccountManagerMock()
         mockStorePurchaseManager = StorePurchaseManagerMock()
-        mockSubscriptionManager = SubscriptionManagerMock(accountManager: mockAccountManager,
-                                                      subscriptionEndpointService: SubscriptionEndpointServiceMock(),
-                                                      authEndpointService: AuthEndpointServiceMock(),
-                                                          storePurchaseManager: mockStorePurchaseManager,
-                                                      currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production, purchasePlatform: .appStore),
-                                                      canPurchase: true,
-                                                      subscriptionFeatureMappingCache: SubscriptionFeatureMappingCacheMock())
+        mockSubscriptionManager = SubscriptionManagerMock()
+        mockSubscriptionManager.resultStorePurchaseManager = mockStorePurchaseManager
 
         mockAppStorePurchaseFlow = AppStorePurchaseFlowMock()
         mockFreeTrialsFeatureFlagExperiment = MockFreeTrialsFeatureFlagExperiment()
@@ -53,13 +50,11 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
                                                       subscriptionAttributionOrigin: nil,
                                                       appStorePurchaseFlow: mockAppStorePurchaseFlow,
                                                       appStoreRestoreFlow: AppStoreRestoreFlowMock(),
-                                                      appStoreAccountManagementFlow: AppStoreAccountManagementFlowMock(),
                                                       freeTrialsExperiment: mockFreeTrialsFeatureFlagExperiment)
     }
 
     func testWhenFreeTrialsCohortIsControl_thenStandardSubscriptionOptionsAreReturned() async throws {
         // Given
-        mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
         mockStorePurchaseManager.subscriptionOptionsResult = .mockStandard
@@ -75,7 +70,6 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
     func testWhenFreeTrialsCohortIsTreatment_thenFreeTrialSubscriptionOptionsAreReturned() async throws {
         // Given
-        mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
         mockStorePurchaseManager.freeTrialSubscriptionOptionsResult = .mockFreeTrial
@@ -91,8 +85,8 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
     func testWhenUserIsAuthenticated_thenStandardSubscriptionOptionsAreReturned() async throws {
         // Given
-        mockAccountManager.accessToken = "token"
         mockSubscriptionManager.canPurchase = true
+        mockSubscriptionManager.resultTokenContainer = OAuthTokensFactory.makeValidTokenContainerWithEntitlements()
         mockStorePurchaseManager.subscriptionOptionsResult = .mockStandard
 
         // When
@@ -106,7 +100,6 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
     func testWhenUserCannotPurchase_thenStandardSubscriptionOptionsAreReturned() async throws {
         // Given
-        mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = false
         mockStorePurchaseManager.subscriptionOptionsResult = .mockStandard
 
@@ -121,7 +114,6 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
     func testWhenFailedToFetchSubscriptionOptions_thenEmptyOptionsAreReturned() async throws {
         // Given
-        mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
         mockStorePurchaseManager.subscriptionOptionsResult = nil
@@ -136,7 +128,6 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
     func testWhenFreeTrialsCohortIsTreatmentAndFreeTrialOptionsAreNil_thenFallbackToStandardOptions() async throws {
         // Given
-        mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
         mockStorePurchaseManager.freeTrialSubscriptionOptionsResult = nil
@@ -153,10 +144,10 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
     func testWhenMonthlySubscribeSucceedsForTreatment_thenSubscriptionPurchasedMonthlyPixelFired() async throws {
         // Given
-        mockAccountManager.accessToken = nil
+        mockStorePurchaseManager.purchaseSubscriptionResult = .success(mostRecentTransactionJWS)
+        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success(mostRecentTransactionJWS)
         mockSubscriptionManager.canPurchase = true
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
-        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
 
         let params: [String: Any] = ["id": "monthly-free-trial"]
@@ -171,10 +162,9 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
     func testWhenMonthlySubscribeSucceedsForTreatment_thenSubscriptionPurchasedYearlyPixelFired() async throws {
         // Given
-        mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
-        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
+        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success(mostRecentTransactionJWS)
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
 
         let params: [String: Any] = ["id": "yearly-free-trial"]
@@ -189,10 +179,9 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
     func testWhenMonthlySubscribeSucceedsForControl_thenSubscriptionPurchasedMonthlyPixelFired() async throws {
         // Given
-        mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
-        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
+        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success(mostRecentTransactionJWS)
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
 
         let params: [String: Any] = ["id": "monthly-free-trial"]
@@ -207,10 +196,9 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
     func testWhenMonthlySubscribeSucceedsForControl_thenSubscriptionPurchasedYearlyPixelFired() async throws {
         // Given
-        mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
-        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
+        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success(mostRecentTransactionJWS)
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
 
         let params: [String: Any] = ["id": "yearly-free-trial"]
@@ -226,28 +214,28 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
 
 private extension SubscriptionOptions {
     static let mockStandard = SubscriptionOptions(platform: .ios,
-                                                   options: [
-                                                       SubscriptionOption(id: "1",
-                                                                          cost: SubscriptionOptionCost(displayPrice: "9", recurrence: "monthly")),
-                                                       SubscriptionOption(id: "2",
-                                                                          cost: SubscriptionOptionCost(displayPrice: "99", recurrence: "yearly"))
-                                                   ],
-                                                   features: [
-                                                       SubscriptionFeature(name: .networkProtection),
-                                                       SubscriptionFeature(name: .dataBrokerProtection),
-                                                       SubscriptionFeature(name: .identityTheftRestoration)
-                                                   ])
-
+                                                  options: [
+                                                    SubscriptionOption(id: "1",
+                                                                       cost: SubscriptionOptionCost(displayPrice: "9", recurrence: "monthly")),
+                                                    SubscriptionOption(id: "2",
+                                                                       cost: SubscriptionOptionCost(displayPrice: "99", recurrence: "yearly"))
+                                                  ],
+                                                  availableEntitlements: [
+                                                    SubscriptionEntitlement.networkProtection,
+                                                    SubscriptionEntitlement.dataBrokerProtection,
+                                                    SubscriptionEntitlement.identityTheftRestoration
+                                                  ])
+    
     static let mockFreeTrial = SubscriptionOptions(platform: .ios,
-                                                    options: [
-                                                        SubscriptionOption(id: "3",
-                                                                           cost: SubscriptionOptionCost(displayPrice: "0", recurrence: "monthly-free-trial"), offer: .init(type: .freeTrial, id: "1", durationInDays: 4, isUserEligible: true)),
-                                                        SubscriptionOption(id: "4",
-                                                                           cost: SubscriptionOptionCost(displayPrice: "0", recurrence: "yearly-free-trial"), offer: .init(type: .freeTrial, id: "1", durationInDays: 4, isUserEligible: true))
-                                                    ],
-                                                    features: [
-                                                        SubscriptionFeature(name: .networkProtection)
-                                                    ])
+                                                   options: [
+                                                    SubscriptionOption(id: "3",
+                                                                       cost: SubscriptionOptionCost(displayPrice: "0", recurrence: "monthly-free-trial"), offer: .init(type: .freeTrial, id: "1", durationInDays: 4, isUserEligible: true)),
+                                                    SubscriptionOption(id: "4",
+                                                                       cost: SubscriptionOptionCost(displayPrice: "0", recurrence: "yearly-free-trial"), offer: .init(type: .freeTrial, id: "1", durationInDays: 4, isUserEligible: true))
+                                                   ],
+                                                   availableEntitlements: [
+                                                    SubscriptionEntitlement.networkProtection
+                                                   ])
 }
 
 private final class MockFreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting {

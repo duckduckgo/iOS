@@ -20,22 +20,6 @@
 import UIKit
 import Core
 
-enum AppBehavior: String {
-
-    case old
-    case new
-
-}
-
-protocol DDGApp {
-
-    var privacyProDataReporter: PrivacyProDataReporting? { get }
-    
-    func initialize()
-    func refreshRemoteMessages()
-
-}
-
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
 
     static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
@@ -45,65 +29,46 @@ protocol DDGApp {
         static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
     }
 
+    private let appStateMachine: AppStateMachine = AppStateMachine()
+
     var window: UIWindow?
 
-    var privacyProDataReporter: PrivacyProDataReporting? {
-        realDelegate.privacyProDataReporter
-    }
-
-    func forceOldAppDelegate() {
-        BoolFileMarker(name: .forceOldAppDelegate)?.mark()
-    }
-
-    private let appBehavior: AppBehavior = {
-        BoolFileMarker(name: .forceOldAppDelegate)?.isPresent == true ? .old : .new
-    }()
-
-    private lazy var realDelegate: UIApplicationDelegate & DDGApp = {
-        if appBehavior == .old {
-            return OldAppDelegate(with: self)
-        } else {
-            return NewAppDelegate()
-        }
-    }()
-
-    var didCallWillEnterForeground: Bool = false
-
-    override init() {
-        super.init()
-        realDelegate.initialize()
-    }
-
+    /// See: Launching.swift
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        realDelegate.application?(application, didFinishLaunchingWithOptions: launchOptions) ?? false
+        let isTesting: Bool = ProcessInfo().arguments.contains("testing")
+        appStateMachine.handle(.didFinishLaunching(application, isTesting: isTesting))
+        return true
     }
 
+    /// See: Foreground.swift
     func applicationDidBecomeActive(_ application: UIApplication) {
-        didCallWillEnterForeground = false
-        realDelegate.applicationDidBecomeActive?(application)
+        appStateMachine.handle(.didBecomeActive)
     }
 
+    /// See: Suspending.swift
     func applicationWillResignActive(_ application: UIApplication) {
-        realDelegate.applicationWillResignActive?(application)
+        appStateMachine.handle(.willResignActive)
     }
 
+    /// See: Resuming.swift
     func applicationWillEnterForeground(_ application: UIApplication) {
-        didCallWillEnterForeground = true
-        realDelegate.applicationWillEnterForeground?(application)
+        appStateMachine.handle(.willEnterForeground)
     }
 
+    /// See: Background.swift
     func applicationDidEnterBackground(_ application: UIApplication) {
-        realDelegate.applicationDidEnterBackground?(application)
+        appStateMachine.handle(.didEnterBackground)
     }
 
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
-        realDelegate.application?(application, performActionFor: shortcutItem, completionHandler: completionHandler)
+        appStateMachine.handle(.handleShortcutItem(shortcutItem))
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        realDelegate.application?(app, open: url, options: options) ?? false
+        appStateMachine.handle(.openURL(url))
+        return true
     }
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -121,12 +86,21 @@ protocol DDGApp {
     }
 
     func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
-        return true
+        true
+    }
+
+    var privacyProDataReporter: PrivacyProDataReporting? {
+        (appStateMachine.currentState as? Foreground)?.appDependencies.privacyProDataReporter // just for now, we have to get rid of this anti pattern
     }
 
     /// It's public in order to allow refreshing on demand via Debug menu. Otherwise it shouldn't be called from outside.
+    /// we have to get rid of this anti pattern
     func refreshRemoteMessages() {
-        realDelegate.refreshRemoteMessages()
+        Task {
+            if let remoteMessagingClient = (appStateMachine.currentState as? Foreground)?.appDependencies.remoteMessagingClient {
+                try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingClient.store)
+            }
+        }
     }
 
 }
@@ -153,19 +127,10 @@ extension Error {
         let nsError = self as NSError
         if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError, underlyingError.code == 13 {
             return true
-        }
-
-        if nsError.userInfo["NSSQLiteErrorDomain"] as? Int == 13 {
+        } else if nsError.userInfo["NSSQLiteErrorDomain"] as? Int == 13 {
             return true
         }
-        
         return false
     }
-
-}
-
-private extension BoolFileMarker.Name {
-
-    static let forceOldAppDelegate = BoolFileMarker.Name(rawValue: "force-old-app-delegate")
 
 }

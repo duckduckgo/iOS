@@ -1,5 +1,5 @@
 //
-//  Launched.swift
+//  Launching.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -35,8 +35,21 @@ import Combine
 import PixelKit
 import PixelExperimentKit
 
+/// Represents the transient state where the app is being prepared for user interaction after being launched by the system.
+/// - Usage:
+///   - This state is typically associated with the `application(_:didFinishLaunchingWithOptions:)` method.
+///   - It is responsible for performing the app's initial setup, including configuring dependencies and preparing the UI.
+///   - As part of this state, the `MainViewController` is created and set as the `rootViewController` of the app's primary `UIWindow`.
+/// - Transitions:
+///   - `Foreground`: Standard transition when the app completes its launch process and becomes active.
+///   - `Background`: Occurs when the app is launched but transitions directly to the background, e.g:
+///     - The app is protected by a FaceID lock mechanism (introduced in iOS 18.0). If the user opens the app
+///       but does not authenticate and then leaves.
+///     - The app is launched by the system for background execution but does not immediately become active.
+/// - Notes:
+///   - Avoid performing heavy or blocking operations during this phase to ensure smooth app startup.
 @MainActor
-struct Launched: AppState {
+struct Launching: AppState {
 
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     private var didCrashDuringCrashHandlersSetUp: Bool
@@ -85,7 +98,7 @@ struct Launched: AppState {
     private let application: UIApplication
 
     // swiftlint:disable:next cyclomatic_complexity
-    init(stateContext: Init.StateContext) {
+    init(stateContext: Initializing.StateContext) {
 
         @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
         var privacyConfigCustomURL: String?
@@ -620,7 +633,7 @@ struct Launched: AppState {
 
 }
 
-extension Launched {
+extension Launching {
 
     struct StateContext {
 
@@ -638,6 +651,19 @@ extension Launched {
               urlToOpen: urlToOpen,
               shortcutItemToHandle: shortcutItemToHandle,
               appDependencies: appDependencies)
+    }
+
+}
+
+extension Launching {
+
+    mutating func handle(action: AppAction) {
+        switch action {
+        case .openURL(let url):
+            urlToOpen = url
+        case .handleShortcutItem(let shortcutItem):
+            shortcutItemToHandle = shortcutItem
+        }
     }
 
 }

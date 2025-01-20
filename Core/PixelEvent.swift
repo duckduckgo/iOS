@@ -216,9 +216,6 @@ extension Pixel {
         case bookmarkAddFavoriteBySwipe
         case bookmarkDeletedFromBookmark
 
-        case bookmarksUIFavoritesAction
-        case bookmarksUIFavoritesManage
-
         case bookmarkImportSuccess
         case bookmarkImportFailure
         case bookmarkImportFailureParsingDL
@@ -863,16 +860,9 @@ extension Pixel {
         case secureVaultL2KeyMigration
         case secureVaultL2KeyPasswordMigration
 
-        // MARK: Experimental report broken site flows
+        // MARK: Report broken site flows
         case reportBrokenSiteShown
-        case reportBrokenSiteBreakageCategorySelected
         case reportBrokenSiteSent
-        case reportBrokenSiteOverallCategorySelected
-        case reportBrokenSiteFeedbackCategorySubmitted
-        case reportBrokenSiteTogglePromptNo
-        case reportBrokenSiteTogglePromptYes
-        case reportBrokenSiteSkipToggleStep
-        case reportBrokenSiteToggleProtectionOff
 
         // MARK: New Tab Page baseline engagement
         case addFavoriteDaily
@@ -972,7 +962,6 @@ extension Pixel {
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
-        case appDidConsecutivelyBackground
 
     }
 
@@ -1108,9 +1097,6 @@ extension Pixel.Event {
         case .bookmarkRemoveFavoriteFromBookmark: return "m_remove_favorite_from_bookmark"
         case .bookmarkAddFavoriteBySwipe: return "m_add_favorite_by_swipe"
         case .bookmarkDeletedFromBookmark: return "m_bookmark_deleted_from_bookmark"
-
-        case .bookmarksUIFavoritesAction: return "m_bookmarks_ui_favorites_action_daily"
-        case .bookmarksUIFavoritesManage: return "m_bookmarks_ui_favorites_manage_daily"
 
         case .homeScreenShown: return "mh"
         case .homeScreenEditFavorite: return "mh_ef"
@@ -1825,16 +1811,9 @@ extension Pixel.Event {
         case .secureVaultL2KeyMigration: return "m_secure-vault_keystore_event_l2-key-migration"
         case .secureVaultL2KeyPasswordMigration: return "m_secure-vault_keystore_event_l2-key-password-migration"
 
-        // MARK: Experimental report broken site flows
+        // MARK: Report broken site flows
         case .reportBrokenSiteShown: return "m_report-broken-site_shown"
-        case .reportBrokenSiteBreakageCategorySelected: return "m_report-broken-site_breakage-category-selected"
         case .reportBrokenSiteSent: return "m_report-broken-site_sent"
-        case .reportBrokenSiteOverallCategorySelected: return "m_report-broken-site_overall-category-selected"
-        case .reportBrokenSiteFeedbackCategorySubmitted: return "m_report-broken-site_feedback-category-submitted"
-        case .reportBrokenSiteTogglePromptNo: return "m_report-broken-site_toggle-prompt-no"
-        case .reportBrokenSiteTogglePromptYes: return "m_report-broken-site_toggle-prompt-yes"
-        case .reportBrokenSiteSkipToggleStep: return "m_report-broken-site_skip-toggle-step"
-        case .reportBrokenSiteToggleProtectionOff: return "m_report-broken-site_toggle-protection-off"
 
         // MARK: New Tab Page baseline engagement
         case .addFavoriteDaily: return "m_add_favorite_daily"
@@ -1942,8 +1921,7 @@ extension Pixel.Event {
         case .openAIChatFromAddressBar: return "m_aichat_addressbar_icon"
 
         // MARK: Lifecycle
-        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-2"
-        case .appDidConsecutivelyBackground: return "m_debug_app-did-consecutively-background-2"
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
 
         }
     }

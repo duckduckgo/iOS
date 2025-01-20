@@ -59,7 +59,7 @@ struct TabSwitcherTopBarView: View {
                 Label(model.closeTabsLabel, image: "Tab-Close-16")
             }
         } label: {
-            Text("Edit")
+            Text(UserText.navigationTitleEdit)
         }
     }
 
@@ -67,7 +67,7 @@ struct TabSwitcherTopBarView: View {
         Button {
             model.onDonePressed()
         } label: {
-            Text("Done")
+            Text(UserText.navigationTitleDone)
         }
     }
 

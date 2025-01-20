@@ -615,17 +615,9 @@ class TabViewController: UIViewController {
             updateWebViewInspectability()
         }
 
-        instrumentation.didPrepareWebView()
+        let didRestoreWebViewState = restoreInteractionStateToWebView(interactionStateData)
 
-        var didRestoreWebViewState = false
-        if let interactionStateData {
-            webView.interactionState = interactionStateData
-            if webView.url != nil {
-                self.url = tabModel.link?.url
-                didRestoreWebViewState = true
-                tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
-            }
-        }
+        instrumentation.didPrepareWebView()
 
         // Initialize DuckPlayerNavigationHandler
         if let handler = duckPlayerNavigationHandler,
@@ -3245,4 +3237,21 @@ extension TabViewController: DuckPlayerTabNavigationHandling {
         }
     }
     
+}
+
+private extension TabViewController {
+
+    func restoreInteractionStateToWebView(_ interactionStateData: Data?) -> Bool {
+        var didRestoreWebViewState = false
+        if let interactionStateData {
+            webView.interactionState = interactionStateData
+            if webView.url != nil {
+                self.url = tabModel.link?.url
+                didRestoreWebViewState = true
+                tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
+            }
+        }
+
+        return didRestoreWebViewState
+    }
 }

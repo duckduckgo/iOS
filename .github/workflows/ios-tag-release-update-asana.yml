@@ -74,7 +74,7 @@ jobs:
       TAG: ${{ github.event.inputs.tag }}
       asana-task-url: ${{ inputs.asana-task-url || github.event.inputs.asana-task-url }}
 
-    needs: [ tag-public-release ]
+    needs: [ tag-release ]
 
     runs-on: macos-15-xlarge
     timeout-minutes: 10

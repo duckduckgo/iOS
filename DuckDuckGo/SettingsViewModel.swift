@@ -775,7 +775,7 @@ extension SettingsViewModel {
             state.subscription.hasActiveSubscription = subscription.isActive
             let features = await subscriptionManager.currentSubscriptionFeatures(forceRefresh: false)
             state.subscription.entitlements = features.compactMap({ feature in
-                if feature.enabled {
+                if feature.availableForUser {
                     return feature.entitlement
                 } else {
                     return nil

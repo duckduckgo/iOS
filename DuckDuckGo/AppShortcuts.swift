@@ -24,7 +24,7 @@ extension UIApplication {
 
     func refreshVPNShortcuts(vpnFeatureVisibility: DefaultNetworkProtectionVisibility, subscriptionManager: any SubscriptionManager) async {
         guard vpnFeatureVisibility.shouldShowVPNShortcut(),
-              await AppDependencyProvider.shared.subscriptionManager.isFeatureActive(.networkProtection)
+              await AppDependencyProvider.shared.subscriptionManager.isFeatureAvailableForUser(.networkProtection)
         else {
             shortcutItems = nil
             return

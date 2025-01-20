@@ -168,14 +168,14 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
         let itrFeature = features.first { $0.entitlement == .identityTheftRestoration }
         let itrgFeature = features.first { $0.entitlement == .identityTheftRestorationGlobal }
 
-        if vpnFeature?.enabled ?? false {
+        if vpnFeature?.availableForUser ?? false {
             availableCategories.append(.vpn)
         }
-        if dbpFeature?.enabled ?? false {
+        if dbpFeature?.availableForUser ?? false {
             availableCategories.append(.pir)
         }
-        let idpEnabled = itrFeature?.enabled ?? false
-        let idpgEnabled = itrgFeature?.enabled ?? false
+        let idpEnabled = itrFeature?.availableForUser ?? false
+        let idpgEnabled = itrgFeature?.availableForUser ?? false
         if idpEnabled || idpgEnabled {
             availableCategories.append(.itr)
         }

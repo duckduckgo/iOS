@@ -1183,6 +1183,10 @@
 		F15531922BF215ED0029ED04 /* SubscriptionTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = F15531912BF215ED0029ED04 /* SubscriptionTestingUtilities */; };
 		F15531942BF215F60029ED04 /* Subscription in Frameworks */ = {isa = PBXBuildFile; productRef = F15531932BF215F60029ED04 /* Subscription */; };
 		F15531962BF215F60029ED04 /* SubscriptionTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = F15531952BF215F60029ED04 /* SubscriptionTestingUtilities */; };
+		F15764C02D3E6AE60086AA21 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = F15764BF2D3E6AE60086AA21 /* Networking */; };
+		F15764C22D3E6AF60086AA21 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = F15764C12D3E6AF60086AA21 /* Networking */; };
+		F15764C42D3E6AF60086AA21 /* NetworkingTestingUtils in Frameworks */ = {isa = PBXBuildFile; productRef = F15764C32D3E6AF60086AA21 /* NetworkingTestingUtils */; };
+		F15764C62D3E6B010086AA21 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = F15764C52D3E6B010086AA21 /* Networking */; };
 		F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */; };
 		F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */; };
 		F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C141E57336D00DEDCAF /* TabManager.swift */; };
@@ -3294,6 +3298,7 @@
 				F1B3DEC12D2D90BB00D33FA5 /* NetworkingTestingUtils in Frameworks */,
 				F1AFDF822D2EE1D100DB313F /* PersistenceTestingUtils in Frameworks */,
 				EEFAB4672A73C230008A38E4 /* NetworkProtectionTestUtils in Frameworks */,
+				F15764C02D3E6AE60086AA21 /* Networking in Frameworks */,
 				4BE67B072B96B9B0007335F7 /* Common in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3328,6 +3333,8 @@
 				4BE67B012B96B741007335F7 /* Common in Frameworks */,
 				F15531962BF215F60029ED04 /* SubscriptionTestingUtilities in Frameworks */,
 				F15531942BF215F60029ED04 /* Subscription in Frameworks */,
+				F15764C42D3E6AF60086AA21 /* NetworkingTestingUtils in Frameworks */,
+				F15764C22D3E6AF60086AA21 /* Networking in Frameworks */,
 				4BE67B032B96B864007335F7 /* ContentBlocking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3359,6 +3366,7 @@
 				98424A962CED4F430071C7DB /* OHHTTPStubs in Frameworks */,
 				98424A972CED4F430071C7DB /* OHHTTPStubsSwift in Frameworks */,
 				98424A982CED4F430071C7DB /* ContentBlocking in Frameworks */,
+				F15764C62D3E6B010086AA21 /* Networking in Frameworks */,
 				98424AB22CEDD6150071C7DB /* BrowserServicesKit in Frameworks */,
 				98424A992CED4F430071C7DB /* SubscriptionTestingUtilities in Frameworks */,
 				98424A9A2CED4F430071C7DB /* Subscription in Frameworks */,
@@ -7073,6 +7081,7 @@
 				F15531912BF215ED0029ED04 /* SubscriptionTestingUtilities */,
 				F1B3DEC02D2D90BB00D33FA5 /* NetworkingTestingUtils */,
 				F1AFDF812D2EE1D100DB313F /* PersistenceTestingUtils */,
+				F15764BF2D3E6AE60086AA21 /* Networking */,
 			);
 			productName = DuckDuckGoTests;
 			productReference = 84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */;
@@ -7138,6 +7147,8 @@
 				4BE67B022B96B864007335F7 /* ContentBlocking */,
 				F15531932BF215F60029ED04 /* Subscription */,
 				F15531952BF215F60029ED04 /* SubscriptionTestingUtilities */,
+				F15764C12D3E6AF60086AA21 /* Networking */,
+				F15764C32D3E6AF60086AA21 /* NetworkingTestingUtils */,
 			);
 			productName = IntegrationTests;
 			productReference = 85D33FCB25C97B6E002B91A6 /* IntegrationTests.xctest */;
@@ -7210,6 +7221,7 @@
 				98424AB32CEDD61C0071C7DB /* BrowserServicesKitTestsUtils */,
 				F1B3DEC22D2D90D500D33FA5 /* NetworkingTestingUtils */,
 				F1AFDF7F2D2EE10A00DB313F /* PersistenceTestingUtils */,
+				F15764C52D3E6B010086AA21 /* Networking */,
 			);
 			productName = DuckDuckGoTests;
 			productReference = 98424AA92CED4F430071C7DB /* WebViewUnitTests.xctest */;
@@ -12303,6 +12315,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = SubscriptionTestingUtilities;
+		};
+		F15764BF2D3E6AE60086AA21 /* Networking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = Networking;
+		};
+		F15764C12D3E6AF60086AA21 /* Networking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = Networking;
+		};
+		F15764C32D3E6AF60086AA21 /* NetworkingTestingUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = NetworkingTestingUtils;
+		};
+		F15764C52D3E6B010086AA21 /* Networking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = Networking;
 		};
 		F1AFDF7F2D2EE10A00DB313F /* PersistenceTestingUtils */ = {
 			isa = XCSwiftPackageProductDependency;

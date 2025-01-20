@@ -1154,7 +1154,7 @@ final class OldAppDelegate: NSObject, UIApplicationDelegate, DDGApp {
             return
         }
 
-        if await AppDependencyProvider.shared.subscriptionManager.isFeatureActive(.networkProtection) {
+        if await AppDependencyProvider.shared.subscriptionManager.isFeatureAvailableForUser(.networkProtection) {
             let items = [
                 UIApplicationShortcutItem(type: AppDelegate.ShortcutKey.openVPNSettings,
                                           localizedTitle: UserText.netPOpenVPNQuickAction,
@@ -1234,7 +1234,7 @@ extension OldAppDelegate: UNUserNotificationCenterDelegate {
 
     func presentNetworkProtectionStatusSettingsModal() {
         Task {
-            if await AppDependencyProvider.shared.subscriptionManager.isFeatureActive(.networkProtection) {
+            if await AppDependencyProvider.shared.subscriptionManager.isFeatureAvailableForUser(.networkProtection) {
                 Task { @MainActor in
                     (window?.rootViewController as? MainViewController)?.segueToVPN()
                 }

@@ -59,7 +59,7 @@ extension UNService: UNUserNotificationCenterDelegate {
 
     private func presentNetworkProtectionStatusSettingsModal() {
         Task {
-            if await AppDependencyProvider.shared.subscriptionManager.isFeatureActive(.networkProtection) {
+            if await AppDependencyProvider.shared.subscriptionManager.isFeatureAvailableForUser(.networkProtection) {
                 Task { @MainActor in
                     (window.rootViewController as? MainViewController)?.segueToVPN()
                 }

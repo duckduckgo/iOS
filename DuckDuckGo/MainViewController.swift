@@ -130,7 +130,7 @@ class MainViewController: UIViewController {
     private let subscriptionCookieManager: SubscriptionCookieManaging
     let privacyProDataReporter: PrivacyProDataReporting
 
-    lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    private(set) lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var faviconLoader: FavoritesFaviconLoading = FavoritesFaviconLoader()
     private lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 

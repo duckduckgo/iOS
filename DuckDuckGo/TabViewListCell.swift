@@ -39,6 +39,7 @@ class TabViewListCell: TabViewCell {
     @IBOutlet weak var link: UILabel!
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unread: UIView!
+    @IBOutlet weak var selectionIndicator: UIImageView!
 
     override func update(withTab tab: Tab,
                          isSelectionModeEnabled: Bool,
@@ -94,10 +95,7 @@ class TabViewListCell: TabViewCell {
             
         }
 
-        if isSelectionModeEnabled {
-            removeButton.isHidden = true
-        }
-
+        updateUIForSelectionMode(removeButton, selectionIndicator)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

@@ -185,7 +185,17 @@ class TabViewCell: UICollectionViewCell {
         border.layer.borderColor = UIColor(designSystemColor: isSelectionModeEnabled ? .accent : .textPrimary).cgColor
         border.layer.borderWidth = showBorder ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
     }
-    
+
+    func updateUIForSelectionMode(_ removeButton: UIButton, _ selectionIndicator: UIImageView) {
+
+        if isSelectionModeEnabled {
+            removeButton.isHidden = true
+            selectionIndicator.isHidden = false
+            updateSelectionIndicator(selectionIndicator)
+        } else {
+            selectionIndicator.isHidden = true
+        }
+    }
 }
 
 extension TabViewCell: UIGestureRecognizerDelegate {

@@ -179,13 +179,7 @@ class TabViewGridCell: TabViewCell {
             
         }
 
-        if isSelectionModeEnabled {
-            removeButton.isHidden = true
-            selectionIndicator.isHidden = false
-            updateSelectionIndicator(selectionIndicator)
-        } else {
-            selectionIndicator.isHidden = true
-        }
+        updateUIForSelectionMode(removeButton, selectionIndicator)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

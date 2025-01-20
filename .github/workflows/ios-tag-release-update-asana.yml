@@ -145,7 +145,7 @@ jobs:
           ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          tasks="$(./scripts/update_asana_for_release.sh list-tasks-in-last-internal-release)"
+          tasks="$(./scripts/get_tasks_in_last_internal_release.sh)"
           echo "WORKFLOW_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
           echo "TASKS_SINCE_LAST_INTERNAL_RELEASE=$tasks" >> $GITHUB_ENV
           if [[ -n "${TASKS_SINCE_LAST_INTERNAL_RELEASE}" ]]; then

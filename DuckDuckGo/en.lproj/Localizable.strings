@@ -25,9 +25,6 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
-/* Open AI Chat action in the menu list */
-"action.title.aichat" = "Chat";
-
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Passwords";
 
@@ -54,6 +51,9 @@
 
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Downloads";
+
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "AI Chat";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Edit Bookmark";
@@ -144,10 +144,6 @@
 
 /* No comment provided by engineer. */
 "addWidget.title" = "One tap to your favorite sites.";
-
-/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
-"ai-chat.preferences.text.markdown" = "Duck.ai is an optional feature that lets you have private conversations with popular 3rd-party Al chat models. Your chats are not used to train chat models.
-[Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
@@ -1058,6 +1054,10 @@
 
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "Duck Player's functionality has been affected by recent changes to YouTube. We’re working to fix these issues and appreciate your understanding.";
+
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"duckai.preferences.text.markdown" = "Duck.ai is an optional feature that lets you chat anonymously with popular 3rd-party Al chat models. Your chats are not used to train AI.
+[Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
 "duckai.settings.enable.address-bar-toggle" = "Show Duck.ai While Searching";

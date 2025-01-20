@@ -19,7 +19,6 @@
 import Foundation
 import os.log
 
-import BrowserServicesKit
 import Core
 
 protocol TabInteractionStateSource {
@@ -29,19 +28,17 @@ protocol TabInteractionStateSource {
     func removeAll(excluding excludedTabs: [Tab])
 }
 
-final class TabInteractionStateDiskSource: TabInteractionStateSource {
+protocol TabInteractionStateSourceDebugging {
+    func allCacheFiles() throws -> [URL]
+}
+
+final class TabInteractionStateDiskSource: TabInteractionStateSource, TabInteractionStateSourceDebugging {
     private let fileManager: FileManager
     private let interactionStateCacheLocation: URL
     private let pixelFiring: PixelFiring.Type
 
     init?(fileManager: FileManager = .default,
-          pixelFiring: PixelFiring.Type = Pixel.self,
-          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
-
-        guard featureFlagger.isFeatureOn(.webViewStateRestoration) else {
-            return nil
-        }
-
+          pixelFiring: PixelFiring.Type = Pixel.self) {
         self.fileManager = fileManager
         self.pixelFiring = pixelFiring
 
@@ -117,7 +114,7 @@ final class TabInteractionStateDiskSource: TabInteractionStateSource {
     }
 
     func removeAll(excluding excludedTabs: [Tab]) {
-        guard let allCacheFiles = try? fileManager.contentsOfDirectory(at: interactionStateCacheLocation, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) else {
+        guard let allCacheFiles = try? allCacheFiles() else {
             return
         }
 
@@ -128,6 +125,10 @@ final class TabInteractionStateDiskSource: TabInteractionStateSource {
                 try? fileManager.removeItem(at: item)
             }
         }
+    }
+
+    func allCacheFiles() throws -> [URL] {
+        try fileManager.contentsOfDirectory(at: interactionStateCacheLocation, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
     }
 
     private func cacheLocationForTab(_ tab: Tab) -> URL {

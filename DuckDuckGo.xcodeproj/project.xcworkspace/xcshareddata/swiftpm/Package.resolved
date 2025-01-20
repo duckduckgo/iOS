@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/customizer",
-        "revision" : "b951930902a499af162f985fbe408949bd0cb599"
+        "revision" : "fb315acdbbea9dee949cc066fcafbb1a1f3618f4",
+        "version" : "225.1.0"
       }
     },
     {

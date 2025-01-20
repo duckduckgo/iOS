@@ -50,9 +50,9 @@ on:
 
 jobs:
 
-  tag-public-release:
+  tag-release:
 
-    name: Tag public release
+    name: Tag Release
 
     uses: ./.github/workflows/ios-tag-release.yml
     with:
@@ -67,7 +67,7 @@ jobs:
 
   update-asana-for-release:
 
-    name: Update asana for release
+    name: Update Asana for release
 
     env:
       RELEASE_TYPE: ${{ github.event.inputs.release-type || 'internal' }}
@@ -162,7 +162,7 @@ jobs:
         run: |
           bundle exec fastlane run asana_add_comment \
             task_url:"${{ env.asana-task-url }}" \
-            template_name:"${{ steps.asana-templates.outputs.release-task-comment-template }}
+            template_name:"${{ steps.asana-templates.outputs.release-task-comment-template }}"
 
       - name: Report status
         if: always()

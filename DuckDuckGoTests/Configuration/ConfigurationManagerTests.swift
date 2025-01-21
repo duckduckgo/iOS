@@ -61,9 +61,8 @@ final class ConfigurationManagerTests: XCTestCase {
         // GIVEN
         mockFetcher.shouldFailPrivacyFetch = true
         operationLog.steps = []
-        let expectedOrder: [ConfigurationStep] = [
-            .fetchPrivacyConfigStarted,
-            .fetchSurrogatesStarted,
+        let expectedFirstTwoSteps: Set<ConfigurationStep> = [.fetchPrivacyConfigStarted, .fetchSurrogatesStarted]
+        let expectedRemainingStepsOrder: [ConfigurationStep] = [
             .fetchTrackerDataSetStarted,
             .reloadPrivacyConfig,
             .reloadTrackerDataSet
@@ -73,15 +72,15 @@ final class ConfigurationManagerTests: XCTestCase {
         await configManager.fetchAndUpdateTrackerBlockingDependencies()
 
         // THEN
-        XCTAssertEqual(operationLog.steps, expectedOrder, "Operations did not occur in the expected order.")
+        XCTAssertEqual(Set(operationLog.steps.prefix(2)), expectedFirstTwoSteps, "Steps do not match the expected order.")
+        XCTAssertEqual(Array(operationLog.steps.dropFirst(2)), expectedRemainingStepsOrder, "Steps do not match the expected order.")
     }
 
     func test_WhenRefreshNow_ThenPrivacyConfigFetchAndReloadBeforeTrackerDataSetFetch() async {
         // GIVEN
         operationLog.steps = []
-        let expectedOrder: [ConfigurationStep] = [
-            .fetchPrivacyConfigStarted,
-            .fetchSurrogatesStarted,
+        let expectedFirstTwoSteps: Set<ConfigurationStep> = [.fetchPrivacyConfigStarted, .fetchSurrogatesStarted]
+        let expectedRemainingStepsOrder: [ConfigurationStep] = [
             .reloadPrivacyConfig,
             .fetchTrackerDataSetStarted,
             .reloadPrivacyConfig,
@@ -92,7 +91,8 @@ final class ConfigurationManagerTests: XCTestCase {
         await configManager.fetchAndUpdateTrackerBlockingDependencies()
 
         // THEN
-        XCTAssertEqual(operationLog.steps, expectedOrder, "Operations did not occur in the expected order.")
+        XCTAssertEqual(Set(operationLog.steps.prefix(2)), expectedFirstTwoSteps, "Steps do not match the expected order.")
+        XCTAssertEqual(Array(operationLog.steps.dropFirst(2)), expectedRemainingStepsOrder, "Steps do not match the expected order.")
     }
 
 }

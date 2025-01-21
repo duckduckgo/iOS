@@ -52,7 +52,7 @@ public struct UserText {
     public static let actionShare = NSLocalizedString("action.title.share", value: "Share", comment: "Share action")
     public static let actionPrint = NSLocalizedString("action.title.print", value: "Print", comment: "Print action in the menu header")
     public static let actionPrintSite = NSLocalizedString("action.title.print.site", value: "Print", comment: "Print action in the menu list")
-    public static let actionOpenAIChat = NSLocalizedString("action.title.aichat", value: "Chat", comment: "Open AI Chat action in the menu list")
+    public static let actionOpenAIChat = NSLocalizedString("action.title.duckai", value: "AI Chat", comment: "Open AI Chat action in the menu list")
 
     public static let actionOpenBookmarks = NSLocalizedString("action.title.bookmarks", value: "Bookmarks", comment: "Button: Open bookmarks list")
     public static let actionEnableProtection = NSLocalizedString("action.title.enable.protection", value: "Enable Privacy Protection", comment: "Enable protection action")
@@ -1358,9 +1358,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let brokenSiteReportMissingDescriptionAlertTitle = NSLocalizedString("broken.site.report.missing.description.alert.title", value: "Description Required", comment: "It appears as an alert after user tries to send a report without submitting any details")
     public static let brokenSiteReportMissingDescriptionAlertDescription = NSLocalizedString("broken.site.report.missing.description.alert.description", value: "Please describe the issue you experienced on this site so we can better understand how to fix it.", comment: "It appears as an alert after user tries to send a report without submitting any details")
     public static let brokenSiteReportMissingDescriptionAlertButton = NSLocalizedString("broken.site.report.missing.description.alert.button", value: "Got It", comment: "Acknowledge button")
-    public static let brokenSiteReportToggleAlertTitle = NSLocalizedString("broken.site.report.toggle.alert.title", value: "Did turning Privacy Protections off resolve the issue on this site?", comment: "An alert that appears after user turns off the privacy protection")
-    public static let brokenSiteReportToggleAlertYesButton = NSLocalizedString("broken.site.report.toggle.alert.yes.button", value: "Yes", comment: "Button to answer question 'Did turning off protections resolve the issue on this site?'")
-    public static let brokenSiteReportToggleAlertNoButton = NSLocalizedString("broken.site.report.toggle.alert.no.button", value: "No", comment: "Button to answer question 'Did turning off protections resolve the issue on this site?'")
     
     // Duck Player
     public static let duckPlayerAlwaysEnabledLabel = NSLocalizedString("duckPlayer.alwaysEnabled.label", value: "Always", comment: "Text displayed when DuckPlayer is always enabled")
@@ -1390,8 +1387,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     // MARK: - AI Chat
     public static let aiChatFeatureName = NSLocalizedString("duckai.settings.title", value: "Duck.ai", comment: "Settings screen cell text for AI Chat settings")
 
-    static let aiChatSettingsCaptionWithLinkMarkdown = NSLocalizedString("ai-chat.preferences.text.markdown", value: """
-Duck.ai is an optional feature that lets you have private conversations with popular 3rd-party Al chat models. Your chats are not used to train chat models.
+    static let aiChatSettingsCaptionWithLinkMarkdown = NSLocalizedString("duckai.preferences.text.markdown", value: """
+Duck.ai is an optional feature that lets you chat anonymously with popular 3rd-party Al chat models. Your chats are not used to train AI.
 [Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)
 """, comment: "Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and ()")
     public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("duckai.settings.enable.browsing-menu-toggle", value: "Show Duck.ai in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")

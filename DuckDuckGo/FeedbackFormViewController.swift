@@ -60,7 +60,6 @@ class FeedbackFormViewController: UIViewController {
     @IBOutlet weak var submitFeedbackButton: UIButton!
     
     private var model: FormModel?
-    private var isFromBrokenSiteReportFlow: Bool = false
 
     static func loadFromStoryboard() -> FeedbackFormViewController {
         let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
@@ -94,13 +93,11 @@ class FeedbackFormViewController: UIViewController {
     }
     
     func configureForNegativeSentiment(for type: FormType,
-                                       with feedbackModel: Feedback.Model,
-                                       isFromBrokenSiteReportFlow: Bool) {
+                                       with feedbackModel: Feedback.Model) {
         guard let category = feedbackModel.category else {
                 fatalError("Feedback model is incomplete!")
         }
         model = .negative(feedbackModel)
-        self.isFromBrokenSiteReportFlow = isFromBrokenSiteReportFlow
 
         loadViewIfNeeded()
         
@@ -165,9 +162,6 @@ class FeedbackFormViewController: UIViewController {
             }
         case .negative(let feedbackModel):
             feedbackSender.fireNegativeSentimentPixel(with: feedbackModel)
-            if isFromBrokenSiteReportFlow {
-                feedbackSender.fireBrokenSiteReportPixel(with: feedbackModel)
-            }
             if message.trimmingWhitespace().isEmpty == false {
                 feedbackSender.submitNegativeSentiment(message: message,
                                                        url: websiteTextField.text,

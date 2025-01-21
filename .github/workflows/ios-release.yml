@@ -15,20 +15,50 @@ on:
         description: "Asana release task URL"
         required: false
         type: string
-
-  pull_request:
-    branches:
-    - release/**
-    - hotfix/**
-    - '!release/**-' # filter out PRs matching that pattern
-    - '!hotfix/**-'
-    types: [closed]
+  workflow_call:
+    inputs:
+      asana-task-url:
+        description: "Asana release task URL"
+        required: true
+        type: string
+      branch:
+        description: "Branch name"
+        required: false
+        type: string
+      destination: 
+        description: "Upload destination (TestFlight or App Store)"
+        required: false
+        default: testflight
+        type: string
+    secrets:
+      APPLE_API_KEY_BASE64:
+        required: true
+      APPLE_API_KEY_ID:
+        required: true
+      APPLE_API_KEY_ISSUER:
+        required: true
+      ASANA_ACCESS_TOKEN:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      MATCH_PASSWORD:
+        required: true
+      MM_WEBHOOK_URL:
+        required: true
+      SSH_PRIVATE_KEY_FASTLANE_MATCH:
+        required: true
 
 jobs:
   make-release:
-    if: github.event.action == 0 || (github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'Merge triggers release')) # empty string returns 0; for case when workflow is triggered manually
     runs-on: macos-15-xlarge
     name: Make App Store Connect Release
+
+    env:
+      destination: ${{ github.event.inputs.destination || inputs.destination }}
+      asana-task-url: ${{ github.event.inputs.asana-task-url || inputs.asana-task-url }}
+      branch: ${{ inputs.branch || github.ref_name }}
 
     steps:
 
@@ -40,7 +70,7 @@ jobs:
 
     - name: Assert release branch
       run: |
-        case "${{ github.ref }}" in
+        case "${branch}" in
           *release/*) ;;
           *hotfix/*) ;;
           *coldfix/*) ;;
@@ -53,9 +83,10 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
 
     - name: Check out the code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: recursive
+        ref: ${{ env.branch }}
 
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
@@ -82,16 +113,9 @@ jobs:
         name: DuckDuckGo-${{ steps.destination.outputs.destination }}-dSYM-${{ env.app_version }}
         path: ${{ env.dsyms_path }}
 
-    - name: Get Asana Task ID
-      id: get-task-id
-      if: ${{ always() && github.event.inputs.asana-task-url }}
-      run: |
-        task_url_regex='^https://app.asana.com/[0-9]/[0-9]*/([0-9]*)/f$'
-        if [[ "${{ github.event.inputs.asana-task-url }}" =~ ${task_url_regex} ]]; then
-          echo "task_id=${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
-        else
-          echo "::error::Asana Task URL has incorrect format (attempted to match ${task_url_regex})."
-        fi
+    - name: Extract Asana Task ID
+      id: task-id
+      run: bundle exec fastlane run asana_extract_task_id task_url:"${{ env.asana-task-url }}"
 
     - name: Upload debug symbols to Asana
       if: ${{ always() && github.event.inputs.asana-task-url }}
@@ -102,7 +126,7 @@ jobs:
           asana_dsyms_path="${{ github.workspace }}/DuckDuckGo-${{ env.app_version }}-dSYM.zip"
           mv -f "${{ env.dsyms_path }}" "$asana_dsyms_path"
 
-          curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}/attachments" \
+          curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.task-id.outputs.task_id }}/attachments" \
             -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
             --form "file=@${asana_dsyms_path};type=application/zip"
         fi
@@ -113,24 +137,20 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
-        DSYM_S3_PATH: s3://${{ secrets.DSYM_BUCKET_NAME }}/${{ secrets.IOS_DSYM_BUCKET_PREFIX }}/
+        DSYM_S3_PATH: s3://${{ vars.DSYM_BUCKET_NAME }}/${{ vars.IOS_DSYM_BUCKET_PREFIX }}/
       run: |
         if [[ -f ${{ env.dsyms_path }} ]]; then
           aws s3 cp "${{ env.dsyms_path }}" ${{ env.DSYM_S3_PATH }}
         fi
 
     - name: Send Mattermost message
-      if: ${{ success() || failure() }} # Don't execute when cancelled
+      if: success() || failure()
       env:
         WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        DESTINATION: ${{ steps.destination.outputs.destination }}
+        DESTINATION: ${{ env.destination }}
+        PLATFORM: iOS
       run: |
-        export MM_USER_HANDLE=$(base64 -d <<< ${{ secrets.MM_HANDLES_BASE64 }} | jq ".${{ github.actor }}" | tr -d '"')
-
-        if [[ -z "${MM_USER_HANDLE}" ]]; then
-            echo "Mattermost user handle not known for ${{ github.actor }}, skipping sending message"
-        else
-            curl -s -H 'Content-type: application/json' \
-                -d "$(envsubst < ./scripts/assets/appstore-release-mm-template.json | jq ".${{ job.status }}")" \
-                ${{ secrets.MM_WEBHOOK_URL }}
-        fi
+        bundle exec fastlane run mattermost_send_message \
+          mattermost_webhook_url:${{ secrets.MM_WEBHOOK_URL }} \
+          github_handle:${{ github.actor }} \
+          template_name:$([[ "${{ job.status }}" == "success" ]] && echo "public-release-complete" || echo "public-release-failed")

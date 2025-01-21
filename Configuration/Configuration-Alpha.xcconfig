@@ -19,7 +19,8 @@
 
 #include "DuckDuckGoDeveloper.xcconfig"
 #include? "ExternalDeveloper.xcconfig"
-#include? "Version.xcconfig"
+#include "Version.xcconfig"
+#include "BuildNumber.xcconfig"
 
 // The app bundle identifier
 APP_ID = com.duckduckgo.mobile.ios.alpha

@@ -63,6 +63,9 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/0/1208767141940869/f
     case privacyProFreeTrialJan25
+
+    /// https://app.asana.com/0/1206226850447395/1206307878076518
+    case webViewStateRestoration
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
@@ -145,6 +148,8 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .aiChatDeepLink:
             return .remoteReleasable(.subfeature(AIChatSubfeature.deepLink))
         case .tabManagerMultiSelection:
+            return .internalOnly()
+        case .webViewStateRestoration:
             return .internalOnly()
         }
     }

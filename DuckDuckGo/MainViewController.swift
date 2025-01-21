@@ -240,8 +240,10 @@ class MainViewController: UIViewController {
 
         self.previewsSource = previewsSource
 
+        let interactionStateSource = WebViewStateRestorationManager(featureFlagger: featureFlagger).isFeatureEnabled ? TabInteractionStateDiskSource() : nil
         self.tabManager = TabManager(model: tabsModel,
                                      previewsSource: previewsSource,
+                                     interactionStateSource: interactionStateSource,
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
                                      syncService: syncService,

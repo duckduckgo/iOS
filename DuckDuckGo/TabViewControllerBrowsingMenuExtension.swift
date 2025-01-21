@@ -507,11 +507,10 @@ extension TabViewController {
         } else {
             togglePrivacyProtection(domain: domain)
         }
-        let tdsEtag = AppDependencyProvider.shared.configurationStore.loadEtag(for: .trackerDataSet)
-        TDSOverrideExperimentMetrics.fireTdsExperimentMetricPrivacyToggleUsed(etag: tdsEtag ?? "", featureFlagger: AppDependencyProvider.shared.featureFlagger, fireDebugExperiment: { parameters in
+        let tdsEtag = AppDependencyProvider.shared.configurationStore.loadEtag(for: .trackerDataSet) ?? ""
+        TDSOverrideExperimentMetrics.fireTdsExperimentMetric(metricType: .privacyToggleUsed, etag: tdsEtag) { parameters in
             UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
-
-        })
+        }
     }
 
     private func togglePrivacyProtection(domain: String, didSendReport: Bool = false) {

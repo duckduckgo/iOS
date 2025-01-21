@@ -1494,9 +1494,9 @@ extension Pixel.Event {
             
         case .configurationFetchInfo: return "m_d_cfgfetch"
             
-        case .trackerDataParseFailed: return "m_d_tds_p"
-        case .trackerDataReloadFailed: return "m_d_tds_r"
-        case .trackerDataCouldNotBeLoaded: return "m_d_tds_l"
+        case .trackerDataParseFailed: return "m_d_tracker_data_parse_failed"
+        case .trackerDataReloadFailed: return "m_d_tracker_data_reload_failed"
+        case .trackerDataCouldNotBeLoaded: return "m_d_trackerDataCouldNotBeLoaded"
         case .fileStoreWriteFailed: return "m_d_fswf"
         case .fileStoreCoordinatorFailed: return "m_d_configuration_file_coordinator_error"
         case .privacyConfigurationReloadFailed: return "m_d_pc_r"

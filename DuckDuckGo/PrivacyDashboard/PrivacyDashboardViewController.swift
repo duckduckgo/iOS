@@ -138,11 +138,10 @@ final class PrivacyDashboardViewController: UIViewController {
                 ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
             }
             Pixel.fire(pixel: .dashboardProtectionAllowlistAdd, withAdditionalParameters: pixelParam)
-            let tdsEtag = AppDependencyProvider.shared.configurationStore.loadEtag(for: .trackerDataSet)
-            TDSOverrideExperimentMetrics.fireTdsExperimentMetricPrivacyToggleUsed(etag: tdsEtag ?? "", featureFlagger: AppDependencyProvider.shared.featureFlagger, fireDebugExperiment: { parameters in
+            let tdsEtag = AppDependencyProvider.shared.configurationStore.loadEtag(for: .trackerDataSet) ?? ""
+            TDSOverrideExperimentMetrics.fireTdsExperimentMetric(metricType: .privacyToggleUsed, etag: tdsEtag) { parameters in
                 UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
-
-            })
+            }
         }
         
         contentBlockingManager.scheduleCompilation()

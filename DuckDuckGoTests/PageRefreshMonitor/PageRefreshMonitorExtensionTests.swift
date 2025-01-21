@@ -25,25 +25,39 @@ import BrowserServicesKit
 
 final class PageRefreshMonitorExtensionTests: XCTestCase {
 
-    var capturedSubfeatureID: String?
     var captureMetric: String?
 
     override func setUpWithError() throws {
-        TDSOverrideExperimentMetrics.configureTDSOverrideExperimentMetrics { subfeatureID, metric, _, _ in
-            self.capturedSubfeatureID = subfeatureID
+        TDSOverrideExperimentMetrics.configureTDSOverrideExperimentMetrics { _, metric, _, _ in
             self.captureMetric = metric
         }
     }
 
     override func tearDownWithError() throws {
-        capturedSubfeatureID = nil
         captureMetric = nil
     }
 
     func test_OnDidDetectRefreshPattern_WithValue1_FireExperimentFuncNotCalled() throws {
         PageRefreshMonitor.onDidDetectRefreshPattern(1)
 
-        XCTAssertNil(capturedSubfeatureID)
+        XCTAssertNil(captureMetric)
+    }
+
+    func test_OnDidDetectRefreshPattern_WithValue2_ExpectedFireExperimentFuncCalled() throws {
+        PageRefreshMonitor.onDidDetectRefreshPattern(2)
+
+        XCTAssertEqual(captureMetric, "2XRefresh")
+    }
+
+    func test_OnDidDetectRefreshPattern_WithValue3_ExpectedFireExperimentFuncCalled() throws {
+        PageRefreshMonitor.onDidDetectRefreshPattern(3)
+
+        XCTAssertEqual(captureMetric, "3XRefresh")
+    }
+
+    func test_OnDidDetectRefreshPattern_WithValue4_FireExperimentFuncNotCalled() throws {
+        PageRefreshMonitor.onDidDetectRefreshPattern(4)
+
         XCTAssertNil(captureMetric)
     }
 

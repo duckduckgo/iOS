@@ -25,19 +25,16 @@ import PixelExperimentKit
 extension PageRefreshMonitor {
 
     static let onDidDetectRefreshPattern: (Int) -> Void = { refreshCount in
+        let tdsEtag = AppDependencyProvider.shared.configurationStore.loadEtag(for: .trackerDataSet) ?? ""
         switch refreshCount {
         case 2:
-            let tdsEtag = AppDependencyProvider.shared.configurationStore.loadEtag(for: .trackerDataSet)
-            TDSOverrideExperimentMetrics.fireTdsExperimentMetric2XRefresh(etag: tdsEtag ?? "", featureFlagger: AppDependencyProvider.shared.featureFlagger, fireDebugExperiment: { parameters in
+            TDSOverrideExperimentMetrics.fireTdsExperimentMetric(metricType: .refresh2X, etag: tdsEtag, fireDebugExperiment: { parameters in
                 UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
-
             })
         case 3:
             Pixel.fire(pixel: .pageRefreshThreeTimesWithin20Seconds)
-            let tdsEtag = AppDependencyProvider.shared.configurationStore.loadEtag(for: .trackerDataSet)
-            TDSOverrideExperimentMetrics.fireTdsExperimentMetric2XRefresh(etag: tdsEtag ?? "", featureFlagger: AppDependencyProvider.shared.featureFlagger, fireDebugExperiment: { parameters in
+            TDSOverrideExperimentMetrics.fireTdsExperimentMetric(metricType: .refresh3X, etag: tdsEtag, fireDebugExperiment: { parameters in
                 UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
-
             })
         default:
             return

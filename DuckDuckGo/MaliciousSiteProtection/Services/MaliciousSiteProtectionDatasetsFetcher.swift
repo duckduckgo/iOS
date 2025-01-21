@@ -73,13 +73,17 @@ extension MaliciousSiteProtectionDatasetsFetcher {
     func startFetching() {
         guard canFetchDatasets else { return }
 
+        Logger.MaliciousSiteProtection.datasetsFetcher.debug("Feature is On and Enabled in App Settings")
+
         // If hashPrefix Sets need to be updated fetch them
         if shouldUpdateHashPrefixSets {
+            Logger.MaliciousSiteProtection.datasetsFetcher.debug("Downloading HashPrefixSets")
             _ = updateManager.updateData(datasetType: .hashPrefixSet)
         }
 
         // If hashPrefix Sets need to be updated fetch them
         if shouldUpdateFilterSets {
+            Logger.MaliciousSiteProtection.datasetsFetcher.debug("Downloading FilterSets")
             _ = updateManager.updateData(datasetType: .filterSet)
         }
     }
@@ -139,7 +143,10 @@ private extension MaliciousSiteProtectionDatasetsFetcher {
             DataManager.StoredDataType.Kind.allCases.forEach { datasetType in
                 // BackgroundTasks will automatically replace an existing task in the queue if one with the same identifier is queued, so we should only
                 // schedule a task if there are none pending in order to avoid the config task getting perpetually replaced.
-                guard !tasks.contains(where: { $0.identifier == datasetType.backgroundTaskIdentifier }) else { return }
+                guard !tasks.contains(where: { $0.identifier == datasetType.backgroundTaskIdentifier }) else {
+                    Logger.MaliciousSiteProtection.datasetsFetcher.debug("Skipping scheduling background tasks for \(datasetType.rawValue)")
+                    return
+                }
                 self.scheduleBackgroundRefreshTask(datasetType: datasetType)
             }
         }
@@ -210,8 +217,10 @@ extension MaliciousSiteProtectionDatasetsFetcher {
     private func scheduleBackgroundRefreshTask(datasetType: DataManager.StoredDataType.Kind) {
         func performScheduleTasks() {
             do {
+                Logger.MaliciousSiteProtection.datasetsFetcher.debug("Scheduling background task for \(datasetType.rawValue)")
                 try backgroundTaskScheduler.submit(task)
             } catch {
+                Logger.MaliciousSiteProtection.datasetsFetcher.error("Failed scheduling background task for \(datasetType.rawValue)")
                 Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error)
             }
         }
@@ -224,11 +233,11 @@ extension MaliciousSiteProtectionDatasetsFetcher {
 
         // Background tasks can be debugged by breaking on the `submit` call, stepping over, then running the following LLDB command, before resuming:
         //
-        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"com.duckduckgo.app.configurationRefresh"]
+        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"com.duckduckgo.app.maliciousSiteProtectionHashPrefixSetRefresh"]
         //
         // Task expiration can be simulated similarly:
         //
-        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"com.duckduckgo.app.configurationRefresh"]
+        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"com.duckduckgo.app.maliciousSiteProtectionHashPrefixSetRefresh"]
 
         #if targetEnvironment(simulator)
         guard ProcessInfo().arguments.contains("testing") else { return }

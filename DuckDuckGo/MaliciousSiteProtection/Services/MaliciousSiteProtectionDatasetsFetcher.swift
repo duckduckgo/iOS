@@ -138,7 +138,10 @@ private extension MaliciousSiteProtectionDatasetsFetcher {
     }
 
     func scheduleBackgroundTasksIfNeeded() {
-        guard application.backgroundRefreshStatus == .available else { return }
+        guard application.backgroundRefreshStatus == .available else {
+            Logger.MaliciousSiteProtection.datasetsFetcher.debug("Skipping scheduling background tasks as App does not support background refresh.")
+            return
+        }
 
         backgroundTaskScheduler.getPendingTaskRequests { [weak self] tasks in
             guard let self else { return }

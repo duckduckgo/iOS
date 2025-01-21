@@ -50,36 +50,54 @@ on:
 
 jobs:
 
-  tag-public-release:
+  tag-release:
 
-    name: Tag public release
+    name: Tag Release
 
     uses: ./.github/workflows/ios-tag-release.yml
     with:
       asana-task-url: ${{ inputs.asana-task-url || github.event.inputs.asana-task-url }}
       base-branch: ${{ github.event.inputs.base-branch || 'main' }}
-      branch: ${{ github.ref_name }}
-      internal-release-bump: ${{ github.event.inputs.internal-release-bump || 'false' }}
-      prerelease: ${{ github.event.inputs.release-type == 'internal' }}
+      branch: ${{ inputs.branch || github.ref_name }}
+      internal-release-bump: ${{ inputs.internal-release-bump || false }}
+      prerelease: ${{ inputs.release-type == 'internal' }}
     secrets:
       ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
       GHA_ELEVATED_PERMISSIONS_TOKEN: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }}
 
   update-asana-for-release:
 
-    name: Update asana for release
+    name: Update Asana for release
 
     env:
       RELEASE_TYPE: ${{ github.event.inputs.release-type || 'internal' }}
       TAG: ${{ github.event.inputs.tag }}
       asana-task-url: ${{ inputs.asana-task-url || github.event.inputs.asana-task-url }}
 
-    needs: [ tag-public-release ]
+    needs: [ tag-release ]
 
     runs-on: macos-15-xlarge
     timeout-minutes: 10
 
     steps:
+
+      - name: Download tag artifact
+        id: download-tag
+        # Only look for the tag artifact when the tag input is empty
+        if: github.event.inputs.tag == null || github.event.inputs.tag == ''
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: tag
+          path: .github
+
+      - name: Set tag variable
+        run: |
+          if [[ "${{ steps.download-tag.outcome }}" == 'success' ]]; then
+            echo "TAG=$(<.github/tag)" >> $GITHUB_ENV
+          else
+            echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          fi
 
       - name: Verify the tag
         id: verify-tag
@@ -148,36 +166,12 @@ jobs:
           tasks="$(./scripts/get_tasks_in_last_internal_release.sh)"
           echo "WORKFLOW_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
           echo "TASKS_SINCE_LAST_INTERNAL_RELEASE=$tasks" >> $GITHUB_ENV
-          if [[ -n "${TASKS_SINCE_LAST_INTERNAL_RELEASE}" ]]; then
+          if [[ -n "$tasks" ]]; then
             echo "release-task-comment-template=internal-release-complete-with-tasks" >> $GITHUB_OUTPUT
           else
             echo "release-task-comment-template=internal-release-complete" >> $GITHUB_OUTPUT
           fi
       
-      - name: Add a comment to the release task
-        if: success()
-        env:
-          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
-          WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          bundle exec fastlane run asana_add_comment \
-            task_url:"${{ env.asana-task-url }}" \
-            template_name:"${{ steps.asana-templates.outputs.release-task-comment-template }}
-
-      - name: Report status
-        if: always()
-        env:
-          ANNOUNCEMENT_TASK_ID: ${{ steps.update-asana.outputs.asana_new_task_id }}
-          ASSIGNEE_ID: ${{ steps.create-task.outputs.asana_assignee_id }}
-          TASK_ID: ${{ steps.create-task.outputs.asana_new_task_id }}
-          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
-        run: |
-          bundle exec fastlane run asana_log_message \
-            task_url:"${{ env.asana-task-url }}" \
-            template_name:"${{ steps.asana-templates.outputs.comment-template }}" \
-            github_handle:"${{ github.actor }}" \
-            is_scheduled_release:"${{ github.event_name == 'schedule' }}"
-
       - name: Add a comment to the release task
         if: success()
         env:

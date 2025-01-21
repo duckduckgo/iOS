@@ -264,6 +264,10 @@ class TabSwitcherViewController: UIViewController {
 
 extension TabSwitcherViewController: TabSwitcherTopBarModel.Delegate {
 
+    var tabCount: Int {
+        tabsModel.count
+    }
+
     func onTabStyleChange() {
         guard isProcessingUpdates == false else { return }
 
@@ -343,6 +347,13 @@ extension TabSwitcherViewController: TabSwitcherTopBarModel.Delegate {
 
         present(alert, animated: true, completion: nil)
 
+    }
+
+    func transitionToMultiSelect() {
+    }
+
+    func closeAllTabs() {
+        delegate?.tabSwitcherDidRequestCloseAll(tabSwitcher: self)
     }
 
 }

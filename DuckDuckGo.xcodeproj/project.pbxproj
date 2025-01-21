@@ -6267,7 +6267,6 @@
 		F1386BA21E6846320062FC3C /* TabSwitcher */ = {
 			isa = PBXGroup;
 			children = (
-				856F28D62D3EC5FA00A88211 /* TabSwitcherViewController+TopBarDelegate.swift */,
 				9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */,
 				85DFEDF824CF3D0E00973FE7 /* TabsBarCell.swift */,
 				8586A10F24CCCD040049720E /* TabsBarViewController.swift */,
@@ -6278,6 +6277,7 @@
 				851EA0872D39D39600A1A590 /* TabSwitcherTopBarView.swift */,
 				F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */,
 				85F2FFCE2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift */,
+				856F28D62D3EC5FA00A88211 /* TabSwitcherViewController+TopBarDelegate.swift */,
 				984D035924ACCC7D0066CFB8 /* TabViewCell.swift */,
 				F1DE78571E5CAE350058895A /* TabViewGridCell.swift */,
 				984D035724ACCC6F0066CFB8 /* TabViewListCell.swift */,

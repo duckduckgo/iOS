@@ -42,6 +42,24 @@ class TabSwitcherViewController: UIViewController {
         let existingCount: Int
     }
 
+    enum InterfaceMode {
+
+        case singleSelectNormal
+        case singleSelectLarge
+        case multiSelectAvailableNormal
+        case multiSelectAvailableLarge
+        case multiSelectEnabledNormal
+        case multiSelectEnabledLarge
+
+    }
+
+    enum TabsStyle: String {
+
+        case list = "tabsToggleList"
+        case grid = "tabsToggleGrid"
+
+    }
+
     @IBOutlet weak var topBarView: UINavigationBar!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
@@ -65,18 +83,22 @@ class TabSwitcherViewController: UIViewController {
 
     var selectedTabs = Set<Int>()
 
-    let favicons = Favicons.shared
-    let topBarModel = TabSwitcherTopBarModel()
+    let favicons: Favicons
+
+    var tabsStyle: TabsStyle = .list
+    var interfaceMode: InterfaceMode = .singleSelectNormal
 
     let featureFlagger: FeatureFlagger
 
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
                    syncService: DDGSyncing,
-                   featureFlagger: FeatureFlagger) {
+                   featureFlagger: FeatureFlagger,
+                   favicons: Favicons = Favicons.shared) {
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
         self.featureFlagger = featureFlagger
+        self.favicons = favicons
         super.init(coder: coder)
     }
 
@@ -116,7 +138,7 @@ class TabSwitcherViewController: UIViewController {
     }
 
     func refreshDisplayModeButton() {
-        topBarModel.tabsStyle = tabSwitcherSettings.isGridViewEnabled ? .grid : .list
+        tabsStyle = tabSwitcherSettings.isGridViewEnabled ? .grid : .list
     }
 
     override func viewWillAppear(_ animated: Bool) {

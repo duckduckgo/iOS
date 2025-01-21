@@ -128,18 +128,19 @@ extension TabSwitcherViewController {
 }
 
 extension TabSwitcherViewController {
+    
     func updateUIForSelectionMode() {
         if featureFlagger.isFeatureOn(.tabManagerMultiSelection) {
             if AppWidthObserver.shared.isLargeWidth {
-                topBarModel.uiMode = isEditing ? .multiSelectEnabledLarge : .multiSelectAvailableLarge
+                interfaceMode = isEditing ? .multiSelectEnabledLarge : .multiSelectAvailableLarge
             } else {
-                topBarModel.uiMode = isEditing ? .multiSelectEnabledNormal : .multiSelectAvailableNormal
+                interfaceMode = isEditing ? .multiSelectEnabledNormal : .multiSelectAvailableNormal
             }
         } else {
             if AppWidthObserver.shared.isLargeWidth {
-                topBarModel.uiMode = .singleSelectLarge
+               interfaceMode = .singleSelectLarge
             } else {
-                topBarModel.uiMode = .singleSelectNormal
+               interfaceMode = .singleSelectNormal
             }
         }
 
@@ -150,7 +151,7 @@ extension TabSwitcherViewController {
 
     func updateTopLeftButtons() {
 
-        switch topBarModel.uiMode {
+        switch interfaceMode {
         case .singleSelectNormal:
             topBarView.topItem?.leftBarButtonItems = [
                 createAddAllBookmarksBarButton(),
@@ -188,7 +189,7 @@ extension TabSwitcherViewController {
 
     func updateTopRightButtons() {
 
-        switch topBarModel.uiMode {
+        switch interfaceMode {
         case .singleSelectNormal:
             topBarView.topItem?.rightBarButtonItems = [
                 createTabStyleSwitcherBarButton(),
@@ -221,7 +222,7 @@ extension TabSwitcherViewController {
 
     func updateBottomBar() {
 
-        switch topBarModel.uiMode {
+        switch interfaceMode {
         case .singleSelectNormal,
                 .multiSelectAvailableNormal:
             toolbar.items = [
@@ -250,7 +251,7 @@ extension TabSwitcherViewController {
     }
 
     func createTabStyleSwitcherBarButton() -> UIBarButtonItem {
-        let image = UIImage(named: topBarModel.tabsStyle.rawValue)
+        let image = UIImage(named: tabsStyle.rawValue)
         return UIBarButtonItem(title: nil, image: image, primaryAction: UIAction { _ in
             self.onTabStyleChange()
         })

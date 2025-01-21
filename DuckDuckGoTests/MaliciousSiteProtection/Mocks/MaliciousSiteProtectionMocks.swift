@@ -22,6 +22,7 @@ import Combine
 import MaliciousSiteProtection
 import BackgroundTasks
 import Testing
+import enum UIKit.UIBackgroundRefreshStatus
 @testable import DuckDuckGo
 
 final class MockMaliciousSiteProtectionUpdateManager: MaliciousSiteUpdateManaging {
@@ -140,4 +141,8 @@ final class MockMaliciousSiteProtectionDataFetcher: MaliciousSiteProtectionDatas
     func registerBackgroundRefreshTaskHandler() {
         didCallRegisterBackgroundRefreshTaskHandler = true
     }
+}
+
+final class MockBackgroundRefreshApplication: BackgroundRefreshCapable {
+    var backgroundRefreshStatus: UIBackgroundRefreshStatus = .available
 }

@@ -20,6 +20,7 @@
 import Testing
 import Foundation
 import MaliciousSiteProtection
+import enum UIKit.UIBackgroundRefreshStatus
 @testable import DuckDuckGo
 
 @Suite("Malicious Site Protection - Feature Flags", .serialized)
@@ -30,6 +31,7 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
     private var userPreferencesManagerMock: MockMaliciousSiteProtectionPreferencesManager!
     private var backgroundSchedulerMock: MockBackgroundScheduler!
     private var timeTraveller: TimeTraveller!
+    private var application: MockBackgroundRefreshApplication!
 
     init() {
         setupSUT()
@@ -40,20 +42,23 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         featureFlaggerMock: MockMaliciousSiteProtectionFeatureFlags = .init(),
         userPreferencesManagerMock: MockMaliciousSiteProtectionPreferencesManager = .init(),
         dateProvider: @escaping () -> Date = Date.init,
-        backgroundSchedulerMock: MockBackgroundScheduler = .init()
+        backgroundSchedulerMock: MockBackgroundScheduler = .init(),
+        application: MockBackgroundRefreshApplication = .init()
     ) {
         self.updateManagerMock = updateManagerMock
         self.featureFlaggerMock = featureFlaggerMock
         self.userPreferencesManagerMock = userPreferencesManagerMock
         self.backgroundSchedulerMock = backgroundSchedulerMock
         self.timeTraveller = TimeTraveller()
+        self.application = application
 
         sut = MaliciousSiteProtectionDatasetsFetcher(
             updateManager: updateManagerMock,
             featureFlagger: featureFlaggerMock,
             userPreferencesManager: userPreferencesManagerMock,
             dateProvider: timeTraveller.getDate,
-            backgroundTaskScheduler: backgroundSchedulerMock
+            backgroundTaskScheduler: backgroundSchedulerMock,
+            application: application
         )
     }
 
@@ -362,7 +367,7 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         #expect(backgroundTask.capturedTaskCompletedSuccess == false)
     }
 
-    @Test("Start Background Update Task When User Turns On the Feature")
+    @Test("Start Background Update Task When User Turns On the Feature And Background Tasks Are Available")
     func whenUserTurnsOnProtectionThenStartBackgroundUpdateTask() {
         // GIVEN
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
@@ -378,6 +383,31 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         // TRUE
         #expect(backgroundSchedulerMock.didCallSubmitTaskRequest)
         #expect(backgroundSchedulerMock.capturedSubmittedTaskRequest != nil)
+    }
+
+    @Test(
+        "Do Not Start Background Update Task When User Turns On the Feature And Background Tasks Are Not Available",
+        arguments: [
+            UIBackgroundRefreshStatus.denied,
+            .restricted,
+        ]
+    )
+    func whenUserTurnsOnProtectionThenStartBackgroundUpdateTask(backgroundRefreshStatus: UIBackgroundRefreshStatus) {
+        // GIVEN
+        featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
+        userPreferencesManagerMock.isMaliciousSiteProtectionOn = false
+        application.backgroundRefreshStatus = backgroundRefreshStatus
+        setupSUT(updateManagerMock: updateManagerMock, featureFlaggerMock: featureFlaggerMock, userPreferencesManagerMock: userPreferencesManagerMock, application: application)
+        sut.registerBackgroundRefreshTaskHandler()
+        #expect(!backgroundSchedulerMock.didCallSubmitTaskRequest)
+        #expect(backgroundSchedulerMock.capturedSubmittedTaskRequest == nil)
+
+        // WHEN
+        userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
+
+        // TRUE
+        #expect(!backgroundSchedulerMock.didCallSubmitTaskRequest)
+        #expect(backgroundSchedulerMock.capturedSubmittedTaskRequest == nil)
     }
 
     @Test("Stop Background Update Task When User Turns Off the Feature")

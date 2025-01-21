@@ -34,6 +34,7 @@ final class MaliciousSiteProtectionDatasetsFetcher: MaliciousSiteProtectionDatas
     private let dateProvider: () -> Date
     private let updateManager: MaliciousSiteUpdateManaging
     private let backgroundTaskScheduler: BGTaskScheduling
+    private let application: BackgroundRefreshCapable
 
     private var preferencesManagerCancellable: AnyCancellable?
 
@@ -54,13 +55,15 @@ final class MaliciousSiteProtectionDatasetsFetcher: MaliciousSiteProtectionDatas
         featureFlagger: MaliciousSiteProtectionFeatureFlagger & MaliciousSiteProtectionFeatureFlagsSettingsProvider,
         userPreferencesManager: MaliciousSiteProtectionPreferencesProvider,
         dateProvider: @escaping () -> Date = Date.init,
-        backgroundTaskScheduler: BGTaskScheduling = BGTaskScheduler.shared
+        backgroundTaskScheduler: BGTaskScheduling = BGTaskScheduler.shared,
+        application: BackgroundRefreshCapable = UIApplication.shared
     ) {
         self.updateManager = updateManager
         self.featureFlagger = featureFlagger
         self.userPreferencesManager = userPreferencesManager
         self.dateProvider = dateProvider
         self.backgroundTaskScheduler = backgroundTaskScheduler
+        self.application = application
     }
 }
 
@@ -135,6 +138,8 @@ private extension MaliciousSiteProtectionDatasetsFetcher {
     }
 
     func scheduleBackgroundTasksIfNeeded() {
+        guard application.backgroundRefreshStatus == .available else { return }
+
         backgroundTaskScheduler.getPendingTaskRequests { [weak self] tasks in
             guard let self else { return }
 
@@ -287,3 +292,9 @@ extension BGTaskScheduler: BGTaskScheduling {
         register(forTaskWithIdentifier: identifier, using: nil, launchHandler: launchHandler)
     }
 }
+
+protocol BackgroundRefreshCapable: AnyObject {
+    var backgroundRefreshStatus: UIBackgroundRefreshStatus { get }
+}
+
+extension UIApplication: BackgroundRefreshCapable {}

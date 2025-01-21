@@ -2118,6 +2118,15 @@ extension MainViewController: OmniBarDelegate {
             }
         }
     }
+
+    func onAIChatPressed() {
+        if let text = omniBar.textField.text {
+            let query = URLQueryItem(name: "q", value: text)
+            openAIChat(query)
+            performCancel()
+        }
+
+    }
 }
 
 extension MainViewController: FavoritesOverlayDelegate {

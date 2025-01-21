@@ -41,6 +41,7 @@ protocol OmniBarState: CustomStringConvertible {
     var showMenu: Bool { get }
     var showSettings: Bool { get }
     var showVoiceSearch: Bool { get }
+    var showAIChat: Bool { get }
     var showAbort: Bool { get }
 
     var onEditingStoppedState: OmniBarState { get }

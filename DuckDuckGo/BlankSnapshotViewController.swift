@@ -163,6 +163,10 @@ extension BlankSnapshotViewController: UICollectionViewDataSource {
 
 extension BlankSnapshotViewController: OmniBarDelegate {
 
+    func onAIChatPressed() {
+        // No-op
+    }
+    
     func onVoiceSearchPressed() {
        // No-op
     }

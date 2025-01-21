@@ -57,6 +57,7 @@ class OmniBar: UIView {
     @IBOutlet weak var voiceSearchButton: UIButton!
     @IBOutlet weak var abortButton: UIButton!
 
+    @IBOutlet weak var aiChatButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
@@ -399,6 +400,7 @@ class OmniBar: UIView {
         setVisibility(refreshButton, hidden: !state.showRefresh)
         setVisibility(voiceSearchButton, hidden: !state.showVoiceSearch)
         setVisibility(abortButton, hidden: !state.showAbort)
+        setVisibility(aiChatButton, hidden: !state.showAIChat)
 
         setVisibility(backButton, hidden: !state.showBackButton)
         setVisibility(forwardButton, hidden: !state.showForwardButton)
@@ -412,6 +414,10 @@ class OmniBar: UIView {
 
         if state.showVoiceSearch && state.showClear {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
+        }
+
+        if state.showAIChat && state.showClear {
+            searchStackContainer.setCustomSpacing(13, after: aiChatButton)
         }
 
         UIView.animate(withDuration: 0.0) { [weak self] in
@@ -490,6 +496,10 @@ class OmniBar: UIView {
 
     @IBAction func onVoiceSearchButtonPressed(_ sender: UIButton) {
         omniDelegate?.onVoiceSearchPressed()
+    }
+
+    @IBAction func onAIChatButtonPressed(_ sender: UIButton) {
+        omniDelegate?.onAIChatPressed()
     }
 
     @IBAction func onAbortButtonPressed(_ sender: Any) {

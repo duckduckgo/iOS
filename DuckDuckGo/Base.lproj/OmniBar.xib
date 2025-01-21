@@ -82,10 +82,10 @@
                                     </constraints>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sek-4Y-GoT" customClass="SearchFieldContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="30" y="0.0" width="313" height="40"/>
+                                    <rect key="frame" x="30" y="0.0" width="283" height="40"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEJ-P3-HpO" customClass="OmniBarNotificationContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="-4" y="0.0" width="317" height="40"/>
+                                            <rect key="frame" x="-4" y="0.0" width="287" height="40"/>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGG-5L-D8Q" customClass="PrivacyInfoContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="138" height="40"/>
@@ -217,7 +217,7 @@
                                             </connections>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="30" y="0.0" width="283" height="40"/>
+                                            <rect key="frame" x="30" y="0.0" width="253" height="40"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                 <accessibilityTraits key="traits" searchField="YES"/>
@@ -260,7 +260,7 @@
                                     </connections>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ita-iD-8ad" userLabel="Voice Button">
-                                    <rect key="frame" x="343" y="5" width="30" height="30"/>
+                                    <rect key="frame" x="313" y="5" width="30" height="30"/>
                                     <accessibility key="accessibilityConfiguration" label="Voice Search"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="80Y-p8-kj7"/>
@@ -269,6 +269,18 @@
                                     <state key="normal" image="Microphone-24"/>
                                     <connections>
                                         <action selector="onVoiceSearchButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="hLt-8r-LIV"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0FN-ox-bFn" userLabel="AIChat Button">
+                                    <rect key="frame" x="343" y="5" width="30" height="30"/>
+                                    <accessibility key="accessibilityConfiguration" label="Voice Search"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" priority="900" constant="30" id="gIz-Yj-LXB"/>
+                                        <constraint firstAttribute="height" constant="30" id="uLZ-CK-Wzw"/>
+                                    </constraints>
+                                    <state key="normal" image="AIChat-24"/>
+                                    <connections>
+                                        <action selector="onAIChatButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="eQa-fT-32f"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
@@ -411,6 +423,7 @@
             <connections>
                 <outlet property="abortButton" destination="gb5-wL-4OW" id="khG-dO-p4p"/>
                 <outlet property="accessoryButton" destination="hor-Jd-3kw" id="vuG-4B-vl0"/>
+                <outlet property="aiChatButton" destination="0FN-ox-bFn" id="Upr-aW-0Q8"/>
                 <outlet property="backButton" destination="i9n-fD-ncJ" id="5sk-Ld-2Pq"/>
                 <outlet property="bookmarksButton" destination="ii4-Sq-bD1" id="XN8-Yb-eXK"/>
                 <outlet property="cancelButton" destination="IHT-9R-ERy" id="XVf-QQ-jSa"/>
@@ -452,6 +465,7 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
+        <image name="AIChat-24" width="24" height="24"/>
         <image name="Book-24" width="24" height="24"/>
         <image name="BrowseNext" width="24" height="24"/>
         <image name="BrowsePrevious" width="24" height="24"/>

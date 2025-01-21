@@ -72,6 +72,8 @@ protocol OmniBarDelegate: AnyObject {
     
     func onVoiceSearchPressed()
 
+    func onAIChatPressed()
+
 }
 
 extension OmniBarDelegate {

@@ -50,7 +50,7 @@ struct LargeOmniBarState {
         var onReloadState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
         var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
-
+        var showAIChat: Bool { false }
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let isLoading: Bool
 
@@ -91,6 +91,7 @@ struct LargeOmniBarState {
         var onReloadState: OmniBarState { return HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
         var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
+        var showAIChat: Bool { true }
 
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let isLoading: Bool
@@ -124,7 +125,7 @@ struct LargeOmniBarState {
         var onEnterPhoneState: OmniBarState { return SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var onReloadState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
-
+        var showAIChat: Bool { false }
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let isLoading: Bool
     }
@@ -157,7 +158,7 @@ struct LargeOmniBarState {
         var onReloadState: OmniBarState { return BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
         var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
-
+        var showAIChat: Bool { false }
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let isLoading: Bool
     }
@@ -190,7 +191,7 @@ struct LargeOmniBarState {
         var onReloadState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
         var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
-
+        var showAIChat: Bool { true }
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let isLoading: Bool
     }
@@ -223,7 +224,7 @@ struct LargeOmniBarState {
         var onEnterPadState: OmniBarState { return self }
         var onEnterPhoneState: OmniBarState { return SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var onReloadState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-
+        var showAIChat: Bool { false }
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let isLoading: Bool
     }

@@ -54,7 +54,7 @@ enum UniversalOmniBarState {
 
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let isLoading: Bool
-
+        var showAIChat: Bool { false }
         func withLoading() -> UniversalOmniBarState.EditingSuspendedState {
             Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, isLoading: true)
         }

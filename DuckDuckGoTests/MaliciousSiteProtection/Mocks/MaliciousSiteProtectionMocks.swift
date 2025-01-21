@@ -147,6 +147,23 @@ final class MockBackgroundRefreshApplication: BackgroundRefreshCapable {
     var backgroundRefreshStatus: UIBackgroundRefreshStatus = .available
 }
 
+final class MockMaliciousSiteFileStore: MaliciousSiteProtection.FileStoring {
+    private var storage: [String: Data] = [:]
+    var didWriteToDisk: Bool = false
+    var didReadFromDisk: Bool = false
+
+    func write(data: Data, to filename: String) -> Bool {
+        didWriteToDisk = true
+        storage[filename] = data
+        return true
+    }
+
+    func read(from filename: String) -> Data? {
+        didReadFromDisk = true
+        return storage[filename]
+    }
+}
+
 final class MockMaliciousSiteDetector: MaliciousSiteProtection.MaliciousSiteDetecting {
 
     var isMalicious: (URL) -> MaliciousSiteProtection.ThreatKind? = { url in

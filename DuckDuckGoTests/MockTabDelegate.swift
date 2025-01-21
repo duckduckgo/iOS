@@ -150,7 +150,8 @@ extension TabViewController {
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
             textZoomCoordinator: MockTextZoomCoordinator(),
             websiteDataManager: MockWebsiteDataManager(),
-            fireproofing: MockFireproofing()
+            fireproofing: MockFireproofing(),
+            tabInteractionStateSource: MockTabInteractionStateSource()
         )
         tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false, customWebView: customWebView)
         return tab

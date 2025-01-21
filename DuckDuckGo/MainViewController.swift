@@ -2592,7 +2592,6 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcherDidRequestCloseAll(tabSwitcher: TabSwitcherViewController) {
-        // TODO polish
         self.forgetTabs()
         self.refreshUIAfterClear()
         tabSwitcher.dismiss()

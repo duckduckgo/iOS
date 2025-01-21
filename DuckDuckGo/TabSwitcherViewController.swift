@@ -42,7 +42,7 @@ class TabSwitcherViewController: UIViewController {
         let existingCount: Int
     }
 
-    @IBOutlet weak var topBarContainerView: UIView!
+    @IBOutlet weak var topBarView: UINavigationBar!
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
@@ -50,6 +50,9 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
+
+    @IBOutlet weak var topLeftButtons: UIStackView!
+    @IBOutlet weak var topRightButtons: UIStackView!
 
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -90,12 +93,10 @@ class TabSwitcherViewController: UIViewController {
     }
 
     fileprivate func createTopBar() {
-        topBarModel.delegate = self
-        let hosting = UIHostingController(rootView: TabSwitcherTopBarView(model: topBarModel))
-        hosting.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        hosting.view.frame = .init(origin: .zero, size: topBarContainerView.frame.size)
-        hosting.view.backgroundColor = nil
-        topBarContainerView.addSubview(hosting.view)
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        topBarView.standardAppearance = appearance
+        topBarView.scrollEdgeAppearance = appearance
     }
 
     override func viewDidLoad() {
@@ -116,13 +117,6 @@ class TabSwitcherViewController: UIViewController {
 
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        updateUIForSelectionMode()
-        toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
-   }
-
     private func setupBackgroundView() {
         let view = UIView(frame: collectionView.frame)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(gesture:))))
@@ -142,6 +136,8 @@ class TabSwitcherViewController: UIViewController {
             collectionView.addGestureRecognizer(recognizer)
             reorderGestureRecognizer = recognizer
         }
+
+        updateUIForSelectionMode()
     }
 
     func prepareForPresentation() {
@@ -186,7 +182,7 @@ class TabSwitcherViewController: UIViewController {
     }
 
     private func refreshTitle() {
-        topBarModel.title = UserText.numberOfTabs(tabsModel.count)
+        topBarView.topItem?.title = UserText.numberOfTabs(tabsModel.count)
     }
 
     func displayBookmarkAllStatusMessage(with results: BookmarkAllResult, openTabsCount: Int) {
@@ -218,7 +214,11 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
-        dismiss()
+        if isEditing {
+            transitionFromMultiSelect()
+        } else {
+            dismiss()
+        }
     }
     
     func markCurrentAsViewedAndDismiss() {
@@ -235,7 +235,7 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBAction func onFirePressed(sender: AnyObject) {
-        burn()
+        burn(sender: sender)
     }
 
     func forgetAll() {
@@ -345,6 +345,7 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
                 selectedTabs.remove(indexPath.row)
             }
             collectionView.reloadItems(at: [indexPath])
+            updateUIForSelectionMode()
         } else {
             markCurrentAsViewedAndDismiss()
         }
@@ -442,7 +443,7 @@ extension TabSwitcherViewController {
         
         refreshDisplayModeButton()
         
-        topBarContainerView.tintColor = theme.barTintColor
+        topBarView.tintColor = theme.barTintColor
 
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor

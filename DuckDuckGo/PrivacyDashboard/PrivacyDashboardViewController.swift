@@ -25,7 +25,6 @@ import BrowserServicesKit
 import PrivacyDashboard
 import Common
 import os.log
-import PixelKit
 import PixelExperimentKit
 
 final class PrivacyDashboardViewController: UIViewController {

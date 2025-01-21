@@ -26,8 +26,6 @@ import WidgetKit
 import Common
 import PrivacyDashboard
 import PixelExperimentKit
-import PixelKit
-import Configuration
 
 extension TabViewController {
 

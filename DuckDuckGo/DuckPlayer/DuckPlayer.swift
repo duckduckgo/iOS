@@ -207,7 +207,7 @@ protocol DuckPlayerControlling: AnyObject {
 }
 
 /// Implementation of the DuckPlayerControlling.
-final class DuckPlayer: DuckPlayerControlling {
+final class DuckPlayer: NSObject, DuckPlayerControlling {
     
     struct Constants {
         static let duckPlayerHost: String = "player"
@@ -224,6 +224,7 @@ final class DuckPlayer: DuckPlayerControlling {
     private(set) weak var hostView: TabViewController?
     
     private var featureFlagger: FeatureFlagger
+    private var hideTimer: Timer?
     
     private lazy var localeStrings: String? = {
         let languageCode = Locale.current.languageCode ?? Constants.defaultLocale
@@ -255,6 +256,7 @@ final class DuckPlayer: DuckPlayerControlling {
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.settings = settings
         self.featureFlagger = featureFlagger
+        super.init()
         registerOrientationSubscriber()
     }
     
@@ -263,12 +265,56 @@ final class DuckPlayer: DuckPlayerControlling {
     /// - Parameter vc: The view controller to set as host.
     public func setHostViewController(_ vc: TabViewController) {
         hostView = vc
+        
+        // Add tap gesture recognizer to the hostView TabView Controller
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tapGesture.delegate = self
+        vc.view.addGestureRecognizer(tapGesture)
     }
     
     /// Removes the host view controller.
     public func removeHostView() {
+        // Remove the tap gesture recognizer
+        hostView?.view.gestureRecognizers?.forEach { recognizer in
+            if recognizer is UITapGestureRecognizer {
+                hostView?.view.removeGestureRecognizer(recognizer)
+            }
+        }
+        
+        // Invalidate timer
+        hideTimer?.invalidate()
+        hideTimer = nil
+        
         hostView = nil
     }
+    
+    /// Handles tap gestures in the hostViewController
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        if let url = hostView?.url, url.isDuckPlayer {
+            let orientation = UIDevice.current.orientation
+            if orientation.isLandscape {
+                hostView?.chromeDelegate?.setBarsHidden(false, animated: true)
+                setupHideTimer()
+            }
+        }
+    }
+    
+    /// Sets up a hide timer for the navigation and toolbars when the user is in landscape mode
+    private func setupHideTimer() {
+        // Invalidate existing timer if any
+        hideTimer?.invalidate()
+        
+        // Create new timer
+        hideTimer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] _ in
+            DispatchQueue.main.async {
+                let orientation = UIDevice.current.orientation
+                if orientation.isLandscape {
+                    self?.hostView?.chromeDelegate?.setBarsHidden(true, animated: true)
+                }
+            }
+        }
+    }
+
     
     // MARK: - Common Message Handlers
     
@@ -325,10 +371,15 @@ final class DuckPlayer: DuckPlayerControlling {
         case .portrait, .portraitUpsideDown:
             hostView?.chromeDelegate?.omniBar.resignFirstResponder()
             hostView?.chromeDelegate?.setBarsHidden(false, animated: true)
+            hideTimer?.invalidate()
+            hideTimer = nil
+            hostView?.resetWebViewConstraints()
         case .landscapeLeft, .landscapeRight:
             hostView?.chromeDelegate?.omniBar.resignFirstResponder()
+            hostView?.setupWebViewConstraintsForLandscape()
             hostView?.chromeDelegate?.setBarsHidden(true, animated: true)
         case .unknown, .faceUp, .faceDown:
+            hostView?.resetWebViewConstraints()
             return
         @unknown default:
             return
@@ -535,4 +586,71 @@ final class DuckPlayer: DuckPlayerControlling {
        
     }
     
+}
+
+extension DuckPlayer: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                          shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
+
+// Remove and resets WebView Constraints to allow the webView
+// to become full screen when rotating the device to Landscape mode
+
+private extension TabViewController {
+    // Use a dedicated key object instead of a String
+    private static let originalWebViewConstraintsKey: UnsafeRawPointer = {
+        return UnsafeRawPointer(UnsafeMutablePointer<UInt8>.allocate(capacity: 1))
+    }()
+    
+    var originalWebViewConstraints: [NSLayoutConstraint]? {
+        get {
+            return objc_getAssociatedObject(self, TabViewController.originalWebViewConstraintsKey) as? [NSLayoutConstraint]
+        }
+        set {
+            objc_setAssociatedObject(self, TabViewController.originalWebViewConstraintsKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+    
+    func setupWebViewConstraintsForLandscape() {
+        guard let webView = webView else { return }
+        
+        // Store current constraints before removing them
+        let currentConstraints = view.constraints.filter { $0.firstItem === webView || $0.secondItem === webView }
+        originalWebViewConstraints = currentConstraints
+        
+        // Remove current webview constraints
+        view.constraints.filter { $0.firstItem === webView || $0.secondItem === webView }.forEach { view.removeConstraint($0) }
+        
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Save original frame before bars hide/show
+        let frame = view.frame
+        
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: view.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            webView.heightAnchor.constraint(equalToConstant: frame.height),
+            webView.widthAnchor.constraint(equalToConstant: frame.width)
+        ])
+    }
+    
+    func resetWebViewConstraints() {
+        guard let webView = webView else { return }
+        
+        // Remove landscape constraints
+        view.constraints.filter { $0.firstItem === webView || $0.secondItem === webView }.forEach { view.removeConstraint($0) }
+        
+        // Restore original constraints
+        if let originalConstraints = originalWebViewConstraints {
+            NSLayoutConstraint.activate(originalConstraints)
+            originalWebViewConstraints = nil
+        }
+        
+        webView.translatesAutoresizingMaskIntoConstraints = false
+    }
 }

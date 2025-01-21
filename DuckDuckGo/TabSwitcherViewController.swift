@@ -43,16 +43,8 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBOutlet weak var topBarView: UINavigationBar!
-
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
-
-    @IBOutlet weak var fireButton: UIBarButtonItem!
-    @IBOutlet weak var doneButton: UIBarButtonItem!
-    @IBOutlet weak var plusButton: UIBarButtonItem!
-
-    @IBOutlet weak var topLeftButtons: UIStackView!
-    @IBOutlet weak var topRightButtons: UIStackView!
 
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!

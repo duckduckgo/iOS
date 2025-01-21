@@ -2755,9 +2755,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Accessibility label on remove button */
 "tab.close.home" = "Close home tab";
 
-/* Close tabs with a count */
-"tab.close.with.count" = "Close All %@ Tabs";
-
 /* Accesibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Close \"%1$@\" at %2$@";
 

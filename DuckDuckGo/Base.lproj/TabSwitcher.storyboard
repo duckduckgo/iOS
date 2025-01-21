@@ -332,30 +332,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="BUt-3S-Yua"/>
                                 </constraints>
-                                <items>
-                                    <barButtonItem systemItem="done" id="S1O-aT-Bgw">
-                                        <connections>
-                                            <action selector="onDonePressed:" destination="G9p-Sf-e96" id="yns-QI-PSf"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="C3E-Kk-DYK"/>
-                                    <barButtonItem title="Close all tabs and clear data" image="Fire" id="h1S-c2-Spf">
-                                        <inset key="imageInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <connections>
-                                            <action selector="onFirePressedWithSender:" destination="G9p-Sf-e96" id="N2s-jE-SXY"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="MHa-87-9H2"/>
-                                    <barButtonItem title="New Tab" image="Add-24" id="nYf-xs-PE7">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Add"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="onAddPressed:" destination="G9p-Sf-e96" id="DNG-FQ-8Bn"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
+                                <items/>
                                 <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
@@ -378,9 +355,6 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="XZT-ek-lrC" id="iNF-Uj-4dl"/>
-                        <outlet property="doneButton" destination="S1O-aT-Bgw" id="8I7-gH-bhZ"/>
-                        <outlet property="fireButton" destination="h1S-c2-Spf" id="VfW-9h-WGv"/>
-                        <outlet property="plusButton" destination="nYf-xs-PE7" id="9pP-uN-hsa"/>
                         <outlet property="toolbar" destination="PrD-ff-flI" id="6c2-zx-gsM"/>
                         <outlet property="topBarView" destination="3Kd-yL-Gby" id="Q0T-rr-eAN"/>
                         <segue destination="JZX-S3-Ir9" kind="presentation" identifier="ActionSheetDaxDialog" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="Zno-fp-7xb"/>
@@ -585,8 +559,6 @@
     </scenes>
     <resources>
         <image name="Add" width="24" height="24"/>
-        <image name="Add-24" width="24" height="24"/>
-        <image name="Fire" width="19" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
         <image name="Remove" width="24" height="24"/>
         <image name="TabUnread" width="24" height="24"/>

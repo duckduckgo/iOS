@@ -1,5 +1,5 @@
 //
-//  TabSwitcherViewController+TopBarDelegate.swift
+//  TabSwitcherViewController+MultiSelect.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -22,7 +22,7 @@ import BrowserServicesKit
 import Core
 import Bookmarks
 
-extension TabSwitcherViewController { // : TabSwitcherTopBarModel.Delegate {
+extension TabSwitcherViewController {
 
     var tabCount: Int {
         tabsModel.count
@@ -90,23 +90,6 @@ extension TabSwitcherViewController { // : TabSwitcherTopBarModel.Delegate {
         dismiss()
     }
 
-    func bookmarkAll() {
-
-        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
-                                      message: UserText.alertBookmarkAllMessage,
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        alert.addAction(title: UserText.actionBookmark, style: .default) {
-            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
-            model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-            let result = self.bookmarkAll(viewModel: model)
-            self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
-        }
-
-        present(alert, animated: true, completion: nil)
-
-    }
-
     func transitionToMultiSelect() {
         self.isEditing = true
         selectedTabs = Set<Int>()
@@ -169,41 +152,33 @@ extension TabSwitcherViewController {
 
         switch topBarModel.uiMode {
         case .singleSelectNormal:
-            // add all bookmarks button
             topBarView.topItem?.leftBarButtonItems = [
                 createAddAllBookmarksBarButton(),
             ]
 
         case .singleSelectLarge:
-            // add all bookmarks button
-            // tab style switcher
             topBarView.topItem?.leftBarButtonItems = [
                 createAddAllBookmarksBarButton(),
                 createTabStyleSwitcherBarButton(),
             ]
 
         case .multiSelectAvailableNormal:
-            // tab style switcher
             topBarView.topItem?.leftBarButtonItems = [
                 createTabStyleSwitcherBarButton(),
             ]
 
         case .multiSelectAvailableLarge:
-            // edit button
-            // tab style switcher
             topBarView.topItem?.leftBarButtonItems = [
                 createEditBarButton(),
                 createTabStyleSwitcherBarButton(),
             ]
 
         case .multiSelectEnabledNormal:
-            // select all button
             topBarView.topItem?.leftBarButtonItems = [
                 createSelectAllButton(),
             ]
 
         case .multiSelectEnabledLarge:
-            // done button
             topBarView.topItem?.leftBarButtonItems = [
                 createDoneBarButton(),
             ]
@@ -215,15 +190,11 @@ extension TabSwitcherViewController {
 
         switch topBarModel.uiMode {
         case .singleSelectNormal:
-            // tab style switcher
             topBarView.topItem?.rightBarButtonItems = [
                 createTabStyleSwitcherBarButton(),
             ]
 
         case .singleSelectLarge, .multiSelectAvailableLarge:
-            // plus button
-            // fire button
-            // done button
             topBarView.topItem?.rightBarButtonItems = [
                 createDoneBarButton(),
                 createFireBarButton(),
@@ -231,19 +202,16 @@ extension TabSwitcherViewController {
             ]
 
         case .multiSelectAvailableNormal:
-            // edit button
             topBarView.topItem?.rightBarButtonItems = [
                 createEditBarButton(),
             ]
 
         case .multiSelectEnabledNormal:
-            // done button
             topBarView.topItem?.rightBarButtonItems = [
                 createDoneBarButton(),
             ]
 
         case .multiSelectEnabledLarge:
-            // multi-select menu button
             topBarView.topItem?.rightBarButtonItems = [
                 createMultiSelectionMenuBarButton(),
             ]
@@ -256,11 +224,6 @@ extension TabSwitcherViewController {
         switch topBarModel.uiMode {
         case .singleSelectNormal,
                 .multiSelectAvailableNormal:
-            // done button
-            // separator
-            // fire button
-            // separator
-            // plus button
             toolbar.items = [
                 createPlusBarButton(),
                 UIBarButtonItem.flexibleSpace(),
@@ -271,9 +234,6 @@ extension TabSwitcherViewController {
             toolbar.isHidden = false
 
         case .multiSelectEnabledNormal:
-            // close tabs
-            // separator
-            // multi-select menu button
             toolbar.items = [
                 createMultiSelectionMenuBarButton(),
                 UIBarButtonItem.flexibleSpace(),
@@ -284,7 +244,6 @@ extension TabSwitcherViewController {
         case .multiSelectEnabledLarge,
                 .multiSelectAvailableLarge,
                 .singleSelectLarge:
-            // hidden
             toolbar.isHidden = true
         }
 
@@ -367,10 +326,30 @@ extension TabSwitcherViewController {
                 self.transitionToMultiSelect()
             },
 
-            UIAction(title: UserText.closeTabs(withCount: tabsModel.count), image: UIImage(named: "Tab-Close-16"), attributes: .destructive) { _ in
+            UIAction(title: UserText.closeAllTabs(withCount: tabsModel.count), image: UIImage(named: "Tab-Close-16"), attributes: .destructive) { _ in
                 self.closeAllTabs()
             },
         ])
+    }
+
+}
+
+// To be removed when fully rolled out
+extension TabSwitcherViewController {
+
+    func bookmarkAll() {
+        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
+                                      message: UserText.alertBookmarkAllMessage,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        alert.addAction(title: UserText.actionBookmark, style: .default) {
+            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
+            model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+            let result = self.bookmarkAll(viewModel: model)
+            self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
+        }
+
+        present(alert, animated: true, completion: nil)
     }
 
 }

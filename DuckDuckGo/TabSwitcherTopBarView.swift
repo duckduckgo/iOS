@@ -43,12 +43,9 @@ struct TabSwitcherTopBarView: View {
     @ViewBuilder func editButton() -> some View {
         Menu {
             Button {
-                print("*** select tabs")
                 model.transitionToMultiSelect()
             } label: {
                 Label("Select tabs", image: "Check-Circle-16")
-            }.onAppear {
-                print("*** select tabs button appeared")
             }
 
             Divider()

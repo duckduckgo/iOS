@@ -108,10 +108,6 @@ extension MainViewController {
             return
         }
 
-        if entryPoint == .report {
-            fireBrokenSiteReportShown()
-        }
-
         let storyboard = UIStoryboard(name: "PrivacyDashboard", bundle: nil)
         let controller = storyboard.instantiateInitialViewController { coder in
             PrivacyDashboardViewController(coder: coder,
@@ -128,8 +124,6 @@ extension MainViewController {
         }
         
         currentTab?.privacyDashboard = controller
-        controller.delegate = currentTab
-        currentTab?.breakageCategory = nil
 
         controller.popoverPresentationController?.delegate = controller
         controller.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
@@ -143,14 +137,7 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
-    private func fireBrokenSiteReportShown() {
-        let parameters = [
-            PrivacyDashboardEvents.Parameters.source: BrokenSiteReport.Source.appMenu.rawValue
-        ]
-        Pixel.fire(pixel: .reportBrokenSiteShown, withAdditionalParameters: parameters)
-    }
-
-    func segueToNegativeFeedbackForm(isFromBrokenSiteReportFlow: Bool = false) {
+    func segueToNegativeFeedbackForm() {
         Logger.lifecycle.debug(#function)
         hideAllHighlightsIfNeeded()
 
@@ -160,7 +147,7 @@ extension MainViewController {
         feedbackPicker.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
         feedbackPicker.modalPresentationStyle = isPad ? .formSheet : .pageSheet
         feedbackPicker.loadViewIfNeeded()
-        feedbackPicker.configure(with: Feedback.Category.allCases, isFromBrokenSiteReportFlow: isFromBrokenSiteReportFlow)
+        feedbackPicker.configure(with: Feedback.Category.allCases)
 
         present(UINavigationController(rootViewController: feedbackPicker), animated: true)
     }
@@ -185,7 +172,8 @@ extension MainViewController {
         guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
             TabSwitcherViewController(coder: coder,
                                       bookmarksDatabase: self.bookmarksDatabase,
-                                      syncService: self.syncService)
+                                      syncService: self.syncService,
+                                      featureFlagger: self.featureFlagger)
         }) else {
             assertionFailure()
             return

@@ -4,6 +4,25 @@ on:
   push:
     branches: [ main, "release/**" ]
   pull_request:
+  workflow_call:
+    inputs:
+      branch:
+        description: "Branch name"
+        required: false
+        type: string
+    secrets:
+      APPLE_API_KEY_BASE64:
+        required: true
+      APPLE_API_KEY_ID:
+        required: true
+      APPLE_API_KEY_ISSUER:
+        required: true
+      ASANA_ACCESS_TOKEN:
+        required: true
+      MATCH_PASSWORD:
+        required: true
+      SSH_PRIVATE_KEY_FASTLANE_MATCH:
+        required: true
 
 jobs:
   swiftlint:
@@ -129,8 +148,8 @@ jobs:
 
     name: Make Release Build
 
-    # Dependabot doesn't have access to all secrets, so we skip this job
-    if: github.actor != 'dependabot[bot]'
+    # Dependabot doesn't have access to all secrets, so we skip this job, also skip for nightly release bump
+    if: github.actor != 'dependabot[bot]' && github.event_name != 'workflow_call'
 
     runs-on: macos-15
     timeout-minutes: 30

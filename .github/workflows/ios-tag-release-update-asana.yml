@@ -59,8 +59,8 @@ jobs:
       asana-task-url: ${{ inputs.asana-task-url || github.event.inputs.asana-task-url }}
       base-branch: ${{ github.event.inputs.base-branch || 'main' }}
       branch: ${{ inputs.branch || github.ref_name }}
-      internal-release-bump: ${{ github.event.inputs.internal-release-bump || false }}
-      prerelease: ${{ github.event.inputs.release-type == 'internal' }}
+      internal-release-bump: ${{ inputs.internal-release-bump || false }}
+      prerelease: ${{ inputs.release-type == 'internal' }}
     secrets:
       ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
       GHA_ELEVATED_PERMISSIONS_TOKEN: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }}

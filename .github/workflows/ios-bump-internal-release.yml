@@ -40,6 +40,8 @@ jobs:
 
       - name: Check out the code
         uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0 # Required to compute the git diff during validate_internal_release_bump
 
       - name: Set up fastlane
         run: bundle install

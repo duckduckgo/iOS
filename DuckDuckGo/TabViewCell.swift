@@ -172,9 +172,9 @@ class TabViewCell: UICollectionViewCell {
         } else {
             image.image = UIImage(systemName: "checkmark.circle.fill")
             let symbolColorConfiguration = UIImage.SymbolConfiguration(paletteColors: [
-                UIColor(designSystemColor: .textPrimary),
+                .white, // The check
                 .clear, // This does nothing in this palette
-                UIColor(designSystemColor: .accent),
+                UIColor(designSystemColor: .accent), // The filled background of the circle
             ])
             image.image = UIImage(systemName: "checkmark.circle.fill")?.applyingSymbolConfiguration(symbolColorConfiguration)
         }

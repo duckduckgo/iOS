@@ -55,8 +55,8 @@ class TabSwitcherViewController: UIViewController {
     weak var tabsModel: TabsModel!
     weak var previewsSource: TabPreviewsSource!
 
-    private var bookmarksDatabase: CoreDataDatabase
-    private let syncService: DDGSyncing
+    private(set) var bookmarksDatabase: CoreDataDatabase
+    let syncService: DDGSyncing
 
     weak var reorderGestureRecognizer: UIGestureRecognizer?
 
@@ -64,8 +64,8 @@ class TabSwitcherViewController: UIViewController {
 
     var currentSelection: Int?
 
-    private var tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
-    private(set) var isProcessingUpdates = false
+    var tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
+    var isProcessingUpdates = false
     private var canUpdateCollection = true
 
     var selectedTabs = Set<Int>()
@@ -119,20 +119,7 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        if featureFlagger.isFeatureOn(.tabManagerMultiSelection) {
-            if AppWidthObserver.shared.isLargeWidth {
-                topBarModel.uiModel = .multiSelectLarge
-            } else {
-                topBarModel.uiModel = .multiSelectNormal
-            }
-        } else {
-            if AppWidthObserver.shared.isLargeWidth {
-                topBarModel.uiModel = .singleSelectLarge
-            } else {
-                topBarModel.uiModel = .singleSelectNormal
-            }
-        }
-
+        updateUIForSelectionMode()
         toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
    }
 
@@ -142,7 +129,7 @@ class TabSwitcherViewController: UIViewController {
         collectionView.backgroundView = view
     }
 
-    private func refreshDisplayModeButton() {
+    func refreshDisplayModeButton() {
         topBarModel.tabsStyle = tabSwitcherSettings.isGridViewEnabled ? .grid : .list
     }
 
@@ -163,6 +150,8 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @objc func handleTap(gesture: UITapGestureRecognizer) {
+        // TODO FIX: If the user tabs between tabs this will dismiss.
+        //  Only dimiss if it's in the big whitespace below the collection view.
         dismiss()
     }
 
@@ -200,7 +189,7 @@ class TabSwitcherViewController: UIViewController {
         topBarModel.title = UserText.numberOfTabs(tabsModel.count)
     }
 
-    fileprivate func displayBookmarkAllStatusMessage(with results: BookmarkAllResult, openTabsCount: Int) {
+    func displayBookmarkAllStatusMessage(with results: BookmarkAllResult, openTabsCount: Int) {
         if results.newCount == openTabsCount {
             ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
         } else {
@@ -210,7 +199,7 @@ class TabSwitcherViewController: UIViewController {
         }
     }
 
-    private func bookmarkAll(viewModel: MenuBookmarksInteracting) -> BookmarkAllResult {
+    func bookmarkAll(viewModel: MenuBookmarksInteracting) -> BookmarkAllResult {
         let tabs = self.tabsModel.tabs
         var newCount = 0
         tabs.forEach { tab in
@@ -249,7 +238,7 @@ class TabSwitcherViewController: UIViewController {
         burn()
     }
 
-    private func forgetAll() {
+    func forgetAll() {
         self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
     }
 
@@ -262,101 +251,6 @@ class TabSwitcherViewController: UIViewController {
         tabsModel.tabs.forEach { $0.removeObserver(self) }
         super.dismiss(animated: animated, completion: completion)
     }
-}
-
-extension TabSwitcherViewController: TabSwitcherTopBarModel.Delegate {
-
-    var tabCount: Int {
-        tabsModel.count
-    }
-
-    func onTabStyleChange() {
-        guard isProcessingUpdates == false else { return }
-
-        isProcessingUpdates = true
-        // Idea is here to wait for any pending processing of reconfigureItems on a cells,
-        // so when transition to/from grid happens we can request cells without any issues
-        // related to mismatched identifiers.
-        // Alternative is to use reloadItems instead of reconfigureItems but it looks very bad
-        // when tabs are reloading in the background.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            guard let self else { return }
-
-            tabSwitcherSettings.isGridViewEnabled = !tabSwitcherSettings.isGridViewEnabled
-
-            if tabSwitcherSettings.isGridViewEnabled {
-                Pixel.fire(pixel: .tabSwitcherGridEnabled)
-            } else {
-                Pixel.fire(pixel: .tabSwitcherListEnabled)
-            }
-
-            self.refreshDisplayModeButton()
-
-            UIView.transition(with: view,
-                              duration: 0.3,
-                              options: .transitionCrossDissolve, animations: {
-                self.collectionView.reloadData()
-            }, completion: { _ in
-                self.isProcessingUpdates = false
-            })
-        }
-    }
-
-    func burn() {
-        func presentForgetDataAlert() {
-            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-                self?.forgetAll()
-            })
-
-            if !toolbar.isHidden {
-                self.present(controller: alert, fromView: toolbar)
-            } else if let fireButtonFrame = topBarModel.fireButtonFrame {
-                let point = Point(x: Int(fireButtonFrame.midX),
-                                  y: Int(fireButtonFrame.midY))
-                self.present(controller: alert, fromView: topBarContainerView, atPoint: point)
-            }
-        }
-
-        Pixel.fire(pixel: .forgetAllPressedTabSwitching)
-        ViewHighlighter.hideAll()
-        presentForgetDataAlert()
-    }
-
-    func addNewTab() {
-        guard !isProcessingUpdates else { return }
-
-        Pixel.fire(pixel: .tabSwitcherNewTab)
-        delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
-        dismiss()
-    }
-
-    func bookmarkAll() {
-
-        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
-                                      message: UserText.alertBookmarkAllMessage,
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        alert.addAction(title: UserText.actionBookmark, style: .default) {
-            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
-            model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-            let result = self.bookmarkAll(viewModel: model)
-            self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
-        }
-
-        present(alert, animated: true, completion: nil)
-
-    }
-
-    func transitionToMultiSelect() {
-        self.isEditing = true
-        selectedTabs = Set<Int>()
-        collectionView.reloadData()
-    }
-
-    func closeAllTabs() {
-        delegate?.tabSwitcherDidRequestCloseAll(tabSwitcher: self)
-    }
-
 }
 
 extension TabSwitcherViewController: TabViewCellDelegate {

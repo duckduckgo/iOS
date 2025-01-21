@@ -79,6 +79,32 @@ struct TabSwitcherTopBarView: View {
         }
     }
 
+    @ViewBuilder func moreButton() -> some View {
+        Button {
+            model.onMorePressed()
+        } label: {
+            Image(systemName: "ellipsis.circle")
+        }
+        .background {
+            GeometryReader { geo in
+                Color
+                    .clear
+                    .onAppear {
+                        model.menuButtonFrame = geo.frame(in: .global)
+                    }
+            }
+        }
+    }
+
+    @ViewBuilder func selectAllButton() -> some View {
+        Button {
+            model.onSelectAllPressed()
+        } label: {
+            // TODO Translate post ship review
+            Text(verbatim: "Select all")
+        }
+    }
+
     @ViewBuilder func fireButton() -> some View {
         Button {
             model.onFirePressed()
@@ -92,7 +118,7 @@ struct TabSwitcherTopBarView: View {
                         Color
                             .clear
                             .onAppear {
-                                model.locationOfFireButton(geo.frame(in: .global))
+                                model.fireButtonFrame = geo.frame(in: .global)
                             }
                     }
                 }
@@ -102,7 +128,7 @@ struct TabSwitcherTopBarView: View {
     var body: some View {
         HStack(spacing: 24) {
 
-            switch model.uiModel {
+            switch model.uiMode {
 
             case .singleSelectNormal:
                 bookmarkAllButton()
@@ -111,30 +137,44 @@ struct TabSwitcherTopBarView: View {
                 bookmarkAllButton()
                 modeButton()
 
-            case .multiSelectNormal:
+            case .multiSelectAvailableNormal:
                 modeButton()
 
-            case .multiSelectLarge:
+            case .multiSelectAvailableLarge:
                 editButton()
                 modeButton()
+
+            case .multiSelectEnabledNormal:
+                selectAllButton()
+
+            case .multiSelectEnabledLarge:
+                doneButton()
+
             }
 
             Text(model.title)
                 .frame(maxWidth: .infinity)
                 .font(.headline)
 
-            switch model.uiModel {
+            switch model.uiMode {
             case .singleSelectNormal:
                 modeButton()
 
-            case .multiSelectNormal:
+            case .multiSelectAvailableNormal:
                 editButton()
 
             case .singleSelectLarge,
-                    .multiSelectLarge:
+                    .multiSelectAvailableLarge:
                 plusButton()
                 fireButton()
                 doneButton()
+
+            case .multiSelectEnabledNormal:
+                doneButton()
+
+            case .multiSelectEnabledLarge:
+                moreButton()
+
             }
         }
         .padding(.horizontal, 16)
@@ -152,7 +192,10 @@ class TabSwitcherTopBarModel: ObservableObject {
         func addNewTab()
         func bookmarkAll()
         func transitionToMultiSelect()
+        func transitionFromMultiSelect()
         func closeAllTabs()
+        func selectAllTabs()
+        func showMultiSelectMenu()
 
         var tabCount: Int { get }
 
@@ -162,8 +205,10 @@ class TabSwitcherTopBarModel: ObservableObject {
 
         case singleSelectNormal
         case singleSelectLarge
-        case multiSelectNormal
-        case multiSelectLarge
+        case multiSelectAvailableNormal
+        case multiSelectAvailableLarge
+        case multiSelectEnabledNormal
+        case multiSelectEnabledLarge
 
     }
 
@@ -176,8 +221,9 @@ class TabSwitcherTopBarModel: ObservableObject {
 
     weak var delegate: Delegate?
     var fireButtonFrame: CGRect?
+    var menuButtonFrame: CGRect?
 
-    @Published var uiModel: UIMode = .singleSelectNormal
+    @Published var uiMode: UIMode = .singleSelectNormal
     @Published var title = ""
     @Published var tabsStyle: TabsStyleToggle = .grid
 
@@ -195,7 +241,13 @@ class TabSwitcherTopBarModel: ObservableObject {
     }
 
     func onDonePressed() {
-        delegate?.dismiss()
+        switch uiMode {
+        case .multiSelectEnabledLarge, .multiSelectEnabledNormal:
+            delegate?.transitionFromMultiSelect()
+
+        default:
+            delegate?.dismiss()
+        }
     }
 
     func onPlusPressed() {
@@ -210,16 +262,20 @@ class TabSwitcherTopBarModel: ObservableObject {
         delegate?.bookmarkAll()
     }
 
-    func locationOfFireButton(_ point: CGRect) {
-        fireButtonFrame = point
-    }
-
     func transitionToMultiSelect() {
         delegate?.transitionToMultiSelect()
     }
 
     func closeAllTabs() {
         delegate?.closeAllTabs()
+    }
+
+    func onSelectAllPressed() {
+        delegate?.selectAllTabs()
+    }
+
+    func onMorePressed() {
+        delegate?.showMultiSelectMenu()
     }
 
 }

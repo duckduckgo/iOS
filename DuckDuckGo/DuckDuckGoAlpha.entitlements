@@ -21,6 +21,7 @@
 		<string>group.com.duckduckgo.alpha.netp</string>
 		<string>group.com.duckduckgo.alpha.statistics</string>
 		<string>group.com.duckduckgo.alpha.vault</string>
+		<string>group.com.duckduckgo.alpha.autofill</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>

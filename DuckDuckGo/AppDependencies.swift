@@ -37,7 +37,6 @@ struct AppDependencies {
 
     let voiceSearchHelper: VoiceSearchHelper
     let autoClear: AutoClear
-    let autofillLoginSession: AutofillLoginSession
     let marketplaceAdPostbackManager: MarketplaceAdPostbackManaging
     let syncService: SyncService
     let privacyProDataReporter: PrivacyProDataReporting
@@ -46,7 +45,7 @@ struct AppDependencies {
     let subscriptionService: SubscriptionService
 
     let onboardingPixelReporter: OnboardingPixelReporter
-    let autofillPixelReporter: AutofillPixelReporter
+    let autofillService: AutofillService
     let crashService: CrashService
 
 }

@@ -55,7 +55,6 @@ struct Launching: AppState {
     private let appSettings = AppDependencyProvider.shared.appSettings
     private let privacyStore = PrivacyUserDefaults()
     private let voiceSearchHelper = VoiceSearchHelper()
-    private let autofillLoginSession = AppDependencyProvider.shared.autofillLoginSession
     private let onboardingPixelReporter = OnboardingPixelReporter()
     private let tipKitAppEventsHandler = TipKitAppEventHandler()
     private let fireproofing = UserDefaultsFireproofing.xshared
@@ -69,10 +68,10 @@ struct Launching: AppState {
     private let unService: UNService
     private let syncService: SyncService
     private let vpnService: VPNService = VPNService()
+    private let autofillService: AutofillService = AutofillService()
 
     private let remoteMessagingClient: RemoteMessagingClient
     private let subscriptionCookieManager: SubscriptionCookieManaging
-    private let autofillPixelReporter: AutofillPixelReporter
     private let window: UIWindow
 
     private var mainViewController: MainViewController?
@@ -388,43 +387,7 @@ struct Launching: AppState {
 
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
-        let autofillUsageMonitor = AutofillUsageMonitor()
-        autofillPixelReporter = AutofillPixelReporter(
-            userDefaults: .standard,
-            autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
-            eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
-                switch event {
-                case .autofillActiveUser:
-                    Pixel.fire(pixel: .autofillActiveUser)
-                case .autofillEnabledUser:
-                    Pixel.fire(pixel: .autofillEnabledUser)
-                case .autofillOnboardedUser:
-                    Pixel.fire(pixel: .autofillOnboardedUser)
-                case .autofillToggledOn:
-                    Pixel.fire(pixel: .autofillToggledOn, withAdditionalParameters: params ?? [:])
-                    if let autofillExtensionToggled = autofillUsageMonitor.autofillExtensionEnabled {
-                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
-                                   withAdditionalParameters: params ?? [:])
-                    }
-                case .autofillToggledOff:
-                    Pixel.fire(pixel: .autofillToggledOff, withAdditionalParameters: params ?? [:])
-                    if let autofillExtensionToggled = autofillUsageMonitor.autofillExtensionEnabled {
-                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
-                                   withAdditionalParameters: params ?? [:])
-                    }
-                case .autofillLoginsStacked:
-                    Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
-                default:
-                    break
-                }
-            },
-            installDate: StatisticsUserDefaults().installDate ?? Date())
-
-        _ = NotificationCenter.default.addObserver(forName: AppUserDefaults.Notifications.autofillEnabledChange,
-                                                   object: nil,
-                                                   queue: nil) { [autofillPixelReporter] _ in
-            autofillPixelReporter.updateAutofillEnabledStatus(AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled)
-        }
+        autofillService.onLaunching()
 
         crashService.handleCrashDuringCrashHandlersSetup()
 
@@ -441,7 +404,6 @@ struct Launching: AppState {
             mainViewController: mainViewController!,
             voiceSearchHelper: voiceSearchHelper,
             autoClear: autoClear!,
-            autofillLoginSession: autofillLoginSession,
             marketplaceAdPostbackManager: marketplaceAdPostbackManager,
             syncService: syncService,
             privacyProDataReporter: privacyProDataReporter,
@@ -449,7 +411,7 @@ struct Launching: AppState {
             subscriptionService: SubscriptionService(subscriptionCookieManager: subscriptionCookieManager,
                                                      privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager),
             onboardingPixelReporter: onboardingPixelReporter,
-            autofillPixelReporter: autofillPixelReporter,
+            autofillService: autofillService,
             crashService: crashService
         )
     }

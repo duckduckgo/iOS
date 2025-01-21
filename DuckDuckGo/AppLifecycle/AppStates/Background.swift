@@ -81,7 +81,7 @@ struct Background: AppState {
         let privacyProDataReporter = appDependencies.privacyProDataReporter
         let voiceSearchHelper = appDependencies.voiceSearchHelper
         let appSettings = appDependencies.appSettings
-        let autofillLoginSession = appDependencies.autofillLoginSession
+        let autofillService = appDependencies.autofillService
         let syncService = appDependencies.syncService
         let uiService = appDependencies.uiService
 
@@ -90,7 +90,7 @@ struct Background: AppState {
                                                  addressBarPosition: appSettings.currentAddressBarPosition)
         }
         autoClear.startClearingTimer()
-        autofillLoginSession.endSession()
+        autofillService.onBackground()
 
         syncService.suspendSync()
         syncService.cancelFaviconsFetching(application: application)

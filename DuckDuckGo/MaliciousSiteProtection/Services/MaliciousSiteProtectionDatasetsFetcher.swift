@@ -61,8 +61,6 @@ final class MaliciousSiteProtectionDatasetsFetcher: MaliciousSiteProtectionDatas
         self.userPreferencesManager = userPreferencesManager
         self.dateProvider = dateProvider
         self.backgroundTaskScheduler = backgroundTaskScheduler
-
-        setupBindings()
     }
 }
 
@@ -212,6 +210,8 @@ extension MaliciousSiteProtectionDatasetsFetcher {
                 backgroundRefreshTaskHandler(backgroundTask: backgroundTask, datasetType: datasetType)
             }
         }
+
+        setupBindings()
     }
 
     private func scheduleBackgroundRefreshTask(datasetType: DataManager.StoredDataType.Kind) {

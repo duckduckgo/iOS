@@ -197,6 +197,7 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = false
         setupSUT(updateManagerMock: updateManagerMock, featureFlaggerMock: featureFlaggerMock, userPreferencesManagerMock: userPreferencesManagerMock)
+        sut.registerBackgroundRefreshTaskHandler()
         #expect(updateManagerMock.updateDatasets[.hashPrefixSet] == false)
         #expect(updateManagerMock.updateDatasets[.filterSet] == false)
 
@@ -239,12 +240,13 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         ]
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
+        setupSUT(featureFlaggerMock: featureFlaggerMock, userPreferencesManagerMock: userPreferencesManagerMock, backgroundSchedulerMock: backgroundSchedulerMock)
 
         await confirmation(expectedCount: 2) { submittedBackgroundTask in
             backgroundSchedulerMock.scheduleBackgroundTaskConfirmation = submittedBackgroundTask
 
             // WHEN
-            setupSUT(featureFlaggerMock: featureFlaggerMock, userPreferencesManagerMock: userPreferencesManagerMock, backgroundSchedulerMock: backgroundSchedulerMock)
+            sut.registerBackgroundRefreshTaskHandler()
 
             // THEN
             #expect(backgroundSchedulerMock.submittedTaskRequests.map(\.identifier) == expectedBackgroundTasksIdentifiers)
@@ -288,8 +290,6 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         sut.registerBackgroundRefreshTaskHandler()
         #expect(!backgroundTask.didCallSetTaskCompleted)
         #expect(backgroundTask.capturedTaskCompletedSuccess == nil)
-        #expect(!backgroundSchedulerMock.didCallSubmitTaskRequest)
-        #expect(backgroundSchedulerMock.capturedSubmittedTaskRequest == nil)
         let launchHandler = try #require(backgroundSchedulerMock.launchHandlers[identifier])
 
         // WHEN
@@ -368,6 +368,7 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = false
         setupSUT(updateManagerMock: updateManagerMock, featureFlaggerMock: featureFlaggerMock, userPreferencesManagerMock: userPreferencesManagerMock)
+        sut.registerBackgroundRefreshTaskHandler()
         #expect(!backgroundSchedulerMock.didCallSubmitTaskRequest)
         #expect(backgroundSchedulerMock.capturedSubmittedTaskRequest == nil)
 
@@ -384,6 +385,7 @@ final class MaliciousSiteProtectionDatasetsFetcherTests {
         // GIVEN
         featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
         setupSUT(featureFlaggerMock: featureFlaggerMock)
+        sut.registerBackgroundRefreshTaskHandler()
         userPreferencesManagerMock.isMaliciousSiteProtectionOn = true
         #expect(!backgroundSchedulerMock.didCallCancelTaskRequestWithIdentifier)
 

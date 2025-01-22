@@ -70,6 +70,7 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
         if navigationAction.isTargetingMainFrame() {
             errorData = nil
             failedURL = nil
+            isSpecialErrorPageVisible = false
         }
         maliciousSiteProtectionNavigationHandler.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
     }

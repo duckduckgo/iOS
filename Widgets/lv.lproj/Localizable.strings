@@ -1,3 +1,6 @@
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Tev ir jāiespējo VPN DuckDuckGo lietotnē.";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Nekavējoties ģenerē jaunu privātu Duck adresi.";
 
@@ -33,6 +36,24 @@
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Balss meklēšana";
+
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Savieno...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Atvieno...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Nezināma atrašanās vieta";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Nav savienots";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN ir izslēgts";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN ir ieslēgts";
 
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Ātri meklē savas saglabātās DuckDuckGo paroles.";

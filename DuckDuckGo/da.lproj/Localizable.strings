@@ -131,13 +131,16 @@
 "addWidget.description" = "Få hurtig adgang til privat søgning og de websteder, du elsker.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Tryk længe på startskærmen for at skifte til jiggle-tilstand.";
+"addWidget.settings.firstParagraph" = "Lav et langt tryk et vilkårligt sted på startskærmen, indtil appsene begynder at ryste";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Tryk på **Rediger**-knappen, og vælg derefter **Tilføj widget**";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tryk på %@-knappen.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Find og vælg DuckDuckGo. Vælg derefter en widget.";
+"addWidget.settings.title" = "Find og vælg **DuckDuckGo**. Vælg derefter en widget.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "Ét tryk til dine yndlingswebsteder.";
@@ -869,14 +872,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "lokalt vejr";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "opskrift på chocolate chip cookie";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Find **DuckDuckGo** på listen, og tryk derefter på **VPN-kontrol** for at tilføje det";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "middagsopskrifter";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Stryg ned fra øverste højre hjørne af skærmen";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Overrask mig!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Tryk på **+**-knappen øverst til venstre i **Kontrolcenter**";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Tryk på **Tilføj en kontrol** nederst på skærmen";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Send altid fejlrapporter";
@@ -1529,6 +1535,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Du skal aktivere VPN fra DuckDuckGo-appen.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1870,6 +1879,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-indstillinger";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Genveje";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Tilpas dine favoritter og go-to-funktioner. Flyt rundt på ting, eller skjul dem for at holde det enkelt.";
@@ -2223,6 +2235,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Tilføj widget til startskærmen";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Tilføj DuckDuckGo VPN-widget til din startskærm";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2878,7 +2893,28 @@
 "vpn.access-revoked.alert.title" = "VPN er afbrudt på grund af et udløbet abonnement";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Find og vælg DuckDuckGo. Stryg derefter til VPN, og vælg Tilføj widget.";
+"vpn.addWidget.settings.title" = "Find og vælg **DuckDuckGo**, swipe derefter til **VPN**, og vælg **Tilføj widget**";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "DuckDuckGo VPN er forbundet";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Siri-genveje lader dig forbinde til din VPN med en hurtig stemmekommando, som \"Siri, tænd for DuckDuckGo VPN\". Det er en hurtig og håndfri måde at bruge din VPN på.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, start DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, aktiver DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, beskyt min enhed med DuckDuckGo.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Styr DuckDuckGo VPN med Siri!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "DuckDuckGo VPN er forbundet";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Annullér";
@@ -2949,8 +2985,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Hjælp med at forbedre DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Tilføj VPN til Kontrolcenter";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Tilføj VPN-widget til startskærmen";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Styr VPN med Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Brug af en brugerdefineret DNS-server kan påvirke browsinghastigheder og afsløre din aktivitet for tredjeparter, hvis serveren ikke er sikker eller pålidelig.";

@@ -195,7 +195,7 @@ class TabSwitcherViewController: UIViewController {
         collectionView.scrollToItem(at: indexPath, at: .bottom, animated: false)
     }
 
-    private func refreshTitle() {
+    func refreshTitle() {
         topBarView.topItem?.title = UserText.numberOfTabs(tabsModel.count)
     }
 

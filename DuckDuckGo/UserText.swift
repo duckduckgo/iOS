@@ -221,6 +221,8 @@ public struct UserText {
 
     public static let closeTab = NotLocalizedString("tab.close", value: "Close Tab", comment: "Close a single tab")
 
+    public static let closeTabs = NotLocalizedString("tab.close.many", value: "Close Tabs", comment: "Close more than one tab")
+
     public static let selectAllTabs = NotLocalizedString("tab.select.all", value: "Select All", comment: "Select all tabs")
 
     public static let deselectAllTabs = NotLocalizedString("tab.select.none", value: "Deselect All", comment: "Deselect all tabs")
@@ -235,11 +237,18 @@ public struct UserText {
         return message.format(arguments: "\(count)")
     }
 
+    public static func alertTitleCloseSelectedTabs(withCount count: Int) -> String {
+        let message = NotLocalizedString("tab.alert.message.close.selected.with.count", value: "Close All %@ Selected Tabs", comment: "Message to confirm closing a number of selected tabs")
+        return message.format(arguments: "\(count)")
+    }
+
+    public static let alertMessageCloseTheseTabs = NotLocalizedString("tab.close.these.tabs", value: "Are you sure you want to close these tabs?", comment: "Title to confirm closing some subset of tabs")
+
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.close.with.title.and.address", value: "Close \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
         return message.format(arguments: title, address)
     }
-    
+
     public static let favorite = NSLocalizedString("favorite", value: "Favorite", comment: "")
     
     public static let onboardingWelcomeHeader = NSLocalizedString("onboardingWelcomeHeader", value: "Welcome to DuckDuckGo!", comment: "")

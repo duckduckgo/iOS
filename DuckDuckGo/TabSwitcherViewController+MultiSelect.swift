@@ -53,6 +53,7 @@ extension TabSwitcherViewController {
             UIView.transition(with: view,
                               duration: 0.3,
                               options: .transitionCrossDissolve, animations: {
+                self.refreshTitle()
                 self.collectionView.reloadData()
             }, completion: { _ in
                 self.isProcessingUpdates = false
@@ -108,16 +109,31 @@ extension TabSwitcherViewController {
         delegate?.tabSwitcherDidRequestCloseAll(tabSwitcher: self)
     }
 
-    // TODO show a confirmation dialog
     func closeSelectedTabs() {
-        selectedTabs.compactMap {
-            tabsModel.safeGetTabAt($0)
-        }.forEach {
-            delegate.tabSwitcher(self, didRemoveTab: $0)
-        }
-        selectedTabs = Set<Int>()
-        collectionView.reloadData()
-        updateUIForSelectionMode()
+
+        let alert = UIAlertController(
+            title: UserText.alertTitleCloseSelectedTabs(withCount: selectedTabs.count),
+            message: UserText.alertMessageCloseTheseTabs,
+            preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: UserText.actionCancel,
+                                      style: .default) { _ in })
+
+        alert.addAction(UIAlertAction(title: UserText.closeTabs,
+                                      style: .destructive) { _ in
+
+            self.selectedTabs.compactMap {
+                self.tabsModel.safeGetTabAt($0)
+            }.forEach {
+                self.delegate.tabSwitcher(self, didRemoveTab: $0)
+            }
+            self.selectedTabs = Set<Int>()
+            self.collectionView.reloadData()
+            self.refreshTitle()
+            self.updateUIForSelectionMode()
+        })
+
+        present(alert, animated: true)
     }
 
     func deselectAllTabs() {

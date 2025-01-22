@@ -20,6 +20,7 @@
 
 import Core
 import Subscription
+import Common
 
 public struct UserText {
     
@@ -217,7 +218,12 @@ public struct UserText {
     
     public static let openHomeTab = NSLocalizedString("tab.open.home", value: "Open home tab", comment: "Accessibility label on tab cell")
     public static let closeHomeTab = NSLocalizedString("tab.close.home", value: "Close home tab", comment: "Accessibility label on remove button")
-    
+
+    public static func closeTabs(withCount count: Int) -> String {
+        let message = NotLocalizedString("tab.close.with.count", value: "Close All %@ Tabs", comment: "Close tabs with a count")
+        return message.format(arguments: "\(count)")
+    }
+
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.close.with.title.and.address", value: "Close \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
         return message.format(arguments: title, address)

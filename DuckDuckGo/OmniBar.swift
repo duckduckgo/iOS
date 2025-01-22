@@ -80,7 +80,7 @@ class OmniBar: UIView {
         didSet {
             switch accessoryType {
             case .chat:
-                accessoryButton.setImage(UIImage(named: "AIChat-Color-24"), for: .normal)
+                accessoryButton.setImage(UIImage(named: "AIChat-24"), for: .normal)
             case .share:
                 accessoryButton.setImage(UIImage(named: "Share-24"), for: .normal)
             }

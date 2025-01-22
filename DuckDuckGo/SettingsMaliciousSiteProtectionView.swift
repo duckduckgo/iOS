@@ -55,6 +55,6 @@ struct SettingsMaliciousProtectionView: View {
     }
 }
 
-//#Preview {
-//    SettingsMaliciousProtectionView(model: )
-//}
+#Preview {
+    SettingsMaliciousProtectionView(model: MaliciousSiteProtectionSettingsViewModel(manager: MaliciousSiteProtectionPreferencesManager()))
+}

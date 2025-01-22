@@ -21,28 +21,32 @@ import SwiftUI
 import DuckUI
 
 struct SettingsMaliciousProtectionView: View {
-    @StateObject private var maliciousSiteProtectionSettingsModel = MaliciousSiteProtectionSettingsViewModel()
+    @ObservedObject private var model: MaliciousSiteProtectionSettingsViewModel
+
+    init(model: MaliciousSiteProtectionSettingsViewModel) {
+        self.model = model
+    }
 
     var body: some View {
-        if maliciousSiteProtectionSettingsModel.shouldShowMaliciousSiteProtectionSection {
+        if model.shouldShowMaliciousSiteProtectionSection {
             Section(
                 header: Text(UserText.MaliciousSiteProtectionSettings.header),
                 footer:
                     VStack(alignment: .leading, spacing: 10) {
-                        Button(action: maliciousSiteProtectionSettingsModel.learnMoreAction) {
+                        Button(action: model.learnMoreAction) {
                             Text(UserText.MaliciousSiteProtectionSettings.footerLearnMore)
                                 .foregroundColor(.blueBase)
                         }
 
                         Text(UserText.MaliciousSiteProtectionSettings.footerDisabledMessage)
-                            .opacity(maliciousSiteProtectionSettingsModel.isMaliciousSiteProtectionOn ? 0 : 1)
+                            .opacity(model.isMaliciousSiteProtectionOn ? 0 : 1)
                             .foregroundColor(.red)
                             .font(.footnote)
                     }
             ) {
                 SettingsCellView(
                     label: UserText.MaliciousSiteProtectionSettings.toggleMessage,
-                    accessory: .toggle(isOn: $maliciousSiteProtectionSettingsModel.isMaliciousSiteProtectionOn)
+                    accessory: .toggle(isOn: $model.isMaliciousSiteProtectionOn)
                 )
             }
         } else {
@@ -51,6 +55,6 @@ struct SettingsMaliciousProtectionView: View {
     }
 }
 
-#Preview {
-    SettingsMaliciousProtectionView()
-}
+//#Preview {
+//    SettingsMaliciousProtectionView(model: )
+//}

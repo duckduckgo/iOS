@@ -35,7 +35,7 @@ final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
     private let urlOpener: URLOpener
 
     init(
-        manager: MaliciousSiteProtectionPreferencesManaging = AppDependencyProvider.shared.maliciousSiteProtectionPreferencesManager,
+        manager: MaliciousSiteProtectionPreferencesManaging,
         featureFlagger: MaliciousSiteProtectionFeatureFlagger = MaliciousSiteProtectionFeatureFlags(featureFlagger: AppDependencyProvider.shared.featureFlagger),
         urlOpener: URLOpener = UIApplication.shared
     ) {

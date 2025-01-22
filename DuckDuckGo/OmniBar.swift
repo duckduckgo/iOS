@@ -62,6 +62,7 @@ class OmniBar: UIView {
     @IBOutlet weak var forwardButton: UIButton!
     @IBOutlet weak var accessoryButton: UIButton!
 
+    @IBOutlet weak var cancelBackButton: UIButton!
     private(set) var menuButtonContent = MenuButton()
 
     // Don't use weak because adding/removing them causes them to go away
@@ -396,6 +397,7 @@ class OmniBar: UIView {
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
+        setVisibility(cancelBackButton, hidden: !state.showCancelBack)
         setVisibility(refreshButton, hidden: !state.showRefresh)
         setVisibility(voiceSearchButton, hidden: !state.showVoiceSearch)
         setVisibility(abortButton, hidden: !state.showAbort)
@@ -407,11 +409,18 @@ class OmniBar: UIView {
         
         searchContainerCenterConstraint.isActive = state.hasLargeWidth
         searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
-        leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
+
+        let spacingConstraint: CGFloat = state.showCancelBack ? 14 : 0
+        leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : spacingConstraint
         rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
 
         if state.showVoiceSearch && state.showClear {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
+        }
+
+        // Nasty hack for PoC
+        if state.name != "PhoneBrowsingNonEditingState" {
+            accessoryType = .chat
         }
 
         UIView.animate(withDuration: 0.0) { [weak self] in

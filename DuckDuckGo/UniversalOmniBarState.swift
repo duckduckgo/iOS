@@ -33,6 +33,7 @@ enum UniversalOmniBarState {
         var allowsTrackersAnimation: Bool { baseState.allowsTrackersAnimation }
         var showSearchLoupe: Bool { baseState.showSearchLoupe }
         var showCancel: Bool { true }
+        var showCancelBack: Bool { true }
         var showPrivacyIcon: Bool { baseState.showPrivacyIcon }
         var showBackground: Bool { baseState.showBackground }
         var showClear: Bool { false }

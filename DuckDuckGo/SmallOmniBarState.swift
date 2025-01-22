@@ -27,7 +27,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let showAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = true
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -37,7 +37,8 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         let showSettings = false
-        let showCancel: Bool = true
+        let showCancel: Bool = false
+        let showCancelBack: Bool = true
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
@@ -60,7 +61,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let showAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = true
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -70,7 +71,8 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         let showSettings = false
-        let showCancel: Bool = true
+        let showCancel: Bool = false
+        let showCancelBack: Bool = true
         let showVoiceSearch = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
@@ -105,6 +107,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
+        let showCancelBack: Bool = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
@@ -138,6 +141,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
+        let showCancelBack: Bool = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
@@ -161,7 +165,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let showAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = true
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -171,8 +175,9 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         let showSettings = false
-        let showCancel: Bool = true
+        let showCancel: Bool = false
         let showVoiceSearch = false
+        let showCancelBack: Bool = true
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
@@ -208,6 +213,7 @@ struct SmallOmniBarState {
         let showSettings = false
         let showCancel: Bool = false
         let showVoiceSearch = false
+        let showCancelBack: Bool = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return BrowsingTextEditingStartedState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
@@ -228,7 +234,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let showAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = true
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -238,7 +244,8 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         let showSettings = false
-        let showCancel: Bool = true
+        let showCancel: Bool = false
+        let showCancelBack: Bool = true
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }

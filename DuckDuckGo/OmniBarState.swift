@@ -42,7 +42,7 @@ protocol OmniBarState: CustomStringConvertible {
     var showSettings: Bool { get }
     var showVoiceSearch: Bool { get }
     var showAbort: Bool { get }
-
+    var showCancelBack: Bool { get }
     var onEditingStoppedState: OmniBarState { get }
     var onEditingSuspendedState: OmniBarState { get }
     var onEditingStartedState: OmniBarState { get }

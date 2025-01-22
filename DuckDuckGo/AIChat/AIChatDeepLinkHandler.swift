@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 struct AIChatDeepLinkHandler {
 
@@ -32,7 +33,6 @@ struct AIChatDeepLinkHandler {
 
     func firePixel(_ url: URL) {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-            print("Invalid URL")
             return
         }
 
@@ -40,9 +40,9 @@ struct AIChatDeepLinkHandler {
         if let sourceItem = queryItems?.first(where: { $0.name == WidgetSourceType.sourceKey }) {
             switch sourceItem.value {
             case WidgetSourceType.quickActions.rawValue:
-                print("A")
+                DailyPixel.fireDailyAndCount(pixel: .openAIChatFromWidgetQuickAction)
             case WidgetSourceType.favorite.rawValue:
-                print("B")
+                DailyPixel.fireDailyAndCount(pixel: .openAIChatFromWidgetFavorite)
             default:
                 break
             }

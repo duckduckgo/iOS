@@ -956,10 +956,11 @@ extension Pixel {
         // MARK: AI Chat
         case aiChatNoRemoteSettingsFound(settings: String)
         case openAIChatFromAddressBar
+        case openAIChatFromWidgetFavorite
+        case openAIChatFromWidgetQuickAction
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
-
     }
 
 }
@@ -1913,6 +1914,8 @@ extension Pixel.Event {
         case .aiChatNoRemoteSettingsFound(let settings):
             return "m_aichat_no_remote_settings_found-\(settings.lowercased())"
         case .openAIChatFromAddressBar: return "m_aichat_addressbar_icon"
+        case .openAIChatFromWidgetFavorite: return "m_aichat-widget-favorite"
+        case .openAIChatFromWidgetQuickAction: return "m_aichat-widget-quickaction"
 
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"

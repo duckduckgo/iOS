@@ -297,7 +297,7 @@ final class SpecialErrorPageNavigationHandlerTests {
     }
 
     @MainActor
-    @Test("Lave Site closes Tab when SSL Error")
+    @Test("Leave Site closes Tab when SSL Error")
     func whenLeaveSite_AndSSLError_AndWebViewCannotNavigateBack_ThenAskDelegateToCloseTab() {
         // GIVEN
         webView.setCanGoBack(false)
@@ -306,12 +306,14 @@ final class SpecialErrorPageNavigationHandlerTests {
         sut.attachWebView(webView)
         sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: .genericSSL)
         #expect(!delegate.didCallCloseSpecialErrorPageTab)
+        #expect(!delegate.capturedShouldCreateNewEmptyTab)
 
         // WHEN
         sut.leaveSiteAction()
 
         // THEN
         #expect(delegate.didCallCloseSpecialErrorPageTab)
+        #expect(!delegate.capturedShouldCreateNewEmptyTab)
     }
 
     @MainActor
@@ -337,13 +339,15 @@ final class SpecialErrorPageNavigationHandlerTests {
         let delegate = SpySpecialErrorPageNavigationDelegate()
         sut.delegate = delegate
         #expect(!delegate.didCallCloseSpecialErrorPageTab)
-        
+        #expect(!delegate.capturedShouldCreateNewEmptyTab)
+
 
         // WHEN
         sut.leaveSiteAction()
 
         // THEN
         #expect(delegate.didCallCloseSpecialErrorPageTab)
+        #expect(delegate.capturedShouldCreateNewEmptyTab)
     }
 
     @MainActor

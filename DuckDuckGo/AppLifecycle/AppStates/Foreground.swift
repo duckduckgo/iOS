@@ -25,7 +25,6 @@ import WidgetKit
 import BackgroundTasks
 import Subscription
 import NetworkProtection
-import MaliciousSiteProtection
 
 /// Represents the state where the app is active and available for user interaction.
 /// - Usage:
@@ -209,7 +208,7 @@ struct Foreground: AppState {
         }
 
         // Fetch Malicious Site protection datasets
-        appDependencies.maliciousSiteProtectionManager.startFetching()
+        appDependencies.maliciousSiteProtectionService.onForeground()
 
         AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
     }

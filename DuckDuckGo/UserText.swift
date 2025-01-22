@@ -219,6 +219,10 @@ public struct UserText {
     public static let openHomeTab = NSLocalizedString("tab.open.home", value: "Open home tab", comment: "Accessibility label on tab cell")
     public static let closeHomeTab = NSLocalizedString("tab.close.home", value: "Close home tab", comment: "Accessibility label on remove button")
 
+    public static let closeTab = NotLocalizedString("tab.close", value: "Close Tab", comment: "Close a single tab")
+
+    public static let selectAllTabs = NotLocalizedString("tab.select.all", value: "Select All", comment: "Select all tabs")
+
     public static func closeAllTabs(withCount count: Int) -> String {
         let message = NotLocalizedString("tab.close.with.count", value: "Close All %@ Tabs", comment: "Close all tabs showing count")
         return message.format(arguments: "\(count)")

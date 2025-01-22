@@ -236,9 +236,9 @@ extension TabSwitcherViewController {
 
         case .multiSelectEnabledNormal:
             toolbar.items = [
-                createMultiSelectionMenuBarButton(),
-                UIBarButtonItem.flexibleSpace(),
                 createCloseAllTabsButton(),
+                UIBarButtonItem.flexibleSpace(),
+                createMultiSelectionMenuBarButton(),
             ]
             toolbar.isHidden = false
 
@@ -298,7 +298,7 @@ extension TabSwitcherViewController {
     }
 
     func createSelectAllButton() -> UIBarButtonItem {
-        return UIBarButtonItem(title: "Select all", primaryAction: UIAction { _ in
+        return UIBarButtonItem(title: UserText.selectAllTabs, primaryAction: UIAction { _ in
             self.selectAllTabs()
         })
     }
@@ -308,9 +308,15 @@ extension TabSwitcherViewController {
     }
 
     func createCloseAllTabsButton() -> UIBarButtonItem {
-        return UIBarButtonItem(title: UserText.closeTabs(withCount: selectedTabs.count), primaryAction: UIAction { _ in
-            self.closeSelectedTabs()
-        })
+        if selectedTabs.count == 0 {
+            let button = UIBarButtonItem(title: UserText.closeTab)
+            button.isEnabled = false
+            return button
+        } else {
+            return UIBarButtonItem(title: UserText.closeTabs(withCount: selectedTabs.count), primaryAction: UIAction { _ in
+                self.closeSelectedTabs()
+            })
+        }
     }
 
     func createMultiSelectionMenu() -> UIMenu {

@@ -40,10 +40,10 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         sslErrorPageNavigationHandler = SSLErrorPageNavigationHandler(featureFlagger: featureFlagger)
         let preferencesManager = MockMaliciousSiteProtectionPreferencesManager()
         preferencesManager.isMaliciousSiteProtectionOn = true
-        let maliciousSiteProtectionFeatureFlags = MockMaliciousSiteProtectionFeatureFlags()
+        maliciousSiteProtectionFeatureFlags = MockMaliciousSiteProtectionFeatureFlags()
         maliciousSiteProtectionFeatureFlags.isMaliciousSiteProtectionEnabled = true
         maliciousSiteProtectionFeatureFlags.shouldDetectMaliciousThreatForDomainResult = true
-        let maliciousSiteProtectionManager = MaliciousSiteProtectionManager(
+        maliciousSiteProtectionManager = MaliciousSiteProtectionManager(
             dataFetcher: MockMaliciousSiteProtectionDataFetcher(),
             api: MaliciousSiteProtectionAPI(),
             dataManager: MaliciousSiteProtection.DataManager(

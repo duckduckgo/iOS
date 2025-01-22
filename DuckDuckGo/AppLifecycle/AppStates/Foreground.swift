@@ -444,9 +444,7 @@ struct Foreground: AppState {
                 mainViewController.launchAutofillLogins(openSearch: true, source: source)
             }
         case .openAIChat:
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                mainViewController.openAIChat()
-            }
+            AIChatDeepLinkHandler().handleDeepLink(url, on: mainViewController)
         default:
             guard app.applicationState == .active,
                   let currentTab = mainViewController.currentTab else {

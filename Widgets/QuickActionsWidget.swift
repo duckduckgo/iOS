@@ -42,7 +42,7 @@ struct QuickActionsWidgetView: View {
             }
             Spacer()
             HStack(spacing: 12) {
-                Link(destination: DeepLinks.openAIChat.appendingParameter(name: "source", value: "widget.quickactions")) {
+                Link(destination: DeepLinks.openAIChat.appendingParameter(name: WidgetSourceType.sourceKey, value: WidgetSourceType.quickActions.rawValue)) {
                     IconView(image: Image(.aiChat24))
                 }
                 Link(destination: DeepLinks.openPasswords) {

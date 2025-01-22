@@ -169,7 +169,7 @@ struct FavoritesWidgetView: View {
             VStack(alignment: .center, spacing: 0) {
                 HStack(spacing: 12) {
                     LargeSearchFieldView()
-                    Link(destination: DeepLinks.openAIChat.appendingParameter(name: "source", value: "widget.favorite")) {
+                    Link(destination: DeepLinks.openAIChat.appendingParameter(name: WidgetSourceType.sourceKey, value: WidgetSourceType.favorite.rawValue)) {
                         CircleIconView(image: Image(.aiChat24))
                     }
                 }

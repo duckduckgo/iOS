@@ -206,6 +206,9 @@
 		31C7D71C27515A6300A95D0A /* MockVoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */; };
 		31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */; };
 		31CC224928369B38001654A4 /* AutofillLoginSettingsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CC224828369B38001654A4 /* AutofillLoginSettingsListViewController.swift */; };
+		31D2D2A22D40F7E900549D12 /* AIChatDeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D2D2A12D40F7E900549D12 /* AIChatDeepLinkHandler.swift */; };
+		31D2D2A42D40F98800549D12 /* WidgetSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D2D2A32D40F98800549D12 /* WidgetSourceType.swift */; };
+		31D2D2A52D40F99100549D12 /* WidgetSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D2D2A32D40F98800549D12 /* WidgetSourceType.swift */; };
 		31DD208427395A5A008FB313 /* VoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */; };
 		31DE43C22C2C480D00F8C51F /* DuckPlayerFeaturePresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DE43C12C2C480D00F8C51F /* DuckPlayerFeaturePresentationView.swift */; };
 		31DE43C42C2C60E800F8C51F /* DuckPlayerModalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DE43C32C2C60E800F8C51F /* DuckPlayerModalPresenter.swift */; };
@@ -1627,6 +1630,8 @@
 		31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerProtocol.swift; sourceTree = "<group>"; };
 		31CC224828369B38001654A4 /* AutofillLoginSettingsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginSettingsListViewController.swift; sourceTree = "<group>"; };
+		31D2D2A12D40F7E900549D12 /* AIChatDeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatDeepLinkHandler.swift; sourceTree = "<group>"; };
+		31D2D2A32D40F98800549D12 /* WidgetSourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSourceType.swift; sourceTree = "<group>"; };
 		31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31DE43C12C2C480D00F8C51F /* DuckPlayerFeaturePresentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerFeaturePresentationView.swift; sourceTree = "<group>"; };
 		31DE43C32C2C60E800F8C51F /* DuckPlayerModalPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerModalPresenter.swift; sourceTree = "<group>"; };
@@ -3761,7 +3766,9 @@
 		311C79E22CF790270021196A /* AIChat */ = {
 			isa = PBXGroup;
 			children = (
+				31D2D2A32D40F98800549D12 /* WidgetSourceType.swift */,
 				31C314A32D2EF9DF009A412A /* UserScript */,
+				31D2D2A12D40F7E900549D12 /* AIChatDeepLinkHandler.swift */,
 				31C314A12D2EF60A009A412A /* AIChatViewControllerManager.swift */,
 				311711902D00E53A0063AC3D /* OmnibarAccessoryHandling.swift */,
 				316AA4592CF8E31F00A2ED28 /* AIChatSettings.swift */,
@@ -8116,6 +8123,7 @@
 				D652498E2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift in Sources */,
 				7B1604E82CB685B400A44EC6 /* Logger+TipKit.swift in Sources */,
 				8548D95E25262B1B005AAE49 /* ViewHighlighter.swift in Sources */,
+				31D2D2A42D40F98800549D12 /* WidgetSourceType.swift in Sources */,
 				F4D7221026F29A70007D6193 /* BookmarkDetailsCell.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
@@ -8374,6 +8382,7 @@
 				4B0F3F502B9BFF2100392892 /* NetworkProtectionFAQView.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
+				31D2D2A22D40F7E900549D12 /* AIChatDeepLinkHandler.swift in Sources */,
 				1E908BF129827C480008C8F3 /* AutoconsentUserScript.swift in Sources */,
 				1D200C972BA3157A00108701 /* SettingsNextStepsView.swift in Sources */,
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
@@ -8762,6 +8771,7 @@
 				853273B424FFB36100E3C778 /* UIColorExtension.swift in Sources */,
 				853273AB24FEF27500E3C778 /* WidgetViews.swift in Sources */,
 				31B0B2BF2D390CF400A702D4 /* QuickActionsWidget.swift in Sources */,
+				31D2D2A52D40F99100549D12 /* WidgetSourceType.swift in Sources */,
 				7B1681092D10C678005EAE24 /* VPNControlStatusValueProvider.swift in Sources */,
 				7B16810D2D10CF44005EAE24 /* WidgetVPNIntents.swift in Sources */,
 				4BB7CBB02AF59C310014A35F /* VPNWidget.swift in Sources */,

@@ -373,13 +373,13 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
             hostView?.chromeDelegate?.setBarsHidden(false, animated: true)
             hideTimer?.invalidate()
             hideTimer = nil
-            hostView?.resetWebViewConstraints()
+            hostView?.setupWebViewForPortraitVideo()
         case .landscapeLeft, .landscapeRight:
             hostView?.chromeDelegate?.omniBar.resignFirstResponder()
-            hostView?.setupWebViewConstraintsForLandscape()
+            hostView?.setupWebViewForLandscapeVideo()
             hostView?.chromeDelegate?.setBarsHidden(true, animated: true)
         case .unknown, .faceUp, .faceDown:
-            hostView?.resetWebViewConstraints()
+            hostView?.setupWebViewForPortraitVideo()
             return
         @unknown default:
             return
@@ -600,57 +600,66 @@ extension DuckPlayer: UIGestureRecognizerDelegate {
 // to become full screen when rotating the device to Landscape mode
 
 private extension TabViewController {
-    // Use a dedicated key object instead of a String
-    private static let originalWebViewConstraintsKey: UnsafeRawPointer = {
-        return UnsafeRawPointer(UnsafeMutablePointer<UInt8>.allocate(capacity: 1))
-    }()
+    // Private struct to hold the original values
+    private struct OriginalSettings {
+        let viewBackground: UIColor?
+        let webViewBackground: UIColor?
+        let webViewOpaque: Bool
+        let scrollViewBackground: UIColor?
+    }
     
-    var originalWebViewConstraints: [NSLayoutConstraint]? {
+    // Key for associated object
+    private static var originalSettingsKey: UInt8 = 0
+    
+    // Getter/Setter for original settings using associated objects
+    private var originalSettings: OriginalSettings? {
         get {
-            return objc_getAssociatedObject(self, TabViewController.originalWebViewConstraintsKey) as? [NSLayoutConstraint]
+            return objc_getAssociatedObject(self, &Self.originalSettingsKey) as? OriginalSettings
         }
         set {
-            objc_setAssociatedObject(self, TabViewController.originalWebViewConstraintsKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &Self.originalSettingsKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
-    func setupWebViewConstraintsForLandscape() {
+    /// Stores WebView settings and
+    /// Updates it's properties to display DuckPlayer in simulated full screen
+    func setupWebViewForLandscapeVideo() {
         guard let webView = webView else { return }
         
-        // Store current constraints before removing them
-        let currentConstraints = view.constraints.filter { $0.firstItem === webView || $0.secondItem === webView }
-        originalWebViewConstraints = currentConstraints
+        // Store original settings
+        originalSettings = OriginalSettings(
+            viewBackground: view.backgroundColor,
+            webViewBackground: webView.backgroundColor,
+            webViewOpaque: webView.isOpaque,
+            scrollViewBackground: webView.scrollView.backgroundColor
+        )
         
-        // Remove current webview constraints
-        view.constraints.filter { $0.firstItem === webView || $0.secondItem === webView }.forEach { view.removeConstraint($0) }
-        
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Save original frame before bars hide/show
-        let frame = view.frame
-        
-        NSLayoutConstraint.activate([
-            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webView.topAnchor.constraint(equalTo: view.topAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            webView.heightAnchor.constraint(equalToConstant: frame.height),
-            webView.widthAnchor.constraint(equalToConstant: frame.width)
-        ])
+        // Apply landscape settings
+        view.backgroundColor = .black
+        webView.backgroundColor = .black
+        webView.isOpaque = true
+        webView.scrollView.backgroundColor = .black
     }
     
-    func resetWebViewConstraints() {
+    /// Resets the webview to it's original settings
+    func setupWebViewForPortraitVideo() {
         guard let webView = webView else { return }
         
-        // Remove landscape constraints
-        view.constraints.filter { $0.firstItem === webView || $0.secondItem === webView }.forEach { view.removeConstraint($0) }
-        
-        // Restore original constraints
-        if let originalConstraints = originalWebViewConstraints {
-            NSLayoutConstraint.activate(originalConstraints)
-            originalWebViewConstraints = nil
+        // Restore original settings if they exist
+        if let settings = originalSettings {
+            view.backgroundColor = settings.viewBackground
+            webView.backgroundColor = settings.webViewBackground
+            webView.isOpaque = settings.webViewOpaque
+            webView.scrollView.backgroundColor = settings.scrollViewBackground
+            
+            // Clear stored settings
+            originalSettings = nil
+        } else {
+            // Fallback to default settings if no stored values
+            view.backgroundColor = .systemBackground
+            webView.backgroundColor = nil
+            webView.isOpaque = true
+            webView.scrollView.backgroundColor = .systemBackground
         }
-        
-        webView.translatesAutoresizingMaskIntoConstraints = false
     }
 }

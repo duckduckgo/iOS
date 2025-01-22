@@ -1569,6 +1569,11 @@ extension TabViewController: WKNavigationDelegate {
             delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
             return
         }
+                
+        guard let url = webView.url, !url.isDuckPlayer else {
+            scheduleTrackerNetworksAnimation(collapsing: true)
+            return
+        }
 
         guard let privacyInfo = self.privacyInfo,
               !isShowingFullScreenDaxDialog else {

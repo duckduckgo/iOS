@@ -1765,13 +1765,13 @@ extension MainViewController: BrowserChromeDelegate {
         _ = findInPageView.resignFirstResponder()
     }
 
-    func setBarsHidden(_ hidden: Bool, animated: Bool) {
+    func setBarsHidden(_ hidden: Bool, animated: Bool, animationDuration: CGFloat?) {
         if hidden { hideKeyboard() }
 
-        setBarsVisibility(hidden ? 0 : 1.0, animated: animated)
+        setBarsVisibility(hidden ? 0 : 1.0, animated: animated, animationDuration: animationDuration)
     }
     
-    func setBarsVisibility(_ percent: CGFloat, animated: Bool = false) {
+    func setBarsVisibility(_ percent: CGFloat, animated: Bool = false, animationDuration: CGFloat?) {
         if percent < 1 {
             hideKeyboard()
             hideMenuHighlighter()
@@ -1789,7 +1789,7 @@ extension MainViewController: BrowserChromeDelegate {
         }
            
         if animated {
-            UIView.animate(withDuration: ChromeAnimationConstants.duration) {
+            UIView.animate(withDuration: animationDuration ?? ChromeAnimationConstants.duration) {
                 updateBlock()
                 self.view.layoutIfNeeded()
             }

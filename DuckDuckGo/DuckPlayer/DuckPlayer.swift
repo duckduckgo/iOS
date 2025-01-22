@@ -217,6 +217,8 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         static let defaultLocale = "en"
         static let translationPath = "pages/duckplayer/locales/"
         static let featureNameKey = "featureName"
+        static let landscapeUIAutohideDelay: CGFloat = 4.0
+        static let chromeShowHideAnimationDuration: CGFloat = 1.0        
     }
     
     
@@ -293,7 +295,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         if let url = hostView?.url, url.isDuckPlayer {
             let orientation = UIDevice.current.orientation
             if orientation.isLandscape {
-                hostView?.chromeDelegate?.setBarsHidden(false, animated: true)
+                hostView?.chromeDelegate?.setBarsHidden(false, animated: true, animationDuration: Constants.chromeShowHideAnimationDuration)
                 setupHideTimer()
             }
         }
@@ -305,11 +307,11 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         hideTimer?.invalidate()
         
         // Create new timer
-        hideTimer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] _ in
+        hideTimer = Timer.scheduledTimer(withTimeInterval: Constants.landscapeUIAutohideDelay, repeats: false) { [weak self] _ in
             DispatchQueue.main.async {
                 let orientation = UIDevice.current.orientation
                 if orientation.isLandscape {
-                    self?.hostView?.chromeDelegate?.setBarsHidden(true, animated: true)
+                    self?.hostView?.chromeDelegate?.setBarsHidden(true, animated: true, animationDuration: Constants.chromeShowHideAnimationDuration)
                 }
             }
         }
@@ -365,8 +367,11 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     }
     
     /// Handles UI Updates based on orientation.  When switching to landscape, we hide
-    /// Navigation and Tabbar to enable "Fake" full screen
+    /// Navigation and Tabbar to enable "Fake" full screen mode.
     private func handleOrientationChange(_ orientation: UIDeviceOrientation) {
+
+        guard UIDevice.current.userInterfaceIdiom == .phone else { return }
+        
         switch orientation {
         case .portrait, .portraitUpsideDown:
             hostView?.chromeDelegate?.omniBar.resignFirstResponder()
@@ -376,8 +381,8 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
             hostView?.setupWebViewForPortraitVideo()
         case .landscapeLeft, .landscapeRight:
             hostView?.chromeDelegate?.omniBar.resignFirstResponder()
-            hostView?.setupWebViewForLandscapeVideo()
-            hostView?.chromeDelegate?.setBarsHidden(true, animated: true)
+            self.hostView?.setupWebViewForLandscapeVideo()
+            self.hostView?.chromeDelegate?.setBarsHidden(true, animated: true, animationDuration: Constants.chromeShowHideAnimationDuration)
         case .unknown, .faceUp, .faceDown:
             hostView?.setupWebViewForPortraitVideo()
             return

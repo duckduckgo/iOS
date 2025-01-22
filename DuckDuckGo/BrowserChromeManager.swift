@@ -20,12 +20,12 @@
 import UIKit
 
 protocol BrowserChromeDelegate: AnyObject {
-
-    func setBarsHidden(_ hidden: Bool, animated: Bool)
+    
+    func setBarsHidden(_ hidden: Bool, animated: Bool, animationDuration: CGFloat?)
     func setNavigationBarHidden(_ hidden: Bool)
     func setRefreshControlEnabled(_ isEnabled: Bool)
-
-    func setBarsVisibility(_ percent: CGFloat, animated: Bool)
+    
+    func setBarsVisibility(_ percent: CGFloat, animated: Bool, animationDuration: CGFloat?)
     
     var canHideBars: Bool { get }
     var isToolbarHidden: Bool { get }
@@ -34,6 +34,16 @@ protocol BrowserChromeDelegate: AnyObject {
 
     var omniBar: OmniBar { get }
     var tabBarContainer: UIView { get }
+}
+
+extension BrowserChromeDelegate {
+    func setBarsHidden(_ hidden: Bool, animated: Bool) {
+        setBarsHidden(hidden, animated: animated, animationDuration: nil)
+    }
+    
+    func setBarsVisibility(_ percent: CGFloat, animated: Bool) {
+        setBarsVisibility(percent, animated: animated, animationDuration: nil)
+    }
 }
 
 class BrowserChromeManager: NSObject, UIScrollViewDelegate {

@@ -94,6 +94,9 @@
 /* Text in passwords widget */
 "widget.passwords" = "Search Passwords";
 
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Search";
+
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Search DuckDuckGo";
 

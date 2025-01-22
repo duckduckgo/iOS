@@ -24,7 +24,7 @@ struct QuickActionsWidget: Widget {
     let kind: String = "QuickActionsWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: Provider()) { _ in
             QuickActionsWidgetView().widgetURL(DeepLinks.openAIChat)
         }
         .configurationDisplayName(UserText.quickActionsWidgetGalleryDisplayName)
@@ -41,8 +41,8 @@ struct QuickActionsWidgetView: View {
                 SearchBoxView()
             }
             Spacer()
-            HStack {
-                Link(destination: DeepLinks.openAIChat) {
+            HStack(spacing: 12) {
+                Link(destination: DeepLinks.openAIChat.appendingParameter(name: "source", value: "widget.quickactions")) {
                     IconView(image: Image(.aiChat24))
                 }
                 Link(destination: DeepLinks.openPasswords) {
@@ -63,7 +63,7 @@ private struct SearchBoxView: View {
                 .frame(width: 28, height: 28)
                 .padding(.leading, 12)
 
-            Text("Search")
+            Text(UserText.quickActionsSearch)
                 .daxBodyRegular()
                 .makeAccentable()
 

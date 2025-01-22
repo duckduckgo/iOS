@@ -118,23 +118,6 @@ struct PasswordsLockScreenWidget: Widget {
     }
 }
 
-@available(iOSApplicationExtension 16.0, *)
-struct AIChatLockScreenWidget: Widget {
-
-    let kind: String = "AIChatLockScreenWidget"
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "LockScreenAIChat")
-                .widgetURL(DeepLinks.openAIChat)
-        }
-        .configurationDisplayName(UserText.lockScreenEmailTitle)
-        .description(UserText.lockScreenEmailDescription)
-        .supportedFamilies([ .accessoryCircular ])
-    }
-
-}
-
 struct LockScreenWidgetView: View {
 
     let imageNamed: String

@@ -41,6 +41,10 @@ struct UserText {
                                                     value: "Search DuckDuckGo",
                                                     comment: "Placeholder text in search field on the search and favorites widget")
 
+    static let quickActionsSearch = NSLocalizedString("widget.quickactions.search",
+                                          value: "Search",
+                                          comment: "Placeholder text in search field on the quick actions widget")
+
     static let noFavoritesMessage = NSLocalizedString("widget.no.favorites.message",
                                                       value: "Quickly visit your favorite sites.",
                                                       comment: "Message shown in the favorites widget empty state.")

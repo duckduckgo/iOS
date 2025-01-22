@@ -34,6 +34,7 @@ import Common
 import Combine
 import PixelKit
 import PixelExperimentKit
+import MaliciousSiteProtection
 
 /// Represents the transient state where the app is being prepared for user interaction after being launched by the system.
 /// - Usage:
@@ -76,7 +77,8 @@ struct Launching: AppState {
     private let isTesting = ProcessInfo().arguments.contains("testing")
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
     private let crashReportUploaderOnboarding: CrashCollectionOnboarding
-    private let maliciousSiteProtectionManager = AppDependencyProvider.shared.maliciousSiteProtectionManager
+    private let maliciousSiteProtectionManager: MaliciousSiteProtectionManaging
+    private let maliciousSiteProtectionPreferencesManager = MaliciousSiteProtectionPreferencesManager()
 
     // These should ideally be let properties instead of force-unwrapped. However, due to various initialization paths, such as database completion blocks, setting them up in advance is currently not feasible. Refactoring will be done once this code is streamlined.
     private let uiService: UIService
@@ -402,6 +404,50 @@ struct Launching: AppState {
 
         privacyProDataReporter.injectTabsModel(tabsModel)
 
+        // Malicious Site Protection
+        let maliciousSiteProtectionAPI = MaliciousSiteProtectionAPI()
+
+        let maliciousSiteProtectionDataManager = MaliciousSiteProtection.DataManager(
+            fileStore: MaliciousSiteProtection.FileStore(
+                dataStoreURL: FileManager.default.urls(
+                    for: .applicationSupportDirectory,
+                    in: .userDomainMask
+                )
+                .first!
+            ),
+            embeddedDataProvider: nil,
+            fileNameProvider: MaliciousSiteProtectionManager.fileName(for:)
+        )
+
+        let maliciousSiteProtectionFeatureFlagger = MaliciousSiteProtectionFeatureFlags(featureFlagger: AppDependencyProvider.shared.featureFlagger)
+
+        let remoteIntervalProvider: (MaliciousSiteProtection.DataManager.StoredDataType) -> TimeInterval = { dataKind in
+            switch dataKind {
+            case .hashPrefixSet: .minutes(maliciousSiteProtectionFeatureFlagger.hashPrefixUpdateFrequency)
+            case .filterSet: .minutes(maliciousSiteProtectionFeatureFlagger.filterSetUpdateFrequency)
+            }
+        }
+
+        let updateManager = MaliciousSiteProtection.UpdateManager(
+            apiEnvironment: maliciousSiteProtectionAPI.environment,
+            service: maliciousSiteProtectionAPI.service,
+            dataManager: maliciousSiteProtectionDataManager,
+            updateIntervalProvider: remoteIntervalProvider
+        )
+
+        let maliciousSiteProtectionDatasetsFetcher = MaliciousSiteProtectionDatasetsFetcher(
+            updateManager: updateManager,
+            featureFlagger: maliciousSiteProtectionFeatureFlagger,
+            userPreferencesManager: maliciousSiteProtectionPreferencesManager
+        )
+
+        maliciousSiteProtectionManager = MaliciousSiteProtectionManager(
+            dataFetcher: maliciousSiteProtectionDatasetsFetcher,
+            api: maliciousSiteProtectionAPI,
+            preferencesManager: maliciousSiteProtectionPreferencesManager,
+            maliciousSiteProtectionFeatureFlagger: maliciousSiteProtectionFeatureFlagger
+        )
+
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
             window = UIWindow(frame: UIScreen.main.bounds)
             window.rootViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
@@ -436,7 +482,9 @@ struct Launching: AppState {
                                                     subscriptionCookieManager: subscriptionCookieManager,
                                                     textZoomCoordinator: Self.makeTextZoomCoordinator(),
                                                     websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
-                                                    appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
+                                                    appDidFinishLaunchingStartTime: didFinishLaunchingStartTime,
+                                                    maliciousSiteProtectionManager: maliciousSiteProtectionManager,
+                                                    maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionPreferencesManager)
 
             mainViewController!.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = mainViewController

@@ -226,7 +226,9 @@ class MainViewController: UIViewController {
         subscriptionCookieManager: SubscriptionCookieManaging,
         textZoomCoordinator: TextZoomCoordinating,
         websiteDataManager: WebsiteDataManaging,
-        appDidFinishLaunchingStartTime: CFAbsoluteTime?
+        appDidFinishLaunchingStartTime: CFAbsoluteTime?,
+        maliciousSiteProtectionManager: MaliciousSiteProtectionManaging,
+        maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -256,7 +258,9 @@ class MainViewController: UIViewController {
                                      appSettings: appSettings,
                                      textZoomCoordinator: textZoomCoordinator,
                                      websiteDataManager: websiteDataManager,
-                                     fireproofing: fireproofing)
+                                     fireproofing: fireproofing,
+                                     maliciousSiteProtectionManager: maliciousSiteProtectionManager,
+                                     maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionPreferencesManager)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()

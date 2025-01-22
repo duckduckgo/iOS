@@ -66,7 +66,7 @@ final class MaliciousSiteProtectionNavigationHandler {
     @MainActor private(set) var maliciousSiteDetectionTasks: [URL: Task<MaliciousSiteProtectionNavigationResult, Never>] = [:]
 
     init(
-        maliciousSiteProtectionManager: MaliciousSiteDetecting = AppDependencyProvider.shared.maliciousSiteProtectionManager,
+        maliciousSiteProtectionManager: MaliciousSiteDetecting,
         storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     ) {
         self.maliciousSiteProtectionManager = maliciousSiteProtectionManager

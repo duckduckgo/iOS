@@ -21,9 +21,19 @@ import Foundation
 import MaliciousSiteProtection
 @testable import DuckDuckGo
 
-final class MockMaliciousSiteProtectionManager: MaliciousSiteDetecting {
+final class MockMaliciousSiteProtectionManager: MaliciousSiteDetecting, MaliciousSiteProtectionDatasetsFetching {
+    private(set) var didCallStartFetching = false
+    private(set) var didCallRegisterBackgroundRefreshTaskHandler = false
 
     var threatKind: ThreatKind?
+
+    func startFetching() {
+        didCallStartFetching = true
+    }
+
+    func registerBackgroundRefreshTaskHandler() {
+        didCallRegisterBackgroundRefreshTaskHandler = true
+    }
 
     func evaluate(_ url: URL) async -> MaliciousSiteProtection.ThreatKind? {
         threatKind

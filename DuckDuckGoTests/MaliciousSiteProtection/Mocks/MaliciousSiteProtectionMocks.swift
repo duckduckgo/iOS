@@ -146,3 +146,27 @@ final class MockMaliciousSiteProtectionDataFetcher: MaliciousSiteProtectionDatas
 final class MockBackgroundRefreshApplication: BackgroundRefreshCapable {
     var backgroundRefreshStatus: UIBackgroundRefreshStatus = .available
 }
+
+final class MockMaliciousSiteDetector: MaliciousSiteProtection.MaliciousSiteDetecting {
+
+    var isMalicious: (URL) -> MaliciousSiteProtection.ThreatKind? = { url in
+        if url.absoluteString.contains("phishing") {
+            .phishing
+        } else if url.absoluteString.contains("malware") {
+            .malware
+        } else {
+            nil
+        }
+    }
+
+    init(isMalicious: ((URL) -> MaliciousSiteProtection.ThreatKind?)? = nil) {
+        if let isMalicious {
+            self.isMalicious = isMalicious
+        }
+    }
+
+    func evaluate(_ url: URL) async -> MaliciousSiteProtection.ThreatKind? {
+        return isMalicious(url)
+    }
+
+}

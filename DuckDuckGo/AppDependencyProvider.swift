@@ -29,7 +29,6 @@ import RemoteMessaging
 import PageRefreshMonitor
 import PixelKit
 import PixelExperimentKit
-import MaliciousSiteProtection
 
 protocol DependencyProvider {
 
@@ -53,10 +52,7 @@ protocol DependencyProvider {
     var serverInfoObserver: ConnectionServerInfoObserver { get }
     var vpnSettings: VPNSettings { get }
     var persistentPixel: PersistentPixelFiring { get }
-
-    // Malicious Site Protection
-    var maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging { get }
-    var maliciousSiteProtectionManager: MaliciousSiteProtectionManaging { get }
+    
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -94,10 +90,6 @@ final class AppDependencyProvider: DependencyProvider {
     let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
     let persistentPixel: PersistentPixelFiring = PersistentPixel()
-
-    // Malicious Site Protection
-    let maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging = MaliciousSiteProtectionPreferencesManager()
-    let maliciousSiteProtectionManager: MaliciousSiteProtectionManaging
 
     private init() {
         let featureFlaggerOverrides = FeatureFlagLocalOverrides(keyValueStore: UserDefaults(suiteName: FeatureFlag.localOverrideStoreName)!,
@@ -156,50 +148,6 @@ final class AppDependencyProvider: DependencyProvider {
                                                                               settings: vpnSettings)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
-
-        // Malicious Site Protection
-        let maliciousSiteProtectionAPI = MaliciousSiteProtectionAPI()
-
-        let maliciousSiteProtectionDataManager = MaliciousSiteProtection.DataManager(
-            fileStore: MaliciousSiteProtection.FileStore(
-                dataStoreURL: FileManager.default.urls(
-                    for: .applicationSupportDirectory,
-                    in: .userDomainMask
-                )
-                .first!
-            ),
-            embeddedDataProvider: nil,
-            fileNameProvider: MaliciousSiteProtectionManager.fileName(for:)
-        )
-
-        let maliciousSiteProtectionFeatureFlagger = MaliciousSiteProtectionFeatureFlags(featureFlagger: featureFlagger)
-
-        let remoteIntervalProvider: (MaliciousSiteProtection.DataManager.StoredDataType) -> TimeInterval = { dataKind in
-            switch dataKind {
-            case .hashPrefixSet: .minutes(maliciousSiteProtectionFeatureFlagger.hashPrefixUpdateFrequency)
-            case .filterSet: .minutes(maliciousSiteProtectionFeatureFlagger.filterSetUpdateFrequency)
-            }
-        }
-
-        let updateManager = MaliciousSiteProtection.UpdateManager(
-            apiEnvironment: maliciousSiteProtectionAPI.environment,
-            service: maliciousSiteProtectionAPI.service,
-            dataManager: maliciousSiteProtectionDataManager,
-            updateIntervalProvider: remoteIntervalProvider
-        )
-
-        let maliciousSiteProtectionDatasetsFetcher = MaliciousSiteProtectionDatasetsFetcher(
-            updateManager: updateManager,
-            featureFlagger: maliciousSiteProtectionFeatureFlagger,
-            userPreferencesManager: maliciousSiteProtectionPreferencesManager
-        )
-
-        maliciousSiteProtectionManager = MaliciousSiteProtectionManager(
-            dataFetcher: maliciousSiteProtectionDatasetsFetcher,
-            api: maliciousSiteProtectionAPI,
-            preferencesManager: maliciousSiteProtectionPreferencesManager,
-            maliciousSiteProtectionFeatureFlagger: maliciousSiteProtectionFeatureFlagger
-        )
     }
 
 }

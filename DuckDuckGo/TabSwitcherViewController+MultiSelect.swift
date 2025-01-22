@@ -106,7 +106,21 @@ extension TabSwitcherViewController {
     }
 
     func closeAllTabs() {
-        delegate?.tabSwitcherDidRequestCloseAll(tabSwitcher: self)
+        let alert = UIAlertController(
+            title: UserText.closeAllTabs(withCount: tabsModel.count),
+            message: UserText.alertMessageCloseTheseTabs,
+            preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: UserText.actionCancel,
+                                      style: .default) { _ in })
+
+        alert.addAction(UIAlertAction(title: UserText.closeTabs,
+                                      style: .destructive) { _ in
+
+            self.delegate?.tabSwitcherDidRequestCloseAll(tabSwitcher: self)
+        })
+
+        present(alert, animated: true)
     }
 
     func closeSelectedTabs() {

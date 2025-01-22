@@ -36,11 +36,10 @@ struct QuickActionsWidget: Widget {
 struct QuickActionsWidgetView: View {
 
     var body: some View {
-        VStack {
+        VStack(spacing: 12) {
             Link(destination: DeepLinks.newSearch) {
                 SearchBoxView()
             }
-            Spacer()
             HStack(spacing: 12) {
                 Link(destination: DeepLinks.openAIChat.appendingParameter(name: WidgetSourceType.sourceKey, value: WidgetSourceType.quickActions.rawValue)) {
                     IconView(image: Image(.aiChat24))

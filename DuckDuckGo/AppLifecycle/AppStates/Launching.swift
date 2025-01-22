@@ -26,7 +26,6 @@ import Persistence
 import BrowserServicesKit
 import WidgetKit
 import RemoteMessaging
-import Subscription
 import WebKit
 import Common
 import Combine
@@ -71,7 +70,6 @@ struct Launching: AppState {
     private let autofillService: AutofillService = AutofillService()
 
     private let remoteMessagingClient: RemoteMessagingClient
-    private let subscriptionCookieManager: SubscriptionCookieManaging
     private let window: UIWindow
 
     private var mainViewController: MainViewController?
@@ -82,6 +80,7 @@ struct Launching: AppState {
 
     private let application: UIApplication
     private let crashService: CrashService
+    private let subscriptionService: SubscriptionService
 
     // swiftlint:disable:next cyclomatic_complexity
     init(stateContext: Initializing.StateContext) {
@@ -293,11 +292,7 @@ struct Launching: AppState {
         )
         remoteMessagingClient.registerBackgroundRefreshTaskHandler()
 
-        let subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            purchasePlatform: .appStore)
-
-        subscriptionCookieManager = Self.makeSubscriptionCookieManager(application: application)
+        subscriptionService = SubscriptionService(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
 
         let homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                           remoteMessagingClient: remoteMessagingClient,
@@ -337,11 +332,11 @@ struct Launching: AppState {
                                                     contextualOnboardingPresenter: contextualOnboardingPresenter,
                                                     contextualOnboardingLogic: daxDialogs,
                                                     contextualOnboardingPixelReporter: onboardingPixelReporter,
-                                                    subscriptionFeatureAvailability: subscriptionFeatureAvailability,
+                                                    subscriptionFeatureAvailability: subscriptionService.subscriptionFeatureAvailability,
                                                     voiceSearchHelper: voiceSearchHelper,
                                                     featureFlagger: AppDependencyProvider.shared.featureFlagger,
                                                     fireproofing: fireproofing,
-                                                    subscriptionCookieManager: subscriptionCookieManager,
+                                                    subscriptionCookieManager: subscriptionService.subscriptionCookieManager,
                                                     textZoomCoordinator: Self.makeTextZoomCoordinator(),
                                                     websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
                                                     appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
@@ -385,7 +380,7 @@ struct Launching: AppState {
 
         vpnService.beginObservingVPNStatus()
 
-        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
+        subscriptionService.onLaunching()
 
         autofillService.onLaunching()
 
@@ -408,34 +403,11 @@ struct Launching: AppState {
             syncService: syncService,
             privacyProDataReporter: privacyProDataReporter,
             remoteMessagingClient: remoteMessagingClient,
-            subscriptionService: SubscriptionService(subscriptionCookieManager: subscriptionCookieManager,
-                                                     privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager),
+            subscriptionService: subscriptionService,
             onboardingPixelReporter: onboardingPixelReporter,
             autofillService: autofillService,
             crashService: crashService
         )
-    }
-
-    private static func makeSubscriptionCookieManager(application: UIApplication) -> SubscriptionCookieManaging {
-        let subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
-                                                                  currentCookieStore: {
-            guard let mainViewController = application.window?.rootViewController as? MainViewController,
-                mainViewController.tabManager.model.hasActiveTabs else {
-                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
-                // eventually the subscription cookie will be refreshed on opening the first tab
-                return nil
-            }
-            return WKHTTPCookieStoreWrapper(store: WKWebsiteDataStore.current().httpCookieStore)
-        }, eventMapping: SubscriptionCookieManageEventPixelMapping())
-
-        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
-
-        // Enable subscriptionCookieManager if feature flag is present
-        if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains) {
-            subscriptionCookieManager.enableSettingSubscriptionCookie()
-        }
-
-        return subscriptionCookieManager
     }
 
     private static func makeHistoryManager() -> HistoryManaging {

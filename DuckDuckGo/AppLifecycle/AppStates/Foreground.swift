@@ -23,7 +23,6 @@ import BrowserServicesKit
 import Core
 import WidgetKit
 import BackgroundTasks
-import Subscription
 import NetworkProtection
 
 /// Represents the state where the app is active and available for user interaction.
@@ -65,19 +64,8 @@ struct Foreground: AppState {
                        withAdditionalParameters: [PixelParameters.time: String(launchTime)])
         }
 
-        // Keep track of feature flag changes
-        let subscriptionCookieManager = appDependencies.subscriptionService.subscriptionCookieManager
-        appDependencies.subscriptionService.onPrivacyConfigurationUpdate = { [privacyConfigurationManager] in
-            let isEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
-
-            Task { @MainActor in
-                if isEnabled {
-                    subscriptionCookieManager.enableSettingSubscriptionCookie()
-                } else {
-                    await subscriptionCookieManager.disableSettingSubscriptionCookie()
-                }
-            }
-        }
+        let subscriptionService = appDependencies.subscriptionService
+        subscriptionService.onFirstForeground()
 
         // onApplicationLaunch code
         Task { @MainActor [self] in
@@ -171,15 +159,8 @@ struct Foreground: AppState {
 
         appDependencies.vpnService.onForeground(mainViewController: mainViewController)
 
-        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscriptionAndEntitlements { isSubscriptionActive in
-            if isSubscriptionActive {
-                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-            }
-        }
-
-        Task {
-            await appDependencies.subscriptionService.subscriptionCookieManager.refreshSubscriptionCookie()
-        }
+        let subscriptionService = appDependencies.subscriptionService
+        subscriptionService.onForeground()
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: appDependencies.syncService.sync)
         importPasswordsStatusHandler.checkSyncSuccessStatus()

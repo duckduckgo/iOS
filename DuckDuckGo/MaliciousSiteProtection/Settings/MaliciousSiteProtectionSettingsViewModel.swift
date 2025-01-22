@@ -24,17 +24,10 @@ import SwiftUI
 
 final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
     @Published var shouldShowMaliciousSiteProtectionSection = false
-    @Published var isMaliciousSiteProtectionEnabled: Bool = false
-
-    var maliciousSiteProtectionBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: {
-                self.manager.isMaliciousSiteProtectionOn
-            },
-            set: {
-                self.updateMaliciousSiteProtection(enabled: $0)
-            }
-        )
+    @Published var isMaliciousSiteProtectionOn: Bool = false {
+        didSet {
+            manager.isMaliciousSiteProtectionOn = isMaliciousSiteProtectionOn
+        }
     }
 
     private let manager: MaliciousSiteProtectionPreferencesManaging
@@ -50,16 +43,11 @@ final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
         self.featureFlagger = featureFlagger
         self.urlOpener = urlOpener
         shouldShowMaliciousSiteProtectionSection = featureFlagger.isMaliciousSiteProtectionEnabled
-        isMaliciousSiteProtectionEnabled = manager.isMaliciousSiteProtectionOn
+        isMaliciousSiteProtectionOn = manager.isMaliciousSiteProtectionOn
     }
 
     func learnMoreAction() {
         urlOpener.open(URL.maliciousSiteProtectionLearnMore)
-    }
-
-    private func updateMaliciousSiteProtection(enabled isEnabled: Bool) {
-        manager.isMaliciousSiteProtectionOn = isEnabled
-        isMaliciousSiteProtectionEnabled = isEnabled
     }
 
 }

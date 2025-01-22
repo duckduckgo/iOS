@@ -35,14 +35,14 @@ struct SettingsMaliciousProtectionView: View {
                         }
 
                         Text(UserText.MaliciousSiteProtectionSettings.footerDisabledMessage)
-                            .opacity(maliciousSiteProtectionSettingsModel.maliciousSiteProtectionBinding.wrappedValue ? 0 : 1)
+                            .opacity(maliciousSiteProtectionSettingsModel.isMaliciousSiteProtectionOn ? 0 : 1)
                             .foregroundColor(.red)
                             .font(.footnote)
                     }
             ) {
                 SettingsCellView(
                     label: UserText.MaliciousSiteProtectionSettings.toggleMessage,
-                    accessory: .toggle(isOn: maliciousSiteProtectionSettingsModel.maliciousSiteProtectionBinding)
+                    accessory: .toggle(isOn: $maliciousSiteProtectionSettingsModel.isMaliciousSiteProtectionOn)
                 )
             }
         } else {

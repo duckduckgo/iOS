@@ -60,77 +60,54 @@ final class MaliciousSiteProtectionSettingsViewModelTests {
         #expect(!result)
     }
 
-    @Test("Malicious Site Protection preference is enabled")
+    @Test("Malicious Site Protection preference is On")
     func whenInit_AndIsEnabledPreferenceSetToTrue_ThenIsMaliciousSiteProtectionEnabledReturnsTrue() {
         // GIVEN
         preferencesManager.isMaliciousSiteProtectionOn = true
         setupSUT()
 
         // WHEN
-        let result = sut.isMaliciousSiteProtectionEnabled
+        let result = sut.isMaliciousSiteProtectionOn
 
         // THEN
         #expect(result)
     }
 
-    @Test("Malicious Site Protection preference is disabled")
+    @Test("Malicious Site Protection preference is Off")
     func whenInit_AndIsEnabledPreferenceSetToFalse_ThenIsMaliciousSiteProtectionEnabledReturnsFalse() {
         // GIVEN
         preferencesManager.isMaliciousSiteProtectionOn = false
         setupSUT()
 
         // WHEN
-        let result = sut.isMaliciousSiteProtectionEnabled
+        let result = sut.isMaliciousSiteProtectionOn
 
         // THEN
         #expect(!result)
     }
 
-    @Test("Malicious Site Protection Settings binding value is true")
-    func whenMaliciousSiteProtectionBindingIsCalled_AndValueIsTrue_ThenReturnTrue() {
-        // GIVEN
-        preferencesManager.isMaliciousSiteProtectionOn = true
 
-        // WHEN
-        let result = sut.maliciousSiteProtectionBinding
-
-        // THEN
-        #expect(result.wrappedValue)
-    }
-
-    @Test("Malicious Site Protection Settings binding value is false")
-    func whenMaliciousSiteProtectionBindingIsCalled_AndValueIsFalse_ThenReturnFalse() {
-        // GIVEN
-        preferencesManager.isMaliciousSiteProtectionOn = false
-
-        // WHEN
-        let result = sut.maliciousSiteProtectionBinding
-
-        // THEN
-        #expect(!result.wrappedValue)
-    }
-
-    @Test("Malicious Site Protection Settings binding value is set to true")
+    @Test("Turning On Malicious Site Protection Settings Save User Preference")
     func whenMaliciousSiteProtectionBindingIsSetToTrue_ThenIsMaliciousSiteProtectionEnabledIsSetToTrue() {
         // GIVEN
         preferencesManager.isMaliciousSiteProtectionOn = false
         #expect(!preferencesManager.isMaliciousSiteProtectionOn)
 
         // WHEN
-        sut.maliciousSiteProtectionBinding.wrappedValue = true
+        sut.isMaliciousSiteProtectionOn = true
 
         // THEN
         #expect(preferencesManager.isMaliciousSiteProtectionOn)
     }
 
-    @Test("Malicious Site Protection Settings binding value is set to false")
+    @Test("Turning Off Malicious Site Protection Settings Save User Preference")
     func whenMaliciousSiteProtectionBindingIsSetToFalse_ThenIsMaliciousSiteProtectionEnabledIsSetToFalse() {
         // GIVEN
         preferencesManager.isMaliciousSiteProtectionOn = true
         #expect(preferencesManager.isMaliciousSiteProtectionOn)
 
         // WHEN
-        sut.maliciousSiteProtectionBinding.wrappedValue = false
+        sut.isMaliciousSiteProtectionOn = false
 
         // THEN
         #expect(!preferencesManager.isMaliciousSiteProtectionOn)

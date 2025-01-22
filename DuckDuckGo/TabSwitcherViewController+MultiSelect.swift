@@ -108,12 +108,19 @@ extension TabSwitcherViewController {
         delegate?.tabSwitcherDidRequestCloseAll(tabSwitcher: self)
     }
 
+    // TODO show a confirmation dialog
     func closeSelectedTabs() {
         selectedTabs.compactMap {
             tabsModel.safeGetTabAt($0)
         }.forEach {
             delegate.tabSwitcher(self, didRemoveTab: $0)
         }
+        selectedTabs = Set<Int>()
+        collectionView.reloadData()
+        updateUIForSelectionMode()
+    }
+
+    func deselectAllTabs() {
         selectedTabs = Set<Int>()
         collectionView.reloadData()
         updateUIForSelectionMode()
@@ -298,9 +305,15 @@ extension TabSwitcherViewController {
     }
 
     func createSelectAllButton() -> UIBarButtonItem {
-        return UIBarButtonItem(title: UserText.selectAllTabs, primaryAction: UIAction { _ in
-            self.selectAllTabs()
-        })
+        if selectedTabs.count == tabsModel.count {
+            return UIBarButtonItem(title: UserText.deselectAllTabs, primaryAction: UIAction { _ in
+                self.deselectAllTabs()
+            })
+        } else {
+            return UIBarButtonItem(title: UserText.selectAllTabs, primaryAction: UIAction { _ in
+                self.selectAllTabs()
+            })
+        }
     }
 
     func createMultiSelectionMenuBarButton() -> UIBarButtonItem {

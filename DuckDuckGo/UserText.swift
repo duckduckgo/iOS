@@ -223,6 +223,8 @@ public struct UserText {
 
     public static let selectAllTabs = NotLocalizedString("tab.select.all", value: "Select All", comment: "Select all tabs")
 
+    public static let deselectAllTabs = NotLocalizedString("tab.select.none", value: "Deselect All", comment: "Deselect all tabs")
+
     public static func closeAllTabs(withCount count: Int) -> String {
         let message = NotLocalizedString("tab.close.with.count", value: "Close All %@ Tabs", comment: "Close all tabs showing count")
         return message.format(arguments: "\(count)")

@@ -1,8 +1,8 @@
 //
-//  TabSwitcherDelegate.swift
+//  MockTabInteractionStateSource.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2025 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,18 +17,12 @@
 //  limitations under the License.
 //
 
-import Core
+import Foundation
+@testable import DuckDuckGo
 
-protocol TabSwitcherDelegate: AnyObject {
-
-    func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController)
-
-    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab)
-
-    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab)
-
-    func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController)
-    
-    func tabSwitcherDidRequestCloseAll(tabSwitcher: TabSwitcherViewController)
-
+final class MockTabInteractionStateSource: TabInteractionStateSource {
+    func saveState(_ state: Any?, for tab: Tab) { }
+    func popLastStateForTab(_ tab: Tab) -> Data? { return nil }
+    func removeStateForTab(_ tab: Tab) { }
+    func removeAll(excluding excludedTabs: [Tab]) { }
 }

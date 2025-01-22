@@ -240,8 +240,10 @@ class MainViewController: UIViewController {
 
         self.previewsSource = previewsSource
 
+        let interactionStateSource = WebViewStateRestorationManager(featureFlagger: featureFlagger).isFeatureEnabled ? TabInteractionStateDiskSource() : nil
         self.tabManager = TabManager(model: tabsModel,
                                      previewsSource: previewsSource,
+                                     interactionStateSource: interactionStateSource,
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
                                      syncService: syncService,
@@ -2590,7 +2592,14 @@ extension MainViewController: TabSwitcherDelegate {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }
-    
+
+    func tabSwitcherDidRequestCloseAll(tabSwitcher: TabSwitcherViewController) {
+        // TODO polish
+        self.forgetTabs()
+        self.refreshUIAfterClear()
+        tabSwitcher.dismiss()
+    }
+
 }
 
 extension MainViewController: BookmarksDelegate {

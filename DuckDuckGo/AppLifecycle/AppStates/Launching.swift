@@ -449,6 +449,11 @@ struct Launching: AppState {
                 await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
                 await vpnWorkaround.installRedditSessionWorkaround()
             }
+
+            if !autoClear.isClearingEnabled {
+                // If not using autoclear, make sure there are no leftover states on disk.
+                mainViewController?.tabManager.removeLeftoverInteractionStates()
+            }
         }
         unService = UNService(window: window, accountManager: accountManager)
         uiService = UIService(window: window)

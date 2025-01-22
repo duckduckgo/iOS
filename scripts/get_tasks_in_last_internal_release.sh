@@ -72,8 +72,7 @@ main() {
 	# 3. Construct a HTML list of task IDs
 	local tasks_list
 	tasks_list="$(construct_this_release_includes)"
-	local escaped_tasks_list="${tasks_list//\"/\\\"}"
-	echo "$escaped_tasks_list"
+	echo "$tasks_list"
 }
 
 main

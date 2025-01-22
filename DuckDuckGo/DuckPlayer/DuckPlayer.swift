@@ -218,7 +218,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         static let translationPath = "pages/duckplayer/locales/"
         static let featureNameKey = "featureName"
         static let landscapeUIAutohideDelay: CGFloat = 4.0
-        static let chromeShowHideAnimationDuration: CGFloat = 0.5
+        static let chromeShowHideAnimationDuration: CGFloat = 0.4
     }
     
     

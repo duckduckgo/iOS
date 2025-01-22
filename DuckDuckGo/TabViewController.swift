@@ -1569,8 +1569,11 @@ extension TabViewController: WKNavigationDelegate {
             delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
             return
         }
-                
-        guard let url = webView.url, !url.isDuckPlayer else {
+              
+        /// Never show onboarding Dax on Youtube or DuckPlayer, unless DuckPlayer is disabled
+        guard let url = link?.url,
+              !url.isDuckPlayer,
+              !(url.isYoutube && duckPlayer?.settings.mode != .disabled) else {
             scheduleTrackerNetworksAnimation(collapsing: true)
             return
         }

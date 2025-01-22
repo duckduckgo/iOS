@@ -34,7 +34,8 @@ final class UserScripts: UserScriptsProvider {
     let contentScopeUserScript: ContentScopeUserScript
     let contentScopeUserScriptIsolated: ContentScopeUserScript
     let autoconsentUserScript: AutoconsentUserScript
-    
+    let aiChatUserScript: AIChatUserScript
+
     var specialPages: SpecialPagesUserScript?
     var duckPlayer: DuckPlayerControlling? {
         didSet {
@@ -52,7 +53,10 @@ final class UserScripts: UserScriptsProvider {
     private(set) var printingUserScript = PrintingUserScript()
     private(set) var debugScript = DebugUserScript()
 
-    init(with sourceProvider: ScriptSourceProviding, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+    init(with sourceProvider: ScriptSourceProviding,
+         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         aiChatDebugSettings: AIChatDebugSettingsHandling = AIChatDebugSettings()) {
 
         contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
         surrogatesScript = SurrogatesUserScript(configuration: sourceProvider.surrogatesConfig)
@@ -66,6 +70,11 @@ final class UserScripts: UserScriptsProvider {
                                                                 properties: sourceProvider.contentScopeProperties,
                                                                 isIsolated: true)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
+
+        let aiChatScriptHandler = AIChatUserScriptHandler(featureFlagger: featureFlagger)
+        aiChatUserScript = AIChatUserScript(handler: aiChatScriptHandler,
+                                            debugSettings: aiChatDebugSettings)
+        contentScopeUserScriptIsolated.registerSubfeature(delegate: aiChatUserScript)
 
         // Special pages - Such as Duck Player
         specialPages = SpecialPagesUserScript()

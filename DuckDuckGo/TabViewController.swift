@@ -64,6 +64,7 @@ class TabViewController: UIViewController {
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     private let instrumentation = TabInstrumentation()
+    let tabInteractionStateSource: TabInteractionStateSource?
 
     var isLinkPreview = false
 
@@ -132,9 +133,7 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
-    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault {
-        return AppDependencyProvider.shared.subscriptionManager.canPurchase
-    }
+    private var tabURLInterceptor: TabURLInterceptor
     private var currentlyLoadedURL: URL?
 
     private let netPConnectionObserver: ConnectionStatusObserver = AppDependencyProvider.shared.connectionObserver
@@ -276,12 +275,8 @@ class TabViewController: UIViewController {
         return manager
     }()
 
-    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager? = {
-        guard let vault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) else {
-            return nil
-        }
-
-        return AutofillCredentialIdentityStoreManager(vault: vault,
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager = {
+        return AutofillCredentialIdentityStoreManager(reporter: SecureVaultReporter(),
                                                       tld: AppDependencyProvider.shared.storageCache.tld)
     }()
 
@@ -344,7 +339,8 @@ class TabViewController: UIViewController {
                                    subscriptionCookieManager: SubscriptionCookieManaging,
                                    textZoomCoordinator: TextZoomCoordinating,
                                    websiteDataManager: WebsiteDataManaging,
-                                   fireproofing: Fireproofing) -> TabViewController {
+                                   fireproofing: Fireproofing,
+                                   tabInteractionStateSource: TabInteractionStateSource?) -> TabViewController {
 
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -364,7 +360,8 @@ class TabViewController: UIViewController {
                               subscriptionCookieManager: subscriptionCookieManager,
                               textZoomCoordinator: textZoomCoordinator,
                               fireproofing: fireproofing,
-                              websiteDataManager: websiteDataManager
+                              websiteDataManager: websiteDataManager,
+                              tabInteractionStateSource: tabInteractionStateSource
             )
         })
         return controller
@@ -404,7 +401,8 @@ class TabViewController: UIViewController {
                    subscriptionCookieManager: SubscriptionCookieManaging,
                    textZoomCoordinator: TextZoomCoordinating,
                    fireproofing: Fireproofing,
-                   websiteDataManager: WebsiteDataManaging) {
+                   websiteDataManager: WebsiteDataManaging,
+                   tabInteractionStateSource: TabInteractionStateSource?) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -427,6 +425,11 @@ class TabViewController: UIViewController {
         self.textZoomCoordinator = textZoomCoordinator
         self.fireproofing = fireproofing
         self.websiteDataManager = websiteDataManager
+        self.tabInteractionStateSource = tabInteractionStateSource
+
+        self.tabURLInterceptor = TabURLInterceptorDefault(featureFlagger: featureFlagger) {
+            return AppDependencyProvider.shared.subscriptionManager.canPurchase
+        }
 
         super.init(coder: aDecoder)
         
@@ -456,7 +459,20 @@ class TabViewController: UIViewController {
 
         observeNetPConnectionStatusChanges()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        registerForResignActive()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        unregisterFromResignActive()
+        tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
+    }
+
     private func registerForAddressBarLocationNotifications() {
         NotificationCenter.default.addObserver(self, selector:
                                                 #selector(onAddressBarPositionChanged),
@@ -543,6 +559,8 @@ class TabViewController: UIViewController {
         
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
+
+        tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
     }
     
     func applyInheritedAttribution(_ attribution: AdClickAttributionLogic.State?) {
@@ -552,6 +570,7 @@ class TabViewController: UIViewController {
     // The `consumeCookies` is legacy behaviour from the previous Fireproofing implementation. Cookies no longer need to be consumed after invocations
     // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
     func attachWebView(configuration: WKWebViewConfiguration,
+                       interactionStateData: Data? = nil,
                        andLoadRequest request: URLRequest?,
                        consumeCookies: Bool,
                        loadingInitiatedByParentTab: Bool = false,
@@ -600,6 +619,8 @@ class TabViewController: UIViewController {
             updateWebViewInspectability()
         }
 
+        let didRestoreWebViewState = restoreInteractionStateToWebView(interactionStateData)
+
         instrumentation.didPrepareWebView()
 
         // Initialize DuckPlayerNavigationHandler
@@ -610,7 +631,7 @@ class TabViewController: UIViewController {
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
-        } else if let urlRequest = request {
+        } else if !didRestoreWebViewState, let urlRequest = request {
             var loadingStopped = false
             linkProtection.getCleanURLRequest(from: urlRequest, onStartExtracting: { [weak self] in
                 if loadingInitiatedByParentTab {
@@ -954,8 +975,6 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-            privacyDashboard?.delegate = self
-            breakageCategory = nil
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -1228,42 +1247,12 @@ class TabViewController: UIViewController {
         job()
     }
 
-    private var alertPresenter: AlertViewPresenter?
-    var breakageCategory: String?
-    private func schedulePrivacyProtectionsOffAlert() {
-        guard let breakageCategory else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.alertPresenter?.hide()
-            self.alertPresenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
-                                                     image: "SiteBreakage",
-                                                     leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { [weak self] in
-                Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
-                                                                                                              didToggleProtectionsFixIssue: true))
-            }),
-                                                     rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { [weak self] in
-                Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
-                                                                                                              didToggleProtectionsFixIssue: false))
-            }))
-            self.alertPresenter?.present(in: self, animated: true)
-        }
-    }
-
     deinit {
         rulesCompilationMonitor.tabWillClose(tabModel.uid)
         removeObservers()
         temporaryDownloadForPreviewedFile?.cancel()
         cleanUpBeforeClosing()
     }
-}
-
-extension TabViewController: PrivacyDashboardViewControllerDelegate {
-
-    func privacyDashboardViewController(_ privacyDashboardViewController: PrivacyDashboardViewController, didSelectBreakageCategory breakageCategory: String) {
-        self.breakageCategory = breakageCategory
-    }
-
 }
 
 // MARK: - LoginFormDetectionDelegate
@@ -1556,6 +1545,8 @@ extension TabViewController: WKNavigationDelegate {
                 inferredOpenerContext = .serp
             }
         }
+        
+        tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
     }
 
     func trackSecondSiteVisitIfNeeded(url: URL?) {
@@ -2032,8 +2023,8 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
-            delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true, inheritingAttribution: adClickAttributionLogic.state)
-            completion(.cancel)
+            // This will fallback to native WebView handling through webView(_:createWebViewWith:for:windowFeatures:)
+            completion(allowPolicy)
             return
         }
 
@@ -2126,6 +2117,23 @@ extension TabViewController: WKNavigationDelegate {
                                                selector: #selector(autofillBreakageReport),
                                                name: .autofillFailureReport,
                                                object: nil)
+    }
+
+    private func registerForResignActive() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onApplicationWillResignActive),
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
+    }
+
+    private func unregisterFromResignActive() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
     }
 
     @objc private func autofillBreakageReport(_ notification: Notification) {
@@ -2594,7 +2602,6 @@ extension TabViewController: UserContentControllerDelegate {
             }) {
 
             reload()
-            schedulePrivacyProtectionsOffAlert()
         }
     }
 
@@ -2851,7 +2858,7 @@ extension TabViewController: SecureVaultManagerDelegate {
 
                 guard let domain = account?.domain else { return }
                 Task {
-                    await self?.credentialIdentityStoreManager?.updateCredentialStore(for: domain)
+                    await self?.credentialIdentityStoreManager.updateCredentialStore(for: domain)
                 }
             } completionHandler: { account in
                 if account != nil {
@@ -3049,7 +3056,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
                 guard let domain = newCredential.account.domain else { return }
                 Task {
-                    await credentialIdentityStoreManager?.updateCredentialStore(for: domain)
+                    await credentialIdentityStoreManager.updateCredentialStore(for: domain)
                 }
             }
         } catch {
@@ -3201,4 +3208,27 @@ extension TabViewController: DuckPlayerTabNavigationHandling {
         }
     }
     
+}
+
+private extension TabViewController {
+
+    func restoreInteractionStateToWebView(_ interactionStateData: Data?) -> Bool {
+        var didRestoreWebViewState = false
+        if let interactionStateData {
+            let startTime = CFAbsoluteTimeGetCurrent()
+            webView.interactionState = interactionStateData
+            if webView.url != nil {
+                self.url = tabModel.link?.url
+                didRestoreWebViewState = true
+                tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
+            } else {
+                Pixel.fire(pixel: .tabInteractionStateFailedToRestore)
+            }
+
+            let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+            Pixel.fire(pixel: .tabInteractionStateRestorationTime(Pixel.Event.BucketAggregation(number: timeElapsed)))
+        }
+
+        return didRestoreWebViewState
+    }
 }

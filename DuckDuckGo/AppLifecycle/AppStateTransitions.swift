@@ -20,12 +20,23 @@
 import os.log
 import Core
 
-extension Init {
+extension Initializing {
+
+    func apply(event: AppEvent) -> any AppState {
+        guard case .didFinishLaunching(let application, let isTesting) = event else { return handleUnexpectedEvent(event) }
+        return isTesting ? Testing(application: application) : Launching(stateContext: makeStateContext(application: application))
+    }
+
+}
+
+extension Launching {
 
     func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .launching(let application, let launchOptions):
-            return Launched(application: application, launchOptions: launchOptions)
+        case .didBecomeActive:
+            return Foreground(stateContext: makeStateContext())
+        case .didEnterBackground:
+            return Background(stateContext: makeStateContext())
         default:
             return handleUnexpectedEvent(event)
         }
@@ -33,49 +44,24 @@ extension Init {
 
 }
 
-extension Launched {
+extension Foreground {
 
     func apply(event: AppEvent) -> any AppState {
-        switch event {
-        case .activating(let application):
-            return Active(application: application)
-        case .openURL:
-            return self
-        case .backgrounding:
-            return InactiveBackground()
-        case .launching, .suspending:
-            return handleUnexpectedEvent(event)
-        }
+        guard case .willResignActive = event else { return handleUnexpectedEvent(event) }
+        return Suspending(stateContext: makeStateContext())
     }
 
 }
 
-extension Active {
+extension Suspending {
 
     func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .suspending(let application):
-            return Inactive(application: application)
-        case .openURL:
-            return self
-        case .launching, .activating, .backgrounding:
-            return handleUnexpectedEvent(event)
-        }
-    }
-
-}
-
-extension Inactive {
-
-    func apply(event: AppEvent) -> any AppState {
-        switch event {
-        case .backgrounding(let application):
-            return Background(application: application)
-        case .activating(let application):
-            return Active(application: application)
-        case .openURL:
-            return self
-        case .launching, .suspending:
+        case .didEnterBackground:
+            return Background(stateContext: makeStateContext())
+        case .didBecomeActive:
+            return Foreground(stateContext: makeStateContext())
+        default:
             return handleUnexpectedEvent(event)
         }
     }
@@ -85,78 +71,40 @@ extension Inactive {
 extension Background {
 
     func apply(event: AppEvent) -> any AppState {
+        guard case .willEnterForeground = event else { return handleUnexpectedEvent(event) }
+        return Resuming(stateContext: makeStateContext())
+    }
+
+}
+
+extension Resuming {
+
+    func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .activating(let application):
-            return Active(application: application)
-        case .openURL:
-            return self
-        case .backgrounding:
-            return DoubleBackground()
-        case .launching, .suspending:
+        case .didBecomeActive:
+            return Foreground(stateContext: makeStateContext())
+        case .didEnterBackground:
+            return Background(stateContext: makeStateContext())
+        default:
             return handleUnexpectedEvent(event)
         }
     }
 
 }
 
-extension DoubleBackground {
+extension Testing {
 
-    func apply(event: AppEvent) -> any AppState {
-        // report event so we know what events can be called at this moment, but do not let SM be stuck in this state just not to be flooded with these events
-        _ = handleUnexpectedEvent(event)
-
-        switch event {
-        case .activating(let application):
-            return Active(application: application)
-        case .suspending(let application):
-            return Inactive(application: application)
-        case .launching, .backgrounding, .openURL:
-            return self
-        }
-
-    }
-
-}
-
-extension InactiveBackground {
-
-    func apply(event: AppEvent) -> any AppState {
-        // report event so we know what events can be called at this moment, but do not let SM be stuck in this state just not to be flooded with these events
-        _ = handleUnexpectedEvent(event)
-
-        switch event {
-        case .activating(let application):
-            return Active(application: application)
-        case .suspending(let application):
-            return Inactive(application: application)
-        case .launching, .backgrounding, .openURL:
-            return self
-        }
-    }
-
-}
-
-extension AppEvent {
-
-    var rawValue: String {
-        switch self {
-        case .launching: return "launching"
-        case .activating: return "activating"
-        case .backgrounding: return "backgrounding"
-        case .suspending: return "suspending"
-        case .openURL: return "openURL"
-        }
-    }
+    func apply(event: AppEvent) -> any AppState { self }
 
 }
 
 extension AppState {
 
     func handleUnexpectedEvent(_ event: AppEvent) -> Self {
-        Logger.lifecycle.error("Invalid transition (\(event.rawValue)) for state (\(type(of: self)))")
+        Logger.lifecycle.error("🔴 Unexpected [\(String(describing: event))] event while in [\(type(of: self))] state!")
         DailyPixel.fireDailyAndCount(pixel: .appDidTransitionToUnexpectedState,
                                      withAdditionalParameters: [PixelParameters.appState: String(describing: type(of: self)),
-                                                                PixelParameters.appEvent: event.rawValue])
+                                                                PixelParameters.appEvent: String(describing: event)])
         return self
     }
 

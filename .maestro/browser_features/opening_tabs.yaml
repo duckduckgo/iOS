@@ -43,8 +43,6 @@ tags:
 - tapOn: "Browse Back"
 - assertVisible: "A link that opens in a new window"
 
-# Workaround - for some reason Tab Switcher button is not found by maestro at this point.
-- tapOn: "Refresh Page"
 - runFlow:
     file: ../shared/check_number_of_tabs.yaml
     env:

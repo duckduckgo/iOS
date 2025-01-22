@@ -48,6 +48,8 @@ class RootDebugViewController: UITableViewController {
         case onboarding = 676
         case resetSyncPromoPrompts = 677
         case resetTipKit = 681
+        case aiChat = 682
+        case webViewStateRestoration = 683
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -193,6 +195,12 @@ class RootDebugViewController: UITableViewController {
                 ActionMessageView.present(message: "Sync Promos reset")
             case .resetTipKit:
                 tipKitUIActionHandler.resetTipKitTapped()
+            case .aiChat:
+                let controller = UIHostingController(rootView: AIChatDebugView())
+                navigationController?.pushViewController(controller, animated: true)
+            case .webViewStateRestoration:
+                let controller = UIHostingController(rootView: WebViewStateRestorationDebugView())
+                navigationController?.pushViewController(controller, animated: true)
             }
         }
     }

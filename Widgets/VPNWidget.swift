@@ -30,6 +30,33 @@ enum VPNStatus {
     case status(NEVPNStatus)
     case error
     case notConfigured
+
+    var isConnecting: Bool {
+        switch self {
+        case .status(let status):
+            return status == .connecting
+        default:
+            return false
+        }
+    }
+
+    var isDisconnecting: Bool {
+        switch self {
+        case .status(let status):
+            return status == .disconnecting
+        default:
+            return false
+        }
+    }
+
+    var isConnected: Bool {
+        switch self {
+        case .status(let status):
+            return status.isConnected
+        default:
+            return false
+        }
+    }
 }
 
 struct VPNStatusTimelineEntry: TimelineEntry {
@@ -171,7 +198,7 @@ struct VPNStatusView: View {
                 switch status {
                 case .connected:
                     let buttonTitle = snoozeTimingStore.isSnoozing ? UserText.vpnWidgetLiveActivityWakeUpButton : UserText.vpnWidgetDisconnectButton
-                    let intent: any AppIntent = snoozeTimingStore.isSnoozing ? CancelSnoozeVPNIntent() : DisableVPNIntent()
+                    let intent: any AppIntent = snoozeTimingStore.isSnoozing ? CancelSnoozeVPNIntent() : WidgetDisableVPNIntent()
 
                     Button(buttonTitle, intent: intent)
                         .borderedStyle(widgetRenderingMode == .fullColor)
@@ -190,7 +217,7 @@ struct VPNStatusView: View {
                         .padding(.top, 6)
                         .padding(.bottom, 16)
                 case .connecting, .reasserting:
-                    Button(UserText.vpnWidgetDisconnectButton, intent: DisableVPNIntent())
+                    Button(UserText.vpnWidgetDisconnectButton, intent: WidgetDisableVPNIntent())
                         .borderedStyle(widgetRenderingMode == .fullColor)
                         .makeAccentable(status == .connected)
                         .font(.system(size: 14, weight: .semibold))
@@ -234,7 +261,7 @@ struct VPNStatusView: View {
     private var connectButton: Button<Text> {
         switch entry.status {
         case .status:
-            Button(UserText.vpnWidgetConnectButton, intent: EnableVPNIntent())
+            Button(UserText.vpnWidgetConnectButton, intent: WidgetEnableVPNIntent())
         case .error, .notConfigured:
             Button(UserText.vpnWidgetConnectButton) {
                 openURL(DeepLinks.openVPN)
@@ -297,10 +324,8 @@ struct VPNStatusView: View {
 
 @available(iOSApplicationExtension 17.0, *)
 struct VPNStatusWidget: Widget {
-    let kind: String = "VPNStatusWidget"
-
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: VPNStatusTimelineProvider()) { entry in
+        StaticConfiguration(kind: WidgetKind.vpn.rawValue, provider: VPNStatusTimelineProvider()) { entry in
             VPNStatusView(entry: entry).widgetURL(DeepLinks.openVPN)
         }
         .configurationDisplayName(UserText.vpnWidgetGalleryDisplayName)

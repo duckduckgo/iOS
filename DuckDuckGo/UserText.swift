@@ -20,6 +20,7 @@
 
 import Core
 import Subscription
+import Common
 
 public struct UserText {
     
@@ -52,7 +53,7 @@ public struct UserText {
     public static let actionShare = NSLocalizedString("action.title.share", value: "Share", comment: "Share action")
     public static let actionPrint = NSLocalizedString("action.title.print", value: "Print", comment: "Print action in the menu header")
     public static let actionPrintSite = NSLocalizedString("action.title.print.site", value: "Print", comment: "Print action in the menu list")
-    public static let actionOpenAIChat = NSLocalizedString("action.title.aichat", value: "Chat", comment: "Open AI Chat action in the menu list")
+    public static let actionOpenAIChat = NSLocalizedString("action.title.duckai", value: "AI Chat", comment: "Open AI Chat action in the menu list")
 
     public static let actionOpenBookmarks = NSLocalizedString("action.title.bookmarks", value: "Bookmarks", comment: "Button: Open bookmarks list")
     public static let actionEnableProtection = NSLocalizedString("action.title.enable.protection", value: "Enable Privacy Protection", comment: "Enable protection action")
@@ -217,7 +218,12 @@ public struct UserText {
     
     public static let openHomeTab = NSLocalizedString("tab.open.home", value: "Open home tab", comment: "Accessibility label on tab cell")
     public static let closeHomeTab = NSLocalizedString("tab.close.home", value: "Close home tab", comment: "Accessibility label on remove button")
-    
+
+    public static func closeTabs(withCount count: Int) -> String {
+        let message = NotLocalizedString("tab.close.with.count", value: "Close All %@ Tabs", comment: "Close tabs with a count")
+        return message.format(arguments: "\(count)")
+    }
+
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.close.with.title.and.address", value: "Close \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
         return message.format(arguments: title, address)
@@ -341,10 +347,11 @@ public struct UserText {
     public static let addWidget = NSLocalizedString("addWidget.button", value: "Add Widget", comment: "")
     public static let addWidgetTitle = NSLocalizedString("addWidget.title", value: "One tap to your favorite sites.", comment: "")
     public static let addWidgetDescription = NSLocalizedString("addWidget.description", value: "Get quick access to private search and the sites you love.", comment: "")
-    public static let addWidgetSettingsFirstParagraph = NSLocalizedString("addWidget.settings.firstParagraph", value: "Long-press on the Home Screen to enter jiggle mode.", comment: "")
-    public static let addWidgetSettingsSecondParagraph = NSLocalizedString("addWidget.settings.secondParagraph.%@", value: "Tap the plus %@ button.", comment: "Replacement string is a plus button icon.")
-    public static let addWidgetSettingsThirdParagraph = NSLocalizedString("addWidget.settings.title", value: "Find and select DuckDuckGo. Then choose a widget.", comment: "")
-    
+    public static let addWidgetSettingsFirstParagraph = NSLocalizedString("addWidget.settings.firstParagraph", value: "Long-press anywhere on the Home Screen until the apps jiggle", comment: "")
+    public static let addWidgetSettingsSecondParagraphiOS17 = NSLocalizedString("addWidget.settings.secondParagraph.%@", value: "Tap the plus %@ button.", comment: "Replacement string is a plus button icon.")
+    public static let addWidgetSettingsSecondParagraph = NSLocalizedString("addWidget.settings.secondParagraph", value: "Tap the **Edit** button, then choose **Add Widget**", comment: "")
+    public static let addWidgetSettingsThirdParagraph = NSLocalizedString("addWidget.settings.title", value: "Find and select **DuckDuckGo**. Then choose a widget.", comment: "")
+
     public static let actionSaveToDownloads = NSLocalizedString("downloads.alert.action.save-to-downloads", value: "Save to Downloads", comment: "Alert action for starting a file dowload")
     public static func messageDownloadStarted(for filename: String) -> String {
         let message = NSLocalizedString("downloads.message.download-started", value: "Download started for %@", comment: "Message confirming that the download process has started. Parameter is downloaded file's filename")
@@ -450,6 +457,16 @@ public struct UserText {
     public static let autofillDisablePromptAction = NSLocalizedString("autofill.disable.prompt.action.open-settings", value: "Open Settings", comment: "Open Settings action for disabling autofill in Settings")
 
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Passwords", comment: "Autofill Logins menu item opening the login list")
+
+    // MARK: - Control Center Widget Education
+
+    public static let controlCenterWidgetEducationParagraph1 = NSLocalizedString("control.center.widget.education.paragraph.1", value: "Swipe down from the top-right corner of the screen", comment: "First paragraph of the Control Center Widget Education screen")
+    public static let controlCenterWidgetEducationParagraph2 = NSLocalizedString("control.center.widget.education.paragraph.2", value: "Tap the **+** button at the top left of **Control Center**", comment: "Second paragraph of the Control Center Widget Education screen")
+    public static let controlCenterWidgetEducationParagraph3 = NSLocalizedString("control.center.widget.education.paragraph.3", value: "Tap **Add a Control** at the bottom of the screen", comment: "Third paragraph of the Control Center Widget Education screen")
+
+    // MARK: - Control Center Widget Education: VPN
+
+    public static let controlCenterVPNWidgetEducationParagraph = NSLocalizedString("control.center.vpn.widget.education.paragraph", value: "Find **DuckDuckGo** in the list, then tap **VPN control** to add it", comment: "Fourth paragraph of the Control Center VPN Widget Education screen")
 
     // MARK: - Waitlist
     
@@ -571,6 +588,7 @@ public struct UserText {
     static let netPVPNAlertsSectionHeader = NSLocalizedString("network.protection.vpn.alerts.section.header", value: "Notifications", comment: "Section header for the toggle for VPN notifications.")
     static let netPVPNAlertsToggleTitle = NSLocalizedString("network.protection.vpn.alerts.toggle.title", value: "VPN Notifications", comment: "Title for the toggle for VPN notifications.")
     static let netPVPNAlertsToggleSectionFooter = NSLocalizedString("network.protection.vpn.alerts.toggle.section.footer", value: "Get notified if your connection drops or VPN status changes.", comment: "List section footer for the toggle for VPN alerts.")
+    static let netPVPNShortcutsSectionHeader = NSLocalizedString("network.protection.vpn.shortcuts.section.header", value: "Shortcuts", comment: "Section header for the shortcuts section in VPN settings.")
     static let netPFrequentlyAskedQuestionsTitle = NSLocalizedString("network.protection.faq.title", value: "DuckDuckGo VPN FAQ", comment: "Title for the VPN FAQ screen.")
 
     static let netPOpenVPNQuickAction = NSLocalizedString("network.protection.quick-action.open-vpn", value: "Open VPN", comment: "Title text for an iOS quick action that opens VPN settings")
@@ -677,10 +695,28 @@ public struct UserText {
     static let itrFeedbackFormCategoryUnhelpful = NSLocalizedString("feedback.itr.category.unhelpful", value: "Call to Advisor was unhelpful", comment: "Category for unhelpful advisor calls")
     static let itrFeedbackFormCategorySomethingElse = NSLocalizedString("feedback.itr.category.something-else", value: "Something else", comment: "Category for other Identity Theft Restoration issues")
 
-    // MARK: VPN Widget
+    // MARK: VPN Shortcuts
 
     public static let vpnSettingsAddWidget = NSLocalizedString("vpn.settings.add.widget", value: "Add VPN Widget to Home Screen", comment: "VPN settings screen cell text for adding the VPN widget to the home screen")
-    public static let addVPNWidgetSettingsThirdParagraph = NSLocalizedString("vpn.addWidget.settings.title", value: "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.", comment: "Title for the VPN widget onboarding screen")
+    public static let vpnSettingsAddControlCenterWidget = NSLocalizedString("vpn.settings.add.control-center.widget", value: "Add VPN to Control Center", comment: "VPN settings screen cell text for adding the VPN widget to the control center")
+    public static let vpnSettingsControlWithSiri = NSLocalizedString("vpn.settings.control.with.siri", value: "Control VPN With Siri", comment: "VPN settings screen cell text to learn how to control the VPN with Siri")
+
+    // MARK: - VPN Widget
+
+    public static let addVPNWidgetSettingsThirdParagraph = NSLocalizedString("vpn.addWidget.settings.title", value: "Find and select **DuckDuckGo**, then swipe to **VPN** and select **Add Widget**", comment: "Title for the VPN widget onboarding screen")
+
+    // MARK: - VPN Control Widget
+
+    public static let vpnControlWidgetEnableVPNIntentSuccess = NSLocalizedString("vpn.control-widget.enable.vpn.intent.success", value: "DuckDuckGo VPN is connected", comment: "Message for success when running the intent to enable the DuckDuckGo VPN")
+    public static let vpnControlWidgetDisableVPNIntentSuccess = NSLocalizedString("vpn.control-widget.disable.vpn.intent.success", value: "DuckDuckGo VPN is connected", comment: "Message for success when running the intent to enable the DuckDuckGo VPN")
+
+    // MARK: - VPN Control Widget Education View
+
+    public static let vpnControlWidgetEducationScreenTitle = NSLocalizedString("vpn.control-widget.education.screen.title", value: "Control DuckDuckGo VPN with Siri!", comment: "Title for the VPN Control Widget education screen title")
+    public static let vpnControlWidgetEducationScreenDescription = NSLocalizedString("vpn.control-widget.education.screen.description", value: "Siri Shortcuts let you connect to your VPN with a quick voice command, like “Siri, turn on DuckDuckGo VPN”. It’s a fast, hands-free way to use your VPN.", comment: "")
+    public static let vpnControlWidgetEducationScreenExample1 = NSLocalizedString("vpn.control-widget.education.screen.example1", value: "Siri, start DuckDuckGo VPN.", comment: "Siri commands education screen: example 1")
+    public static let vpnControlWidgetEducationScreenExample2 = NSLocalizedString("vpn.control-widget.education.screen.example2", value: "Siri, enable DuckDuckGo VPN.", comment: "Siri commands education screen: example 2")
+    public static let vpnControlWidgetEducationScreenExample3 = NSLocalizedString("vpn.control-widget.education.screen.example3", value: "Siri, protect my device with DuckDuckGo.", comment: "Siri commands education screen: example 3")
 
     // MARK: Custom DNS
 
@@ -1070,6 +1106,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let nextSteps = NSLocalizedString("settings.next.steps", value: "Next Steps", comment: "The name of a settings category listing next steps")
     public static let settingsAddToDock = NSLocalizedString("settings.add.to.dock", value: "Add App to Your Dock", comment: "Settings screen cell text for adding the app to the dock")
     public static let settingsAddWidget = NSLocalizedString("settings.add.widget", value: "Add Widget to Home Screen", comment: "Settings screen cell text for add widget to the home screen")
+    public static let settingsAddVPNWidget = NSLocalizedString("settings.add.widget.vpn", value: "Add DuckDuckGo VPN Widget to Your Home Screen", comment: "Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen")
     public static let setYourAddressBarPosition = NSLocalizedString("settings.set.your.address.bar.position", value: "Set Your Address Bar Position", comment: "Settings screen cell text for setting address bar position")
     public static let enableVoiceSearch = NSLocalizedString("settings.enable.voice.search", value: "Enable Voice Search", comment: "Settings screen cell text for enabling voice search")
 
@@ -1325,9 +1362,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let brokenSiteReportMissingDescriptionAlertTitle = NSLocalizedString("broken.site.report.missing.description.alert.title", value: "Description Required", comment: "It appears as an alert after user tries to send a report without submitting any details")
     public static let brokenSiteReportMissingDescriptionAlertDescription = NSLocalizedString("broken.site.report.missing.description.alert.description", value: "Please describe the issue you experienced on this site so we can better understand how to fix it.", comment: "It appears as an alert after user tries to send a report without submitting any details")
     public static let brokenSiteReportMissingDescriptionAlertButton = NSLocalizedString("broken.site.report.missing.description.alert.button", value: "Got It", comment: "Acknowledge button")
-    public static let brokenSiteReportToggleAlertTitle = NSLocalizedString("broken.site.report.toggle.alert.title", value: "Did turning Privacy Protections off resolve the issue on this site?", comment: "An alert that appears after user turns off the privacy protection")
-    public static let brokenSiteReportToggleAlertYesButton = NSLocalizedString("broken.site.report.toggle.alert.yes.button", value: "Yes", comment: "Button to answer question 'Did turning off protections resolve the issue on this site?'")
-    public static let brokenSiteReportToggleAlertNoButton = NSLocalizedString("broken.site.report.toggle.alert.no.button", value: "No", comment: "Button to answer question 'Did turning off protections resolve the issue on this site?'")
     
     // Duck Player
     public static let duckPlayerAlwaysEnabledLabel = NSLocalizedString("duckPlayer.alwaysEnabled.label", value: "Always", comment: "Text displayed when DuckPlayer is always enabled")
@@ -1355,17 +1389,15 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let duckPlayerContingencyMessageCTA = NSLocalizedString("duck-player.video-contingency-cta", value: "Learn More", comment: "Button for the message explaining to the user that Duck Player is not available so the user can learn more")
 
     // MARK: - AI Chat
-    public static let aiChatTitle = NSLocalizedString("aichat.title", value: "DuckDuckGo AI Chat", comment: "Title for DuckDuckGo AI Chat. Should not be translated")
-    public static let aiChatFeatureName = NSLocalizedString("aichat.settings.title", value: "AI Chat", comment: "Settings screen cell text for AI Chat settings")
+    public static let aiChatFeatureName = NSLocalizedString("duckai.settings.title", value: "Duck.ai", comment: "Settings screen cell text for AI Chat settings")
 
-    public static let aiChatSettingsEnableFooter = NSLocalizedString("aichat.settings.enable.footer", value: "Turning this off will hide the AI Chat feature in the DuckDuckGo app.", comment: "Footer text for AI Chat settings")
-    static let aiChatSettingsCaptionWithLinkMarkdown = NSLocalizedString("ai-chat.preferences.text.markdown", value: """
-AI Chat is an optional feature available at [duck.ai](ddgquicklink://duck.ai) that lets you have private conversations with popular 3rd-party AI chat models. Your chats are not used to train chat models.
+    static let aiChatSettingsCaptionWithLinkMarkdown = NSLocalizedString("duckai.preferences.text.markdown", value: """
+Duck.ai is an optional feature that lets you chat anonymously with popular 3rd-party Al chat models. Your chats are not used to train AI.
 [Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)
 """, comment: "Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and ()")
-    public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("aichat.settings.enable.browsing-menu-toggle", value: "Show AI Chat in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
+    public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("duckai.settings.enable.browsing-menu-toggle", value: "Show Duck.ai in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
 
-    public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("aichat.settings.enable.address-bar-toggle", value: "Show AI Chat While Searching", comment: "Toggle text to enable/disable AI Chat in the address bar")
+    public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("duckai.settings.enable.address-bar-toggle", value: "Show Duck.ai While Searching", comment: "Toggle text to enable/disable AI Chat in the address bar")
 
     // MARK: - New Tab Page
 

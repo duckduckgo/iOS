@@ -21,33 +21,47 @@ import UIKit
 
 enum AppEvent {
 
-    case launching(UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?)
-    case activating(UIApplication)
-    case backgrounding(UIApplication)
-    case suspending(UIApplication)
+    case didFinishLaunching(UIApplication, isTesting: Bool)
+    case didBecomeActive
+    case didEnterBackground
+    case willResignActive
+    case willEnterForeground
+
+}
+
+enum AppAction {
 
     case openURL(URL)
+    case handleShortcutItem(UIApplicationShortcutItem)
 
 }
 
 protocol AppState {
 
     func apply(event: AppEvent) -> any AppState
+    mutating func handle(action: AppAction)
 
 }
 
+@MainActor
 protocol AppEventHandler {
 
     func handle(_ event: AppEvent)
+    func handle(_ action: AppAction)
 
 }
 
+@MainActor
 final class AppStateMachine: AppEventHandler {
 
-    private(set) var currentState: any AppState = Init()
+    private(set) var currentState: any AppState = Initializing()
 
     func handle(_ event: AppEvent) {
         currentState = currentState.apply(event: event)
+    }
+
+    func handle(_ action: AppAction) {
+        currentState.handle(action: action)
     }
 
 }

@@ -160,9 +160,14 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @objc func handleTap(gesture: UITapGestureRecognizer) {
-        // TODO FIX: If the user tabs between tabs this will dismiss.
+        // TODO FIX: If the user taps between tabs this will dismiss.
         //  Only dimiss if it's in the big whitespace below the collection view.
-        dismiss()
+
+        if isEditing {
+            transitionFromMultiSelect()
+        } else {
+            dismiss()
+        }
     }
 
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {

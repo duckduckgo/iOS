@@ -21,7 +21,6 @@ import WidgetKit
 import SwiftUI
 import AppIntents
 
-/// Will be added once we have the correct assets for it
 @available(iOS 18, *)
 struct AIChatControlWidget: ControlWidget {
     var body: some ControlWidgetConfiguration {

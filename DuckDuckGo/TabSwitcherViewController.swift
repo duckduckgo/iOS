@@ -128,7 +128,11 @@ class TabSwitcherViewController: UIViewController {
             Pixel.fire(pixel: .tabSwitcherNewLayoutSeen)
             tabSwitcherSettings.hasSeenNewLayout = true
         }
+    }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateUIForSelectionMode()
     }
 
     private func setupBackgroundView() {

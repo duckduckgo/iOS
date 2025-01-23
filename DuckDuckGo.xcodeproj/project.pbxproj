@@ -1058,6 +1058,7 @@
 		CBF259792D3FC36C00AC63E4 /* AutofillService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259782D3FC36C00AC63E4 /* AutofillService.swift */; };
 		CBF2597B2D414B6D00AC63E4 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF2597A2D414B6D00AC63E4 /* PersistenceService.swift */; };
 		CBF2597D2D41734700AC63E4 /* Terminating.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF2597C2D41734700AC63E4 /* Terminating.swift */; };
+		CBF259812D42852B00AC63E4 /* PixelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259802D42852B00AC63E4 /* PixelService.swift */; };
 		CBFCB30E2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */; };
 		D60170BD2BA34CE8001911B5 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60170BB2BA32DD6001911B5 /* Subscription.swift */; };
 		D6037E692C32F2E7009AAEC0 /* DuckPlayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */; };
@@ -3005,6 +3006,7 @@
 		CBF259782D3FC36C00AC63E4 /* AutofillService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillService.swift; sourceTree = "<group>"; };
 		CBF2597A2D414B6D00AC63E4 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		CBF2597C2D41734700AC63E4 /* Terminating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminating.swift; sourceTree = "<group>"; };
+		CBF259802D42852B00AC63E4 /* PixelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelService.swift; sourceTree = "<group>"; };
 		CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationURLDebugViewController.swift; sourceTree = "<group>"; };
 		D60170BB2BA32DD6001911B5 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerSettings.swift; sourceTree = "<group>"; };
@@ -5795,6 +5797,7 @@
 				CBAD0F132D01EE40006267B8 /* SubscriptionService.swift */,
 				CBF259782D3FC36C00AC63E4 /* AutofillService.swift */,
 				CBF2597A2D414B6D00AC63E4 /* PersistenceService.swift */,
+				CBF259802D42852B00AC63E4 /* PixelService.swift */,
 			);
 			path = AppServices;
 			sourceTree = "<group>";
@@ -8195,6 +8198,7 @@
 				85374D3C21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift in Sources */,
 				7B4F87EE2D0739EB0010B18F /* SiriBubbleView.swift in Sources */,
 				85DFEDF124C7EEA400973FE7 /* LargeOmniBarState.swift in Sources */,
+				CBF259812D42852B00AC63E4 /* PixelService.swift in Sources */,
 				9880722A25FA497B0039EF4B /* MenuButton.swift in Sources */,
 				D6E83C602B22B3C9006C8AFB /* SettingsState.swift in Sources */,
 				D6E83C482B20C812006C8AFB /* SettingsHostingController.swift in Sources */,

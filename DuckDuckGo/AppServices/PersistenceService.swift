@@ -56,7 +56,6 @@ final class PersistenceService {
     }
 
     private func loadAndMigrateDatabase() {
-        var shouldPresentInsufficientDiskSpaceAlertAndCrash = false
         database.loadStore { [application] context, error in
             guard let context = context else {
 

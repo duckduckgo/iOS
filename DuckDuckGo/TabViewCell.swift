@@ -49,8 +49,6 @@ class TabViewCell: UICollectionViewCell {
     var canDelete = false
     var isSelectionModeEnabled = false
 
-    weak var collectionReorderRecognizer: UIGestureRecognizer?
-
     override func awakeFromNib() {
         super.awakeFromNib()
         let recognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipe(recognizer:)))
@@ -146,24 +144,16 @@ class TabViewCell: UICollectionViewCell {
 
     func update(withTab tab: Tab,
                 isSelectionModeEnabled: Bool,
-                preview: UIImage?,
-                reorderRecognizer: UIGestureRecognizer?) {}
+                preview: UIImage?) {}
     
     func closeTab() {
         guard let tab = tab else { return }
-        guard isNotReordering(with: collectionReorderRecognizer) else { return }
         self.delegate?.deleteTab(tab: tab)
     }
 
     @IBAction func deleteTab() {
         Pixel.fire(pixel: .tabSwitcherClickCloseTab)
         closeTab()
-    }
-
-    private func isNotReordering(with gestureRecognizer: UIGestureRecognizer?) -> Bool {
-        guard let gestureRecognizer = gestureRecognizer else { return true }
-        let inactiveStates: [UIGestureRecognizer.State] = [.possible, .failed, .cancelled, .ended]
-        return inactiveStates.contains(gestureRecognizer.state)
     }
 
     func updateSelectionIndicator(_ image: UIImageView) {
@@ -210,12 +200,5 @@ extension TabViewCell: UIGestureRecognizerDelegate {
         let velocity = pan.velocity(in: self)
         return abs(velocity.y) < abs(velocity.x)
     }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard otherGestureRecognizer == collectionReorderRecognizer else {
-            return false
-        }
-        return true
-    }
-    
+
 }

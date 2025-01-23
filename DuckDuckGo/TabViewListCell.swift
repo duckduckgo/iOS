@@ -43,13 +43,11 @@ class TabViewListCell: TabViewCell {
 
     override func update(withTab tab: Tab,
                          isSelectionModeEnabled: Bool,
-                         preview: UIImage?,
-                         reorderRecognizer: UIGestureRecognizer?) {
+                         preview: UIImage?) {
         accessibilityElements = [ title as Any, removeButton as Any ]
         
         self.tab = tab
         self.isSelectionModeEnabled = isSelectionModeEnabled
-        self.collectionReorderRecognizer = reorderRecognizer
         
         if !isDeleting {
             isHidden = false

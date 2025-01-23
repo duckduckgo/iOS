@@ -2599,6 +2599,10 @@ extension MainViewController: TabSwitcherDelegate {
         tabSwitcher.dismiss()
     }
 
+    func tabSwitcherDidReorderTabs(tabSwitcher: TabSwitcherViewController) {
+        tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+    }
+
 }
 
 extension MainViewController: BookmarksDelegate {

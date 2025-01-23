@@ -44,6 +44,14 @@ class TabSwitcherViewController: UIViewController {
 
     enum InterfaceMode {
 
+        var isMultiSelection: Bool {
+            return !isSingleSelection
+        }
+
+        var isSingleSelection: Bool {
+            return self == .singleSelectLarge || self == .singleSelectNormal
+        }
+
         case singleSelectNormal
         case singleSelectLarge
         case multiSelectAvailableNormal
@@ -70,8 +78,6 @@ class TabSwitcherViewController: UIViewController {
 
     private(set) var bookmarksDatabase: CoreDataDatabase
     let syncService: DDGSyncing
-
-    weak var reorderGestureRecognizer: UIGestureRecognizer?
 
     override var canBecomeFirstResponder: Bool { return true }
 
@@ -144,12 +150,9 @@ class TabSwitcherViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if reorderGestureRecognizer == nil {
-            let recognizer = UILongPressGestureRecognizer(target: self,
-                                                          action: #selector(handleLongPress(gesture:)))
-            collectionView.addGestureRecognizer(recognizer)
-            reorderGestureRecognizer = recognizer
-        }
+        collectionView.dragInteractionEnabled = true
+        collectionView.dragDelegate = self
+        collectionView.dropDelegate = self
 
         updateUIForSelectionMode()
     }
@@ -341,8 +344,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
             cell.isSelected = selectedTabs.contains(indexPath.row)
             cell.update(withTab: tab,
                         isSelectionModeEnabled: self.isEditing,
-                        preview: previewsSource.preview(for: tab),
-                        reorderRecognizer: reorderGestureRecognizer)
+                        preview: previewsSource.preview(for: tab))
         }
         
         return cell
@@ -372,16 +374,75 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                         toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
         return proposedIndexPath
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         tabsModel.moveTab(from: sourceIndexPath.row, to: destinationIndexPath.row)
         currentSelection = tabsModel.currentIndex
     }
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard interfaceMode.isMultiSelection,
+              let tab = tabsModel.safeGetTabAt(indexPath.row) else { return nil }
+
+        // Arbitrary but limit size of title. UIMenu supports display preferences on iOS 17.4 to
+        //  limit the number of title lines but that doesn't appear to work here.
+        let title = trimMenuTitleIfNeeded(tab.link?.displayTitle ?? "", 50)
+
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+
+            let menuItems = [
+                // Share Link
+                self.menuAction(indexPath.row, UserText.tabSwitcherShareLink, "Share-Apple-16", self.tabMenuShareLink),
+
+                // Bookmark This Page
+                self.menuAction(indexPath.row, UserText.tabSwitcherBookmarkPage, "Bookmark-Add-16", self.tabMenuBookmarkThisPage),
+
+                // -- divider --
+                UIMenu(title: "", options: .displayInline, children: [
+                    // Bookmark All Tabs -> shortcut to same functionality at top level
+                    self.menuAction(indexPath.row, UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.tabMenuBookmarkAllTabs),
+                    // Select Tabs -> switch to selection mode with this tab selected
+                    self.menuAction(indexPath.row, UserText.tabSwitcherSelectTabs, "Check-Circle-16", self.tabMenuSelectTabs),
+                ]),
+
+                // -- divider --
+                UIMenu(title: "", options: .displayInline, children: [
+                    // Close Tab
+                    self.menuAction(indexPath.row, UserText.keyCommandCloseTab, "Close-16", destructive: true, self.tabMenuCloseTab),
+                    // Close Other Tabs
+                    self.menuAction(indexPath.row, UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.tabMenuCloseOtherTabs),
+                ])
+            ]
+
+            return UIMenu(title: title, children: menuItems.compactMap { $0 })
+        }
+    }
+
+    func trimMenuTitleIfNeeded(_ s: String, _ maxLength: Int) -> String {
+        if s.count > maxLength {
+            return s.prefix(maxLength) + "..."
+        }
+        return s
+    }
+
+    func menuAction(_ index: Int, _ title: String, _ imageName: String, destructive: Bool = false, _ action: @escaping (Int) -> Void) -> UIAction {
+        let attributes: UIAction.Attributes = destructive ? .destructive : []
+        return UIAction(title: title, image: UIImage(named: imageName), attributes: attributes) { _ in
+            action(index)
+        }
+    }
+
+    func tabMenuShareLink(index: Int) { }
+    func tabMenuBookmarkThisPage(index: Int) { }
+    func tabMenuBookmarkAllTabs(index: Int) { }
+    func tabMenuSelectTabs(index: Int) { }
+    func tabMenuCloseTab(index: Int) { }
+    func tabMenuCloseOtherTabs(index: Int) { }
 
 }
 
@@ -464,4 +525,49 @@ extension TabSwitcherViewController {
                 
         collectionView.reloadData()
     }
+}
+
+extension TabSwitcherViewController: UICollectionViewDragDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: any UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        guard let cell = collectionView.cellForItem(at: indexPath),
+              let snapshot = cell.createImageSnapshot() else { return [] }
+        return [.init(itemProvider: .init(object: snapshot))]
+    }
+
+}
+
+extension TabSwitcherViewController: UICollectionViewDropDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, canHandle session: any UIDropSession) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: any UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        return .init(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: any UICollectionViewDropCoordinator) {
+
+        guard let destination = coordinator.destinationIndexPath,
+              let item = coordinator.items.first,
+              let source = item.sourceIndexPath
+        else {
+                assertionFailure("Unexpected state when dropping tab into new position")
+            return
+        }
+
+        collectionView.performBatchUpdates {
+            tabsModel.moveTab(from: source.row, to: destination.row)
+            currentSelection = tabsModel.currentIndex
+            collectionView.deleteItems(at: [source])
+            collectionView.insertItems(at: [destination])
+        } completion: { _ in
+            collectionView.reloadItems(at: [IndexPath(row: self.currentSelection ?? 0, section: 0)])
+            self.delegate.tabSwitcherDidReorderTabs(tabSwitcher: self)
+        }
+
+        coordinator.drop(item.dragItem, toItemAt: destination)
+    }
+
 }

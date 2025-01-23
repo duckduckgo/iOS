@@ -251,6 +251,16 @@ public struct UserText {
         return message.format(arguments: title, address)
     }
 
+    public static let tabSwitcherShareLink = NotLocalizedString("tab.switcher.share.link", value: "Share Link", comment: "Share link menu item")
+
+    public static let tabSwitcherBookmarkPage = NotLocalizedString("tab.switcher.bookmark.page", value: "Bookmark This Page", comment: "Bookmark this page menu item")
+
+    public static let tabSwitcherBookmarkAllTabs = NotLocalizedString("tab.switcher.bookmarkAll", value: "Bookmark All Tabs", comment: "Bookmark all tabs menu item")
+
+    public static let tabSwitcherSelectTabs = NotLocalizedString("tab.switcher.select-tabs", value: "Select Tabs", comment: "Select tabs  menu item")
+
+    public static let tabSwitcherCloseOtherTabs = NotLocalizedString("tab.switcher.close-others", value: "Close Other Tabs", comment: "Close other tabs menu item")
+
     public static let favorite = NSLocalizedString("favorite", value: "Favorite", comment: "")
     
     public static let onboardingWelcomeHeader = NSLocalizedString("onboardingWelcomeHeader", value: "Welcome to DuckDuckGo!", comment: "")

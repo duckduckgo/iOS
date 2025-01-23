@@ -143,9 +143,6 @@ struct Launching: AppState {
         }
 
         WidgetCenter.shared.reloadAllTimelines()
-        Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
-            WidgetCenter.shared.reloadAllTimelines()
-        }
 
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
 

@@ -46,9 +46,6 @@ public class Favicons {
 
     public static let shared = Favicons()
 
-    @UserDefaultsWrapper(key: .faviconSizeNeedsMigration, defaultValue: true)
-    var sizeNeedsMigration: Bool
-
     let sourcesProvider: FaviconSourcesProvider
     let downloader: NotFoundCachingDownloader
     let fireproofing: Fireproofing
@@ -65,34 +62,6 @@ public class Favicons {
         // Prevents the caches being cleaned up
         NotificationCenter.default.removeObserver(Constants.fireproofCache)
         NotificationCenter.default.removeObserver(Constants.tabsCache)
-    }
-
-    public func migrateFavicons(to size: CGSize, afterMigrationHandler: @escaping () -> Void) {
-        guard sizeNeedsMigration else { return }
-
-        DispatchQueue.global(qos: .utility).async {
-            guard let files = try? FileManager.default.contentsOfDirectory(at: Constants.fireproofCache.diskStorage.directoryURL,
-                    includingPropertiesForKeys: nil) else {
-                return
-            }
-
-            files.forEach { file in
-                guard let data = (try? Data(contentsOf: file)),
-                      let image = UIImage(data: data),
-                      !self.isValidImage(image, forMaxSize: size) else {
-                    return
-                }
-
-                let resizedImage = self.resizedImage(image, toSize: size)
-                if let data = resizedImage.pngData() {
-                    try? data.write(to: file)
-                }
-            }
-
-            Constants.fireproofCache.clearMemoryCache()
-            self.sizeNeedsMigration = false
-            afterMigrationHandler()
-        }
     }
 
     internal func isValidImage(_ image: UIImage, forMaxSize size: CGSize) -> Bool {

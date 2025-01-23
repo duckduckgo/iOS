@@ -298,8 +298,6 @@ struct Launching: AppState {
         unService = UNService(window: window, accountManager: accountManager)
         uiService = UIService(window: window)
 
-        voiceSearchHelper.migrateSettingsFlagIfNecessary()
-
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()

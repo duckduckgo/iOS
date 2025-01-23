@@ -37,6 +37,8 @@ extension Launching {
             return Foreground(stateContext: makeStateContext())
         case .didEnterBackground:
             return Background(stateContext: makeStateContext())
+        case .willTerminate(let terminationReason):
+            return Terminating(stateContext: makeStateContext(), terminationReason: terminationReason)
         default:
             return handleUnexpectedEvent(event)
         }
@@ -47,8 +49,14 @@ extension Launching {
 extension Foreground {
 
     func apply(event: AppEvent) -> any AppState {
-        guard case .willResignActive = event else { return handleUnexpectedEvent(event) }
-        return Suspending(stateContext: makeStateContext())
+        switch event {
+        case .willResignActive:
+            return Suspending(stateContext: makeStateContext())
+        case .willTerminate(let terminationReason):
+            return Terminating(stateContext: makeStateContext(), terminationReason: terminationReason)
+        default:
+            return handleUnexpectedEvent(event)
+        }
     }
 
 }
@@ -71,8 +79,14 @@ extension Suspending {
 extension Background {
 
     func apply(event: AppEvent) -> any AppState {
-        guard case .willEnterForeground = event else { return handleUnexpectedEvent(event) }
-        return Resuming(stateContext: makeStateContext())
+        switch event {
+        case .willEnterForeground:
+            return Resuming(stateContext: makeStateContext())
+        case .willTerminate(let terminationReason):
+            return Terminating(stateContext: makeStateContext(), terminationReason: terminationReason)
+        default:
+            return handleUnexpectedEvent(event)
+        }
     }
 
 }
@@ -89,6 +103,12 @@ extension Resuming {
             return handleUnexpectedEvent(event)
         }
     }
+
+}
+
+extension Terminating {
+
+    func apply(event: AppEvent) -> any AppState { self }
 
 }
 

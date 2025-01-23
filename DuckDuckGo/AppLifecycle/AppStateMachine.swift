@@ -26,6 +26,7 @@ enum AppEvent {
     case didEnterBackground
     case willResignActive
     case willEnterForeground
+    case willTerminate(UIApplication.TerminationReason)
 
 }
 

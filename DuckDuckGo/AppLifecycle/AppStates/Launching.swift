@@ -48,7 +48,7 @@ import PixelExperimentKit
 @MainActor
 struct Launching: AppState {
 
-    private let bookmarksDatabase = BookmarksDatabase.make()
+    
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     private let accountManager = AppDependencyProvider.shared.accountManager
     private let appSettings = AppDependencyProvider.shared.appSettings
@@ -68,12 +68,13 @@ struct Launching: AppState {
     private let syncService: SyncService
     private let vpnService: VPNService = VPNService()
     private let autofillService: AutofillService = AutofillService()
+    private let persistenceService = PersistenceService()
 
     private let remoteMessagingClient: RemoteMessagingClient
     private let window: UIWindow
 
-    private var mainViewController: MainViewController?
-    private var autoClear: AutoClear?
+    private let mainViewController: MainViewController
+    private let autoClear: AutoClear
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
@@ -135,16 +136,7 @@ struct Launching: AppState {
 
         crashService.startAttachingCrashLogMessages(application: application)
 
-        clearTmp()
-
-        func clearTmp() {
-            let tmp = FileManager.default.temporaryDirectory
-            do {
-                try FileManager.default.removeItem(at: tmp)
-            } catch {
-                Logger.general.error("Failed to delete tmp dir")
-            }
-        }
+        persistenceService.onLaunching()
 
         _ = DefaultUserAgentManager.shared
         removeEmailWaitlistState()
@@ -161,51 +153,7 @@ struct Launching: AppState {
             }
         }
 
-        var shouldPresentInsufficientDiskSpaceAlertAndCrash = false
-        Database.shared.loadStore { context, error in
-            guard let context = context else {
-
-                let parameters = [PixelParameters.applicationState: "\(stateContext.application.applicationState.rawValue)",
-                                  PixelParameters.dataAvailability: "\(stateContext.application.isProtectedDataAvailable)"]
-
-                switch error {
-                case .none:
-                    fatalError("Could not create database stack: Unknown Error")
-                case .some(CoreDataDatabase.Error.containerLocationCouldNotBePrepared(let underlyingError)):
-                    Pixel.fire(pixel: .dbContainerInitializationError,
-                               error: underlyingError,
-                               withAdditionalParameters: parameters)
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create database stack: \(underlyingError.localizedDescription)")
-                case .some(let error):
-                    Pixel.fire(pixel: .dbInitializationError,
-                               error: error,
-                               withAdditionalParameters: parameters)
-                    if error.isDiskFull {
-                        shouldPresentInsufficientDiskSpaceAlertAndCrash = true
-                        return
-                    } else {
-                        Thread.sleep(forTimeInterval: 1)
-                        fatalError("Could not create database stack: \(error.localizedDescription)")
-                    }
-                }
-            }
-            DatabaseMigration.migrate(to: context)
-        }
-
-        switch BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
-        case .success:
-            break
-        case .failure(let error):
-            Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
-                       error: error)
-            if error.isDiskFull {
-                shouldPresentInsufficientDiskSpaceAlertAndCrash = true
-            } else {
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create database stack: \(error.localizedDescription)")
-            }
-        }
+        
 
         WidgetCenter.shared.reloadAllTimelines()
 
@@ -276,10 +224,10 @@ struct Launching: AppState {
         PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger,
                                         eventTracker: ExperimentEventTracker(store: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()))
 
-        syncService = SyncService(bookmarksDatabase: bookmarksDatabase)
+        syncService = SyncService(bookmarksDatabase: persistenceService.bookmarksDatabase)
 
         remoteMessagingClient = RemoteMessagingClient(
-            bookmarksDatabase: bookmarksDatabase,
+            bookmarksDatabase: persistenceService.bookmarksDatabase,
             appSettings: AppDependencyProvider.shared.appSettings,
             internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
             configurationStore: AppDependencyProvider.shared.configurationStore,
@@ -305,19 +253,9 @@ struct Launching: AppState {
 
         privacyProDataReporter.injectTabsModel(tabsModel)
 
-        if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window.rootViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
-                                                                     voiceSearchHelper: voiceSearchHelper)
-            window.makeKeyAndVisible()
-            application.setWindow(window)
-
-            let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
-            window.rootViewController?.present(alertController, animated: true, completion: nil)
-        } else {
             let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
             let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
-            mainViewController = MainViewController(bookmarksDatabase: bookmarksDatabase,
+            mainViewController = MainViewController(bookmarksDatabase: persistenceService.bookmarksDatabase,
                                                     bookmarksDatabaseCleaner: syncService.syncDataProviders.bookmarksAdapter.databaseCleaner,
                                                     historyManager: historyManager,
                                                     homePageConfiguration: homePageConfiguration,
@@ -341,7 +279,7 @@ struct Launching: AppState {
                                                     websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
                                                     appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
-            mainViewController!.loadViewIfNeeded()
+            mainViewController.loadViewIfNeeded()
             syncService.syncErrorHandler.alertPresenter = mainViewController
 
             window = UIWindow(frame: UIScreen.main.bounds)
@@ -349,14 +287,14 @@ struct Launching: AppState {
             window.makeKeyAndVisible()
             application.setWindow(window)
 
-            let autoClear = AutoClear(worker: mainViewController!)
+            let autoClear = AutoClear(worker: mainViewController)
             self.autoClear = autoClear
             let applicationState = application.applicationState
             Task { [vpnService] in
                 await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
                 await vpnService.installRedditSessionWorkaround()
             }
-        }
+
         unService = UNService(window: window, accountManager: accountManager)
         uiService = UIService(window: window)
 
@@ -396,9 +334,9 @@ struct Launching: AppState {
             appSettings: appSettings,
             privacyStore: privacyStore,
             uiService: uiService,
-            mainViewController: mainViewController!,
+            mainViewController: mainViewController,
             voiceSearchHelper: voiceSearchHelper,
-            autoClear: autoClear!,
+            autoClear: autoClear,
             marketplaceAdPostbackManager: marketplaceAdPostbackManager,
             syncService: syncService,
             privacyProDataReporter: privacyProDataReporter,
@@ -507,6 +445,12 @@ extension Launching {
 }
 
 extension UIApplication {
+
+    enum TerminationReason {
+
+        case insufficientDiskSpace
+
+    }
 
     func setWindow(_ window: UIWindow?) {
         (delegate as? AppDelegate)?.window = window

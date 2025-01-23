@@ -33,6 +33,13 @@ import Core
 
     var window: UIWindow?
 
+    override init() {
+        super.init()
+        NotificationCenter.default.addObserver(forName: .databaseDidEncounterInsufficientDiskSpace, object: nil, queue: .main) { _ in
+            self.application(UIApplication.shared, willTerminateWithReason: .insufficientDiskSpace)
+        }
+    }
+
     /// See: Launching.swift
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let isTesting: Bool = ProcessInfo().arguments.contains("testing")
@@ -58,6 +65,11 @@ import Core
     /// See: Background.swift
     func applicationDidEnterBackground(_ application: UIApplication) {
         appStateMachine.handle(.didEnterBackground)
+    }
+
+    /// See: Terminating.swift
+    func application(_ application: UIApplication, willTerminateWithReason terminationReason: UIApplication.TerminationReason) {
+        appStateMachine.handle(.willTerminate(terminationReason))
     }
 
     func application(_ application: UIApplication,

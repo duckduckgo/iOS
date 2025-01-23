@@ -1502,7 +1502,7 @@ extension Pixel.Event {
             
         case .trackerDataParseFailed: return "m_d_tracker_data_parse_failed"
         case .trackerDataReloadFailed: return "m_d_tds_r"
-        case .trackerDataCouldNotBeLoaded: return "m_d_trackerDataCouldNotBeLoaded"
+        case .trackerDataCouldNotBeLoaded: return "m_d_tracker_data_could_not_be_loaded"
         case .fileStoreWriteFailed: return "m_d_fswf"
         case .fileStoreCoordinatorFailed: return "m_d_configuration_file_coordinator_error"
         case .privacyConfigurationReloadFailed: return "m_d_pc_r"

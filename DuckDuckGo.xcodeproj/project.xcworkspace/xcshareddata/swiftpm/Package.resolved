@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "423ff3aaa526abd0e7d658ed88e48209b015e86b",
-        "version" : "227.2.0"
+        "branch": "alex/malsite-subfeature",
+        "revision" : "281b39c13b56fff4d8e7ab00913b8f9f8862578b"
       }
     },
     {

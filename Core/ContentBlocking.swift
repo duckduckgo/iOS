@@ -21,6 +21,7 @@ import Foundation
 import BrowserServicesKit
 import Combine
 import Common
+import PixelExperimentKit
 
 public final class ContentBlocking {
     
@@ -39,6 +40,11 @@ public final class ContentBlocking {
         didSet {
             contentBlockingManager.onCriticalError = onCriticalError
         }
+    }
+
+    enum PixelParameterName {
+        static let experimentName = "experimentName"
+        static let etag = "etag"
     }
 
     private init(privacyConfigurationManager: PrivacyConfigurationManaging? = nil) {
@@ -80,9 +86,14 @@ public final class ContentBlocking {
 
     private static let debugEvents = EventMapping<ContentBlockerDebugEvents> { event, error, parameters, onComplete in
         let domainEvent: Pixel.Event
+        var finalParameters = parameters ?? [:]
         switch event {
         case .trackerDataParseFailed:
             domainEvent = .trackerDataParseFailed
+            if let experimentName = TDSOverrideExperimentMetrics.activeTDSExperimentNameWithCohort {
+                finalParameters[PixelParameterName.experimentName] = experimentName
+                finalParameters[PixelParameterName.etag] = UserDefaultsETagStorage().loadEtag(for: .trackerDataSet)
+            }
 
         case .trackerDataReloadFailed:
             domainEvent = .trackerDataReloadFailed
@@ -131,16 +142,20 @@ public final class ContentBlocking {
         case .contentBlockingCompilationTaskPerformance(let retryCount, let timeBucketAggregation):
             domainEvent = .contentBlockingCompilationTaskPerformance(iterationCount: retryCount,
                                                                      timeBucketAggregation: Pixel.Event.CompileTimeBucketAggregation(number: timeBucketAggregation))
+            if let experimentName = TDSOverrideExperimentMetrics.activeTDSExperimentNameWithCohort {
+                finalParameters[PixelParameterName.experimentName] = experimentName
+                finalParameters[PixelParameterName.etag] = UserDefaultsETagStorage().loadEtag(for: .trackerDataSet)
+            }
         }
 
         if let error = error {
             Pixel.fire(pixel: domainEvent,
                        error: error,
-                       withAdditionalParameters: parameters ?? [:],
+                       withAdditionalParameters: finalParameters,
                        onComplete: onComplete)
         } else {
             Pixel.fire(pixel: domainEvent,
-                       withAdditionalParameters: parameters ?? [:],
+                       withAdditionalParameters: finalParameters,
                        includedParameters: [],
                        onComplete: onComplete)
         }

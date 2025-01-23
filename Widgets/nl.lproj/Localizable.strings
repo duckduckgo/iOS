@@ -1,3 +1,6 @@
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Je moet de VPN inschakelen vanuit de DuckDuckGo-app.";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Maak meteen een nieuw privaat Duck Address aan.";
 
@@ -33,6 +36,24 @@
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Zoeken via spraak";
+
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Er wordt verbinding gemaakt ...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "De verbinding wordt verbroken ...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Onbekende locatie";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Niet verbonden";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN is uitgeschakeld";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN is ingeschakeld";
 
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Zoek snel je opgeslagen DuckDuckGo-wachtwoorden.";

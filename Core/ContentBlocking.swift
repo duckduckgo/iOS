@@ -42,9 +42,11 @@ public final class ContentBlocking {
         }
     }
 
-    struct Constants {
-        static let experimentNameParameterName = "experimentName"
-        static let etagParameterName = "etag"
+    enum Constants {
+        enum ParameterName {
+            static let experimentName = "experimentName"
+            static let etag = "etag"
+        }
     }
 
     private init(privacyConfigurationManager: PrivacyConfigurationManaging? = nil) {
@@ -91,8 +93,8 @@ public final class ContentBlocking {
         case .trackerDataParseFailed:
             domainEvent = .trackerDataParseFailed
             if let experimentName = TDSOverrideExperimentMetrics.activeTDSExperimentNameWithCohort {
-                finalParameters[Constants.experimentNameParameterName] = experimentName
-                finalParameters[Constants.etagParameterName] = UserDefaultsETagStorage().loadEtag(for: .trackerDataSet)
+                finalParameters[Constants.ParameterName.experimentName] = experimentName
+                finalParameters[Constants.ParameterName.etag] = UserDefaultsETagStorage().loadEtag(for: .trackerDataSet)
             }
 
         case .trackerDataReloadFailed:
@@ -143,8 +145,8 @@ public final class ContentBlocking {
             domainEvent = .contentBlockingCompilationTaskPerformance(iterationCount: retryCount,
                                                                      timeBucketAggregation: Pixel.Event.CompileTimeBucketAggregation(number: timeBucketAggregation))
             if let experimentName = TDSOverrideExperimentMetrics.activeTDSExperimentNameWithCohort {
-                finalParameters[Constants.experimentNameParameterName] = experimentName
-                finalParameters[Constants.etagParameterName] = UserDefaultsETagStorage().loadEtag(for: .trackerDataSet)
+                finalParameters[Constants.ParameterName.experimentName] = experimentName
+                finalParameters[Constants.ParameterName.etag] = UserDefaultsETagStorage().loadEtag(for: .trackerDataSet)
             }
         }
 

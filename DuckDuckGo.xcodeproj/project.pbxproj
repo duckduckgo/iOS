@@ -12095,7 +12095,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "alex/malsite-subfeature-rebase";
+				branch = "alessandro/malicious-site-protection-ios";
 				kind = branch;
 			};
 		};

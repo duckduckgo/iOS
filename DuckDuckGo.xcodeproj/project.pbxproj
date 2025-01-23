@@ -283,6 +283,7 @@
 		564DE4572C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4562C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift */; };
 		564DE45A2C450BE600D23241 /* DaxDialogsNewTabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4592C450BE600D23241 /* DaxDialogsNewTabTests.swift */; };
 		564DE45E2C45218500D23241 /* OnboardingNavigationDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE45D2C45218500D23241 /* OnboardingNavigationDelegateTests.swift */; };
+		5650E36F2D3E8E5900D41ECF /* PageRefreshMonitorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5650E36E2D3E8E5900D41ECF /* PageRefreshMonitorExtensionTests.swift */; };
 		566B73702BECD46800FF1959 /* MainViewController+SyncAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */; };
 		566B73732BECE4F200FF1959 /* SyncErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B73712BECE4F200FF1959 /* SyncErrorHandling.swift */; };
 		566B73762BECE53D00FF1959 /* SyncPausedStateManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B73742BECE53D00FF1959 /* SyncPausedStateManaging.swift */; };
@@ -1020,7 +1021,6 @@
 		CB3C788D2D06D3A700A7E4ED /* AppStateTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0F072CFE27D5006267B8 /* AppStateTransitions.swift */; };
 		CB3C788E2D06D3A700A7E4ED /* Initializing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0EF82CFE1D35006267B8 /* Initializing.swift */; };
 		CB3C788F2D06D3A700A7E4ED /* Suspending.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0EFE2CFE1D4E006267B8 /* Suspending.swift */; };
-		CB48D3332B90CE9F00631D8B /* PageRefreshStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB48D3312B90CE9F00631D8B /* PageRefreshStore.swift */; };
 		CB4FA44E2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */; };
 		CB5516D0286500290079B175 /* TrackerRadarIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */; };
 		CB5516D1286500290079B175 /* ContentBlockingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904C24FD2DB000D41DDF /* ContentBlockingRulesTests.swift */; };
@@ -1685,6 +1685,7 @@
 		564DE4562C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageControllerDaxDialogTests.swift; sourceTree = "<group>"; };
 		564DE4592C450BE600D23241 /* DaxDialogsNewTabTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogsNewTabTests.swift; sourceTree = "<group>"; };
 		564DE45D2C45218500D23241 /* OnboardingNavigationDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNavigationDelegateTests.swift; sourceTree = "<group>"; };
+		5650E36E2D3E8E5900D41ECF /* PageRefreshMonitorExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageRefreshMonitorExtensionTests.swift; sourceTree = "<group>"; };
 		566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+SyncAlerts.swift"; sourceTree = "<group>"; };
 		566B73712BECE4F200FF1959 /* SyncErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorHandling.swift; sourceTree = "<group>"; };
 		566B73742BECE53D00FF1959 /* SyncPausedStateManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPausedStateManaging.swift; sourceTree = "<group>"; };
@@ -2945,7 +2946,6 @@
 		CB2A7EF3285383B300885F67 /* AppLastCompiledRulesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLastCompiledRulesStore.swift; sourceTree = "<group>"; };
 		CB2C47822AF6D55800AEDCD9 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB4448752AF6D51D001F93F7 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CB48D3312B90CE9F00631D8B /* PageRefreshStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageRefreshStore.swift; sourceTree = "<group>"; };
 		CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageUserScript.swift; sourceTree = "<group>"; };
 		CB5038622AF6D563007FD69F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB6ABD002AF6D52B004A8224 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -4079,6 +4079,14 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		5650E36D2D3E8E3100D41ECF /* PageRefreshMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				5650E36E2D3E8E5900D41ECF /* PageRefreshMonitorExtensionTests.swift */,
+			);
+			path = PageRefreshMonitor;
+			sourceTree = "<group>";
+		};
 		566B736E2BECD3DC00FF1959 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -4617,6 +4625,7 @@
 		84E341A91E2F7EFB00BDBA6F /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				5650E36D2D3E8E3100D41ECF /* PageRefreshMonitor */,
 				F1BDDC012C340DDF00459306 /* SyncUI */,
 				F12D98401F266B30003C2EE3 /* DuckDuckGo */,
 				F1E092B31E92A6B900732CCC /* Core */,
@@ -5728,7 +5737,6 @@
 			isa = PBXGroup;
 			children = (
 				CBECDB792CD981C6005B8B87 /* AppPageRefreshMonitor.swift */,
-				CB48D3312B90CE9F00631D8B /* PageRefreshStore.swift */,
 			);
 			name = PageRefreshMonitor;
 			sourceTree = "<group>";
@@ -8316,7 +8324,6 @@
 				9FE05CEE2C36424E00D9046B /* OnboardingPixelReporter.swift in Sources */,
 				310C4B47281B60E300BA79A9 /* AutofillLoginDetailsViewModel.swift in Sources */,
 				85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */,
-				CB48D3332B90CE9F00631D8B /* PageRefreshStore.swift in Sources */,
 				1EC458462948932500CB2B13 /* UIHostingControllerExtension.swift in Sources */,
 				1E4DCF4E27B6A69600961E25 /* DownloadsListHostingController.swift in Sources */,
 				850F93DB2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift in Sources */,
@@ -8708,6 +8715,7 @@
 				569437292BDD487600C0881B /* SyncCredentialsAdapterTests.swift in Sources */,
 				6AC98419288055C1005FA9CA /* BarsAnimatorTests.swift in Sources */,
 				8536A1CA209AF6490050739E /* HomeRowReminderTests.swift in Sources */,
+				5650E36F2D3E8E5900D41ECF /* PageRefreshMonitorExtensionTests.swift in Sources */,
 				C1106F312D0EFD8B0054A221 /* FreeTrialsFeatureFlagExperimentTests.swift in Sources */,
 				851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */,
 				98983096255B5019003339A2 /* BookmarksCachingSearchTests.swift in Sources */,

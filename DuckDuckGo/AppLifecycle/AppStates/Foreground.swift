@@ -58,12 +58,6 @@ struct Foreground: AppState {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
-        defer {
-            let launchTime = CFAbsoluteTimeGetCurrent() - stateContext.didFinishLaunchingStartTime
-            Pixel.fire(pixel: .appDidBecomeActiveTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
-                       withAdditionalParameters: [PixelParameters.time: String(launchTime)])
-        }
-
         let subscriptionService = appDependencies.subscriptionService
         subscriptionService.onFirstForeground()
 

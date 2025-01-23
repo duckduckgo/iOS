@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/html-history",
-        "revision" : "5770bf57440542f181f4ccd4d92d27eefb1a965c"
+        "revision" : "b103a2a05dff415102978e0c1a2e5fbd6b86e813",
+        "version" : "227.3.0"
       }
     },
     {

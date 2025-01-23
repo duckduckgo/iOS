@@ -25,10 +25,7 @@ struct AIChatDeepLinkHandler {
     /// Utilitiy function to handle AI Chat deeplink since it needs to be called from 2 different entry points
     func handleDeepLink(_ url: URL, on mainViewController: MainViewController) {
         firePixel(url)
-
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            mainViewController.openAIChat()
-        }
+        mainViewController.openAIChat()
     }
 
     func firePixel(_ url: URL) {

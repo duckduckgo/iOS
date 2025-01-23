@@ -27,7 +27,7 @@ struct AIChatControlWidget: ControlWidget {
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(kind: ControlWidgetKind.aiChat.rawValue) {
             ControlWidgetButton(action: OpenAIChatIntent()) {
-                Label("Duck.ai", image: "ControlCenter-VPN-on")
+                Label("Duck.ai", image: "AI-Chat")
             }
         }
         .displayName("Duck.ai")

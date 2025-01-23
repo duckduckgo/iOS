@@ -1,0 +1,112 @@
+name: iOS - Tag Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      asana-task-url:
+        description: "Asana release task URL"
+        required: true
+        type: string
+      base-branch:
+        description: "Base branch name (defaults to main, only override for testing)"
+        required: false
+        type: string
+      branch:
+        description: "Branch name"
+        required: false
+        type: string
+      prerelease:
+        description: "Is this a pre-release? (a.k.a. internal release)"
+        required: true
+        type: boolean
+  workflow_call:
+    inputs:
+      asana-task-url:
+        description: "Asana release task URL"
+        required: true
+        type: string
+      base-branch:
+        description: "Base branch name (defaults to main, only override for testing)"
+        required: false
+        type: string
+      branch:
+        description: "Branch name"
+        required: false
+        type: string
+      prerelease:
+        description: "Is this a pre-release? (a.k.a. internal release)"
+        required: true
+        type: boolean
+      internal-release-bump:
+        description: "Is this an internal release bump? (the subsequent internal release of the current week)"
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      ASANA_ACCESS_TOKEN:
+        required: true
+      GHA_ELEVATED_PERMISSIONS_TOKEN:
+        required: true
+
+jobs:
+  tag-release:
+
+    name: Tag Release
+
+    runs-on: macos-15
+
+    env:
+      asana-task-url: ${{ github.event.inputs.asana-task-url || inputs.asana-task-url }}
+      BASE_BRANCH: ${{ inputs.base-branch || 'main' }}
+      BRANCH: ${{ inputs.branch || github.ref_name }}
+      prerelease: ${{ github.event.inputs.prerelease || inputs.prerelease }}
+      internal-release-bump: ${{ inputs.internal-release-bump || 'false' }}
+
+    outputs:
+      tag: ${{ steps.tag-release.outputs.tag }}
+
+    steps:
+
+    - name: Assert release branch
+      run: |
+        case "${{ env.BRANCH }}" in
+          *release/*) ;;
+          *hotfix/*) ;;
+          *) echo "👎 Not a release or hotfix branch"; exit 1 ;;
+        esac
+
+    - name: Check out the code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        ref: ${{ env.BRANCH }}
+
+    - name: Set up fastlane
+      run: bundle install
+
+    - name: Tag Release and merge to base branch
+      id: tag-release
+      env:
+        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_ELEVATED_PERMISSIONS_TOKEN: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }}
+        WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      run: |
+        bundle exec fastlane run tag_release \
+          platform:"ios" \
+          asana_task_url:"${{ env.asana-task-url }}" \
+          base_branch:"${{ env.BASE_BRANCH }}" \
+          github_handle:${{ github.actor }} \
+          is_internal_release_bump:"${{ env.internal-release-bump }}" \
+          is_prerelease:"${{ env.prerelease }}" \
+          is_scheduled_release:"${{ github.event_name == 'schedule' }}"
+
+    - name: Store created tag in a file artifact
+      run: echo ${{ steps.tag-release.outputs.tag }} > .github/tag
+
+    - name: Upload tag artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: tag
+        path: .github/tag
+        retention-days: 1

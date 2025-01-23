@@ -962,6 +962,12 @@ extension Pixel {
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
 
+        // MARK: Tab interaction state debug pixels
+        case tabInteractionStateSourceMissingRootDirectory
+        case tabInteractionStateSourceFailedToWrite
+
+        case tabInteractionStateFailedToRestore
+        case tabInteractionStateRestorationTime(_ time: BucketAggregation)
     }
 
 }
@@ -1562,8 +1568,20 @@ extension Pixel.Event {
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
         case .debugWebsiteDataStoresCleared: return "m_d_wkwebsitedatastorescleared"
 
+            // MARK: Tab interaction state debug pixels
+
+        case .tabInteractionStateSourceMissingRootDirectory:
+            return "m_d_tab-interaction-state-source_missing-root-directory"
+        case .tabInteractionStateSourceFailedToWrite:
+            return "m_d_tab-interaction-state-source_failed-to-write"
+
+        case .tabInteractionStateFailedToRestore:
+            return "m_d_tab-interaction-state_failed-to-restore"
+        case .tabInteractionStateRestorationTime(let aggregation):
+            return "m_d_tab-interaction-state_restoration-time-\(aggregation)"
+
             // MARK: Ad Attribution
-            
+
         case .adAttributionGlobalAttributedRulesDoNotExist: return "m_attribution_global_attributed_rules_do_not_exist"
         case .adAttributionCompilationFailedForAttributedRulesList: return "m_attribution_compilation_failed_for_attributed_rules_list"
             

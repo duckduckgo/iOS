@@ -131,7 +131,10 @@
 "addWidget.description" = "Obține acces rapid la căutarea privată și la site-urile care îți plac.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Ține apăsat pe ecranul de întâmpinare pentru a intra în modul în care elementele „tremură”.";
+"addWidget.settings.firstParagraph" = "Ține apăsat oriunde pe ecranul de pornire până când aplicațiile încep să tremure.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Apasă butonul **Editează**, apoi alege **Adaugă widget**";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Atinge butonul plus %@.";
@@ -869,14 +872,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "vremea locală";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "rețete de fursecuri cu fulgi de ciocolată";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Găsește **DuckDuckGo** în listă, apoi atinge **Control VPN** pentru a-l adăuga.";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "rețete pentru cină";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Glisează în jos din colțul din dreapta sus al ecranului";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Surprinde-mă!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Atinge butonul **+** din colțul din stânga sus al **Centrului de control**.";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Atinge **Adaugă un control** în partea de jos a ecranului";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Trimite întotdeauna rapoarte de cădere";
@@ -1063,6 +1069,18 @@
 
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "Funcționalitatea Duck Player a fost afectată de modificările recente ale YouTube. Lucrăm pentru a remedia aceste probleme și apreciem înțelegerea ta.";
+
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"duckai.preferences.text.markdown" = "Duck.ai este o caracteristică opțională care îți permite să discuți anonim cu modele populare de chat AI de la terțe părți. Chaturile tale nu sunt folosite pentru a antrena AI.\n[Află mai multe](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
+
+/* Toggle text to enable/disable AI Chat in the address bar */
+"duckai.settings.enable.address-bar-toggle" = "Afișează Duck.ai în timp ce cauți";
+
+/* Toggle text to enable/disable AI Chat in the browsing menu */
+"duckai.settings.enable.browsing-menu-toggle" = "Afișează Duck.ai în meniul browserului";
+
+/* Settings screen cell text for AI Chat settings */
+"duckai.settings.title" = "Duck.ai";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo pentru iOS";
@@ -1517,6 +1535,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "Identificator: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Trebuie să activezi VPN-ul din aplicația DuckDuckGo.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1858,6 +1879,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Setări VPN";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Scurtături";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personalizează-ți Favoritele și funcțiile predilecte. Reordonează lucrurile sau ascunde-le pentru a menține ordinea.";
@@ -2211,6 +2235,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Adaugă un widget la ecranul de întâmpinare";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Adaugă widgetul VPN DuckDuckGo pe ecranul tău de pornire";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2866,7 +2893,28 @@
 "vpn.access-revoked.alert.title" = "VPN-ul s-a deconectat din cauza unui abonament expirat";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Găsește și selectează DuckDuckGo. Apoi glisează la VPN și selectează Adaugă widget.";
+"vpn.addWidget.settings.title" = "Găsește și selectează **DuckDuckGo**, apoi glisează la **VPN** și selectează **Adaugă widget**.";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "DuckDuckGo VPN este conectat.";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Comenzile rapide Siri îți permit să te conectezi la VPN cu o comandă vocală rapidă, cum ar fi „Siri, pornește DuckDuckGo VPN”. Este o modalitate rapidă, fără mâini, de a-ți folosi VPN-ul.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, pornește DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, activează VPN-ul DuckDuckGo.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, protejează-mi dispozitivul cu DuckDuckGo.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Controlează VPN-ul DuckDuckGo cu Siri!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "DuckDuckGo VPN este conectat.";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Renunță";
@@ -2937,8 +2985,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Contribuie la îmbunătățirea DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Adaugă VPN la Centrul de control";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Adaugă un widget VPN la ecranul de întâmpinare";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Controlează VPN-ul cu Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Folosirea unui server DNS personalizat poate afecta viteza de navigare și îți poate expune activitatea unor terțe părți, dacă serverul nu este sigur sau de încredere.";

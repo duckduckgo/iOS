@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1736767052030,
+    "version": 1737129345760,
     "features": {
         "adAttributionReporting": {
             "state": "disabled",
@@ -648,6 +648,18 @@
                     "domain": "collectcheckout.com"
                 },
                 {
+                    "domain": "sbid.org"
+                },
+                {
+                    "domain": "wunderground.com"
+                },
+                {
+                    "domain": "lecreuset.co.uk"
+                },
+                {
+                    "domain": "sueddeutsche.de"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -795,7 +807,11 @@
                     "google.rs",
                     "google.ru",
                     "google.se",
-                    "google.sk"
+                    "google.sk",
+                    "sachsen-netze.de",
+                    "alpharunning.co.uk",
+                    "lecreuset.co.uk",
+                    "sueddeutsche.de"
                 ]
             },
             "state": "enabled",
@@ -818,7 +834,7 @@
                     }
                 }
             },
-            "hash": "5e4ab2c3e8ba8fe6229ebffab6191014"
+            "hash": "f8a882e4db7e3f0dd7ef344202509ebc"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -3733,6 +3749,14 @@
                                 "type": "hide"
                             },
                             {
+                                "selector": "div:has(> iframe[src*='prid=19044504'])",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "div:has(> iframe[src*='prid=19031729'])",
+                                "type": "hide"
+                            },
+                            {
                                 "selector": "[aria-labelledby='promo-header']",
                                 "type": "hide"
                             },
@@ -4656,6 +4680,14 @@
                         "domain": "realtor.com",
                         "rules": [
                             {
+                                "selector": ".ad-wrapper",
+                                "type": "override"
+                            },
+                            {
+                                "selector": ".lb1-ad",
+                                "type": "hide-empty"
+                            },
+                            {
                                 "selector": ".ads_container",
                                 "type": "hide"
                             }
@@ -5509,7 +5541,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "3a47b35b36ca8f08ced6db0537ab6de2"
+            "hash": "b215ce6cb79ff9412cced99bd87e6c4e"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -6544,6 +6576,11 @@
             "state": "disabled",
             "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
         },
+        "settingsPage": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
         "showOnAppLaunch": {
             "exceptions": [
                 {
@@ -6628,6 +6665,16 @@
             "exceptions": [],
             "minSupportedVersion": "7.104.0",
             "hash": "d7dca6ee484eadebb5133e3f15fd9f41"
+        },
+        "tabManager": {
+            "exceptions": [],
+            "state": "internal",
+            "features": {
+                "multiSelection": {
+                    "state": "disabled"
+                }
+            },
+            "hash": "954fac5bc6414ccd05efe8c37811a6db"
         },
         "textZoom": {
             "exceptions": [],
@@ -10204,30 +10251,6 @@
             },
             "state": "enabled",
             "hash": "3792a4970c07fe00da08f77e7dcf01ed"
-        },
-        "userAgentRotation": {
-            "settings": {
-                "agentExcludePatterns": []
-            },
-            "exceptions": [
-                {
-                    "domain": "marvel.com"
-                },
-                {
-                    "domain": "sundancecatalog.com"
-                },
-                {
-                    "domain": "noaprints.com"
-                },
-                {
-                    "domain": "flexmls.com"
-                },
-                {
-                    "domain": "instructure.com"
-                }
-            ],
-            "state": "disabled",
-            "hash": "9225b8785d6973db37abde99d81d219c"
         },
         "voiceSearch": {
             "exceptions": [],

@@ -27,7 +27,7 @@ struct AIChatControlWidget: ControlWidget {
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(kind: ControlWidgetKind.aiChat.rawValue) {
             ControlWidgetButton(action: OpenAIChatIntent()) {
-                Label("Duck.ai", image: "AI-Chat")
+                Label("Duck.ai", image: "AI-Chat-Symbol")
             }
         }
         .displayName("Duck.ai")
@@ -41,7 +41,7 @@ struct OpenAIChatIntent: AppIntent {
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult & OpensIntent {
-          await EnvironmentValues().openURL(DeepLinks.openAIChat)
-          return .result()
+        await EnvironmentValues().openURL(DeepLinks.openAIChat.appendingParameter(name: WidgetSourceType.sourceKey, value: WidgetSourceType.controlCenter.rawValue))
+        return .result()
     }
 }

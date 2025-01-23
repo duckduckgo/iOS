@@ -221,4 +221,14 @@ struct UserText {
         value: "Quickly search your saved DuckDuckGo passwords.",
         comment: "Description shown to the user when adding the Search Passwords lock screen widget")
 
+    static let lockScreenAIChatTitle = NSLocalizedString(
+        "lock.screen.widget.aichat.title",
+        value: "Duck.ai",
+        comment: "Title shown to the user when adding the Duck.ai lock screen widget")
+
+    static let lockScreenAIChatDescription = NSLocalizedString(
+        "lock.screen.widget.aichat.description",
+        value: "Quickly open Duck.ai with a tap.",
+        comment: "Description shown to the user when adding the Duck.ai lock screen widget")
+
 }

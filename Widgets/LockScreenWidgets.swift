@@ -118,6 +118,23 @@ struct PasswordsLockScreenWidget: Widget {
     }
 }
 
+/// Waiting copywriting and icon for this.
+@available(iOSApplicationExtension 16.0, *)
+struct AIChatLockScreenWidget: Widget {
+
+    let kind: String = "AIChatLockScreenWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) { _ in
+            return LockScreenWidgetView(imageNamed: "AI-Chat-Symbol")
+                .widgetURL(DeepLinks.openAIChat.appendingParameter(name: WidgetSourceType.sourceKey, value: WidgetSourceType.lockscreenComplication.rawValue))
+        }
+        .configurationDisplayName(UserText.lockScreenAIChatTitle)
+        .description(UserText.lockScreenAIChatDescription)
+        .supportedFamilies([ .accessoryCircular ])
+    }
+}
+
 struct LockScreenWidgetView: View {
 
     let imageNamed: String

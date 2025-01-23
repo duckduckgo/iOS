@@ -40,6 +40,10 @@ struct AIChatDeepLinkHandler {
                 DailyPixel.fireDailyAndCount(pixel: .openAIChatFromWidgetQuickAction)
             case WidgetSourceType.favorite.rawValue:
                 DailyPixel.fireDailyAndCount(pixel: .openAIChatFromWidgetFavorite)
+            case WidgetSourceType.lockscreenComplication.rawValue:
+                DailyPixel.fireDailyAndCount(pixel: .openAIChatFromWidgetLockScreenComplication)
+            case WidgetSourceType.controlCenter.rawValue:
+                DailyPixel.fireDailyAndCount(pixel: .openAIChatFromWidgetControlCenter)
             default:
                 break
             }

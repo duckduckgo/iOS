@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "alessandro/malicious-site-protection-ios",
-        "revision" : "bb2320b9c3cffcd9b4483aaa3c9a85ef10fb8add"
+        "branch" : "alex/malsite-subfeature-rebase",
+        "revision" : "281b39c13b56fff4d8e7ab00913b8f9f8862578b"
       }
     },
     {

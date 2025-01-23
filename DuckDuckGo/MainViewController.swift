@@ -130,7 +130,7 @@ class MainViewController: UIViewController {
     private let subscriptionCookieManager: SubscriptionCookieManaging
     let privacyProDataReporter: PrivacyProDataReporting
 
-    private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    private(set) lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var faviconLoader: FavoritesFaviconLoading = FavoritesFaviconLoader()
     private lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 
@@ -240,8 +240,10 @@ class MainViewController: UIViewController {
 
         self.previewsSource = previewsSource
 
+        let interactionStateSource = WebViewStateRestorationManager(featureFlagger: featureFlagger).isFeatureEnabled ? TabInteractionStateDiskSource() : nil
         self.tabManager = TabManager(model: tabsModel,
                                      previewsSource: previewsSource,
+                                     interactionStateSource: interactionStateSource,
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
                                      syncService: syncService,
@@ -504,7 +506,18 @@ class MainViewController: UIViewController {
         segueToDaxOnboarding()
 
     }
-    
+
+    func presentNetworkProtectionStatusSettingsModal() {
+        Task {
+            let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
+            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
+                segueToVPN()
+            } else {
+                segueToPrivacyPro()
+            }
+        }
+    }
+
     private func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillChangeFrame),
@@ -2579,7 +2592,14 @@ extension MainViewController: TabSwitcherDelegate {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }
-    
+
+    func tabSwitcherDidRequestCloseAll(tabSwitcher: TabSwitcherViewController) {
+        // TODO polish
+        self.forgetTabs()
+        self.refreshUIAfterClear()
+        tabSwitcher.dismiss()
+    }
+
 }
 
 extension MainViewController: BookmarksDelegate {

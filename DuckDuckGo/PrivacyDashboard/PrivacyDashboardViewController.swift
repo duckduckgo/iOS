@@ -26,19 +26,11 @@ import PrivacyDashboard
 import Common
 import os.log
 
-protocol PrivacyDashboardViewControllerDelegate: AnyObject {
-
-    func privacyDashboardViewController(_ privacyDashboardViewController: PrivacyDashboardViewController,
-                                        didSelectBreakageCategory breakageCategory: String)
-    
-}
-
 final class PrivacyDashboardViewController: UIViewController {
 
     @IBOutlet private(set) weak var webView: WKWebView!
 
     public var breakageAdditionalInfo: BreakageAdditionalInfo?
-    public weak var delegate: PrivacyDashboardViewControllerDelegate?
 
     private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
@@ -66,13 +58,8 @@ final class PrivacyDashboardViewController: UIViewController {
         let domainEvent: Pixel.Event
         switch event {
         case .showReportBrokenSite: domainEvent = .privacyDashboardReportBrokenSite
-
-        case .breakageCategorySelected: domainEvent = .reportBrokenSiteBreakageCategorySelected
-        case .overallCategorySelected: domainEvent = .reportBrokenSiteOverallCategorySelected
         case .reportBrokenSiteShown: domainEvent = .reportBrokenSiteShown
         case .reportBrokenSiteSent: domainEvent = .reportBrokenSiteSent
-        case .skipToggleStep: domainEvent = .reportBrokenSiteSkipToggleStep
-        case .toggleProtectionOff: domainEvent = .reportBrokenSiteToggleProtectionOff
         }
         if let parameters {
             Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters)
@@ -88,17 +75,11 @@ final class PrivacyDashboardViewController: UIViewController {
           contentBlockingManager: ContentBlockerRulesManager,
           breakageAdditionalInfo: BreakageAdditionalInfo?) {
 
-        var variant: PrivacyDashboardVariant {
-            let isExperimentEnabled = privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .brokenSiteReportExperiment)
-            return PrivacyDashboardVariant.control
-        }
-
         let toggleReportingConfiguration = ToggleReportingConfiguration(privacyConfigurationManager: privacyConfigurationManager)
         let toggleReportingFeature = ToggleReportingFeature(toggleReportingConfiguration: toggleReportingConfiguration)
         let toggleReportingManager = ToggleReportingManager(feature: toggleReportingFeature)
         privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo,
                                                                 entryPoint: entryPoint,
-                                                                variant: variant,
                                                                 toggleReportingManager: toggleReportingManager,
                                                                 eventMapping: privacyDashboardEvents)
         self.privacyConfigurationManager = privacyConfigurationManager
@@ -186,10 +167,6 @@ extension PrivacyDashboardViewController {
 // MARK: - PrivacyDashboardControllerDelegate
 
 extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
-    
-    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didSelectBreakageCategory category: String) {
-        delegate?.privacyDashboardViewController(self, didSelectBreakageCategory: category)
-    }
 
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController,
                                     didChangeProtectionSwitch protectionState: ProtectionState,
@@ -250,7 +227,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
     func privacyDashboardControllerDidRequestShowGeneralFeedback(_ privacyDashboardController: PrivacyDashboardController) {
         guard let mainViewController = presentingViewController as? MainViewController else { return }
         dismiss(animated: true) {
-            mainViewController.segueToNegativeFeedbackForm(isFromBrokenSiteReportFlow: true)
+            mainViewController.segueToNegativeFeedbackForm()
         }
     }
 

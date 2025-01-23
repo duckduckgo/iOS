@@ -296,9 +296,11 @@ extension TabSwitcherViewController {
 
     func createAddAllBookmarksBarButton() -> UIBarButtonItem {
         let image = UIImage(named: "Bookmark-New-24")
-        return UIBarButtonItem(title: nil, image: image, primaryAction: UIAction { _ in
+        let button = UIBarButtonItem(title: nil, image: image, primaryAction: UIAction { _ in
             self.bookmarkAll()
         })
+        button.accessibilityLabel = UserText.bookmarkAllTabs
+        return button
     }
 
     func createPlusBarButton() -> UIBarButtonItem {
@@ -306,6 +308,7 @@ extension TabSwitcherViewController {
         let button = UIBarButtonItem(title: nil, image: image, primaryAction: UIAction { _ in
             self.addNewTab()
         })
+        button.accessibilityLabel = UserText.keyCommandNewTab
         return button
     }
 

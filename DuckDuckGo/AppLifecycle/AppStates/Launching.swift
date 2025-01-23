@@ -22,14 +22,9 @@ import Core
 import Networking
 import Configuration
 import UIKit
-import Persistence
 import BrowserServicesKit
 import WidgetKit
 import WebKit
-import Common
-import Combine
-import PixelKit
-import PixelExperimentKit
 
 /// Represents the transient state where the app is being prepared for user interaction after being launched by the system.
 /// - Usage:
@@ -47,7 +42,6 @@ import PixelExperimentKit
 @MainActor
 struct Launching: AppState {
 
-    
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     private let accountManager = AppDependencyProvider.shared.accountManager
     private let appSettings = AppDependencyProvider.shared.appSettings
@@ -62,7 +56,6 @@ struct Launching: AppState {
     private let isTesting = ProcessInfo().arguments.contains("testing")
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
 
-    // These should ideally be let properties instead of force-unwrapped. However, due to various initialization paths, such as database completion blocks, setting them up in advance is currently not feasible. Refactoring will be done once this code is streamlined.
     private let uiService: UIService
     private let unService: UNService
     private let syncService: SyncService
@@ -84,7 +77,6 @@ struct Launching: AppState {
     private let crashService: CrashService
     private let subscriptionService: SubscriptionService
 
-    // swiftlint:disable:next cyclomatic_complexity
     init(stateContext: Initializing.StateContext) {
 
         @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
@@ -150,10 +142,7 @@ struct Launching: AppState {
             }
         }
 
-        
-
         WidgetCenter.shared.reloadAllTimelines()
-
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -206,55 +195,53 @@ struct Launching: AppState {
         let homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                           remoteMessagingClient: remoteMessagingService.remoteMessagingClient,
                                                           privacyProDataReporter: privacyProDataReporter)
-
-
         let previewsSource = TabPreviewsSource()
         let historyManager = Self.makeHistoryManager()
         let tabsModel = Self.prepareTabsModel(previewsSource: previewsSource)
 
         privacyProDataReporter.injectTabsModel(tabsModel)
 
-            let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
-            let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
-            mainViewController = MainViewController(bookmarksDatabase: persistenceService.bookmarksDatabase,
-                                                    bookmarksDatabaseCleaner: syncService.syncDataProviders.bookmarksAdapter.databaseCleaner,
-                                                    historyManager: historyManager,
-                                                    homePageConfiguration: homePageConfiguration,
-                                                    syncService: syncService.sync,
-                                                    syncDataProviders: syncService.syncDataProviders,
-                                                    appSettings: AppDependencyProvider.shared.appSettings,
-                                                    previewsSource: previewsSource,
-                                                    tabsModel: tabsModel,
-                                                    syncPausedStateManager: syncService.syncErrorHandler,
-                                                    privacyProDataReporter: privacyProDataReporter,
-                                                    variantManager: variantManager,
-                                                    contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                                    contextualOnboardingLogic: daxDialogs,
-                                                    contextualOnboardingPixelReporter: onboardingPixelReporter,
-                                                    subscriptionFeatureAvailability: subscriptionService.subscriptionFeatureAvailability,
-                                                    voiceSearchHelper: voiceSearchHelper,
-                                                    featureFlagger: featureFlagger,
-                                                    fireproofing: fireproofing,
-                                                    subscriptionCookieManager: subscriptionService.subscriptionCookieManager,
-                                                    textZoomCoordinator: Self.makeTextZoomCoordinator(),
-                                                    websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
-                                                    appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
+        let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
+        let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
+        mainViewController = MainViewController(bookmarksDatabase: persistenceService.bookmarksDatabase,
+                                                bookmarksDatabaseCleaner: syncService.syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                                historyManager: historyManager,
+                                                homePageConfiguration: homePageConfiguration,
+                                                syncService: syncService.sync,
+                                                syncDataProviders: syncService.syncDataProviders,
+                                                appSettings: AppDependencyProvider.shared.appSettings,
+                                                previewsSource: previewsSource,
+                                                tabsModel: tabsModel,
+                                                syncPausedStateManager: syncService.syncErrorHandler,
+                                                privacyProDataReporter: privacyProDataReporter,
+                                                variantManager: variantManager,
+                                                contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                                contextualOnboardingLogic: daxDialogs,
+                                                contextualOnboardingPixelReporter: onboardingPixelReporter,
+                                                subscriptionFeatureAvailability: subscriptionService.subscriptionFeatureAvailability,
+                                                voiceSearchHelper: voiceSearchHelper,
+                                                featureFlagger: featureFlagger,
+                                                fireproofing: fireproofing,
+                                                subscriptionCookieManager: subscriptionService.subscriptionCookieManager,
+                                                textZoomCoordinator: Self.makeTextZoomCoordinator(),
+                                                websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
+                                                appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
-            mainViewController.loadViewIfNeeded()
-            syncService.syncErrorHandler.alertPresenter = mainViewController
+        mainViewController.loadViewIfNeeded()
+        syncService.syncErrorHandler.alertPresenter = mainViewController
 
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window.rootViewController = mainViewController
-            window.makeKeyAndVisible()
-            application.setWindow(window)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = mainViewController
+        window.makeKeyAndVisible()
+        application.setWindow(window)
 
-            let autoClear = AutoClear(worker: mainViewController)
-            self.autoClear = autoClear
-            let applicationState = application.applicationState
-            Task { [vpnService] in
-                await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
-                await vpnService.installRedditSessionWorkaround()
-            }
+        let autoClear = AutoClear(worker: mainViewController)
+        self.autoClear = autoClear
+        let applicationState = application.applicationState
+        Task { [vpnService] in
+            await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
+            await vpnService.installRedditSessionWorkaround()
+        }
 
         unService = UNService(window: window, accountManager: accountManager)
         uiService = UIService(window: window)
@@ -264,7 +251,6 @@ struct Launching: AppState {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = unService
-
         window.windowScene?.screenshotService?.delegate = uiService
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
@@ -274,15 +260,10 @@ struct Launching: AppState {
         }
 
         NewTabPageIntroMessageSetup().perform()
-
         vpnService.beginObservingVPNStatus()
-
         subscriptionService.onLaunching()
-
         autofillService.onLaunching()
-
         crashService.handleCrashDuringCrashHandlersSetup()
-
         tipKitAppEventsHandler.appDidFinishLaunching()
     }
 

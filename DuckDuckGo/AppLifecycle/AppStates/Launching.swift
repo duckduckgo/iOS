@@ -25,7 +25,6 @@ import UIKit
 import Persistence
 import BrowserServicesKit
 import WidgetKit
-import RemoteMessaging
 import WebKit
 import Common
 import Combine
@@ -71,8 +70,8 @@ struct Launching: AppState {
     private let autofillService: AutofillService = AutofillService()
     private let persistenceService = PersistenceService()
     private let pixelKitService: PixelService
+    private let remoteMessagingService: RemoteMessagingService
 
-    private let remoteMessagingClient: RemoteMessagingClient
     private let window: UIWindow
 
     private let mainViewController: MainViewController
@@ -196,25 +195,16 @@ struct Launching: AppState {
         }
 
         syncService = SyncService(bookmarksDatabase: persistenceService.bookmarksDatabase)
-
-        remoteMessagingClient = RemoteMessagingClient(
-            bookmarksDatabase: persistenceService.bookmarksDatabase,
-            appSettings: AppDependencyProvider.shared.appSettings,
-            internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
-            configurationStore: AppDependencyProvider.shared.configurationStore,
-            database: Database.shared,
-            errorEvents: RemoteMessagingStoreErrorHandling(),
-            remoteMessagingAvailabilityProvider: PrivacyConfigurationRemoteMessagingAvailabilityProvider(
-                privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager
-            ),
-            duckPlayerStorage: DefaultDuckPlayerStorage()
-        )
-        remoteMessagingClient.registerBackgroundRefreshTaskHandler()
+        remoteMessagingService = RemoteMessagingService(persistenceService: persistenceService,
+                                                        appSettings: appSettings,
+                                                        internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+                                                        configurationStore: AppDependencyProvider.shared.configurationStore,
+                                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
 
         subscriptionService = SubscriptionService(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
 
         let homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
-                                                          remoteMessagingClient: remoteMessagingClient,
+                                                          remoteMessagingClient: remoteMessagingService.remoteMessagingClient,
                                                           privacyProDataReporter: privacyProDataReporter)
 
 
@@ -309,7 +299,7 @@ struct Launching: AppState {
             marketplaceAdPostbackManager: marketplaceAdPostbackManager,
             syncService: syncService,
             privacyProDataReporter: privacyProDataReporter,
-            remoteMessagingClient: remoteMessagingClient,
+            remoteMessagingService: remoteMessagingService,
             subscriptionService: subscriptionService,
             onboardingPixelReporter: onboardingPixelReporter,
             autofillService: autofillService,

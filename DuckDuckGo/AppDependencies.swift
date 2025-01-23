@@ -40,7 +40,7 @@ struct AppDependencies {
     let marketplaceAdPostbackManager: MarketplaceAdPostbackManaging
     let syncService: SyncService
     let privacyProDataReporter: PrivacyProDataReporting
-    let remoteMessagingClient: RemoteMessagingClient
+    let remoteMessagingService: RemoteMessagingService
 
     let subscriptionService: SubscriptionService
 

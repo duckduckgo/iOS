@@ -64,9 +64,10 @@ struct Foreground: AppState {
         // onApplicationLaunch code
         Task { @MainActor [self] in
             await beginAuthentication()
+            // TODO: onAuthentication()?
             initialiseBackgroundFetch(application)
             applyAppearanceChanges()
-            refreshRemoteMessages(remoteMessagingClient: appDependencies.remoteMessagingClient)
+            appDependencies.remoteMessagingService.onForeground() // TODO: perhaps it should be onAuthentication (if it actually depends on it)
         }
 
         // TODO: it should happen after autoclear
@@ -294,13 +295,6 @@ struct Foreground: AppState {
 
     private func applyAppearanceChanges() {
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
-    }
-
-    /// It's public in order to allow refreshing on demand via Debug menu. Otherwise it shouldn't be called from outside.
-    func refreshRemoteMessages(remoteMessagingClient: RemoteMessagingClient) {
-        Task {
-            try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingClient.store)
-        }
     }
 
     private func handleEmailSignUpDeepLink(_ url: URL) -> Bool {

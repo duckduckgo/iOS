@@ -108,10 +108,8 @@ import Core
     /// It's public in order to allow refreshing on demand via Debug menu. Otherwise it shouldn't be called from outside.
     /// we have to get rid of this anti pattern
     func refreshRemoteMessages() {
-        Task {
-            if let remoteMessagingClient = (appStateMachine.currentState as? Foreground)?.appDependencies.remoteMessagingClient {
-                try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingClient.store)
-            }
+        if let remoteMessagingService = (appStateMachine.currentState as? Foreground)?.appDependencies.remoteMessagingService {
+            remoteMessagingService.refreshRemoteMessages()
         }
     }
 

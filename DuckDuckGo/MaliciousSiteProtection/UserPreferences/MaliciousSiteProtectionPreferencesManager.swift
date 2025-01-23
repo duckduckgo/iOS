@@ -26,7 +26,7 @@ protocol MaliciousSiteProtectionPreferencesStorage: AnyObject {
 }
 
 final class MaliciousSiteProtectionPreferencesUserDefaultsStore: MaliciousSiteProtectionPreferencesStorage {
-    @UserDefaultsWrapper(key: .maliciousSiteProtectionEnabled, defaultValue: false)
+    @UserDefaultsWrapper(key: .maliciousSiteProtectionEnabled, defaultValue: true)
     var isEnabled: Bool
 }
 

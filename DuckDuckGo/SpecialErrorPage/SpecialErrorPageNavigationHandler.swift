@@ -66,12 +66,7 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
 
     @MainActor
     func handleDecidePolicy(for navigationAction: WKNavigationAction, webView: WKWebView) {
-        // A new main navigation is starting reset the error
-        if navigationAction.isTargetingMainFrame() {
-            errorData = nil
-            failedURL = nil
-            isSpecialErrorPageVisible = false
-        }
+        guard navigationAction.isTargetingMainFrame() else { return }
         maliciousSiteProtectionNavigationHandler.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
     }
 
@@ -102,6 +97,7 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
             return true
         case .navigationNotHandled:
             isSpecialErrorPageRequest = false
+            isSpecialErrorPageVisible = false
             return false
         }
     }

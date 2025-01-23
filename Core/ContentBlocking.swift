@@ -42,11 +42,9 @@ public final class ContentBlocking {
         }
     }
 
-    enum Constants {
-        enum ParameterName {
-            static let experimentName = "experimentName"
-            static let etag = "etag"
-        }
+    enum PixelParameterName {
+        static let experimentName = "experimentName"
+        static let etag = "etag"
     }
 
     private init(privacyConfigurationManager: PrivacyConfigurationManaging? = nil) {
@@ -93,8 +91,8 @@ public final class ContentBlocking {
         case .trackerDataParseFailed:
             domainEvent = .trackerDataParseFailed
             if let experimentName = TDSOverrideExperimentMetrics.activeTDSExperimentNameWithCohort {
-                finalParameters[Constants.ParameterName.experimentName] = experimentName
-                finalParameters[Constants.ParameterName.etag] = UserDefaultsETagStorage().loadEtag(for: .trackerDataSet)
+                finalParameters[PixelParameterName.experimentName] = experimentName
+                finalParameters[PixelParameterName.etag] = UserDefaultsETagStorage().loadEtag(for: .trackerDataSet)
             }
 
         case .trackerDataReloadFailed:
@@ -145,8 +143,8 @@ public final class ContentBlocking {
             domainEvent = .contentBlockingCompilationTaskPerformance(iterationCount: retryCount,
                                                                      timeBucketAggregation: Pixel.Event.CompileTimeBucketAggregation(number: timeBucketAggregation))
             if let experimentName = TDSOverrideExperimentMetrics.activeTDSExperimentNameWithCohort {
-                finalParameters[Constants.ParameterName.experimentName] = experimentName
-                finalParameters[Constants.ParameterName.etag] = UserDefaultsETagStorage().loadEtag(for: .trackerDataSet)
+                finalParameters[PixelParameterName.experimentName] = experimentName
+                finalParameters[PixelParameterName.etag] = UserDefaultsETagStorage().loadEtag(for: .trackerDataSet)
             }
         }
 

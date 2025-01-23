@@ -230,7 +230,7 @@ public struct UserText {
     public static let deselectAllTabs = NotLocalizedString("tab.select.none", value: "Deselect All", comment: "Deselect all tabs")
 
     public static func closeAllTabs(withCount count: Int) -> String {
-        let message = NotLocalizedString("tab.close.with.count", value: "Close All %@ Tabs", comment: "Close all tabs showing count")
+        let message = NotLocalizedString("tab.close.all.with.count", value: "Close All %@ Tabs", comment: "Close all tabs showing count")
         return message.format(arguments: "\(count)")
     }
 
@@ -260,6 +260,16 @@ public struct UserText {
     public static let tabSwitcherSelectTabs = NotLocalizedString("tab.switcher.select-tabs", value: "Select Tabs", comment: "Select tabs  menu item")
 
     public static let tabSwitcherCloseOtherTabs = NotLocalizedString("tab.switcher.close-others", value: "Close Other Tabs", comment: "Close other tabs menu item")
+
+    public static func shareLink(withCount count: Int) -> String {
+        let message = NotLocalizedString("tabs.share.with.count", value: "Share %@ Tabs", comment: "Share links with a count")
+        return message.format(arguments: "\(count)")
+    }
+
+    public static func bookmarkTabs(withCount count: Int) -> String {
+        let message = NotLocalizedString("bookmark.tabs.with.count", value: "Bookmark %@ Tabs", comment: "Bookmark tabs with a count")
+        return message.format(arguments: "\(count)")
+    }
 
     public static let favorite = NSLocalizedString("favorite", value: "Favorite", comment: "")
     

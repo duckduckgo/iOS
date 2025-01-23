@@ -22,6 +22,8 @@ import BrowserServicesKit
 import Core
 import Bookmarks
 
+// MARK: Source agnostic action implementations
+// TODO fire pixels from the source specific action implementations
 extension TabSwitcherViewController {
 
     var tabCount: Int {
@@ -164,6 +166,7 @@ extension TabSwitcherViewController {
 
 }
 
+// MARK: UI updating
 extension TabSwitcherViewController {
     
     func updateUIForSelectionMode() {
@@ -287,6 +290,98 @@ extension TabSwitcherViewController {
 
     }
 
+    func createMultiSelectionMenu() -> UIMenu {
+        var children = [UIMenuElement]()
+
+        if self.interfaceMode.isLarge {
+            if selectedTabs.count == tabsModel.count {
+                children.append(action(UserText.deselectAllTabs, systemImage: "circle", self.selectModeDeselectAllTabs))
+            } else {
+                children.append(action(UserText.selectAllTabs, systemImage: "checkmark.circle", self.selectModeSelectAllTabs))
+            }
+        }
+
+        if selectedTabs.count > 0 {
+            // share
+            // bookmark
+            children.append(UIMenu(title: "", options: .displayInline, children: [
+                action(UserText.shareLink(withCount: selectedTabs.count), "Share-Apple-16", self.selectModeShareLink),
+                action(UserText.bookmarkTabs(withCount: selectedTabs.count), "Bookmark-Add-16", self.selectModeBookmarkSelected),
+            ]))
+        }
+
+        children.append(UIMenu(title: "", options: .displayInline, children: [
+            action(UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.selectModeBookmarkAll),
+        ]))
+
+        if selectedTabs.count > 0 {
+            // close
+            // close other
+            children.append(UIMenu(title: "", options: .displayInline, children: [
+                action(UserText.closeTabs(withCount: selectedTabs.count), "Close-16", destructive: true, self.selectModeCloseSelectedTabs),
+                action(UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.selectModeCloseOtherTabs),
+            ]))
+        }
+
+        return UIMenu(title: "", children: children)
+    }
+
+    func createEditMenu() -> UIMenu {
+        return UIMenu(children: [
+            action(UserText.tabSwitcherSelectTabs, systemImage: "checkmark.cicle", self.editMenuSelectAll),
+            action(UserText.closeAllTabs(withCount: tabsModel.count), "Tab-Close-16", destructive: true, self.editMenuCloseAllTabs),
+        ])
+    }
+
+    func trimMenuTitleIfNeeded(_ s: String, _ maxLength: Int) -> String {
+        if s.count > maxLength {
+            return s.prefix(maxLength) + "..."
+        }
+        return s
+    }
+
+    func createLongPressMenuItems(forIndex index: Int) -> [UIMenuElement] {
+        guard let tab = tabsModel.safeGetTabAt(index) else { return [] }
+        let bookmarksModel = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
+
+        let group0 = [
+            // Share Link
+            self.action(index, UserText.tabSwitcherShareLink, "Share-Apple-16", self.longPressMenuShareLink),
+
+            // Bookmark This Page (if not already bookmarked)
+            tab.link?.url != nil && bookmarksModel.bookmark(for: tab.link!.url) == nil ? self.action(index, UserText.tabSwitcherBookmarkPage, "Bookmark-Add-16", self.longPressMenuBookmarkThisPage) : nil,
+        ]
+
+        let group1 = [
+            // Bookmark All Tabs -> shortcut to same functionality at top level
+            self.action(index, UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.longPressMenuBookmarkAllTabs),
+
+            // Select Tabs -> switch to selection mode with this tab selected (if not already selected)
+            selectedTabs.contains(index) ? nil : self.action(index, UserText.tabSwitcherSelectTabs, "Check-Circle-16", self.longPressMenuSelectTabs),
+        ]
+
+        let group2 = [
+            // Close Tab
+            self.action(index, UserText.keyCommandCloseTab, "Close-16", destructive: true, self.longPressMenuCloseTab),
+            // Close Other Tabs
+            self.action(index, UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.longPressMenuCloseOtherTabs),
+        ]
+
+        return group0.compactMap { $0 } +
+        [
+            // -- divider --
+            UIMenu(title: "", options: .displayInline, children: group1.compactMap { $0 }),
+
+            // -- divider --
+            UIMenu(title: "", options: .displayInline, children: group2),
+        ]
+    }
+
+}
+
+// MARK: Button factories
+extension TabSwitcherViewController {
+
     func createTabStyleSwitcherBarButton() -> UIBarButtonItem {
         let image = UIImage(named: tabsStyle.rawValue)
         return UIBarButtonItem(title: nil, image: image, primaryAction: UIAction { _ in
@@ -365,24 +460,68 @@ extension TabSwitcherViewController {
         }
     }
 
-    func createMultiSelectionMenu() -> UIMenu {
-        return UIMenu(title: "Menu", children: [
-            UIAction(title: "Item") { _ in
-                print("Action!")
-            }
-        ])
+}
+
+// MARK: Edit menu actions
+extension TabSwitcherViewController {
+
+    func editMenuSelectAll() {
+        transitionToMultiSelect()
     }
 
-    func createEditMenu() -> UIMenu {
-        return UIMenu(children: [
-            UIAction(title: "Select Tabs", image: UIImage(systemName: "checkmark.circle")) { _ in
-                self.transitionToMultiSelect()
-            },
+    func editMenuCloseAllTabs() {
+        closeAllTabs()
+    }
 
-            UIAction(title: UserText.closeAllTabs(withCount: tabsModel.count), image: UIImage(named: "Tab-Close-16"), attributes: .destructive) { _ in
-                self.closeAllTabs()
-            },
-        ])
+}
+
+// MARK: Select mode menu actions
+extension TabSwitcherViewController {
+
+    func selectModeCloseSelectedTabs() { }
+    func selectModeCloseOtherTabs() { }
+    func selectModeBookmarkAll() { }
+    func selectModeBookmarkSelected() { }
+    func selectModeShareLink() { }
+    func selectModeDeselectAllTabs() { }
+    func selectModeSelectAllTabs() { }
+
+}
+
+// MARK: Long press menu actions
+extension TabSwitcherViewController {
+
+    func longPressMenuShareLink(index: Int) { }
+    func longPressMenuBookmarkThisPage(index: Int) { }
+    func longPressMenuBookmarkAllTabs(index: Int) { }
+    func longPressMenuSelectTabs(index: Int) { }
+    func longPressMenuCloseTab(index: Int) { }
+    func longPressMenuCloseOtherTabs(index: Int) { }
+
+}
+
+// MARK: UIAction factories
+extension TabSwitcherViewController {
+
+    func action(_ title: String, _ imageNamed: String, destructive: Bool = false, _ handler: @escaping () -> Void) -> UIAction {
+        let attributes: UIAction.Attributes = destructive ? .destructive : []
+        return UIAction(title: title, image: UIImage(named: imageNamed), attributes: attributes) { _ in
+            handler()
+        }
+    }
+
+    func action(_ title: String, systemImage: String, destructive: Bool = false, _ handler: @escaping () -> Void) -> UIAction {
+        let attributes: UIAction.Attributes = destructive ? .destructive : []
+        return UIAction(title: title, image: UIImage(systemName: systemImage), attributes: attributes) { _ in
+            handler()
+        }
+    }
+
+    func action<T>(_ argument: T, _ title: String, _ imageName: String, destructive: Bool = false, _ action: @escaping (T) -> Void) -> UIAction {
+        let attributes: UIAction.Attributes = destructive ? .destructive : []
+        return UIAction(title: title, image: UIImage(named: imageName), attributes: attributes) { _ in
+            action(argument)
+        }
     }
 
 }

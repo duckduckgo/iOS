@@ -49,7 +49,15 @@ class TabSwitcherViewController: UIViewController {
         }
 
         var isSingleSelection: Bool {
-            return self == .singleSelectLarge || self == .singleSelectNormal
+            return [InterfaceMode.singleSelectNormal, .singleSelectLarge].contains(self)
+        }
+
+        var isLarge: Bool {
+            return [InterfaceMode.singleSelectLarge, .multiSelectAvailableLarge, .multiSelectEnabledLarge].contains(self)
+        }
+
+        var isNormal: Bool {
+            return !isLarge
         }
 
         case singleSelectNormal
@@ -403,55 +411,10 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
         let title = trimMenuTitleIfNeeded(tab.link?.displayTitle ?? "", 50)
 
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-
-            let menuItems = [
-                // Share Link
-                self.menuAction(indexPath.row, UserText.tabSwitcherShareLink, "Share-Apple-16", self.tabMenuShareLink),
-
-                // Bookmark This Page
-                self.menuAction(indexPath.row, UserText.tabSwitcherBookmarkPage, "Bookmark-Add-16", self.tabMenuBookmarkThisPage),
-
-                // -- divider --
-                UIMenu(title: "", options: .displayInline, children: [
-                    // Bookmark All Tabs -> shortcut to same functionality at top level
-                    self.menuAction(indexPath.row, UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.tabMenuBookmarkAllTabs),
-                    // Select Tabs -> switch to selection mode with this tab selected
-                    self.menuAction(indexPath.row, UserText.tabSwitcherSelectTabs, "Check-Circle-16", self.tabMenuSelectTabs),
-                ]),
-
-                // -- divider --
-                UIMenu(title: "", options: .displayInline, children: [
-                    // Close Tab
-                    self.menuAction(indexPath.row, UserText.keyCommandCloseTab, "Close-16", destructive: true, self.tabMenuCloseTab),
-                    // Close Other Tabs
-                    self.menuAction(indexPath.row, UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.tabMenuCloseOtherTabs),
-                ])
-            ]
-
+            let menuItems = self.createLongPressMenuItems(forIndex: indexPath.row)
             return UIMenu(title: title, children: menuItems.compactMap { $0 })
         }
     }
-
-    func trimMenuTitleIfNeeded(_ s: String, _ maxLength: Int) -> String {
-        if s.count > maxLength {
-            return s.prefix(maxLength) + "..."
-        }
-        return s
-    }
-
-    func menuAction(_ index: Int, _ title: String, _ imageName: String, destructive: Bool = false, _ action: @escaping (Int) -> Void) -> UIAction {
-        let attributes: UIAction.Attributes = destructive ? .destructive : []
-        return UIAction(title: title, image: UIImage(named: imageName), attributes: attributes) { _ in
-            action(index)
-        }
-    }
-
-    func tabMenuShareLink(index: Int) { }
-    func tabMenuBookmarkThisPage(index: Int) { }
-    func tabMenuBookmarkAllTabs(index: Int) { }
-    func tabMenuSelectTabs(index: Int) { }
-    func tabMenuCloseTab(index: Int) { }
-    func tabMenuCloseOtherTabs(index: Int) { }
 
 }
 

@@ -329,7 +329,9 @@ struct Launching: AppState {
 
             let url = URL.pixelUrl(forPixelNamed: pixelName)
             let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
-            guard let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders) else {
+            guard let request = APIRequestV2(url: url, method: .get,
+                                             queryItems: parameters.map({ (key, value) in QueryItem(key: key, value: value) }),
+                                             headers: apiHeaders) else {
                 onComplete(false, nil)
                 return
             }

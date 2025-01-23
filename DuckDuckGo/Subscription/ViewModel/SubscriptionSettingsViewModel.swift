@@ -142,7 +142,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
 
     func fetchAndUpdateAccountEmail(cachePolicy: SubscriptionCachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
         Logger.subscription.log("Fetch and update account email")
-        var tokensPolicy: TokensCachePolicy = .local
+        var tokensPolicy: AuthTokensCachePolicy = .local
         switch cachePolicy {
         case .reloadIgnoringLocalCacheData:
             tokensPolicy = .localForceRefresh

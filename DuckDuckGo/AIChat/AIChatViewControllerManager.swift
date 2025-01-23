@@ -34,7 +34,8 @@ final class AIChatViewControllerManager {
     private var payloadHandler = AIChatPayloadHandler()
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let internalUserDecider: InternalUserDecider
-    
+    private weak var userContentController: UserContentController?
+
     init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider) {
         self.privacyConfigurationManager = privacyConfigurationManager
@@ -51,6 +52,7 @@ final class AIChatViewControllerManager {
         userContentController.delegate = self
 
         webviewConfiguration.userContentController = userContentController
+        self.userContentController = userContentController
         let aiChatViewController = AIChatViewController(settings: settings,
                                                         webViewConfiguration: webviewConfiguration)
         aiChatViewController.delegate = self
@@ -58,6 +60,8 @@ final class AIChatViewControllerManager {
         let roundedPageSheet = RoundedPageSheetContainerViewController(
             contentViewController: aiChatViewController,
             allowedOrientation: .portrait)
+
+        roundedPageSheet.delegate = self
 
         if let query = query {
             aiChatViewController.loadQuery(query)
@@ -69,6 +73,13 @@ final class AIChatViewControllerManager {
             aiChatViewController.reload()
         }
         viewController.present(roundedPageSheet, animated: true, completion: nil)
+    }
+
+    private func cleanUpUserContent() {
+        Task {
+            await userContentController?.removeAllContentRuleLists()
+            await userContentController?.cleanUpBeforeClosing()
+        }
     }
 }
 
@@ -94,6 +105,12 @@ extension AIChatViewControllerManager: AIChatViewControllerDelegate {
 
     func aiChatViewControllerDidFinish(_ viewController: AIChatViewController) {
         viewController.dismiss(animated: true)
-        
+    }
+}
+
+// MARK: - RoundedPageSheetContainerViewControllerDelegate
+extension AIChatViewControllerManager: RoundedPageSheetContainerViewControllerDelegate {
+    func roundedPageSheetContainerViewControllerDidDisappear(_ controller: RoundedPageSheetContainerViewController) {
+        cleanUpUserContent()
     }
 }

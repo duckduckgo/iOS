@@ -40,12 +40,12 @@ final class AIChatViewControllerManager {
         self.privacyConfigurationManager = privacyConfigurationManager
         self.internalUserDecider = internalUserDecider
     }
-    
+
     @MainActor
-    lazy var aiChatViewController: AIChatViewController = {
+    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil, on viewController: UIViewController) {
         let settings = AIChatSettings(privacyConfigurationManager: privacyConfigurationManager,
                                       internalUserDecider: internalUserDecider)
-        
+
         let webviewConfiguration = WKWebViewConfiguration.persistent()
         let userContentController = UserContentController()
         userContentController.delegate = self
@@ -54,11 +54,7 @@ final class AIChatViewControllerManager {
         let aiChatViewController = AIChatViewController(settings: settings,
                                                         webViewConfiguration: webviewConfiguration)
         aiChatViewController.delegate = self
-        return aiChatViewController
-    }()
 
-    @MainActor
-    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil, on viewController: UIViewController) {
         let roundedPageSheet = RoundedPageSheetContainerViewController(
             contentViewController: aiChatViewController,
             allowedOrientation: .portrait)

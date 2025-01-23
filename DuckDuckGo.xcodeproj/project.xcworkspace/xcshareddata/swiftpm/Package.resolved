@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sabrina/tds-experiment-metrics",
-        "revision" : "4573efb9bbc6650fcb33eac6ccf4a716bceef1c7"
+        "revision" : "796b12bd39904f377abc9dc487c80b24a6945604"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "0ac30560ec969a321caea321f95537120416c323",
-        "version" : "7.7.0"
+        "revision" : "5d2ab9f5da3c3fc5ec330f23ec35d558dcc8e35b",
+        "version" : "7.8.0"
       }
     },
     {

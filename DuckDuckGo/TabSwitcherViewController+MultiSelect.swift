@@ -125,10 +125,10 @@ extension TabSwitcherViewController {
         present(alert, animated: true)
     }
 
-    func closeSelectedTabs() {
+    func closeTabs(withIndexes indices: [Int]) {
 
         let alert = UIAlertController(
-            title: UserText.alertTitleCloseSelectedTabs(withCount: selectedTabs.count),
+            title: UserText.alertTitleCloseSelectedTabs(withCount: indices.count),
             message: UserText.alertMessageCloseTheseTabs,
             preferredStyle: .alert)
 
@@ -138,7 +138,7 @@ extension TabSwitcherViewController {
         alert.addAction(UIAlertAction(title: UserText.closeTabs,
                                       style: .destructive) { _ in
 
-            self.selectedTabs.compactMap {
+            indices.compactMap {
                 self.tabsModel.safeGetTabAt($0)
             }.forEach {
                 self.delegate.tabSwitcher(self, didRemoveTab: $0)
@@ -162,6 +162,29 @@ extension TabSwitcherViewController {
         selectedTabs = Set<Int>(tabsModel.tabs.indices)
         collectionView.reloadData()
         updateUIForSelectionMode()
+    }
+
+    func shareTabs(_ tabs: [Tab]) {
+        let sharingItems = tabs.compactMap { $0.link?.url }
+        let controller = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+
+        // Generically show the share sheet in the middle of the screen when on iPad
+        if let popoverController = controller.popoverPresentationController {
+            popoverController.sourceView = view
+            popoverController.sourceRect = CGRect(
+                x: view.bounds.midX,
+                y: view.bounds.midY,
+                width: 0,
+                height: 0
+            )
+            popoverController.permittedArrowDirections = []
+        }
+        present(controller, animated: true)
+    }
+
+    func closeOtherTabs(retainingIndexes indices: [Int]) {
+        let otherIndices = Set<Int>(tabsModel.tabs.indices).subtracting(indices)
+        closeTabs(withIndexes: [Int](otherIndices))
     }
 
 }
@@ -363,8 +386,9 @@ extension TabSwitcherViewController {
         let group2 = [
             // Close Tab
             self.action(index, UserText.keyCommandCloseTab, "Close-16", destructive: true, self.longPressMenuCloseTab),
+
             // Close Other Tabs
-            self.action(index, UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.longPressMenuCloseOtherTabs),
+            tabsModel.count > 1 ? self.action(index, UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.longPressMenuCloseOtherTabs) : nil,
         ]
 
         return group0.compactMap { $0 } +
@@ -373,7 +397,7 @@ extension TabSwitcherViewController {
             UIMenu(title: "", options: .displayInline, children: group1.compactMap { $0 }),
 
             // -- divider --
-            UIMenu(title: "", options: .displayInline, children: group2),
+            UIMenu(title: "", options: .displayInline, children: group2.compactMap { $0 }),
         ]
     }
 
@@ -455,7 +479,7 @@ extension TabSwitcherViewController {
             return button
         } else {
             return UIBarButtonItem(title: UserText.closeTabs(withCount: selectedTabs.count), primaryAction: UIAction { _ in
-                self.closeSelectedTabs()
+                self.closeTabs(withIndexes: [Int](self.selectedTabs))
             })
         }
     }
@@ -491,12 +515,34 @@ extension TabSwitcherViewController {
 // MARK: Long press menu actions
 extension TabSwitcherViewController {
 
-    func longPressMenuShareLink(index: Int) { }
+    func longPressMenuShareLink(index: Int) {
+        guard let tab = tabsModel.safeGetTabAt(index) else { return }
+        shareTabs([tab])
+    }
+
     func longPressMenuBookmarkThisPage(index: Int) { }
-    func longPressMenuBookmarkAllTabs(index: Int) { }
-    func longPressMenuSelectTabs(index: Int) { }
-    func longPressMenuCloseTab(index: Int) { }
-    func longPressMenuCloseOtherTabs(index: Int) { }
+
+    func longPressMenuBookmarkAllTabs(index: Int) {
+        selectAllTabs()
+    }
+
+    func longPressMenuSelectTabs(index: Int) {
+        if !isEditing {
+            transitionToMultiSelect()
+        }
+
+        selectedTabs.insert(index)
+        collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+    }
+
+    func longPressMenuCloseTab(index: Int) {
+        guard let tab = tabsModel.safeGetTabAt(index) else { return }
+        deleteTab(tab: tab)
+    }
+
+    func longPressMenuCloseOtherTabs(index: Int) {
+        closeOtherTabs(retainingIndexes: [index])
+    }
 
 }
 

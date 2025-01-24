@@ -30,6 +30,28 @@ extension TabSwitcherViewController {
         tabsModel.count
     }
 
+    func bookmarkTabs(withIndexes indices: [Int]) {
+        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
+                                      message: UserText.alertBookmarkAllMessage,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        alert.addAction(title: UserText.actionBookmark, style: .default) {
+            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
+            model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+            let result = self.bookmarkTabs(withIndices: indices, viewModel: model)
+            self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
+        }
+
+        present(alert, animated: true, completion: nil)
+    }
+
+    func bookmarkTabAt(_ index: Int) {
+        guard let tab = tabsModel.safeGetTabAt(index), let link = tab.link else { return }
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
+        viewModel.createBookmark(title: link.displayTitle, url: link.url)
+        ActionMessageView.present(message: UserText.webSaveBookmarkDone)
+    }
+
     func onTabStyleChange() {
         guard isProcessingUpdates == false else { return }
 
@@ -416,7 +438,7 @@ extension TabSwitcherViewController {
     func createAddAllBookmarksBarButton() -> UIBarButtonItem {
         let image = UIImage(named: "Bookmark-New-24")
         let button = UIBarButtonItem(title: nil, image: image, primaryAction: UIAction { _ in
-            self.bookmarkAll()
+            self.bookmarkTabs(withIndexes: self.tabsModel.tabs.indices.map { $0 })
         })
         button.accessibilityLabel = UserText.bookmarkAllTabs
         return button
@@ -502,13 +524,33 @@ extension TabSwitcherViewController {
 // MARK: Select mode menu actions
 extension TabSwitcherViewController {
 
-    func selectModeCloseSelectedTabs() { }
-    func selectModeCloseOtherTabs() { }
-    func selectModeBookmarkAll() { }
-    func selectModeBookmarkSelected() { }
-    func selectModeShareLink() { }
-    func selectModeDeselectAllTabs() { }
-    func selectModeSelectAllTabs() { }
+    func selectModeCloseSelectedTabs() {
+        closeTabs(withIndexes: [Int](selectedTabs))
+    }
+
+    func selectModeCloseOtherTabs() {
+        closeOtherTabs(retainingIndexes: [Int](selectedTabs))
+    }
+
+    func selectModeBookmarkAll() {
+        bookmarkTabs(withIndexes: tabsModel.tabs.indices.map { $0 })
+    }
+
+    func selectModeBookmarkSelected() {
+        bookmarkTabs(withIndexes: [Int](selectedTabs))
+    }
+
+    func selectModeShareLink() {
+        shareTabs(selectedTabs.compactMap { tabsModel.safeGetTabAt($0) })
+    }
+
+    func selectModeDeselectAllTabs() {
+        deselectAllTabs()
+    }
+
+    func selectModeSelectAllTabs() {
+        selectAllTabs()
+    }
 
 }
 
@@ -520,7 +562,9 @@ extension TabSwitcherViewController {
         shareTabs([tab])
     }
 
-    func longPressMenuBookmarkThisPage(index: Int) { }
+    func longPressMenuBookmarkThisPage(index: Int) {
+        bookmarkTabAt(index)
+    }
 
     func longPressMenuBookmarkAllTabs(index: Int) {
         selectAllTabs()
@@ -568,26 +612,6 @@ extension TabSwitcherViewController {
         return UIAction(title: title, image: UIImage(named: imageName), attributes: attributes) { _ in
             action(argument)
         }
-    }
-
-}
-
-// To be removed when fully rolled out
-extension TabSwitcherViewController {
-
-    func bookmarkAll() {
-        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
-                                      message: UserText.alertBookmarkAllMessage,
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        alert.addAction(title: UserText.actionBookmark, style: .default) {
-            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
-            model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-            let result = self.bookmarkAll(viewModel: model)
-            self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
-        }
-
-        present(alert, animated: true, completion: nil)
     }
 
 }

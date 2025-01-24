@@ -229,10 +229,13 @@ class TabSwitcherViewController: UIViewController {
         }
     }
 
-    func bookmarkAll(viewModel: MenuBookmarksInteracting) -> BookmarkAllResult {
+    func bookmarkTabs(withIndices indexes: [Int], viewModel: MenuBookmarksInteracting) -> BookmarkAllResult {
         let tabs = self.tabsModel.tabs
         var newCount = 0
-        tabs.forEach { tab in
+
+        indexes.compactMap {
+            tabsModel.safeGetTabAt($0)
+        }.forEach { tab in
             guard let link = tab.link else { return }
             if viewModel.bookmark(for: link.url) == nil {
                 viewModel.createBookmark(title: link.displayTitle, url: link.url)

@@ -26,7 +26,7 @@ extension URL {
         static let chatQueryValue = "chat"
 
         static let bangQueryName = "q"
-        static let bangQueryPrefix = "!ai"
+        static let supportedBangs: Set<String> = ["ai", "aichat", "chat", "duckai"]
     }
 
     func addingOrReplacingQueryItem(_ queryItem: URLQueryItem) -> URL {
@@ -65,7 +65,19 @@ extension URL {
             return false
         }
 
-        return queryItems.contains { $0.name == Constants.bangQueryName && $0.value?.hasPrefix(Constants.bangQueryPrefix) == true }
+        return queryItems.contains { $0.name == Constants.bangQueryName && hasSupportedBangPrefix($0.value) }
+    }
+
+    private func hasSupportedBangPrefix(_ input: String?) -> Bool {
+        guard let input = input else {
+            return false
+        }
+
+        /// Bangs can be used either at the beginning or at the end of a query.
+        let bangValues = Constants.supportedBangs.flatMap { bang in
+            return ["!\(bang)", "\(bang)!"]
+        }
+        return bangValues.contains { input.hasPrefix($0) }
     }
 
 }

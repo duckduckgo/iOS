@@ -941,14 +941,6 @@ extension Pixel {
 
         // MARK: Browsing
         case stopPageLoad
-        
-        // MARK: - DuckPlayer Overlay Navigation
-        case duckPlayerYouTubeOverlayNavigationBack
-        case duckPlayerYouTubeOverlayNavigationRefresh
-        case duckPlayerYouTubeNavigationWithinYouTube
-        case duckPlayerYouTubeOverlayNavigationOutsideYoutube
-        case duckPlayerYouTubeOverlayNavigationClosed
-        case duckPlayerYouTubeNavigationIdle30
 
         // MARK: Launch time
         case appDidFinishLaunchingTime(time: BucketAggregation)
@@ -1915,14 +1907,6 @@ extension Pixel.Event {
 
         // MARK: Browsing
         case .stopPageLoad: return "m_stop-page-load"
-                        
-        // MARK: - DuckPlayer Overlay Navigation
-        case .duckPlayerYouTubeOverlayNavigationBack: return "duckplayer.youtube.overlay.navigation.back"
-        case .duckPlayerYouTubeOverlayNavigationRefresh: return "duckplayer.youtube.overlay.navigation.refresh"
-        case .duckPlayerYouTubeNavigationWithinYouTube: return "duckplayer.youtube.overlay.navigation.within-youtube"
-        case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
-        case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
-        case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
 
         // MARK: Launch time
         case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"

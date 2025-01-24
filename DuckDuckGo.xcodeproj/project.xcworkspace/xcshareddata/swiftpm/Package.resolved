@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch": "alex/fix-malsite-timeout-pixel-name",
-        "revision" : "b1edc832c1212792529890c46addfa6db0195828"
+        "revision" : "b33273c73b417cb812bd02385bee7ecdd527eb91",
+        "version": "229.1.1"
       }
     },
     {

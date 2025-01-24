@@ -22,7 +22,7 @@ import Core
 
 struct AIChatDeepLinkHandler {
 
-    /// Utilitiy function to handle AI Chat deeplink since it needs to be called from 2 different entry points
+    /// Utility function to handle AI Chat deeplink since it needs to be called from 2 different entry points
     func handleDeepLink(_ url: URL, on mainViewController: MainViewController) {
         firePixel(url)
         mainViewController.openAIChat()

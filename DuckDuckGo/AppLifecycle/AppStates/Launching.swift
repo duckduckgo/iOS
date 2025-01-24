@@ -53,7 +53,6 @@ struct Launching: AppState {
     private let featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger
 
     private let privacyProDataReporter: PrivacyProDataReporting
-    private let isTesting = ProcessInfo().arguments.contains("testing")
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
 
     private let uiService: UIService

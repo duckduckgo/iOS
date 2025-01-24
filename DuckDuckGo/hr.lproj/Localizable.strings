@@ -131,13 +131,16 @@
 "addWidget.description" = "Čeka vas brzi pristup privatnom pretraživanju i omiljenim mrežnim mjestima.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Duže zadržite prst na početnom zaslonu za ulaz u način tresenja.";
+"addWidget.settings.firstParagraph" = "Dugo pritisni bilo gdje na početnom zaslonu dok se aplikacije ne počnu tresti.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Dodirni gumb **Uredi**, a zatim odaberi **Dodaj widget**.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Dodirnite gumb plus %@.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Pronađite i odaberite DuckDuckGo. Zatim odaberite widget.";
+"addWidget.settings.title" = "Pronađi i odaberi DuckDuckGo. Zatim odaberi widget.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "Jednim dodirom do vaših omiljenih stranica.";
@@ -869,14 +872,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "lokalno vrijeme";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "recepti za kolačiće s komadićima čokolade";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Pronađi **DuckDuckGo** na popisu, zatim dodirni **VPN kontrolu** za njeno dodavanje.";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "recepti za večeru";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Prijeđi prstom prema dolje iz gornjeg desnog kuta zaslona.";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Iznenadi me!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Dodirni gumb **+** u gornjem lijevom kutu **Kontrolnog centra**.";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Dodirni **Dodaj kontrolu** na dnu zaslona.";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Uvijek šalji izvješća o padu programa";
@@ -1529,6 +1535,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Trebaš omogućiti VPN iz aplikacije DuckDuckGo.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1870,6 +1879,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN postavke";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Prečaci";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Prilagodi svoje favorite i najdraže značajke. Preuredi stvari ili ih sakrij kako bi sve bilo jasno.";
@@ -2223,6 +2235,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Dodajte widget na početni zaslon";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Dodaj DuckDuckGo VPN widget na svoj početni zaslon";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2878,7 +2893,28 @@
 "vpn.access-revoked.alert.title" = "VPN je isključen zbog isteka pretplate";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Pronađi i odaberi DuckDuckGo. Zatim prijeđi prstom do VPN-a i odaberi Dodaj widget.";
+"vpn.addWidget.settings.title" = "Pronađi i odaberi **DuckDuckGo**, zatim prijeđi prstom do **VPN-a** i odaberi **Dodaj widget**.";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "DuckDuckGo VPN je povezan";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Siri prečaci omogućuju ti povezivanje s VPN-om brzom glasovnom naredbom, poput „Siri, uključi DuckDuckGo VPN“. To je brz način korištenja VPN-a bez upotrebe ruku.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, pokreni DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, omogući DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, zaštiti moj uređaj pomoću DuckDuckGoa.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Kontroliraj DuckDuckGo VPN putem Siri!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "DuckDuckGo VPN je povezan";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Otkaži";
@@ -2949,8 +2985,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Pomozi poboljšati DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Dodaj VPN u kontrolni centar";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Dodaj VPN widget na početni zaslon";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Upravljaj VPN-om pomoću Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Korištenje prilagođenog DNS poslužitelja može utjecati na brzinu pregledavanja i izložiti tvoju aktivnost trećim stranama ako poslužitelj nije zaštićen ili pouzdan.";

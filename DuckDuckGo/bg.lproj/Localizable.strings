@@ -131,13 +131,16 @@
 "addWidget.description" = "Получете бърз достъп до поверително търсене и до любимите си сайтове.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Натиснете продължително началния екран, за да влезете в режим за пренареждане.";
+"addWidget.settings.firstParagraph" = "Натиснете продължително където и да е на началния екран, докато влезете в режим на пренареждане на приложенията";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Натиснете бутона **Редактиране** и след това изберете **Добавяне на приспособления**";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Натиснете бутона плюс %@.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Открийте и изберете DuckDuckGo. След това изберете приспособление.";
+"addWidget.settings.title" = "Открийте и изберете **DuckDuckGo**. След това изберете приспособление.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "На едно докосване от любимите уебсайтове.";
@@ -869,14 +872,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "местното време";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "рецепти за бисквити с парченца шоколад";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Открийте **DuckDuckGo** в списъка и след това натиснете **Управление на VPN**, за да го добавите";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "рецепти за вечеря";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Плъзнете надолу от горния десен ъгъл на екрана";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Изненадайте ме!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Натиснете бутона **+** горе вляво на **Център за управление**";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Натиснете **Добавяне на управление** в долната част на екрана";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Винаги да се изпращат доклади за сривове";
@@ -1529,6 +1535,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Трябва да активирате VPN от приложението DuckDuckGo.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1870,6 +1879,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Настройки на VPN";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Бързи Връзки";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Персонализирайте раздела Любими и функциите за достъп. Пренаредете елементите или скрийте някои от тях за по голяма яснота.";
@@ -2223,6 +2235,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Добавяне на приспособлението към началния екран";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Добавяне на приспособлението DuckDuckGo VPN към началния екран";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2878,7 +2893,28 @@
 "vpn.access-revoked.alert.title" = "VPN връзката е прекъсната поради изтекъл абонамент";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Открийте и изберете DuckDuckGo. След това плъзнете до VPN и изберете „Добавяне на уиджет“.";
+"vpn.addWidget.settings.title" = "Намерете и изберете **DuckDuckGo**, след това плъзнете до **VPN** и изберете **Добавяне на приспособление**";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "Функцията DuckDuckGo VPN е включена";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Можете да използвате бързите клавиши на Сири за включване на VPN услугата чрез бърза гласова команда, например „Сири, включи DuckDuckGo VPN“. Това е бърз начин да включите VPN, без да използвате ръцете си.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Сири, стартирай DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Сири, активирай DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Сири, защити устройството ми с DuckDuckGo.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Управлявайте DuckDuckGo VPN със Сири!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "Функцията DuckDuckGo VPN е включена";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Отмени";
@@ -2949,8 +2985,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Помогнете ни да подобрим DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Добавяне на VPN към Центъра за управление";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Добавяне на уиджет за VPN към началния екран";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Управление на VPN със Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Използването на персонализиран DNS сървър може да повлияе на скоростта на сърфиране и дейността да стане видима за трети страни, ако сървърът не е сигурен или надежден.";

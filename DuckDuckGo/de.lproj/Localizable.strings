@@ -131,13 +131,16 @@
 "addWidget.description" = "Erhalte schnellen Zugriff auf die private Suche und die Websites, die dir gefallen.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Drücke lange auf den Startbildschirm, um in den Jiggle-Modus zu wechseln.";
+"addWidget.settings.firstParagraph" = "Drücke lange irgendwo auf den Startbildschirm, bis die Apps wackeln";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Tippe auf die Schaltfläche **Bearbeiten**, dann wähle **Widget hinzufügen**";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tippe auf die Plus-Schaltfläche %@.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Finde DuckDuckGo und wähle es aus. Wähle dann ein Widget aus.";
+"addWidget.settings.title" = "Finde **DuckDuckGo** und wähle es aus. Wähle dann ein Widget aus.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "Mit nur einem Klick zu deinen Lieblingswebsites.";
@@ -869,14 +872,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "Lokales Wetter";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "Rezepte für Schokoladenkekse";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Finde **DuckDuckGo** in der Liste und tippe dann auf **VPN-Steuerung**, um es hinzuzufügen";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "Dinner-Rezepte";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Wische von der oberen rechten Ecke des Bildschirms nach unten";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Überrasche mich!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Tippe auf die Schaltfläche **+** oben links im **Kontrollzentrum**";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Tippe unten auf dem Bildschirm auf **Steuerelement hinzufügen**";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Absturzberichte immer senden";
@@ -1529,6 +1535,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Du musst das VPN in der DuckDuckGo-App aktivieren.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1870,6 +1879,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-Einstellungen";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Shortcuts";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Passe deine Favoriten und häufig genutzten Funktionen an. Ordne die Dinge neu an oder blende sie aus, um die Übersichtlichkeit zu wahren.";
@@ -2223,6 +2235,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Widget zum Startbildschirm hinzufügen";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Füge deinem Startbildschirm das DuckDuckGo VPN-Widget hinzu";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2878,7 +2893,28 @@
 "vpn.access-revoked.alert.title" = "VPN aufgrund abgelaufenen Abonnements getrennt";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Finde DuckDuckGo und wähle es aus. Wische dann zu VPN und wähle „Widget hinzufügen“.";
+"vpn.addWidget.settings.title" = "Finde **DuckDuckGo** und wähle es aus. Wische dann zu **VPN** und wähle **Widget hinzufügen**.";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "DuckDuckGo VPN ist verbunden";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Siri-Kurzbefehle ermöglichen es dir, mit einem schnellen Sprachbefehl wie „Siri, aktiviere DuckDuckGo VPN“ eine Verbindung zu deinem VPN herzustellen. So kannst du dein VPN schnell und freihändig nutzen.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, starte DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, aktiviere DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, schütze mein Gerät mit DuckDuckGo.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Steuere DuckDuckGo VPN mit Siri!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "DuckDuckGo VPN ist verbunden";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Abbrechen";
@@ -2949,8 +2985,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Hilf mit, das DuckDuckGo-VPN zu verbessern";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "VPN zum Kontrollzentrum hinzufügen";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "VPN-Widget zum Startbildschirm hinzufügen";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "VPN mit Siri steuern";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Die Verwendung eines benutzerdefinierten DNS-Servers kann die Geschwindigkeit beim Browsen beeinträchtigen und deine Aktivitäten Dritten preisgeben, wenn der Server nicht sicher oder zuverlässig ist.";

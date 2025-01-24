@@ -131,7 +131,10 @@
 "addWidget.description" = "Özel aramaya ve sevdiğiniz sitelere hızlı erişim elde edin.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Sallama moduna girmek için ana ekranda uzun basın.";
+"addWidget.settings.firstParagraph" = "Uygulamalar titreyene kadar Ana Ekranın herhangi bir yerine uzun basın";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "**Düzenle** düğmesine dokunun, ardından **Widget Ekle**'yi seçin";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Artı %@ düğmesine dokunun.";
@@ -869,14 +872,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "yerel hava durumu";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "çikolata parçacıklı kurabiye tarifleri";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Listede **DuckDuckGo**'yu bulun, ardından eklemek için **VPN kontrolü**ne dokunun";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "akşam yemeği tarifleri";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Ekranın sağ üst köşesinden aşağı doğru kaydırın";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Şaşırt beni!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Kontrol Merkezi'nin** sol üst köşesindeki **+** düğmesine dokunun";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Ekranın en altındaki **Kontrol Ekle** seçeneğine dokunun";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Kilitlenme Raporlarını Her Zaman Gönder";
@@ -1529,6 +1535,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "VPN'i DuckDuckGo Uygulamasından etkinleştirmeniz gerekir.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1870,6 +1879,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Ayarları";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Kısayollar";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Favorilerinizi ve düzenli olarak kullandığınız özellikleri kendinize göre ayarlayın. Temiz tutmak için öğeleri yeniden sıralayın veya gizleyin.";
@@ -2223,6 +2235,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Widget'ı Ana Ekrana Ekle";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "DuckDuckGo VPN Widget'ını Ana Ekranına Ekle";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2878,7 +2893,28 @@
 "vpn.access-revoked.alert.title" = "Abonelik süresi dolduğu için VPN bağlantısı kesildi";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "DuckDuckGo'yu bulun ve seçin. Ardından VPN'e kaydırın ve Widget Ekle'yi seçin.";
+"vpn.addWidget.settings.title" = "**DuckDuckGo**'yu bulup seçin, ardından **VPN**'e kaydırın ve **Widget Ekle**'yi seçin";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "DuckDuckGo VPN bağlı";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Siri Kısayolları, \"Siri, DuckDuckGo VPN'i aç\" gibi hızlı bir sesli komutla VPN'e bağlanmanızı sağlar. Bu VPN kullanmanın hızlı ve eller serbest bir yoludur.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, DuckDuckGo VPN'i başlat.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, DuckDuckGo VPN'i etkinleştir.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, cihazımı DuckDuckGo ile koru.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "DuckDuckGo VPN'i Siri ile kontrol edin!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "DuckDuckGo VPN bağlı";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "İptal";
@@ -2949,8 +2985,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "DuckDuckGo VPN'i geliştirmeye yardımcı olun";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "VPN'i Kontrol Merkezine Ekle";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "VPN Widget'ını Ana Ekrana Ekleyin";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "VPN'i Siri ile Kontrol Edin";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Özel bir DNS sunucusu kullanmak, tarama hızlarını etkileyebilir ve sunucu güvenli veya güvenilir değilse etkinliğini üçüncü taraflara ifşa edebilir.";

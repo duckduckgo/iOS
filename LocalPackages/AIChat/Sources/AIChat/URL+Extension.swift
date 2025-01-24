@@ -24,6 +24,9 @@ extension URL {
         static let duckDuckGoHost = "duckduckgo.com"
         static let chatQueryName = "ia"
         static let chatQueryValue = "chat"
+
+        static let bangQueryName = "q"
+        static let bangQueryPrefix = "!ai"
     }
 
     func addingOrReplacingQueryItem(_ queryItem: URLQueryItem) -> URL {
@@ -49,6 +52,20 @@ extension URL {
             return false
         }
 
-        return queryItems.contains { $0.name == Constants.chatQueryName && $0.value == Constants.chatQueryValue }
+        return queryItems.contains { $0.name == Constants.chatQueryName && $0.value == Constants.chatQueryValue } || self.isDuckAIBang
     }
+
+    public var isDuckAIBang: Bool {
+        guard let host = self.host, host == Constants.duckDuckGoHost else {
+            return false
+        }
+
+        guard let urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false),
+              let queryItems = urlComponents.queryItems else {
+            return false
+        }
+
+        return queryItems.contains { $0.name == Constants.bangQueryName && $0.value?.hasPrefix(Constants.bangQueryPrefix) == true }
+    }
+
 }

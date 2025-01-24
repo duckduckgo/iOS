@@ -26,7 +26,7 @@ struct FavoriteView: View {
     var favorite: Favorite?
     var isPreview: Bool
 
-    private let cornerRaidus: CGFloat = 14
+    private let cornerRadius: CGFloat = 14
 
     var body: some View {
 

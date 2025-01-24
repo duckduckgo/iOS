@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1737129345760,
+    "version": 1737710783927,
     "features": {
         "adAttributionReporting": {
             "state": "disabled",
@@ -80,18 +80,23 @@
             "minSupportedVersion": "7.131.0",
             "hash": "7616abe480cf4aecb67ffbaa71d17217"
         },
-        "aiChat": {
+        "addressBarTldNavOrSearch": {
             "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
+        },
+        "aiChat": {
+            "state": "enabled",
             "exceptions": [],
             "features": {
                 "browsingToolbarShortcut": {
-                    "state": "disabled"
+                    "state": "enabled"
                 },
                 "addressBarShortcut": {
-                    "state": "disabled"
+                    "state": "enabled"
                 },
                 "deepLink": {
-                    "state": "disabled"
+                    "state": "enabled"
                 }
             },
             "settings": {
@@ -660,6 +665,33 @@
                     "domain": "sueddeutsche.de"
                 },
                 {
+                    "domain": "vital-parts.co.uk"
+                },
+                {
+                    "domain": "lta.org.uk"
+                },
+                {
+                    "domain": "hobbyhall.fi"
+                },
+                {
+                    "domain": "wienmobil.at"
+                },
+                {
+                    "domain": "memsoft.fr"
+                },
+                {
+                    "domain": "bafin.de"
+                },
+                {
+                    "domain": "levi.pt"
+                },
+                {
+                    "domain": "premiumegeszsegpenztar.hu"
+                },
+                {
+                    "domain": "mapquest.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -811,7 +843,16 @@
                     "sachsen-netze.de",
                     "alpharunning.co.uk",
                     "lecreuset.co.uk",
-                    "sueddeutsche.de"
+                    "sueddeutsche.de",
+                    "vital-parts.co.uk",
+                    "lta.org.uk",
+                    "hobbyhall.fi",
+                    "wienmobil.at",
+                    "memsoft.fr",
+                    "bafin.de",
+                    "levi.pt",
+                    "premiumegeszsegpenztar.hu",
+                    "mapquest.com"
                 ]
             },
             "state": "enabled",
@@ -834,7 +875,7 @@
                     }
                 }
             },
-            "hash": "f8a882e4db7e3f0dd7ef344202509ebc"
+            "hash": "e943120cd9f470a33375c69cbef89e6d"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -2572,7 +2613,7 @@
                     "advertisement\n\nhide ad",
                     "advertisementhide ad",
                     "advertisement - scroll to continue",
-                    "advertisement · scroll to continue",
+                    "advertisement Ã‚Â· scroll to continue",
                     "advertisement - story continues below",
                     "advertising",
                     "advertising\nskip ad",
@@ -2588,11 +2629,11 @@
                     "_",
                     "sponsor message",
                     "sponsored",
-                    "sponsorisé",
+                    "sponsorisÃƒÂ©",
                     "story continues below advertisement",
                     "story continues below advertisementadvertisement",
                     "oglas",
-                    "publicité",
+                    "publicitÃƒÂ©",
                     "publicidade",
                     "- publicidade -",
                     "reklama",
@@ -6194,11 +6235,16 @@
                     "domain": "broken.third-party.site"
                 }
             ],
+            "features": {
+                "onByDefault": {
+                    "state": "internal"
+                }
+            },
             "settings": {
                 "hashPrefixUpdateFrequency": 20,
                 "filterSetUpdateFrequency": 720
             },
-            "hash": "8ceb05ed570765a54738b77c1deb1f64"
+            "hash": "78ceda333e534acda085da3366322878"
         },
         "marketplaceAdPostback": {
             "state": "enabled",
@@ -6211,13 +6257,24 @@
             "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "messageBridge": {
-            "exceptions": [],
-            "settings": {
-                "aiChat": "disabled",
-                "domains": []
-            },
-            "state": "disabled",
-            "hash": "cec85d8cf7db4b2abcbc450c66dd63fc"
+          "exceptions": [],
+          "settings": {
+            "aiChat": "enabled",
+            "domains": [
+              {
+                "domain": "duckduckgo.com",
+                "patchSettings": [
+                  {
+                    "op": "replace",
+                    "path": "/aiChat",
+                    "value": "enabled"
+                  }
+                ]
+              }
+            ]
+          },
+          "state": "enabled",
+          "hash": "cec85d8cf7db4b2abcbc450c66dd63fc"
         },
         "navigatorInterface": {
             "exceptions": [
@@ -8583,6 +8640,16 @@
                             }
                         ]
                     },
+                    "karte.io": {
+                        "rules": [
+                            {
+                                "rule": "bs.karte.io",
+                                "domains": [
+                                    "rentio.jp"
+                                ]
+                            }
+                        ]
+                    },
                     "klarnaservices.com": {
                         "rules": [
                             {
@@ -10131,7 +10198,7 @@
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "07d601326ac1d3df0c881468241d955d"
+            "hash": "65d5e346d5f4b32b8b5f813d753c8718"
         },
         "trackingCookies1p": {
             "settings": {
@@ -10354,6 +10421,11 @@
                 ]
             },
             "hash": "2853748f3ebb813d59f4db4a7bb13c83"
+        },
+        "webViewStateRestoration": {
+            "state": "enabled",
+            "exceptions": [],
+            "hash": "697382e31649d84b01166f1dc6f790d6"
         },
         "webViewBlobDownload": {
             "exceptions": [],

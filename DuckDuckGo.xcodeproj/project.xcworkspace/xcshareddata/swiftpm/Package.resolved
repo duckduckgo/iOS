@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "2ed8705a2e8a0ba6cb5253ccf3b2f73f98da6bb0",
-        "version" : "230.1.0"
+        "branch" : "graeme/simplify-connecting-sync-accounts-when-2",
+        "revision" : "ba2657bb138c353d4aaaac8ee1bc1a0cb7d0a897"
       }
     },
     {

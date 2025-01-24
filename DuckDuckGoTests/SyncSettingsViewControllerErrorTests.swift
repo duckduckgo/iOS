@@ -59,11 +59,14 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
             secureVaultErrorReporter: MockSecureVaultReporting(),
             syncErrorHandler: CapturingAdapterErrorHandler(),
             tld: TLD())
+        let featureFlagger = MockFeatureFlagger(enabledFeatureFlags: [.syncSeamlessAccountSwitching])
         vc = SyncSettingsViewController(
             syncService: ddgSyncing,
             syncBookmarksAdapter: bookmarksAdapter,
             syncCredentialsAdapter: credentialsAdapter,
-            syncPausedStateManager: errorHandler)
+            syncPausedStateManager: errorHandler,
+            featureFlagger: featureFlagger
+        )
     }
 
     override func tearDown() {

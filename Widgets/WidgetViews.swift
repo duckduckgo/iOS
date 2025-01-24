@@ -31,14 +31,14 @@ struct FavoriteView: View {
     var body: some View {
 
         ZStack {
-            RoundedRectangle(cornerRadius: cornerRaidus)
+            RoundedRectangle(cornerRadius: cornerRadius)
                 .fill(Color(designSystemColor: .container))
 
             if let favorite = favorite {
 
                 Link(destination: favorite.url) {
                     ZStack {
-                        RoundedRectangle(cornerRadius: cornerRaidus)
+                        RoundedRectangle(cornerRadius: cornerRadius)
                             .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color(designSystemColor: .container))
                             .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
                         

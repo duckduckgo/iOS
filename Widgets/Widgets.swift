@@ -221,19 +221,20 @@ struct Widgets: WidgetBundle {
 
     private func makeWidgets() -> some Widget {
         if #available(iOS 17, *) {
-            return WidgetBundleBuilder.buildBlock(SearchWidget(),
-                                                  PasswordsWidget(),
+            return WidgetBundleBuilder.buildBlock(QuickActionsWidget(),
                                                   FavoritesWidget(),
+                                                  PasswordsWidget(),
+                                                  VPNBundle().body,
+                                                  SearchWidget(),
                                                   SearchLockScreenWidget(),
                                                   VoiceSearchLockScreenWidget(),
                                                   EmailProtectionLockScreenWidget(),
                                                   FireButtonLockScreenWidget(),
                                                   FavoritesLockScreenWidget(),
-                                                  PasswordsLockScreenWidget(),
-                                                  VPNBundle().body,
-                                                  QuickActionsWidget())
+                                                  PasswordsLockScreenWidget()
+            )
         }
-
+        
         if #available(iOS 16.0, *) {
             return WidgetBundleBuilder.buildBlock(SearchWidget(),
                                                   PasswordsWidget(),

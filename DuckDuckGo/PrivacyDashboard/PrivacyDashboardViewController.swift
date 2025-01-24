@@ -25,6 +25,7 @@ import BrowserServicesKit
 import PrivacyDashboard
 import Common
 import os.log
+import PixelExperimentKit
 
 final class PrivacyDashboardViewController: UIViewController {
 
@@ -136,6 +137,10 @@ final class PrivacyDashboardViewController: UIViewController {
                 ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
             }
             Pixel.fire(pixel: .dashboardProtectionAllowlistAdd, withAdditionalParameters: pixelParam)
+            let tdsEtag = AppDependencyProvider.shared.configurationStore.loadEtag(for: .trackerDataSet) ?? ""
+            TDSOverrideExperimentMetrics.fireTDSExperimentMetric(metricType: .privacyToggleUsed, etag: tdsEtag) { parameters in
+                UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
+            }
         }
         
         contentBlockingManager.scheduleCompilation()

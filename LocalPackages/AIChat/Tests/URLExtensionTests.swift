@@ -143,6 +143,62 @@ final class URLExtensionTests: XCTestCase {
             XCTFail("Failed to create URL from string.")
         }
     }
+
+    /// Duck AI Bang
+    func testIsDuckAIBangWithValidBangQuery() {
+        let urlString = "https://duckduckgo.com/?q=!ai+some+query"
+        if let url = URL(string: urlString) {
+            XCTAssertTrue(url.isDuckAIBang, "The URL should be identified as a DuckDuckGo AI Bang URL.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIBangWithInvalidBangQuery() {
+        let urlString = "https://duckduckgo.com/?q=some+query"
+        if let url = URL(string: urlString) {
+            XCTAssertFalse(url.isDuckAIBang, "The URL should not be identified as a DuckDuckGo AI Bang URL due to missing bang prefix.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIBangWithDifferentBangPrefix() {
+        let urlString = "https://duckduckgo.com/?q=!other+query"
+        if let url = URL(string: urlString) {
+            XCTAssertFalse(url.isDuckAIBang, "The URL should not be identified as a DuckDuckGo AI Bang URL due to different bang prefix.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIBangWithMultipleQueryItems() {
+        let urlString = "https://duckduckgo.com/?q=!ai+some+query&other=param"
+        if let url = URL(string: urlString) {
+            XCTAssertTrue(url.isDuckAIBang, "The URL should be identified as a DuckDuckGo AI Bang URL even with additional query items.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIBangWithMissingQueryItem() {
+        let urlString = "https://duckduckgo.com/"
+        if let url = URL(string: urlString) {
+            XCTAssertFalse(url.isDuckAIBang, "The URL should not be identified as a DuckDuckGo AI Bang URL due to missing query item.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIBangWithNilQueryValue() {
+        let urlString = "https://duckduckgo.com/?q="
+        if let url = URL(string: urlString) {
+            XCTAssertFalse(url.isDuckAIBang, "The URL should not be identified as a DuckDuckGo AI Bang URL due to nil query value.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
 }
 
 extension URL {

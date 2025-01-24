@@ -7429,7 +7429,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 84E3418D1E2F7EFB00BDBA6F /* Build configuration list for PBXProject "DuckDuckGo" */;
+			buildConfigurationList = 84E3418D1E2F7EFB00BDBA6F /* Build configuration list for PBXProject "DuckDuckGo-iOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -11770,7 +11770,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		84E3418D1E2F7EFB00BDBA6F /* Build configuration list for PBXProject "DuckDuckGo" */ = {
+		84E3418D1E2F7EFB00BDBA6F /* Build configuration list for PBXProject "DuckDuckGo-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84E341B81E2F7EFC00BDBA6F /* Debug */,

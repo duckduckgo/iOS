@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "85482D872462DCD100EDEDD1"
-               BuildableName = "OpenAction.appex"
-               BlueprintName = "OpenAction"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+               BlueprintIdentifier = "8512EA4C24ED30D20073EE19"
+               BuildableName = "WidgetsExtension.appex"
+               BlueprintName = "WidgetsExtension"
+               ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -32,7 +32,7 @@
                BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
                BuildableName = "DuckDuckGo.app"
                BlueprintName = "DuckDuckGo"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+               ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -43,26 +43,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "025CCFE12582601C001CD5BB"
-               BuildableName = "FingerprintingUITests.xctest"
-               BlueprintName = "FingerprintingUITests"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "85D33FCA25C97B6E002B91A6"
-               BuildableName = "IntegrationTests.xctest"
-               BlueprintName = "IntegrationTests"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -77,16 +57,43 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.springboard">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "8512EA4C24ED30D20073EE19"
+            BuildableName = "WidgetsExtension.appex"
+            BlueprintName = "WidgetsExtension"
+            ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
+         </BuildableReference>
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
             BuildableName = "DuckDuckGo.app"
             BlueprintName = "DuckDuckGo"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "_XCWidgetKind"
+            value = "FavoritesWidget"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "_XCWidgetDefaultView"
+            value = "snapshot"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "_XCWidgetFamily"
+            value = "medium"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -103,7 +110,7 @@
             BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
             BuildableName = "DuckDuckGo.app"
             BlueprintName = "DuckDuckGo"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -19,7 +19,7 @@
                BlueprintIdentifier = "85F21DAC210F5E32002631A6"
                BuildableName = "AtbUITests.xctest"
                BlueprintName = "AtbUITests"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+               ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
             </BuildableReference>
             <SkippedTests>
                <Test
@@ -52,7 +52,7 @@
             BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
             BuildableName = "DuckDuckGo.app"
             BlueprintName = "DuckDuckGo"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>

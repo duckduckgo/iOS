@@ -590,9 +590,8 @@ extension DuckPlayer: UIGestureRecognizerDelegate {
 }
 
 
-// Remove and resets WebView Constraints to allow the webView
+// Remove and resets settings
 // to become full screen when rotating the device to Landscape mode
-
 private extension TabViewController {
     // Private struct to hold the original values
     private struct OriginalSettings {

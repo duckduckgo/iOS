@@ -15,6 +15,7 @@ appId: com.duckduckgo.mobile.ios
         isUITesting: true # Renaming `isUITesting` requires to update LaunchOptionsHandler `isUITesting` key
         isOnboardingCompleted: ${ONBOARDING_COMPLETED} # Renaming `isOnboardingCompleted` requires to update LaunchOptionsHandler `isOnboardingCompleted` key
         currentAppVariant: ${APP_VARIANT} # Renaming `currentAppVariant` requires to update LaunchOptionsHandler `currentAppVariant` key
+        automationPort: ${AUTOMATION_PORT}
 
 # Get past onboarding screens
 - runFlow:

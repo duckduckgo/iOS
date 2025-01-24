@@ -360,7 +360,12 @@ import os.log
                                           subscriptionCookieManager: subscriptionCookieManager,
                                           textZoomCoordinator: makeTextZoomCoordinator())
 
-            AutomationServer(main: main)
+//#if DEBUG
+            print("Automation port: \(launchOptionsHandler.automationPort ?? 0)")
+            if launchOptionsHandler.isUITesting {
+                AutomationServer(main: main, port: launchOptionsHandler.automationPort)
+            }
+//#endif
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -849,6 +854,8 @@ import os.log
         let historyMessageManager = HistoryMessageManager()
 
         AtbAndVariantCleanup.cleanup()
+        daxDialogs.dismiss()
+        /*
         variantManager.assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             // If it's running UI Tests check if the onboarding should be in a completed state.
@@ -863,7 +870,7 @@ import os.log
 
             // Setup storage for marketplace postback
             marketplaceAdPostbackManager.updateReturningUserValue()
-        }
+        }*/
     }
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {

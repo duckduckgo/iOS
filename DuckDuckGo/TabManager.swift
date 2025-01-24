@@ -132,7 +132,7 @@ class TabManager {
         }
     }
     
-    private func controller(for tab: Tab) -> TabViewController? {
+    public func controller(for tab: Tab) -> TabViewController? {
         return tabControllerCache.first { $0.tabModel === tab }
     }
 

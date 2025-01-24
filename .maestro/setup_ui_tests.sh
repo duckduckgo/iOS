@@ -115,6 +115,7 @@ echo "📱 Using simulator $device_uuid"
 
 xcrun simctl boot $device_uuid
 xcrun simctl keychain booted add-root-cert  ../shared-web-tests/web-platform-tests/tools/certs/cacert.pem
+xcrun simctl keychain booted add-root-cert  ../shared-web-tests/web-platform-tests/build/tools/certs/cacert.pem
 if [ $? -ne 0 ]; then
     echo "‼️ Unable to boot simulator"
     exit 1

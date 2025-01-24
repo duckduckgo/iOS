@@ -23,6 +23,7 @@ public final class LaunchOptionsHandler {
     private static let isUITesting = "isUITesting"
     private static let isOnboardingcompleted = "isOnboardingCompleted"
     private static let appVariantName = "currentAppVariant"
+    private static let automationPort = "automationPort"
 
     private let launchArguments: [String]
     private let userDefaults: UserDefaults
@@ -38,6 +39,10 @@ public final class LaunchOptionsHandler {
 
     public var isOnboardingCompleted: Bool {
         userDefaults.string(forKey: Self.isOnboardingcompleted) == "true"
+    }
+
+    public var automationPort: Int? {
+        userDefaults.integer(forKey: Self.automationPort)
     }
 
     public var appVariantName: String? {

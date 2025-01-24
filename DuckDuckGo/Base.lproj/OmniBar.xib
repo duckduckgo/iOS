@@ -16,7 +16,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="pg8-E6-C14" userLabel="LeftButtons">
-                    <rect key="frame" x="16" y="14" width="174" height="24"/>
+                    <rect key="frame" x="16" y="14" width="120" height="24"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i9n-fD-ncJ" userLabel="Backwards">
                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -51,17 +51,6 @@
                                 <action selector="onBookmarksPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="ozG-je-Zgk"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2R-qB-4Lk" userLabel="Cancel Back">
-                            <rect key="frame" x="144" y="0.0" width="30" height="24"/>
-                            <accessibility key="accessibilityConfiguration" label="Bookmarks"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="30" id="As8-Nj-tDB"/>
-                            </constraints>
-                            <state key="normal" image="Chevron-Left-24"/>
-                            <connections>
-                                <action selector="onCancelPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="qlo-Aw-Inv"/>
-                            </connections>
-                        </button>
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5D5-iT-bUk">
@@ -86,17 +75,28 @@
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
                             <rect key="frame" x="6" y="0.0" width="463" height="40"/>
                             <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGZ-Na-FIg" userLabel="Abort Button">
+                                    <rect key="frame" x="0.0" y="11" width="30" height="18"/>
+                                    <accessibility key="accessibilityConfiguration" label="Clear Text"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" priority="900" constant="30" id="LVk-Mc-YA2"/>
+                                    </constraints>
+                                    <state key="normal" image="Chevron-Left-16"/>
+                                    <connections>
+                                        <action selector="onCancelPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="ra4-ze-W30"/>
+                                    </connections>
+                                </button>
                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="Find-Search-20" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
-                                    <rect key="frame" x="0.0" y="10" width="30" height="20"/>
+                                    <rect key="frame" x="30" y="10" width="30" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="WCw-cm-dCl"/>
                                     </constraints>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sek-4Y-GoT" customClass="SearchFieldContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="30" y="0.0" width="313" height="40"/>
+                                    <rect key="frame" x="60" y="0.0" width="283" height="40"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEJ-P3-HpO" customClass="OmniBarNotificationContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="-4" y="0.0" width="317" height="40"/>
+                                            <rect key="frame" x="-4" y="0.0" width="287" height="40"/>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGG-5L-D8Q" customClass="PrivacyInfoContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="138" height="40"/>
@@ -228,7 +228,7 @@
                                             </connections>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="30" y="0.0" width="283" height="40"/>
+                                            <rect key="frame" x="30" y="0.0" width="253" height="40"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                 <accessibilityTraits key="traits" searchField="YES"/>
@@ -424,7 +424,7 @@
                 <outlet property="accessoryButton" destination="hor-Jd-3kw" id="vuG-4B-vl0"/>
                 <outlet property="backButton" destination="i9n-fD-ncJ" id="5sk-Ld-2Pq"/>
                 <outlet property="bookmarksButton" destination="ii4-Sq-bD1" id="XN8-Yb-eXK"/>
-                <outlet property="cancelBackButton" destination="P2R-qB-4Lk" id="kfz-WJ-MUj"/>
+                <outlet property="cancelBackButton" destination="MGZ-Na-FIg" id="8Xd-V1-NHT"/>
                 <outlet property="cancelButton" destination="IHT-9R-ERy" id="XVf-QQ-jSa"/>
                 <outlet property="clearButton" destination="Dt8-We-5tV" id="6d0-LL-4OJ"/>
                 <outlet property="editingBackground" destination="Atk-JN-lv8" id="E2d-Lx-OrN"/>
@@ -467,7 +467,7 @@
         <image name="Book-24" width="24" height="24"/>
         <image name="BrowseNext" width="24" height="24"/>
         <image name="BrowsePrevious" width="24" height="24"/>
-        <image name="Chevron-Left-24" width="24" height="24"/>
+        <image name="Chevron-Left-16" width="16" height="16"/>
         <image name="Clear-24" width="24" height="24"/>
         <image name="Close-24" width="24" height="24"/>
         <image name="Find-Search-20" width="20" height="20"/>

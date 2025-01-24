@@ -49,8 +49,8 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var showSearchLoupe: Bool { !voiceSearchHelper.isSpeechRecognizerAvailable }
-        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
+        var showSearchLoupe: Bool { false }
+        var showVoiceSearch: Bool { false }
 
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let isLoading: Bool
@@ -84,7 +84,7 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var showSearchLoupe: Bool { !voiceSearchHelper.isSpeechRecognizerAvailable }
+        var showSearchLoupe: Bool { false }
 
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let isLoading: Bool
@@ -95,7 +95,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let showAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = true
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -105,7 +105,7 @@ struct SmallOmniBarState {
         let showAbort = false
         let showRefresh = false
         let showMenu = false
-        let showSettings = true
+        let showSettings = false
         let showCancel: Bool = false
         let showCancelBack: Bool = false
         var name: String { return "Phone" + Type.name(self) }
@@ -189,7 +189,7 @@ struct SmallOmniBarState {
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
 
-        var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
+        var showSearchLoupe: Bool { false }
 
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let isLoading: Bool
@@ -256,7 +256,7 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return BrowsingTextEditingStartedState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
+        var showSearchLoupe: Bool { false }
         var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
 
         let voiceSearchHelper: VoiceSearchHelperProtocol

@@ -411,7 +411,7 @@ class OmniBar: UIView {
         searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
 
         let spacingConstraint: CGFloat = state.showCancelBack ? 14 : 0
-        leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : spacingConstraint
+        leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
         rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
 
         if state.showVoiceSearch && state.showClear {

@@ -463,8 +463,6 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
             return nil
     }
     
-    
-    
     /// Opens Duck Player information modal.
     ///
     /// - Parameters:
@@ -549,7 +547,6 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         guard let feature = messageData.featureName else { return }
         
         // Get the webView URL
-        let webView = message.webView
         guard let webView = message.webView, let url = webView.url else {
             return
         }
@@ -584,7 +581,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
 
 extension DuckPlayer: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                          shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }

@@ -186,6 +186,14 @@ private func mockScrollView() -> UIScrollView {
 }
 
 private class BrowserChromeDelegateMock: BrowserChromeDelegate {
+    func setBarsVisibility(_ percent: CGFloat, animated: Bool, animationDuration: CGFloat?) {
+        setBarsVisibility(percent, animated: animated)
+    }
+    
+    func setBarsHidden(_ hidden: Bool, animated: Bool, animationDuration: CGFloat?) {
+        setBarsHidden(hidden, animated: animated)
+    }
+    
     enum Message: Equatable {
         case setBarsHidden(Bool)
         case setNavigationBarHidden(Bool)

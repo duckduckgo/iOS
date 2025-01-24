@@ -642,7 +642,9 @@ extension Pixel {
         case debugWebsiteDataStoresCleared
 
         case debugBookmarksMigratedMoreThanOnce
-        
+
+        case debugBreakageExperiment
+
         // Return user measurement
         case debugReturnUserAddATB
         case debugReturnUserUpdateATB
@@ -1502,9 +1504,9 @@ extension Pixel.Event {
             
         case .configurationFetchInfo: return "m_d_cfgfetch"
             
-        case .trackerDataParseFailed: return "m_d_tds_p"
+        case .trackerDataParseFailed: return "m_d_tracker_data_parse_failed"
         case .trackerDataReloadFailed: return "m_d_tds_r"
-        case .trackerDataCouldNotBeLoaded: return "m_d_tds_l"
+        case .trackerDataCouldNotBeLoaded: return "m_d_tracker_data_could_not_be_loaded"
         case .fileStoreWriteFailed: return "m_d_fswf"
         case .fileStoreCoordinatorFailed: return "m_d_configuration_file_coordinator_error"
         case .privacyConfigurationReloadFailed: return "m_d_pc_r"
@@ -1943,6 +1945,7 @@ extension Pixel.Event {
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
 
+        case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
         }
     }
 }

@@ -20,8 +20,10 @@
 import NetworkProtection
 import Subscription
 import UIKit
+import NotificationCenter
+import Core
 
-final class VPNService {
+final class VPNService: NSObject {
 
     private let tunnelController = AppDependencyProvider.shared.networkProtectionTunnelController
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
@@ -31,12 +33,19 @@ final class VPNService {
                                                                                             tunnelController: tunnelController)
     private let vpnFeatureVisibility: DefaultNetworkProtectionVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
 
+    private let window: UIWindow
     private let accountManager: AccountManager
     private let application: UIApplication
-    init(accountManager: AccountManager = AppDependencyProvider.shared.accountManager,
-         application: UIApplication = UIApplication.shared) {
+    init(window: UIWindow,
+         accountManager: AccountManager = AppDependencyProvider.shared.accountManager,
+         application: UIApplication = UIApplication.shared,
+         notificationCenter: UNUserNotificationCenter = .current()) {
+        self.window = window
         self.accountManager = accountManager
         self.application = application
+        super.init()
+
+        notificationCenter.delegate = self
     }
 
     func beginObservingVPNStatus() {
@@ -128,6 +137,40 @@ final class VPNService {
                                       icon: UIApplicationShortcutIcon(templateImageName: "VPN-16"),
                                       userInfo: nil)
         ]
+    }
+
+}
+
+extension VPNService: UNUserNotificationCenterDelegate {
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler(.banner)
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+            let identifier = response.notification.request.identifier
+
+            if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
+                presentNetworkProtectionStatusSettingsModal()
+            }
+        }
+        completionHandler()
+    }
+
+    // TODO: should be moved to (future) AppCoordinator
+    private func presentNetworkProtectionStatusSettingsModal() {
+        Task { @MainActor in
+            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
+                (window.rootViewController as? MainViewController)?.segueToVPN()
+            } else {
+                (window.rootViewController as? MainViewController)?.segueToPrivacyPro()
+            }
+        }
     }
 
 }

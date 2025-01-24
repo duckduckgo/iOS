@@ -57,9 +57,8 @@ struct Launching: AppState {
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
 
     private let uiService: UIService
-    private let unService: UNService
     private let syncService: SyncService
-    private let vpnService: VPNService = VPNService()
+    private let vpnService: VPNService
     private let autofillService: AutofillService = AutofillService()
     private let persistenceService = PersistenceService()
     private let pixelKitService: PixelService
@@ -180,14 +179,15 @@ struct Launching: AppState {
             }
         }
 
+        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
         syncService = SyncService(bookmarksDatabase: persistenceService.bookmarksDatabase)
         remoteMessagingService = RemoteMessagingService(persistenceService: persistenceService,
                                                         appSettings: appSettings,
                                                         internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
                                                         configurationStore: AppDependencyProvider.shared.configurationStore,
-                                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
+                                                        privacyConfigurationManager: privacyConfigurationManager)
 
-        subscriptionService = SubscriptionService(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
+        subscriptionService = SubscriptionService(privacyConfigurationManager: privacyConfigurationManager)
 
         let homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                           remoteMessagingClient: remoteMessagingService.remoteMessagingClient,
@@ -235,19 +235,18 @@ struct Launching: AppState {
         let autoClear = AutoClear(worker: mainViewController)
         self.autoClear = autoClear
         let applicationState = application.applicationState
+        vpnService = VPNService(window: window)
         Task { [vpnService] in
             await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
             await vpnService.installRedditSessionWorkaround()
         }
 
-        unService = UNService(window: window, accountManager: accountManager)
         uiService = UIService(window: window)
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
-        UNUserNotificationCenter.current().delegate = unService
         window.windowScene?.screenshotService?.delegate = uiService
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 

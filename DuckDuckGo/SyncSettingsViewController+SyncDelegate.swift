@@ -194,8 +194,9 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 await self?.switchAccounts(recoveryKey: recoveryKey)
             }
         }
-        alertController.addAction(title: UserText.actionCancel, style: .cancel) {
+        alertController.addAction(title: UserText.actionCancel, style: .cancel) { [weak self] in
             Pixel.fire(pixel: .syncUserCancelledSwitchingAccount)
+            self?.navigationController?.presentedViewController?.dismiss(animated: true)
         }
 
         let viewControllerToPresentFrom = navigationController?.presentedViewController ?? self

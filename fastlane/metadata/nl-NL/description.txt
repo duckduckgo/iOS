@@ -8,10 +8,6 @@ Scherm je browsegeschiedenis af: onze externe Tracker Loading Protection blokkee
 Beveilig je e-mail (optioneel): gebruik Email Protection om de meeste e-mailtrackers te blokkeren en je bestaande e-mailadres te verbergen met @duck.com-adressen.  
 
 Bekijk YouTube-video's zonder gerichte advertenties : Duck Player beschermt je tegen gerichte advertenties en cookies met een interface zonder afleiding die de strengste privacy-instellingen van YouTube voor ingesloten video's hanteert.
-  
-Dwing versleuteling automatisch af: bescherm je gegevens tegen netwerk- en wifi-snoopers door veel sites te dwingen een HTTPS-verbinding te gebruiken. 
-
-Ontsnap aan fingerprinting: blokkeer pogingen om informatie over je browser en apparaat te combineren en maak het op die manier moeilijker voor bedrijven om een unieke ID voor je te maken. 
 
 Synchroniseer en maak veilig back-ups   (Optioneel): synchroniseer versleutelde bladwijzers en wachtwoorden op je apparaten.  
 

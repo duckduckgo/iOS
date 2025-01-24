@@ -76,7 +76,7 @@ public class AppUserDefaults: AppSettings {
 
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
         static let crashCollectionShouldRevertOptedInStatusTrigger = "com.duckduckgo.ios.crashCollectionShouldRevertOptedInStatusTrigger"
-        
+
         static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
         static let duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
         static let duckPlayerOpenInNewTab = "com.duckduckgo.ios.duckPlayerOpenInNewTab"
@@ -146,7 +146,7 @@ public class AppUserDefaults: AppSettings {
         }
         
     }
-    
+
     var autoClearAction: AutoClearSettingsModel.Action {
         
         get {

@@ -21,6 +21,7 @@ import Foundation
 import SwiftUI
 import DesignResourcesKit
 import Core
+import Networking
 
 struct SubscriptionSettingsView: View {
 
@@ -243,7 +244,10 @@ struct SubscriptionSettingsView: View {
 
     @ViewBuilder
     private var supportButton: some View {
-        let viewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector(), source: .ppro)
+        let viewModel = UnifiedFeedbackFormViewModel(subscriptionManager: settingsViewModel.subscriptionManager,
+                                                     apiService: DefaultAPIService(),
+                                                     vpnMetadataCollector: DefaultVPNMetadataCollector(),
+                                                     source: .ppro)
         NavigationLink(UserText.subscriptionFeedback, destination: UnifiedFeedbackRootView(viewModel: viewModel))
             .daxBodyRegular()
             .foregroundColor(.init(designSystemColor: .textPrimary))

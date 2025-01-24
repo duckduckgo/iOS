@@ -24,7 +24,11 @@ final class MockFeatureFlagger: FeatureFlagger {
     var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider(store: MockInternalUserStoring())
     var localOverrides: FeatureFlagLocalOverriding?
 
+    var mockActiveExperiments: [String: ExperimentData] = [:]
+
     var enabledFeatureFlags: [FeatureFlag] = []
+
+    var cohortToReturn: (any FlagCohort)?
 
     init(enabledFeatureFlags: [FeatureFlag] = []) {
         self.enabledFeatureFlags = enabledFeatureFlags
@@ -38,5 +42,17 @@ final class MockFeatureFlagger: FeatureFlagger {
             return false
         }
         return true
+    }
+
+    func getCohortIfEnabled(_ subfeature: any PrivacySubfeature) -> CohortID? {
+        return nil
+    }
+
+    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag: FeatureFlagExperimentDescribing {
+        return cohortToReturn
+    }
+
+    func getAllActiveExperiments() -> Experiments {
+        mockActiveExperiments
     }
 }

@@ -101,7 +101,8 @@ public class SyncDataProviders: DataProvidersSource {
         settingHandlers: [SettingSyncHandler],
         favoritesDisplayModeStorage: FavoritesDisplayModeStoring,
         syncErrorHandler: SyncErrorHandling,
-        faviconStoring: FaviconStoring
+        faviconStoring: FaviconStoring,
+        tld: TLD
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.secureVaultFactory = secureVaultFactory
@@ -112,7 +113,8 @@ public class SyncDataProviders: DataProvidersSource {
                                                 faviconStoring: faviconStoring)
         credentialsAdapter = SyncCredentialsAdapter(secureVaultFactory: secureVaultFactory,
                                                     secureVaultErrorReporter: secureVaultErrorReporter,
-                                                    syncErrorHandler: syncErrorHandler)
+                                                    syncErrorHandler: syncErrorHandler,
+                                                    tld: tld)
         settingsAdapter = SyncSettingsAdapter(settingHandlers: settingHandlers,
                                               syncErrorHandler: syncErrorHandler)
     }

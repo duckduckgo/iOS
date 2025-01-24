@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Închidere";
+
+/* Done button title */
+"action.button.done" = "Terminat";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "Deschide DuckDuckGo";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Completarea automată a parolelor a fost activată!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "dispozitiv";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Renunță";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Deblochează dispozitivul pentru a accesa parolele";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "URL-ul site-ului";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "Copiază %@";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Adresă copiată";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Note copiate";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Parolă copiată";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Numele de utilizator a fost copiat";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Ascunde parola";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Ultima actualizare la %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Titlu";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Note";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Parolă";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Arată parola";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Nume utilizator";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Parolele sunt stocate în siguranță pe dispozitivul tău.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Nici o parolă nu a fost salvată încă";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Alege o parolă pe care să o utilizezi pentru „%@”";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Caută parole";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "pentru „%@”";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Niciun rezultat";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Sugerat";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Parole";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Setează o parolă pe %@ pentru a-ți completa automat parolele DuckDuckGo.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Codul de acces al dispozitivului este necesar";
+

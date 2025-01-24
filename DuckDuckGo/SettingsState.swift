@@ -37,17 +37,23 @@ struct SettingsState {
     }
 
     struct Subscription: Codable {
-        var enabled: Bool
         var canPurchase: Bool
         var isSignedIn: Bool
         var hasActiveSubscription: Bool
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
+        var subscriptionFeatures: [Entitlement.ProductName]
         var entitlements: [Entitlement.ProductName]
         var platform: DDGSubscription.Platform
         var isShowingStripeView: Bool
     }
-    
+
+    struct AIChat: Codable {
+        var enabled: Bool
+        var isAIChatBrowsingMenuFeatureFlagEnabled: Bool
+        var isAIChatAddressBarFeatureFlagEnabled: Bool
+    }
+
     struct SyncSettings {
         var enabled: Bool
         var title: String
@@ -101,7 +107,10 @@ struct SettingsState {
     var duckPlayerMode: DuckPlayerMode?
     var duckPlayerOpenInNewTab: Bool
     var duckPlayerOpenInNewTabEnabled: Bool
-    
+
+    // AI Chat
+    var aiChat: AIChat
+
     static var defaults: SettingsState {
         return SettingsState(
             appTheme: .systemDefault,
@@ -126,12 +135,12 @@ struct SettingsState {
             speechRecognitionAvailable: false,
             loginsEnabled: false,
             networkProtectionConnected: false,
-            subscription: Subscription(enabled: false,
-                                       canPurchase: false,
+            subscription: Subscription(canPurchase: false,
                                        isSignedIn: false,
                                        hasActiveSubscription: false,
                                        isRestoring: false,
                                        shouldDisplayRestoreSubscriptionError: false,
+                                       subscriptionFeatures: [],
                                        entitlements: [],
                                        platform: .unknown,
                                        isShowingStripeView: false),
@@ -140,7 +149,10 @@ struct SettingsState {
             duckPlayerEnabled: false,
             duckPlayerMode: .alwaysAsk,
             duckPlayerOpenInNewTab: true,
-            duckPlayerOpenInNewTabEnabled: false
+            duckPlayerOpenInNewTabEnabled: false,
+            aiChat: AIChat(enabled: false,
+                                  isAIChatBrowsingMenuFeatureFlagEnabled: false,
+                                  isAIChatAddressBarFeatureFlagEnabled: false)
         )
     }
 }

@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Stäng";
+
+/* Done button title */
+"action.button.done" = "Klart";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "Öppna DuckDuckGo";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Automatisk ifyllning av lösenord har aktiverats!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "enhet";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Avbryt";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Lås upp enheten för att komma åt lösenord";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "Webbplats-URL";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "Kopiera %@";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Adress kopierad";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Anteckningar kopierade";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Lösenord kopierat";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Användarnamn kopierat";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Dölj lösenord";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Uppdaterades senast %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Rubrik";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Anteckningar";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Lösenord";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Visa lösenord";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Användarnamn";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Lösenord lagras säkert på din enhet.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Inga lösenord sparade ännu";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Välj ett lösenord att använda för %@";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Sök lösenord";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "för ”%@”";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Inga resultat";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Förslag";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Lösenord";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Ställ in en lösenkod på %@ för att automatiskt fylla i dina DuckDuckGo-lösenord.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Enhetens lösenkod krävs";
+

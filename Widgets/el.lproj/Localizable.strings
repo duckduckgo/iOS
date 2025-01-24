@@ -1,8 +1,5 @@
-/* No comment provided by engineer. */
-"iOS 17 required" = "iOS 17 required";
-
-/* No comment provided by engineer. */
-"Label" = "Label";
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Πρέπει να ενεργοποιήσετε το VPN από την εφαρμογή DuckDuckGo.";
 
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Δημιουργήστε αμέσως μια νέα ιδιωτική διεύθυνση Duck Address.";
@@ -39,6 +36,24 @@
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Φωνητική αναζήτηση";
+
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Σύνδεση...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Αποσύνδεση...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Άγνωστη τοποθεσία";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Δεν έχει συνδεθεί";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "Το VPN είναι απενεργοποιημένο";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "Το VPN είναι ενεργοποιημένο";
 
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Αναζητήστε γρήγορα τους αποθηκευμένους κωδικούς πρόσβασής σας στο DuckDuckGo.";
@@ -82,11 +97,29 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Αποσύνδεση";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Μέχρι %@";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Απόρριψη";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Αφύπνιση";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "Το VPN είναι ενεργοποιημένο";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "Αναστολή VPN";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "Το VPN είναι ενεργοποιημένο";
 
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "Το VPN είναι απενεργοποιημένο";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "Το VPN είναι σε αναστολή";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Δεν έχει συνδεθεί";

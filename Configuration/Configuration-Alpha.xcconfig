@@ -19,7 +19,8 @@
 
 #include "DuckDuckGoDeveloper.xcconfig"
 #include? "ExternalDeveloper.xcconfig"
-#include? "Version.xcconfig"
+#include "Version.xcconfig"
+#include "BuildNumber.xcconfig"
 
 // The app bundle identifier
 APP_ID = com.duckduckgo.mobile.ios.alpha
@@ -29,6 +30,9 @@ GROUP_ID_PREFIX = group.com.duckduckgo.alpha
 
 // The keychain access group for subscriptions
 SUBSCRIPTION_APP_GROUP = com.duckduckgo.subscriptions.alpha
+
+// The keychain access group for secure vault
+VAULT_APP_GROUP = com.duckduckgo.vault.alpha
 
 // Prevents asserts from crashing alpha TF builds
 OTHER_SWIFT_FLAGS[config=Alpha][arch=*][sdk=*] = $(inherited) -assert-config Release

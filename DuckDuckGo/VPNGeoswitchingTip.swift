@@ -26,18 +26,23 @@ struct VPNGeoswitchingTip {}
 @available(iOS 17.0, *)
 extension VPNGeoswitchingTip: Tip {
 
-    private static let vpnConnectedEvent = Tips.Event(id: "com.duckduckgo.vpn.tip.geoswitching.vpnConnectedEvent")
+    /// Where the VPN was ever enabled.
+    ///
+    /// Once set this is never unset.  The tip doesn't need to be hidden when the user is disconnected.
+    ///
+    @Parameter
+    static var vpnEnabledOnce: Bool = false
 
     var id: String {
         "com.duckduckgo.vpn.tip.geoswitching"
     }
 
     var title: Text {
-        Text("Change Your Location")
+        Text(UserText.networkProtectionGeoswitchingTipTitle)
     }
 
     var message: Text? {
-        Text("You can customize your VPN location by connecting to any of our servers worldwide.")
+        Text(UserText.networkProtectionGeoswitchingTipMessage)
     }
 
     var image: Image? {
@@ -45,14 +50,8 @@ extension VPNGeoswitchingTip: Tip {
     }
 
     var rules: [Rule] {
-        #Rule(Self.vpnConnectedEvent) {
-            $0.donations.donatedWithin(.week).count > 0
-        }
-    }
-
-    static func donateVPNConnectedEvent() {
-        Task {
-            await vpnConnectedEvent.donate()
+        #Rule(Self.$vpnEnabledOnce) {
+            $0
         }
     }
 }

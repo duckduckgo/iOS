@@ -1,8 +1,5 @@
-/* No comment provided by engineer. */
-"iOS 17 required" = "iOS 17 required";
-
-/* No comment provided by engineer. */
-"Label" = "Silt";
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Peate lubama VPN-i rakenduses DuckDuckGo.";
 
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Loo hetkega uus privaatne Duck Address.";
@@ -39,6 +36,24 @@
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Häälotsing";
+
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Ühendamine...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Katkestamine...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Tundmatu asukoht";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Ei ole ühendatud";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN on Väljas";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN on Sees";
 
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Otsi kiiresti oma salvestatud DuckDuckGo paroole.";
@@ -82,11 +97,29 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Katkesta ühendus";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Kuni %@";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Loobu";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Ärata";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "VPN on Sees";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "VPN-i peatamine";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN on Sees";
 
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "VPN on Väljas";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "VPN on uinutatud";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Ei ole ühendatud";

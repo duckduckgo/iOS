@@ -1,0 +1,156 @@
+name: iOS - Make App Store Connect Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      destination:
+        description: "Upload destination (App Store or TestFlight)"
+        required: true
+        default: testflight
+        type: choice
+        options:
+        - appstore
+        - testflight
+      asana-task-url:
+        description: "Asana release task URL"
+        required: false
+        type: string
+  workflow_call:
+    inputs:
+      asana-task-url:
+        description: "Asana release task URL"
+        required: true
+        type: string
+      branch:
+        description: "Branch name"
+        required: false
+        type: string
+      destination: 
+        description: "Upload destination (TestFlight or App Store)"
+        required: false
+        default: testflight
+        type: string
+    secrets:
+      APPLE_API_KEY_BASE64:
+        required: true
+      APPLE_API_KEY_ID:
+        required: true
+      APPLE_API_KEY_ISSUER:
+        required: true
+      ASANA_ACCESS_TOKEN:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      MATCH_PASSWORD:
+        required: true
+      MM_WEBHOOK_URL:
+        required: true
+      SSH_PRIVATE_KEY_FASTLANE_MATCH:
+        required: true
+
+jobs:
+  make-release:
+    runs-on: macos-15-xlarge
+    name: Make App Store Connect Release
+
+    env:
+      destination: ${{ github.event.inputs.destination || inputs.destination }}
+      asana-task-url: ${{ github.event.inputs.asana-task-url || inputs.asana-task-url }}
+      branch: ${{ inputs.branch || github.ref_name }}
+
+    steps:
+
+    - name: Set destination output
+      id: destination
+      run: |
+        INPUT_DESTINATION=${{ github.event.inputs.destination }}
+        echo "destination=${INPUT_DESTINATION:-"testflight"}" >> $GITHUB_OUTPUT
+
+    - name: Assert release branch
+      run: |
+        case "${branch}" in
+          *release/*) ;;
+          *hotfix/*) ;;
+          *coldfix/*) ;;
+          *) echo "👎 Not a release, hotfix, or coldfix branch"; exit 1 ;;
+        esac
+
+    - name: Register SSH keys for access to certificates
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
+
+    - name: Check out the code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        ref: ${{ env.branch }}
+
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
+
+    - name: Prepare fastlane
+      run: bundle install
+
+    - name: Archive and upload the app
+      env:
+        APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+        APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+        APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      run: |
+        app_version="$(cut -d ' ' -f 3 < Configuration/Version.xcconfig)"
+        echo "dsyms_path=${{ github.workspace }}/DuckDuckGo.app.dSYM.zip" >> $GITHUB_ENV
+        echo "app_version=${app_version}" >> $GITHUB_ENV
+        bundle exec fastlane release_${{ steps.destination.outputs.destination }}
+
+    - name: Upload dSYMs artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: DuckDuckGo-${{ steps.destination.outputs.destination }}-dSYM-${{ env.app_version }}
+        path: ${{ env.dsyms_path }}
+
+    - name: Extract Asana Task ID
+      id: task-id
+      run: bundle exec fastlane run asana_extract_task_id task_url:"${{ env.asana-task-url }}"
+
+    - name: Upload debug symbols to Asana
+      if: ${{ always() && github.event.inputs.asana-task-url }}
+      env:
+        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+      run: |
+        if [[ -f ${{ env.dsyms_path }} ]]; then
+          asana_dsyms_path="${{ github.workspace }}/DuckDuckGo-${{ env.app_version }}-dSYM.zip"
+          mv -f "${{ env.dsyms_path }}" "$asana_dsyms_path"
+
+          curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.task-id.outputs.task_id }}/attachments" \
+            -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+            --form "file=@${asana_dsyms_path};type=application/zip"
+        fi
+
+    - name: Upload debug symbols to S3
+      if: always()
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
+        DSYM_S3_PATH: s3://${{ vars.DSYM_BUCKET_NAME }}/${{ vars.IOS_DSYM_BUCKET_PREFIX }}/
+      run: |
+        if [[ -f ${{ env.dsyms_path }} ]]; then
+          aws s3 cp "${{ env.dsyms_path }}" ${{ env.DSYM_S3_PATH }}
+        fi
+
+    - name: Send Mattermost message
+      if: success() || failure()
+      env:
+        WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        DESTINATION: ${{ env.destination }}
+        PLATFORM: iOS
+      run: |
+        bundle exec fastlane run mattermost_send_message \
+          mattermost_webhook_url:${{ secrets.MM_WEBHOOK_URL }} \
+          github_handle:${{ github.actor }} \
+          template_name:$([[ "${{ job.status }}" == "success" ]] && echo "public-release-complete" || echo "public-release-failed")

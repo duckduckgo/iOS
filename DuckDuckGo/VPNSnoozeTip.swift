@@ -32,7 +32,14 @@ extension VPNSnoozeTip: Tip {
         case learnMore = "com.duckduckgo.vpn.tip.snooze.learnMoreId"
     }
 
-    static let geolocationTipDismissedEvent = Tips.Event(id: "com.duckduckgo.vpn.tip.snooze.geolocationTipDismissedEvent")
+    /// This condition tries to verify that this tip is distanced from the previous tip..
+    ///
+    /// The conditions that will trigger this are:
+    ///     - The status view was opened when previous tip's status is invalidated.
+    ///     - The VPN is enabled when previous tip's status is invalidated.
+    ///
+    @Parameter
+    static var isDistancedFromPreviousTip: Bool = false
 
     @Parameter(.transient)
     static var vpnEnabled: Bool = false
@@ -42,11 +49,11 @@ extension VPNSnoozeTip: Tip {
     }
 
     var title: Text {
-        Text("Avoid VPN Conflicts")
+        Text(UserText.networkProtectionSnoozeTipTitle)
     }
 
     var message: Text? {
-        Text("You can use sites or apps that block VPN traffic by snoozing the VPN connection.")
+        Text(UserText.networkProtectionSnoozeTipMessage)
     }
 
     var image: Image? {
@@ -55,17 +62,17 @@ extension VPNSnoozeTip: Tip {
 
     var actions: [Action] {
         [Action(id: ActionIdentifiers.learnMore.rawValue) {
-            Text("Learn more")
+            Text(UserText.networkProtectionSnoozeTipAction)
                 .foregroundStyle(Color(designSystemColor: .accent))
         }]
     }
 
     var rules: [Rule] {
-        #Rule(Self.geolocationTipDismissedEvent) {
-            $0.donations.count > 0
-        }
         #Rule(Self.$vpnEnabled) {
             $0 == true
+        }
+        #Rule(Self.$isDistancedFromPreviousTip) {
+            $0
         }
     }
 }

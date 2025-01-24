@@ -51,7 +51,7 @@ protocol TextZoomCoordinating {
     func onTextZoomChange(applyToWebView webView: WKWebView)
 
     /// Shows a text zoom editor for the current webview. Does nothing if the feature is disabled.
-    func showTextZoomEditor(inController controller: UIViewController, forWebView webView: WKWebView)
+    func showTextZoomEditor(inController controller: UIViewController, forWebView webView: WKWebView) async
 
     /// Creates a browsing menu entry for the given link.  Returns nil if the feature is disabled.
     func makeBrowsingMenuEntry(forLink: Link, inController controller: UIViewController, forWebView webView: WKWebView) -> BrowsingMenuEntry?
@@ -63,19 +63,21 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     let appSettings: AppSettings
     let storage: TextZoomStoring
     let featureFlagger: FeatureFlagger
+    let tld: TLD
 
     var isEnabled: Bool {
         featureFlagger.isFeatureOn(.textZoom)
     }
 
-    init(appSettings: AppSettings, storage: TextZoomStoring, featureFlagger: FeatureFlagger) {
+    init(appSettings: AppSettings, storage: TextZoomStoring, featureFlagger: FeatureFlagger, tld: TLD = TLD()) {
         self.appSettings = appSettings
         self.storage = storage
         self.featureFlagger = featureFlagger
+        self.tld = tld
     }
 
     func textZoomLevel(forHost host: String?) -> TextZoomLevel {
-        let domain = TLD().eTLDplus1(host) ?? ""
+        let domain = tld.eTLDplus1(host) ?? ""
         // If the webview returns no host then there won't be a setting for a blank string anyway.
         return storage.textZoomLevelForDomain(domain)
             // And if there's no setting for whatever domain is passed in, use the app default
@@ -83,7 +85,7 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     }
 
     func set(textZoomLevel level: TextZoomLevel, forHost host: String?) {
-        guard let domain = TLD().eTLDplus1(host) else { return }
+        guard let domain = tld.eTLDplus1(host) else { return }
         if level == appSettings.defaultTextZoomLevel {
             storage.removeTextZoomLevel(forDomain: domain)
         } else {
@@ -110,8 +112,7 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     private func applyTextZoom(_ webView: WKWebView) {
         guard isEnabled else { return }
         let level = textZoomLevel(forHost: webView.url?.host)
-        let dynamicTypeScalePercentage = UIFontMetrics.default.scaledValue(for: 1.0)
-        let viewScale = CGFloat(level.rawValue) / 100 * dynamicTypeScalePercentage
+        let viewScale = CGFloat(level.rawValue) / 100
         webView.applyViewScale(viewScale)
     }
 
@@ -119,7 +120,7 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     func showTextZoomEditor(inController controller: UIViewController, forWebView webView: WKWebView) {
         guard isEnabled else { return }
 
-        guard let domain = TLD().eTLDplus1(webView.url?.host) else { return }
+        guard let domain = tld.eTLDplus1(webView.url?.host) else { return }
         let zoomController = TextZoomController(
             domain: domain,
             coordinator: self,
@@ -148,7 +149,7 @@ final class TextZoomCoordinator: TextZoomCoordinating {
         guard isEnabled else { return nil }
 
         let label: String
-        if let domain = TLD().eTLDplus1(link.url.host),
+        if let domain = tld.eTLDplus1(link.url.host),
            let level = storage.textZoomLevelForDomain(domain) {
             label = UserText.textZoomWithPercentForMenuItem(level.rawValue)
         } else {

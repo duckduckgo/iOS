@@ -19,6 +19,7 @@
 
 import SwiftUI
 import UIKit
+import Networking
 
 struct SettingsOthersView: View {
 
@@ -34,9 +35,12 @@ struct SettingsOthersView: View {
 
             // Share Feedback
             if viewModel.usesUnifiedFeedbackForm {
-                let formViewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector(), source: .settings)
+                let formViewModel = UnifiedFeedbackFormViewModel(subscriptionManager: viewModel.subscriptionManager,
+                                                                 apiService: DefaultAPIService(),
+                                                                 vpnMetadataCollector: DefaultVPNMetadataCollector(),
+                                                                 source: .settings)
                 NavigationLink {
-                    UnifiedFeedbackCategoryView(UserText.subscriptionFeedback, sources: UnifiedFeedbackFlowCategory.self, selection: $viewModel.selectedFeedbackFlow) {
+                    UnifiedFeedbackCategoryView(UserText.subscriptionFeedback, options: UnifiedFeedbackFlowCategory.allCases, selection: $viewModel.selectedFeedbackFlow) {
                         if let selectedFeedbackFlow = viewModel.selectedFeedbackFlow {
                             switch UnifiedFeedbackFlowCategory(rawValue: selectedFeedbackFlow) {
                             case nil:

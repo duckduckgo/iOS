@@ -20,6 +20,7 @@
 import SwiftUI
 import NetworkProtection
 import TipKit
+import Networking
 
 struct NetworkProtectionStatusView: View {
 
@@ -30,48 +31,9 @@ struct NetworkProtectionStatusView: View {
     @ObservedObject
     public var statusModel: NetworkProtectionStatusViewModel
 
-    // MARK: - Tips
-
-    let geoswitchingTip: VPNGeoswitchingTip = {
-        let tip = VPNGeoswitchingTip()
-
-        if #available(iOS 17.0, *) {
-            if tip.shouldDisplay {
-                Task {
-                    for await status in tip.statusUpdates {
-                        if case .invalidated = status {
-                            await VPNSnoozeTip.geolocationTipDismissedEvent.donate()
-                            await VPNAddWidgetTip.geolocationTipDismissedEvent.donate()
-                        }
-                    }
-                }
-            }
-        }
-
-        return tip
-    }()
-
-    let snoozeTip: VPNSnoozeTip = {
-        let tip = VPNSnoozeTip()
-
-        if #available(iOS 17.0, *) {
-            if tip.shouldDisplay {
-                Task {
-                    for await status in tip.statusUpdates {
-                        if case .invalidated = status {
-                            await VPNAddWidgetTip.snoozeTipDismissedEvent.donate()
-                        }
-                    }
-                }
-            }
-        }
-
-        return tip
-    }()
-
-    let widgetTip: VPNAddWidgetTip = {
-        VPNAddWidgetTip()
-    }()
+    var tipsModel: VPNTipsModel {
+        statusModel.tipsModel
+    }
 
     // MARK: - View
 
@@ -103,7 +65,19 @@ struct NetworkProtectionStatusView: View {
         })
         .applyInsetGroupedListStyle()
         .sheet(isPresented: $statusModel.showAddWidgetEducationView) {
-            widgetEducationSheet()
+            if #available(iOS 17.0, *) {
+                widgetEducationSheet()
+            }
+        }
+        .onAppear {
+            if #available(iOS 18.0, *) {
+                tipsModel.handleStatusViewAppear()
+            }
+        }
+        .onDisappear {
+            if #available(iOS 18.0, *) {
+                tipsModel.handleStatusViewDisappear()
+            }
         }
     }
 
@@ -309,7 +283,10 @@ struct NetworkProtectionStatusView: View {
 
     @ViewBuilder
     private func about() -> some View {
-        let viewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector(), source: .vpn)
+        let viewModel = UnifiedFeedbackFormViewModel(subscriptionManager: statusModel.subscriptionManager,
+                                                     apiService: DefaultAPIService(),
+                                                     vpnMetadataCollector: DefaultVPNMetadataCollector(),
+                                                     source: .vpn)
 
         Section {
             NavigationLink(UserText.netPVPNSettingsFAQ, destination: LazyView(NetworkProtectionFAQView()))
@@ -355,11 +332,26 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func geoswitchingTipView() -> some View {
         if statusModel.canShowTips {
-
-            TipView(geoswitchingTip)
+            TipView(tipsModel.geoswitchingTip)
                 .removeGroupedListStyleInsets()
                 .tipCornerRadius(0)
                 .tipBackground(Color(designSystemColor: .surface))
+                .onAppear {
+                    tipsModel.handleGeoswitchingTipShown()
+                }
+                .task {
+                    var previousStatus = tipsModel.geoswitchingTip.status
+
+                    for await status in tipsModel.geoswitchingTip.statusUpdates {
+                        if case .invalidated(let reason) = status {
+                            if case .available = previousStatus {
+                                tipsModel.handleGeoswitchingTipInvalidated(reason)
+                            }
+                        }
+
+                        previousStatus = status
+                    }
+                }
         }
     }
 
@@ -369,10 +361,26 @@ struct NetworkProtectionStatusView: View {
         if statusModel.canShowTips,
            statusModel.hasServerInfo {
 
-            TipView(snoozeTip, action: statusModel.snoozeActionHandler(action:))
+            TipView(tipsModel.snoozeTip, action: statusModel.snoozeActionHandler(action:))
                 .removeGroupedListStyleInsets()
                 .tipCornerRadius(0)
                 .tipBackground(Color(designSystemColor: .surface))
+                .onAppear {
+                    tipsModel.handleSnoozeTipShown()
+                }
+                .task {
+                    var previousStatus = tipsModel.snoozeTip.status
+
+                    for await status in tipsModel.snoozeTip.statusUpdates {
+                        if case .invalidated(let reason) = status {
+                            if case .available = previousStatus {
+                                tipsModel.handleSnoozeTipInvalidated(reason)
+                            }
+                        }
+
+                        previousStatus = status
+                    }
+                }
         }
     }
 
@@ -382,15 +390,32 @@ struct NetworkProtectionStatusView: View {
         if statusModel.canShowTips,
            !statusModel.isNetPEnabled && !statusModel.isSnoozing {
 
-            TipView(widgetTip, action: statusModel.widgetActionHandler(action:))
+            TipView(tipsModel.widgetTip, action: statusModel.widgetActionHandler(action:))
                 .removeGroupedListStyleInsets()
                 .tipCornerRadius(0)
                 .tipBackground(Color(designSystemColor: .surface))
+                .onAppear {
+                    tipsModel.handleWidgetTipShown()
+                }
+                .task {
+                    var previousStatus = tipsModel.widgetTip.status
+
+                    for await status in tipsModel.widgetTip.statusUpdates {
+                        if case .invalidated(let reason) = status {
+                            if case .available = previousStatus {
+                                tipsModel.handleWidgetTipInvalidated(reason)
+                            }
+                        }
+
+                        previousStatus = status
+                    }
+                }
         }
     }
 
     // MARK: - Sheets
 
+    @available(iOS 17.0, *)
     private func widgetEducationSheet() -> some View {
         NavigationView {
             WidgetEducationView()

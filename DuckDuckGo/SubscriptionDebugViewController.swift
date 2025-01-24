@@ -22,12 +22,17 @@ import UIKit
 import Subscription
 import Core
 import NetworkProtection
+import StoreKit
+import BrowserServicesKit
 
 final class SubscriptionDebugViewController: UITableViewController {
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
     private var subscriptionManager: SubscriptionManager {
         AppDependencyProvider.shared.subscriptionManager
+    }
+    private var featureFlagger: FeatureFlagger {
+        AppDependencyProvider.shared.featureFlagger
     }
 
     // swiftlint:disable:next force_cast
@@ -39,6 +44,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         Sections.appstore: "App Store",
         Sections.environment: "Environment",
         Sections.pixels: "Promo Pixel Parameters",
+        Sections.metadata: "StoreKit Metadata"
     ]
 
     enum Sections: Int, CaseIterable {
@@ -47,6 +53,8 @@ final class SubscriptionDebugViewController: UITableViewController {
         case appstore
         case environment
         case pixels
+        case metadata
+        case featureFlags
     }
 
     enum AuthorizationRows: Int, CaseIterable {
@@ -74,8 +82,26 @@ final class SubscriptionDebugViewController: UITableViewController {
         case randomize
     }
 
+    enum MetadataRows: Int, CaseIterable {
+        case storefrontID
+        case countryCode
+    }
+
+    enum FeatureFlagRows: Int, CaseIterable {
+        case privacyProFreeTrialJan25
+    }
+
+    private var storefrontID = "Loading"
+    private var storefrontCountryCode = "Loading"
+    private let freeTrialKey = FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadStoreKitMetadata()
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -145,6 +171,28 @@ final class SubscriptionDebugViewController: UITableViewController {
             case .none:
                 break
             }
+
+        case .metadata:
+            switch MetadataRows(rawValue: indexPath.row) {
+            case .storefrontID:
+                cell.textLabel?.text = "Storefront ID"
+                cell.detailTextLabel?.text = storefrontID
+            case .countryCode:
+                cell.textLabel?.text = "Country Code"
+                cell.detailTextLabel?.text = storefrontCountryCode
+            case .none:
+                break
+            }
+
+        case .featureFlags:
+            switch FeatureFlagRows(rawValue: indexPath.row) {
+            case .privacyProFreeTrialJan25:
+                cell.textLabel?.text = "privacyProFreeTrialJan25"
+                cell.accessoryType = UserDefaults.standard.bool(forKey: freeTrialKey) ? .checkmark : .none
+            case .none:
+                break
+            }
+
         case .none:
             break
         }
@@ -159,8 +207,9 @@ final class SubscriptionDebugViewController: UITableViewController {
         case .appstore: return AppStoreRows.allCases.count
         case .environment: return EnvironmentRows.allCases.count
         case .pixels: return PixelsRows.allCases.count
+        case .metadata: return MetadataRows.allCases.count
+        case .featureFlags: return FeatureFlagRows.allCases.count
         case .none: return 0
-
         }
     }
 
@@ -191,6 +240,13 @@ final class SubscriptionDebugViewController: UITableViewController {
         case .pixels:
             switch PixelsRows(rawValue: indexPath.row) {
             case .randomize: showRandomizedParamters()
+            default: break
+            }
+        case .metadata:
+            break
+        case .featureFlags:
+            switch FeatureFlagRows(rawValue: indexPath.row) {
+            case .privacyProFreeTrialJan25: togglePrivacyProFreeTrialJan25Flag()
             default: break
             }
         case .none:
@@ -239,8 +295,6 @@ final class SubscriptionDebugViewController: UITableViewController {
             self.present(alertController, animated: true, completion: nil)
         }
     }
-
-//    func showAlert(title: String, message: String, alternativeAction)
 
     // MARK: Account Status Actions
 
@@ -299,6 +353,12 @@ final class SubscriptionDebugViewController: UITableViewController {
                 Randomized: \(reportedParameters.joined(separator: ", "))
                 """
         showAlert(title: "", message: message)
+    }
+
+    private func togglePrivacyProFreeTrialJan25Flag() {
+        let currentValue = UserDefaults.standard.bool(forKey: freeTrialKey)
+        UserDefaults.standard.set(!currentValue, forKey: freeTrialKey)
+        tableView.reloadData()
     }
 
     private func syncAppleIDAccount() {
@@ -387,6 +447,15 @@ final class SubscriptionDebugViewController: UITableViewController {
                 settings.selectedEnvironment = .staging
             }
             NetworkProtectionLocationListCompositeRepository.clearCache()
+        }
+    }
+
+    private func loadStoreKitMetadata() {
+        Task { @MainActor in
+            let storefront = await Storefront.current
+            self.storefrontID = storefront?.id ?? "nil"
+            self.storefrontCountryCode = storefront?.countryCode ?? "nil"
+            self.tableView.reloadData()
         }
     }
 }

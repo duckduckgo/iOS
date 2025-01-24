@@ -23,6 +23,7 @@ import Combine
 import DDGSync
 import SecureStorage
 import Core
+import Common
 @testable import DuckDuckGo
 
 final class SyncCredentialsAdapterTests: XCTestCase {
@@ -34,7 +35,7 @@ final class SyncCredentialsAdapterTests: XCTestCase {
 
     override func setUpWithError() throws {
         errorHandler = CapturingAdapterErrorHandler()
-        adapter = SyncCredentialsAdapter(secureVaultErrorReporter: MockSecureVaultReporting(), syncErrorHandler: errorHandler)
+        adapter = SyncCredentialsAdapter(secureVaultErrorReporter: MockSecureVaultReporting(), syncErrorHandler: errorHandler, tld: TLD())
         cancellables = []
     }
 

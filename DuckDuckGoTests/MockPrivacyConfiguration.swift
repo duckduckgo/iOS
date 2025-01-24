@@ -35,6 +35,18 @@ class MockPrivacyConfiguration: PrivacyConfiguration {
         return .disabled(.disabledInConfig)
     }
 
+    func stateFor(subfeatureID: SubfeatureID, parentFeatureID: ParentFeatureID, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> PrivacyConfigurationFeatureState {
+        return .disabled(.disabledInConfig)
+    }
+
+    func cohorts(for subfeature: any PrivacySubfeature) -> [PrivacyConfigurationData.Cohort]? {
+        return nil
+    }
+
+    func cohorts(subfeatureID: SubfeatureID, parentFeatureID: ParentFeatureID) -> [PrivacyConfigurationData.Cohort]? {
+        return nil
+    }
+
     var identifier: String = "MockPrivacyConfiguration"
     var version: String? = "123456789"
     var userUnprotectedDomains: [String] = []
@@ -43,6 +55,11 @@ class MockPrivacyConfiguration: PrivacyConfiguration {
                                                                             state: PrivacyConfigurationData.State.enabled)
     var exceptionsList: (PrivacyFeature) -> [String] = { _ in [] }
     var featureSettings: PrivacyConfigurationData.PrivacyFeature.FeatureSettings = [:]
+
+    var subfeatureSettings: String?
+    func settings(for subfeature: any PrivacySubfeature) -> PrivacyConfigurationData.PrivacyFeature.SubfeatureSettings? {
+        return subfeatureSettings
+    }
 
     func exceptionsList(forFeature featureKey: PrivacyFeature) -> [String] { exceptionsList(featureKey) }
     var isFeatureKeyEnabled: ((PrivacyFeature, AppVersionProvider) -> Bool)?

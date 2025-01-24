@@ -1,8 +1,5 @@
-/* No comment provided by engineer. */
-"iOS 17 required" = "Reikalinga „iOS 17“";
-
-/* No comment provided by engineer. */
-"Label" = "Etiketė";
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Reikia įjungti VPN iš „DuckDuckGo“ programėlės.";
 
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Nedelsiant sugeneruokite naują privatų „Duck Address“.";
@@ -39,6 +36,24 @@
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Paieška balsu";
+
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Jungiamasi...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Atsijungiama...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Nežinoma vieta";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Neprijungta";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN išjungtas";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN įjungtas";
 
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Greitai ieškokite išsaugotų „DuckDuckGo“ slaptažodžių.";
@@ -82,11 +97,29 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Atjungti";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Iki %@";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Atmesti";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Atšaukti pristabdymą";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "VPN įjungtas";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "VPN pristabdymas";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN įjungtas";
 
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "VPN išjungtas";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "VPN pristabdytas";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Neprijungta";

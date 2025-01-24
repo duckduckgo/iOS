@@ -1,0 +1,17 @@
+name: iOS - Danger JS
+on:
+  pull_request:
+    types: [labeled, unlabeled, opened, reopened, edited, synchronize]
+
+jobs:
+  build:
+    name: Danger JS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Danger
+        uses: danger/danger-js@11.2.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: "--dangerfile duckduckgo/danger-settings/org/allPRs.ts@main"

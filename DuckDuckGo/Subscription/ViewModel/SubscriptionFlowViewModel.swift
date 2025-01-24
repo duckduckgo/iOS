@@ -115,15 +115,17 @@ final class SubscriptionFlowViewModel: ObservableObject {
          subFeature.onFeatureSelected = { feature in
              DispatchQueue.main.async {
                  switch feature {
-                 case .netP:
+                 case .networkProtection:
                      UniquePixel.fire(pixel: .privacyProWelcomeVPN)
                      self.state.selectedFeature = .netP
-                 case .dbp:
+                 case .dataBrokerProtection:
                      UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
                      self.state.selectedFeature = .dbp
-                 case .itr:
+                 case .identityTheftRestoration, .identityTheftRestorationGlobal:
                      UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
                      self.state.selectedFeature = .itr
+                 case .unknown:
+                     break
                  }
              }
          }
@@ -181,7 +183,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             isBackendError = true
             state.transactionError = .hasActiveSubscription
         case .cancelledByUser:
-            state.transactionError = nil
+            state.transactionError = .cancelledByUser
         case .accountCreationFailed:
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureAccountNotCreated,
                                          pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)

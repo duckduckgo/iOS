@@ -1,0 +1,72 @@
+# local-storage.yaml
+appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
+---
+
+# Set up 
+- runFlow: 
+    file: ../shared/setup.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site/features/local-storage.html"
+- pressKey: Enter
+
+# Add a cookie
+- assertVisible: "Storage Counter: undefined"
+- assertVisible: "Cookie Counter:"
+- assertNotVisible: "Cookie Counter: 1"
+- assertNotVisible: "Storage Counter: 1"
+- assertVisible: "Manual Increment"
+- tapOn: "Manual Increment"
+- tapOn: "Manual Increment"
+- assertVisible: "Cookie Counter: 2"
+- assertVisible: "Storage Counter: 2"
+
+# Fireproofing
+- tapOn: "Browsing menu"
+- tapOn: "Fireproof This Site"
+- tapOn: "Fireproof"
+
+# Fire button
+- tapOn: "Close Tabs and Clear Data"
+- tapOn: "Close Tabs and Clear Data"
+
+- assertNotVisible: "https://privacy-test-pages.site/features/local-storage.html"
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+
+- inputText: "https://privacy-test-pages.site/features/local-storage.html"
+- pressKey: Enter
+- assertVisible: "Storage Counter: 2"
+- assertVisible: "Cookie Counter: 2"
+
+# Remove Fireproofing
+- tapOn: "Browsing menu"
+- tapOn: "Remove Fireproofing"
+
+# Fire button
+- tapOn: "Close Tabs and Clear Data"
+- tapOn: "Close Tabs and Clear Data"
+
+- assertNotVisible: "https://privacy-test-pages.site/features/local-storage.html"
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+
+- inputText: "https://privacy-test-pages.site/features/local-storage.html"
+- pressKey: Enter
+- assertVisible: "Storage Counter: undefined"
+- assertVisible: "Cookie Counter:"

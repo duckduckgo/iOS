@@ -787,10 +787,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         changeEditButtonToDone()
         configureToolbarMoreItem()
         refreshFooterView()
-
-        if !favoritesContainer.isHidden {
-            DailyPixel.fireDaily(.bookmarksUIFavoritesManage)
-        }
     }
 
     private func finishEditing() {

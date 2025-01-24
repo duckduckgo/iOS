@@ -1,8 +1,5 @@
-/* No comment provided by engineer. */
-"iOS 17 required" = "iOS 17 påkrævet";
-
-/* No comment provided by engineer. */
-"Label" = "Etiket";
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Du skal aktivere VPN fra DuckDuckGo-appen.";
 
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Generer øjeblikkeligt en ny privat Duck Address.";
@@ -39,6 +36,24 @@
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Stemmesøgning";
+
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Forbinder...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Afbryder...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Ukendt sted";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Ikke forbundet";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN er slået fra";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN er slået til";
 
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Søg hurtigt i dine gemte DuckDuckGo-adgangskoder.";
@@ -82,11 +97,29 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Afbryd forbindelse";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Indtil %@";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Afvis";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Afbryd pause";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "VPN er slået til";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "VPN er sat på pause";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN er slået til";
 
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "VPN er slået fra";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "VPN er sat på pause";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Ikke forbundet";

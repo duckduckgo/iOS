@@ -64,9 +64,19 @@ struct SettingsSubscriptionView: View {
     @ViewBuilder
     private var purchaseSubscriptionView: some View {
         Group {
+            let subtitleText = {
+                switch subscriptionManager.storePurchaseManager().currentStorefrontRegion {
+                case .usa:
+                    UserText.settingsPProUSDescription
+                case .restOfWorld:
+                    UserText.settingsPProROWDescription
+                }
+            }()
+
             SettingsCellView(label: UserText.settingsPProSubscribe,
-                             subtitle: UserText.settingsPProDescription,
+                             subtitle: subtitleText,
                              image: Image("SettingsPrivacyPro"))
+            .disabled(true)
 
             // Get privacy pro
             SettingsCustomCell(content: {
@@ -93,23 +103,33 @@ struct SettingsSubscriptionView: View {
 
     @ViewBuilder
     private var disabledFeaturesView: some View {
-        SettingsCellView(label: UserText.settingsPProVPNTitle,
-                         image: Image("SettingsPrivacyProVPN"),
-                         statusIndicator: StatusIndicatorView(status: .off),
-                         isGreyedOut: true
-        )
-        SettingsCellView(
-            label: UserText.settingsPProDBPTitle,
-            image: Image("SettingsPrivacyProPIR"),
-            statusIndicator: StatusIndicatorView(status: .off),
-            isGreyedOut: true
-        )
-        SettingsCellView(
-            label: UserText.settingsPProITRTitle,
-            image: Image("SettingsPrivacyProITP"),
-            statusIndicator: StatusIndicatorView(status: .off),
-            isGreyedOut: true
-        )
+        let subscriptionFeatures = settingsViewModel.state.subscription.subscriptionFeatures
+
+        if subscriptionFeatures.contains(.networkProtection) {
+            SettingsCellView(label: UserText.settingsPProVPNTitle,
+                             image: Image("SettingsPrivacyProVPN"),
+                             statusIndicator: StatusIndicatorView(status: .off),
+                             isGreyedOut: true
+            )
+        }
+
+        if subscriptionFeatures.contains(.dataBrokerProtection) {
+            SettingsCellView(
+                label: UserText.settingsPProDBPTitle,
+                image: Image("SettingsPrivacyProPIR"),
+                statusIndicator: StatusIndicatorView(status: .off),
+                isGreyedOut: true
+            )
+        }
+
+        if subscriptionFeatures.contains(.identityTheftRestoration) || subscriptionFeatures.contains(.identityTheftRestorationGlobal) {
+            SettingsCellView(
+                label: UserText.settingsPProITRTitle,
+                image: Image("SettingsPrivacyProITP"),
+                statusIndicator: StatusIndicatorView(status: .off),
+                isGreyedOut: true
+            )
+        }
     }
 
     @ViewBuilder
@@ -155,37 +175,50 @@ struct SettingsSubscriptionView: View {
 
     @ViewBuilder
     private var subscriptionDetailsView: some View {
-        
-        if settingsViewModel.state.subscription.entitlements.contains(.networkProtection) {
+        let subscriptionFeatures = settingsViewModel.state.subscription.subscriptionFeatures
+        let userEntitlements = settingsViewModel.state.subscription.entitlements
+
+        if subscriptionFeatures.contains(.networkProtection) {
+            let hasVPNEntitlement = userEntitlements.contains(.networkProtection)
+            let isVPNConnected = settingsViewModel.state.networkProtectionConnected
+
             NavigationLink(destination: LazyView(NetworkProtectionRootView()), isActive: $isShowingVPN) {
                 SettingsCellView(
                     label: UserText.settingsPProVPNTitle,
                     image: Image("SettingsPrivacyProVPN"),
-                    statusIndicator: StatusIndicatorView(status: settingsViewModel.state.networkProtectionConnected ? .on : .off)
+                    statusIndicator: StatusIndicatorView(status: isVPNConnected ? .on : .off),
+                    isGreyedOut: !hasVPNEntitlement
                 )
             }
+            .disabled(!hasVPNEntitlement)
         }
-        
-        if settingsViewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
+
+        if subscriptionFeatures.contains(.dataBrokerProtection) {
+            let hasDBPEntitlement = userEntitlements.contains(.dataBrokerProtection)
+
             NavigationLink(destination: LazyView(SubscriptionPIRView()), isActive: $isShowingDBP) {
                 SettingsCellView(
                     label: UserText.settingsPProDBPTitle,
                     image: Image("SettingsPrivacyProPIR"),
-                    statusIndicator: StatusIndicatorView(status: .on)
+                    statusIndicator: StatusIndicatorView(status: hasDBPEntitlement ? .on : .off),
+                    isGreyedOut: !hasDBPEntitlement
                 )
             }
+            .disabled(!hasDBPEntitlement)
         }
-        
-        if settingsViewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
-            NavigationLink(
-                destination: LazyView(SubscriptionITPView()),
-                isActive: $isShowingITP) {
-                    SettingsCellView(
-                        label: UserText.settingsPProITRTitle,
-                        image: Image("SettingsPrivacyProITP"),
-                        statusIndicator: StatusIndicatorView(status: .on)
-                    )
+
+        if subscriptionFeatures.contains(.identityTheftRestoration) || subscriptionFeatures.contains(.identityTheftRestorationGlobal) {
+            let hasITREntitlement = userEntitlements.contains(.identityTheftRestoration) || userEntitlements.contains(.identityTheftRestorationGlobal)
+
+            NavigationLink(destination: LazyView(SubscriptionITPView()), isActive: $isShowingITP) {
+                SettingsCellView(
+                    label: UserText.settingsPProITRTitle,
+                    image: Image("SettingsPrivacyProITP"),
+                    statusIndicator: StatusIndicatorView(status: hasITREntitlement ? .on : .off),
+                    isGreyedOut: !hasITREntitlement
+                )
             }
+            .disabled(!hasITREntitlement)
         }
         
         NavigationLink(destination: LazyView(SubscriptionSettingsView(configuration: .subscribed, settingsViewModel: settingsViewModel))
@@ -239,7 +272,7 @@ struct SettingsSubscriptionView: View {
             }
         }
         .onReceive(settingsViewModel.$state) { state in
-            isShowingPrivacyPro = state.subscription.enabled && (state.subscription.isSignedIn || state.subscription.canPurchase)
+            isShowingPrivacyPro = (state.subscription.isSignedIn || state.subscription.canPurchase)
         }
     }
 }

@@ -44,15 +44,15 @@ final class OnboardingAddressBarPositionPickerViewModelTests: XCTestCase {
         // THEN
         let firstItem = try XCTUnwrap(items.first)
         XCTAssertEqual(firstItem.type, .top)
-        XCTAssertEqual(firstItem.title.string, UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle + " " + UserText.HighlightsOnboardingExperiment.AddressBarPosition.defaultOption)
-        XCTAssertEqual(firstItem.message, UserText.HighlightsOnboardingExperiment.AddressBarPosition.topMessage)
+        XCTAssertEqual(firstItem.title.string, UserText.Onboarding.AddressBarPosition.topTitle + " " + UserText.Onboarding.AddressBarPosition.defaultOption)
+        XCTAssertEqual(firstItem.message, UserText.Onboarding.AddressBarPosition.topMessage)
         XCTAssertEqual(firstItem.icon, .addressBarTop)
         XCTAssertTrue(firstItem.isSelected)
 
         let secondItem = try XCTUnwrap(items.last)
         XCTAssertEqual(secondItem.type, .bottom)
-        XCTAssertEqual(secondItem.title.string, UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomTitle)
-        XCTAssertEqual(secondItem.message, UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomMessage)
+        XCTAssertEqual(secondItem.title.string, UserText.Onboarding.AddressBarPosition.bottomTitle)
+        XCTAssertEqual(secondItem.message, UserText.Onboarding.AddressBarPosition.bottomMessage)
         XCTAssertEqual(secondItem.icon, .addressBarBottom)
         XCTAssertFalse(secondItem.isSelected)
     }
@@ -73,15 +73,15 @@ final class OnboardingAddressBarPositionPickerViewModelTests: XCTestCase {
         let items = sut.items
         let firstItem = try XCTUnwrap(items.first)
         XCTAssertEqual(firstItem.type, .top)
-        XCTAssertEqual(firstItem.title.string, UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle + " " + UserText.HighlightsOnboardingExperiment.AddressBarPosition.defaultOption)
-        XCTAssertEqual(firstItem.message, UserText.HighlightsOnboardingExperiment.AddressBarPosition.topMessage)
+        XCTAssertEqual(firstItem.title.string, UserText.Onboarding.AddressBarPosition.topTitle + " " + UserText.Onboarding.AddressBarPosition.defaultOption)
+        XCTAssertEqual(firstItem.message, UserText.Onboarding.AddressBarPosition.topMessage)
         XCTAssertEqual(firstItem.icon, .addressBarTop)
         XCTAssertFalse(firstItem.isSelected)
 
         let secondItem = try XCTUnwrap(items.last)
         XCTAssertEqual(secondItem.type, .bottom)
-        XCTAssertEqual(secondItem.title.string, UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomTitle)
-        XCTAssertEqual(secondItem.message, UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomMessage)
+        XCTAssertEqual(secondItem.title.string, UserText.Onboarding.AddressBarPosition.bottomTitle)
+        XCTAssertEqual(secondItem.message, UserText.Onboarding.AddressBarPosition.bottomMessage)
         XCTAssertEqual(secondItem.icon, .addressBarBottom)
         XCTAssertTrue(secondItem.isSelected)
     }

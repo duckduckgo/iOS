@@ -27,12 +27,15 @@ import RemoteMessaging
 import Configuration
 import Core
 import SubscriptionTestingUtilities
+import Common
 @testable import DuckDuckGo
 
 final class OnboardingDaxFavouritesTests: XCTestCase {
     private var sut: MainViewController!
     private var tutorialSettingsMock: MockTutorialSettings!
     private var contextualOnboardingLogicMock: ContextualOnboardingLogicMock!
+
+    let mockWebsiteDataManager = MockWebsiteDataManager()
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -45,7 +48,8 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             settingHandlers: [],
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
             syncErrorHandler: SyncErrorHandler(),
-            faviconStoring: MockFaviconStore()
+            faviconStoring: MockFaviconStore(),
+            tld: TLD()
         )
 
         let remoteMessagingClient = RemoteMessagingClient(
@@ -82,8 +86,11 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled,
             voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
             featureFlagger: MockFeatureFlagger(),
+            fireproofing: MockFireproofing(),
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
-            textZoomCoordinator: MockTextZoomCoordinator()
+            textZoomCoordinator: MockTextZoomCoordinator(),
+            websiteDataManager: mockWebsiteDataManager,
+            appDidFinishLaunchingStartTime: nil
         )
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()
@@ -129,18 +136,7 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
         XCTAssertTrue(result)
     }
 
-    func testWhenAddFavouriteIsCalled_ThenItShouldAskContextualOnboardingLogicIfAddFavoriteFlowCanStart() {
-        // GIVEN
-        XCTAssertFalse(contextualOnboardingLogicMock.didCallCanEnableAddFavoriteFlow)
-
-        // WHEN
-        sut.startAddFavoriteFlow()
-
-        // THEN
-        XCTAssertTrue(contextualOnboardingLogicMock.didCallCanEnableAddFavoriteFlow)
-    }
-
-    func testWhenAddFavouriteIsCalled_AndCanStartAddFavouriteFlow_ThenItShouldEnableAddFavouriteFlowOnContextualOnboardingLogic() {
+    func testWhenAddFavouriteIsCalled_ThenItShouldEnableAddFavouriteFlowOnContextualOnboardingLogic() {
         // GIVEN
         contextualOnboardingLogicMock.canStartFavoriteFlow = true
         XCTAssertFalse(contextualOnboardingLogicMock.didCallEnableAddFavoriteFlow)
@@ -152,27 +148,4 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
         XCTAssertTrue(contextualOnboardingLogicMock.didCallEnableAddFavoriteFlow)
     }
 
-    func testWhenAddFavouriteIsCalled_AndCannotStartAddFavouriteFlow_ThenItShouldNotEnableAddFavouriteFlowOnContextualOnboardingLogic() {
-        // GIVEN
-        contextualOnboardingLogicMock.canStartFavoriteFlow = false
-        XCTAssertFalse(contextualOnboardingLogicMock.didCallEnableAddFavoriteFlow)
-
-        // WHEN
-        sut.startAddFavoriteFlow()
-
-        // THEN
-        XCTAssertFalse(contextualOnboardingLogicMock.didCallEnableAddFavoriteFlow)
-    }
-
-    func testWhenAddFavouriteIsCalled_AndCannotStartAddFavouriteFlow_ThenOpenANewTab() {
-        // GIVEN
-        contextualOnboardingLogicMock.canStartFavoriteFlow = false
-        XCTAssertEqual(sut.tabManager.model.tabs.count, 1)
-
-        // WHEN
-        sut.startAddFavoriteFlow()
-
-        // THEN
-        XCTAssertEqual(sut.tabManager.model.tabs.count, 2)
-    }
 }

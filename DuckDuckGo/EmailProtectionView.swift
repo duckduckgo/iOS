@@ -56,6 +56,9 @@ struct EmailProtectionView: View {
         .onChange(of: viewModel.shouldShowEmailAlert) { value in
             shouldShowEmailAlert = value
         }
+        .onFirstAppear {
+            Pixel.fire(pixel: .settingsEmailProtectionOpen)
+        }
     }
 }
 
@@ -90,7 +93,10 @@ struct EmailProtectionViewSettings: View {
             // Enable Email Protection
             Section {
                 SettingsCellView(label: UserText.enableEmailProtection,
-                                 action: { viewModel.openEmailProtection() },
+                                 action: {
+                    viewModel.openEmailProtection()
+                    Pixel.fire(pixel: .settingsEmailProtectionEnable)
+                                 },
                                  webLinkIndicator: true,
                                  isButton: true)
             }

@@ -264,6 +264,7 @@ private enum Const {
 
 struct SaveLoginView_Previews: PreviewProvider {
     private struct MockManager: SaveAutofillLoginManagerProtocol {
+        var hasSavedMatchingUsernameWithoutPassword: Bool { false }
 
         var username: String { "dax@duck.com" }
         var visiblePassword: String { "supersecurepasswordquack" }

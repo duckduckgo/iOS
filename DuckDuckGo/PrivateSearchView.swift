@@ -40,6 +40,9 @@ struct PrivateSearchView: View {
         .applySettingsListModifiers(title: UserText.privateSearch,
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onFirstAppear {
+            Pixel.fire(pixel: .settingsPrivateSearchOpen)
+        }
     }
 }
 

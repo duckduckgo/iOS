@@ -32,6 +32,7 @@ public enum FeatureFlag: String {
     case autofillFailureReporting
     case autofillOnForExistingUsers
     case autofillUnknownUsernameCategorization
+    case autofillPartialFormSaves
     case incontextSignup
     case autoconsentOnByDefault
     case history
@@ -47,6 +48,9 @@ public enum FeatureFlag: String {
     case autcompleteTabs
     case textZoom
     case adAttributionReporting
+    case aiChat
+    case aiChatDeepLink
+    case tabManagerMultiSelection
 
     /// https://app.asana.com/0/72649045549333/1208231259093710/f
     case networkProtectionUserTips
@@ -56,17 +60,29 @@ public enum FeatureFlag: String {
     
     /// https://app.asana.com/0/1208592102886666/1208613627589762/f
     case crashReportOptInStatusResetting
+
+    /// https://app.asana.com/0/0/1208767141940869/f
+    case privacyProFreeTrialJan25
+
+    /// https://app.asana.com/0/1206226850447395/1206307878076518
+    case webViewStateRestoration
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
+
+    public static var localOverrideStoreName: String = "com.duckduckgo.app.featureFlag.localOverrides"
+
     public var supportsLocalOverriding: Bool {
-        false
+        switch self {
+        default:
+            return false
+        }
     }
 
     public var source: FeatureFlagSource {
         switch self {
         case .debugMenu:
-            return .internalOnly
+            return .internalOnly()
         case .sync:
             return .remoteReleasable(.subfeature(SyncSubfeature.level0ShowSync))
         case .autofillCredentialInjecting:
@@ -87,6 +103,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.subfeature(AutofillSubfeature.onForExistingUsers))
         case .autofillUnknownUsernameCategorization:
             return .remoteReleasable(.subfeature(AutofillSubfeature.unknownUsernameCategorization))
+        case .autofillPartialFormSaves:
+            return .remoteReleasable(.subfeature(AutofillSubfeature.partialFormSaves))
         case .incontextSignup:
             return .remoteReleasable(.feature(.incontextSignup))
         case .autoconsentOnByDefault:
@@ -106,9 +124,9 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .syncPromotionPasswords:
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.passwords))
         case .onboardingHighlights:
-            return .internalOnly
+            return .internalOnly()
         case .onboardingAddToDock:
-            return .internalOnly
+            return .internalOnly()
         case .autofillSurveys:
             return .remoteReleasable(.feature(.autofillSurveys))
         case .autcompleteTabs:
@@ -122,7 +140,17 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .adAttributionReporting:
             return .remoteReleasable(.feature(.adAttributionReporting))
         case .crashReportOptInStatusResetting:
-            return .internalOnly
+            return .internalOnly()
+        case .privacyProFreeTrialJan25:
+            return .remoteDevelopment(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
+        case .aiChat:
+            return .remoteReleasable(.feature(.aiChat))
+        case .aiChatDeepLink:
+            return .remoteReleasable(.subfeature(AIChatSubfeature.deepLink))
+        case .tabManagerMultiSelection:
+            return .internalOnly()
+        case .webViewStateRestoration:
+            return .remoteReleasable(.feature(.webViewStateRestoration))
         }
     }
 }

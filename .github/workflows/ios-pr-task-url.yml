@@ -1,0 +1,103 @@
+name: iOS - Asana PR Task URL
+
+on:
+  pull_request:
+    types: [opened, edited, closed, synchronize, review_requested, ready_for_review]
+
+jobs:
+
+  # This job is used to check if the task linked in the PR description belongs to the specified project (App Board).
+  # If that's not the case, the task is added to the project's PR section.
+  add-task-to-project:
+
+    name: Add Task to App Board Project
+
+    runs-on: ubuntu-latest
+
+    if: ${{ !github.event.pull_request.draft }}
+
+    outputs:
+      task_id: ${{ steps.get-task-id.outputs.task_id }}
+      task_in_project: ${{ steps.check-board-membership.outputs.task_in_project }}
+
+    steps:
+    - name: Get Task ID
+      id: get-task-id
+      env:
+        BODY: ${{ github.event.pull_request.body }}
+      run: |
+        task_id=$(grep -i "task/issue url.*https://app.asana.com/" <<< "$BODY" \
+          | sed -E 's|.*https://(.*)|\1|' \
+          | cut -d '/' -f 4)
+        echo "task_id=$task_id" >> $GITHUB_OUTPUT
+
+    - name: Check App Board Project Membership
+      id: check-board-membership
+      env:
+        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        ASANA_PROJECT_ID: ${{ vars.IOS_APP_BOARD_ASANA_PROJECT_ID }}
+      run: |
+        project_ids="$(curl -fLSs "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}?opt_fields=projects" \
+          -H "Authorization: Bearer ${{ env.ASANA_ACCESS_TOKEN }}" \
+          | jq -r .data.projects[].gid)"
+
+        if grep -q "\b${{ env.ASANA_PROJECT_ID }}\b" <<< $project_ids; then
+          echo "task_in_project=1" >> $GITHUB_OUTPUT
+        else
+          echo "task_in_project=0" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Add Task to the App Board Project
+      id: add-task-to-project
+      if: ${{ (github.event.action == 'opened' || github.event.action == 'ready_for_review') && steps.check-board-membership.outputs.task_in_project == '0' }}
+      env:
+        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        ASANA_PROJECT_ID: ${{ vars.IOS_APP_BOARD_ASANA_PROJECT_ID }}
+        ASANA_PR_SECTION_ID: ${{ vars.IOS_APP_BOARD_PR_SECTION_ID }}
+      run: |
+        curl -fLSs -X POST "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}/addProject" \
+          -H "Authorization: Bearer ${{ env.ASANA_ACCESS_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          --output /dev/null \
+          -d "{\"data\": {\"project\": \"${{ env.ASANA_PROJECT_ID }}\", \"section\": \"${{ env.ASANA_PR_SECTION_ID }}\"}}"
+
+  # When reviewer is assigned create a subtask in Asana if not existing already
+  create-asana-pr-subtask-if-needed:
+
+    name: "Create the PR subtask in Asana"
+
+    runs-on: ubuntu-latest
+    if: github.event.action == 'review_requested'
+
+    needs: [add-task-to-project]
+
+    steps:
+    - name: Create or Update PR Subtask
+      uses: duckduckgo/apple-toolbox/actions/asana-create-pr-subtask@main
+      with:
+        access-token: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        asana-task-id: ${{ needs.add-task-to-project.outputs.task_id }}
+        github-reviewer-user: ${{ github.event.requested_reviewer.login }}
+
+  # When a PR is merged, move the task to the Waiting for Release section of the App Board.
+  mark-waiting-for-release:
+
+    name: Move to Waiting for Release on Merge
+
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+
+    needs: [add-task-to-project]
+
+    steps:
+    - name: Move to Waiting for Release
+      if: ${{ needs.add-task-to-project.outputs.task_in_project == '1' }}
+      env:
+        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        ASANA_PROJECT_ID: ${{ vars.IOS_APP_BOARD_ASANA_PROJECT_ID }}
+      run: |
+        curl -fLSs -X POST "https://app.asana.com/api/1.0/sections/${{ vars.IOS_APP_BOARD_WAITING_FOR_RELEASE_SECTION_ID }}/addTask" \
+          -H "Authorization: Bearer ${{ env.ASANA_ACCESS_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          --output /dev/null \
+          -d "{\"data\": {\"task\": \"${{ needs.add-task-to-project.outputs.task_id }}\"}}"

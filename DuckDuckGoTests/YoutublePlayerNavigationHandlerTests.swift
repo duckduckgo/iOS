@@ -241,6 +241,23 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     }
     
     @MainActor
+    func testHandleNavigation_WithReferrerInURL_UpdatesDuckPlayerReferrer() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&dp_referrer=serp")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
+        playerSettings.mode = .alwaysAsk
+        playerSettings.openInNewTab = true
+        featureFlagger.enabledFeatures = [.duckPlayer, .duckPlayerOpenInNewTab]
+
+        // Act
+        handler.handleDuckNavigation(navigationAction, webView: mockWebView)
+        
+        // Assert
+        XCTAssertEqual(handler.referrer, .serp)
+        
+    }
+    
+    @MainActor
     func testHandleDelegateNavigation_DuckPlayerURL_CancelNavigationAndLoadsDuckPlayerWithParamsInTab() async {
         // Arrange
         let duckPlayerURL = URL(string: "duck://player/abc123")!
@@ -283,7 +300,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let result2 = handler.handleURLChange(webView: mockWebView)
 
         // Assert
-        if case .handled = result1 {
+        if case .handled(.duckPlayerEnabled) = result1 {
             // Success
         } else {
             XCTFail("Expected first call to return .handled")
@@ -370,6 +387,26 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
             XCTFail("Expected .unhandled when feature flag is disabled")
         }
     }
+    
+    @MainActor
+    func testHandleURLChange_WithYoutubeEmbedURIParam_ReturnsHandled() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&&embeds_referring_euri=true")!
+        mockWebView.setCurrentURL(youtubeURL)
+        playerSettings.mode = .enabled
+        featureFlagger.enabledFeatures = [.duckPlayer, .duckPlayerOpenInNewTab]
+
+        // Act
+        let result = handler.handleURLChange(webView: mockWebView)
+        
+        // Assert
+        if case .handled(.allowFirstVideo) = result {
+            // Success
+        } else {
+            XCTFail("Expected first call to return .handled")
+        }
+    }
+
     
     @MainActor
     func testHandleDelegateNavigation_NotToMainFrame_ReturnsFalse() async {
@@ -580,6 +617,43 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
 
         // Assert
         XCTAssertNil(tabNavigator.openedURL, "No new tabs should open")
+    }
+    
+    @MainActor
+    func testHandleDelegateNavigation_YoutubeInternalNavigation_ReturnsFalse() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123#searching")!
+        let request = URLRequest(url: youtubeURL)
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: request, targetFrame: mockFrameInfo)
+        playerSettings.mode = .enabled
+        featureFlagger.enabledFeatures = [.duckPlayer, .duckPlayerOpenInNewTab]
+
+        mockWebView.setCurrentURL(youtubeURL)
+        
+        // Act
+        var shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertFalse(shouldCancel, "Expected navigation NOT to be cancelled as it's Youtube Internal navigation")
+        
+        // Arrange
+        playerSettings.mode = .disabled
+        
+        // Act
+        shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertFalse(shouldCancel, "Expected navigation NOT to be cancelled as it's Youtube Internal navigation")
+        
+        // Arrange
+        featureFlagger.enabledFeatures = [.duckPlayer]
+        
+        // Act
+        shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertFalse(shouldCancel, "Expected navigation NOT to be cancelled as it's Youtube Internal navigation")
     }
     
 }

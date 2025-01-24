@@ -1,8 +1,5 @@
-/* No comment provided by engineer. */
-"iOS 17 required" = "iOS 17 required";
-
-/* No comment provided by engineer. */
-"Label" = "Etykieta";
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Musisz włączyć VPN w aplikacji DuckDuckGo.";
 
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Błyskawicznie wygeneruj prywatny adres Duck Address.";
@@ -39,6 +36,24 @@
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Wyszukiwanie głosowe";
+
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Łączenie...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Odłączanie...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Nieznana lokalizacja";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Nie połączono";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "Wyłączono VPN";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "Włączono VPN";
 
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Szybko wyszukuj zapisane hasła DuckDuckGo.";
@@ -82,11 +97,29 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Odłącz";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Do %@";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Odrzuć";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Przywróć";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "Włączono VPN";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "Wstrzymano VPN";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "Włączono VPN";
 
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "Wyłączono VPN";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "Wstrzymano VPN";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Nie połączono";

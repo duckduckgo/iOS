@@ -21,126 +21,46 @@ import XCTest
 @testable import DuckDuckGo
 
 final class BrowserComparisonModelTests: XCTestCase {
-    private var onboardingManager: OnboardingManagerMock!
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        onboardingManager = OnboardingManagerMock()
+    func testBrowserComparisonFeaturePrivateSearchIsCorrect() throws {
+        // WHEN
+        let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .privateSearch })?.type.title)
+
+        // THEN
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.Features.privateSearch)
+
     }
 
-    override func tearDownWithError() throws {
-        onboardingManager = nil
-        try super.tearDownWithError()
-    }
-
-    func testWhenIsNotHighlightsThenBrowserComparisonFeaturePrivateSearchIsCorrect() throws {
-        // GIVEN
-        try [false, true].forEach { isOnboardingHighlightsEnabled in
-            onboardingManager.isOnboardingHighlightsEnabled = isOnboardingHighlightsEnabled
-            BrowsersComparisonModel.PrivacyFeature.FeatureType.onboardingManager = onboardingManager
-
-            // WHEN
-            let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .privateSearch })?.type.title)
-
-            // THEN
-            XCTAssertEqual(result, UserText.DaxOnboardingExperiment.BrowsersComparison.Features.privateSearch)
-        }
-    }
-
-    func testWhenIsNotHighlightsThenBrowserComparisonFeatureBlockThirdPartyTrackersIsCorrect() throws {
-        // GIVEN
-        onboardingManager.isOnboardingHighlightsEnabled = false
-        BrowsersComparisonModel.PrivacyFeature.FeatureType.onboardingManager = onboardingManager
-
+    func testBrowserComparisonFeatureBlockThirdPartyTrackersIsCorrect() throws {
         // WHEN
         let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .blockThirdPartyTrackers })?.type.title)
 
         // THEN
-        XCTAssertEqual(result, UserText.DaxOnboardingExperiment.BrowsersComparison.Features.trackerBlockers)
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.Features.trackerBlockers)
     }
 
-    func testWhenIsHighlightsThenBrowserComparisonFeatureBlockThirdPartyTrackersIsCorrect() throws {
-        // GIVEN
-        onboardingManager.isOnboardingHighlightsEnabled = true
-        BrowsersComparisonModel.PrivacyFeature.FeatureType.onboardingManager = onboardingManager
-
-        // WHEN
-        let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .blockThirdPartyTrackers })?.type.title)
-
-        // THEN
-        XCTAssertEqual(result, UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.trackerBlockers)
-    }
-
-    func testWhenIsNotHighlightsThenBrowserComparisonFeatureBlockCookiePopupsIsCorrect() throws {
-        // GIVEN
-        onboardingManager.isOnboardingHighlightsEnabled = false
-        BrowsersComparisonModel.PrivacyFeature.FeatureType.onboardingManager = onboardingManager
-
+    func testBrowserComparisonFeatureBlockCookiePopupsIsCorrect() throws {
         // WHEN
         let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .blockCookiePopups })?.type.title)
 
         // THEN
-        XCTAssertEqual(result, UserText.DaxOnboardingExperiment.BrowsersComparison.Features.cookiePopups)
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.Features.cookiePopups)
     }
 
-    func testWhenIsHighlightsThenBrowserComparisonFeatureBlockCookiePopupsIsCorrect() throws {
-        // GIVEN
-        onboardingManager.isOnboardingHighlightsEnabled = true
-        BrowsersComparisonModel.PrivacyFeature.FeatureType.onboardingManager = onboardingManager
-
-        // WHEN
-        let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .blockCookiePopups })?.type.title)
-
-        // THEN
-        XCTAssertEqual(result, UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.cookiePopups)
-    }
-
-    func testWhenIsNotHighlightsThenBrowserComparisonFeatureBlockCreepyAdsIsCorrect() throws {
-        // GIVEN
-        onboardingManager.isOnboardingHighlightsEnabled = false
-        BrowsersComparisonModel.PrivacyFeature.FeatureType.onboardingManager = onboardingManager
-
+    func testBrowserComparisonFeatureBlockCreepyAdsIsCorrect() throws {
         // WHEN
         let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .blockCreepyAds })?.type.title)
 
         // THEN
-        XCTAssertEqual(result, UserText.DaxOnboardingExperiment.BrowsersComparison.Features.creepyAds)
-    }
-
-    func testWhenIsHighlightsThenBrowserComparisonFeatureBlockCreepyAdsIsCorrect() throws {
-        // GIVEN
-        onboardingManager.isOnboardingHighlightsEnabled = true
-        BrowsersComparisonModel.PrivacyFeature.FeatureType.onboardingManager = onboardingManager
-
-        // WHEN
-        let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .blockCreepyAds })?.type.title)
-
-        // THEN
-        XCTAssertEqual(result, UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.creepyAds)
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.Features.creepyAds)
     }
 
     func testWhenIsNotHighlightsThenBrowserComparisonFeatureEraseBrowsingDataIsCorrect() throws {
-        // GIVEN
-        onboardingManager.isOnboardingHighlightsEnabled = false
-        BrowsersComparisonModel.PrivacyFeature.FeatureType.onboardingManager = onboardingManager
-
         // WHEN
         let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .eraseBrowsingData })?.type.title)
 
         // THEN
-        XCTAssertEqual(result, UserText.DaxOnboardingExperiment.BrowsersComparison.Features.eraseBrowsingData)
-    }
-
-    func testWhenIsHighlightsThenBrowserComparisonFeatureEraseBrowsingDataIsCorrect() throws {
-        // GIVEN
-        onboardingManager.isOnboardingHighlightsEnabled = true
-        BrowsersComparisonModel.PrivacyFeature.FeatureType.onboardingManager = onboardingManager
-
-        // WHEN
-        let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .eraseBrowsingData })?.type.title)
-
-        // THEN
-        XCTAssertEqual(result, UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.eraseBrowsingData)
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.Features.eraseBrowsingData)
     }
 
 }

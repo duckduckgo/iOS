@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view autoresizesSubviews="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iN0-l3-epB" customClass="ActionMessageView" customModule="DuckDuckGo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="346" height="45"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEm-Fo-Kmm">
+                    <rect key="frame" x="13" y="12" width="280" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="kfp-HB-tL2"/>
+                    </constraints>
+                    <attributedString key="attributedText">
+                        <fragment content="Label">
+                            <attributes>
+                                <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <font key="NSFont" size="16" metaFont="system"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oCd-LV-OI1">
+                    <rect key="frame" x="303" y="9" width="30" height="27"/>
+                    <state key="normal">
+                        <attributedString key="attributedTitle">
+                            <fragment content="Edit">
+                                <attributes>
+                                    <color key="NSColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <font key="NSFont" size="15" metaFont="systemBold"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </state>
+                    <connections>
+                        <action selector="onButtonTap" destination="iN0-l3-epB" eventType="touchUpInside" id="994-gA-3wR"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="WEm-Fo-Kmm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="13" id="2qs-X4-9hl"/>
+                <constraint firstItem="oCd-LV-OI1" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6rV-Uf-wi9"/>
+                <constraint firstItem="WEm-Fo-Kmm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="Dcw-lz-Qtn"/>
+                <constraint firstAttribute="trailing" secondItem="oCd-LV-OI1" secondAttribute="trailing" constant="13" id="M6a-3L-VQf"/>
+                <constraint firstAttribute="bottom" secondItem="WEm-Fo-Kmm" secondAttribute="bottom" constant="12" id="bGo-Vb-YBZ"/>
+                <constraint firstItem="oCd-LV-OI1" firstAttribute="leading" secondItem="WEm-Fo-Kmm" secondAttribute="trailing" constant="10" id="dLh-j4-VmK"/>
+                <constraint firstAttribute="trailing" secondItem="WEm-Fo-Kmm" secondAttribute="trailing" constant="14" id="tGL-FG-Yuv"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="tGL-FG-Yuv"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="actionButton" destination="oCd-LV-OI1" id="rV2-gG-PYB"/>
+                <outlet property="labelToButton" destination="dLh-j4-VmK" id="eOw-mN-R99"/>
+                <outlet property="labelToTrailing" destination="tGL-FG-Yuv" id="HId-Nr-8kQ"/>
+                <outlet property="message" destination="WEm-Fo-Kmm" id="UyH-Ik-mWb"/>
+            </connections>
+            <point key="canvasLocation" x="-197.10144927536234" y="69.977678571428569"/>
+        </view>
+    </objects>
+</document>

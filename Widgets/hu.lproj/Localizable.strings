@@ -1,8 +1,5 @@
-/* No comment provided by engineer. */
-"iOS 17 required" = "iOS 17 szükséges";
-
-/* No comment provided by engineer. */
-"Label" = "Címke";
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "A DuckDuckGo alkalmazásban engedélyezned kell a VPN-t.";
 
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Új privát Duck-cím azonnali létrehozása.";
@@ -39,6 +36,24 @@
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Beszédhangalapú keresés";
+
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Csatlakozás…";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Leválasztás…";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Ismeretlen hely";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Nincs csatlakoztatva";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN kikapcsolva";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN csatlakoztatva";
 
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Gyorsan kereshetsz a DuckDuckGo mentett jelszavai között.";
@@ -82,11 +97,29 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Leválasztás";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "%@-ig";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Elutasítás";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Ébredj fel";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "VPN csatlakoztatva";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "VPN szüneteltetése";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN csatlakoztatva";
 
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "VPN kikapcsolva";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "A VPN szüneteltetve van";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Nincs csatlakoztatva";

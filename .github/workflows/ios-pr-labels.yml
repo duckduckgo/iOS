@@ -1,0 +1,21 @@
+name: iOS - PR Labels
+
+on:
+  push:
+    branches:
+      - 'release/**'
+  pull_request:
+    types: [labeled, unlabeled, opened, edited, synchronize]
+
+jobs:
+  enforce-label:
+
+    name: Prevent merging with banned labels
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - if: github.event_name == 'pull_request'
+      uses: yogevbd/enforce-label-action@2.2.2
+      with:
+        BANNED_LABELS: "DO NOT MERGE,HOTFIX DO NOT MERGE,Pending Product Review,Under Internal Review,Work In Progress"

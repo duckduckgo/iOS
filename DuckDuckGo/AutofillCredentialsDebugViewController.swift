@@ -87,7 +87,8 @@ class AutofillCredentialsDebugViewController: UITableViewController {
     private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
     private let autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private var credentials: [DisplayCredentials] = []
-    private let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason)
+    private let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason,
+                                                               cancelTitle: UserText.autofillLoginListAuthenticationCancelButton)
 
     override func viewDidLoad() {
         super.viewDidLoad()

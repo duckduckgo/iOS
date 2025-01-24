@@ -131,13 +131,16 @@
 "addWidget.description" = "Krijg snel toegang tot privézoekopdrachten en de sites die je leuk vindt.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Druk lang op het startscherm om de schudmodus te gebruiken.";
+"addWidget.settings.firstParagraph" = "Druk lang op het startscherm tot de apps beginnen te schudden.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Tik op de knop **Bewerken** en kies vervolgens **Widget toevoegen**.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tik op de plus %@-knop.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Zoek en selecteer DuckDuckGo. Kies vervolgens een widget.";
+"addWidget.settings.title" = "Zoek en selecteer **DuckDuckGo**. Kies vervolgens een widget.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "Eén tik naar uw favoriete sites.";
@@ -878,14 +881,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "lokaal weer";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "Recepten voor chocoladekoekjes";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Zoek **DuckDuckGo** in de lijst en tik vervolgens op **VPN-bediening** om het toe te voegen.";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "recepten voor het avondeten";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Veeg omlaag vanuit de rechterbovenhoek van het scherm";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Verras me!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Tik op de **+**-knop in de linkerbovenhoek van **Bedieningspaneel**";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Tik op **Een besturingselement toevoegen** onderaan het scherm";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Crashrapporten altijd verzenden";
@@ -1072,6 +1078,18 @@
 
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "Recente wijzigingen in YouTube hebben invloed op de functionaliteit van Duck Player. We werken aan een oplossing voor deze problemen. Bedankt voor je begrip.";
+
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"duckai.preferences.text.markdown" = "Duck.ai is een optionele functie waarmee je anoniem kunt chatten met populaire AI-chatmodellen van derden. Je chats worden niet gebruikt om AI te trainen.\n[Meer informatie](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
+
+/* Toggle text to enable/disable AI Chat in the address bar */
+"duckai.settings.enable.address-bar-toggle" = "Duck.ai weergeven tijdens het zoeken";
+
+/* Toggle text to enable/disable AI Chat in the browsing menu */
+"duckai.settings.enable.browsing-menu-toggle" = "Duck.ai weergeven in browsermenu";
+
+/* Settings screen cell text for AI Chat settings */
+"duckai.settings.title" = "Duck.ai";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo voor iOS";
@@ -1526,6 +1544,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Je moet de VPN inschakelen vanuit de DuckDuckGo-app.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1867,6 +1888,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-instellingen";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Sneltoetsen";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Pas je favorieten en go-to-functies aan. Herschik dingen of verberg ze om de tabbladpagina overzichtelijk te maken.";
@@ -2220,6 +2244,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Widget toevoegen aan startscherm";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Voeg de DuckDuckGo VPN-widget toe aan je startscherm";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2875,7 +2902,28 @@
 "vpn.access-revoked.alert.title" = "De verbinding met de VPN is verbroken omdat het abonnement is beëindigd";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Zoek en selecteer DuckDuckGo. Veeg vervolgens naar VPN en selecteer Widget toevoegen.";
+"vpn.addWidget.settings.title" = "Zoek en selecteer **DuckDuckGo**, veeg vervolgens naar **VPN** en selecteer **Widget toevoegen**.";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "DuckDuckGo VPN is verbonden";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Met Siri-snelkoppelingen kun je verbinding maken met je VPN met een snel spraakcommando, zoals \"Siri, zet DuckDuckGo VPN aan\". Het is een snelle, handsfree manier om je VPN te gebruiken.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, start DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, schakel DuckDuckGo VPN in.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, bescherm mijn apparaat met DuckDuckGo.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Bedien DuckDuckGo VPN met Siri!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "DuckDuckGo VPN is verbonden";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Annuleren";
@@ -2946,8 +2994,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help de VPN-functie van DuckDuckGo te verbeteren";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "VPN toevoegen aan het bedieningspaneel";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "VPN-widget toevoegen aan startscherm";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Gebruik VPN met Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Het gebruik van een aangepaste DNS-server kan de surfsnelheid beïnvloeden en je activiteiten blootstellen aan derden als de server niet veilig of betrouwbaar is.";

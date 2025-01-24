@@ -131,7 +131,10 @@
 "addWidget.description" = "Greitai pasiekite privačią paiešką ir mėgstamas svetaines.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Ilgai spauskite pagrindinį ekraną, kad įjungtumėte į programėlių perkėlimo ir ištrynimo režimą.";
+"addWidget.settings.firstParagraph" = "Ilgai spauskite bet kurioje pagrindinio ekrano vietoje, kol programos pradės judėti.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Bakstelėkite mygtuką **Redaguoti**, tada pasirinkite **Pridėti valdiklį**.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Bakstelėkite pliuso mygtuką %@.";
@@ -878,14 +881,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "vietinis oras";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "šokolado drožlių sausainių receptai";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Sąraše raskite **DuckDuckGo**, tada palieskite **VPN valdymą**, kad jį pridėtumėte.";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "vakarienės receptai";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Perbraukite žemyn iš viršutinio dešiniojo ekrano kampo";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Nustebink mane!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Bakstelėkite **+** mygtuką **Valdymo centro** viršuje, kairėje";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Ekrano apačioje bakstelėkite **Pridėti valdiklį**";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Visada siųsti strigčių ataskaitas";
@@ -1072,6 +1078,18 @@
 
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "Neseniai atlikti „YouTube“ pakeitimai turėjo įtakos „Duck Player“ funkcijoms. Stengiamės pašalinti šias triktis ir dėkojame už supratingumą.";
+
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"duckai.preferences.text.markdown" = "Duck.ai yra pasirenkama funkcija, leidžianti anonimiškai kalbėtis su populiariais trečiųjų šalių DI pokalbių modeliais. Jūsų pokalbiai nenaudojami DI mokymui.\n[Sužinoti daugiau](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
+
+/* Toggle text to enable/disable AI Chat in the address bar */
+"duckai.settings.enable.address-bar-toggle" = "Rodyti „Duck.ai“ paieškos metu";
+
+/* Toggle text to enable/disable AI Chat in the browsing menu */
+"duckai.settings.enable.browsing-menu-toggle" = "Rodyti „Duck.ai“ naršyklės meniu";
+
+/* Settings screen cell text for AI Chat settings */
+"duckai.settings.title" = "Duck.ai";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "„iOS“ skirta „DuckDuckGo“";
@@ -1526,6 +1544,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Reikia įjungti VPN iš „DuckDuckGo“ programėlės.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1867,6 +1888,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN nustatymai";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Šaukiniai";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Tinkinkite savo mėgstamiausius ir pagrindines funkcijas. Pertvarkykite elementus arba paslėpkite juos, kad užtikrintumėte tvarką.";
@@ -2220,6 +2244,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Įtraukti valdiklį į pagrindinį ekraną";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Pridėkite „DuckDuckGo“ VPN valdiklį prie pagrindinio ekrano";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2875,7 +2902,28 @@
 "vpn.access-revoked.alert.title" = "VPN atjungtas dėl pasibaigusios prenumeratos.";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Raskite ir pasirinkite „DuckDuckGo“. Tada perbraukite į VPN ir pasirinkite „Pridėti valdiklį“.";
+"vpn.addWidget.settings.title" = "Raskite ir pasirinkite **DuckDuckGo**, tada perbraukite iki **VPN** ir pasirinkite **Pridėti valdiklį**";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "„DuckDuckGo“ VPN prijungtas";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "„Siri“ spartieji klavišai leidžia prisijungti prie VPN naudojant greitą balso komandą, pvz., „Siri“, įjunk „DuckDuckGo“ VPN. Tai greitas ir patogus būdas naudotis savo VPN be rankų.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, paleisk „DuckDuckGo VPN“.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, įjunk „DuckDuckGo“ VPN.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, apsaugok mano įrenginį su „DuckDuckGo“.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Valdyk „DuckDuckGo“ VPN su „Siri“!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "„DuckDuckGo“ VPN yra prijungtas";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Atšaukti";
@@ -2946,8 +2994,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Padėk tobulinti „DuckDuckGo“ VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Pridėti VPN į valdymo centrą";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Pridėti VPN valdiklį pagrindiniame ekrane";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Valdykite VPN su „Siri“";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Pasirinktinio DNS serverio naudojimas gali turėti įtakos naršymo greičiui ir atskleisti jūsų veiklą trečiosioms šalims, jei serveris nėra saugus ar patikimas.";

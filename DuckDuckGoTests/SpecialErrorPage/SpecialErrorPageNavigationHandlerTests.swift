@@ -190,6 +190,7 @@ final class SpecialErrorPageNavigationHandlerTests {
 
         // THEN
         #expect(sut.isSpecialErrorPageRequest == false)
+        #expect(sut.isSpecialErrorPageVisible == false)
         #expect(sut.failedURL == nil)
         #expect(didCallLoadSimulatedRequest == false)
         #expect(result == false)

@@ -17,23 +17,8 @@
 //  limitations under the License.
 //
 
-import BrowserServicesKit
-import Core
 import Foundation
 import MaliciousSiteProtection
-
-extension MaliciousSiteProtectionFeatureFlags {
-
-    init(
-        featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-        privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager
-    ) {
-        self.init(privacyConfigManager: privacyConfigManager, isMaliciousSiteProtectionEnabled: {
-            featureFlagger.isFeatureOn(.maliciousSiteProtection)
-        })
-    }
-
-}
 
 typealias MaliciousSiteProtectionManaging = MaliciousSiteDetecting & MaliciousSiteProtectionDatasetsFetching
 

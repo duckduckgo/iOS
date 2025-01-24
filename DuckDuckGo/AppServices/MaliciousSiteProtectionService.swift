@@ -18,8 +18,9 @@
 //
 
 import Foundation
+import BrowserServicesKit
 import MaliciousSiteProtection
-import protocol BrowserServicesKit.FeatureFlagger
+import Core
 
 final class MaliciousSiteProtectionService {
 
@@ -77,6 +78,24 @@ final class MaliciousSiteProtectionService {
 
     func onForeground() {
         manager.startFetching()
+    }
+
+}
+
+// MARK: Malicious Site Protection Feature Flagger
+
+extension MaliciousSiteProtectionFeatureFlags {
+
+    init(
+        featureFlagger: FeatureFlagger,
+        privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager
+    ) {
+        self.init(
+            privacyConfigManager: privacyConfigManager,
+            isMaliciousSiteProtectionEnabled: {
+                featureFlagger.isFeatureOn(.maliciousSiteProtection)
+            }
+        )
     }
 
 }

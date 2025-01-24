@@ -31,19 +31,19 @@ import WidgetKit
 import WireGuard
 import BrowserServicesKit
 
-
-public protocol SubscriptionSomething {
-    func isUserAuthenticated() -> Bool
-    var subscriptionAuthToken: String? { get }
-
-}
-
-extension SubscriptionSomething {
-    var accessToken: String? {
-        guard let subscriptionAuthToken else { return nil }
-        return "ddg:"+subscriptionAuthToken
-    }
-}
+//
+// public protocol SubscriptionSomething {
+//    func isUserAuthenticated() -> Bool
+//    var subscriptionAuthToken: String? { get }
+//
+// }
+//
+// extension SubscriptionSomething {
+//    var accessToken: String? {
+//        guard let subscriptionAuthToken else { return nil }
+//        return "ddg:"+subscriptionAuthToken
+//    }
+// }
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {

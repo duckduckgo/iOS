@@ -276,6 +276,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     }
 
     private func start(_ tunnelManager: NETunnelProviderManager) async throws {
+
         var options = [String: NSObject]()
 
         if Self.shouldSimulateFailure {
@@ -283,13 +284,11 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             throw StartError.simulateControllerFailureError
         }
 
-        options["activationAttemptId"] = UUID().uuidString as NSString
-
-        if let token = try await tokenProvider.getTokenContainer(policy: .localValid).accessToken as NSString? {
-            options["authToken"] = token
-        } else {
+        guard let token = try await tokenProvider.getAccessToken() as NSString? else {
             throw StartError.fetchAuthTokenFailed
         }
+
+        options[NetworkProtectionOptionKey.activationAttemptId] = UUID().uuidString as NSString
         options[NetworkProtectionOptionKey.selectedEnvironment] = AppDependencyProvider.shared.vpnSettings
             .selectedEnvironment.rawValue as NSString
         if let data = try? JSONEncoder().encode(AppDependencyProvider.shared.vpnSettings.dnsSettings) {

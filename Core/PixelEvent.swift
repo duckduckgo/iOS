@@ -642,7 +642,9 @@ extension Pixel {
         case debugWebsiteDataStoresCleared
 
         case debugBookmarksMigratedMoreThanOnce
-        
+
+        case debugBreakageExperiment
+
         // Return user measurement
         case debugReturnUserAddATB
         case debugReturnUserUpdateATB
@@ -857,16 +859,9 @@ extension Pixel {
         case secureVaultL2KeyMigration
         case secureVaultL2KeyPasswordMigration
 
-        // MARK: Experimental report broken site flows
+        // MARK: Report broken site flows
         case reportBrokenSiteShown
-        case reportBrokenSiteBreakageCategorySelected
         case reportBrokenSiteSent
-        case reportBrokenSiteOverallCategorySelected
-        case reportBrokenSiteFeedbackCategorySubmitted
-        case reportBrokenSiteTogglePromptNo
-        case reportBrokenSiteTogglePromptYes
-        case reportBrokenSiteSkipToggleStep
-        case reportBrokenSiteToggleProtectionOff
 
         // MARK: New Tab Page baseline engagement
         case addFavoriteDaily
@@ -967,6 +962,12 @@ extension Pixel {
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
 
+        // MARK: Tab interaction state debug pixels
+        case tabInteractionStateSourceMissingRootDirectory
+        case tabInteractionStateSourceFailedToWrite
+
+        case tabInteractionStateFailedToRestore
+        case tabInteractionStateRestorationTime(_ time: BucketAggregation)
     }
 
 }
@@ -1499,9 +1500,9 @@ extension Pixel.Event {
             
         case .configurationFetchInfo: return "m_d_cfgfetch"
             
-        case .trackerDataParseFailed: return "m_d_tds_p"
+        case .trackerDataParseFailed: return "m_d_tracker_data_parse_failed"
         case .trackerDataReloadFailed: return "m_d_tds_r"
-        case .trackerDataCouldNotBeLoaded: return "m_d_tds_l"
+        case .trackerDataCouldNotBeLoaded: return "m_d_tracker_data_could_not_be_loaded"
         case .fileStoreWriteFailed: return "m_d_fswf"
         case .fileStoreCoordinatorFailed: return "m_d_configuration_file_coordinator_error"
         case .privacyConfigurationReloadFailed: return "m_d_pc_r"
@@ -1567,8 +1568,20 @@ extension Pixel.Event {
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
         case .debugWebsiteDataStoresCleared: return "m_d_wkwebsitedatastorescleared"
 
+            // MARK: Tab interaction state debug pixels
+
+        case .tabInteractionStateSourceMissingRootDirectory:
+            return "m_d_tab-interaction-state-source_missing-root-directory"
+        case .tabInteractionStateSourceFailedToWrite:
+            return "m_d_tab-interaction-state-source_failed-to-write"
+
+        case .tabInteractionStateFailedToRestore:
+            return "m_d_tab-interaction-state_failed-to-restore"
+        case .tabInteractionStateRestorationTime(let aggregation):
+            return "m_d_tab-interaction-state_restoration-time-\(aggregation)"
+
             // MARK: Ad Attribution
-            
+
         case .adAttributionGlobalAttributedRulesDoNotExist: return "m_attribution_global_attributed_rules_do_not_exist"
         case .adAttributionCompilationFailedForAttributedRulesList: return "m_attribution_compilation_failed_for_attributed_rules_list"
             
@@ -1812,16 +1825,9 @@ extension Pixel.Event {
         case .secureVaultL2KeyMigration: return "m_secure-vault_keystore_event_l2-key-migration"
         case .secureVaultL2KeyPasswordMigration: return "m_secure-vault_keystore_event_l2-key-password-migration"
 
-        // MARK: Experimental report broken site flows
+        // MARK: Report broken site flows
         case .reportBrokenSiteShown: return "m_report-broken-site_shown"
-        case .reportBrokenSiteBreakageCategorySelected: return "m_report-broken-site_breakage-category-selected"
         case .reportBrokenSiteSent: return "m_report-broken-site_sent"
-        case .reportBrokenSiteOverallCategorySelected: return "m_report-broken-site_overall-category-selected"
-        case .reportBrokenSiteFeedbackCategorySubmitted: return "m_report-broken-site_feedback-category-submitted"
-        case .reportBrokenSiteTogglePromptNo: return "m_report-broken-site_toggle-prompt-no"
-        case .reportBrokenSiteTogglePromptYes: return "m_report-broken-site_toggle-prompt-yes"
-        case .reportBrokenSiteSkipToggleStep: return "m_report-broken-site_skip-toggle-step"
-        case .reportBrokenSiteToggleProtectionOff: return "m_report-broken-site_toggle-protection-off"
 
         // MARK: New Tab Page baseline engagement
         case .addFavoriteDaily: return "m_add_favorite_daily"
@@ -1931,6 +1937,7 @@ extension Pixel.Event {
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
 
+        case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
         }
     }
 }

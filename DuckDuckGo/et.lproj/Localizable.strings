@@ -131,13 +131,16 @@
 "addWidget.description" = "Kasuta kiiret juurdepääsu privaatsele otsingule ja lemmiksaitidele.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Pikk vajutus avaekraanile rakenduse ümberkorraldusrežiimi sisenemiseks.";
+"addWidget.settings.firstParagraph" = "Vajutage pikalt ükskõik kus avakuval, kuni rakendused hakkavad värisema";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Puuduta nuppu **Muuda**, seejärel vali **Lisa vidin**";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Vajutage plussnupule %@.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Leidke ja valige DuckDuckGo. Seejärel valige vidin.";
+"addWidget.settings.title" = "Leidke ja valige **DuckDuckGo**. Seejärel valige vidin.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "Ühe puudutusega oma lemmiksaitidele.";
@@ -869,14 +872,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "kohalik ilm";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "šokolaadiküpsiste retseptid";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Leia loendist **DuckDuckGo**, seejärel puuduta **VPN-i juhtimine**, et see lisada";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "õhtusöögi retseptid";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Libista ekraani paremast ülemisest nurgast alla";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Üllata mind!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Puudutage **+** nuppu **Juhtkeskuse** vasakus ülanurgas";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Puuduta ekraani allosas nuppu **Lisa juhtelement**";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Saada krahhiaruanded alati";
@@ -1063,6 +1069,18 @@
 
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "Duck Playeri funktsionaalsust on mõjutanud hiljutised YouTube'i muudatused. Töötame nende probleemide lahendamise nimel ja täname sind mõistva suhtumise eest.";
+
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"duckai.preferences.text.markdown" = "Duck.ai on valikuline funktsioon, mis võimaldab anonüümselt vestelda populaarsete kolmanda poole AI vestlusmudelitega. Teie vestlusi ei kasutata tehisintellekti treenimiseks.\n[Lisateave](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
+
+/* Toggle text to enable/disable AI Chat in the address bar */
+"duckai.settings.enable.address-bar-toggle" = "Kuva Duck.ai otsingu ajal";
+
+/* Toggle text to enable/disable AI Chat in the browsing menu */
+"duckai.settings.enable.browsing-menu-toggle" = "Kuva Duck.ai brauseri menüüs";
+
+/* Settings screen cell text for AI Chat settings */
+"duckai.settings.title" = "Duck.ai";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo iOS-ile";
@@ -1517,6 +1535,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Peate lubama VPN-i rakenduses DuckDuckGo.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1858,6 +1879,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-i seaded";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Otseteed";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Kohanda oma lemmikuid ja enim kasutatavaid funktsioone. Järjesta valikud ümber või peida need, et kõik oleks lihtsasti leitav.";
@@ -2211,6 +2235,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Lisa vidin avakuvale";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Lisa DuckDuckGo VPN vidin oma avakuvale";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2866,7 +2893,28 @@
 "vpn.access-revoked.alert.title" = "VPN-ühendus katkestati aegunud tellimuse tõttu";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Leia ja vali DuckDuckGo. Seejärel pühi VPN-ile ja vali Lisa vidin.";
+"vpn.addWidget.settings.title" = "Leia ja vali **DuckDuckGo**, seejärel pühi **VPN**-ile ja vali **Lisa vidin**";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "DuckDuckGo VPN on ühendatud";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Siri otseteed võimaldavad teil oma VPN-iga ühenduse luua kiire häälkäsklusega, näiteks \"Siri, lülita DuckDuckGo VPN sisse\". See on kiire ja käed-vaba viis oma VPN-i kasutamiseks.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, käivita DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, aktiveeri DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, kaitse mu seadet DuckDuckGo'ga.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Juhi DuckDuckGo VPN-i Siri abil!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "DuckDuckGo VPN on ühendatud";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Tühista";
@@ -2937,8 +2985,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Aita parandada DuckDuckGo VPN-i";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Lisa VPN juhtimiskeskusesse";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Lisa VPN-i vidin avakuvale";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Juhi VPN-i Siri abil";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Kohandatud DNS-serveri kasutamine võib mõjutada sirvimise kiirust ja paljastada su tegevuse kolmandatele osapooltele, kui server ei ole turvaline või usaldusväärne.";

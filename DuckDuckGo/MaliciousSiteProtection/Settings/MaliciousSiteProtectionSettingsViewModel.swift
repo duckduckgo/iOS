@@ -21,6 +21,7 @@ import Foundation
 import Combine
 import Core
 import SwiftUI
+import MaliciousSiteProtection
 
 final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
     @Published var shouldShowMaliciousSiteProtectionSection = false

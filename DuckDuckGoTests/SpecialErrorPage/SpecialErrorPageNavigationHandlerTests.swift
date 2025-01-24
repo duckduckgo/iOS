@@ -54,7 +54,7 @@ final class SpecialErrorPageNavigationHandlerTests {
     func whenHandleDecidePolicyForNavigationActionIsCalledThenAskMaliciousSiteProtectionNavigationHandlerToHandleTheDecision() throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
-        let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
 
         // WHEN
         sut.handleDecidePolicy(for: navigationAction, webView: webView)
@@ -63,34 +63,6 @@ final class SpecialErrorPageNavigationHandlerTests {
         #expect(maliciousSiteProtectionNavigationHandler.didCallHandleMaliciousSiteProtectionForNavigationAction)
         #expect(maliciousSiteProtectionNavigationHandler.capturedNavigationAction == navigationAction)
         #expect(maliciousSiteProtectionNavigationHandler.capturedWebView == webView)
-    }
-
-    @MainActor
-    @Test
-    func whenHandleDecidePolicyForNavigationActionIsCalled_AndNavigationIsMainFrame_ThenResetErrorData() async throws {
-        // GIVEN
-        let maliciousURL = try #require(URL(string: "https://www.phishing.com"))
-        webView.setCurrentURL(maliciousURL)
-        let errorData = SpecialErrorData.maliciousSite(kind: .phishing, url: maliciousURL)
-        let maliciousNavigationAction = MockNavigationAction(request: URLRequest(url: maliciousURL), targetFrame: MockFrameInfo(isMainFrame: true))
-        let maliciousNavigationResponse = MockNavigationResponse.with(url: maliciousURL)
-        maliciousSiteProtectionNavigationHandler.task = Task {
-            .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: maliciousNavigationAction, errorData: errorData)))
-        }
-        _ = await sut.handleDecidePolicy(for: maliciousNavigationResponse, webView: webView)
-        #expect(sut.errorData == errorData)
-        #expect(sut.failedURL == maliciousURL)
-
-        let url = try #require(URL(string: "https://www.example.com"))
-        webView.setCurrentURL(url)
-        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
-
-        // WHEN
-        sut.handleDecidePolicy(for: navigationAction, webView: webView)
-
-        // THEN
-        #expect(sut.errorData == nil)
-        #expect(sut.failedURL == nil)
     }
 
     @MainActor

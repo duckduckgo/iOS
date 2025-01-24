@@ -205,10 +205,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func switchAccounts(recoveryKey: SyncCode.RecoveryKey) async {
-        viewModel?.isSwitchingAccounts = true
-        defer {
-            viewModel?.isSwitchingAccounts = false
-        }
         do {
             try await syncService.disconnect()
         } catch {

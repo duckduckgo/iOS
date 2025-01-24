@@ -45,7 +45,7 @@ public struct SyncSettingsView: View {
                 }
         } else {
             List {
-                if model.isSyncEnabled || model.isSwitchingAccounts {
+                if model.isSyncEnabled {
 
                     syncUnavailableViewWhileLoggedIn()
 

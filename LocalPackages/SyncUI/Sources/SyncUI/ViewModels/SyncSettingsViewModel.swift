@@ -115,8 +115,6 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published public var invalidBookmarksTitles: [String] = []
     @Published public var invalidCredentialsTitles: [String] = []
 
-    @Published public var isSwitchingAccounts = false
-
     @Published var isBusy = false
     @Published var recoveryCode = ""
 

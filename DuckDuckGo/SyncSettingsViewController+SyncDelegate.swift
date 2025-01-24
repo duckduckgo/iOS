@@ -197,13 +197,10 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         alertController.addAction(title: UserText.actionCancel, style: .cancel) {
             Pixel.fire(pixel: .syncUserCancelledSwitchingAccount)
         }
-        // Gives time to the is syncing view to appear
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.dismissPresentedViewController { [weak self] in
-                self?.present(alertController, animated: true, completion: nil)
-                Pixel.fire(pixel: .syncAskUserToSwitchAccount)
-            }
-        }
+
+        let viewControllerToPresentFrom = navigationController?.presentedViewController ?? self
+        viewControllerToPresentFrom.present(alertController, animated: true, completion: nil)
+        Pixel.fire(pixel: .syncAskUserToSwitchAccount)
     }
 
     func switchAccounts(recoveryKey: SyncCode.RecoveryKey) async {
@@ -287,9 +284,17 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
     }
 
-    func showPreparingSync() {
+    func showPreparingSyncAsync() async {
+        await withCheckedContinuation { continuation in
+            showPreparingSync {
+                continuation.resume()
+            }
+        }
+    }
+
+    func showPreparingSync(_ completion: (() -> Void)? = nil) {
         let controller = UIHostingController(rootView: PreparingToSyncView())
-        navigationController?.present(controller, animated: true)
+        navigationController?.present(controller, animated: true, completion: completion)
     }
 
     @MainActor

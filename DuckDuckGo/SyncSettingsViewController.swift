@@ -355,7 +355,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         }
         if let recoveryKey = syncCode.recovery {
             dismissPresentedViewController()
-            showPreparingSync()
+            await showPreparingSyncAsync()
             do {
                 try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
                 return true

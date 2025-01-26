@@ -28,7 +28,7 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }} #KS rename
+          token: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }} 
           submodules: recursive
           fetch-depth: 0 # Fetch all history and tags in order to extract Asana task URLs from git log
 

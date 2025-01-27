@@ -1184,12 +1184,16 @@ class MainViewController: UIViewController {
         }
 
         self.showMenuHighlighterIfNeeded()
-        
-        coordinator.animate { _ in
-            self.swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model, scrollToSelected: true)
 
+        let isKeyboardShowing = omniBar.textField.isFirstResponder
+        coordinator.animate { _ in
             self.deferredFireOrientationPixel()
         } completion: { _ in
+            self.swipeTabsCoordinator?.invalidateLayout()
+            if isKeyboardShowing {
+                self.omniBar.becomeFirstResponder()
+            }
+
             ViewHighlighter.updatePositions()
         }
 

@@ -1,5 +1,5 @@
 //
-//  PixelService.swift
+//  PixelConfiguration.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -26,9 +26,9 @@ import Common
 import Core
 import BrowserServicesKit
 
-final class PixelService {
+final class PixelConfiguration {
 
-    init(featureFlagger: FeatureFlagger) {
+    static func configure(featureFlagger: FeatureFlagger) {
 
 #if DEBUG
         Pixel.isDryRun = true

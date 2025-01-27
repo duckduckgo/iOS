@@ -60,7 +60,6 @@ struct Launching: AppState {
     private let vpnService: VPNService
     private let autofillService: AutofillService = AutofillService()
     private let persistenceService = PersistenceService()
-    private let pixelKitService: PixelService
     private let remoteMessagingService: RemoteMessagingService
 
     private let window: UIWindow
@@ -92,8 +91,7 @@ struct Launching: AppState {
         }
 
         KeyboardConfiguration.configure()
-
-        pixelKitService = PixelService(featureFlagger: featureFlagger)
+        PixelConfiguration.configure(featureFlagger: featureFlagger)
 
         ContentBlocking.shared.onCriticalError = { [application] in
             Task { @MainActor [application] in

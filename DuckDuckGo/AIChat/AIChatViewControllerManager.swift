@@ -49,7 +49,7 @@ final class AIChatViewControllerManager {
 
         // Check if the viewController is already presenting a RoundedPageSheetContainerViewController with AIChatViewController inside
         if let presentedVC = viewController.presentedViewController as? RoundedPageSheetContainerViewController,
-           _ = presentedVC.contentViewController as? AIChatViewController {
+           presentedVC.contentViewController is AIChatViewController {
             return
         } else {
             viewController.dismiss(animated: true)

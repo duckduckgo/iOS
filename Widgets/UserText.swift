@@ -228,7 +228,7 @@ struct UserText {
 
     static let lockScreenAIChatDescription = NSLocalizedString(
         "lock.screen.widget.aichat.description",
-        value: "Quickly open Duck.ai with a tap.",
+        value: "Quickly start a new AI chat in Duck.ai",
         comment: "Description shown to the user when adding the Duck.ai lock screen widget")
 
 }

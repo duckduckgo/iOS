@@ -126,7 +126,7 @@ struct AIChatLockScreenWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "AI-Chat-Symbol")
+            return LockScreenWidgetView(imageNamed: "LockScreenAIChat")
                 .widgetURL(DeepLinks.openAIChat.appendingParameter(name: WidgetSourceType.sourceKey, value: WidgetSourceType.lockscreenComplication.rawValue))
         }
         .configurationDisplayName(UserText.lockScreenAIChatTitle)

@@ -2,7 +2,7 @@
 "intent.vpn.needs.to.be.enabled.from.app" = "You need to enable the VPN from the DuckDuckGo App.";
 
 /* Description shown to the user when adding the Duck.ai lock screen widget */
-"lock.screen.widget.aichat.description" = "Quickly open Duck.ai with a tap.";
+"lock.screen.widget.aichat.description" = "Quickly start a new AI chat in Duck.ai";
 
 /* Title shown to the user when adding the Duck.ai lock screen widget */
 "lock.screen.widget.aichat.title" = "Duck.ai";

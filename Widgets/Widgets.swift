@@ -231,6 +231,7 @@ struct Widgets: WidgetBundle {
                                                   EmailProtectionLockScreenWidget(),
                                                   FireButtonLockScreenWidget(),
                                                   FavoritesLockScreenWidget(),
+                                                  AIChatLockScreenWidget(),
                                                   PasswordsLockScreenWidget()
             )
         }
@@ -244,6 +245,7 @@ struct Widgets: WidgetBundle {
                                                   EmailProtectionLockScreenWidget(),
                                                   FireButtonLockScreenWidget(),
                                                   FavoritesLockScreenWidget(),
+                                                  AIChatLockScreenWidget(),
                                                   PasswordsLockScreenWidget())
         } else {
             return WidgetBundleBuilder.buildBlock(SearchWidget(),

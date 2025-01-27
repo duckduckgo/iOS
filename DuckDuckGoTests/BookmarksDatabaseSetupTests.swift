@@ -25,7 +25,7 @@ import CoreData
 import Bookmarks
 @testable import DuckDuckGo
 @testable import Core
-import TestUtils
+import PersistenceTestingUtils
 
 class DummyCoreDataStoreMock: CoreDataStoring {
 

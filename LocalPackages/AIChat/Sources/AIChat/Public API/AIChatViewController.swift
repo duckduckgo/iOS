@@ -80,21 +80,7 @@ extension AIChatViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .black
         setupTitleBar()
-    }
-
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         addWebViewController()
-    }
-
-    public override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        removeWebViewController()
-    }
-    
-    public override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        removeWebViewController()
     }
 }
 

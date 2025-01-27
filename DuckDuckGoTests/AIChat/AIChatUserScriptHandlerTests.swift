@@ -71,7 +71,6 @@ class AIChatUserScriptHandlerTests: XCTestCase {
         XCTAssertEqual(handoffData?.aiChatPayload as? [String: String], expectedPayload)
     }
 
-
     func testOpenAIChat() async {
         // Given
         let expectation = self.expectation(description: "Notification should be posted")

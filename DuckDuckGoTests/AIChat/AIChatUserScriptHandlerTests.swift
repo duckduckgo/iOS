@@ -87,7 +87,7 @@ class AIChatUserScriptHandlerTests: XCTestCase {
         DispatchQueue.main.async {
             expectation.fulfill()
         }
-        await waitForExpectations(timeout: 1, handler: nil)
+        await fulfillment(of: [expectation])
     }
 }
 

@@ -11960,8 +11960,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "graeme/simplify-connecting-sync-accounts-when-2";
-				kind = branch;
+				kind = exactVersion;
+				version = 232.0.0;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

@@ -200,7 +200,7 @@ update_marketing_version() {
 update_build_version() {
 	echo "Setting build version ..."
 	(cd "$base_dir" && bundle exec fastlane increment_build_number_for_version version:"${version}")
-	git add "${base_dir}/DuckDuckGo.xcodeproj/project.pbxproj"
+	git add "${base_dir}/DuckDuckGo-iOS.xcodeproj/project.pbxproj"
 	if [[ "$(git diff --cached)" ]]; then
 		eval git commit --allow-empty -m \"Update build number\" "$mute"
 		echo "Setting build version ... ✅"

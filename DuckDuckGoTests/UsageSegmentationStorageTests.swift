@@ -20,8 +20,8 @@
 import Foundation
 import XCTest
 @testable import Core
-import PersistenceTestingUtils
 @testable import Persistence
+import PersistenceTestingUtils
 
 final class UsageSegmentationStorageTests: XCTestCase {
 

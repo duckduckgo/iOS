@@ -59,7 +59,7 @@ struct Launching: AppState {
                                                   crashCollectionStorage: UserDefaults())
     private let bookmarksDatabase = BookmarksDatabase.make()
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
-    private let subscriptionManager = AppDependencyProvider.shared.subscriptionManager
+    private let accountManager = AppDependencyProvider.shared.accountManager
     private let tunnelController = AppDependencyProvider.shared.networkProtectionTunnelController
     private let vpnFeatureVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
     private let appSettings = AppDependencyProvider.shared.appSettings
@@ -80,7 +80,6 @@ struct Launching: AppState {
     // These should ideally be let properties instead of force-unwrapped. However, due to various initialization paths, such as database completion blocks, setting them up in advance is currently not feasible. Refactoring will be done once this code is streamlined.
     private let uiService: UIService
     private let unService: UNService
-    private var tokenBackgroundRefreshTask: TokenBackgroundRefreshTask?
     private let syncDataProviders: SyncDataProviders
     private let syncService: DDGSync
     private let isSyncInProgressCancellable: AnyCancellable
@@ -103,14 +102,9 @@ struct Launching: AppState {
         @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
         var privacyConfigCustomURL: String?
 
-        Task {
-            await AppDependencyProvider.shared.subscriptionManager.loadInitialData()
-        }
-
         application = stateContext.application
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
-        vpnWorkaround = VPNRedditSessionWorkaround(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
-                                                   tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController)
+        vpnWorkaround = VPNRedditSessionWorkaround(accountManager: accountManager, tunnelController: tunnelController)
         crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
 
         defer {
@@ -329,11 +323,18 @@ struct Launching: AppState {
 
             let url = URL.pixelUrl(forPixelNamed: pixelName)
             let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
-            guard let request = APIRequestV2(url: url, method: .get,
-                                             queryItems: parameters.map({ (key, value) in QueryItem(key: key, value: value) }),
-                                             headers: apiHeaders) else {
+            guard let request = APIRequestV2(url: url, method: .get, queryItems: parameters.toQueryItems(), headers: apiHeaders) else {
+                assertionFailure("Invalid request Pixel request")
                 onComplete(false, nil)
                 return
+            }
+            Task {
+                do {
+                    _ = try await DefaultAPIService().fetch(request: request)
+                    onComplete(true, nil)
+                } catch {
+                    onComplete(false, error)
+                }
             }
         }
         PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger,
@@ -458,7 +459,7 @@ struct Launching: AppState {
                 mainViewController?.tabManager.removeLeftoverInteractionStates()
             }
         }
-        unService = UNService(window: window, subscriptionManager: subscriptionManager)
+        unService = UNService(window: window, accountManager: accountManager)
         uiService = UIService(window: window)
 
         voiceSearchHelper.migrateSettingsFlagIfNecessary()
@@ -466,9 +467,6 @@ struct Launching: AppState {
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-
-        tokenBackgroundRefreshTask = TokenBackgroundRefreshTask(subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
-        tokenBackgroundRefreshTask?.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = unService
 
@@ -483,6 +481,8 @@ struct Launching: AppState {
         NewTabPageIntroMessageSetup().perform()
 
         widgetRefreshModel.beginObservingVPNStatus()
+
+        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
         let autofillUsageMonitor = AutofillUsageMonitor()
         autofillPixelReporter = AutofillPixelReporter(
@@ -532,7 +532,7 @@ struct Launching: AppState {
 
     private var appDependencies: AppDependencies {
         AppDependencies(
-            subscriptionManager: subscriptionManager,
+            accountManager: accountManager,
             vpnWorkaround: vpnWorkaround,
             vpnFeatureVisibility: vpnFeatureVisibility,
             appSettings: appSettings,

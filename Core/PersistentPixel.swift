@@ -21,6 +21,7 @@ import Foundation
 import os.log
 import Networking
 import Persistence
+import PixelKit
 
 public protocol PersistentPixelFiring {
     func fire(pixel: Pixel.Event,

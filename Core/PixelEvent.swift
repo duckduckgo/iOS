@@ -22,7 +22,6 @@ import BrowserServicesKit
 import Bookmarks
 import Configuration
 import DDGSync
-import NetworkProtection
 
 extension Pixel {
     
@@ -413,7 +412,7 @@ extension Pixel {
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
 
-        case networkProtectionLatency(quality: NetworkProtectionLatencyMonitor.ConnectionQuality)
+        case networkProtectionLatency(quality: String)
         case networkProtectionLatencyError
         
         case networkProtectionEnabledOnSearch
@@ -642,7 +641,9 @@ extension Pixel {
         case debugWebsiteDataStoresCleared
 
         case debugBookmarksMigratedMoreThanOnce
-        
+
+        case debugBreakageExperiment
+
         // Return user measurement
         case debugReturnUserAddATB
         case debugReturnUserUpdateATB
@@ -1383,7 +1384,7 @@ extension Pixel.Event {
         case .networkProtectionConnectionTesterExtendedFailureRecovered: return "m_netp_connection_tester_extended_failure_recovered"
         case .networkProtectionTunnelFailureDetected: return "m_netp_ev_tunnel_failure"
         case .networkProtectionTunnelFailureRecovered: return "m_netp_ev_tunnel_failure_recovered"
-        case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality.rawValue)_latency"
+        case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality)_latency"
         case .networkProtectionLatencyError: return "m_netp_ev_latency_error_d"
         case .networkProtectionRekeyAttempt: return "m_netp_rekey_attempt"
         case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"
@@ -1501,9 +1502,9 @@ extension Pixel.Event {
             
         case .configurationFetchInfo: return "m_d_cfgfetch"
             
-        case .trackerDataParseFailed: return "m_d_tds_p"
+        case .trackerDataParseFailed: return "m_d_tracker_data_parse_failed"
         case .trackerDataReloadFailed: return "m_d_tds_r"
-        case .trackerDataCouldNotBeLoaded: return "m_d_tds_l"
+        case .trackerDataCouldNotBeLoaded: return "m_d_tracker_data_could_not_be_loaded"
         case .fileStoreWriteFailed: return "m_d_fswf"
         case .fileStoreCoordinatorFailed: return "m_d_configuration_file_coordinator_error"
         case .privacyConfigurationReloadFailed: return "m_d_pc_r"
@@ -1941,6 +1942,7 @@ extension Pixel.Event {
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
 
+        case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
         }
     }
 }

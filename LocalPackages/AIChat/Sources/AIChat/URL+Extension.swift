@@ -24,6 +24,9 @@ extension URL {
         static let duckDuckGoHost = "duckduckgo.com"
         static let chatQueryName = "ia"
         static let chatQueryValue = "chat"
+
+        static let bangQueryName = "q"
+        static let supportedBangs: Set<String> = ["ai", "aichat", "chat", "duckai"]
     }
 
     func addingOrReplacingQueryItem(_ queryItem: URLQueryItem) -> URL {
@@ -49,6 +52,32 @@ extension URL {
             return false
         }
 
-        return queryItems.contains { $0.name == Constants.chatQueryName && $0.value == Constants.chatQueryValue }
+        return queryItems.contains { $0.name == Constants.chatQueryName && $0.value == Constants.chatQueryValue } || self.isDuckAIBang
     }
+
+    public var isDuckAIBang: Bool {
+        guard let host = self.host, host == Constants.duckDuckGoHost else {
+            return false
+        }
+
+        guard let urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false),
+              let queryItems = urlComponents.queryItems else {
+            return false
+        }
+
+        return queryItems.contains { $0.name == Constants.bangQueryName && hasSupportedBangPrefix($0.value) }
+    }
+
+    private func hasSupportedBangPrefix(_ input: String?) -> Bool {
+        guard let input = input else {
+            return false
+        }
+
+        /// Bangs can be used either at the beginning or at the end of a query.
+        let bangValues = Constants.supportedBangs.flatMap { bang in
+            return ["!\(bang)", "\(bang)!"]
+        }
+        return bangValues.contains { input.hasPrefix($0) }
+    }
+
 }

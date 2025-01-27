@@ -67,7 +67,6 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
     enum Error: String, Swift.Error {
         case missingAccessToken
         case invalidResponse
-        case invalidRequest
     }
 
     struct Payload: Codable {
@@ -135,7 +134,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
         }
     }
 
-    private let subscriptionManager: any SubscriptionManager
+    private let accountManager: any AccountManager
     private let apiService: any Networking.APIService
     private let vpnMetadataCollector: any UnifiedMetadataCollector
     private let defaultMetadataCollector: any UnifiedMetadataCollector
@@ -152,32 +151,26 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
          feedbackSender: any UnifiedFeedbackSender = DefaultFeedbackSender(),
          source: Source = .unknown) {
         self.viewState = .feedbackPending
-        self.subscriptionManager = subscriptionManager
+
+        self.accountManager = subscriptionManager.accountManager
         self.apiService = apiService
         self.vpnMetadataCollector = vpnMetadataCollector
         self.defaultMetadataCollector = defaultMetadatCollector
         self.feedbackSender = feedbackSender
         self.source = source.rawValue
-    }
 
-    @MainActor
-    func updateCategories() async {
-        let features = await subscriptionManager.currentSubscriptionFeatures(forceRefresh: false)
-        let vpnFeature = features.first { $0.entitlement == .networkProtection }
-        let dbpFeature = features.first { $0.entitlement == .dataBrokerProtection }
-        let itrFeature = features.first { $0.entitlement == .identityTheftRestoration }
-        let itrgFeature = features.first { $0.entitlement == .identityTheftRestorationGlobal }
+        Task {
+            let features = await subscriptionManager.currentSubscriptionFeatures()
 
-        if vpnFeature?.availableForUser ?? false {
-            availableCategories.append(.vpn)
-        }
-        if dbpFeature?.availableForUser ?? false {
-            availableCategories.append(.pir)
-        }
-        let idpEnabled = itrFeature?.availableForUser ?? false
-        let idpgEnabled = itrgFeature?.availableForUser ?? false
-        if idpEnabled || idpgEnabled {
-            availableCategories.append(.itr)
+            if features.contains(.networkProtection) {
+                availableCategories.append(.vpn)
+            }
+            if features.contains(.dataBrokerProtection) {
+                availableCategories.append(.pir)
+            }
+            if features.contains(.identityTheftRestoration) || features.contains(.identityTheftRestorationGlobal) {
+                availableCategories.append(.itr)
+            }
         }
     }
 
@@ -291,7 +284,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
     private func submitIssue(metadata: UnifiedFeedbackMetadata?) async throws {
         guard !userEmail.isEmpty, let selectedCategory else { return }
 
-        guard let accessToken = try? await subscriptionManager.getTokenContainer(policy: .localValid) else {
+        guard let accessToken = accountManager.accessToken else {
             throw Error.missingAccessToken
         }
 
@@ -304,7 +297,8 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
                               customMetadata: metadata?.toString() ?? "")
         let headers = APIRequestV2.HeadersV2(additionalHeaders: [HTTPHeaderKey.authorization: "Bearer \(accessToken)"])
         guard let request = APIRequestV2(url: Self.feedbackEndpoint, method: .post, headers: headers, body: payload.toData()) else {
-            throw Error.invalidRequest
+            assertionFailure("Invalid request")
+            return
         }
 
         let response: Response = try await apiService.fetch(request: request).decodeBody()

@@ -255,12 +255,10 @@ platform :ios do
 
   desc 'Latest build number for version'
   lane :latest_build_number_for_version do |options|
-    if options[:app_identifier]
-      app_identifier = options[:app_identifier]
-    end
     build_number = latest_testflight_build_number(
       api_key: get_api_key,
       version: options[:version],
+      app_identifier: options[:app_identifier],
       initial_build_number: -1,
       username: get_username(options))
     if options[:file_name]
@@ -270,13 +268,10 @@ platform :ios do
 
   desc 'Increment build number based on version in App Store Connect'
   lane :increment_build_number_for_version do |options|
-    if options[:app_identifier]
-      app_identifier = options[:app_identifier]
-    end
-
     build_number = latest_testflight_build_number(
       api_key: get_api_key,
       version: options[:version],
+      app_identifier: options[:app_identifier],
       initial_build_number: -1,
       username: get_username(options)
     )

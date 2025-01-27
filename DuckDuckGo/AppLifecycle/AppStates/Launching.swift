@@ -91,16 +91,7 @@ struct Launching: AppState {
                        withAdditionalParameters: [PixelParameters.time: String(launchTime)])
         }
 
-#if targetEnvironment(simulator)
-        if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
-            // Disable hardware keyboards.
-            let setHardwareLayout = NSSelectorFromString("setHardwareLayout:")
-            UITextInputMode.activeInputModes
-            // Filter `UIKeyboardInputMode`s.
-                .filter({ $0.responds(to: setHardwareLayout) })
-                .forEach { $0.perform(setHardwareLayout, with: nil) }
-        }
-#endif
+        KeyboardConfiguration.configure()
 
         pixelKitService = PixelService(featureFlagger: featureFlagger)
 

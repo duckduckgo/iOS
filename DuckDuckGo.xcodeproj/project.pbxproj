@@ -1059,6 +1059,7 @@
 		CBF2597D2D41734700AC63E4 /* Terminating.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF2597C2D41734700AC63E4 /* Terminating.swift */; };
 		CBF259812D42852B00AC63E4 /* PixelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259802D42852B00AC63E4 /* PixelService.swift */; };
 		CBF259832D4293B700AC63E4 /* RemoteMessagingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259822D4293B700AC63E4 /* RemoteMessagingService.swift */; };
+		CBF2598E2D47B1A500AC63E4 /* KeyboardConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF2598D2D47B1A500AC63E4 /* KeyboardConfiguration.swift */; };
 		CBFCB30E2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */; };
 		D60170BD2BA34CE8001911B5 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60170BB2BA32DD6001911B5 /* Subscription.swift */; };
 		D6037E692C32F2E7009AAEC0 /* DuckPlayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */; };
@@ -3007,6 +3008,7 @@
 		CBF2597C2D41734700AC63E4 /* Terminating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminating.swift; sourceTree = "<group>"; };
 		CBF259802D42852B00AC63E4 /* PixelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelService.swift; sourceTree = "<group>"; };
 		CBF259822D4293B700AC63E4 /* RemoteMessagingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMessagingService.swift; sourceTree = "<group>"; };
+		CBF2598D2D47B1A500AC63E4 /* KeyboardConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardConfiguration.swift; sourceTree = "<group>"; };
 		CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationURLDebugViewController.swift; sourceTree = "<group>"; };
 		D60170BB2BA32DD6001911B5 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerSettings.swift; sourceTree = "<group>"; };
@@ -5802,6 +5804,14 @@
 			path = AppServices;
 			sourceTree = "<group>";
 		};
+		CBF2598C2D47B19800AC63E4 /* AppConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				CBF2598D2D47B1A500AC63E4 /* KeyboardConfiguration.swift */,
+			);
+			path = AppConfiguration;
+			sourceTree = "<group>";
+		};
 		D62EC3B72C24695800FC9D04 /* DuckPlayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -6694,6 +6704,7 @@
 		F1C5ECF31E37812900C599A4 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				CBF2598C2D47B19800AC63E4 /* AppConfiguration */,
 				CBAD0F0E2D006291006267B8 /* AppServices */,
 				CBAD0F0B2CFF4EDD006267B8 /* AppDependencies.swift */,
 				CBAD0F092CFF4185006267B8 /* AppShortcuts.swift */,
@@ -7945,6 +7956,7 @@
 				D68DF81C2B58302E0023DBEA /* SubscriptionRestoreView.swift in Sources */,
 				D664C7CE2B289AA200CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift in Sources */,
 				EE9D68DC2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift in Sources */,
+				CBF2598E2D47B1A500AC63E4 /* KeyboardConfiguration.swift in Sources */,
 				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
 				C1BF26152C74D10F00F6405E /* SyncPromoManager.swift in Sources */,
 				D6E83C2E2B1EA06E006C8AFB /* SettingsViewModel.swift in Sources */,

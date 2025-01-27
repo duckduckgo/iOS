@@ -150,7 +150,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .tabManagerMultiSelection:
             return .internalOnly()
         case .webViewStateRestoration:
-            return .internalOnly()
+            return .remoteReleasable(.feature(.webViewStateRestoration))
         }
     }
 }

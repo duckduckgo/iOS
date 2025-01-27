@@ -2592,7 +2592,14 @@ extension MainViewController: TabSwitcherDelegate {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }
-    
+
+    func tabSwitcherDidRequestCloseAll(tabSwitcher: TabSwitcherViewController) {
+        // TODO polish
+        self.forgetTabs()
+        self.refreshUIAfterClear()
+        tabSwitcher.dismiss()
+    }
+
 }
 
 extension MainViewController: BookmarksDelegate {

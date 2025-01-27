@@ -273,16 +273,20 @@ platform :ios do
     if options[:app_identifier]
       app_identifier = options[:app_identifier]
     end
-    increment_build_number({
-      build_number:
-        latest_testflight_build_number(
-          api_key: get_api_key,
-          version: options[:version],
-          app_identifier: app_identifier,
-          initial_build_number: -1,
-          username: get_username(options)) + 1,
-      skip_info_plist: "true"
-    })
+
+    build_number = latest_testflight_build_number(
+      api_key: get_api_key,
+      version: options[:version],
+      initial_build_number: -1,
+      username: get_username(options)
+    )
+
+    Dir.chdir("..") do
+      File.write(
+        Fastlane::Helper::DdgAppleAutomationHelper::BUILD_NUMBER_CONFIG_PATH,
+        "#{Fastlane::Helper::DdgAppleAutomationHelper::BUILD_NUMBER_CONFIG_DEFINITION} = #{build_number + 1}\n"
+      )
+    end
   end
 
   #################################################

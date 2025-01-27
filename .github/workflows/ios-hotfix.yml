@@ -1,0 +1,66 @@
+name: iOS - Set Up Hotfix Release Branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  create_release_branch:
+
+    name: Create Release Branch
+
+    runs-on: macos-15-xlarge
+    timeout-minutes: 10
+
+    outputs:
+      release_branch_name: ${{ steps.make_release_branch.outputs.release_branch_name }}
+      asana_task_url: ${{ steps.create_release_task.outputs.asana_task_url }}
+
+    steps:
+
+      - name: Assert main branch
+        run: |
+          if [ "${{ github.ref_name }}" != "main" ]; then
+            echo "👎 Not the main branch"
+            exit 1
+          fi
+
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }} 
+          submodules: recursive
+          fetch-depth: 0 # Fetch all history and tags in order to extract Asana task URLs from git log
+
+      - name: Set up fastlane
+        run: bundle install
+
+      - name: Make release branch
+        id: make_release_branch
+        env:
+          APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
+          # Elevated permissions token is needed here to use GH git/refs API (used by fastlane)
+          GITHUB_TOKEN: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }}
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        run: |
+          bundle exec fastlane run start_new_release \
+            platform:"ios" \
+            github_handle:"${{ github.actor }}" \
+            is_hotfix:"true"
+
+      # Necessary as make_release_branch will checkout a hotfix branch and the plugins may be differnet
+      - name: Reinstall fastlane
+        run: bundle install
+
+      - name: Report success
+        env:
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          BRANCH: ${{ steps.make_release_branch.outputs.release_branch_name }}
+          RELEASE_TAG: ${{ steps.make_release_branch.outputs.last_release }}
+          WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          bundle exec fastlane run asana_add_comment \
+            task_url:"${{ steps.make_release_branch.outputs.asana_task_url }}" \
+            template_name:"hotfix-branch-ready"

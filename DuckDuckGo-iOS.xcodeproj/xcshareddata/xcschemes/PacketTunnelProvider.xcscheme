@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8512EA4C24ED30D20073EE19"
-               BuildableName = "WidgetsExtension.appex"
-               BlueprintName = "WidgetsExtension"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+               BlueprintIdentifier = "02025661298818B100E694E7"
+               BuildableName = "PacketTunnelProvider.appex"
+               BlueprintName = "PacketTunnelProvider"
+               ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -32,7 +32,7 @@
                BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
                BuildableName = "DuckDuckGo.app"
                BlueprintName = "DuckDuckGo"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+               ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -58,15 +58,9 @@
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
       <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.springboard">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8512EA4C24ED30D20073EE19"
-            BuildableName = "WidgetsExtension.appex"
-            BlueprintName = "WidgetsExtension"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
-         </BuildableReference>
+         runnableDebuggingMode = "1"
+         BundleIdentifier = "com.amazon.Amazon"
+         RemotePath = "/var/containers/Bundle/Application/80ED956D-9245-40D7-B75E-B2DB54238B4E/Amazon.app">
       </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -74,26 +68,9 @@
             BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
             BuildableName = "DuckDuckGo.app"
             BlueprintName = "DuckDuckGo"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "_XCWidgetKind"
-            value = "FavoritesWidget"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "_XCWidgetDefaultView"
-            value = "snapshot"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "_XCWidgetFamily"
-            value = "medium"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -110,7 +87,7 @@
             BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
             BuildableName = "DuckDuckGo.app"
             BlueprintName = "DuckDuckGo"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -21,7 +21,7 @@ import XCTest
 import os.log
 import WebKit
 @testable import Core
-import TestUtils
+import PersistenceTestingUtils
 
 final class FireButtonReferenceTests: XCTestCase {
 

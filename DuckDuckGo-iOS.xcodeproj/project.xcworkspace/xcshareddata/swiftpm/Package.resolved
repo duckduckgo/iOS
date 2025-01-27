@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "fcappelli/authv2/networking_improvements",
-        "revision" : "2e2a6a4b38f29ede2eae8eadfa4d3f0ae54ca744"
+        "revision" : "81e09dafb4fe49745e38c7e36609270d3d367839",
+        "version" : "231.0.0"
       }
     },
     {

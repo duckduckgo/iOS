@@ -83,8 +83,8 @@ jobs:
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       run: |
         app_version="$(cut -d ' ' -f 3 < Configuration/Version.xcconfig)"
-        build_version="$(cut -d ' ' -f 3 < Configuration/BuildNumber.xcconfig)"
         bundle exec fastlane increment_build_number_for_version version:$app_version app_identifier:"com.duckduckgo.mobile.ios.alpha"
+        build_version="$(cut -d ' ' -f 3 < Configuration/BuildNumber.xcconfig)"
         bundle exec fastlane release_alpha groups:["${{ env.destination }}"]
         echo "dsyms_path=${{ github.workspace }}/DuckDuckGo-Alpha.app.dSYM.zip" >> $GITHUB_ENV
         echo "app_version=${app_version}" >> $GITHUB_ENV

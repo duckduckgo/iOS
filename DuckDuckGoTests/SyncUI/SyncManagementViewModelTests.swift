@@ -19,7 +19,7 @@
 
 import XCTest
 import Combine
-@testable import SyncUI
+@testable import SyncUI_iOS
 
 /// To be fleshed out when UI is settled
 class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate {

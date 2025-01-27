@@ -43,10 +43,6 @@ struct Foreground: AppState {
 
     private let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
 
-    private var window: UIWindow {
-        appDependencies.uiService.window // should it be application.window?
-    }
-
     private var mainViewController: MainViewController {
         appDependencies.mainViewController
     }
@@ -61,14 +57,12 @@ struct Foreground: AppState {
         let subscriptionService = appDependencies.subscriptionService
         subscriptionService.onFirstForeground()
 
-        // onApplicationLaunch code
-        Task { @MainActor [self] in
-            await beginAuthentication()
-            // TODO: onAuthentication()?
-            initialiseBackgroundFetch(application)
-            applyAppearanceChanges()
-            appDependencies.remoteMessagingService.onForeground() // TODO: perhaps it should be onAuthentication (if it actually depends on it)
-        }
+        let authenticationService = appDependencies.authenticationService
+        authenticationService.beginAuthentication(onAuthentication: onAuthentication)
+
+        initialiseBackgroundFetch(application)
+        applyAppearanceChanges()
+        appDependencies.remoteMessagingService.onForeground()
 
         // TODO: it should happen after autoclear
         if let url = stateContext.urlToOpen {
@@ -111,14 +105,16 @@ struct Foreground: AppState {
         activateApp()
     }
 
+    private func onAuthentication() {
+        appDependencies.keyboardService.showKeyboardOnLaunch()
+    }
+
     // MARK: handle applicationDidBecomeActive(_:) logic here
     private func activateApp(isTesting: Bool = false) {
         appDependencies.syncService.initializeIfNeeded()
         appDependencies.syncService.setUpDatabaseCleanersIfNeeded()
 
-        if !(appDependencies.uiService.overlayWindow?.rootViewController is AuthenticationViewController) {
-            appDependencies.uiService.removeOverlay()
-        }
+        appDependencies.overlayWindowManager.removeNonAuthenticationOverlay()
 
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
@@ -130,9 +126,9 @@ struct Foreground: AppState {
         mainViewController.showBars()
         mainViewController.didReturnFromBackground()
 
-        if !appDependencies.privacyStore.authenticationEnabled {
-            showKeyboardOnLaunch()
-        }
+//        if !appDependencies.privacyStore.authenticationEnabled {
+//            showKeyboardOnLaunch()
+//        } // it should in theory be called if the authentication is disabled, inside onAuthentication() method
 
         if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
             ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
@@ -188,44 +184,12 @@ struct Foreground: AppState {
 
          Task { @MainActor in
              // Autoclear should have happened by now
-             appDependencies.uiService.showKeyboardIfSettingOn = false
+             appDependencies.keyboardService.showKeyboardIfSettingOn = false
 
              if !handleAppDeepLink(application, mainViewController, url) {
                  mainViewController.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil, fromExternalLink: true)
              }
          }
-    }
-
-    @MainActor
-    private func beginAuthentication(lastBackgroundDate: Date? = nil) async {
-        guard appDependencies.privacyStore.authenticationEnabled else { return }
-
-        let uiService = appDependencies.uiService
-        uiService.removeOverlay()
-        uiService.displayAuthenticationWindow()
-
-        guard let controller = uiService.overlayWindow?.rootViewController as? AuthenticationViewController else {
-            uiService.removeOverlay()
-            return
-        }
-
-        await controller.beginAuthentication {
-            uiService.removeOverlay()
-            showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
-        }
-    }
-
-    private func showKeyboardOnLaunch(lastBackgroundDate: Date? = nil) {
-        guard KeyboardSettings().onAppLaunch && appDependencies.uiService.showKeyboardIfSettingOn && shouldShowKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate) else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.mainViewController.enterSearch()
-        }
-        appDependencies.uiService.showKeyboardIfSettingOn = false
-    }
-
-    private func shouldShowKeyboardOnLaunch(lastBackgroundDate: Date? = nil) -> Bool {
-        guard let lastBackgroundDate else { return true }
-        return Date().timeIntervalSince(lastBackgroundDate) > AppDelegate.ShowKeyboardOnLaunchThreshold
     }
 
     private func fireAppLaunchPixel() {
@@ -385,9 +349,9 @@ struct Foreground: AppState {
     func presentNetworkProtectionStatusSettingsModal() {
         Task {
             if case .success(let hasEntitlements) = await appDependencies.accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
-                (window.rootViewController as? MainViewController)?.segueToVPN()
+                (appDependencies.window.rootViewController as? MainViewController)?.segueToVPN()
             } else {
-                (window.rootViewController as? MainViewController)?.segueToPrivacyPro()
+                (appDependencies.window.rootViewController as? MainViewController)?.segueToPrivacyPro()
             }
         }
     }

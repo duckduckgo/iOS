@@ -55,12 +55,15 @@ struct Launching: AppState {
     private let privacyProDataReporter: PrivacyProDataReporting
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
 
-    private let uiService: UIService
+    private let screenshotService: ScreenshotService
+    private let overlayWindowManager: OverlayWindowManager
+    private let authenticationService: AuthenticationService
     private let syncService: SyncService
     private let vpnService: VPNService
     private let autofillService: AutofillService = AutofillService()
     private let persistenceService = PersistenceService()
     private let remoteMessagingService: RemoteMessagingService
+    private let keyboardService: KeyboardService
 
     private let window: UIWindow
 
@@ -229,13 +232,15 @@ struct Launching: AppState {
             await vpnService.installRedditSessionWorkaround()
         }
 
-        uiService = UIService(window: window)
+        screenshotService = ScreenshotService(window: window)
+        overlayWindowManager = OverlayWindowManager(window: window)
+        authenticationService = AuthenticationService(privacyStore: privacyStore, overlayWindowManager: overlayWindowManager)
+        keyboardService = KeyboardService(mainViewController: mainViewController)
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
-        window.windowScene?.screenshotService?.delegate = uiService
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         // Temporary logic for rollout of Autofill as on by default for new installs only
@@ -253,11 +258,14 @@ struct Launching: AppState {
 
     private var appDependencies: AppDependencies {
         AppDependencies(
+            window: window,
             accountManager: accountManager,
             vpnService: vpnService,
             appSettings: appSettings,
             privacyStore: privacyStore,
-            uiService: uiService,
+            overlayWindowManager: overlayWindowManager,
+            authenticationService: authenticationService,
+            screenshotService: screenshotService,
             mainViewController: mainViewController,
             voiceSearchHelper: voiceSearchHelper,
             autoClear: autoClear,
@@ -268,7 +276,8 @@ struct Launching: AppState {
             subscriptionService: subscriptionService,
             onboardingPixelReporter: onboardingPixelReporter,
             autofillService: autofillService,
-            crashService: crashService
+            crashService: crashService,
+            keyboardService: keyboardService
         )
     }
 

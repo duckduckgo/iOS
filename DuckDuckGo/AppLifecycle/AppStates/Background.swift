@@ -83,11 +83,11 @@ struct Background: AppState {
         let appSettings = appDependencies.appSettings
         let autofillService = appDependencies.autofillService
         let syncService = appDependencies.syncService
-        let uiService = appDependencies.uiService
+        let overlayWindowManager = appDependencies.overlayWindowManager
 
         if autoClear.isClearingEnabled || privacyStore.authenticationEnabled {
-            uiService.displayBlankSnapshotWindow(voiceSearchHelper: voiceSearchHelper,
-                                                 addressBarPosition: appSettings.currentAddressBarPosition)
+            overlayWindowManager.displayBlankSnapshotWindow(addressBarPosition: appSettings.currentAddressBarPosition,
+                                                            voiceSearchHelper: voiceSearchHelper)
         }
         autoClear.startClearingTimer()
         autofillService.onBackground()
@@ -99,7 +99,6 @@ struct Background: AppState {
 
         resetAppStartTime()
     }
-
 
     private func resetAppStartTime() {
         appDependencies.mainViewController.appDidFinishLaunchingStartTime = nil

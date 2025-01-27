@@ -35,60 +35,31 @@ struct Resuming: AppState {
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
+    private let lastBackgroundDate: Date
 
     init(stateContext: Background.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
+        lastBackgroundDate = stateContext.lastBackgroundDate
 
         ThemeManager.shared.updateUserInterfaceStyle()
 
-        let uiService = appDependencies.uiService
+        let authenticationService = appDependencies.authenticationService
+        authenticationService.beginAuthentication(onAuthentication: onAuthentication)
         let syncService = appDependencies.syncService
+        syncService.sync.scheduler.resumeSyncQueue() // TODO: onResuming()
+    }
+
+    private func onAuthentication() { // TODO: this method needs documentation
+        let keyboardService = appDependencies.keyboardService
+        keyboardService.showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
         let autoClear = appDependencies.autoClear
-        Task { @MainActor [self] in
-            await beginAuthentication(lastBackgroundDate: stateContext.lastBackgroundDate)
+        Task { @MainActor in // TODO: for now we do it as it was:
+            // we used to wait for authentication to finish before we were starting autoclearing, but we should really
+            // do these task in parallel, and only when both finish we should manipulate the keyboard
             await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
-            uiService.showKeyboardIfSettingOn = true
-            syncService.sync.scheduler.resumeSyncQueue()
+            keyboardService.showKeyboardIfSettingOn = true
         }
-    }
-
-    // duplicated from Foreground just for now
-
-    @MainActor
-    private func beginAuthentication(lastBackgroundDate: Date? = nil) async {
-        guard appDependencies.privacyStore.authenticationEnabled else { return }
-
-        let uiService = appDependencies.uiService
-        uiService.removeOverlay()
-        uiService.displayAuthenticationWindow()
-
-        guard let controller = uiService.overlayWindow?.rootViewController as? AuthenticationViewController else {
-            uiService.removeOverlay()
-            return
-        }
-
-        await controller.beginAuthentication {
-            uiService.removeOverlay()
-            showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
-        }
-    }
-
-    private func showKeyboardOnLaunch(lastBackgroundDate: Date? = nil) {
-        guard KeyboardSettings().onAppLaunch && appDependencies.uiService.showKeyboardIfSettingOn && shouldShowKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate) else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.mainViewController.enterSearch()
-        }
-        appDependencies.uiService.showKeyboardIfSettingOn = false
-    }
-
-    private func shouldShowKeyboardOnLaunch(lastBackgroundDate: Date? = nil) -> Bool {
-        guard let lastBackgroundDate else { return true }
-        return Date().timeIntervalSince(lastBackgroundDate) > AppDelegate.ShowKeyboardOnLaunchThreshold
-    }
-
-    private var mainViewController: MainViewController {
-        appDependencies.mainViewController
     }
 
 }

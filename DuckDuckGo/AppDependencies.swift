@@ -26,13 +26,17 @@ import BrowserServicesKit
 
 struct AppDependencies {
 
+    let window: UIWindow
+
     let accountManager: AccountManager
     let vpnService: VPNService
 
     let appSettings: AppSettings
     let privacyStore: PrivacyUserDefaults
 
-    let uiService: UIService
+    let overlayWindowManager: OverlayWindowManager
+    let authenticationService: AuthenticationService
+    let screenshotService: ScreenshotService
     let mainViewController: MainViewController
 
     let voiceSearchHelper: VoiceSearchHelper
@@ -47,5 +51,6 @@ struct AppDependencies {
     let onboardingPixelReporter: OnboardingPixelReporter
     let autofillService: AutofillService
     let crashService: CrashService
+    let keyboardService: KeyboardService
 
 }

@@ -22,7 +22,6 @@ import Core
 
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
     struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
         static let passwords = "com.duckduckgo.mobile.ios.passwords"

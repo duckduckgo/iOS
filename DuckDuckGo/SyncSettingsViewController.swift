@@ -364,13 +364,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
                 return true
             } catch {
-                if self.rootView.model.isSyncEnabled && featureFlagger.isFeatureOn(.syncSeamlessAccountSwitching) {
-                    await handleTwoSyncAccountsFoundDuringRecovery(recoveryKey)
-                } else if self.rootView.model.isSyncEnabled {
-                    handleError(.unableToMergeTwoAccounts, error: error, event: .syncLoginExistingAccountError)
-                } else {
-                    handleError(.unableToSyncToServer, error: error, event: .syncLoginError)
-                }
+                await handleRecoveryCodeLoginError(recoveryKey: recoveryKey, error: error)
             }
         } else if let connectKey = syncCode.connect {
             dismissPresentedViewController()
@@ -406,6 +400,16 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             return true
         }
         return false
+    }
+
+    private func handleRecoveryCodeLoginError(recoveryKey: SyncCode.RecoveryKey, error: Error) async {
+        if self.rootView.model.isSyncEnabled && featureFlagger.isFeatureOn(.syncSeamlessAccountSwitching) {
+            await handleTwoSyncAccountsFoundDuringRecovery(recoveryKey)
+        } else if self.rootView.model.isSyncEnabled {
+            handleError(.unableToMergeTwoAccounts, error: error, event: .syncLoginExistingAccountError)
+        } else {
+            handleError(.unableToSyncToServer, error: error, event: .syncLoginError)
+        }
     }
 
     private func handleTwoSyncAccountsFoundDuringRecovery(_ recoveryKey: SyncCode.RecoveryKey) async {

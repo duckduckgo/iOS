@@ -22,7 +22,8 @@ import BrowserServicesKit
 import RemoteMessaging
 
 protocol AIChatUserScriptHandling {
-    func handleGetUserValues(params: Any, message: UserScriptMessage) -> Encodable?
+    func getAIChatNativeConfigValues(params: Any, message: UserScriptMessage) -> Encodable?
+    func getAIChatNativeHandoffData(params: Any, message: UserScriptMessage) -> Encodable?
     func openAIChat(params: Any, message: UserScriptMessage) async -> Encodable?
     func setPayloadHandler(_ payloadHandler: (any AIChatPayloadHandling)?)
 }
@@ -33,6 +34,14 @@ final class AIChatUserScriptHandler: AIChatUserScriptHandling {
 
     init(featureFlagger: FeatureFlagger) {
         self.featureFlagger = featureFlagger
+    }
+
+    private var isHandoffEnabled: Bool {
+        featureFlagger.isFeatureOn(.aiChatDeepLink)
+    }
+
+    private var platform: String {
+        "ios"
     }
 
     enum AIChatKeys {
@@ -58,10 +67,14 @@ final class AIChatUserScriptHandler: AIChatUserScriptHandling {
         return nil
     }
 
-    /// Called when the AI Chat view is displayed. If a payload exists, it retrieves and clears it from storage.
-    public func handleGetUserValues(params: Any, message: UserScriptMessage) -> Encodable? {
-        AIChatScriptUserValues(isAIChatHandoffEnabled: featureFlagger.isFeatureOn(.aiChatDeepLink),
-                               platform: "iOS",
+    public func getAIChatNativeConfigValues(params: Any, message: UserScriptMessage) -> Encodable? {
+        AIChatNativeConfigValues(isAIChatHandoffEnabled: isHandoffEnabled,
+                               platform: platform)
+    }
+
+    public func getAIChatNativeHandoffData(params: Any, message: UserScriptMessage) -> Encodable? {
+        AIChatNativeHandoffData(isAIChatHandoffEnabled: isHandoffEnabled,
+                               platform: platform,
                                aiChatPayload: payloadHandler?.consumePayload() as? AIChatPayload)
     }
 

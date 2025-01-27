@@ -25,6 +25,7 @@ import WebKit
 import UserScript
 import Core
 import ContentScopeScripts
+import SwiftUI
 
 /// Values that the frontend can use to determine the current state.
 struct InitialPlayerSettings: Codable {
@@ -204,6 +205,9 @@ protocol DuckPlayerControlling: AnyObject {
     
     /// Removes the host view controller.
     func removeHostView()
+    
+    /// Loads a native DuckPlayerView
+    func loadNativeDuckPlayerVideo(videoID: String)
 }
 
 /// Implementation of the DuckPlayerControlling.
@@ -267,6 +271,17 @@ final class DuckPlayer: DuckPlayerControlling {
     /// Removes the host view controller.
     public func removeHostView() {
         hostView = nil
+    }
+    
+    // Loads a native DuckPlayerView
+    func loadNativeDuckPlayerVideo(videoID: String) {
+        let viewModel = DuckPlayerViewModel(videoID: videoID)
+        let duckPlayerView = DuckPlayerView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: duckPlayerView)
+        hostingController.modalPresentationStyle = .formSheet
+        hostingController.isModalInPresentation = false // Allows dismissal with swipe
+        
+        hostView?.present(hostingController, animated: true)
     }
     
     // MARK: - Common Message Handlers
@@ -487,5 +502,6 @@ final class DuckPlayer: DuckPlayerControlling {
         }
        
     }
+
     
 }

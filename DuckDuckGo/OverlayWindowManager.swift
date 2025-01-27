@@ -88,4 +88,3 @@ extension OverlayWindowManager: BlankSnapshotViewRecoveringDelegate {
     }
 
 }
-

@@ -136,7 +136,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .quality(let quality):
                 guard quality != .unknown else { return }
                 DailyPixel.fireDailyAndCount(
-                    pixel: .networkProtectionLatency(quality: quality),
+                    pixel: .networkProtectionLatency(quality: quality.rawValue),
                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                     includedParameters: [.appVersion, .atb]
                 )

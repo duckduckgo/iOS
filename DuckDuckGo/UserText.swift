@@ -1207,7 +1207,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionSubscribed = NSLocalizedString("subscription.subscribed", value: "Subscribed", comment: "Subtitle in header when subscribed")
     public static let subscriptionCloseButton = NSLocalizedString("subscription.close", value: "Close", comment: "Navigation Button for closing subscription view")
 
-    static func renewingSubscriptionInfo(billingPeriod: Subscription.BillingPeriod, renewalDate: String) -> String {
+    static func renewingSubscriptionInfo(billingPeriod: PrivacyProSubscription.BillingPeriod, renewalDate: String) -> String {
         let localized: String
 
         switch billingPeriod {
@@ -1228,7 +1228,7 @@ But if you *do* want a peek under the hood, you can find more information about 
         return String(format: localized, renewalDate)
     }
 
-    static func expiringSubscriptionInfo(billingPeriod: Subscription.BillingPeriod, expiryDate: String) -> String {
+    static func expiringSubscriptionInfo(billingPeriod: PrivacyProSubscription.BillingPeriod, expiryDate: String) -> String {
         let localized: String
 
         switch billingPeriod {

@@ -40,7 +40,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var isShowingGoogleView: Bool = false
         var isShowingFAQView: Bool = false
         var isShowingLearnMoreView: Bool = false
-        var subscriptionInfo: Subscription?
+        var subscriptionInfo: PrivacyProSubscription?
         var isLoadingSubscriptionInfo: Bool = false
         var isLoadingEmailInfo: Bool = false
 
@@ -211,7 +211,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     @MainActor
-    private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
+    private func updateSubscriptionsStatusMessage(status: PrivacyProSubscription.Status, date: Date, product: String, billingPeriod: PrivacyProSubscription.BillingPeriod) {
         let date = dateFormatter.string(from: date)
 
         switch status {

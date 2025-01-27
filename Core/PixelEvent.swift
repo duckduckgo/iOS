@@ -710,6 +710,13 @@ extension Pixel {
         case syncSecureStorageDecodingError
         case syncAccountRemoved(reason: String)
 
+        case syncAskUserToSwitchAccount
+        case syncUserAcceptedSwitchingAccount
+        case syncUserCancelledSwitchingAccount
+        case syncUserSwitchedAccount
+        case syncUserSwitchedLogoutError
+        case syncUserSwitchedLoginError
+
         case syncGetOtherDevices
         case syncGetOtherDevicesCopy
         case syncGetOtherDevicesShare
@@ -940,14 +947,6 @@ extension Pixel {
 
         // MARK: Browsing
         case stopPageLoad
-        
-        // MARK: - DuckPlayer Overlay Navigation
-        case duckPlayerYouTubeOverlayNavigationBack
-        case duckPlayerYouTubeOverlayNavigationRefresh
-        case duckPlayerYouTubeNavigationWithinYouTube
-        case duckPlayerYouTubeOverlayNavigationOutsideYoutube
-        case duckPlayerYouTubeOverlayNavigationClosed
-        case duckPlayerYouTubeNavigationIdle30
 
         // MARK: Launch time
         case appDidFinishLaunchingTime(time: BucketAggregation)
@@ -1655,6 +1654,13 @@ extension Pixel.Event {
         case .syncSecureStorageDecodingError: return "sync_secure_storage_decoding_error"
         case .syncAccountRemoved(let reason): return "sync_account_removed_reason_\(reason)"
 
+        case .syncAskUserToSwitchAccount: return "sync_ask_user_to_switch_account"
+        case .syncUserAcceptedSwitchingAccount: return "sync_user_accepted_switching_account"
+        case .syncUserCancelledSwitchingAccount: return "sync_user_cancelled_switching_account"
+        case .syncUserSwitchedAccount: return "sync_user_switched_account"
+        case .syncUserSwitchedLogoutError: return "sync_user_switched_logout_error"
+        case .syncUserSwitchedLoginError: return "sync_user_switched_login_error"
+
         case .syncGetOtherDevices: return "sync_get_other_devices"
         case .syncGetOtherDevicesCopy: return "sync_get_other_devices_copy"
         case .syncGetOtherDevicesShare: return "sync_get_other_devices_share"
@@ -1914,14 +1920,6 @@ extension Pixel.Event {
 
         // MARK: Browsing
         case .stopPageLoad: return "m_stop-page-load"
-                        
-        // MARK: - DuckPlayer Overlay Navigation
-        case .duckPlayerYouTubeOverlayNavigationBack: return "duckplayer.youtube.overlay.navigation.back"
-        case .duckPlayerYouTubeOverlayNavigationRefresh: return "duckplayer.youtube.overlay.navigation.refresh"
-        case .duckPlayerYouTubeNavigationWithinYouTube: return "duckplayer.youtube.overlay.navigation.within-youtube"
-        case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
-        case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
-        case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
 
         // MARK: Launch time
         case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"

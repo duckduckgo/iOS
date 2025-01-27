@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "graeme/fix-sync-user-defaults-event",
-        "revision" : "a60f4b6d24d826cc9889bb5e6e47672ad0f1a9a1"
+        "revision" : "6da20aa52556692397d4c62dbfd005f7c70d783c"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "0ac30560ec969a321caea321f95537120416c323",
-        "version" : "7.7.0"
+        "revision" : "181696656f3627c1b3ca8cda06d54971e03436ef",
+        "version" : "7.10.0"
       }
     },
     {

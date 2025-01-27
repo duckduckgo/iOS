@@ -217,6 +217,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         switch status {
         case .autoRenewable:
             state.subscriptionDetails = UserText.renewingSubscriptionInfo(billingPeriod: billingPeriod, renewalDate: date)
+        case .trial:
+            state.subscriptionDetails = UserText.startingSubscriptionInfo(billingPeriod: billingPeriod, renewalDate: date)
         case .expired, .inactive:
             state.subscriptionDetails = UserText.expiredSubscriptionInfo(expiration: date)
         default:

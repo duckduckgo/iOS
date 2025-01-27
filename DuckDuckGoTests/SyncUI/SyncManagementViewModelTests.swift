@@ -216,7 +216,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
-    func confirmRemoveDevice(_ device: SyncUI.SyncSettingsViewModel.Device) async -> Bool {
+    func confirmRemoveDevice(_ device: SyncUI_iOS.SyncSettingsViewModel.Device) async -> Bool {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
         return true
     }
@@ -253,7 +253,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
-    func fireOtherPlatformLinksPixel(event: SyncUI.SyncSettingsViewModel.PlatformLinksPixelEvent, with source: SyncUI.SyncSettingsViewModel.PlatformLinksPixelSource) {
+    func fireOtherPlatformLinksPixel(event: SyncUI_iOS.SyncSettingsViewModel.PlatformLinksPixelEvent, with source: SyncUI_iOS.SyncSettingsViewModel.PlatformLinksPixelSource) {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 

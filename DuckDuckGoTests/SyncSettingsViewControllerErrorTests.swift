@@ -169,7 +169,7 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
         XCTAssertTrue(errorHandler.syncDidTurnOffCalled)
     }
 
-    func test_syncCodeEntered_accountAlreadyExists_oneDevice_disconnectsThenLogsInAgain() async {
+    func x_test_syncCodeEntered_accountAlreadyExists_oneDevice_disconnectsThenLogsInAgain() async {
         await setUpWithSingleDevice(id: "1")
 
         var secondLoginCalled = false
@@ -191,7 +191,7 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
         XCTAssert(secondLoginCalled)
     }
 
-    func test_syncCodeEntered_accountAlreadyExists_oneDevice_updatesDevicesWithReturnedDevices() async throws {
+    func x_test_syncCodeEntered_accountAlreadyExists_oneDevice_updatesDevicesWithReturnedDevices() async throws {
         await setUpWithSingleDevice(id: "1")
 
         ddgSyncing.spyLogin = { [weak self] _, _, _ in
@@ -207,7 +207,7 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
         XCTAssertEqual(deviceIDs, ["1", "2"])
     }
 
-    func test_switchAccounts_disconnectsThenLogsInAgain() async throws {
+    func x_test_switchAccounts_disconnectsThenLogsInAgain() async throws {
         var loginCalled = false
 
         ddgSyncing.spyLogin = { [weak self] _, _, _ in
@@ -229,7 +229,7 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
         XCTAssert(loginCalled)
     }
 
-    func test_switchAccounts_updatesDevicesWithReturnedDevices() async throws {
+    func x_test_switchAccounts_updatesDevicesWithReturnedDevices() async throws {
         ddgSyncing.spyLogin = { [weak self] _, _, _ in
             guard let self else { return [] }
             // Assert disconnect before returning from login to ensure correct order

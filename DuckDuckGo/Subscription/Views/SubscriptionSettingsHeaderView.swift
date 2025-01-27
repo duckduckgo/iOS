@@ -21,11 +21,10 @@ import SwiftUI
 
 struct SubscriptionSettingsHeaderView: View {
 
-    enum HeaderState: Equatable {
+    enum HeaderState {
         case subscribed
         case expired(_ details: String)
         case activating
-        case trial
     }
 
     let state: HeaderState
@@ -43,13 +42,12 @@ struct SubscriptionSettingsHeaderView: View {
                 .foregroundColor(Color(designSystemColor: .textPrimary))
 
             switch state {
-            case .subscribed, .trial:
-                let statusText = state == .subscribed ? UserText.subscriptionSubscribed : UserText.subscriptionTrial
+            case .subscribed:
                 HStack(spacing: 4) {
                     Circle()
                         .fill(Color(designSystemColor: .alertGreen))
                         .frame(width: 8, height: 8)
-                    Text(statusText)
+                    Text(UserText.subscriptionSubscribed)
                         .daxBodyRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                 }

@@ -2692,20 +2692,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Annual subscription renewal info where parameter is renewal date. This reads as 'Your annual subscription renews on (date)' */
 "subscription.subscription.renewing.yearly.caption" = "Your annual subscription renews on %@.";
 
-/* Monthly subscription start info where parameter is start date. This reads as 'Your monthly subscription starts on (date)' */
-"subscription.subscription.starts.monthly.caption" = "Your monthly subscription starts on %@.";
-
-/* Unknown period subscription start info where parameter is renewal date. This reads as 'Your subscription starts on (date)' */
-"subscription.subscription.starts.unknown.caption" = "Your subscription starts on %@.";
-
-/* Annual subscription start info where parameter is start date. This reads as 'Your annual subscription starts on (date)' */
-"subscription.subscription.starts.yearly.caption" = "Your annual subscription starts on %@.";
-
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
-
-/* Subtitle in header when user is on a Free Trial */
-"subscription.trial" = "Free Trial";
 
 /* Message confirming that recovery code was copied to clipboard */
 "sync.code.copied" = "Recovery code copied to clipboard";

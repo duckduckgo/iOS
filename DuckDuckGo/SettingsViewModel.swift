@@ -780,7 +780,6 @@ extension SettingsViewModel {
         case .success(let subscription):
             state.subscription.platform = subscription.platform
             state.subscription.hasActiveSubscription = subscription.isActive
-            state.subscription.isTrial = subscription.status == .trial
 
             // Check entitlements and update state
             var currentEntitlements: [Entitlement.ProductName] = []

@@ -1187,9 +1187,9 @@ class MainViewController: UIViewController {
 
         let isKeyboardShowing = omniBar.textField.isFirstResponder
         coordinator.animate { _ in
+            self.swipeTabsCoordinator?.invalidateLayout()
             self.deferredFireOrientationPixel()
         } completion: { _ in
-            self.swipeTabsCoordinator?.invalidateLayout()
             if isKeyboardShowing {
                 self.omniBar.becomeFirstResponder()
             }

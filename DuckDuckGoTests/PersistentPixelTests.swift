@@ -21,7 +21,7 @@ import Foundation
 import XCTest
 import Networking
 import Persistence
-import TestUtils
+import PersistenceTestingUtils
 @testable import Core
 
 final class PersistentPixelTests: XCTestCase {

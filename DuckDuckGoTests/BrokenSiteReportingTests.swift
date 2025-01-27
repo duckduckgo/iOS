@@ -25,7 +25,7 @@ import OHHTTPStubsSwift
 @testable import Core
 import PrivacyDashboard
 @testable import DuckDuckGo
-import TestUtils
+import PersistenceTestingUtils
 
 final class BrokenSiteReportingTests: XCTestCase {
     private let data = JsonTestDataLoader()

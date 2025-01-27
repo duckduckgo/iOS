@@ -163,13 +163,17 @@ jobs:
           ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          tasks="$(./scripts/get_tasks_in_last_internal_release.sh)"
-          echo "WORKFLOW_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
-          echo "TASKS_SINCE_LAST_INTERNAL_RELEASE=$tasks" >> $GITHUB_ENV
-          if [[ -n "$tasks" ]]; then
-            echo "release-task-comment-template=internal-release-complete-with-tasks" >> $GITHUB_OUTPUT
+          if [[ "${RELEASE_TYPE}" == "internal" ]]; then
+            tasks="$(./scripts/get_tasks_in_last_internal_release.sh)"
+            echo "WORKFLOW_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
+            echo "TASKS_SINCE_LAST_INTERNAL_RELEASE=$tasks" >> $GITHUB_ENV
+            if [[ -n "$tasks" ]]; then
+              echo "release-task-comment-template=internal-release-complete-with-tasks" >> $GITHUB_OUTPUT
+            else
+              echo "release-task-comment-template=internal-release-complete" >> $GITHUB_OUTPUT
+            fi
           else
-            echo "release-task-comment-template=internal-release-complete" >> $GITHUB_OUTPUT
+            echo "release-task-comment-template=public-release-complete-ios" >> $GITHUB_OUTPUT
           fi
       
       - name: Add a comment to the release task

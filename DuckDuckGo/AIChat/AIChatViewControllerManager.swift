@@ -47,6 +47,14 @@ final class AIChatViewControllerManager {
         let settings = AIChatSettings(privacyConfigurationManager: privacyConfigurationManager,
                                       internalUserDecider: internalUserDecider)
 
+        // Check if the viewController is already presenting a RoundedPageSheetContainerViewController with AIChatViewController inside
+        if let presentedVC = viewController.presentedViewController as? RoundedPageSheetContainerViewController,
+           _ = presentedVC.contentViewController as? AIChatViewController {
+            return
+        } else {
+            viewController.dismiss(animated: true)
+        }
+
         let webviewConfiguration = WKWebViewConfiguration.persistent()
         let userContentController = UserContentController()
         userContentController.delegate = self

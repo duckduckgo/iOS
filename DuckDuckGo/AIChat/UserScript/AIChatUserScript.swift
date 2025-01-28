@@ -26,7 +26,8 @@ final class AIChatUserScript: NSObject, Subfeature {
 
     enum MessageNames: String, CaseIterable {
         case openAIChat
-        case getUserValues
+        case getAIChatNativeConfigValues
+        case getAIChatNativeHandoffData
     }
 
     private var handler: AIChatUserScriptHandling
@@ -52,8 +53,10 @@ final class AIChatUserScript: NSObject, Subfeature {
 
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
         switch MessageNames(rawValue: methodName) {
-        case .getUserValues:
-            return handler.handleGetUserValues
+        case .getAIChatNativeConfigValues:
+            return handler.getAIChatNativeConfigValues
+        case .getAIChatNativeHandoffData:
+            return handler.getAIChatNativeHandoffData
         case .openAIChat:
             return handler.openAIChat
         default:

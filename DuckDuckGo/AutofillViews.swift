@@ -221,6 +221,10 @@ struct AutofillViews {
             return false
         }
     }
+
+    static func maxWidthFor(title1: String, title2: String, font: UIFont) -> CGFloat {
+        return max(title1.width(for: font), title2.width(for: font))
+    }
 }
 
 extension View {

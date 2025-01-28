@@ -54,9 +54,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let viewModel: AutofillLoginListViewModel
     private lazy var emptyView: UIView = {
         let emptyView = AutofillItemsEmptyView(importButtonAction: { [weak self] in
-            // TODO
-        }, importViaSyncButtonAction: { [weak self] in
             self?.segueToImport()
+            // TODO - new pixel
+//            Pixel.fire(pixel: .autofillLoginsImportNoPasswords)
+        }, importViaSyncButtonAction: { [weak self] in
+            self?.segueToImportViaSync()
             Pixel.fire(pixel: .autofillLoginsImportNoPasswords)
         })
 
@@ -98,7 +100,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private lazy var moreBarButtonItem = UIBarButtonItem(customView: moreButton)
 
     private lazy var moreMenu: UIMenu = {
-        return UIMenu(children: [editAction(), importAction()])
+        if #available(iOS 18.2, *) {
+            return UIMenu(children: [editAction(), importAction(), importViaSyncAction()])
+        } else {
+            return UIMenu(children: [editAction(), importViaSyncAction()])
+        }
     }()
 
     private lazy var deleteAllButtonItem: UIBarButtonItem = {
@@ -401,20 +407,28 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
     
     private func editAction() -> UIAction {
-        return UIAction(title: UserText.actionGenericEdit) { [weak self] _ in
+        return UIAction(title: UserText.actionGenericEdit, image: UIImage(named: "Edit-16")) { [weak self] _ in
             self?.setEditing(true, animated: true)
         }
     }
 
     private func importAction() -> UIAction {
-        return UIAction(title: UserText.autofillEmptyViewImportButtonTitle) { [weak self] _ in
+        return UIAction(title: UserText.autofillEmptyViewImportButtonTitle, image: UIImage(named: "Import-16")) { [weak self] _ in
             self?.segueToImport()
+            // TODO - new pixel
+//            Pixel.fire(pixel: .autofillLoginsImport)
+        }
+    }
+
+    private func importViaSyncAction() -> UIAction {
+        return UIAction(title: UserText.autofillEmptyViewImportViaSyncButtonTitle, image: UIImage(named: "Sync-16")) { [weak self] _ in
+            self?.segueToImportViaSync()
             Pixel.fire(pixel: .autofillLoginsImport)
         }
     }
 
     private func segueToImport() {
-        let importController = ImportPasswordsViaSyncViewController(syncService: syncService)
+        let importController = ImportPasswordsViewController()
         importController.delegate = self
         navigationController?.pushViewController(importController, animated: true)
     }

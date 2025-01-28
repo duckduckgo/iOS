@@ -52,6 +52,7 @@ struct AutofillItemsEmptyView: View {
                     importButtonAction?()
                 } label: {
                     Text(UserText.autofillEmptyViewImportButtonTitle)
+                        .frame(width: maxButtonWidth())
                 }
                 .buttonStyle(PrimaryButtonStyle(fullWidth: false))
                 .padding(.top, 24)
@@ -60,6 +61,7 @@ struct AutofillItemsEmptyView: View {
                     importViaSyncButtonAction?()
                 } label: {
                     Text(UserText.autofillEmptyViewImportViaSyncButtonTitle)
+                        .frame(width: maxButtonWidth())
                 }
                 .buttonStyle(SecondaryFillButtonStyle(fullWidth: false))
                 .padding(.top, 8)
@@ -76,6 +78,12 @@ struct AutofillItemsEmptyView: View {
         .frame(maxWidth: 300.0)
         .padding(.top, 16)
     }
+
+    private func maxButtonWidth() -> CGFloat {
+        let maxWidth = AutofillViews.maxWidthFor(title1: UserText.autofillEmptyViewImportButtonTitle, title2: UserText.autofillEmptyViewImportViaSyncButtonTitle, font: UIFont.boldAppFont(ofSize: 15))
+        return min(maxWidth, 300)
+    }
+
 }
 
 #Preview {

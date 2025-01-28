@@ -19,7 +19,7 @@
 
 import XCTest
 import Networking
-import TestUtils
+import PersistenceTestingUtils
 import Persistence
 @testable import Core
 

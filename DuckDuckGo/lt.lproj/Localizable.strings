@@ -184,6 +184,15 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Sinchronizavimas pristabdytas";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Perjungti sinchronizavimą";
+
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "Šis įrenginys jau sinchronizuotas, ar tikrai norite jį sinchronizuoti su kita atsargine kopija ar įrenginiu? Perjungiant nebus pašalinti jokie duomenys, jau sinchronizuoti su šiuo įrenginiu.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "Perjungti į kitą sinchronizaciją?";
+
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "Sinchronizavimas ir atsarginės kopijos kūrimas laikinai nepasiekiami.";
 

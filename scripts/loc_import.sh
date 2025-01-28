@@ -28,7 +28,7 @@ for dir in "$1"/*; do
 
     	echo "Importing ${dir}/${fileName} ..."
 
-		if ! xcodebuild -importLocalizations -project "${base_dir}/DuckDuckGo.xcodeproj" -sdk iphoneos -localizationPath "${dir}/${fileName}"; then
+		if ! xcodebuild -importLocalizations -project "${base_dir}/DuckDuckGo-iOS.xcodeproj" -sdk iphoneos -localizationPath "${dir}/${fileName}"; then
 			echo "ERROR: Failed to import ${dir}/${fileName}"
 			echo
 			echo "Check translation folder and files then try again."

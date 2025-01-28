@@ -145,8 +145,35 @@ final class URLExtensionTests: XCTestCase {
     }
 
     /// Duck AI Bang
-    func testIsDuckAIBangWithValidBangQuery() {
+    func testIsDuckAIBangWithValidAIBangQuery() {
         let urlString = "https://duckduckgo.com/?q=!ai+some+query"
+        if let url = URL(string: urlString) {
+            XCTAssertTrue(url.isDuckAIBang, "The URL should be identified as a DuckDuckGo AI Bang URL.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIBangWithValidAIEndingBangQuery() {
+        let urlString = "https://duckduckgo.com/?q=ai!+some+query"
+        if let url = URL(string: urlString) {
+            XCTAssertTrue(url.isDuckAIBang, "The URL should be identified as a DuckDuckGo AI Bang URL.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIBangWithValidChatBangQuery() {
+        let urlString = "https://duckduckgo.com/?q=!chat+some+query"
+        if let url = URL(string: urlString) {
+            XCTAssertTrue(url.isDuckAIBang, "The URL should be identified as a DuckDuckGo AI Bang URL.")
+        } else {
+            XCTFail("Failed to create URL from string.")
+        }
+    }
+
+    func testIsDuckAIBangWithValidChatEndingBangQuery() {
+        let urlString = "https://duckduckgo.com/?q=chat!+some+query"
         if let url = URL(string: urlString) {
             XCTAssertTrue(url.isDuckAIBang, "The URL should be identified as a DuckDuckGo AI Bang URL.")
         } else {

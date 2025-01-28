@@ -71,8 +71,13 @@ final class MockDDGSyncing: DDGSyncing {
     func createAccount(deviceName: String, deviceType: String) async throws {
     }
 
+    var stubLogin: [RegisteredDevice] = []
+    lazy var spyLogin: (SyncCode.RecoveryKey, String, String) throws -> [RegisteredDevice] = { _, _, _ in
+        return self.stubLogin
+    }
+
     func login(_ recoveryKey: SyncCode.RecoveryKey, deviceName: String, deviceType: String) async throws -> [RegisteredDevice] {
-        return []
+        return try spyLogin(recoveryKey, deviceName, deviceType)
     }
 
     func remoteConnect() throws -> RemoteConnecting {

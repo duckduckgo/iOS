@@ -832,9 +832,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             webView.reload()
             return
         }
-        
-        // Fire Reload Pixel
-        duckPlayerOverlayUsagePixels?.fireReloadPixelIfNeeded(url: url)
                     
         if url.isDuckPlayer, duckPlayerMode != .disabled {
             redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: true)

@@ -85,7 +85,9 @@ struct SettingsDuckPlayerView: View {
             if viewModel.isInternalUser {
                 Section("Experimental (Internal only)", content: {
                     SettingsCellView(label: "Use Native UI (Alpha)", accessory: .toggle(isOn: viewModel.duckPlayerNativeUI))
-                    SettingsCellView(label: "Autoplay Videos", accessory: .toggle(isOn: viewModel.duckPlayerAutoplay))
+                    if viewModel.appSettings.duckPlayerNativeUI {
+                        SettingsCellView(label: "Autoplay Videos", accessory: .toggle(isOn: viewModel.duckPlayerAutoplay))
+                    }
                 })
             }
         }

@@ -46,7 +46,6 @@ struct Launching: AppState {
     private let appSettings = AppDependencyProvider.shared.appSettings
     private let voiceSearchHelper = VoiceSearchHelper()
     private let onboardingPixelReporter = OnboardingPixelReporter()
-    private let tipKitAppEventsHandler = TipKitAppEventHandler()
     private let fireproofing = UserDefaultsFireproofing.xshared
     private let featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger
 
@@ -235,11 +234,10 @@ struct Launching: AppState {
         }
 
         NewTabPageIntroMessageSetup().perform()
-        vpnService.beginObservingVPNStatus()
+        vpnService.onLaunching()
         subscriptionService.onLaunching()
         autofillService.onLaunching()
         crashService.handleCrashDuringCrashHandlersSetup()
-        tipKitAppEventsHandler.appDidFinishLaunching()
     }
 
     private var appDependencies: AppDependencies {

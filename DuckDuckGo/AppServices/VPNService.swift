@@ -32,6 +32,7 @@ final class VPNService: NSObject {
     private lazy var vpnWorkaround: VPNRedditSessionWorkaround = VPNRedditSessionWorkaround(accountManager: accountManager,
                                                                                             tunnelController: tunnelController)
     private let vpnFeatureVisibility: DefaultNetworkProtectionVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
+    private let tipKitAppEventsHandler = TipKitAppEventHandler()
 
     private let window: UIWindow
     private let accountManager: AccountManager
@@ -48,8 +49,9 @@ final class VPNService: NSObject {
         notificationCenter.delegate = self
     }
 
-    func beginObservingVPNStatus() {
+    func onLaunching() {
         widgetRefreshModel.beginObservingVPNStatus()
+        tipKitAppEventsHandler.appDidFinishLaunching()
     }
 
     func installRedditSessionWorkaround(autoClearTask: Task<Void, Never>? = nil) async { // TODO: optional just for now, but we always have to pass autoClearTask

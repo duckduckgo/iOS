@@ -63,6 +63,7 @@ struct Launching: AppState {
     private let persistenceService = PersistenceService()
     private let remoteMessagingService: RemoteMessagingService
     private let keyboardService: KeyboardService
+    private let contentBlockingService: ContentBlockingService = ContentBlockingService()
 
     private let window: UIWindow
 
@@ -78,6 +79,12 @@ struct Launching: AppState {
 
     init(stateContext: Initializing.StateContext) {
 
+        defer {
+            let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+            Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                       withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+        }
+
         @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
         var privacyConfigCustomURL: String?
 
@@ -86,24 +93,11 @@ struct Launching: AppState {
 
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
 
-        defer {
-            let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
-            Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
-                       withAdditionalParameters: [PixelParameters.time: String(launchTime)])
-        }
-
         KeyboardConfiguration.configure()
         PixelConfiguration.configure(featureFlagger: featureFlagger)
 
-        ContentBlocking.shared.onCriticalError = { [application] in
-            Task { @MainActor [application] in
-                let alertController = CriticalAlerts.makePreemptiveCrashAlert()
-                application.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-            }
-        }
-        // Explicitly prepare ContentBlockingUpdating instance before Tabs are created
-        _ = ContentBlockingUpdating.shared
-
+        contentBlockingService.onLaunching()
+        
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
 
         if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
@@ -380,6 +374,7 @@ extension UIApplication {
     enum TerminationReason {
 
         case insufficientDiskSpace
+        case rulesCompilationFatalError
 
     }
 

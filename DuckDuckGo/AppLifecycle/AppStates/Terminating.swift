@@ -34,12 +34,14 @@ struct Terminating: AppState {
     }
 
     private func alertAndTerminate(application: UIApplication, terminationReason: UIApplication.TerminationReason) {
-        if case .insufficientDiskSpace = terminationReason {
-            let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
-            application.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-        } else {
-            fatalError("Unrecognized state")
+        let alertController: UIAlertController
+        switch terminationReason {
+        case .insufficientDiskSpace:
+            alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
+        case .rulesCompilationFatalError:
+            alertController = CriticalAlerts.makePreemptiveCrashAlert()
         }
+        application.window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
 
 }

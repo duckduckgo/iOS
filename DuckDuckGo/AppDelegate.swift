@@ -37,6 +37,9 @@ import Core
         NotificationCenter.default.addObserver(forName: .databaseDidEncounterInsufficientDiskSpace, object: nil, queue: .main) { _ in
             self.application(UIApplication.shared, willTerminateWithReason: .insufficientDiskSpace)
         }
+        NotificationCenter.default.addObserver(forName: .contentBlockingDidEncounterCompilationFatalError, object: nil, queue: .main) { _ in
+            self.application(UIApplication.shared, willTerminateWithReason: .rulesCompilationFatalError)
+        }
     }
 
     /// See: Launching.swift

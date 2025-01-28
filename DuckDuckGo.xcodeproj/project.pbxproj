@@ -1063,6 +1063,7 @@
 		CBF259902D47BEC700AC63E4 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF2598F2D47BEC700AC63E4 /* AuthenticationService.swift */; };
 		CBF259922D47BFDD00AC63E4 /* OverlayWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259912D47BFDD00AC63E4 /* OverlayWindowManager.swift */; };
 		CBF259B32D47EE6F00AC63E4 /* KeyboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259B22D47EE6F00AC63E4 /* KeyboardService.swift */; };
+		CBF259B52D49075D00AC63E4 /* ContentBlockingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259B42D49075D00AC63E4 /* ContentBlockingService.swift */; };
 		CBFCB30E2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */; };
 		D60170BD2BA34CE8001911B5 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60170BB2BA32DD6001911B5 /* Subscription.swift */; };
 		D6037E692C32F2E7009AAEC0 /* DuckPlayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */; };
@@ -3015,6 +3016,7 @@
 		CBF2598F2D47BEC700AC63E4 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		CBF259912D47BFDD00AC63E4 /* OverlayWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayWindowManager.swift; sourceTree = "<group>"; };
 		CBF259B22D47EE6F00AC63E4 /* KeyboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardService.swift; sourceTree = "<group>"; };
+		CBF259B42D49075D00AC63E4 /* ContentBlockingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockingService.swift; sourceTree = "<group>"; };
 		CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationURLDebugViewController.swift; sourceTree = "<group>"; };
 		D60170BB2BA32DD6001911B5 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerSettings.swift; sourceTree = "<group>"; };
@@ -5807,6 +5809,7 @@
 				CBF259822D4293B700AC63E4 /* RemoteMessagingService.swift */,
 				CBF2598F2D47BEC700AC63E4 /* AuthenticationService.swift */,
 				CBF259B22D47EE6F00AC63E4 /* KeyboardService.swift */,
+				CBF259B42D49075D00AC63E4 /* ContentBlockingService.swift */,
 			);
 			path = AppServices;
 			sourceTree = "<group>";
@@ -8268,6 +8271,7 @@
 				851672CF2BED1F9500592F24 /* HistoryMessageManager.swift in Sources */,
 				F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */,
 				EEC02C142B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift in Sources */,
+				CBF259B52D49075D00AC63E4 /* ContentBlockingService.swift in Sources */,
 				D63FF8962C1B67E9006DE24D /* YoutubeOverlayUserScript.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				8598D2E02CEB98B500C45685 /* Favicons.swift in Sources */,

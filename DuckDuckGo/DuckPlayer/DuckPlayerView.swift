@@ -58,8 +58,10 @@ struct DuckPlayerView: View {
                             )
                         
                         // WebView
-                        WebView(url: URL(string: "https://www.youtube-nocookie.com/embed/\(viewModel.videoID)?playsinline=1&autoplay=1&rel=0&modestbranding=1&rel=0")!)
-                            .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
+                        if let videoURL = viewModel.getVideoURL() {
+                            WebView(url: videoURL)
+                                .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
+                        }
                     }
                     .frame(
                         width: geometry.size.width - (Constants.horizontalPadding * 2),

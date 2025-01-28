@@ -18,13 +18,21 @@
 //
 
 import Combine
+import Foundation
 
 final class DuckPlayerViewModel: ObservableObject {
     
     let videoID: String
+    let baseURL: String = "https://www.youtube-nocookie.com/embed/"
+    let parameters: [String: String] = ["autoplay": "1", "rel": "0", "playsinline": "1"]
     
     init(videoID: String) {
         self.videoID = videoID
+    }
+    
+    func getVideoURL() -> URL? {
+        let queryString = parameters.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
+        return URL(string: "\(baseURL)\(videoID)?\(queryString)")
     }
     
     func onFirstAppear() {

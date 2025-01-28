@@ -86,6 +86,8 @@ protocol DuckPlayerSettings: AnyObject {
     /// Determines if Duck Player should open videos in a new tab.
     var openInNewTab: Bool { get }
     
+    var nativeUI: Bool { get }
+    
     /// Initializes a new instance with the provided app settings and privacy configuration manager.
     ///
     /// - Parameters:
@@ -178,6 +180,11 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     /// Determines if Duck Player should open videos in a new tab.
     var openInNewTab: Bool {
         return appSettings.duckPlayerOpenInNewTab
+    }
+    
+    // Determines if we should use the native verion of DuckPlayer
+    var nativeUI: Bool {
+        return appSettings.duckPlayerNativeUI
     }
     
     /// Registers a publisher to listen for changes in the privacy configuration.

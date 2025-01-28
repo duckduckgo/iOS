@@ -275,12 +275,10 @@ final class DuckPlayerNavigationHandler: NSObject {
     @MainActor
     private func redirectToDuckPlayerVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false, disableNewTab: Bool = false) {
         
-        let useNativeDuckPlayer = true
-        
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
         
-        if useNativeDuckPlayer {
+        if duckPlayer.settings.nativeUI {
             loadNativeDuckPlayerVideo(videoID: videoID)
             return
         }

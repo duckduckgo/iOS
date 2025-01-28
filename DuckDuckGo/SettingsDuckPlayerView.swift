@@ -73,10 +73,20 @@ struct SettingsDuckPlayerView: View {
                                        selectedOption: viewModel.duckPlayerModeBinding)
                 .disabled(viewModel.shouldDisplayDuckPlayerContingencyMessage)
                 
-                if viewModel.state.duckPlayerOpenInNewTabEnabled || viewModel.isInternalUser {
-                    SettingsCellView(label: UserText.settingsOpenDuckPlayerNewTabLabel,
-                                     accessory: .toggle(isOn: viewModel.duckPlayerOpenInNewTabBinding))
+                if (viewModel.state.duckPlayerOpenInNewTabEnabled || viewModel.isInternalUser) && !viewModel.state.duckPlayerNativeUI {
+                        SettingsCellView(label: UserText.settingsOpenDuckPlayerNewTabLabel,
+                                         accessory: .toggle(isOn: viewModel.duckPlayerOpenInNewTabBinding))
+                    
                 }
+                
+            }
+            
+            /// Experimental features for internal users
+            if viewModel.isInternalUser {
+                Section("Experimental (Internal only)", content: {
+                    SettingsCellView(label: "Use Native UI (Alpha)", accessory: .toggle(isOn: viewModel.duckPlayerNativeUI))
+                    
+                })
             }
         }
         .applySettingsListModifiers(title: UserText.duckPlayerFeatureName,

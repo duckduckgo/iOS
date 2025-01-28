@@ -84,6 +84,7 @@ protocol AppSettings: AnyObject, AppDebugSettings {
     var duckPlayerMode: DuckPlayerMode { get set }
     var duckPlayerAskModeOverlayHidden: Bool { get set }
     var duckPlayerOpenInNewTab: Bool { get set }
+    var duckPlayerNativeUI: Bool { get set }
 }
 
 protocol AppDebugSettings {

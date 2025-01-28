@@ -52,7 +52,7 @@ protocol DependencyProvider {
     var serverInfoObserver: ConnectionServerInfoObserver { get }
     var vpnSettings: VPNSettings { get }
     var persistentPixel: PersistentPixelFiring { get }
-    
+
 }
 
 /// Provides dependencies for objects that are not directly instantiated

@@ -39,11 +39,13 @@ final class MaliciousSiteProtectionDatasetsFetcher: MaliciousSiteProtectionDatas
     private var preferencesManagerCancellable: AnyCancellable?
 
     private var shouldUpdateHashPrefixSets: Bool {
-        dateProvider().timeIntervalSince(updateManager.lastHashPrefixSetUpdateDate) > .minutes(featureFlagger.hashPrefixUpdateFrequency)
+        // Absolute interval to avoid never updating the dataset if the `lastHashPrefixSetUpdateDate` is mistakenly set in the far future
+        abs(dateProvider().timeIntervalSince(updateManager.lastHashPrefixSetUpdateDate)) > .minutes(featureFlagger.hashPrefixUpdateFrequency)
     }
 
     private var shouldUpdateFilterSets: Bool {
-        dateProvider().timeIntervalSince(updateManager.lastFilterSetUpdateDate) > .minutes(featureFlagger.filterSetUpdateFrequency)
+        // Absolute interval to avoid never updating the dataset if the `lastFilterSetUpdateDate` is mistakenly set in the far future
+        abs(dateProvider().timeIntervalSince(updateManager.lastFilterSetUpdateDate)) > .minutes(featureFlagger.filterSetUpdateFrequency)
     }
 
     private var canFetchDatasets: Bool {

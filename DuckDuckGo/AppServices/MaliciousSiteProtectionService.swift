@@ -22,6 +22,7 @@ import BrowserServicesKit
 import MaliciousSiteProtection
 import Core
 
+// Container for Malicious Site Protection Feature.
 final class MaliciousSiteProtectionService {
 
     let preferencesManager = MaliciousSiteProtectionPreferencesManager()

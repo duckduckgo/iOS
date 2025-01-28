@@ -111,9 +111,7 @@ struct Foreground: AppState {
 
     // MARK: handle applicationDidBecomeActive(_:) logic here
     private func activateApp(isTesting: Bool = false) {
-        appDependencies.syncService.initializeIfNeeded()
-        appDependencies.syncService.setUpDatabaseCleanersIfNeeded()
-
+        appDependencies.syncService.onForeground()
         appDependencies.overlayWindowManager.removeNonAuthenticationOverlay()
 
         StatisticsLoader.shared.load {
@@ -143,7 +141,6 @@ struct Foreground: AppState {
             }
         }
 
-        appDependencies.syncService.notifyAppLifecycleEvent()
         appDependencies.privacyProDataReporter.injectSyncService(appDependencies.syncService.sync)
 
         fireFailedCompilationsPixelIfNeeded()

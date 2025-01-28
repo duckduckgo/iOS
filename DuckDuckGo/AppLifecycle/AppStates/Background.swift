@@ -92,8 +92,7 @@ struct Background: AppState {
         autoClear.startClearingTimer()
         autofillService.onBackground()
 
-        syncService.suspendSync()
-        syncService.cancelFaviconsFetching(application: application)
+        syncService.onBackground()
 
         privacyProDataReporter.saveApplicationLastSessionEnded()
 

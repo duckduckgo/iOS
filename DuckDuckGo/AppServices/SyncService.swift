@@ -30,9 +30,12 @@ final class SyncService {
     let syncErrorHandler: SyncErrorHandler
     private let isSyncInProgressCancellable: AnyCancellable
     private var syncDidFinishCancellable: AnyCancellable?
+    private let application: UIApplication
 
     init(bookmarksDatabase: CoreDataDatabase,
-         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
+         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         application: UIApplication = UIApplication.shared) {
+        self.application = application
 #if DEBUG
         let defaultEnvironment = ServerEnvironment.development
 #else
@@ -77,15 +80,7 @@ final class SyncService {
             }
     }
 
-    func initializeIfNeeded() {
-        sync.initializeIfNeeded()
-    }
-
-    func notifyAppLifecycleEvent() {
-        sync.scheduler.notifyAppLifecycleEvent()
-    }
-
-    func suspendSync() {
+    private func suspendSync() {
         if sync.isSyncInProgress {
             Logger.sync.debug("Sync is in progress. Starting background task to allow it to gracefully complete.")
 
@@ -107,12 +102,23 @@ final class SyncService {
         sync.scheduler.cancelSyncAndSuspendSyncQueue()
     }
 
-    func setUpDatabaseCleanersIfNeeded() {
-        syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: sync)
+    private func cancelFaviconsFetching() {
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
     }
 
-    func cancelFaviconsFetching(application: UIApplication) {
-        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
+    func onForeground() {
+        sync.initializeIfNeeded()
+        syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: sync)
+        sync.scheduler.notifyAppLifecycleEvent()
+    }
+
+    func onResuming() {
+        sync.scheduler.resumeSyncQueue()
+    }
+
+    func onBackground() {
+        suspendSync()
+        cancelFaviconsFetching()
     }
 
 }

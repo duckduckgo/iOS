@@ -47,7 +47,7 @@ struct Resuming: AppState {
         let authenticationService = appDependencies.authenticationService
         authenticationService.beginAuthentication(onAuthentication: onAuthentication)
         let syncService = appDependencies.syncService
-        syncService.sync.scheduler.resumeSyncQueue() // TODO: onResuming()
+        syncService.onResuming()
     }
 
     private func onAuthentication() { // TODO: this method needs documentation

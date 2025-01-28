@@ -17,7 +17,7 @@
                BlueprintIdentifier = "98A54A8022AFCB2C00E541F4"
                BuildableName = "Instruments.instrdst"
                BlueprintName = "Instruments"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+               ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,7 +50,7 @@
             BlueprintIdentifier = "98A54A8022AFCB2C00E541F4"
             BuildableName = "Instruments.instrdst"
             BlueprintName = "Instruments"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </LaunchAction>
@@ -66,7 +66,7 @@
             BlueprintIdentifier = "98A54A8022AFCB2C00E541F4"
             BuildableName = "Instruments.instrdst"
             BlueprintName = "Instruments"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -20,7 +20,7 @@
 import XCTest
 import CoreData
 import Bookmarks
-import TestUtils
+import PersistenceTestingUtils
 @testable import Core
 @testable import DuckDuckGo
 

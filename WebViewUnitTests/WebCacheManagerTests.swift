@@ -20,7 +20,7 @@
 import XCTest
 @testable import Core
 import WebKit
-import TestUtils
+import PersistenceTestingUtils
 
 extension HTTPCookie {
 

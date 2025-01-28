@@ -66,6 +66,9 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/1206226850447395/1206307878076518
     case webViewStateRestoration
+
+    /// https://app.asana.com/0/72649045549333/1208944782348823/f
+    case syncSeamlessAccountSwitching
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
@@ -151,6 +154,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .internalOnly()
         case .webViewStateRestoration:
             return .remoteReleasable(.feature(.webViewStateRestoration))
+        case .syncSeamlessAccountSwitching:
+            return .remoteReleasable(.subfeature(SyncSubfeature.seamlessAccountSwitching))
         }
     }
 }

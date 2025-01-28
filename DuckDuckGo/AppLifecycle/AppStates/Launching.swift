@@ -84,9 +84,6 @@ struct Launching: AppState {
                        withAdditionalParameters: [PixelParameters.time: String(launchTime)])
         }
 
-        @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
-        var privacyConfigCustomURL: String?
-
         application = stateContext.application
         crashService = stateContext.crashService
 

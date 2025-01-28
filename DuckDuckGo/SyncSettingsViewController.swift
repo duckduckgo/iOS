@@ -24,6 +24,7 @@ import SyncUI
 import DDGSync
 import Common
 import os.log
+import BrowserServicesKit
 
 @MainActor
 class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
@@ -38,6 +39,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     let userAuthenticator = UserAuthenticator(reason: UserText.syncUserUserAuthenticationReason,
                                               cancelTitle: UserText.autofillLoginListAuthenticationCancelButton)
     let userSession = UserSession()
+    let featureFlagger: FeatureFlagger
 
     var recoveryCode: String {
         guard let code = syncService.account?.recoveryCode else {
@@ -71,13 +73,15 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         syncCredentialsAdapter: SyncCredentialsAdapter,
         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
         syncPausedStateManager: any SyncPausedStateManaging,
-        source: String? = nil
+        source: String? = nil,
+        featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger
     ) {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
         self.syncCredentialsAdapter = syncCredentialsAdapter
         self.syncPausedStateManager = syncPausedStateManager
         self.source = source
+        self.featureFlagger = featureFlagger
 
         let viewModel = SyncSettingsViewModel(
             isOnDevEnvironment: { syncService.serverEnvironment == .development },
@@ -355,16 +359,12 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         }
         if let recoveryKey = syncCode.recovery {
             dismissPresentedViewController()
-            showPreparingSync()
+            await showPreparingSyncAsync()
             do {
                 try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
                 return true
             } catch {
-                if self.rootView.model.isSyncEnabled {
-                    handleError(.unableToMergeTwoAccounts, error: error, event: .syncLoginExistingAccountError)
-                } else {
-                    handleError(.unableToSyncToServer, error: error, event: .syncLoginError)
-                }
+                await handleRecoveryCodeLoginError(recoveryKey: recoveryKey, error: error)
             }
         } else if let connectKey = syncCode.connect {
             dismissPresentedViewController()
@@ -400,6 +400,24 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             return true
         }
         return false
+    }
+
+    private func handleRecoveryCodeLoginError(recoveryKey: SyncCode.RecoveryKey, error: Error) async {
+        if self.rootView.model.isSyncEnabled && featureFlagger.isFeatureOn(.syncSeamlessAccountSwitching) {
+            await handleTwoSyncAccountsFoundDuringRecovery(recoveryKey)
+        } else if self.rootView.model.isSyncEnabled {
+            handleError(.unableToMergeTwoAccounts, error: error, event: .syncLoginExistingAccountError)
+        } else {
+            handleError(.unableToSyncToServer, error: error, event: .syncLoginError)
+        }
+    }
+
+    private func handleTwoSyncAccountsFoundDuringRecovery(_ recoveryKey: SyncCode.RecoveryKey) async {
+        if rootView.model.devices.count > 1 {
+            promptToSwitchAccounts(recoveryKey: recoveryKey)
+        } else {
+            await switchAccounts(recoveryKey: recoveryKey)
+        }
     }
 
     func dismissVCAndShowRecoveryPDF() {

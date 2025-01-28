@@ -52,9 +52,9 @@ jobs:
 
     - name: Set cache key hash
       run: |
-         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo-iOS.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
          if [[ "$has_only_tags" == "true" ]]; then
-           echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
+           echo "cache_key_hash=${{ hashFiles('DuckDuckGo-iOS.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
          else
            echo "Package.resolved contains dependencies specified by branch or commit, skipping cache."
          fi
@@ -83,8 +83,8 @@ jobs:
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       run: |
         app_version="$(cut -d ' ' -f 3 < Configuration/Version.xcconfig)"
-        build_version="$(cut -d ' ' -f 3 < Configuration/BuildNumber.xcconfig)"
         bundle exec fastlane increment_build_number_for_version version:$app_version app_identifier:"com.duckduckgo.mobile.ios.alpha"
+        build_version="$(cut -d ' ' -f 3 < Configuration/BuildNumber.xcconfig)"
         bundle exec fastlane release_alpha groups:["${{ env.destination }}"]
         echo "dsyms_path=${{ github.workspace }}/DuckDuckGo-Alpha.app.dSYM.zip" >> $GITHUB_ENV
         echo "app_version=${app_version}" >> $GITHUB_ENV

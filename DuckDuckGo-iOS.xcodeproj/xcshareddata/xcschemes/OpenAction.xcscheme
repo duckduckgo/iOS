@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1500"
-   version = "1.3">
+   wasCreatedForAppExtension = "YES"
+   version = "2.0">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -14,10 +15,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "85482D872462DCD100EDEDD1"
+               BuildableName = "OpenAction.appex"
+               BlueprintName = "OpenAction"
+               ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
                BuildableName = "DuckDuckGo.app"
                BlueprintName = "DuckDuckGo"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+               ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,34 +41,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "NO"
-      codeCoverageEnabled = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
-            BuildableName = "DuckDuckGo.app"
-            BlueprintName = "DuckDuckGo"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "testing"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84E341A51E2F7EFB00BDBA6F"
-               BuildableName = "UnitTests.xctest"
-               BlueprintName = "UnitTests"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
@@ -61,7 +50,7 @@
                BlueprintIdentifier = "025CCFE12582601C001CD5BB"
                BuildableName = "FingerprintingUITests.xctest"
                BlueprintName = "FingerprintingUITests"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+               ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -71,22 +60,23 @@
                BlueprintIdentifier = "85D33FCA25C97B6E002B91A6"
                BuildableName = "IntegrationTests.xctest"
                BlueprintName = "IntegrationTests"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+               ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = "en"
+      selectedDebuggerIdentifier = ""
+      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
+      askForAppToLaunch = "Yes"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES">
+      allowLocationSimulation = "YES"
+      launchAutomaticallySubstyle = "2">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
@@ -94,42 +84,18 @@
             BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
             BuildableName = "DuckDuckGo.app"
             BlueprintName = "DuckDuckGo"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "-com.apple.CoreData.ConcurrencyDebug 1"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-com.apple.CoreData.SQLDebug 1"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-com.apple.CoreData.Logging.stderr 1"
-            isEnabled = "NO">
-         </CommandLineArgument>
-      </CommandLineArguments>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "VARIANT"
-            value = "md"
-            isEnabled = "NO">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "ONBOARDING"
-            value = "true"
-            isEnabled = "NO">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      debugDocumentVersioning = "YES">
+      debugDocumentVersioning = "YES"
+      askForAppToLaunch = "Yes"
+      launchAutomaticallySubstyle = "2">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
@@ -137,7 +103,7 @@
             BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
             BuildableName = "DuckDuckGo.app"
             BlueprintName = "DuckDuckGo"
-            ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            ReferencedContainer = "container:DuckDuckGo-iOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
@@ -145,7 +111,7 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

@@ -21,122 +21,92 @@ import SwiftUI
 import WidgetKit
 
 @available(iOSApplicationExtension 16.0, *)
-struct SearchLockScreenWidget: Widget {
-
-    let kind: String = "SearchLockScreenWidget"
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "LockScreenSearch")
-                .widgetURL(DeepLinks.newSearch.appendingParameter(name: "ls", value: "1"))
-        }
-        .configurationDisplayName(UserText.lockScreenSearchTitle)
-        .description(UserText.lockScreenSearchDescription)
-        .supportedFamilies([ .accessoryCircular ])
-    }
-
+protocol LockScreenWidget: Widget {
+    var kind: String { get }
+    var imageName: String { get }
+    var deepLink: URL { get }
+    var displayName: String { get }
+    var description: String { get }
 }
 
 @available(iOSApplicationExtension 16.0, *)
-struct FavoritesLockScreenWidget: Widget {
-
-    let kind: String = "FavoritesLockScreenWidget"
-
+extension LockScreenWidget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "LockScreenFavorites")
-                .widgetURL(DeepLinks.favorites.appendingParameter(name: "ls", value: "1"))
+            LockScreenWidgetView(imageNamed: imageName)
+                .widgetURL(deepLink)
         }
-        .configurationDisplayName(UserText.lockScreenFavoritesTitle)
-        .description(UserText.lockScreenFavoritesDescription)
-        .supportedFamilies([ .accessoryCircular ])
+        .configurationDisplayName(displayName)
+        .description(self.description)
+        .supportedFamilies([.accessoryCircular])
     }
 }
 
 @available(iOSApplicationExtension 16.0, *)
-struct VoiceSearchLockScreenWidget: Widget {
-
-    let kind: String = "VoiceSearchLockScreenWidget"
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "LockScreenVoice")
-                .widgetURL(DeepLinks.voiceSearch.appendingParameter(name: "ls", value: "1"))
-        }
-        .configurationDisplayName(UserText.lockScreenVoiceTitle)
-        .description(UserText.lockScreenVoiceDescription)
-        .supportedFamilies([ .accessoryCircular ])
-    }
-
+struct SearchLockScreenWidget: LockScreenWidget {
+    let kind = "SearchLockScreenWidget"
+    let imageName = "LockScreenSearch"
+    let deepLink = DeepLinks.newSearch.appendingParameter(name: "ls", value: "1")
+    let displayName = UserText.lockScreenSearchTitle
+    let description = UserText.lockScreenSearchDescription
 }
 
 @available(iOSApplicationExtension 16.0, *)
-struct EmailProtectionLockScreenWidget: Widget {
-
-    let kind: String = "EmailProtectionLockScreenWidget"
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "LockScreenEmail")
-                .widgetURL(DeepLinks.newEmail.appendingParameter(name: "ls", value: "1"))
-        }
-        .configurationDisplayName(UserText.lockScreenEmailTitle)
-        .description(UserText.lockScreenEmailDescription)
-        .supportedFamilies([ .accessoryCircular ])
-    }
+struct FavoritesLockScreenWidget: LockScreenWidget {
+    let kind = "FavoritesLockScreenWidget"
+    let imageName = "LockScreenFavorites"
+    let deepLink = DeepLinks.favorites.appendingParameter(name: "ls", value: "1")
+    let displayName = UserText.lockScreenFavoritesTitle
+    let description = UserText.lockScreenFavoritesDescription
 }
 
 @available(iOSApplicationExtension 16.0, *)
-struct FireButtonLockScreenWidget: Widget {
-
-    let kind: String = "FireButtonLockScreenWidget"
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "LockScreenFire")
-                .widgetURL(DeepLinks.fireButton.appendingParameter(name: "ls", value: "1"))
-        }
-        .configurationDisplayName(UserText.lockScreenFireTitle)
-        .description(UserText.lockScreenFireDescription)
-        .supportedFamilies([ .accessoryCircular ])
-    }
+struct VoiceSearchLockScreenWidget: LockScreenWidget {
+    let kind = "VoiceSearchLockScreenWidget"
+    let imageName = "LockScreenVoice"
+    let deepLink = DeepLinks.voiceSearch.appendingParameter(name: "ls", value: "1")
+    let displayName = UserText.lockScreenVoiceTitle
+    let description = UserText.lockScreenVoiceDescription
 }
 
 @available(iOSApplicationExtension 16.0, *)
-struct PasswordsLockScreenWidget: Widget {
-
-    let kind: String = "PasswordsLockScreenWidget"
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "LockScreenPasswords")
-                .widgetURL(DeepLinks.openPasswords.appendingParameter(name: "ls", value: "1"))
-        }
-        .configurationDisplayName(UserText.lockScreenPasswordsTitle)
-        .description(UserText.lockScreenPasswordsDescription)
-        .supportedFamilies([ .accessoryCircular ])
-    }
+struct EmailProtectionLockScreenWidget: LockScreenWidget {
+    let kind = "EmailProtectionLockScreenWidget"
+    let imageName = "LockScreenEmail"
+    let deepLink = DeepLinks.newEmail.appendingParameter(name: "ls", value: "1")
+    let displayName = UserText.lockScreenEmailTitle
+    let description = UserText.lockScreenEmailDescription
 }
 
-/// Waiting copywriting and icon for this.
 @available(iOSApplicationExtension 16.0, *)
-struct AIChatLockScreenWidget: Widget {
-
-    let kind: String = "AIChatLockScreenWidget"
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "LockScreenAIChat")
-                .widgetURL(DeepLinks.openAIChat.appendingParameter(name: WidgetSourceType.sourceKey, value: WidgetSourceType.lockscreenComplication.rawValue))
-        }
-        .configurationDisplayName(UserText.lockScreenAIChatTitle)
-        .description(UserText.lockScreenAIChatDescription)
-        .supportedFamilies([ .accessoryCircular ])
-    }
+struct FireButtonLockScreenWidget: LockScreenWidget {
+    let kind = "FireButtonLockScreenWidget"
+    let imageName = "LockScreenFire"
+    let deepLink = DeepLinks.fireButton.appendingParameter(name: "ls", value: "1")
+    let displayName = UserText.lockScreenFireTitle
+    let description = UserText.lockScreenFireDescription
 }
 
+@available(iOSApplicationExtension 16.0, *)
+struct PasswordsLockScreenWidget: LockScreenWidget {
+    let kind = "PasswordsLockScreenWidget"
+    let imageName = "LockScreenPasswords"
+    let deepLink = DeepLinks.openPasswords.appendingParameter(name: "ls", value: "1")
+    let displayName = UserText.lockScreenPasswordsTitle
+    let description = UserText.lockScreenPasswordsDescription
+}
+
+@available(iOSApplicationExtension 16.0, *)
+struct AIChatLockScreenWidget: LockScreenWidget {
+    let kind = "AIChatLockScreenWidget"
+    let imageName = "LockScreenAIChat"
+    let deepLink = DeepLinks.openAIChat.appendingParameter(name: WidgetSourceType.sourceKey, value: WidgetSourceType.lockscreenComplication.rawValue)
+    let displayName = UserText.lockScreenAIChatTitle
+    let description = UserText.lockScreenAIChatDescription
+}
+
+// MARK: - Widget View
 struct LockScreenWidgetView: View {
-
     let imageNamed: String
 
     var body: some View {
@@ -148,5 +118,4 @@ struct LockScreenWidgetView: View {
         .background(Circle().foregroundColor(.white.opacity(0.3)))
         .widgetContainerBackground()
     }
-
 }

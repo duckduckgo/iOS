@@ -170,6 +170,9 @@ final class MockDuckPlayerSettings: DuckPlayerSettings {
     var askModeOverlayHidden: Bool = false
     var allowFirstVideo: Bool = false
     var openInNewTab: Bool = false
+    var nativeUI: Bool = false
+    var autoplay: Bool = false
+
     
     init(appSettings: AppSettings = AppSettingsMock(), privacyConfigManager: any BrowserServicesKit.PrivacyConfigurationManaging) {}
     func triggerNotification() {}
@@ -210,6 +213,10 @@ final class MockDuckPlayer: DuckPlayerControlling {
     
     func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
         nil
+    }
+    
+    func loadNativeDuckPlayerVideo(videoID: String) {
+        return
     }
     
     var settings: any DuckPlayerSettings

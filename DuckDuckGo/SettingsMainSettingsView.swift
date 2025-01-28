@@ -19,7 +19,7 @@
 
 import SwiftUI
 import UIKit
-import SyncUI
+import SyncUI_iOS
 
 struct SettingsMainSettingsView: View {
 

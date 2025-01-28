@@ -23,7 +23,7 @@ import Persistence
 import SwiftUI
 import Common
 import Combine
-import SyncUI
+import SyncUI_iOS
 import DuckPlayer
 import Crashes
 
@@ -515,7 +515,7 @@ extension SettingsViewModel {
                 || syncPausedStateManager.isSyncCredentialsPaused {
                 return "⚠️ \(UserText.settingsSync)"
             }
-            return SyncUI.UserText.syncTitle
+            return SyncUI_iOS.UserText.syncTitle
         }())
     }
 

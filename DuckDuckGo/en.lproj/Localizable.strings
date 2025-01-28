@@ -322,6 +322,57 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
 
+/* Title of button to dismiss the screen */
+"autofill.import.passwords.complete.button.title.done" = "Done";
+
+/* Data import summary of how many passwords were not imported as they were duplicates. */
+"autofill.import.passwords.complete.duplicates" = "Duplicates Skipped";
+
+/* Data import summary of how many passwords failed to import. */
+"autofill.import.passwords.complete.failed" = "Failed to import";
+
+/* Subtitle for screen shown after after attempting to import passwords */
+"autofill.import.passwords.complete.subtitle" = "You can now delete the passwords file";
+
+/* Data import summary of how many passwords were successfully imported. */
+"autofill.import.passwords.complete.success" = "Passwords";
+
+/* Title for screen shown after attempting to import passwords */
+"autofill.import.passwords.complete.title" = "Import complete!";
+
+/* Button label to select zip or csv file for importing */
+"autofill.import.passwords.file-button" = "Upload Passwords File...";
+
+/* Title for button to select zip or csn file for importing */
+"autofill.import.passwords.instructions.button.title" = "Upload Passwords File...";
+
+/* Step 1 for instructions to import passwords from Safari. This reads as 'On your iPhone|iPad|device, open ⚙️ System Settings and go to Safari' */
+"autofill.import.passwords.instructions.step1" = "On your %1$@, open ⚙️ %2$@ and go to %3$@";
+
+/* second parameter for autofill.import.passwords.instructions.step1 */
+"autofill.import.passwords.instructions.step1.safari" = "Safari";
+
+/* first parameter for autofill.import.passwords.instructions.step1 */
+"autofill.import.passwords.instructions.step1.system-settings" = "System Settings";
+
+/* Step 2 for instructions to import passwords. Select Export, check the box for Passwords, and save the file in a folder that you can remember' */
+"autofill.import.passwords.instructions.step2" = "Select %1$@, check the box for %2$@, and save the file in a folder that you can remember";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.export" = "Export";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Passwords";
+
+/* Title for section with instructions to export passwords from Safari */
+"autofill.import.passwords.instructions.title" = "How to export Passwords from Safari:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Select the file containing passwords exported from Safari. This is usually a ZIP or CSV file.";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = " Import Passwords to DuckDuckGo";
+
 /* Button label to get link to download the desktop browser */
 "autofill.import.passwords.via.sync.get-browser-button" = "Get Desktop Browser";
 

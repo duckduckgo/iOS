@@ -65,6 +65,13 @@ extension String {
         }
         return firstString
     }
+
+    public func width(for font: UIFont) -> CGFloat {
+        let attributes = [NSAttributedString.Key.font: font]
+        let size = (self as NSString).size(withAttributes: attributes)
+        return size.width
+    }
+
 }
 
 // MARK: - URL

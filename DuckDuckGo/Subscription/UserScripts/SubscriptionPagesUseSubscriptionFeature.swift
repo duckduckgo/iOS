@@ -256,6 +256,13 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         let emailAccessToken = try? EmailManager().getToken()
         let purchaseTransactionJWS: String
 
+        /*
+         Prior to purchase, check the Free Trial experiment status.
+         This status determines the post-purchase Free Trial actions we will perform.
+         It must be checked now, as purchasing causes the status to change.
+        */
+        let shouldPerformFreeTrialPostPurchaseActions = userIsEnrolledInFreeTrialsExperiment
+
         switch await appStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
                                                                emailAccessToken: emailAccessToken) {
         case .success(let transactionJWS):
@@ -283,10 +290,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         
         setTransactionStatus(.polling)
 
-        // Free Trials Experiment Pixels
-        fireFreeTrialSubscriptionPurchasePixelIfApplicable(for: subscriptionSelection.id)
+        // Free Trials Experiment Parameters & Pixels
+        var freeTrialParameters: [String: String]?
+        if shouldPerformFreeTrialPostPurchaseActions {
+            freeTrialParameters = completeSubscriptionFreeTrialParameters
+            fireFreeTrialSubscriptionPurchasePixel(for: subscriptionSelection.id)
+        }
 
-        switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS, additionalParams: completeSubscriptionFreeTrialParameters) {
+        switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS, additionalParams: freeTrialParameters) {
         case .success(let purchaseUpdate):
             Logger.subscription.debug("Subscription purchase completed successfully")
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess,
@@ -484,14 +495,13 @@ private extension SubscriptionPagesUseSubscriptionFeature {
 
     /// Retrieves the parameters for completing a subscription free trial if applicable.
     ///
-    /// This property checks if the user is part of a valid free trial cohort. If the user is in a cohort,
-    /// it returns the associated free trial parameters, provided these parameters have not been returned previously.
-    /// If the user is not in a cohort or the parameters have already been returned, the property returns `nil`.
+    /// This property returns the associated free trial parameters, provided these parameters have not been returned previously.
+    /// Otherwise this returns `nil`.
     ///
     /// - Returns: A dictionary of free trial parameters (`[String: String]`) if applicable, or `nil` otherwise.
     var completeSubscriptionFreeTrialParameters: [String: String]? {
-        guard let cohort = freeTrialCohortIfApplicable() else { return nil }
-        return freeTrialsExperiment.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+        guard let cohort = freeTrialsExperiment.getCohortIfEnabled() else { return nil }
+        return freeTrialsExperiment.oneTimeParameters(for: cohort)
     }
     
     /// Determines whether a user is enrolled in the Free Trials experiment
@@ -502,14 +512,8 @@ private extension SubscriptionPagesUseSubscriptionFeature {
 
     /// Fires a subscription purchase pixel for a free trial if applicable.
     ///
-    /// This method checks if the user is part of a free trial cohort and fires
-    /// the appropriate pixel based on the subscription type (monthly or yearly).
-    ///
     /// - Parameter id: The subscription identifier used to determine the type of subscription.
-    func fireFreeTrialSubscriptionPurchasePixelIfApplicable(for id: String) {
-        // Check if the pixel should be fired; exit early if not applicable
-        guard userIsEnrolledInFreeTrialsExperiment else { return }
-
+    func fireFreeTrialSubscriptionPurchasePixel(for id: String) {
         /*
          Logic based on strings is obviously not ideal, but acceptable for this temporary
          experiment.

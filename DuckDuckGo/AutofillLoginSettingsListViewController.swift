@@ -1222,6 +1222,16 @@ extension AutofillLoginSettingsListViewController: AutofillHeaderViewDelegate {
     }
 }
 
+// MARK: ImportPasswordsViewControllerDelegate
+
+extension AutofillLoginSettingsListViewController: ImportPasswordsViewControllerDelegate {
+
+    func importPasswordsViewControllerDidFinish(_ viewController: ImportPasswordsViewController) {
+        viewModel.updateData()
+    }
+}
+
+
 extension NSNotification.Name {
     static let autofillFailureReport: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.autofillFailureReport")
 }

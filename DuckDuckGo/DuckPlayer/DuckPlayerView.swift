@@ -98,14 +98,12 @@ struct DuckPlayerView: View {
             }
             
             // Close Button
-            Button(action: {
-                dismiss()
-            }) {
+            Button(action: { dismiss() }, label: {
                 Image(systemName: "xmark")
                     .foregroundColor(.white)
                     .font(.system(size: 20, weight: .medium))
                     .frame(width: 44, height: 44) // Larger touch target
-            }
+            })
         }
         .padding(.horizontal, Constants.horizontalPadding)
         .background(Color.black)

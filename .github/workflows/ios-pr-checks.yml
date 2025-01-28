@@ -10,6 +10,11 @@ on:
         description: "Branch name"
         required: false
         type: string
+      skip-release:
+        description: "Skip release build"
+        required: false
+        default: false
+        type: boolean
     secrets:
       APPLE_API_KEY_BASE64:
         required: true
@@ -148,8 +153,8 @@ jobs:
 
     name: Make Release Build
 
-    # Dependabot doesn't have access to all secrets, so we skip this job, also skip for nightly release bump
-    if: github.actor != 'dependabot[bot]' && github.event_name != 'workflow_call'
+    # Dependabot doesn't have access to all secrets, so we skip this job, also skip for releases
+    if: github.actor != 'dependabot[bot]' && inputs.skip-release != true
 
     runs-on: macos-15
     timeout-minutes: 30

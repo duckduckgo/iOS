@@ -21,6 +21,7 @@ import SwiftUI
 import DesignResourcesKit
 import DuckUI
 import BrowserServicesKit
+import Lottie
 
 struct ImportPasswordsCompleteView: View {
 
@@ -33,8 +34,12 @@ struct ImportPasswordsCompleteView: View {
         VStack {
             ScrollView {
                 VStack(spacing: 0) {
-                    Image(.success128)
-                        .padding(.top, 64)
+                    LottieView(
+                        lottieFile: "burst-blob-passwords",
+                        isAnimating: $isAnimating
+                    )
+                    .frame(width: 200, height: 128)
+                    .padding(.top, 64)
 
                     Text(UserText.autofillImportPasswordsCompleteTitle)
                         .daxTitle1()
@@ -74,6 +79,11 @@ struct ImportPasswordsCompleteView: View {
         .background(Rectangle()
             .foregroundColor(Color(designSystemColor: .backgroundSheets))
             .ignoresSafeArea())
+        .onFirstAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                isAnimating = true
+            }
+        }
 
     }
 

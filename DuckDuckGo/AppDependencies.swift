@@ -51,5 +51,6 @@ struct AppDependencies {
     let autofillService: AutofillService
     let crashService: CrashService
     let keyboardService: KeyboardService
+    let configurationService: ConfigurationService
 
 }

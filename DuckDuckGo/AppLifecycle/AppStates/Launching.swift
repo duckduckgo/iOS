@@ -20,7 +20,6 @@
 import Foundation
 import Core
 import Networking
-import Configuration
 import UIKit
 import BrowserServicesKit
 import WidgetKit
@@ -64,6 +63,7 @@ struct Launching: AppState {
     private let remoteMessagingService: RemoteMessagingService
     private let keyboardService: KeyboardService
     private let contentBlockingService: ContentBlockingService = ContentBlockingService()
+    private let configurationService: ConfigurationService
 
     private let window: UIWindow
 
@@ -100,11 +100,8 @@ struct Launching: AppState {
         
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
 
-        if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
-            Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
-        } else {
-            Configuration.setURLProvider(AppConfigurationURLProvider())
-        }
+        configurationService = ConfigurationService(isDebugBuild: isDebugBuild)
+        configurationService.onLaunching()
 
         crashService.startAttachingCrashLogMessages(application: application)
 
@@ -230,10 +227,6 @@ struct Launching: AppState {
         authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
         keyboardService = KeyboardService(mainViewController: mainViewController)
 
-        // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
-        // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
-        AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         // Temporary logic for rollout of Autofill as on by default for new installs only
@@ -269,7 +262,8 @@ struct Launching: AppState {
             onboardingPixelReporter: onboardingPixelReporter,
             autofillService: autofillService,
             crashService: crashService,
-            keyboardService: keyboardService
+            keyboardService: keyboardService,
+            configurationService: configurationService
         )
     }
 

@@ -128,18 +128,8 @@ struct Foreground: AppState {
 //            showKeyboardOnLaunch()
 //        } // it should in theory be called if the authentication is disabled, inside onAuthentication() method
 
-        if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
-            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
-            AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
-        }
-        AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()
-
-        AppConfigurationFetch().start { result in
-            self.sendAppLaunchPostback(marketplaceAdPostbackManager: appDependencies.marketplaceAdPostbackManager)
-            if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
-                ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
-            }
-        }
+        appDependencies.configurationService.onConfigurationFetch = onConfigurationFetch
+        appDependencies.configurationService.onForeground()
 
         appDependencies.privacyProDataReporter.injectSyncService(appDependencies.syncService.sync)
 
@@ -158,6 +148,10 @@ struct Foreground: AppState {
         }
 
         AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
+    }
+
+    func onConfigurationFetch() { // TODO: needs documentation
+        sendAppLaunchPostback(marketplaceAdPostbackManager: appDependencies.marketplaceAdPostbackManager)
     }
 
     // MARK: handle application(_:open:options:) logic here

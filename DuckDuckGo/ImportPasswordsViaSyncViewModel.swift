@@ -82,7 +82,7 @@ final class ImportPasswordsViaSyncViewModel {
     private(set) var buttonWasPressed: Bool = false
 
     func maxButtonWidth() -> CGFloat {
-        let maxWidth = maxWidthFor(title1: ButtonType.getBrowser.title, title2: ButtonType.sync.title)
+        let maxWidth = AutofillViews.maxWidthFor(title1: ButtonType.getBrowser.title, title2: ButtonType.sync.title, font: UIFont.boldAppFont(ofSize: 16))
         return min(maxWidth, 300)
     }
 
@@ -121,21 +121,6 @@ final class ImportPasswordsViaSyncViewModel {
 
     private func openSync() {
         delegate?.importPasswordsViaSyncViewModelDidRequestOpenSync(self)
-    }
-
-    private func maxWidthFor(title1: String, title2: String) -> CGFloat {
-        return max(title1.width(), title2.width())
-    }
-
-}
-
-private extension String {
-
-    func width() -> CGFloat {
-        let font = UIFont.boldAppFont(ofSize: 16)
-        let attributes = [NSAttributedString.Key.font: font]
-        let size = (self as NSString).size(withAttributes: attributes)
-        return size.width
     }
 
 }

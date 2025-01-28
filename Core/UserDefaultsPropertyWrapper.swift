@@ -163,6 +163,7 @@ public struct UserDefaultsWrapper<T> {
         case userInteractedWithDuckPlayer = "com.duckduckgo.ios.userInteractedWithDuckPlayer"
         case duckPlayerOpenInNewTab = "com.duckduckgo.ios.duckPlayerOpenInNewTab"
         case duckPlayerNativeUI = "com.duckduckgo.ios.duckPlayerNativeUI"
+        case duckPlayerAutoplay = "com.duckduckgo.ios.duckPlayerAutoplay"
 
         case vpnRedditWorkaroundInstalled = "com.duckduckgo.ios.vpn.workaroundInstalled"
 

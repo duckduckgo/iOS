@@ -345,6 +345,16 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
+    
+    var duckPlayerAutoplay: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.duckPlayerAutoplay },
+            set: {
+                self.appSettings.duckPlayerAutoplay = $0
+                self.state.duckPlayerAutoplay = $0
+            }
+        )
+    }
 
     func setVoiceSearchEnabled(to value: Bool) {
         if value {
@@ -490,6 +500,7 @@ extension SettingsViewModel {
             duckPlayerOpenInNewTab: appSettings.duckPlayerOpenInNewTab,
             duckPlayerOpenInNewTabEnabled: featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab),
             duckPlayerNativeUI: appSettings.duckPlayerNativeUI,
+            duckPlayerAutoplay: appSettings.duckPlayerAutoplay,
             aiChat: SettingsState.AIChat(enabled: aiChatSettings.isAIChatFeatureEnabled,
                                          isAIChatBrowsingMenuFeatureFlagEnabled: aiChatSettings.isAIChatBrowsingMenubarShortcutFeatureEnabled,
                                          isAIChatAddressBarFeatureFlagEnabled: aiChatSettings.isAIChatAddressBarShortcutFeatureEnabled)

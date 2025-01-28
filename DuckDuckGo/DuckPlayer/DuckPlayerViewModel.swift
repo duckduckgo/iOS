@@ -2,7 +2,7 @@
 //  DuckPlayerViewModel.swift
 //  DuckDuckGo
 //
-//  Copyright © 2025 DuckDuckGo. All rights reserved.
+//  Copyright 2025 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -22,17 +22,36 @@ import Foundation
 
 final class DuckPlayerViewModel: ObservableObject {
     
-    let videoID: String
-    let baseURL: String = "https://www.youtube-nocookie.com/embed/"
-    let parameters: [String: String] = ["autoplay": "1", "rel": "0", "playsinline": "1"]
+    enum Constants {
+        static let baseURL = "https://www.youtube-nocookie.com/embed/"
+        
+        // Parameters
+        static let relParameter = "rel"
+        static let playsInlineParameter = "playsinline"
+        static let autoplayParameter = "autoplay"
+        
+        // Values
+        static let enabled = "1"
+        static let disabled = "0"
+    }
     
-    init(videoID: String) {
+    let videoID: String
+    var appSettings: AppSettings
+    let defaultParameters: [String: String] = [
+        Constants.relParameter: Constants.disabled,
+        Constants.playsInlineParameter: Constants.enabled
+    ]
+    
+    init(videoID: String, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         self.videoID = videoID
+        self.appSettings = appSettings
     }
     
     func getVideoURL() -> URL? {
+        var parameters = defaultParameters
+        parameters[Constants.autoplayParameter] = appSettings.duckPlayerAutoplay ? Constants.enabled : Constants.disabled
         let queryString = parameters.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
-        return URL(string: "\(baseURL)\(videoID)?\(queryString)")
+        return URL(string: "\(Constants.baseURL)\(videoID)?\(queryString)")
     }
     
     func onFirstAppear() {

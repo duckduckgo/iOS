@@ -2,7 +2,7 @@
 //  SettingsDuckPlayerView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2024 DuckDuckGo. All rights reserved.
+//  Copyright 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -85,7 +85,7 @@ struct SettingsDuckPlayerView: View {
             if viewModel.isInternalUser {
                 Section("Experimental (Internal only)", content: {
                     SettingsCellView(label: "Use Native UI (Alpha)", accessory: .toggle(isOn: viewModel.duckPlayerNativeUI))
-                    
+                    SettingsCellView(label: "Autoplay Videos", accessory: .toggle(isOn: viewModel.duckPlayerAutoplay))
                 })
             }
         }

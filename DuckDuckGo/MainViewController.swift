@@ -1729,7 +1729,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    private func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
+    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
         aiChatViewControllerManager.openAIChat(query, payload: payload, on: self)
     }
 }

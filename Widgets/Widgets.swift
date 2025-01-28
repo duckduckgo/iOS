@@ -221,18 +221,21 @@ struct Widgets: WidgetBundle {
 
     private func makeWidgets() -> some Widget {
         if #available(iOS 17, *) {
-            return WidgetBundleBuilder.buildBlock(SearchWidget(),
-                                                  PasswordsWidget(),
+            return WidgetBundleBuilder.buildBlock(QuickActionsWidget(),
                                                   FavoritesWidget(),
+                                                  PasswordsWidget(),
+                                                  VPNBundle().body,
+                                                  SearchWidget(),
                                                   SearchLockScreenWidget(),
                                                   VoiceSearchLockScreenWidget(),
                                                   EmailProtectionLockScreenWidget(),
                                                   FireButtonLockScreenWidget(),
                                                   FavoritesLockScreenWidget(),
-                                                  PasswordsLockScreenWidget(),
-                                                  VPNBundle().body)
+                                                  AIChatLockScreenWidget(),
+                                                  PasswordsLockScreenWidget()
+            )
         }
-
+        
         if #available(iOS 16.0, *) {
             return WidgetBundleBuilder.buildBlock(SearchWidget(),
                                                   PasswordsWidget(),
@@ -242,6 +245,7 @@ struct Widgets: WidgetBundle {
                                                   EmailProtectionLockScreenWidget(),
                                                   FireButtonLockScreenWidget(),
                                                   FavoritesLockScreenWidget(),
+                                                  AIChatLockScreenWidget(),
                                                   PasswordsLockScreenWidget())
         } else {
             return WidgetBundleBuilder.buildBlock(SearchWidget(),
@@ -261,6 +265,7 @@ struct VPNBundle: WidgetBundle {
 
         if #available(iOS 18, *) {
             VPNControlWidget()
+            AIChatControlWidget()
         }
     }
 }

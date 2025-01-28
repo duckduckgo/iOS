@@ -84,7 +84,6 @@ struct EmailProtectionLockScreenWidget: Widget {
         .description(UserText.lockScreenEmailDescription)
         .supportedFamilies([ .accessoryCircular ])
     }
-
 }
 
 @available(iOSApplicationExtension 16.0, *)
@@ -115,6 +114,23 @@ struct PasswordsLockScreenWidget: Widget {
         }
         .configurationDisplayName(UserText.lockScreenPasswordsTitle)
         .description(UserText.lockScreenPasswordsDescription)
+        .supportedFamilies([ .accessoryCircular ])
+    }
+}
+
+/// Waiting copywriting and icon for this.
+@available(iOSApplicationExtension 16.0, *)
+struct AIChatLockScreenWidget: Widget {
+
+    let kind: String = "AIChatLockScreenWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) { _ in
+            return LockScreenWidgetView(imageNamed: "LockScreenAIChat")
+                .widgetURL(DeepLinks.openAIChat.appendingParameter(name: WidgetSourceType.sourceKey, value: WidgetSourceType.lockscreenComplication.rawValue))
+        }
+        .configurationDisplayName(UserText.lockScreenAIChatTitle)
+        .description(UserText.lockScreenAIChatDescription)
         .supportedFamilies([ .accessoryCircular ])
     }
 }

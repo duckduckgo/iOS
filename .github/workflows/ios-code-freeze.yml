@@ -59,6 +59,7 @@ jobs:
     uses: ./.github/workflows/ios-pr-checks.yml
     with:
       branch: ${{ needs.create_release_branch.outputs.release_branch_name }}
+      skip-release: true
     secrets:
       APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
       APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}

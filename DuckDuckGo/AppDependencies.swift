@@ -32,7 +32,6 @@ struct AppDependencies {
     let vpnService: VPNService
 
     let appSettings: AppSettings
-    let privacyStore: PrivacyUserDefaults
 
     let overlayWindowManager: OverlayWindowManager
     let authenticationService: AuthenticationService

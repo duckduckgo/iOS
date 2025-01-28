@@ -45,7 +45,6 @@ struct Launching: AppState {
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     private let accountManager = AppDependencyProvider.shared.accountManager
     private let appSettings = AppDependencyProvider.shared.appSettings
-    private let privacyStore = PrivacyUserDefaults()
     private let voiceSearchHelper = VoiceSearchHelper()
     private let onboardingPixelReporter = OnboardingPixelReporter()
     private let tipKitAppEventsHandler = TipKitAppEventHandler()
@@ -234,7 +233,7 @@ struct Launching: AppState {
 
         screenshotService = ScreenshotService(window: window)
         overlayWindowManager = OverlayWindowManager(window: window)
-        authenticationService = AuthenticationService(privacyStore: privacyStore, overlayWindowManager: overlayWindowManager)
+        authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
         keyboardService = KeyboardService(mainViewController: mainViewController)
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
@@ -262,7 +261,6 @@ struct Launching: AppState {
             accountManager: accountManager,
             vpnService: vpnService,
             appSettings: appSettings,
-            privacyStore: privacyStore,
             overlayWindowManager: overlayWindowManager,
             authenticationService: authenticationService,
             screenshotService: screenshotService,

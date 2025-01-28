@@ -22,14 +22,12 @@ import Foundation
 final class AuthenticationService {
 
     private let authenticator = Authenticator()
-    private let privacyStore: PrivacyStore
     private let overlayWindowManager: OverlayWindowManager
+    private let privacyStore: PrivacyStore = PrivacyUserDefaults()
 
     private var onAuthentication: (() -> Void)?
 
-    init(privacyStore: PrivacyStore,
-         overlayWindowManager: OverlayWindowManager) {
-        self.privacyStore = privacyStore
+    init(overlayWindowManager: OverlayWindowManager) {
         self.overlayWindowManager = overlayWindowManager
     }
 
@@ -43,6 +41,10 @@ final class AuthenticationService {
         Task { @MainActor in
             await authenticate(with: authenticationViewController)
         }
+    }
+
+    var isAuthenticationEnabled: Bool {
+        privacyStore.authenticationEnabled
     }
 
     @MainActor

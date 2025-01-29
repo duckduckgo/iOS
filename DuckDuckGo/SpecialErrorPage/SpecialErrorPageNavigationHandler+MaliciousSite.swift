@@ -23,7 +23,6 @@ import Core
 import SpecialErrorPages
 import WebKit
 import MaliciousSiteProtection
-import PixelKit
 
 enum MaliciousSiteProtectionNavigationResult: Equatable {
     case navigationHandled(NavigationType)
@@ -110,7 +109,7 @@ extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavig
                 let response = MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)
                 return .navigationHandled(.mainFrame(response))
             } else {
-                PixelKit.fire(MaliciousSiteProtection.Event.iframeLoaded(category: threatKind))
+                Pixel.fire(MaliciousSiteProtection.Event.iframeLoaded(category: threatKind))
                 // Extract the URL of the source frame (the iframe) that initiated the navigation action
                 let iFrameTopURL = navigationAction.sourceFrame.safeRequest?.url ?? url
                 let errorData = SpecialErrorData.maliciousSite(kind: threatKind, url: iFrameTopURL)
@@ -146,7 +145,7 @@ extension MaliciousSiteProtectionNavigationHandler: SpecialErrorPageActionHandle
         maliciousURLExemptions[url] = threatKind
         bypassedMaliciousSiteThreatKind = threatKind
 
-        PixelKit.fire(MaliciousSiteProtection.Event.visitSite(category: threatKind))
+        Pixel.fire(MaliciousSiteProtection.Event.visitSite(category: threatKind))
     }
 
     func leaveSite() { }

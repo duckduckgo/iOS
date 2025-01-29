@@ -22,6 +22,8 @@ import BrowserServicesKit
 import Bookmarks
 import Configuration
 import DDGSync
+import MaliciousSiteProtection
+import PixelKit
 
 extension Pixel {
     
@@ -979,6 +981,9 @@ extension Pixel {
 
         case tabInteractionStateFailedToRestore
         case tabInteractionStateRestorationTime(_ time: BucketAggregation)
+
+        // MARK: Malicious Site Protection
+        case maliciousSiteProtection(event: MaliciousSiteProtectionEvent)
     }
 
 }
@@ -1961,6 +1966,9 @@ extension Pixel.Event {
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
 
         case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
+
+        // MARK: Malicious Site Protection
+        case .maliciousSiteProtection(let event): return event.name
         }
     }
 }
@@ -2078,6 +2086,65 @@ extension Pixel.Event {
             default:
                 self = .more
             }
+        }
+    }
+}
+
+// This is a temporary mapper from PixelKit to Pixel events for MaliciousSiteProtection
+// Malicious Site Protection BSK library depends on PixelKit which is not ready yet to be ported to iOS.
+// The below code maps between `PixelKitEvent` to `Pixel.Event` in order to use `Pixel.fire` on the client.
+public extension Pixel.Event {
+
+    enum MaliciousSiteProtectionEvent: Equatable {
+        case errorPageShown(category: ThreatKind, clientSideHit: Bool)
+        case visitSite(category: ThreatKind)
+        case iframeLoaded(category: ThreatKind)
+        case settingToggled(to: Bool)
+        case matchesApiTimeout
+        case failedToDownloadInitialDataSets(category: ThreatKind, type: DataManager.StoredDataType.Kind)
+
+        public init?(_ pixelKitEvent: MaliciousSiteProtection.Event) {
+            switch pixelKitEvent {
+            case .errorPageShown(category: let category, clientSideHit: let clientSideHit):
+                self = .errorPageShown(category: category, clientSideHit: clientSideHit)
+            case .visitSite(category: let category):
+                self = .visitSite(category: category)
+            case .iframeLoaded(category: let category):
+                self = .iframeLoaded(category: category)
+            case .settingToggled(let enabled):
+                self = .settingToggled(to: enabled)
+            case .matchesApiTimeout:
+                self = .matchesApiTimeout
+            case .matchesApiFailure:
+                return nil
+            case .failedToDownloadInitialDataSets(category: let category, type: let type):
+                self = .failedToDownloadInitialDataSets(category: category, type: type)
+            }
+        }
+
+        private var event: PixelKitEventV2 {
+            switch self {
+            case .errorPageShown(let category, let clientSideHit):
+                return MaliciousSiteProtection.Event.errorPageShown(category: category, clientSideHit: clientSideHit)
+            case .visitSite(let category):
+                return MaliciousSiteProtection.Event.visitSite(category: category)
+            case .iframeLoaded(let category):
+                return MaliciousSiteProtection.Event.iframeLoaded(category: category)
+            case .settingToggled(let enabled):
+                return MaliciousSiteProtection.Event.settingToggled(to: enabled)
+            case .matchesApiTimeout:
+                return MaliciousSiteProtection.Event.matchesApiTimeout
+            case .failedToDownloadInitialDataSets(let category, let type):
+                return MaliciousSiteProtection.Event.failedToDownloadInitialDataSets(category: category, type: type)
+            }
+        }
+
+        var name: String {
+            event.name
+        }
+
+        public var parameters: [String: String] {
+            event.parameters ?? [:]
         }
     }
 }

@@ -21,14 +21,13 @@ import Foundation
 import Combine
 import Core
 import SwiftUI
-import PixelKit
 import MaliciousSiteProtection
 
 final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
-    @Published var shouldShowMaliciousSiteProtectionSection = false
-    @Published var isMaliciousSiteProtectionOn: Bool = false {
+    @Published var shouldShowMaliciousSiteProtectionSection: Bool
+    @Published var isMaliciousSiteProtectionOn: Bool {
         didSet {
-            manager.isMaliciousSiteProtectionOn = isMaliciousSiteProtectionOn
+            updateMaliciousSiteProtection(enabled: isMaliciousSiteProtectionOn)
         }
     }
 
@@ -53,7 +52,7 @@ final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
     }
 
     private func updateMaliciousSiteProtection(enabled isEnabled: Bool) {
-        isMaliciousSiteProtectionOn = isEnabled
-        PixelKit.fire(MaliciousSiteProtection.Event.settingToggled(to: isEnabled))
+        manager.isMaliciousSiteProtectionOn = isEnabled
+        Pixel.fire(MaliciousSiteProtection.Event.settingToggled(to: isEnabled))
     }
 }

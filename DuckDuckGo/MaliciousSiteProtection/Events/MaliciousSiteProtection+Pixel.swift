@@ -1,5 +1,5 @@
 //
-//  Logger+MaliciousSiteProtection.swift
+//  MaliciousSiteProtection+Pixel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -18,11 +18,14 @@
 //
 
 import Foundation
-import os.log
+import Core
+import MaliciousSiteProtection
 
-extension Logger {
-    enum MaliciousSiteProtection {
-        static let datasetsFetcher = Logger(subsystem: "MaliciousSite", category: "DatasetsFetcher")
-        static let manager = Logger(subsystem: "MaliciousSite", category: "Manager")
+extension Pixel {
+
+    static func fire(_ event: MaliciousSiteProtection.Event) {
+        guard let convertedPixelEvent = Event.MaliciousSiteProtectionEvent(event) else { return }
+        Pixel.fire(.maliciousSiteProtection(event: convertedPixelEvent), withAdditionalParameters: convertedPixelEvent.parameters)
     }
+
 }

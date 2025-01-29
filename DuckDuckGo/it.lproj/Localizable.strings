@@ -1083,7 +1083,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai è una funzionalità opzionale che consente di chattare in forma anonima con i più diffusi modelli di chat AI di terze parti. Le chat non vengono utilizzate per addestrare l'AI.\n[Scopri di più](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Mostra Duck.ai durante la ricerca";
+"duckai.settings.enable.address-bar-searching-toggle" = "Mostra Duck.ai nella pagina di ricerca";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Mostra Duck.ai nel menu del browser";

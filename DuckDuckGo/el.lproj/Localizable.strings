@@ -1083,7 +1083,7 @@
 "duckai.preferences.text.markdown" = "Το Duck.ai αποτελεί προαιρετική λειτουργία που σας επιτρέπει να συνομιλείτε ανώνυμα με δημοφιλή μοντέλα τρίτων για συνομιλία μέσω τεχνητής νοημοσύνης. Οι συνομιλίες σας δεν χρησιμοποιούνται για την εκπαίδευση τεχνητής νοημοσύνης.\n[Μάθετε περισσότερα](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Εμφάνιση του Duck.ai κατά την αναζήτηση";
+"duckai.settings.enable.address-bar-searching-toggle" = "Εμφάνιση του Duck.ai στη σελίδα αναζήτησης";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Εμφάνιση του Duck.ai στο μενού του προγράμματος περιήγησης";

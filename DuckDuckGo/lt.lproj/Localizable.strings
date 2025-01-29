@@ -1083,7 +1083,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai yra pasirenkama funkcija, leidžianti anonimiškai kalbėtis su populiariais trečiųjų šalių DI pokalbių modeliais. Jūsų pokalbiai nenaudojami DI mokymui.\n[Sužinoti daugiau](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Rodyti „Duck.ai“ paieškos metu";
+"duckai.settings.enable.address-bar-searching-toggle" = "Rodyti „Duck.ai“ paieškos puslapyje";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Rodyti „Duck.ai“ naršyklės meniu";

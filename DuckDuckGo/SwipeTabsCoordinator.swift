@@ -106,15 +106,24 @@ class SwipeTabsCoordinator: NSObject {
     
     weak var preview: UIView?
     weak var currentView: UIView?
-    
+
+    func invalidateLayout() {
+        updateLayout()
+        scrollToCurrent()
+
+        let indexPath = IndexPath(row: self.tabsModel.currentIndex, section: 0)
+        collectionView.reloadItems(at: [indexPath])
+    }
+
     private func updateLayout() {
         let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
         layout?.itemSize = CGSize(width: coordinator.superview.frame.size.width, height: coordinator.omniBar.frame.height)
         layout?.minimumLineSpacing = 0
         layout?.minimumInteritemSpacing = 0
         layout?.scrollDirection = .horizontal
+        layout?.invalidateLayout()
     }
-    
+
     private func scrollToCurrent() {
         guard isEnabled else { return }
         let targetOffset = collectionView.frame.width * CGFloat(tabsModel.currentIndex)

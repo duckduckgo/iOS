@@ -145,6 +145,7 @@
 				<string>ddgOpenPasswords</string>
 				<string>http</string>
 				<string>https</string>
+				<string>ddgOpenAIChat</string>
 			</array>
 		</dict>
 	</array>

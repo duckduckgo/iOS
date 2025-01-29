@@ -805,7 +805,7 @@ extension SettingsViewModel {
                     state.subscription.entitlements = []
                     state.subscription.platform = .unknown
 
-                    // TODO: Fire pixel for "No subscription found"
+                    DailyPixel.fireDailyAndCount(pixel: .settingsPrivacyProAccountWithNoSubscriptionFound)
                 }
             }
         }

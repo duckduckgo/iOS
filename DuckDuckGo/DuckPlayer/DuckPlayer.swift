@@ -480,9 +480,9 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     ///   - params: Parameters from the web content.
     ///   - message: The script message containing the parameters.
     @MainActor
-        public func telemetryEvent(params: Any, message: WKScriptMessage) async -> Encodable? {
-            // Not currently accepting any telemetry events
-            return nil
+    public func telemetryEvent(params: Any, message: WKScriptMessage) async -> Encodable? {
+        // Not currently accepting any telemetry events
+        return nil
     }
     
     /// Opens Duck Player information modal.

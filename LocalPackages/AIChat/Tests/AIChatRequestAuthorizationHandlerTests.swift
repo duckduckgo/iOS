@@ -1,5 +1,5 @@
 //
-//  MockAIChatDebugSettings.swift
+//  AIChatRequestAuthorizationHandlerTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -17,11 +17,9 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 import WebKit
-import AIChat
-@testable import DuckDuckGo
+@testable import AIChat
 
 final class MockAIChatDebugSettings: AIChatDebugSettingsHandling {
     var messagePolicyHostname: String?
@@ -31,6 +29,8 @@ class AIChatRequestAuthorizationHandlerTests: XCTestCase {
 
     var handler: AIChatRequestAuthorizationHandler!
     var mockDebugSettings: MockAIChatDebugSettings!
+
+    var navigationAction: MockWKNavigationAction!
 
     override func setUp() {
         super.setUp()
@@ -45,20 +45,22 @@ class AIChatRequestAuthorizationHandlerTests: XCTestCase {
     }
 
     // MARK: Valid URLS
+    @MainActor
     func testShouldAllowRequestWithDuckAIURL() {
         let url = URL(string: "https://duckduckgo.com/?ia=chat")!
         let request = URLRequest(url: url)
-        let navigationAction = MockWKNavigationAction(request: request, targetFrame: nil)
+        navigationAction = MockWKNavigationAction(request: request, targetFrame: nil)
 
         let result = handler.shouldAllowRequestWithNavigationAction(navigationAction)
 
         XCTAssertTrue(result, "Expected to allow request for DuckAI URL")
     }
 
+    @MainActor
     func testShouldAllowRequestWithDuckAIBang() {
         let url = URL(string: "https://duckduckgo.com/?q=!ai")!
         let request = URLRequest(url: url)
-        let navigationAction = MockWKNavigationAction(request: request, targetFrame: nil)
+        navigationAction = MockWKNavigationAction(request: request, targetFrame: nil)
 
         let result = handler.shouldAllowRequestWithNavigationAction(navigationAction)
 
@@ -66,22 +68,24 @@ class AIChatRequestAuthorizationHandlerTests: XCTestCase {
     }
 
     // MARK: - Main Frame
+    @MainActor
     func testShouldAllowRequestWithNonMainFrame() {
         let url = URL(string: "https://example.com")!
         let request = URLRequest(url: url)
         let targetFrame = MockWKFrameInfo(isMainFrame: false)
-        let navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
+        navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
 
         let result = handler.shouldAllowRequestWithNavigationAction(navigationAction)
 
         XCTAssertTrue(result, "Expected to allow request for non-main frame")
     }
 
+    @MainActor
     func testShouldNotAllowRequestWithNonDuckAIURLAndMainFrame() {
         let url = URL(string: "https://example.com")!
         let request = URLRequest(url: url)
         let targetFrame = MockWKFrameInfo(isMainFrame: true)
-        let navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
+        navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
 
         let result = handler.shouldAllowRequestWithNavigationAction(navigationAction)
 
@@ -89,48 +93,52 @@ class AIChatRequestAuthorizationHandlerTests: XCTestCase {
     }
 
     // MARK: Debug settings
+    @MainActor
     func testShouldAllowRequestOnNonDuckDuckGoURLWhenDebugSettingsExists() {
         mockDebugSettings.messagePolicyHostname = "potato"
         let url = URL(string: "https://test.com")!
         let request = URLRequest(url: url)
         let targetFrame = MockWKFrameInfo(isMainFrame: false)
-        let navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
+        navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
 
         let result = handler.shouldAllowRequestWithNavigationAction(navigationAction)
 
         XCTAssertTrue(result, "Expected to allow request when debug settings is on even on non-DuckDuckGo URL")
     }
 
+    @MainActor
     func testShouldAllowRequestOnDuckDuckGoURLWhenDebugSettingsExists() {
         mockDebugSettings.messagePolicyHostname = "potato"
         let url = URL(string: "https://duck.ai")!
         let request = URLRequest(url: url)
         let targetFrame = MockWKFrameInfo(isMainFrame: false)
-        let navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
+        navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
 
         let result = handler.shouldAllowRequestWithNavigationAction(navigationAction)
 
         XCTAssertTrue(result, "Expected to allow request when debug settings is on")
     }
 
+    @MainActor
     func testShouldNotAllowRequestOnNonDuckDuckGoURLWhenDebugSettingsIsNil() {
         mockDebugSettings.messagePolicyHostname = nil
         let url = URL(string: "https://test.com")!
         let request = URLRequest(url: url)
         let targetFrame = MockWKFrameInfo(isMainFrame: true)
-        let navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
+        navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
 
         let result = handler.shouldAllowRequestWithNavigationAction(navigationAction)
 
         XCTAssertFalse(result, "Expected to deny request when debug settings doesnt exist on non-DuckDuckGo URL")
     }
 
+    @MainActor
     func testShouldNotAllowRequestOnNonDuckDuckGoURLWhenDebugSettingsIsEmpty() {
         mockDebugSettings.messagePolicyHostname = ""
         let url = URL(string: "https://test.com")!
         let request = URLRequest(url: url)
         let targetFrame = MockWKFrameInfo(isMainFrame: true)
-        let navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
+        navigationAction = MockWKNavigationAction(request: request, targetFrame: targetFrame)
 
         let result = handler.shouldAllowRequestWithNavigationAction(navigationAction)
 

@@ -33,6 +33,7 @@ protocol AIChatViewModeling {
     var requestAuthHandler: AIChatRequestAuthorizationHandling { get }
 
     /// Forward function from AIChatRequestAuthorizationHandling
+    @MainActor
     func shouldAllowRequestWithNavigationAction(_ navigationAction: WKNavigationAction) -> Bool
 }
 
@@ -53,6 +54,7 @@ final class AIChatViewModel: AIChatViewModeling {
         settings.aiChatURL
     }
 
+    @MainActor
     func shouldAllowRequestWithNavigationAction(_ navigationAction: WKNavigationAction) -> Bool {
         requestAuthHandler.shouldAllowRequestWithNavigationAction(navigationAction)
     }

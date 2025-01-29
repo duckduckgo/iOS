@@ -29,5 +29,30 @@ public protocol AIChatRequestAuthorizationHandling {
     ///   - `true`: The request will be processed inside the custom AI Chat UI.
     ///   - `false`: The request will be canceled, and the `AIChatViewControllerDelegate` method
     ///     `aiChatViewController(_:didRequestToLoad:)` will be called to handle the request externally.
-    func shouldAllowRequestWithNavigationAction(_ navigationAction: WKNavigationAction) -> Bool
+    @MainActor func shouldAllowRequestWithNavigationAction(_ navigationAction: WKNavigationAction) -> Bool
+}
+
+public struct AIChatRequestAuthorizationHandler: AIChatRequestAuthorizationHandling {
+    let debugSettings: AIChatDebugSettingsHandling
+
+    public init(debugSettings: AIChatDebugSettingsHandling) {
+        self.debugSettings = debugSettings
+    }
+
+    @MainActor
+    public func shouldAllowRequestWithNavigationAction(_ navigationAction: WKNavigationAction) -> Bool {
+        /// If we have debug settings, lets allow all requests since we might have redirects like Duo
+        if debugSettings.messagePolicyHostname?.isEmpty == false {
+            return true
+        }
+        if let url = navigationAction.request.url {
+            if url.isDuckAIURL || navigationAction.targetFrame?.isMainFrame == false {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return true
+        }
+    }
 }

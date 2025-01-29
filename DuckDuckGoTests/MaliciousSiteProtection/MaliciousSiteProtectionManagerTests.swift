@@ -18,22 +18,34 @@
 //
 
 import Testing
+import Foundation
+import MaliciousSiteProtection
 @testable import DuckDuckGo
 
 @Suite("Malicious Site Protection - Manager", .serialized)
 final class MaliciousSiteProtectionManagerTests {
     private var sut: MaliciousSiteProtectionManager!
+    private var mockDetector: MockMaliciousSiteDetector!
     private var dataFetcherMock: MockMaliciousSiteProtectionDataFetcher!
+    private var dataManager: MaliciousSiteProtection.DataManager!
     private var preferencesManagerMock: MockMaliciousSiteProtectionPreferencesManager!
     private var featureFlaggerMock: MockMaliciousSiteProtectionFeatureFlags!
 
     init() {
+        dataManager = MaliciousSiteProtection.DataManager(
+            fileStore: MockMaliciousSiteFileStore(),
+            embeddedDataProvider: nil,
+            fileNameProvider: { _ in "file.json" }
+        )
+        mockDetector = MockMaliciousSiteDetector()
         dataFetcherMock = MockMaliciousSiteProtectionDataFetcher()
         preferencesManagerMock = MockMaliciousSiteProtectionPreferencesManager()
         featureFlaggerMock = MockMaliciousSiteProtectionFeatureFlags()
         sut = MaliciousSiteProtectionManager(
             dataFetcher: dataFetcherMock,
             api: MaliciousSiteProtectionAPI(),
+            dataManager: dataManager,
+            detector: mockDetector,
             preferencesManager: preferencesManagerMock,
             maliciousSiteProtectionFeatureFlagger: featureFlaggerMock
         )
@@ -61,5 +73,86 @@ final class MaliciousSiteProtectionManagerTests {
 
         // THEN
         #expect(dataFetcherMock.didCallRegisterBackgroundRefreshTaskHandler)
+    }
+
+    @Test(
+        "No Threat Detected when Feature is disabled",
+        arguments: [
+            "https://phishing.com",
+            "https://malware.com",
+        ]
+    )
+    func whenFeatureIsDisabledThenThreatIsNotDetected(path: String) async throws {
+        // GIVEN
+        featureFlaggerMock.isMaliciousSiteProtectionEnabled = false
+        let url = try #require(URL(string: path))
+
+        // WHEN
+        let result = await sut.evaluate(url)
+
+        // THEN
+        #expect(result == nil)
+    }
+
+    @Test(
+        "No Threat Detected When Domain Should Not Be Checked",
+        arguments: [
+            "https://phishing.com",
+            "https://malware.com",
+        ]
+    )
+    func whenEvaluateURL_AndShouldNotDetectMaliciousThreatForDomain_ThenReturnNil(path: String) async throws {
+        // GIVEN
+        preferencesManagerMock.isMaliciousSiteProtectionOn = true
+        featureFlaggerMock.shouldDetectMaliciousThreatForDomainResult = false
+        let url = try #require(URL(string: path))
+
+        // WHEN
+        let result = await sut.evaluate(url)
+
+        // THEN
+        #expect(result == nil)
+    }
+
+    @Test(
+        "No Threat Detected When Preferences is Disabled",
+        arguments: [
+            "https://phishing.com",
+            "https://malware.com",
+        ]
+    )
+    func whenEvaluateURL_AndPreferenceDisabled_ThenReturnNil(path: String) async throws {
+        // GIVEN
+        preferencesManagerMock.isMaliciousSiteProtectionOn = false
+        featureFlaggerMock.shouldDetectMaliciousThreatForDomainResult = true
+        let url = try #require(URL(string: path))
+
+        // WHEN
+        let result = await sut.evaluate(url)
+
+        // THEN
+        #expect(result == nil)
+    }
+
+    @Test(
+        "Evaluate URL returns Right Threat",
+        arguments: [
+            (path: "https://phishing.com", threat: ThreatKind.phishing),
+            (path: "https://malware.com", threat: .malware),
+            (path: "https://trusted.com", threat: nil)
+        ]
+    )
+    func urlReturnsRightThreat(threatInfo: (path: String, threat: ThreatKind?)) async throws {
+        // GIVEN
+        preferencesManagerMock.isMaliciousSiteProtectionOn = true
+        featureFlaggerMock.isMaliciousSiteProtectionEnabled = true
+        featureFlaggerMock.shouldDetectMaliciousThreatForDomainResult = true
+        let url = try #require(URL(string: threatInfo.path))
+
+        // WHEN
+        let result = await sut.evaluate(url)
+
+        // THEN
+        #expect(result == threatInfo.threat)
     }
 }

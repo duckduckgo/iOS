@@ -48,7 +48,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
     func unhandledURLTypes(path: String) async throws {
         // GIVEN
         let url = try #require(URL(string: path))
-        let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
 
         // WHEN
         sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
@@ -85,7 +85,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         let url = try #require(URL(string: "https://www.example.com"))
         mockMaliciousSiteProtectionManager.threatKind = threat
         sut.visitSite(url: url, errorData: .maliciousSite(kind: threat, url: url))
-        let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
 
         // WHEN
         sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
@@ -99,7 +99,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
     func whenHandleDecidePolicyForNavigationResponse_AndTaskIsNotNil_ReturnTaskAndRemoveItFromTheDictionary() throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
-        let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
         sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
         let navigationResponse = MockNavigationResponse.with(url: url)
         #expect(sut.maliciousSiteDetectionTasks[url] != nil)
@@ -116,7 +116,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
     func whenThreatKindIsNilThenReturnNavigationNotHandled() async throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
-        let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
         mockMaliciousSiteProtectionManager.threatKind = nil
         sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
         let navigationResponse = MockNavigationResponse.with(url: url)
@@ -133,7 +133,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         "Handle known threat in Main Frame",
         arguments: [
             ThreatKind.phishing,
-                .malware
+            .malware
         ]
     )
     func whenThreatKindIsNotNil_AndNavigationIsMainFrame_ThenReturnNavigationHandledMainFrame(threat: ThreatKind) async throws {
@@ -156,7 +156,7 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         "Handle known threat in IFrame",
         arguments: [
             ThreatKind.phishing,
-                .malware
+            .malware
         ]
     )
     func whenThreatKindIsNotNil_AndNavigationIsIFrame_ThenReturnNavigationHandledIFrame(threat: ThreatKind) async throws {
@@ -178,7 +178,8 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
     @Test(
         "Visit Site sets Exemption URL and Threat Kind",
         arguments: [
-            ThreatKind.phishing, .malware
+            ThreatKind.phishing,
+            .malware
         ]
     )
     func whenVisitSiteActionThenSetExemptionURLAndThreatKind(threat: ThreatKind) throws {

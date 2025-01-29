@@ -68,6 +68,7 @@ final class MaliciousSiteProtectionService {
         manager = MaliciousSiteProtectionManager(
             dataFetcher: maliciousSiteProtectionDatasetsFetcher,
             api: maliciousSiteProtectionAPI,
+            dataManager: maliciousSiteProtectionDataManager,
             preferencesManager: preferencesManager,
             maliciousSiteProtectionFeatureFlagger: maliciousSiteProtectionFeatureFlagger
         )

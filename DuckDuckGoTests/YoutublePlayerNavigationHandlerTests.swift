@@ -30,6 +30,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     var mockWebView: MockWebView!
     var mockAppSettings: AppSettingsMock!
     var mockPrivacyConfig: PrivacyConfigurationManagerMock!
+    var mockInternalUserDecider: MockDuckPlayerInternalUserDecider!
     var playerSettings: MockDuckPlayerSettings!
     var player: MockDuckPlayer!
     var featureFlagger: MockDuckPlayerFeatureFlagger!
@@ -43,7 +44,8 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         mockAppSettings.duckPlayerOpenInNewTab = false // Disable openInNewTab
         mockPrivacyConfig = PrivacyConfigurationManagerMock()
         playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings,
-                                                privacyConfigManager: mockPrivacyConfig)
+                                                privacyConfigManager: mockPrivacyConfig,
+                                                internalUserDecider: mockInternalUserDecider)
         featureFlagger = MockDuckPlayerFeatureFlagger()
         player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
 

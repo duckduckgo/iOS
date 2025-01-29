@@ -174,7 +174,8 @@ final class MockDuckPlayerSettings: DuckPlayerSettings {
     var autoplay: Bool = false
 
     
-    init(appSettings: AppSettings = AppSettingsMock(), privacyConfigManager: any BrowserServicesKit.PrivacyConfigurationManaging) {}
+    init(appSettings: any DuckDuckGo.AppSettings, privacyConfigManager: any BrowserServicesKit.PrivacyConfigurationManaging, internalUserDecider: any BrowserServicesKit.InternalUserDecider) {}
+    
     func triggerNotification() {}
     
     func setMode(_ mode: DuckPlayerMode) {
@@ -289,5 +290,25 @@ final class MockDuckPlayerTabNavigator: DuckPlayerTabNavigationHandling {
 
     func closeTab() {
         closeTabCalled = true
+    }
+}
+
+final class MockDuckPlayerInternalUserDecider: InternalUserDecider {
+    var mockIsInternalUser: Bool = false
+    var mockIsInternalUserPublisher: AnyPublisher<Bool, Never> {
+        Just(mockIsInternalUser).eraseToAnyPublisher()
+    }
+
+    var isInternalUser: Bool {
+        return mockIsInternalUser
+    }
+
+    var isInternalUserPublisher: AnyPublisher<Bool, Never> {
+        return mockIsInternalUserPublisher
+    }
+
+    @discardableResult
+    func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) -> Bool {
+        return mockIsInternalUser
     }
 }

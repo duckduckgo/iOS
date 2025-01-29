@@ -97,7 +97,7 @@ protocol DuckPlayerSettings: AnyObject {
     /// - Parameters:
     ///   - appSettings: The application settings.
     ///   - privacyConfigManager: The privacy configuration manager.
-    init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging)
+    init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging, internalUserDecider: InternalUserDecider)
     
     /// Sets the Duck Player mode.
     ///
@@ -119,6 +119,7 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     private var appSettings: AppSettings
     private let privacyConfigManager: PrivacyConfigurationManaging
     private var isFeatureEnabledCancellable: AnyCancellable?
+    private var internalUserDecider: InternalUserDecider
     
     private var _isFeatureEnabled: Bool
     private var isFeatureEnabled: Bool {
@@ -144,10 +145,12 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     ///   - appSettings: The application settings.
     ///   - privacyConfigManager: The privacy configuration manager.
     init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-         privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
+         privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider) {
         self.appSettings = appSettings
         self.privacyConfigManager = privacyConfigManager
         self._isFeatureEnabled = privacyConfigManager.privacyConfig.isEnabled(featureKey: .duckPlayer)
+        self.internalUserDecider = internalUserDecider
         registerConfigPublisher()
         registerForNotificationChanges()
     }
@@ -186,14 +189,14 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
         return appSettings.duckPlayerOpenInNewTab
     }
     
-    // Determines if we should use the native verion of DuckPlayer
+    // Determines if we should use the native verion of DuckPlayer (Internal only)
     var nativeUI: Bool {
-        return appSettings.duckPlayerNativeUI
+        return appSettings.duckPlayerNativeUI && internalUserDecider.isInternalUser
     }
     
-    // Determines if we should use the native verion of DuckPlayer
+    // Determines if we should use the native verion of DuckPlayer (Internal only)
     var autoplay: Bool {
-        return appSettings.duckPlayerAutoplay
+        return appSettings.duckPlayerAutoplay && internalUserDecider.isInternalUser
     }
     
     /// Registers a publisher to listen for changes in the privacy configuration.

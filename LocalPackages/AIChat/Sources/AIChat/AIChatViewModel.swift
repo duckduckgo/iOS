@@ -28,18 +28,32 @@ protocol AIChatViewModeling {
     /// The configuration settings for the web view used in the AI Chat.
     /// This configuration can include preferences such as data storage
     var webViewConfiguration: WKWebViewConfiguration { get }
+
+    /// Handler for decide policy requests inside the AI Chat view
+    var requestAuthHandler: AIChatRequestAuthorizationHandling { get }
+
+    /// Forward function from AIChatRequestAuthorizationHandling
+    func shouldAllowRequestWithNavigationAction(_ navigationAction: WKNavigationAction) -> Bool
 }
 
 final class AIChatViewModel: AIChatViewModeling {
     private let settings: AIChatSettingsProvider
     let webViewConfiguration: WKWebViewConfiguration
+    let requestAuthHandler: AIChatRequestAuthorizationHandling
 
-    init(webViewConfiguration: WKWebViewConfiguration, settings: AIChatSettingsProvider) {
+    init(webViewConfiguration: WKWebViewConfiguration,
+         settings: AIChatSettingsProvider,
+         requestAuthHandler: AIChatRequestAuthorizationHandling) {
         self.webViewConfiguration = webViewConfiguration
         self.settings = settings
+        self.requestAuthHandler = requestAuthHandler
     }
 
     var aiChatURL: URL {
         settings.aiChatURL
+    }
+
+    func shouldAllowRequestWithNavigationAction(_ navigationAction: WKNavigationAction) -> Bool {
+        requestAuthHandler.shouldAllowRequestWithNavigationAction(navigationAction)
     }
 }

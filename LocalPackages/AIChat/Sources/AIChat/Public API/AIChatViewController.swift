@@ -57,8 +57,13 @@ public final class AIChatViewController: UIViewController {
     /// - Parameters:
     ///   - remoteSettings: An object conforming to `AIChatSettingsProvider` that provides remote settings.
     ///   - webViewConfiguration: A `WKWebViewConfiguration` object used to configure the web view.
-    public convenience init(settings: AIChatSettingsProvider, webViewConfiguration: WKWebViewConfiguration) {
-        let chatModel = AIChatViewModel(webViewConfiguration: webViewConfiguration, settings: settings)
+    ///   - requestAuthHandler: A `AIChatRequestAuthorizationHandling` object to handle decide policy callbacks
+    public convenience init(settings: AIChatSettingsProvider,
+                            webViewConfiguration: WKWebViewConfiguration,
+                            requestAuthHandler: AIChatRequestAuthorizationHandling) {
+        let chatModel = AIChatViewModel(webViewConfiguration: webViewConfiguration,
+                                        settings: settings,
+                                        requestAuthHandler: requestAuthHandler)
         self.init(chatModel: chatModel)
     }
 

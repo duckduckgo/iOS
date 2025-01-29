@@ -805,7 +805,7 @@ extension SettingsViewModel {
                     state.subscription.entitlements = []
                     state.subscription.platform = .unknown
 
-                    // TOOD: Fire pixel
+                    // TODO: Fire pixel for "No subscription found"
                 }
             }
         }
@@ -855,13 +855,17 @@ extension SettingsViewModel {
             }
             await self.setupSubscriptionEnvironment()
             
-        case .failure:
+        case .failure(let restoreFlowError):
             DispatchQueue.main.async {
                 self.state.subscription.isRestoring = false
                 self.state.subscription.shouldDisplayRestoreSubscriptionError = true
-                self.state.subscription.shouldDisplayRestoreSubscriptionError = false
                 
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.state.subscription.shouldDisplayRestoreSubscriptionError = false
+                }
             }
+
+            // TODO: Fire pixel for restoreFlowError
         }
     }
     

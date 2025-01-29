@@ -780,7 +780,7 @@ extension SettingsViewModel {
             
         case .success(let subscription):
             state.subscription.platform = subscription.platform
-            state.subscription.hasActiveSubscription = true
+            state.subscription.hasSubscription = true
             state.subscription.hasActiveSubscription = subscription.isActive
 
             // Check entitlements and update state

@@ -117,7 +117,8 @@ extension TabViewController {
             textZoomCoordinator: textZoomCoordinator,
             websiteDataManager: websiteDataManager,
             fireproofing: fireproofing,
-            tabInteractionStateSource: tabInteractionStateSource)
+            tabInteractionStateSource: tabInteractionStateSource,
+            specialErrorPageNavigationHandler: specialErrorPageNavigationHandler)
 
         tabController.isLinkPreview = true
         let configuration = WKWebViewConfiguration.nonPersistent()

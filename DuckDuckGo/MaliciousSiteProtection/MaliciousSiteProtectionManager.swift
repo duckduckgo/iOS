@@ -19,28 +19,38 @@
 
 import Foundation
 import MaliciousSiteProtection
+import Common
+import PixelKit
 
 typealias MaliciousSiteProtectionManaging = MaliciousSiteDetecting & MaliciousSiteProtectionDatasetsFetching
 
 final class MaliciousSiteProtectionManager {
-
+    private let detector: MaliciousSiteDetecting
     private let dataFetcher: MaliciousSiteProtectionDatasetsFetching
-    private let api: MaliciousSiteProtectionAPI
     private let preferencesManager: MaliciousSiteProtectionPreferencesReading
     private let maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger
+
+    private static let debugEvents = EventMapping<MaliciousSiteProtection.Event> { event, _, _, _ in
+        PixelKit.fire(event)
+    }
 
     init(
         dataFetcher: MaliciousSiteProtectionDatasetsFetching,
         api: MaliciousSiteProtectionAPI,
-        dataManager: MaliciousSiteProtection.DataManager? = nil,
+        dataManager: MaliciousSiteProtection.DataManager,
         detector: MaliciousSiteProtection.MaliciousSiteDetecting? = nil,
         preferencesManager: MaliciousSiteProtectionPreferencesReading,
         maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger
     ) {
         self.dataFetcher = dataFetcher
-        self.api = api
         self.preferencesManager = preferencesManager
         self.maliciousSiteProtectionFeatureFlagger = maliciousSiteProtectionFeatureFlagger
+        self.detector = detector ?? MaliciousSiteDetector(
+            apiEnvironment: api.environment,
+            service: api.service,
+            dataManager: dataManager,
+            eventMapping: Self.debugEvents
+        )
     }
 }
 
@@ -63,16 +73,14 @@ extension MaliciousSiteProtectionManager: MaliciousSiteProtectionDatasetsFetchin
 extension MaliciousSiteProtectionManager: MaliciousSiteDetecting {
 
     func evaluate(_ url: URL) async -> ThreatKind? {
-        try? await Task.sleep(interval: 0.3)
-
-        switch url.absoluteString {
-        case "http://privacy-test-pages.site/security/badware/phishing.html":
-            return .phishing
-        case "http://privacy-test-pages.site/security/badware/malware.html":
-            return .malware
-        default:
+        guard
+            maliciousSiteProtectionFeatureFlagger.shouldDetectMaliciousThreat(forDomain: url.host),
+            preferencesManager.isMaliciousSiteProtectionOn
+        else {
             return .none
         }
+
+        return await detector.evaluate(url)
     }
 
 }

@@ -22,5 +22,5 @@ import Foundation
 /// A delegate for handling navigation actions related to special error pages.
 protocol SpecialErrorPageNavigationDelegate: AnyObject {
     /// Asks the delegate to close the special error page tab when the web view can't navigate back.
-    func closeSpecialErrorPageTab()
+    func closeSpecialErrorPageTab(shouldCreateNewEmptyTab: Bool)
 }

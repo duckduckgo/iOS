@@ -813,15 +813,10 @@
 		9F254AB32CF4A1F10063B308 /* SpecialErrorPageNavigationHandler+MaliciousSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AB22CF4A1E10063B308 /* SpecialErrorPageNavigationHandler+MaliciousSite.swift */; };
 		9F254ACB2CF5CDC60063B308 /* SpecialErrorPageNavigationHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ACA2CF5CDC60063B308 /* SpecialErrorPageNavigationHandlerTests.swift */; };
 		9F254ACE2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ACD2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift */; };
-		9F254AD22CF5D3A80063B308 /* MockSpecialErrorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD12CF5D3A20063B308 /* MockSpecialErrorWebView.swift */; };
 		9F254AD32CF5D3A80063B308 /* MockSpecialErrorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD12CF5D3A20063B308 /* MockSpecialErrorWebView.swift */; };
 		9F254AD52CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD42CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift */; };
-		9F254AD62CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD42CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift */; };
-		9F254AD82CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD72CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift */; };
 		9F254AD92CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD72CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift */; };
-		9F254ADB2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADA2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift */; };
 		9F254ADC2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADA2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift */; };
-		9F254ADE2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */; };
 		9F254ADF2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */; };
 		9F254AF12CF8D5250063B308 /* MaliciousSiteProtection in Frameworks */ = {isa = PBXBuildFile; productRef = 9F254AF02CF8D5250063B308 /* MaliciousSiteProtection */; };
 		9F254AFF2CF9FA1B0063B308 /* WebViewNavigationHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AFE2CF9FA1B0063B308 /* WebViewNavigationHandling.swift */; };
@@ -883,7 +878,6 @@
 		9FB0271D2C293619009EA190 /* OnboardingIntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */; };
 		9FBC76672CFE33B5008B21E7 /* MaliciousSiteProtectionNavigationHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBC76662CFE33B5008B21E7 /* MaliciousSiteProtectionNavigationHandlerTests.swift */; };
 		9FBC766A2CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBC76692CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift */; };
-		9FBC766B2CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBC76692CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift */; };
 		9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */; };
 		9FCFCD812C6B020D006EB7A0 /* LaunchOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */; };
 		9FCFCD852C75C91A006EB7A0 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD842C75C91A006EB7A0 /* ProgressBarView.swift */; };
@@ -9075,14 +9069,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F254AD62CF5E5B10063B308 /* MockMaliciousSiteProtectionNavigationHandler.swift in Sources */,
 				85F21DB0210F5E32002631A6 /* AtbIntegrationTests.swift in Sources */,
-				9FBC766B2CFE3802008B21E7 /* MockMaliciousSiteProtectionManager.swift in Sources */,
-				9F254AD22CF5D3A80063B308 /* MockSpecialErrorWebView.swift in Sources */,
-				9F254ADE2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */,
 				8551912724746EDC0010FDD0 /* SnapshotHelper.swift in Sources */,
-				9F254ADB2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift in Sources */,
-				9F254AD82CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

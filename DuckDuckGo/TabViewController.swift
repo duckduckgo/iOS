@@ -344,8 +344,8 @@ class TabViewController: UIViewController {
                                    textZoomCoordinator: TextZoomCoordinating,
                                    websiteDataManager: WebsiteDataManaging,
                                    fireproofing: Fireproofing,
-                                   tabInteractionStateSource: TabInteractionStateSource?) -> TabViewController {
-
+                                   tabInteractionStateSource: TabInteractionStateSource?,
+                                   specialErrorPageNavigationHandler: SpecialErrorPageManaging) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -364,7 +364,8 @@ class TabViewController: UIViewController {
                               textZoomCoordinator: textZoomCoordinator,
                               fireproofing: fireproofing,
                               websiteDataManager: websiteDataManager,
-                              tabInteractionStateSource: tabInteractionStateSource
+                              tabInteractionStateSource: tabInteractionStateSource,
+                              specialErrorPageNavigationHandler: specialErrorPageNavigationHandler
             )
         })
         return controller
@@ -407,7 +408,7 @@ class TabViewController: UIViewController {
                    fireproofing: Fireproofing,
                    websiteDataManager: WebsiteDataManaging,
                    tabInteractionStateSource: TabInteractionStateSource?,
-                   specialErrorPageNavigationHandler: SpecialErrorPageManaging = SpecialErrorPageNavigationHandler()) {
+                   specialErrorPageNavigationHandler: SpecialErrorPageManaging) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase

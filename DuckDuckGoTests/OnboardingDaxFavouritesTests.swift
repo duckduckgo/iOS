@@ -90,7 +90,9 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
             textZoomCoordinator: MockTextZoomCoordinator(),
             websiteDataManager: mockWebsiteDataManager,
-            appDidFinishLaunchingStartTime: nil
+            appDidFinishLaunchingStartTime: nil,
+            maliciousSiteProtectionManager: MockMaliciousSiteProtectionManager(),
+            maliciousSiteProtectionPreferencesManager: MockMaliciousSiteProtectionPreferencesManager()
         )
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()

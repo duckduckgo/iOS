@@ -44,7 +44,7 @@ final class SpecialErrorPageNavigationHandler: SpecialErrorPageContextHandling {
 
     init(
         sslErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling & SpecialErrorPageActionHandler = SSLErrorPageNavigationHandler(),
-        maliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling & SpecialErrorPageActionHandler = MaliciousSiteProtectionNavigationHandler()
+        maliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling & SpecialErrorPageActionHandler
     ) {
         self.sslErrorPageNavigationHandler = sslErrorPageNavigationHandler
         self.maliciousSiteProtectionNavigationHandler = maliciousSiteProtectionNavigationHandler

@@ -266,7 +266,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
 
     @MainActor
     func showTermsOfService() {
-        self.openURL(SettingsSubscriptionView.ViewConstants.privacyPolicyURL)
+        let privacyPolicyQuickLinkURL = URL(string: AppDeepLinkSchemes.quickLink.appending(SettingsSubscriptionView.ViewConstants.privacyPolicyURL.absoluteString))!
+        openURL(privacyPolicyQuickLinkURL)
     }
 
     // MARK: -

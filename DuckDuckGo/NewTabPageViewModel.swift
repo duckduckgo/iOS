@@ -42,7 +42,7 @@ final class NewTabPageViewModel: ObservableObject {
         isShowingSettings = false
 
         // This is just temporarily here to run an A/A test to check the new experiment framework works as expected
-        _ = AppDependencyProvider.shared.featureFlagger.getCohortIfEnabled(for: CredentialsSavingFlag())
+        _ = AppDependencyProvider.shared.featureFlagger.getCohortIfEnabled(for: FeatureFlag.testExperiment)
     }
 
     func introMessageDisplayed() {
@@ -80,21 +80,5 @@ final class NewTabPageViewModel: ObservableObject {
 
     func endDragging() {
         isDragging = false
-    }
-}
-
-// This is just temporarily here to run an A/A test to check the new experiment framework works as expected
-public struct CredentialsSavingFlag: FeatureFlagExperimentDescribing {
-    public init() {}
-
-    public typealias CohortType = Cohort
-
-    public var rawValue = "credentialSaving"
-
-    public var source: FeatureFlagSource = .remoteReleasable(.subfeature(ExperimentTestSubfeatures.experimentTestAA))
-
-    public enum Cohort: String, FlagCohort {
-        case control
-        case blue
     }
 }

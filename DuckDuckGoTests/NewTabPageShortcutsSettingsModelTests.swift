@@ -78,7 +78,7 @@ private final class AlwaysTrueFeatureFlagger: FeatureFlagger {
         return nil
     }
 
-    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag: FeatureFlagExperimentDescribing {
+    func getCohortIfEnabled<Flag>(for featureFlag: Flag, allowOverride: Bool) -> (any FlagCohort)? where Flag: FeatureFlagDescribing {
         return nil
     }
 

@@ -69,9 +69,19 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/72649045549333/1208944782348823/f
     case syncSeamlessAccountSwitching
+
+    case testExperiment
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
+    public var cohortType: (any FlagCohort.Type)? {
+        switch self {
+        case .testExperiment:
+            TestExperimentCohort.self
+        default:
+            nil
+        }
+    }
 
     public static var localOverrideStoreName: String = "com.duckduckgo.app.featureFlag.localOverrides"
 
@@ -156,6 +166,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.feature(.webViewStateRestoration))
         case .syncSeamlessAccountSwitching:
             return .remoteReleasable(.subfeature(SyncSubfeature.seamlessAccountSwitching))
+        case .testExperiment:
+            return .remoteReleasable(.subfeature(ExperimentTestSubfeatures.experimentTestAA))
         }
     }
 }
@@ -164,4 +176,10 @@ extension FeatureFlagger {
     public func isFeatureOn(_ featureFlag: FeatureFlag) -> Bool {
         return isFeatureOn(for: featureFlag)
     }
+
+}
+
+public enum TestExperimentCohort: String, FlagCohort {
+    case control
+    case blue
 }

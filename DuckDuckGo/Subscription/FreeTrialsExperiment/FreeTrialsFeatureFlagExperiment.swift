@@ -49,7 +49,7 @@ protocol ExperimentPixelFiring {
 extension PixelKit: ExperimentPixelFiring {}
 
 /// Protocol defining the functionality required for a feature flag experiment related to free trials.
-protocol FreeTrialsFeatureFlagExperimenting: FeatureFlagExperimentDescribing {
+protocol FreeTrialsFeatureFlagExperimenting {
 
     /// Retrieves the cohort assigned to the user for the experiment.
     ///
@@ -94,7 +94,6 @@ protocol FreeTrialsFeatureFlagExperimenting: FeatureFlagExperimentDescribing {
 final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting {
 
     /// Represents the cohorts in the experiment.
-    typealias CohortType = Cohort
     enum Cohort: String, FlagCohort {
         /// Control cohort with no changes applied.
         case control
@@ -105,7 +104,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
     /// Constants used in the experiment.
     enum Constants {
         /// Unique identifier for the subfeature being tested.
-        static let subfeatureIdentifier = "privacyProFreeTrialJan25"
+        static let subfeatureIdentifier = PrivacyProFreeTrialJan25ExperimentFlag.privacyProFreeTrialJan25.rawValue
 
         /// Metric identifiers for various user actions during the experiment.
         static let metricPaywallImpressions = "paywallImpressions"
@@ -133,9 +132,6 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
 
     /// Identifier for the experiment.
     let rawValue = Constants.subfeatureIdentifier
-
-    /// Source of the feature flag, defining how it is retrieved and enabled.
-    let source: FeatureFlagSource = .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
 
     /// Persistent storage for experiment-related data.
     private let storage: KeyValueStoring
@@ -176,7 +172,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
             return FreeTrialsFeatureFlagExperiment.Cohort.treatment
         }
 
-        return featureFlagger.getCohortIfEnabled(for: self)
+        return featureFlagger.getCohortIfEnabled(for: PrivacyProFreeTrialJan25ExperimentFlag.privacyProFreeTrialJan25)
                 as? FreeTrialsFeatureFlagExperiment.Cohort
     }
 
@@ -310,5 +306,23 @@ private extension Date {
     /// - Returns: A `Date` representing the beginning of the day.
     func startOfDay() -> Date {
         Calendar.current.startOfDay(for: self)
+    }
+}
+
+enum PrivacyProFreeTrialJan25ExperimentFlag: String, CaseIterable {
+    case privacyProFreeTrialJan25
+}
+
+extension PrivacyProFreeTrialJan25ExperimentFlag: FeatureFlagDescribing {
+    var supportsLocalOverriding: Bool {
+        return false
+    }
+    
+    var source: FeatureFlagSource {
+        .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
+    }
+    
+    var cohortType: (any FlagCohort.Type)? {
+        FreeTrialsFeatureFlagExperiment.Cohort.self
     }
 }

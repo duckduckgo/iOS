@@ -10,6 +10,11 @@ on:
         description: "Branch name"
         required: false
         type: string
+      skip-release:
+        description: "Skip release build"
+        required: false
+        default: false
+        type: boolean
     secrets:
       APPLE_API_KEY_BASE64:
         required: true
@@ -72,9 +77,9 @@ jobs:
 
     - name: Set cache key hash
       run: |
-         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo-iOS.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
          if [[ "$has_only_tags" == "true" ]]; then
-           echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
+           echo "cache_key_hash=${{ hashFiles('DuckDuckGo-iOS.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
          else
            echo "Package.resolved contains dependencies specified by branch or commit, skipping cache."
          fi
@@ -148,8 +153,8 @@ jobs:
 
     name: Make Release Build
 
-    # Dependabot doesn't have access to all secrets, so we skip this job, also skip for nightly release bump
-    if: github.actor != 'dependabot[bot]' && github.event_name != 'workflow_call'
+    # Dependabot doesn't have access to all secrets, so we skip this job, also skip for releases
+    if: github.actor != 'dependabot[bot]' && inputs.skip-release != true
 
     runs-on: macos-15
     timeout-minutes: 30
@@ -168,9 +173,9 @@ jobs:
 
     - name: Set cache key hash
       run: |
-        has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+        has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo-iOS.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
         if [[ "$has_only_tags" == "true" ]]; then
-          echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
+          echo "cache_key_hash=${{ hashFiles('DuckDuckGo-iOS.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
         else
           echo "Package.resolved contains dependencies specified by branch or commit, skipping cache."
         fi

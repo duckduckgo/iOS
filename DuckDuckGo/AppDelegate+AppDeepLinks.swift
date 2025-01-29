@@ -69,6 +69,8 @@ extension AppDelegate {
                 mainViewController.launchAutofillLogins(openSearch: true, source: source)
             }
 
+        case .openAIChat:
+            AIChatDeepLinkHandler().handleDeepLink(url, on: mainViewController)
         default:
             guard app.applicationState == .active,
                   let currentTab = mainViewController.currentTab else {

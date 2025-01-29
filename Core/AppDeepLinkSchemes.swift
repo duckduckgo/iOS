@@ -26,13 +26,11 @@ public enum AppDeepLinkSchemes: String, CaseIterable {
     case fireButton = "ddgFireButton"
     case favorites = "ddgFavorites"
     case newEmail = "ddgNewEmail"
-
     case quickLink = "ddgQuickLink"
-
     case addFavorite = "ddgAddFavorite"
-
     case openVPN = "ddgOpenVPN"
     case openPasswords = "ddgOpenPasswords"
+    case openAIChat = "ddgOpenAIChat"
 
     public var url: URL {
         URL(string: rawValue + "://")!

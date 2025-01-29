@@ -66,6 +66,9 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/1206226850447395/1206307878076518
     case webViewStateRestoration
+
+    /// https://app.asana.com/0/72649045549333/1208944782348823/f
+    case syncSeamlessAccountSwitching
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
@@ -136,7 +139,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .textZoom:
             return .remoteReleasable(.feature(.textZoom))
         case .networkProtectionEnforceRoutes:
-            return .remoteDevelopment(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
+            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
         case .adAttributionReporting:
             return .remoteReleasable(.feature(.adAttributionReporting))
         case .crashReportOptInStatusResetting:
@@ -151,6 +154,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .internalOnly()
         case .webViewStateRestoration:
             return .remoteReleasable(.feature(.webViewStateRestoration))
+        case .syncSeamlessAccountSwitching:
+            return .remoteReleasable(.subfeature(SyncSubfeature.seamlessAccountSwitching))
         }
     }
 }

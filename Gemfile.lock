@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/duckduckgo/fastlane-plugin-ddg_apple_automation
-  revision: 8d13f1e78e69886345f92dc575c6063b76d1da25
-  tag: 1.0.1
+  revision: 58a9e74adb94d4de25a142f0c311e63b141a6917
+  tag: 1.0.4
   specs:
-    fastlane-plugin-ddg_apple_automation (1.0.1)
+    fastlane-plugin-ddg_apple_automation (1.0.4)
       asana
       climate_control
       httpparty

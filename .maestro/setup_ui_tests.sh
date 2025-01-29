@@ -48,7 +48,7 @@ build_app() {
     fi
 
     echo "⏲️ Building the app"
-    set -o pipefail && xcodebuild -project "$project_root"/DuckDuckGo.xcodeproj \
+    set -o pipefail && xcodebuild -project "$project_root"/DuckDuckGo-iOS.xcodeproj \
                                   -scheme "DuckDuckGo" \
                                   -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
                                   -derivedDataPath "$derived_data_path" \
@@ -77,9 +77,9 @@ echo
 # Parse command line arguments
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        --skip-build) 
+        --skip-build)
             skip_build=1 ;;
-        --rebuild) 
+        --rebuild)
             rebuild=1 ;;
         *)
     esac

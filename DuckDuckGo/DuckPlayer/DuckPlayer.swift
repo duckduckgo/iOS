@@ -201,9 +201,6 @@ protocol DuckPlayerControlling: AnyObject {
     ///
     /// - Parameter vc: The view controller to set as host.
     func setHostViewController(_ vc: TabViewController)
-    
-    /// Removes the host view controller.
-    func removeHostView()
 }
 
 /// Implementation of the DuckPlayerControlling.
@@ -226,7 +223,8 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     private(set) weak var hostView: TabViewController?
     
     private var featureFlagger: FeatureFlagger
-    private var hideTimer: Timer?
+    private var hideBrowserChromeTimer: Timer?
+    private var tapGestureRecognizer: UITapGestureRecognizer?
     
     private lazy var localeStrings: String? = {
         let languageCode = Locale.current.languageCode ?? Constants.defaultLocale
@@ -262,32 +260,40 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         registerOrientationSubscriber()
     }
     
+    deinit {
+        // Only remove our specific tap gesture recognizer
+        if let tapGestureRecognizer = tapGestureRecognizer {
+            hostView?.view.removeGestureRecognizer(tapGestureRecognizer)
+        }
+        hostView = nil
+    }
+    
     /// Sets the host view controller for presenting modals.
     ///
     /// - Parameter vc: The view controller to set as host.
     public func setHostViewController(_ vc: TabViewController) {
         hostView = vc
-        
-        // Add tap gesture recognizer to the hostView TabView Controller
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        tapGesture.delegate = self
-        vc.view.addGestureRecognizer(tapGesture)
     }
     
-    /// Removes the host view controller.
-    public func removeHostView() {
-        // Remove the tap gesture recognizer
-        hostView?.view.gestureRecognizers?.forEach { recognizer in
-            if recognizer is UITapGestureRecognizer {
-                hostView?.view.removeGestureRecognizer(recognizer)
-            }
+    private func addTapGestureRecognizer() {
+        guard let hostView = hostView,
+              tapGestureRecognizer == nil,
+              let url = hostView.url,
+              url.isDuckPlayer else {
+            return
         }
         
-        // Invalidate timer
-        hideTimer?.invalidate()
-        hideTimer = nil
-        
-        hostView = nil
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tapGesture.delegate = self
+        hostView.view.addGestureRecognizer(tapGesture)
+        tapGestureRecognizer = tapGesture
+    }
+    
+    private func removeTapGestureRecognizer() {
+        if let tapGestureRecognizer = tapGestureRecognizer {
+            hostView?.view.removeGestureRecognizer(tapGestureRecognizer)
+            self.tapGestureRecognizer = nil
+        }
     }
     
     /// Handles tap gestures in the hostViewController
@@ -296,18 +302,18 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
             let orientation = UIDevice.current.orientation
             if orientation.isLandscape {
                 hostView?.chromeDelegate?.setBarsHidden(false, animated: true, animationDuration: Constants.chromeShowHideAnimationDuration)
-                setupHideTimer()
+                setupHideBrowserChromeTimer()
             }
         }
     }
     
     /// Sets up a hide timer for the navigation and toolbars when the user is in landscape mode
-    private func setupHideTimer() {
+    private func setupHideBrowserChromeTimer() {
         // Invalidate existing timer if any
-        hideTimer?.invalidate()
+        hideBrowserChromeTimer?.invalidate()
         
         // Create new timer
-        hideTimer = Timer.scheduledTimer(withTimeInterval: Constants.landscapeUIAutohideDelay, repeats: false) { [weak self] _ in
+        hideBrowserChromeTimer = Timer.scheduledTimer(withTimeInterval: Constants.landscapeUIAutohideDelay, repeats: false) { [weak self] _ in
             DispatchQueue.main.async {
                 let orientation = UIDevice.current.orientation
                 if orientation.isLandscape {
@@ -374,10 +380,13 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         switch orientation {
         case .portrait, .portraitUpsideDown:
             handlePortraitOrientation()
+            removeTapGestureRecognizer()
         case .landscapeLeft, .landscapeRight:
             handleLandscapeOrientation()
+            addTapGestureRecognizer()
         case .unknown, .faceUp, .faceDown:
             handleDefaultOrientation()
+            removeTapGestureRecognizer()
         @unknown default:
             return
         }
@@ -387,8 +396,8 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     private func handlePortraitOrientation() {
         hostView?.chromeDelegate?.omniBar.resignFirstResponder()
         hostView?.chromeDelegate?.setBarsHidden(false, animated: true)
-        hideTimer?.invalidate()
-        hideTimer = nil
+        hideBrowserChromeTimer?.invalidate()
+        hideBrowserChromeTimer = nil
         hostView?.setupWebViewForPortraitVideo()
     }
     

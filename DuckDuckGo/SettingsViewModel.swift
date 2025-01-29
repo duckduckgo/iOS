@@ -865,7 +865,20 @@ extension SettingsViewModel {
                 }
             }
 
-            // TODO: Fire pixel for restoreFlowError
+            switch restoreFlowError {
+            case .missingAccountOrTransactions:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorMissingAccountOrTransactions)
+            case .pastTransactionAuthenticationError:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorPastTransactionAuthenticationError)
+            case .failedToObtainAccessToken:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorFailedToObtainAccessToken)
+            case .failedToFetchAccountDetails:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorFailedToFetchAccountDetails)
+            case .failedToFetchSubscriptionDetails:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorFailedToFetchSubscriptionDetails)
+            case .subscriptionExpired:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorSubscriptionExpired)
+            }
         }
     }
     

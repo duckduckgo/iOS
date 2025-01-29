@@ -2334,8 +2334,8 @@ extension MainViewController: TabDelegate {
         return newTab.webView
     }
 
-    func tabDidRequestClose(_ tab: TabViewController) {
-        closeTab(tab.tabModel)
+    func tabDidRequestClose(_ tab: TabViewController, shouldCreateEmptyTabAtSamePosition: Bool) {
+        closeTab(tab.tabModel, andOpenEmptyOneAtSamePosition: shouldCreateEmptyTabAtSamePosition)
     }
 
     func tabLoadingStateDidChange(tab: TabViewController) {
@@ -2585,12 +2585,20 @@ extension MainViewController: TabSwitcherDelegate {
             showFireButtonPulse()
         }
     }
-    
-    func closeTab(_ tab: Tab) {
+
+    func closeTab(_ tab: Tab, andOpenEmptyOneAtSamePosition shouldOpen: Bool = false) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
         hideNotificationBarIfBrokenSitePromptShown()
-        tabManager.remove(at: index)
+
+        if shouldOpen {
+            let newTab = Tab()
+            tabManager.replaceTab(at: index, withNewTab: newTab)
+            tabManager.selectTab(newTab)
+        } else {
+            tabManager.remove(at: index)
+        }
+
         updateCurrentTab()
         tabsBarController?.refresh(tabsModel: tabManager.model)
     }

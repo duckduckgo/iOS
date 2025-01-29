@@ -66,6 +66,7 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
 
     @MainActor
     func handleDecidePolicy(for navigationAction: WKNavigationAction, webView: WKWebView) {
+        guard navigationAction.isTargetingMainFrame() else { return }
         maliciousSiteProtectionNavigationHandler.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
     }
 
@@ -96,6 +97,7 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
             return true
         case .navigationNotHandled:
             isSpecialErrorPageRequest = false
+            isSpecialErrorPageVisible = false
             return false
         }
     }
@@ -138,12 +140,12 @@ extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate 
             if webView?.canGoBack == true {
                 _ = webView?.goBack()
             } else {
-                closeTab()
+                closeTab(shouldCreateNewTab: false)
             }
         }
 
-        func closeTab() {
-            delegate?.closeSpecialErrorPageTab()
+        func closeTab(shouldCreateNewTab: Bool) {
+            delegate?.closeSpecialErrorPageTab(shouldCreateNewEmptyTab: shouldCreateNewTab)
         }
 
         guard let errorData else { return }
@@ -154,7 +156,7 @@ extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate 
             navigateBackIfPossible()
         case .maliciousSite:
             maliciousSiteProtectionNavigationHandler.leaveSite()
-            closeTab()
+            closeTab(shouldCreateNewTab: true)
         }
     }
 

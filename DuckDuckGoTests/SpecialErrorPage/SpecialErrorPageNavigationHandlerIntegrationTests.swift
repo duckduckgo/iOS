@@ -28,20 +28,22 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
     private var sut: SpecialErrorPageNavigationHandler!
     private var webView: MockSpecialErrorWebView!
     private var sslErrorPageNavigationHandler: SSLErrorPageNavigationHandler!
+    private var maliciousSiteProtectionManager: MaliciousSiteProtectionManager!
+    private var maliciousSiteProtectionFeatureFlags: MockMaliciousSiteProtectionFeatureFlags!
     private var maliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandler!
 
     @MainActor
     init() {
         let featureFlagger = MockFeatureFlagger()
-        featureFlagger.enabledFeatureFlags = [.sslCertificatesBypass]
+        featureFlagger.enabledFeatureFlags = [.sslCertificatesBypass, .maliciousSiteProtection]
         webView = MockSpecialErrorWebView(frame: CGRect(), configuration: .nonPersistent())
         sslErrorPageNavigationHandler = SSLErrorPageNavigationHandler(featureFlagger: featureFlagger)
         let preferencesManager = MockMaliciousSiteProtectionPreferencesManager()
         preferencesManager.isMaliciousSiteProtectionOn = true
-        let maliciousSiteProtectionFeatureFlags = MockMaliciousSiteProtectionFeatureFlags()
+        maliciousSiteProtectionFeatureFlags = MockMaliciousSiteProtectionFeatureFlags()
         maliciousSiteProtectionFeatureFlags.isMaliciousSiteProtectionEnabled = true
         maliciousSiteProtectionFeatureFlags.shouldDetectMaliciousThreatForDomainResult = true
-        let maliciousSiteProtectionManager = MaliciousSiteProtectionManager(
+        maliciousSiteProtectionManager = MaliciousSiteProtectionManager(
             dataFetcher: MockMaliciousSiteProtectionDataFetcher(),
             api: MaliciousSiteProtectionAPI(),
             dataManager: MaliciousSiteProtection.DataManager(
@@ -60,18 +62,14 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             maliciousSiteProtectionFeatureFlagger: maliciousSiteProtectionFeatureFlags
         )
         maliciousSiteProtectionNavigationHandler = MaliciousSiteProtectionNavigationHandler(maliciousSiteProtectionManager: maliciousSiteProtectionManager)
+        
         sut = SpecialErrorPageNavigationHandler(
             sslErrorPageNavigationHandler: sslErrorPageNavigationHandler,
             maliciousSiteProtectionNavigationHandler: maliciousSiteProtectionNavigationHandler
         )
     }
 
-    deinit {
-        sslErrorPageNavigationHandler = nil
-        maliciousSiteProtectionNavigationHandler = nil
-        sut = nil
-        webView = nil
-    }
+    // MARK: - SSL
 
     @MainActor
     @Test
@@ -277,6 +275,8 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         #expect(script.isEnabled)
     }
 
+    // MARK: - Malicious Site Protection
+
     @MainActor
     @Test(
         "Test Current Threat Kind Returns Threat Kind",
@@ -291,7 +291,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         let url = try #require(URL(string: threatInfo.path))
         webView.setCurrentURL(url)
         sut.attachWebView(webView)
-        let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
         sut.handleDecidePolicy(for: navigationAction, webView: webView)
         let response = MockNavigationResponse.with(url: url)
         _ = await sut.handleDecidePolicy(for: response, webView: webView)
@@ -303,4 +303,190 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         // THEN
         #expect(result == threatInfo.threat)
     }
+
+    @MainActor
+    @Test
+    func whenNoMaliciousThreatIsDetectedThenSpecialErrorPageIsNotLoaded() async throws {
+        // GIVEN
+        let url = try #require(URL(string: "http://privacy-test-pages.site/"))
+        webView.setCurrentURL(url)
+        sut.attachWebView(webView)
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
+        sut.handleDecidePolicy(for: navigationAction, webView: webView)
+        let response = MockNavigationResponse.with(url: url)
+
+        await confirmation(expectedCount: 0) { receivedHTML in
+            webView.loadRequestHandler = { _, _ in
+                receivedHTML()
+            }
+
+            // WHEN
+            let result = await sut.handleDecidePolicy(for: response, webView: webView)
+
+            // THEN
+            #expect(!result)
+        }
+    }
+
+    @MainActor
+    @Test
+    func whenPhishingThreatIsDetectedThenSpecialErrorPageIsLoaded() async throws {
+        // GIVEN
+        let url = try #require(URL(string: "http://privacy-test-pages.site/security/badware/phishing.html"))
+        webView.setCurrentURL(url)
+        sut.attachWebView(webView)
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
+        sut.handleDecidePolicy(for: navigationAction, webView: webView)
+        let response = MockNavigationResponse.with(url: url)
+
+        var expectedHTML: String?
+
+        try await confirmation { receivedHTML in
+            webView.loadRequestHandler = { _, html in
+                expectedHTML = html
+                receivedHTML()
+            }
+
+            // WHEN
+            let result = await sut.handleDecidePolicy(for: response, webView: webView)
+
+            // THEN
+            #expect(result)
+            #expect(sut.failedURL == url)
+            #expect(sut.errorData == .maliciousSite(kind: .phishing, url: url))
+            #expect(sut.isSpecialErrorPageRequest)
+            #expect(sut.isSpecialErrorPageVisible)
+            let html = try #require(expectedHTML)
+            #expect(html.contains("Warning: This site may put your personal information at risk"))
+            #expect(html.contains("This website may be impersonating a legitimate site in order to trick you into providing personal information, such as passwords or credit card numbers."))
+        }
+    }
+
+    @MainActor
+    @Test
+    func wheanMaliciousSiteProtectionDisabledThenSpecialErrorPageIsNotLoaded() async throws {
+        // GIVEN
+        maliciousSiteProtectionFeatureFlags.shouldDetectMaliciousThreatForDomainResult = false
+        let url = try #require(URL(string: "http://privacy-test-pages.site/security/badware/phishing.html"))
+        webView.setCurrentURL(url)
+        sut.attachWebView(webView)
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
+        sut.handleDecidePolicy(for: navigationAction, webView: webView)
+        let response = MockNavigationResponse.with(url: url)
+
+        await confirmation(expectedCount: 0) { receivedHTML in
+            webView.loadRequestHandler = { _, _ in
+                receivedHTML()
+            }
+
+            // WHEN
+            let result = await sut.handleDecidePolicy(for: response, webView: webView)
+
+            // THEN
+            #expect(!result)
+        }
+    }
+
+    @MainActor
+    @Test
+    func whenLoadingASafeWebsiteAfterDetectingAThreat_ThenSpecialErrorPageIsNotLoaded() async throws {
+        // LOAD MALICIOUS WEBSITE
+
+        // GIVEN
+        sut.attachWebView(webView)
+        let maliciousURL = try #require(URL(string: "http://privacy-test-pages.site/security/badware/phishing.html"))
+        webView.setCurrentURL(maliciousURL)
+        let maliciousSiteNavigationAction = MockNavigationAction(request: URLRequest(url: maliciousURL), targetFrame: MockFrameInfo(isMainFrame: true))
+        sut.handleDecidePolicy(for: maliciousSiteNavigationAction, webView: webView)
+        let maliciousSiteResponse = MockNavigationResponse.with(url: maliciousURL)
+
+        await confirmation { receivedHTML in
+            webView.loadRequestHandler = { _, _ in
+                receivedHTML()
+            }
+
+            // WHEN
+            let maliciousResult = await sut.handleDecidePolicy(for: maliciousSiteResponse, webView: webView)
+
+            // THEN
+            #expect(maliciousResult)
+            #expect(sut.failedURL == maliciousURL)
+            #expect(sut.errorData == .maliciousSite(kind: .phishing, url: maliciousURL))
+            #expect(sut.isSpecialErrorPageRequest)
+            #expect(sut.isSpecialErrorPageVisible)
+        }
+
+        // LOAD SAFE WEBSITE
+
+        // GIVEN
+        let safeURL = try #require(URL(string: "http://broken.third-party.site/"))
+        webView.setCurrentURL(safeURL)
+        let safeSiteNavigationAction = MockNavigationAction(request: URLRequest(url: safeURL), targetFrame: MockFrameInfo(isMainFrame: true))
+        sut.handleDecidePolicy(for: safeSiteNavigationAction, webView: webView)
+        let safeSiteResponse = MockNavigationResponse.with(url: safeURL)
+
+        await confirmation(expectedCount: 0) { receivedHTML in
+            webView.loadRequestHandler = { _, _ in
+                receivedHTML()
+            }
+
+            // WHEN
+            let result = await sut.handleDecidePolicy(for: safeSiteResponse, webView: webView)
+
+            // THEN
+            #expect(!result)
+        }
+    }
+
+    @MainActor
+    @Test
+    func whenLoadingDDGWebsiteAfterDetectingAThreat_ThenSpecialErrorPageIsNotLoaded() async throws {
+        // LOAD MALICIOUS WEBSITE
+
+        // GIVEN
+        sut.attachWebView(webView)
+        let maliciousURL = try #require(URL(string: "http://privacy-test-pages.site/security/badware/phishing.html"))
+        webView.setCurrentURL(maliciousURL)
+        let maliciousSiteNavigationAction = MockNavigationAction(request: URLRequest(url: maliciousURL), targetFrame: MockFrameInfo(isMainFrame: true))
+        sut.handleDecidePolicy(for: maliciousSiteNavigationAction, webView: webView)
+        let maliciousSiteResponse = MockNavigationResponse.with(url: maliciousURL)
+
+        await confirmation { receivedHTML in
+            webView.loadRequestHandler = { _, _ in
+                receivedHTML()
+            }
+
+            // WHEN
+            let maliciousResult = await sut.handleDecidePolicy(for: maliciousSiteResponse, webView: webView)
+
+            // THEN
+            #expect(maliciousResult)
+            #expect(sut.failedURL == maliciousURL)
+            #expect(sut.errorData == .maliciousSite(kind: .phishing, url: maliciousURL))
+            #expect(sut.isSpecialErrorPageRequest)
+            #expect(sut.isSpecialErrorPageVisible)
+        }
+
+        // LOAD DDG WEBSITE
+
+        // GIVEN
+        let safeURL = try #require(URL(string: "http://duckduckgo.com/"))
+        webView.setCurrentURL(safeURL)
+        let safeSiteNavigationAction = MockNavigationAction(request: URLRequest(url: safeURL), targetFrame: MockFrameInfo(isMainFrame: true))
+        sut.handleDecidePolicy(for: safeSiteNavigationAction, webView: webView)
+        let safeSiteResponse = MockNavigationResponse.with(url: safeURL)
+
+        await confirmation(expectedCount: 0) { receivedHTML in
+            webView.loadRequestHandler = { _, _ in
+                receivedHTML()
+            }
+
+            // WHEN
+            let result = await sut.handleDecidePolicy(for: safeSiteResponse, webView: webView)
+
+            // THEN
+            #expect(!result)
+        }
+    }
+
 }

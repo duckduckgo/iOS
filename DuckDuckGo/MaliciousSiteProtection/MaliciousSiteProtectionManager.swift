@@ -17,25 +17,50 @@
 //  limitations under the License.
 //
 
-import BrowserServicesKit
-import Core
 import Foundation
 import MaliciousSiteProtection
 
-extension MaliciousSiteProtectionFeatureFlags {
+typealias MaliciousSiteProtectionManaging = MaliciousSiteDetecting & MaliciousSiteProtectionDatasetsFetching
+
+final class MaliciousSiteProtectionManager {
+
+    private let dataFetcher: MaliciousSiteProtectionDatasetsFetching
+    private let api: MaliciousSiteProtectionAPI
+    private let preferencesManager: MaliciousSiteProtectionPreferencesReading
+    private let maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger
 
     init(
-        featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-        privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager
+        dataFetcher: MaliciousSiteProtectionDatasetsFetching,
+        api: MaliciousSiteProtectionAPI,
+        dataManager: MaliciousSiteProtection.DataManager? = nil,
+        detector: MaliciousSiteProtection.MaliciousSiteDetecting? = nil,
+        preferencesManager: MaliciousSiteProtectionPreferencesReading,
+        maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger
     ) {
-        self.init(privacyConfigManager: privacyConfigManager, isMaliciousSiteProtectionEnabled: {
-            featureFlagger.isFeatureOn(.maliciousSiteProtection)
-        })
+        self.dataFetcher = dataFetcher
+        self.api = api
+        self.preferencesManager = preferencesManager
+        self.maliciousSiteProtectionFeatureFlagger = maliciousSiteProtectionFeatureFlagger
     }
-
 }
 
-final class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
+// MARK: - MaliciousSiteProtectionDatasetsFetching
+
+extension MaliciousSiteProtectionManager: MaliciousSiteProtectionDatasetsFetching {
+
+    func startFetching() {
+        dataFetcher.startFetching()
+    }
+    
+    func registerBackgroundRefreshTaskHandler() {
+        dataFetcher.registerBackgroundRefreshTaskHandler()
+    }
+    
+}
+
+// MARK: - MaliciousSiteDetecting
+
+extension MaliciousSiteProtectionManager: MaliciousSiteDetecting {
 
     func evaluate(_ url: URL) async -> ThreatKind? {
         try? await Task.sleep(interval: 0.3)
@@ -50,4 +75,19 @@ final class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
         }
     }
 
+}
+
+// MARK: - Configuration
+
+extension MaliciousSiteProtectionManager {
+    
+    static func fileName(for dataType: MaliciousSiteProtection.DataManager.StoredDataType) -> String {
+        switch (dataType, dataType.threatKind) {
+        case (.hashPrefixSet, .phishing): "phishingHashPrefixes.json"
+        case (.filterSet, .phishing): "phishingFilterSet.json"
+        case (.hashPrefixSet, .malware): "malwareHashPrefixes.json"
+        case (.filterSet, .malware): "malwareFilterSet.json"
+        }
+    }
+    
 }

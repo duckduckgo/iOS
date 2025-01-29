@@ -36,7 +36,30 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         featureFlagger.enabledFeatureFlags = [.sslCertificatesBypass]
         webView = MockSpecialErrorWebView(frame: CGRect(), configuration: .nonPersistent())
         sslErrorPageNavigationHandler = SSLErrorPageNavigationHandler(featureFlagger: featureFlagger)
-        maliciousSiteProtectionNavigationHandler = MaliciousSiteProtectionNavigationHandler()
+        let preferencesManager = MockMaliciousSiteProtectionPreferencesManager()
+        preferencesManager.isMaliciousSiteProtectionOn = true
+        let maliciousSiteProtectionFeatureFlags = MockMaliciousSiteProtectionFeatureFlags()
+        maliciousSiteProtectionFeatureFlags.isMaliciousSiteProtectionEnabled = true
+        maliciousSiteProtectionFeatureFlags.shouldDetectMaliciousThreatForDomainResult = true
+        let maliciousSiteProtectionManager = MaliciousSiteProtectionManager(
+            dataFetcher: MockMaliciousSiteProtectionDataFetcher(),
+            api: MaliciousSiteProtectionAPI(),
+            dataManager: MaliciousSiteProtection.DataManager(
+                fileStore: MaliciousSiteProtection.FileStore(
+                    dataStoreURL: FileManager.default.urls(
+                        for: .applicationSupportDirectory,
+                        in: .userDomainMask
+                    )
+                    .first!
+                ),
+                embeddedDataProvider: nil,
+                fileNameProvider: MaliciousSiteProtectionManager.fileName(for:)
+            ),
+            detector: MockMaliciousSiteDetector(),
+            preferencesManager: preferencesManager,
+            maliciousSiteProtectionFeatureFlagger: maliciousSiteProtectionFeatureFlags
+        )
+        maliciousSiteProtectionNavigationHandler = MaliciousSiteProtectionNavigationHandler(maliciousSiteProtectionManager: maliciousSiteProtectionManager)
         sut = SpecialErrorPageNavigationHandler(
             sslErrorPageNavigationHandler: sslErrorPageNavigationHandler,
             maliciousSiteProtectionNavigationHandler: maliciousSiteProtectionNavigationHandler

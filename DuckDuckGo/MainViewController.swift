@@ -187,6 +187,7 @@ class MainViewController: UIViewController {
     var viewCoordinator: MainViewCoordinator!
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
+    let maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
 
     private lazy var aiChatViewControllerManager: AIChatViewControllerManager = {
         let manager = AIChatViewControllerManager()
@@ -276,6 +277,7 @@ class MainViewController: UIViewController {
         self.textZoomCoordinator = textZoomCoordinator
         self.websiteDataManager = websiteDataManager
         self.appDidFinishLaunchingStartTime = appDidFinishLaunchingStartTime
+        self.maliciousSiteProtectionPreferencesManager = maliciousSiteProtectionPreferencesManager
 
         super.init(nibName: nil, bundle: nil)
         

@@ -40,6 +40,8 @@ jobs:
 
     needs: assert_release_branch
     uses: ./.github/workflows/ios-pr-checks.yml
+    with:
+      skip-release: true
     secrets:
       APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
       APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}

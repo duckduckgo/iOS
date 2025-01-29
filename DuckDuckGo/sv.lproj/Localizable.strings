@@ -1083,7 +1083,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai är en valfri funktion som låter dig chatta anonymt med populära AI-chattmodeller från tredje part. Dina chattar används inte för att träna AI.\n[Mer information](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Visa Duck.ai medan du söker";
+"duckai.settings.enable.address-bar-searching-toggle" = "Visa Duck.ai på söksidan";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Visa Duck.ai i webbläsarmenyn";

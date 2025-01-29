@@ -2096,7 +2096,7 @@ extension Pixel.Event {
 public extension Pixel.Event {
 
     enum MaliciousSiteProtectionEvent: Equatable {
-        case errorPageShown(category: ThreatKind, clientSideHit: Bool)
+        case errorPageShown(category: ThreatKind, clientSideHit: Bool?)
         case visitSite(category: ThreatKind)
         case iframeLoaded(category: ThreatKind)
         case settingToggled(to: Bool)

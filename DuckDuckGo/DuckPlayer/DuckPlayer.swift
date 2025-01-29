@@ -369,26 +369,39 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     /// Handles UI Updates based on orientation.  When switching to landscape, we hide
     /// Navigation and Tabbar to enable "Fake" full screen mode.
     private func handleOrientationChange(_ orientation: UIDeviceOrientation) {
-
         guard UIDevice.current.userInterfaceIdiom == .phone else { return }
         
         switch orientation {
         case .portrait, .portraitUpsideDown:
-            hostView?.chromeDelegate?.omniBar.resignFirstResponder()
-            hostView?.chromeDelegate?.setBarsHidden(false, animated: true)
-            hideTimer?.invalidate()
-            hideTimer = nil
-            hostView?.setupWebViewForPortraitVideo()
+            handlePortraitOrientation()
         case .landscapeLeft, .landscapeRight:
-            hostView?.chromeDelegate?.omniBar.resignFirstResponder()
-            self.hostView?.setupWebViewForLandscapeVideo()
-            self.hostView?.chromeDelegate?.setBarsHidden(true, animated: true, animationDuration: Constants.chromeShowHideAnimationDuration)
+            handleLandscapeOrientation()
         case .unknown, .faceUp, .faceDown:
-            hostView?.setupWebViewForPortraitVideo()
-            return
+            handleDefaultOrientation()
         @unknown default:
             return
         }
+    }
+    
+    /// Handle Portrait rotation
+    private func handlePortraitOrientation() {
+        hostView?.chromeDelegate?.omniBar.resignFirstResponder()
+        hostView?.chromeDelegate?.setBarsHidden(false, animated: true)
+        hideTimer?.invalidate()
+        hideTimer = nil
+        hostView?.setupWebViewForPortraitVideo()
+    }
+    
+    /// Handle Landscape rotation
+    private func handleLandscapeOrientation() {
+        hostView?.chromeDelegate?.omniBar.resignFirstResponder()
+        hostView?.setupWebViewForLandscapeVideo()
+        hostView?.chromeDelegate?.setBarsHidden(true, animated: true, animationDuration: Constants.chromeShowHideAnimationDuration)
+    }
+    
+    /// Default rotation should be portrait mode
+    private func handleDefaultOrientation() {
+        hostView?.setupWebViewForPortraitVideo()
     }
     
     /// Retrieves user values to send to the web content.

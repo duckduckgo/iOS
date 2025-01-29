@@ -101,11 +101,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             async let reloadedSubscription = await self.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData,
                                                                                           loadingIndicator: !hasLoadedSubscriptionFromCache)
             let (hasReloadedEmail, hasReloadedSubscription) = await (reloadedEmail, reloadedSubscription)
-
-            // In case any fetch fails show an error
-            if !hasReloadedEmail || !hasReloadedSubscription {
-                self.showConnectionError(true)
-            }
         }
     }
 

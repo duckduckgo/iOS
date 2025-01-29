@@ -137,7 +137,7 @@ jobs:
         yq < unittests.xml -p xml -o json -r \
           $'[.testsuites.testsuite[].testcase] | flatten | map(select(.failure) | .+@classname + " " + .+@name + " \'" + .failure.+@message + "\' ${{ env.WORKFLOW_URL }}") | .[]' \
           | sort -u -k 1,2 \
-          | xargs -L 1 ./scripts/report-failed-unit-test.sh -s ${{ vars.APPLE_CI_FAILING_TESTS_FAILED_TESTS_SECTION_ID }}
+          | xargs -L 1 ./scripts/report-failed-unit-test.sh -s ${{ vars.APPLE_CI_FAILING_TESTS_IOS_FAILED_TESTS_SECTION_ID }}
 
     - name: Fetch latest commit author
       if: always() && github.ref_name == 'main'

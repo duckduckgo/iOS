@@ -766,6 +766,7 @@ extension SettingsViewModel {
         // Active subscription check
         guard let token = subscriptionManager.accountManager.accessToken else {
             // Reset state in case cache was outdated
+            state.subscription.hasSubscription = false
             state.subscription.hasActiveSubscription = false
             state.subscription.entitlements = []
             state.subscription.platform = .unknown
@@ -779,6 +780,7 @@ extension SettingsViewModel {
             
         case .success(let subscription):
             state.subscription.platform = subscription.platform
+            state.subscription.hasActiveSubscription = true
             state.subscription.hasActiveSubscription = subscription.isActive
 
             // Check entitlements and update state
@@ -794,8 +796,18 @@ extension SettingsViewModel {
             self.state.subscription.entitlements = currentEntitlements
             self.state.subscription.subscriptionFeatures = await subscriptionManager.currentSubscriptionFeatures()
 
-        case .failure:
-            break
+        case .failure(let subscriptionServiceError):
+            if case let .apiError(apiError) = subscriptionServiceError,
+               case let .serverError(statusCode, error) = apiError {
+                if statusCode == 400 && error == "No subscription found" {
+                    state.subscription.hasSubscription = false
+                    state.subscription.hasActiveSubscription = false
+                    state.subscription.entitlements = []
+                    state.subscription.platform = .unknown
+
+                    // TOOD: Fire pixel
+                }
+            }
         }
         
         // Sync Cache

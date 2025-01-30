@@ -53,7 +53,7 @@ class FavoritesViewModel: ObservableObject {
 
     // In memory only so that when settings is dismissed we can show the prompt.
     //  Missing icons will trigger the prompt from elsewhere too so we don't need to persist this.
-    var hasMissingIcons = false
+    private(set) var hasMissingIcons = false
 
     private(set) var faviconLoader: FavoritesFaviconLoading?
 

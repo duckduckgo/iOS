@@ -124,6 +124,7 @@ struct WebView: UIViewRepresentable {
         webView.isOpaque = false
         webView.scrollView.backgroundColor = .black
         webView.scrollView.bounces = false
+        webView.navigationDelegate = context.coordinator
         
         return webView
     }
@@ -132,5 +133,34 @@ struct WebView: UIViewRepresentable {
         var request = URLRequest(url: url)
         request.setValue("http://localhost", forHTTPHeaderField: "Referer")
         webView.load(request)
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+    
+    class Coordinator: NSObject, WKNavigationDelegate {
+        // Called when navigation starts
+        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+            print("WebView navigation started")
+        }
+        
+        // Called when navigation completes successfully
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            print("WebView navigation finished")
+        }
+        
+        // Called when navigation fails
+        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+            print("WebView navigation failed with error: \(error.localizedDescription)")
+        }
+        
+        // Called when a link is clicked
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            if let url = navigationAction.request.url {
+                print("WebView navigation requested to: \(url)")
+            }
+            decisionHandler(.allow)
+        }
     }
 }

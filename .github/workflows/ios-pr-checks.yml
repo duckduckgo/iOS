@@ -64,7 +64,7 @@ jobs:
     name: Unit Tests
 
     runs-on: macos-15
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     outputs:
       commit_author: ${{ steps.fetch_commit_author.outputs.commit_author }}

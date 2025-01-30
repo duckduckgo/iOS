@@ -41,8 +41,20 @@ struct TabSwitcherTopBarView: View {
     }
 
     @ViewBuilder func editButton() -> some View {
-        Button {
-            model.onEditPressed()
+        Menu {
+            Button {
+                model.transitionToMultiSelect()
+            } label: {
+                Label("Select tabs", image: "Check-Circle-16")
+            }
+
+            Divider()
+
+            Button(role: .destructive) {
+                model.closeAllTabs()
+            } label: {
+                Label(model.closeTabsLabel, image: "Tab-Close-16")
+            }
         } label: {
             Text(UserText.navigationTitleEdit)
         }
@@ -133,10 +145,13 @@ class TabSwitcherTopBarModel: ObservableObject {
 
         func onTabStyleChange()
         func burn()
-        func startEditing()
         func dismiss()
         func addNewTab()
         func bookmarkAll()
+        func transitionToMultiSelect()
+        func closeAllTabs()
+
+        var tabCount: Int { get }
 
     }
 
@@ -163,6 +178,10 @@ class TabSwitcherTopBarModel: ObservableObject {
     @Published var title = ""
     @Published var tabsStyle: TabsStyleToggle = .grid
 
+    var closeTabsLabel: String {
+        return UserText.closeTabs(withCount: delegate?.tabCount ?? 0)
+    }
+
     func toggleTabsStyle() {
         if tabsStyle == .grid {
             tabsStyle = .list
@@ -170,10 +189,6 @@ class TabSwitcherTopBarModel: ObservableObject {
             tabsStyle = .grid
         }
         delegate?.onTabStyleChange()
-    }
-
-    func onEditPressed() {
-        delegate?.startEditing()
     }
 
     func onDonePressed() {
@@ -194,6 +209,14 @@ class TabSwitcherTopBarModel: ObservableObject {
 
     func locationOfFireButton(_ point: CGRect) {
         fireButtonFrame = point
+    }
+
+    func transitionToMultiSelect() {
+        delegate?.transitionToMultiSelect()
+    }
+
+    func closeAllTabs() {
+        delegate?.closeAllTabs()
     }
 
 }

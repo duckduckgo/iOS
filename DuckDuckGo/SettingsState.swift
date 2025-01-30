@@ -37,14 +37,14 @@ struct SettingsState {
         var level: TextZoomLevel
     }
 
-    struct SubscriptionState: Codable {
+    struct Subscription: Codable {
         var canPurchase: Bool
-        var subscriptionExist: Bool
+        var isSignedIn: Bool
         var hasActiveSubscription: Bool
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
-        var entitlements: [SubscriptionEntitlement]
-        var subscriptionFeatures: [SubscriptionEntitlement]
+        var subscriptionFeatures: [Entitlement.ProductName]
+        var entitlements: [Entitlement.ProductName]
         var platform: PrivacyProSubscription.Platform
         var isShowingStripeView: Bool
     }
@@ -97,7 +97,7 @@ struct SettingsState {
     var networkProtectionConnected: Bool
 
     // Subscriptions Properties
-    var subscription: SubscriptionState
+    var subscription: Subscription
     
     // Sync Properties
     var sync: SyncSettings
@@ -136,15 +136,16 @@ struct SettingsState {
             speechRecognitionAvailable: false,
             loginsEnabled: false,
             networkProtectionConnected: false,
-            subscription: SubscriptionState(canPurchase: false,
-                                            subscriptionExist: false,
-                                            hasActiveSubscription: false,
-                                            isRestoring: false,
-                                            shouldDisplayRestoreSubscriptionError: false,
-                                            entitlements: [],
-                                            subscriptionFeatures: [],
-                                            platform: .unknown,
-                                            isShowingStripeView: false),
+            subscription: Subscription(canPurchase: false,
+                                       isSignedIn: false,
+                                       hasSubscription: false,
+                                       hasActiveSubscription: false,
+                                       isRestoring: false,
+                                       shouldDisplayRestoreSubscriptionError: false,
+                                       subscriptionFeatures: [],
+                                       entitlements: [],
+                                       platform: .unknown,
+                                       isShowingStripeView: false),
             sync: SyncSettings(enabled: false, title: ""),
             syncSource: nil,
             duckPlayerEnabled: false,

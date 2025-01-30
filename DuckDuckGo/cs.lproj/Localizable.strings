@@ -131,13 +131,16 @@
 "addWidget.description" = "Získejte rychlý přístup k soukromému vyhledávání a oblíbeným webům.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Podržením prstu na ploše aktivuj režim úprav plochy.";
+"addWidget.settings.firstParagraph" = "Podrž prst kdekoli na ploše, dokud se aplikace nezačnou třást.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Klepni na **Edit** [Upravit], pak na **Add Widget** [Přidat widget]";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Klepni na tlačítko plus %@.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Najdi aplikaci DuckDuckGo a vyber ji. Pak zvol widget.";
+"addWidget.settings.title" = "Najdi a vyber **DuckDuckGo**. Pak zvol widget.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "Jedním klepnutím se dostaneš na svoje oblíbené stránky.";
@@ -180,6 +183,15 @@
 
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Synchronizace je pozastavená";
+
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Přepnout synchronizaci";
+
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "Tohle zařízení už je synchronizované. Opravdu ho chceš synchronizovat s jinou zálohou nebo zařízením? Přepnutím se nesmažou žádná data, která už s tímto zařízením byla synchronizována.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "Přepnout synchronizaci?";
 
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "Funkce Sync & Backup je dočasně nedostupná.";
@@ -869,14 +881,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "aktuální počasí";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "recepty na čokoládové sušenky";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Najdi v seznamu **DuckDuckGo** a pro přidání klepni na **VPN control** [Ovládání VPN]";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "recepty na večeři";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Přejeď prstem dolů z pravého horního rohu obrazovky";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Překvap mě!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Klepni na tlačítko **+** v levém horním rohu **Control Center** [Ovládacího centra]";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Klepni na **Add a Control** [Přidat ovládací prvek] v dolní části obrazovky";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Vždycky odesílat hlášení o selhání";
@@ -1063,6 +1078,18 @@
 
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "Funkčnost přehrávače Duck Player ovlivnily nedávné změny na YouTube. Problémy se snažíme opravit. Děkujeme za pochopení.";
+
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"duckai.preferences.text.markdown" = "Duck.ai je volitelná funkce, která umožňuje anonymně chatovat s populárními AI chatovacími modely třetích stran. Tvoje chaty se nepoužívají k trénování AI.\n[Další informace](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
+
+/* Toggle text to enable/disable AI Chat in the address bar */
+"duckai.settings.enable.address-bar-searching-toggle" = "Zobrazit Duck.ai na stránce vyhledávání";
+
+/* Toggle text to enable/disable AI Chat in the browsing menu */
+"duckai.settings.enable.browsing-menu-toggle" = "Zobrazit Duck.ai v nabídce prohlížeče";
+
+/* Settings screen cell text for AI Chat settings */
+"duckai.settings.title" = "Duck.ai";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo pro iOS";
@@ -1517,6 +1544,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Musíš povolit VPN v aplikaci DuckDuckGo.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1858,6 +1888,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Nastavení sítě VPN";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Zkratky";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Přizpůsob si oblíbené záložky a časté funkce. Přeskládej je nebo je skryj, ať je všechno přehledné.";
@@ -2211,6 +2244,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Přidat widget na domovskou obrazovku";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Přidej widget VPN DuckDuckGo na svou plochu";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2866,7 +2902,28 @@
 "vpn.access-revoked.alert.title" = "VPN byla odpojena kvůli vypršení platnosti předplatného";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Najdi aplikaci DuckDuckGo a vyber ji. Potom se posuň na VPN a vyber Přidat widget.";
+"vpn.addWidget.settings.title" = "Najdi a vyber **DuckDuckGo**. Potom se posuň na **VPN** a vyber **Add Widget** [Přidat widget].";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "VPN DuckDuckGo je připojená";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Zkratky Siri ti umožní připojit se k VPN pomocí rychlého hlasového příkazu, jako je „Siri, turn on DuckDuckGo VPN“ [Siri, zapni VPN DuckDuckGo]. Zvládneš to rychle, i když máš zrovna plné ruce.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, start DuckDuckGo VPN [Siri, spusť VPN DuckDuckGo]";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, enable DuckDuckGo VPN [Siri, povol VPN DuckDuckGo]";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, protect my device with DuckDuckGo [Siri, chraň moje zařízení pomocí DuckDuckGo]";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Ovládej VPN DuckDuckGo pomocí Siri!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "VPN DuckDuckGo je připojená";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Zrušit";
@@ -2937,8 +2994,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Pomoz zlepšit DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Přidej VPN do Ovládacího centra";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Přidat widget VPN na domovskou obrazovku";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Ovládej VPN pomocí Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Používání vlastního serveru DNS může ovlivnit rychlost procházení a odhalit tvoji aktivitu třetím stranám, pokud server není bezpečný nebo spolehlivý.";

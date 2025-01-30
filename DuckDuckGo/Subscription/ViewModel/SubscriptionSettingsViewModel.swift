@@ -105,11 +105,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             async let reloadedSubscription = await self.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData,
                                                                                           loadingIndicator: !hasLoadedSubscriptionFromCache)
             let (hasReloadedEmail, hasReloadedSubscription) = await (reloadedEmail, reloadedSubscription)
-
-            // In case any fetch fails show an error
-            if !hasReloadedEmail || !hasReloadedSubscription {
-                self.showConnectionError(true)
-            }
         }
     }
 
@@ -271,7 +266,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @MainActor
     func showTermsOfService() {
         Logger.subscription.log("Show terms of service")
-        self.openURL(SettingsSubscriptionView.ViewConstants.privacyPolicyURL)
+        let privacyPolicyQuickLinkURL = URL(string: AppDeepLinkSchemes.quickLink.appending(SettingsSubscriptionView.ViewConstants.privacyPolicyURL.absoluteString))!
+        openURL(privacyPolicyQuickLinkURL)
     }
 
     // MARK: -

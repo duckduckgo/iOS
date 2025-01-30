@@ -5,44 +5,12 @@
       "scale" : "1x"
     },
     {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "AppIconRed29x29@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Icon-Dark-58x58.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
       "filename" : "AppIconRed29x29@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Icon-Dark-87x87.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

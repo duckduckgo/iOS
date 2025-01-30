@@ -225,7 +225,7 @@ struct Foreground: AppState {
          NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
 
          // The openVPN action handles the navigation stack on its own and does not need it to be cleared
-         if url != AppDeepLinkSchemes.openVPN.url {
+        if url != AppDeepLinkSchemes.openVPN.url && url.scheme != AppDeepLinkSchemes.openAIChat.url.scheme {
              mainViewController.clearNavigationStack()
          }
 
@@ -444,7 +444,8 @@ struct Foreground: AppState {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 mainViewController.launchAutofillLogins(openSearch: true, source: source)
             }
-
+        case .openAIChat:
+            AIChatDeepLinkHandler().handleDeepLink(url, on: mainViewController)
         default:
             guard app.applicationState == .active,
                   let currentTab = mainViewController.currentTab else {

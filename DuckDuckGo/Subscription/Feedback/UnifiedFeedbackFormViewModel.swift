@@ -304,6 +304,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
                               customMetadata: metadata?.toString() ?? "")
         let headers = APIRequestV2.HeadersV2(additionalHeaders: [HTTPHeaderKey.authorization: "Bearer \(accessToken)"])
         guard let request = APIRequestV2(url: Self.feedbackEndpoint, method: .post, headers: headers, body: payload.toData()) else {
+            assertionFailure("Invalid request")
             throw Error.invalidRequest
         }
 

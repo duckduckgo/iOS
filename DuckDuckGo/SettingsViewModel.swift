@@ -23,13 +23,12 @@ import Persistence
 import SwiftUI
 import Common
 import Combine
-import SyncUI
+import SyncUI_iOS
 import DuckPlayer
-import Networking
 import Crashes
+
 import Subscription
 import NetworkProtection
-import os.log
 import AIChat
 
 final class SettingsViewModel: ObservableObject {
@@ -61,7 +60,7 @@ final class SettingsViewModel: ObservableObject {
         case subscriptionState = "com.duckduckgo.ios.subscription.state"
     }
     // Used to cache the lasts subscription state for up to a week
-    private let subscriptionStateCache = UserDefaultsCache<SettingsState.SubscriptionState>(key: UserDefaultsCacheKey.subscriptionState,
+    private let subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
                                                                          settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
     // Properties
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
@@ -402,7 +401,7 @@ final class SettingsViewModel: ObservableObject {
     }
 
     var usesUnifiedFeedbackForm: Bool {
-        subscriptionManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
+        subscriptionManager.accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
     }
 
     // MARK: Default Init
@@ -516,7 +515,7 @@ extension SettingsViewModel {
                 || syncPausedStateManager.isSyncCredentialsPaused {
                 return "⚠️ \(UserText.settingsSync)"
             }
-            return SyncUI.UserText.syncTitle
+            return SyncUI_iOS.UserText.syncTitle
         }())
     }
 
@@ -750,7 +749,6 @@ extension SettingsViewModel {
 
     @MainActor
     private func setupSubscriptionEnvironment() async {
-        Logger.subscription.log("Setting up Subscription Environment")
         // If there's cached data use it by default
         if let cachedSubscription = subscriptionStateCache.get() {
             state.subscription = cachedSubscription
@@ -762,43 +760,60 @@ extension SettingsViewModel {
         // Update if can purchase based on App Store product availability
         state.subscription.canPurchase = subscriptionManager.canPurchase
 
-        // Fetch subscription details using a stored access token
-        do {
-            guard subscriptionManager.isUserAuthenticated == true else {
-                throw SubscriptionEndpointServiceError.noData
-            }
+        // Update if user is signed in based on the presence of token
+        state.subscription.isSignedIn = subscriptionManager.accountManager.isUserAuthenticated
 
-            let subscription = try await subscriptionManager.getSubscription(cachePolicy: .reloadIgnoringLocalCacheData)
-            Logger.subscription.log("Subscription loaded: \(subscription.debugDescription, privacy: .public)")
-            state.subscription.subscriptionExist = true
-            state.subscription.platform = subscription.platform
-            state.subscription.hasActiveSubscription = subscription.isActive
-            let features = await subscriptionManager.currentSubscriptionFeatures(forceRefresh: false)
-            state.subscription.entitlements = features.compactMap({ feature in
-                if feature.availableForUser {
-                    return feature.entitlement
-                } else {
-                    return nil
-                }
-            })
-            state.subscription.subscriptionFeatures = features.map({ feature in feature.entitlement })
-        } catch SubscriptionEndpointServiceError.noData, OAuthClientError.missingTokens {
-            // Auth successful but no Subscription is available
-            Logger.subscription.log("Subscription not present")
-
-            state.subscription.subscriptionExist = false
-            state.subscription.platform = .unknown
+        // Active subscription check
+        guard let token = subscriptionManager.accountManager.accessToken else {
+            // Reset state in case cache was outdated
+            state.subscription.hasSubscription = false
             state.subscription.hasActiveSubscription = false
             state.subscription.entitlements = []
-        } catch {
-            // Generic error, we don't update the cached data
-            Logger.subscription.debug("Failed to load Subscription: \(error, privacy: .public)")
-        }
+            state.subscription.platform = .unknown
 
+            subscriptionStateCache.set(state.subscription) // Sync cache
+            return
+        }
+        
+        let subscriptionResult = await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token)
+        switch subscriptionResult {
+            
+        case .success(let subscription):
+            state.subscription.platform = subscription.platform
+            state.subscription.hasSubscription = true
+            state.subscription.hasActiveSubscription = subscription.isActive
+
+            // Check entitlements and update state
+            var currentEntitlements: [Entitlement.ProductName] = []
+            let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration, .identityTheftRestorationGlobal]
+
+            for entitlement in entitlementsToCheck {
+                if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
+                    currentEntitlements.append(entitlement)
+                }
+            }
+
+            self.state.subscription.entitlements = currentEntitlements
+            self.state.subscription.subscriptionFeatures = await subscriptionManager.currentSubscriptionFeatures()
+
+        case .failure(let subscriptionServiceError):
+            if case let .apiError(apiError) = subscriptionServiceError,
+               case let .serverError(statusCode, error) = apiError {
+                if statusCode == 400 && error == "No subscription found" {
+                    state.subscription.hasSubscription = false
+                    state.subscription.hasActiveSubscription = false
+                    state.subscription.entitlements = []
+                    state.subscription.platform = .unknown
+
+                    DailyPixel.fireDailyAndCount(pixel: .settingsPrivacyProAccountWithNoSubscriptionFound)
+                }
+            }
+        }
+        
         // Sync Cache
         subscriptionStateCache.set(state.subscription)
     }
-
+    
     private func setupNotificationObservers() {
         subscriptionSignOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut,
                                                                              object: nil,
@@ -828,9 +843,10 @@ extension SettingsViewModel {
     
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
-
-        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
-                                                             storePurchaseManager: subscriptionManager.storePurchaseManager())
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
+                                                             storePurchaseManager: subscriptionManager.storePurchaseManager(),
+                                                             subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
+                                                             authEndpointService: subscriptionManager.authEndpointService)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:
@@ -839,12 +855,29 @@ extension SettingsViewModel {
             }
             await self.setupSubscriptionEnvironment()
             
-        case .failure:
+        case .failure(let restoreFlowError):
             DispatchQueue.main.async {
                 self.state.subscription.isRestoring = false
                 self.state.subscription.shouldDisplayRestoreSubscriptionError = true
-                self.state.subscription.shouldDisplayRestoreSubscriptionError = false
                 
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.state.subscription.shouldDisplayRestoreSubscriptionError = false
+                }
+            }
+
+            switch restoreFlowError {
+            case .missingAccountOrTransactions:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorMissingAccountOrTransactions)
+            case .pastTransactionAuthenticationError:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorPastTransactionAuthenticationError)
+            case .failedToObtainAccessToken:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorFailedToObtainAccessToken)
+            case .failedToFetchAccountDetails:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorFailedToFetchAccountDetails)
+            case .failedToFetchSubscriptionDetails:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorFailedToFetchSubscriptionDetails)
+            case .subscriptionExpired:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorSubscriptionExpired)
             }
         }
     }

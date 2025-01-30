@@ -131,13 +131,16 @@
 "addWidget.description" = "Obtén acceso rápido a búsquedas privadas y a los sitios que más te gustan.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Mantén pulsada la pantalla de inicio para entrar en el modo jiggle.";
+"addWidget.settings.firstParagraph" = "Mantén pulsado cualquier lugar de la pantalla de inicio hasta que las aplicaciones se muevan";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Pulsa el botón **Editar**, luego elige **Añadir widget**";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Pulsa el botón más %@.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Busca y selecciona DuckDuckGo. A continuación, elige un widget.";
+"addWidget.settings.title" = "Busca y selecciona **DuckDuckGo**. A continuación, elige un widget.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "Visita tus sitios favoritos con un toque.";
@@ -180,6 +183,15 @@
 
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "La sincronización está en pausa";
+
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Cambiar sincronización";
+
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "Este dispositivo ya está sincronizado. ¿Seguro que deseas sincronizarlo con una copia de seguridad o con un dispositivo diferente? Cambiar no eliminará ningún dato ya sincronizado en este dispositivo.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "¿Cambiar a una sincronización diferente?";
 
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "La sincronización y la copia de seguridad no están disponibles temporalmente.";
@@ -869,14 +881,17 @@
 /* Browser Search query for local weather */
 "contextual.onboarding.try-search.option3" = "el tiempo local";
 
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "recetas de galletas con pepitas de chocolate";
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Busca **DuckDuckGo** en la lista, luego pulsa **control de VPN** para añadirlo";
 
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "recetas para la cena";
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Desliza hacia abajo desde la esquina superior derecha de la pantalla";
 
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "¡Sorpréndeme!";
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Pulsa el botón **+** en la parte superior izquierda del **Centro de Control**";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Toca **Añadir un control** en la parte inferior de la pantalla";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Enviar siempre informes de fallos";
@@ -1063,6 +1078,18 @@
 
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "La funcionalidad de Duck Player se ha visto afectada por los cambios recientes en YouTube. Estamos trabajando para solucionar estos problemas y agradecemos tu comprensión.";
+
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"duckai.preferences.text.markdown" = "Duck.ai es una función opcional que te permite chatear de forma anónima con modelos populares de chat de IA de terceros. Tus chats no se utilizan para entrenar a la IA.\n[Más información](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
+
+/* Toggle text to enable/disable AI Chat in the address bar */
+"duckai.settings.enable.address-bar-searching-toggle" = "Mostar Duck.ai en la página de búsqueda";
+
+/* Toggle text to enable/disable AI Chat in the browsing menu */
+"duckai.settings.enable.browsing-menu-toggle" = "Mostrar Duck.ai en el menú del navegador";
+
+/* Settings screen cell text for AI Chat settings */
+"duckai.settings.title" = "Duck.ai";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo para iOS";
@@ -1517,6 +1544,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Tienes que habilitar la VPN desde la aplicación DuckDuckGo.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1858,6 +1888,9 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Configuración de VPN";
+
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Accesos directos";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personaliza tus favoritos y funciones de acceso. Reordena los elementos o escóndelos para mantener el orden.";
@@ -2211,6 +2244,9 @@
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Añadir widget a la pantalla de inicio";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Añade el widget VPN de DuckDuckGo a tu pantalla de inicio";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2866,7 +2902,28 @@
 "vpn.access-revoked.alert.title" = "VPN desconectada por suscripción caducada";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Busca y selecciona DuckDuckGo. A continuación, desliza el dedo hasta VPN y selecciona Añadir widget.";
+"vpn.addWidget.settings.title" = "Busca y selecciona **DuckDuckGo**, luego desliza hasta **VPN** y selecciona **Añadir widget**";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "La VPN de DuckDuckGo está conectada.";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Los atajos de Siri te permiten conectarte a tu VPN con un comando de voz rápido, como \"Siri, activa la VPN de DuckDuckGo\". Es una manera rápida de utilizar tu VPN sin usar las manos.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, abre la VPN de DuckDuckGo.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, activa la VPN de DuckDuckGo.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, protege mi dispositivo con DuckDuckGo.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "¡Controla la VPN de DuckDuckGo con Siri!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "La VPN de DuckDuckGo está conectada";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancelar";
@@ -2937,8 +2994,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Ayuda a mejorar la VPN de DuckDuckGo";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Añadir VPN al Centro de Control";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Añadir widget de VPN a la pantalla de inicio";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Controla la VPN con Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "El uso de un servidor DNS personalizado puede afectar a la velocidad de navegación y exponer tu actividad a terceros si el servidor no es seguro o fiable.";

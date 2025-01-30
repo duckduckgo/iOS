@@ -23,10 +23,12 @@ import WidgetKit
 
 enum WidgetKind: String, Codable {
     case vpn = "VPNStatusWidget"
+    case aiChat = "AIChatWidget"
 }
 
 enum ControlWidgetKind: String, Codable {
     case vpn = "VPNControlWidget"
+    case aiChat = "AIChatControlWidget"
 }
 
 extension WidgetCenter {

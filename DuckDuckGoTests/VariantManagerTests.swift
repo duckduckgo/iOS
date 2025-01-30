@@ -188,9 +188,9 @@ struct MockVariantRNG: VariantRNG {
 
 class MockReturningUserMeasurement: ReturnUserMeasurement {
     var isReturningUser: Bool = false
-    func installCompletedWithATB(_ atb: Core.Atb) {
+    func installCompletedWithATB(_ atb: Atb) {
     }
-    func updateStoredATB(_ atb: Core.Atb) {
+    func updateStoredATB(_ atb: Atb) {
     }
 }
 

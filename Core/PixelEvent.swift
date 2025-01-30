@@ -22,7 +22,6 @@ import BrowserServicesKit
 import Bookmarks
 import Configuration
 import DDGSync
-import NetworkProtection
 
 extension Pixel {
     
@@ -413,7 +412,7 @@ extension Pixel {
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
 
-        case networkProtectionLatency(quality: NetworkProtectionLatencyMonitor.ConnectionQuality)
+        case networkProtectionLatency(quality: String)
         case networkProtectionLatencyError
         
         case networkProtectionEnabledOnSearch
@@ -642,7 +641,9 @@ extension Pixel {
         case debugWebsiteDataStoresCleared
 
         case debugBookmarksMigratedMoreThanOnce
-        
+
+        case debugBreakageExperiment
+
         // Return user measurement
         case debugReturnUserAddATB
         case debugReturnUserUpdateATB
@@ -708,6 +709,13 @@ extension Pixel {
         case syncSecureStorageReadError
         case syncSecureStorageDecodingError
         case syncAccountRemoved(reason: String)
+
+        case syncAskUserToSwitchAccount
+        case syncUserAcceptedSwitchingAccount
+        case syncUserCancelledSwitchingAccount
+        case syncUserSwitchedAccount
+        case syncUserSwitchedLogoutError
+        case syncUserSwitchedLoginError
 
         case syncGetOtherDevices
         case syncGetOtherDevicesCopy
@@ -801,6 +809,15 @@ extension Pixel {
         case privacyProSubscriptionCookieRefreshedWithAccessToken
         case privacyProSubscriptionCookieRefreshedWithEmptyValue
         case privacyProSubscriptionCookieFailedToSetSubscriptionCookie
+
+        case settingsPrivacyProAccountWithNoSubscriptionFound
+
+        case privacyProActivatingRestoreErrorMissingAccountOrTransactions
+        case privacyProActivatingRestoreErrorPastTransactionAuthenticationError
+        case privacyProActivatingRestoreErrorFailedToObtainAccessToken
+        case privacyProActivatingRestoreErrorFailedToFetchAccountDetails
+        case privacyProActivatingRestoreErrorFailedToFetchSubscriptionDetails
+        case privacyProActivatingRestoreErrorSubscriptionExpired
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
@@ -939,14 +956,6 @@ extension Pixel {
 
         // MARK: Browsing
         case stopPageLoad
-        
-        // MARK: - DuckPlayer Overlay Navigation
-        case duckPlayerYouTubeOverlayNavigationBack
-        case duckPlayerYouTubeOverlayNavigationRefresh
-        case duckPlayerYouTubeNavigationWithinYouTube
-        case duckPlayerYouTubeOverlayNavigationOutsideYoutube
-        case duckPlayerYouTubeOverlayNavigationClosed
-        case duckPlayerYouTubeNavigationIdle30
 
         // MARK: Launch time
         case appDidFinishLaunchingTime(time: BucketAggregation)
@@ -956,6 +965,10 @@ extension Pixel {
         // MARK: AI Chat
         case aiChatNoRemoteSettingsFound(settings: String)
         case openAIChatFromAddressBar
+        case openAIChatFromWidgetFavorite
+        case openAIChatFromWidgetQuickAction
+        case openAIChatFromWidgetControlCenter
+        case openAIChatFromWidgetLockScreenComplication
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
@@ -1380,7 +1393,7 @@ extension Pixel.Event {
         case .networkProtectionConnectionTesterExtendedFailureRecovered: return "m_netp_connection_tester_extended_failure_recovered"
         case .networkProtectionTunnelFailureDetected: return "m_netp_ev_tunnel_failure"
         case .networkProtectionTunnelFailureRecovered: return "m_netp_ev_tunnel_failure_recovered"
-        case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality.rawValue)_latency"
+        case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality)_latency"
         case .networkProtectionLatencyError: return "m_netp_ev_latency_error_d"
         case .networkProtectionRekeyAttempt: return "m_netp_rekey_attempt"
         case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"
@@ -1498,9 +1511,9 @@ extension Pixel.Event {
             
         case .configurationFetchInfo: return "m_d_cfgfetch"
             
-        case .trackerDataParseFailed: return "m_d_tds_p"
+        case .trackerDataParseFailed: return "m_d_tracker_data_parse_failed"
         case .trackerDataReloadFailed: return "m_d_tds_r"
-        case .trackerDataCouldNotBeLoaded: return "m_d_tds_l"
+        case .trackerDataCouldNotBeLoaded: return "m_d_tracker_data_could_not_be_loaded"
         case .fileStoreWriteFailed: return "m_d_fswf"
         case .fileStoreCoordinatorFailed: return "m_d_configuration_file_coordinator_error"
         case .privacyConfigurationReloadFailed: return "m_d_pc_r"
@@ -1654,6 +1667,13 @@ extension Pixel.Event {
         case .syncSecureStorageDecodingError: return "sync_secure_storage_decoding_error"
         case .syncAccountRemoved(let reason): return "sync_account_removed_reason_\(reason)"
 
+        case .syncAskUserToSwitchAccount: return "sync_ask_user_to_switch_account"
+        case .syncUserAcceptedSwitchingAccount: return "sync_user_accepted_switching_account"
+        case .syncUserCancelledSwitchingAccount: return "sync_user_cancelled_switching_account"
+        case .syncUserSwitchedAccount: return "sync_user_switched_account"
+        case .syncUserSwitchedLogoutError: return "sync_user_switched_logout_error"
+        case .syncUserSwitchedLoginError: return "sync_user_switched_login_error"
+
         case .syncGetOtherDevices: return "sync_get_other_devices"
         case .syncGetOtherDevicesCopy: return "sync_get_other_devices_copy"
         case .syncGetOtherDevicesShare: return "sync_get_other_devices_share"
@@ -1755,6 +1775,15 @@ extension Pixel.Event {
         case .privacyProSubscriptionCookieRefreshedWithAccessToken: return "m_privacy-pro_subscription-cookie-refreshed_with_access_token"
         case .privacyProSubscriptionCookieRefreshedWithEmptyValue: return "m_privacy-pro_subscription-cookie-refreshed_with_empty_value"
         case .privacyProSubscriptionCookieFailedToSetSubscriptionCookie: return "m_privacy-pro_subscription-cookie-failed_to_set_subscription_cookie"
+
+        case .settingsPrivacyProAccountWithNoSubscriptionFound: return "m_settings_privacy-pro_account_with_no_subscription_found"
+
+        case .privacyProActivatingRestoreErrorMissingAccountOrTransactions: return "m_privacy-pro_activating_restore_error_missing_account_or_transactions"
+        case .privacyProActivatingRestoreErrorPastTransactionAuthenticationError: return "m_privacy-pro_activating_restore_error_past_transaction_authentication_error"
+        case .privacyProActivatingRestoreErrorFailedToObtainAccessToken: return "m_privacy-pro_activating_restore_error_failed_to_obtain_access_token"
+        case .privacyProActivatingRestoreErrorFailedToFetchAccountDetails: return "m_privacy-pro_activating_restore_error_failed_to_fetch_account_details"
+        case .privacyProActivatingRestoreErrorFailedToFetchSubscriptionDetails: return "m_privacy-pro_activating_restore_error_failed_to_fetch_subscription_details"
+        case .privacyProActivatingRestoreErrorSubscriptionExpired: return "m_privacy-pro_activating_restore_error_subscription_expired"
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"
@@ -1913,14 +1942,6 @@ extension Pixel.Event {
 
         // MARK: Browsing
         case .stopPageLoad: return "m_stop-page-load"
-                        
-        // MARK: - DuckPlayer Overlay Navigation
-        case .duckPlayerYouTubeOverlayNavigationBack: return "duckplayer.youtube.overlay.navigation.back"
-        case .duckPlayerYouTubeOverlayNavigationRefresh: return "duckplayer.youtube.overlay.navigation.refresh"
-        case .duckPlayerYouTubeNavigationWithinYouTube: return "duckplayer.youtube.overlay.navigation.within-youtube"
-        case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
-        case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
-        case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
 
         // MARK: Launch time
         case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"
@@ -1931,10 +1952,15 @@ extension Pixel.Event {
         case .aiChatNoRemoteSettingsFound(let settings):
             return "m_aichat_no_remote_settings_found-\(settings.lowercased())"
         case .openAIChatFromAddressBar: return "m_aichat_addressbar_icon"
+        case .openAIChatFromWidgetFavorite: return "m_aichat-widget-favorite"
+        case .openAIChatFromWidgetQuickAction: return "m_aichat-widget-quickaction"
+        case .openAIChatFromWidgetControlCenter: return "m_aichat-widget-control-center"
+        case .openAIChatFromWidgetLockScreenComplication: return "m_aichat-widget-lock-screen-complication"
 
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
 
+        case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
         }
     }
 }

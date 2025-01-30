@@ -184,6 +184,15 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Synchronizácia bola pozastavená.";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Prepnutie synchronizácie";
+
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "Toto zariadenie je už synchronizované. Naozaj ho že chceš synchronizovať s inou zálohou alebo zariadením? Prepínanie neodstráni žiadne údaje, ktoré už boli synchronizované s týmto zariadením.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "Prepnúť na inú synchronizáciu?";
+
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "Služba Sync & Backup je dočasne nedostupná.";
 
@@ -1074,7 +1083,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai je voliteľná funkcia, ktorá ti umožňuje anonymne chatovať s obľúbenými modelmi chatu s umelou inteligenciou tretích strán. Tvoje chaty sa nepoužívajú na trénovanie AI.\n[Viac informácií](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Zobraziť Duck.ai počas vyhľadávania";
+"duckai.settings.enable.address-bar-searching-toggle" = "Zobraziť Duck.ai na stránke vyhľadávania";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Zobraziť Duck.ai v ponuke prehliadača";

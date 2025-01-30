@@ -154,7 +154,7 @@ struct SettingsSubscriptionView: View {
     }
 
     @ViewBuilder
-    private var noEntitlementsAvailableView: some View {
+    private var missingSubscriptionOrEntitlementsView: some View {
         disabledFeaturesView
         
         // Renew Subscription (Expired)
@@ -233,8 +233,9 @@ struct SettingsSubscriptionView: View {
             if isShowingPrivacyPro {
 
                 let isSignedIn = settingsViewModel.state.subscription.isSignedIn
+                let hasSubscription = settingsViewModel.state.subscription.hasSubscription
                 let hasActiveSubscription = settingsViewModel.state.subscription.hasActiveSubscription
-                let hasNoEntitlements = settingsViewModel.state.subscription.entitlements.isEmpty
+                let hasAnyEntitlements = !settingsViewModel.state.subscription.entitlements.isEmpty
 
                 let footerLink = Link(UserText.settingsPProSectionFooter,
                                       destination: ViewConstants.privacyPolicyURL)
@@ -244,23 +245,27 @@ struct SettingsSubscriptionView: View {
                         footer: !isSignedIn ? footerLink : nil
                 ) {
 
-                    switch (isSignedIn, hasActiveSubscription, hasNoEntitlements) {
+                    switch (isSignedIn, hasSubscription, hasActiveSubscription, hasAnyEntitlements) {
 
-                        // Signed In, Subscription Expired
-                    case (true, false, _):
+                    // Signed out
+                    case (false, _, _, _):
+                        purchaseSubscriptionView
+
+                    // Signed In, Subscription Missing
+                    case (true, false, _, _):
+                        missingSubscriptionOrEntitlementsView
+
+                    // Signed In, Subscription Present & Not Active
+                    case (true, true, false, _):
                         subscriptionExpiredView
-                        
-                        // Signed in, Subscription Active, Valid entitlements
-                    case (true, true, false):
-                        subscriptionDetailsView  // View for valid subscription details
-                        
-                        // Signed in, Subscription Active, Empty Entitlements
-                    case (true, true, true):
-                        noEntitlementsAvailableView  // View for no entitlements
-                        
-                        // Signed out
-                    case (false, _, _):
-                        purchaseSubscriptionView  // View for signing up or purchasing a subscription
+
+                    // Signed in, Subscription Present & Active, Missing Entitlements
+                    case (true, true, true, false):
+                        missingSubscriptionOrEntitlementsView
+
+                    // Signed in, Subscription Present & Active, Valid entitlements
+                    case (true, true, true, true):
+                        subscriptionDetailsView
                     }
                 }
                 .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in

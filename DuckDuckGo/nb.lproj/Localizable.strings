@@ -184,6 +184,15 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Synkronisering er satt på pause";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Bytt synkronisering";
+
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "Denne enheten er allerede synkronisert. Er du sikker på at du vil synkronisere den med en annen sikkerhetskopi eller enhet? Data som allerede er synkronisert med denne enheten, fjernes ikke hvis du bytter.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "Vil du bytte til en annen synkronisering?";
+
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "Sync & Backup er midlertidig utilgjengelig.";
 
@@ -1074,7 +1083,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai er en valgfri funksjon der du kan chatte anonymt med populære tredjeparts AI-chat-modeller. Chattene dine brukes ikke til å trene AI.\n[Finn ut mer](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Vis Duck.ai mens du søker";
+"duckai.settings.enable.address-bar-searching-toggle" = "Vis Duck.ai på søkesiden";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Vis Duck.ai i nettlesermenyen";

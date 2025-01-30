@@ -41,6 +41,10 @@ struct UserText {
                                                     value: "Search DuckDuckGo",
                                                     comment: "Placeholder text in search field on the search and favorites widget")
 
+    static let quickActionsSearch = NSLocalizedString("widget.quickactions.search",
+                                          value: "Search",
+                                          comment: "Placeholder text in search field on the quick actions widget")
+
     static let noFavoritesMessage = NSLocalizedString("widget.no.favorites.message",
                                                       value: "Quickly visit your favorite sites.",
                                                       comment: "Message shown in the favorites widget empty state.")
@@ -53,9 +57,18 @@ struct UserText {
                                                                   value: "Search Passwords",
                                                                   comment: "Display name for search passwords widget in widget gallery")
 
+
     static let passwordsWidgetGalleryDescription = NSLocalizedString("widget.gallery.passwords.description",
                                                                   value: "Quickly search your saved DuckDuckGo passwords.",
                                                                   comment: "Description of search passwords widget in widget gallery")
+
+    static let quickActionsWidgetGalleryDisplayName = NSLocalizedString("widget.gallery.quickactions.display.name",
+                                                                  value: "Shortcuts",
+                                                                  comment: "Display name for quick actions widget in widget gallery")
+
+    static let quickActionsWidgetGalleryDescription = NSLocalizedString("widget.gallery.quickactions.description",
+                                                                  value: "Search, chat on Duck.ai, or view your passwords.",
+                                                                  comment: "Description of quickActions widget in widget gallery")
 
     static let passwords = NSLocalizedString("widget.passwords",
                                              value: "Search Passwords",
@@ -207,5 +220,15 @@ struct UserText {
         "lock.screen.widget.passwords.description",
         value: "Quickly search your saved DuckDuckGo passwords.",
         comment: "Description shown to the user when adding the Search Passwords lock screen widget")
+
+    static let lockScreenAIChatTitle = NSLocalizedString(
+        "lock.screen.widget.aichat.title",
+        value: "Duck.ai",
+        comment: "Title shown to the user when adding the Duck.ai lock screen widget")
+
+    static let lockScreenAIChatDescription = NSLocalizedString(
+        "lock.screen.widget.aichat.description",
+        value: "Quickly start a new AI chat in Duck.ai",
+        comment: "Description shown to the user when adding the Duck.ai lock screen widget")
 
 }

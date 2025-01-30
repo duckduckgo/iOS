@@ -59,16 +59,17 @@ protocol FreeTrialsFeatureFlagExperimenting: FeatureFlagExperimentDescribing {
     /// - Returns: The user's cohort, or `nil` if the experiment is not enabled.
     func getCohortIfEnabled() -> (any FlagCohort)?
 
-    /// Provides experiment-specific parameters if applicable.
+    /// Implementations can use this method to provide a dictionary of parameters
+    /// associated with an experiment and the user's cohort.
     ///
-    /// This method returns parameters associated with the experiment and cohort, based on
-    /// certain criteria. Implementations can use this to provide experiment-specific data
-    /// to be used for analytics or feature configuration.
+    /// - Parameters:
+    ///   - cohort: The cohort for which the experiment parameters are being retrieved.
     ///
-    /// - Parameter cohort: The cohort assigned to the user.
-    /// - Returns: A dictionary of experiment-specific parameters, or `nil` if parameters
-    ///            are not applicable.
-    func freeTrialParametersIfNotPreviouslyReturned(for cohort: any FlagCohort) -> [String: String]?
+    /// - Returns: A dictionary containing experiment-specific parameters:
+    ///   - Experiment name.
+    ///   - Cohort value, which may be adjusted based on criteria (e.g., adding `"_outside"`).
+    ///   Returns `nil` if parameters are not applicable.
+    func oneTimeParameters(for cohort: any FlagCohort) -> [String: String]?
 
     /// Increments the count of paywall views if the user's enrollment date is within the conversion window.
     func incrementPaywallViewCountIfWithinConversionWindow()
@@ -179,17 +180,25 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
                 as? FreeTrialsFeatureFlagExperiment.Cohort
     }
 
-    /// Provides free trial experiment parameters if they haven't been returned before.
+    /// Provides one-time free trial experiment parameters for the user's cohort.
     ///
-    /// This method checks whether the experiment parameters for the user's cohort have already been returned.
-    /// If not, it returns a dictionary of parameters containing the experiment name and cohort.
-    /// If the user is outside the conversion window, `_outside` is appended to the cohort name.
-    /// This ensures parameters are provided only once per user.
+    /// This method ensures that experiment parameters for the user's cohort are returned only once.
+    /// It checks whether the parameters have already been provided using a persistent storage key. If they
+    /// have not, it calculates the cohort value based on the user's conversion window status and returns
+    /// a dictionary of parameters containing the experiment name and cohort.
     ///
-    /// - Parameter cohort: The cohort to which the user is assigned.
-    /// - Returns: A dictionary containing the experiment name and cohort, or `nil` if the parameters
-    ///            have already been returned.
-    func freeTrialParametersIfNotPreviouslyReturned(for cohort: any FlagCohort) -> [String: String]? {
+    /// - Cohort Value Calculation:
+    ///   - If the user is within the conversion window, the `cohort.rawValue` is used as the cohort value.
+    ///   - If the user is outside the conversion window, `"_outside"` is appended to the cohort value.
+    ///
+    /// The method also updates the storage flag to indicate that the parameters have been returned,
+    /// preventing duplicate retrievals.
+    ///
+    /// - Returns: A dictionary containing:
+    ///   - `Constants.freeTrialParameterExperimentName`: The experiment name.
+    ///   - `Constants.freeTrialParameterExperimentCohort`: The cohort name.
+    ///   Returns `nil` if the parameters have already been provided.
+    func oneTimeParameters(for cohort: any FlagCohort) -> [String: String]? {
         let hasReturnedParameters = storage.object(forKey: Constants.hasReturnedFreeTrialParametersKey) as? Bool ?? false
 
         // Return parameters only if they haven't been returned before

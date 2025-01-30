@@ -184,6 +184,15 @@
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Sync è in pausa";
 
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Cambia sincronizzazione";
+
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "Questo dispositivo è già sincronizzato. Vuoi davvero sincronizzarlo con un backup o un dispositivo diverso? L'operazione non rimuoverà alcun dato già sincronizzato su questo dispositivo.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "Vuoi passare a una sincronizzazione diversa?";
+
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "Sync & Backup non è temporaneamente disponibile.";
 
@@ -1074,7 +1083,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai è una funzionalità opzionale che consente di chattare in forma anonima con i più diffusi modelli di chat AI di terze parti. Le chat non vengono utilizzate per addestrare l'AI.\n[Scopri di più](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Mostra Duck.ai durante la ricerca";
+"duckai.settings.enable.address-bar-searching-toggle" = "Mostra Duck.ai nella pagina di ricerca";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Mostra Duck.ai nel menu del browser";

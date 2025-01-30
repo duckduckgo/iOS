@@ -129,7 +129,8 @@ struct WebView: UIViewRepresentable {
     }
     
     func updateUIView(_ webView: WKWebView, context: Context) {
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.setValue("http://localhost", forHTTPHeaderField: "Referer")
         webView.load(request)
     }
 }

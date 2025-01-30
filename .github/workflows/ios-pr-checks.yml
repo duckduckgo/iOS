@@ -37,7 +37,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.branch || github.ref_name }}
     - name: SwiftLint
       uses: docker://norionomura/swiftlint:0.54.0_swift-5.9.0
       with:
@@ -51,7 +53,10 @@ jobs:
 
     steps:
     - name: Check out the code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.branch || github.ref_name }}
+
 
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
@@ -71,9 +76,10 @@ jobs:
 
     steps:
     - name: Check out the code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: recursive
+        ref: ${{ inputs.branch || github.ref_name }}
 
     - name: Set cache key hash
       run: |
@@ -86,7 +92,7 @@ jobs:
 
     - name: Cache SPM
       if: env.cache_key_hash
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: DerivedData/SourcePackages
         key: ${{ runner.os }}-spm-${{ env.cache_key_hash }}
@@ -167,7 +173,7 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
 
     - name: Check out the code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -182,7 +188,7 @@ jobs:
 
     - name: Cache SPM
       if: env.cache_key_hash
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: DerivedData/SourcePackages
         key: ${{ runner.os }}-spm-release-${{ env.cache_key_hash }}

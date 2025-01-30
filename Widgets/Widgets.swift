@@ -219,6 +219,19 @@ struct Widgets: WidgetBundle {
         makeWidgets()
     }
 
+    @available(iOSApplicationExtension 16.0, *)
+    private var lockScreenWidgets: some Widget {
+        WidgetBundleBuilder.buildBlock(
+                 SearchLockScreenWidget(),
+                 VoiceSearchLockScreenWidget(),
+                 EmailProtectionLockScreenWidget(),
+                 FireButtonLockScreenWidget(),
+                 FavoritesLockScreenWidget(),
+                 AIChatLockScreenWidget(),
+                 PasswordsLockScreenWidget()
+             )
+    }
+
     private func makeWidgets() -> some Widget {
         if #available(iOS 17, *) {
             return WidgetBundleBuilder.buildBlock(QuickActionsWidget(),
@@ -226,27 +239,14 @@ struct Widgets: WidgetBundle {
                                                   PasswordsWidget(),
                                                   VPNBundle().body,
                                                   SearchWidget(),
-                                                  SearchLockScreenWidget(),
-                                                  VoiceSearchLockScreenWidget(),
-                                                  EmailProtectionLockScreenWidget(),
-                                                  FireButtonLockScreenWidget(),
-                                                  FavoritesLockScreenWidget(),
-                                                  AIChatLockScreenWidget(),
-                                                  PasswordsLockScreenWidget()
-            )
+                                                  lockScreenWidgets)
         }
         
         if #available(iOS 16.0, *) {
             return WidgetBundleBuilder.buildBlock(SearchWidget(),
                                                   PasswordsWidget(),
                                                   FavoritesWidget(),
-                                                  SearchLockScreenWidget(),
-                                                  VoiceSearchLockScreenWidget(),
-                                                  EmailProtectionLockScreenWidget(),
-                                                  FireButtonLockScreenWidget(),
-                                                  FavoritesLockScreenWidget(),
-                                                  AIChatLockScreenWidget(),
-                                                  PasswordsLockScreenWidget())
+                                                  lockScreenWidgets)
         } else {
             return WidgetBundleBuilder.buildBlock(SearchWidget(),
                                                   PasswordsWidget(),

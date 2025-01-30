@@ -1083,7 +1083,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai je volitelná funkce, která umožňuje anonymně chatovat s populárními AI chatovacími modely třetích stran. Tvoje chaty se nepoužívají k trénování AI.\n[Další informace](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Zobrazit Duck.ai při vyhledávání";
+"duckai.settings.enable.address-bar-searching-toggle" = "Zobrazit Duck.ai na stránce vyhledávání";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Zobrazit Duck.ai v nabídce prohlížeče";

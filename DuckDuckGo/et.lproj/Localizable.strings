@@ -1083,7 +1083,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai on valikuline funktsioon, mis võimaldab anonüümselt vestelda populaarsete kolmanda poole AI vestlusmudelitega. Teie vestlusi ei kasutata tehisintellekti treenimiseks.\n[Lisateave](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Kuva Duck.ai otsingu ajal";
+"duckai.settings.enable.address-bar-searching-toggle" = "Kuva Duck.ai otsingulehel";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Kuva Duck.ai brauseri menüüs";

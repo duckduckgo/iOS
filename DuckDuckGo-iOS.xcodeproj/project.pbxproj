@@ -263,6 +263,7 @@
 		4B6ED9452B992FE4007F5CAA /* vpn-dark-mode.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B6ED9442B992FE4007F5CAA /* vpn-dark-mode.json */; };
 		4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75EA9126A266CB00018634 /* PrintingUserScript.swift */; };
 		4B948E2629DCCDB9002531FA /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = 4B948E2529DCCDB9002531FA /* Persistence */; };
+		4B94B79E2D4831D90014AAB8 /* SyncUI-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = 4B94B79D2D4831D90014AAB8 /* SyncUI-iOS */; };
 		4BB7CBB02AF59C310014A35F /* VPNWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB7CBAF2AF59C310014A35F /* VPNWidget.swift */; };
 		4BBBBA872B02E85400D965DA /* DesignResourcesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4BBBBA862B02E85400D965DA /* DesignResourcesKit */; };
 		4BBBBA922B03291700D965DA /* VPNWaitlistUserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBBA912B03291700D965DA /* VPNWaitlistUserText.swift */; };
@@ -573,7 +574,6 @@
 		8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8586A10C24CBA7070049720E /* FindInPageActivity.swift */; };
 		8586A10E24CBAF5B0049720E /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		8586A11024CCCD040049720E /* TabsBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8586A10F24CCCD040049720E /* TabsBarViewController.swift */; };
-		85875B6129912A9900115F05 /* SyncUI in Frameworks */ = {isa = PBXBuildFile; productRef = 85875B6029912A9900115F05 /* SyncUI */; };
 		8588026624E420BD00C24AB6 /* LargeOmniBarStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8588026424E4209900C24AB6 /* LargeOmniBarStateTests.swift */; };
 		8588026A24E424EE00C24AB6 /* AppWidthObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8588026824E424AF00C24AB6 /* AppWidthObserverTests.swift */; };
 		858D009D2B9799FC004E5B4C /* History in Frameworks */ = {isa = PBXBuildFile; productRef = 858D009C2B9799FC004E5B4C /* History */; };
@@ -1681,6 +1681,7 @@
 		4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuControllerView.swift; sourceTree = "<group>"; };
 		4B6ED9442B992FE4007F5CAA /* vpn-dark-mode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "vpn-dark-mode.json"; sourceTree = "<group>"; };
 		4B75EA9126A266CB00018634 /* PrintingUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingUserScript.swift; sourceTree = "<group>"; };
+		4B94B79C2D4831700014AAB8 /* SyncUI-iOS */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "SyncUI-iOS"; sourceTree = "<group>"; };
 		4BB7CBAF2AF59C310014A35F /* VPNWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWidget.swift; sourceTree = "<group>"; };
 		4BBBBA912B03291700D965DA /* VPNWaitlistUserText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWaitlistUserText.swift; sourceTree = "<group>"; };
 		4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoopExtensionTests.swift; sourceTree = "<group>"; };
@@ -1981,7 +1982,6 @@
 		858650DA246B111900C36F8A /* DaxOnboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DaxOnboarding.xcassets; sourceTree = "<group>"; };
 		8586A10C24CBA7070049720E /* FindInPageActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInPageActivity.swift; sourceTree = "<group>"; };
 		8586A10F24CCCD040049720E /* TabsBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBarViewController.swift; sourceTree = "<group>"; };
-		85875B5F29912A2D00115F05 /* SyncUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SyncUI; sourceTree = "<group>"; };
 		8588026424E4209900C24AB6 /* LargeOmniBarStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeOmniBarStateTests.swift; sourceTree = "<group>"; };
 		8588026824E424AF00C24AB6 /* AppWidthObserverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWidthObserverTests.swift; sourceTree = "<group>"; };
 		8590CB602684D0600089F6BF /* CookieDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieDebugViewController.swift; sourceTree = "<group>"; };
@@ -3292,8 +3292,8 @@
 				CB941A6E2B96AB08000F9E7A /* PrivacyDashboard in Frameworks */,
 				F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */,
 				1E5918472CA422A7008ED2B3 /* Navigation in Frameworks */,
-				85875B6129912A9900115F05 /* SyncUI in Frameworks */,
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
+				4B94B79E2D4831D90014AAB8 /* SyncUI-iOS in Frameworks */,
 				9F96F73B2C9144D5009E45D5 /* Onboarding in Frameworks */,
 				85D598872927F84C00FA3B1B /* Crashes in Frameworks */,
 			);
@@ -3976,7 +3976,7 @@
 			isa = PBXGroup;
 			children = (
 				31794BFF2821DFB600F18633 /* DuckUI */,
-				85875B5F29912A2D00115F05 /* SyncUI */,
+				4B94B79C2D4831700014AAB8 /* SyncUI-iOS */,
 				7B10FF282D11AA0D00F36BF2 /* VPNiOS */,
 				37FCAACB2993149A000E420A /* Waitlist */,
 				315C77802CFA414400699683 /* AIChat */,
@@ -7080,7 +7080,6 @@
 				31E69A62280F4CB600478327 /* DuckUI */,
 				85D598862927F84C00FA3B1B /* Crashes */,
 				F4D7F633298C00C3006C3AE9 /* FindInPageIOSJSSupport */,
-				85875B6029912A9900115F05 /* SyncUI */,
 				3760DFEC299315EF0045A446 /* Waitlist */,
 				F42D541C29DCA40B004C4FF1 /* DesignResourcesKit */,
 				0238E44E29C0FAA100615E30 /* FindInPageIOSJSSupport */,
@@ -7091,6 +7090,7 @@
 				1E5918462CA422A7008ED2B3 /* Navigation */,
 				7B2CCBA42D11ABBA00FE5852 /* VPNWidgetSupport */,
 				315C77812CFA41A400699683 /* AIChat */,
+				4B94B79D2D4831D90014AAB8 /* SyncUI-iOS */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -11963,7 +11963,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 232.1.0;
+				version = 232.1.1;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
@@ -12103,6 +12103,10 @@
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Persistence;
 		};
+		4B94B79D2D4831D90014AAB8 /* SyncUI-iOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "SyncUI-iOS";
+		};
 		4BBBBA862B02E85400D965DA /* DesignResourcesKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F42D541B29DCA40B004C4FF1 /* XCRemoteSwiftPackageReference "DesignResourcesKit" */;
@@ -12160,10 +12164,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Suggestions;
-		};
-		85875B6029912A9900115F05 /* SyncUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SyncUI;
 		};
 		858D009C2B9799FC004E5B4C /* History */ = {
 			isa = XCSwiftPackageProductDependency;

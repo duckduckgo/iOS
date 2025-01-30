@@ -80,7 +80,7 @@ jobs:
     name: Unit Tests
 
     runs-on: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 60 # temporary (vs original 20) to fix the issue with GHA slowness
 
     outputs:
       commit_author: ${{ steps.fetch_commit_author.outputs.commit_author }}

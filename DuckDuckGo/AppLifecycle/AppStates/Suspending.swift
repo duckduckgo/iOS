@@ -36,6 +36,7 @@ import UIKit
 ///   - This is a short-lived state and is part of the app's standard lifecycle.
 ///   - It allows the app to prepare for a potential transition to `Background`, such as pausing animations
 ///     or saving transient state information.
+@MainActor
 struct Suspending: AppState {
 
     private let application: UIApplication

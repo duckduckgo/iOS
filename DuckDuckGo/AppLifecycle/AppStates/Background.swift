@@ -35,6 +35,7 @@ import Core
 ///   - Background tasks, such as saving data or refreshing content, should be handled in this state.
 ///   - Use this state to ensure that the app's current state is saved and any necessary cleanup is performed
 ///     to release resources or prepare for a potential termination.
+@MainActor
 struct Background: AppState {
 
     private let lastBackgroundDate: Date = Date()
@@ -96,11 +97,7 @@ struct Background: AppState {
 
         privacyProDataReporter.saveApplicationLastSessionEnded()
 
-        resetAppStartTime()
-    }
-
-    private func resetAppStartTime() {
-        appDependencies.mainViewController.appDidFinishLaunchingStartTime = nil
+        appDependencies.mainCoordinator.resetAppStartTime()
     }
 
 }

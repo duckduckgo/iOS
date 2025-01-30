@@ -62,11 +62,11 @@ struct Launching: AppState {
     private let remoteMessagingService: RemoteMessagingService
     private let keyboardService: KeyboardService
     private let contentBlockingService: ContentBlockingService = ContentBlockingService()
-    private let configurationService: ConfigurationService
+    private let configurationService: ConfigurationService = ConfigurationService(isDebugBuild: isDebugBuild)
 
     private let window: UIWindow
 
-    private let mainViewController: MainViewController
+    private let mainCoordinator: MainCoordinator
     private let autoClear: AutoClear
 
     var urlToOpen: URL?
@@ -88,21 +88,13 @@ struct Launching: AppState {
         crashService = stateContext.crashService
 
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
-
         KeyboardConfiguration.configure()
         PixelConfiguration.configure(featureFlagger: featureFlagger)
-
         contentBlockingService.onLaunching()
-        
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
-
-        configurationService = ConfigurationService(isDebugBuild: isDebugBuild)
         configurationService.onLaunching()
-
         crashService.startAttachingCrashLogMessages(application: application)
-
         persistenceService.onLaunching()
-
         _ = DefaultUserAgentManager.shared
         removeEmailWaitlistState()
 
@@ -166,42 +158,21 @@ struct Launching: AppState {
 
         subscriptionService = SubscriptionService(privacyConfigurationManager: privacyConfigurationManager)
 
-        let homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
-                                                          remoteMessagingClient: remoteMessagingService.remoteMessagingClient,
-                                                          privacyProDataReporter: privacyProDataReporter)
-        let previewsSource = TabPreviewsSource()
-        let historyManager = Self.makeHistoryManager()
-        let tabsModel = Self.prepareTabsModel(previewsSource: previewsSource)
-
-        privacyProDataReporter.injectTabsModel(tabsModel)
-
-        let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
-        let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
-        mainViewController = MainViewController(bookmarksDatabase: persistenceService.bookmarksDatabase,
-                                                bookmarksDatabaseCleaner: syncService.syncDataProviders.bookmarksAdapter.databaseCleaner,
-                                                historyManager: historyManager,
-                                                homePageConfiguration: homePageConfiguration,
-                                                syncService: syncService.sync,
-                                                syncDataProviders: syncService.syncDataProviders,
-                                                appSettings: AppDependencyProvider.shared.appSettings,
-                                                previewsSource: previewsSource,
-                                                tabsModel: tabsModel,
-                                                syncPausedStateManager: syncService.syncErrorHandler,
-                                                privacyProDataReporter: privacyProDataReporter,
-                                                variantManager: variantManager,
-                                                contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                                contextualOnboardingLogic: daxDialogs,
-                                                contextualOnboardingPixelReporter: onboardingPixelReporter,
-                                                subscriptionFeatureAvailability: subscriptionService.subscriptionFeatureAvailability,
-                                                voiceSearchHelper: voiceSearchHelper,
-                                                featureFlagger: featureFlagger,
-                                                fireproofing: fireproofing,
-                                                subscriptionCookieManager: subscriptionService.subscriptionCookieManager,
-                                                textZoomCoordinator: Self.makeTextZoomCoordinator(),
-                                                websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
-                                                appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
-
-        mainViewController.loadViewIfNeeded()
+        mainCoordinator = MainCoordinator(syncService: syncService,
+                                          persistenceService: persistenceService,
+                                          remoteMessagingService: remoteMessagingService,
+                                          privacyProDataReporter: privacyProDataReporter,
+                                          daxDialogs: daxDialogs,
+                                          onboardingPixelReporter: onboardingPixelReporter,
+                                          variantManager: variantManager,
+                                          subscriptionService: subscriptionService,
+                                          voiceSearchHelper: voiceSearchHelper,
+                                          featureFlagger: featureFlagger,
+                                          fireproofing: fireproofing,
+                                          accountManager: accountManager,
+                                          didFinishLaunchingStartTime: didFinishLaunchingStartTime)
+        mainCoordinator.start()
+        let mainViewController = mainCoordinator.controller
         syncService.syncErrorHandler.alertPresenter = mainViewController
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -212,7 +183,7 @@ struct Launching: AppState {
         let autoClear = AutoClear(worker: mainViewController)
         self.autoClear = autoClear
         let applicationState = application.applicationState
-        vpnService = VPNService(window: window)
+        vpnService = VPNService(mainCoordinator: mainCoordinator)
         Task { [vpnService] in
             await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
             await vpnService.installRedditSessionWorkaround()
@@ -246,7 +217,7 @@ struct Launching: AppState {
             overlayWindowManager: overlayWindowManager,
             authenticationService: authenticationService,
             screenshotService: screenshotService,
-            mainViewController: mainViewController,
+            mainCoordinator: mainCoordinator,
             voiceSearchHelper: voiceSearchHelper,
             autoClear: autoClear,
             marketplaceAdPostbackManager: marketplaceAdPostbackManager,
@@ -261,66 +232,7 @@ struct Launching: AppState {
             configurationService: configurationService
         )
     }
-
-    private static func makeHistoryManager() -> HistoryManaging {
-        let provider = AppDependencyProvider.shared
-        switch HistoryManager.make(isAutocompleteEnabledByUser: provider.appSettings.autocomplete,
-                                   isRecentlyVisitedSitesEnabledByUser: provider.appSettings.recentlyVisitedSites,
-                                   privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
-                                   tld: provider.storageCache.tld) {
-
-        case .failure(let error):
-            Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
-// Commenting out as it didn't work anyway - the window was just always nil at this point
-//            if error.isDiskFull {
-//                self.presentInsufficientDiskSpaceAlert()
-//            } else {
-//                self.presentPreemptiveCrashAlert()
-//            }
-            return NullHistoryManager()
-
-        case .success(let historyManager):
-            return historyManager
-        }
-    }
-
-    private static func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
-                                         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-                                         isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
-        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-        let tabsModel: TabsModel
-        if AutoClearSettingsModel(settings: appSettings) != nil {
-            tabsModel = TabsModel(desktop: isPadDevice)
-            tabsModel.save()
-            previewsSource.removeAllPreviews()
-        } else {
-            if let storedModel = TabsModel.get() {
-                // Save new model in case of migration
-                storedModel.save()
-                tabsModel = storedModel
-            } else {
-                tabsModel = TabsModel(desktop: isPadDevice)
-            }
-        }
-        return tabsModel
-    }
-
-    private static func makeTextZoomCoordinator() -> TextZoomCoordinator {
-        let provider = AppDependencyProvider.shared
-        let storage = TextZoomStorage()
-
-        return TextZoomCoordinator(appSettings: provider.appSettings,
-                                   storage: storage,
-                                   featureFlagger: provider.featureFlagger)
-    }
-
-    private static func makeWebsiteDataManager(fireproofing: Fireproofing,
-                                               dataStoreIDManager: DataStoreIDManaging = DataStoreIDManager.shared) -> WebsiteDataManaging {
-        return WebCacheManager(cookieStorage: MigratableCookieStorage(),
-                               fireproofing: fireproofing,
-                               dataStoreIDManager: dataStoreIDManager)
-    }
-
+    
 }
 
 extension Launching {

@@ -36,7 +36,7 @@ struct AppDependencies {
     let overlayWindowManager: OverlayWindowManager
     let authenticationService: AuthenticationService
     let screenshotService: ScreenshotService
-    let mainViewController: MainViewController
+    let mainCoordinator: MainCoordinator
 
     let voiceSearchHelper: VoiceSearchHelper
     let autoClear: AutoClear

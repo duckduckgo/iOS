@@ -36,15 +36,15 @@ import NetworkProtection
 ///     - When the user presses the home button, swipes up to the App Switcher, or receives a system interruption.
 /// - Notes:
 ///   - This is one of the two long-living states in the app's lifecycle (along with `Background`).
+@MainActor
 struct Foreground: AppState {
 
     let application: UIApplication
     let appDependencies: AppDependencies
 
     private let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
-
-    private var mainViewController: MainViewController {
-        appDependencies.mainViewController
+    private var mainCoordinator: MainCoordinator {
+        appDependencies.mainCoordinator
     }
 
     // MARK: Handle logic when transitioning from Launched to Foreground
@@ -114,15 +114,14 @@ struct Foreground: AppState {
         appDependencies.syncService.onForeground()
         appDependencies.overlayWindowManager.removeNonAuthenticationOverlay()
 
-        StatisticsLoader.shared.load {
+        StatisticsLoader.shared.load { 
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
             self.reportAdAttribution()
             self.appDependencies.onboardingPixelReporter.fireEnqueuedPixelsIfNeeded()
         }
 
-        mainViewController.showBars()
-        mainViewController.didReturnFromBackground()
+        mainCoordinator.onForeground()
 
 //        if !appDependencies.privacyStore.authenticationEnabled {
 //            showKeyboardOnLaunch()
@@ -135,7 +134,7 @@ struct Foreground: AppState {
 
         fireFailedCompilationsPixelIfNeeded()
 
-        appDependencies.vpnService.onForeground(mainViewController: mainViewController)
+        appDependencies.vpnService.onForeground()
 
         let subscriptionService = appDependencies.subscriptionService
         subscriptionService.onForeground()
@@ -156,31 +155,23 @@ struct Foreground: AppState {
 
     // MARK: handle application(_:open:options:) logic here
     func openURL(_ url: URL) {
-         Logger.sync.debug("App launched with url \(url.absoluteString)")
-         // If showing the onboarding intro ignore deeplinks
-         guard mainViewController.needsToShowOnboardingIntro() == false else {
-             return
-         }
+        Logger.sync.debug("App launched with url \(url.absoluteString)")
+        guard mainCoordinator.shouldProcessDeepLink(url) else { return }
 
-         if handleEmailSignUpDeepLink(url) {
-             return
-         }
+        NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
 
-         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
+        // TODO: to be refactored after introducing autoclearservice, we won't need clearNavigationStack, it should be hidden implementation, we
+        // TODO: should just call mainCoordinator.handleURL or processDeeplink
+        // The openVPN action handles the navigation stack on its own and does not need it to be cleared
+        if url != AppDeepLinkSchemes.openVPN.url {
+            mainCoordinator.clearNavigationStack()
+        }
 
-         // The openVPN action handles the navigation stack on its own and does not need it to be cleared
-         if url != AppDeepLinkSchemes.openVPN.url {
-             mainViewController.clearNavigationStack()
-         }
-
-         Task { @MainActor in
-             // Autoclear should have happened by now
-             appDependencies.keyboardService.showKeyboardIfSettingOn = false
-
-             if !handleAppDeepLink(application, mainViewController, url) {
-                 mainViewController.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil, fromExternalLink: true)
-             }
-         }
+        Task { @MainActor in // TODO: to be removed
+            // Autoclear should have happened by now
+            appDependencies.keyboardService.showKeyboardIfSettingOn = false
+            mainCoordinator.handleURL(url)
+        }
     }
 
     private func fireAppLaunchPixel() {
@@ -252,16 +243,6 @@ struct Foreground: AppState {
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
     }
 
-    private func handleEmailSignUpDeepLink(_ url: URL) -> Bool {
-        guard url.absoluteString.starts(with: URL.emailProtection.absoluteString),
-              let navViewController = mainViewController.presentedViewController as? UINavigationController,
-              let emailSignUpViewController = navViewController.topViewController as? EmailSignupViewController else {
-            return false
-        }
-        emailSignUpViewController.loadUrl(url)
-        return true
-    }
-
     private func fireFailedCompilationsPixelIfNeeded() {
         let store = FailedCompilationsStore()
         if store.hasAnyFailures {
@@ -272,86 +253,10 @@ struct Foreground: AppState {
         }
     }
 
-    @MainActor
-    func handleAppDeepLink(_ app: UIApplication, _ mainViewController: MainViewController?, _ url: URL) -> Bool {
-        guard let mainViewController else { return false }
-
-        switch AppDeepLinkSchemes.fromURL(url) {
-
-        case .newSearch:
-            mainViewController.newTab(reuseExisting: true)
-            mainViewController.enterSearch()
-
-        case .favorites:
-            mainViewController.newTab(reuseExisting: true, allowingKeyboard: false)
-
-        case .quickLink:
-            let query = AppDeepLinkSchemes.query(fromQuickLink: url)
-            mainViewController.loadQueryInNewTab(query, reuseExisting: true)
-
-        case .addFavorite:
-            mainViewController.startAddFavoriteFlow()
-
-        case .fireButton:
-            mainViewController.forgetAllWithAnimation()
-
-        case .voiceSearch:
-            mainViewController.onVoiceSearchPressed()
-
-        case .newEmail:
-            mainViewController.newEmailAddress()
-
-        case .openVPN:
-            presentNetworkProtectionStatusSettingsModal()
-
-        case .openPasswords:
-            var source: AutofillSettingsSource = .homeScreenWidget
-
-            if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-                let queryItems = components.queryItems,
-                queryItems.first(where: { $0.name == "ls" }) != nil {
-                Pixel.fire(pixel: .autofillLoginsLaunchWidgetLock)
-                source = .lockScreenWidget
-            } else {
-                Pixel.fire(pixel: .autofillLoginsLaunchWidgetHome)
-            }
-
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                mainViewController.launchAutofillLogins(openSearch: true, source: source)
-            }
-
-        default:
-            guard app.applicationState == .active,
-                  let currentTab = mainViewController.currentTab else {
-                return false
-            }
-
-            // If app is in active state, treat this navigation as something initiated form the context of the current tab.
-            mainViewController.tab(currentTab,
-                                   didRequestNewTabForUrl: url,
-                                   openedByPage: true,
-                                   inheritingAttribution: nil)
-        }
-
-        return true
-    }
-
-    @MainActor
-    func presentNetworkProtectionStatusSettingsModal() {
-        Task {
-            if case .success(let hasEntitlements) = await appDependencies.accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
-                (appDependencies.window.rootViewController as? MainViewController)?.segueToVPN()
-            } else {
-                (appDependencies.window.rootViewController as? MainViewController)?.segueToPrivacyPro()
-            }
-        }
-    }
-
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, appIsLaunching: Bool = false) {
         Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
         let autoClear = appDependencies.autoClear
         Task { @MainActor in
-
             // This if/else could potentially be removed by ensuring previous autoClear calls (triggered during both Launch and Active states) are completed before proceeding. To be looked at in next milestones
             if appIsLaunching {
                 await autoClear.clearDataIfEnabled()
@@ -360,25 +265,12 @@ struct Foreground: AppState {
             }
 
             if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
-                mainViewController.clearNavigationStack()
-                mainViewController.loadQueryInNewTab(query)
-                return
+                mainCoordinator.handleQuery(query)
+            } else if shortcutItem.type == AppDelegate.ShortcutKey.passwords {
+                mainCoordinator.handleSearchPassword()
+            } else if shortcutItem.type == AppDelegate.ShortcutKey.openVPNSettings {
+                mainCoordinator.presentNetworkProtectionStatusSettingsModal()
             }
-
-            if shortcutItem.type == AppDelegate.ShortcutKey.passwords {
-                mainViewController.clearNavigationStack()
-                // Give the `clearNavigationStack` call time to complete.
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [application] in
-                    (application.window?.rootViewController as? MainViewController)?.launchAutofillLogins(openSearch: true, source: .appIconShortcut)
-                }
-                Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
-                return
-            }
-
-            if shortcutItem.type == AppDelegate.ShortcutKey.openVPNSettings {
-                presentNetworkProtectionStatusSettingsModal()
-            }
-
         }
     }
 

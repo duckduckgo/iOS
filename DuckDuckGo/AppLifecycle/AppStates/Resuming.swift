@@ -28,6 +28,7 @@ import UIKit
 ///   - `Foreground`: The app transitions to the `Foreground` state when the app is fully active and visible to the user after resuming.
 ///   - `Background`: The app can transition to the `Background` state if,
 ///     e.g. the app is protected by a FaceID lock mechanism (introduced in iOS 18.0) and the user does not authenticate and then leaves.
+@MainActor
 struct Resuming: AppState {
 
     private let application: UIApplication

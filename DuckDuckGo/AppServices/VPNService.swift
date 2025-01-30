@@ -34,14 +34,14 @@ final class VPNService: NSObject {
     private let vpnFeatureVisibility: DefaultNetworkProtectionVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
     private let tipKitAppEventsHandler = TipKitAppEventHandler()
 
-    private let window: UIWindow
+    private let mainCoordinator: MainCoordinator
     private let accountManager: AccountManager
     private let application: UIApplication
-    init(window: UIWindow,
+    init(mainCoordinator: MainCoordinator,
          accountManager: AccountManager = AppDependencyProvider.shared.accountManager,
          application: UIApplication = UIApplication.shared,
          notificationCenter: UNUserNotificationCenter = .current()) {
-        self.window = window
+        self.mainCoordinator = mainCoordinator
         self.accountManager = accountManager
         self.application = application
         super.init()
@@ -59,10 +59,10 @@ final class VPNService: NSObject {
         await vpnWorkaround.installRedditSessionWorkaround()
     }
 
-    func onForeground(autoClearTask: Task<Void, Never>? = nil, // TODO: optional just for now, but we always have to pass autoClearTask
-                      mainViewController: MainViewController) {
+    @MainActor
+    func onForeground(autoClearTask: Task<Void, Never>? = nil) { // TODO: optional just for now, but we always have to pass autoClearTask
         refreshVPNWidget()
-        presentExpiredEntitlementAlertIfNeeded(mainViewController: mainViewController)
+        presentExpiredEntitlementAlertIfNeeded()
         presentExpiredEntitlementNotificationIfNeeded()
 
         Task {
@@ -97,15 +97,17 @@ final class VPNService: NSObject {
         presenter.showEntitlementNotification()
     }
 
-    private func presentExpiredEntitlementAlertIfNeeded(mainViewController: MainViewController) {
+    @MainActor
+    private func presentExpiredEntitlementAlertIfNeeded() {
         if tunnelDefaults.showEntitlementAlert {
-            presentExpiredEntitlementAlert(mainViewController: mainViewController)
+            presentExpiredEntitlementAlert()
         }
     }
 
-    private func presentExpiredEntitlementAlert(mainViewController: MainViewController) {
+    @MainActor
+    private func presentExpiredEntitlementAlert() {
         let alertController = CriticalAlerts.makeExpiredEntitlementAlert {
-            mainViewController.segueToPrivacyPro()
+            self.mainCoordinator.segueToPrivacyPro()
         }
         application.window?.rootViewController?.present(alertController, animated: true) {
             self.tunnelDefaults.showEntitlementAlert = false
@@ -151,6 +153,7 @@ extension VPNService: UNUserNotificationCenterDelegate {
         completionHandler(.banner)
     }
 
+    @MainActor
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
@@ -158,21 +161,10 @@ extension VPNService: UNUserNotificationCenterDelegate {
             let identifier = response.notification.request.identifier
 
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
-                presentNetworkProtectionStatusSettingsModal()
+                mainCoordinator.presentNetworkProtectionStatusSettingsModal()
             }
         }
         completionHandler()
-    }
-
-    // TODO: should be moved to (future) AppCoordinator
-    private func presentNetworkProtectionStatusSettingsModal() {
-        Task { @MainActor in
-            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
-                (window.rootViewController as? MainViewController)?.segueToVPN()
-            } else {
-                (window.rootViewController as? MainViewController)?.segueToPrivacyPro()
-            }
-        }
     }
 
 }

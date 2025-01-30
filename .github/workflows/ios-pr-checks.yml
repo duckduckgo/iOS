@@ -37,9 +37,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Check out the code
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      uses: actions/checkout@v4
+
+    - name: Check out the code
+      if: github.event_name != 'pull_request' && github.event_name != 'push'
+      uses: actions/checkout@v4
       with:
         ref: ${{ inputs.branch || github.ref_name }}
+
     - name: SwiftLint
       uses: docker://norionomura/swiftlint:0.54.0_swift-5.9.0
       with:
@@ -53,10 +60,14 @@ jobs:
 
     steps:
     - name: Check out the code
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      uses: actions/checkout@v4
+
+    - name: Check out the code
+      if: github.event_name != 'pull_request' && github.event_name != 'push'
       uses: actions/checkout@v4
       with:
         ref: ${{ inputs.branch || github.ref_name }}
-
 
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
@@ -76,6 +87,11 @@ jobs:
 
     steps:
     - name: Check out the code
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      uses: actions/checkout@v4
+
+    - name: Check out the code
+      if: github.event_name != 'pull_request' && github.event_name != 'push'
       uses: actions/checkout@v4
       with:
         submodules: recursive
@@ -173,9 +189,14 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
 
     - name: Check out the code
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      uses: actions/checkout@v4
+
+    - name: Check out the code
+      if: github.event_name != 'pull_request' && github.event_name != 'push'
       uses: actions/checkout@v4
       with:
-        submodules: recursive
+        ref: ${{ inputs.branch || github.ref_name }}
 
     - name: Set cache key hash
       run: |

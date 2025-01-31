@@ -41,7 +41,7 @@ public class StatisticsLoader {
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement(),
-         usageSegmentation: UsageSegmenting = UsageSegmentation(),
+         usageSegmentation: UsageSegmenting = UsageSegmentation(pixelEvents: UsageSegmentation.pixelEvents),
          fireAppRetentionExperimentPixels: @escaping () -> Void = PixelKit.fireAppRetentionExperimentPixels,
          fireSearchExperimentPixels: @escaping () -> Void = PixelKit.fireSearchExperimentPixels,
          pixelFiring: PixelFiring.Type = Pixel.self) {
@@ -200,4 +200,19 @@ public class StatisticsLoader {
 
 private extension BoolFileMarker.Name {
     static let isATBPresent = BoolFileMarker.Name(rawValue: "atb-present")
+}
+
+extension UsageSegmentation {
+
+    static let pixelEvents: EventMapping<UsageSegmentationPixel> = .init { event, _, params, _ in
+        switch event {
+        case .usageSegments:
+            guard let params = params else {
+                assertionFailure("Missing pixel parameters")
+                return
+            }
+
+            Pixel.fire(pixel: .usageSegments, withAdditionalParameters: params)
+        }
+    }
 }

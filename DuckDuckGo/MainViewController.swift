@@ -240,8 +240,10 @@ class MainViewController: UIViewController {
 
         self.previewsSource = previewsSource
 
+        let interactionStateSource = WebViewStateRestorationManager(featureFlagger: featureFlagger).isFeatureEnabled ? TabInteractionStateDiskSource() : nil
         self.tabManager = TabManager(model: tabsModel,
                                      previewsSource: previewsSource,
+                                     interactionStateSource: interactionStateSource,
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
                                      syncService: syncService,
@@ -1182,12 +1184,16 @@ class MainViewController: UIViewController {
         }
 
         self.showMenuHighlighterIfNeeded()
-        
-        coordinator.animate { _ in
-            self.swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model, scrollToSelected: true)
 
+        let isKeyboardShowing = omniBar.textField.isFirstResponder
+        coordinator.animate { _ in
+            self.swipeTabsCoordinator?.invalidateLayout()
             self.deferredFireOrientationPixel()
         } completion: { _ in
+            if isKeyboardShowing {
+                self.omniBar.becomeFirstResponder()
+            }
+
             ViewHighlighter.updatePositions()
         }
 
@@ -1723,7 +1729,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    private func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
+    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
         aiChatViewControllerManager.openAIChat(query, payload: payload, on: self)
     }
 }
@@ -2590,7 +2596,14 @@ extension MainViewController: TabSwitcherDelegate {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }
-    
+
+    func tabSwitcherDidRequestCloseAll(tabSwitcher: TabSwitcherViewController) {
+        // TODO polish
+        self.forgetTabs()
+        self.refreshUIAfterClear()
+        tabSwitcher.dismiss()
+    }
+
 }
 
 extension MainViewController: BookmarksDelegate {

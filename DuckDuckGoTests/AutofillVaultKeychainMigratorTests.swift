@@ -20,7 +20,7 @@
 import XCTest
 @testable import Core
 import BrowserServicesKit
-import TestUtils
+import PersistenceTestingUtils
 
 final class AutofillVaultKeychainMigratorTests: XCTestCase {
 

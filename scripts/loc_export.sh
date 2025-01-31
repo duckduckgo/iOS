@@ -10,5 +10,5 @@ echo "Updating..."
 echo "Exporting..."
 loc_path="${script_dir}/assets/loc"
 rm -r "$loc_path"
-xcodebuild -exportLocalizations -project "${base_dir}/DuckDuckGo.xcodeproj" -localizationPath "$loc_path" -sdk iphoneos -exportLanguage en
+xcodebuild -exportLocalizations -project "${base_dir}/DuckDuckGo-iOS.xcodeproj" -localizationPath "$loc_path" -sdk iphoneos -exportLanguage en
 open "${loc_path}/en.xcloc/Localized Contents"

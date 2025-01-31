@@ -323,7 +323,11 @@ struct Launching: AppState {
 
             let url = URL.pixelUrl(forPixelNamed: pixelName)
             let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
-            let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
+            guard let request = APIRequestV2(url: url, method: .get, queryItems: parameters.toQueryItems(), headers: apiHeaders) else {
+                assertionFailure("Invalid request Pixel request")
+                onComplete(false, nil)
+                return
+            }
             Task {
                 do {
                     _ = try await DefaultAPIService().fetch(request: request)
@@ -448,6 +452,11 @@ struct Launching: AppState {
             Task {
                 await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
                 await vpnWorkaround.installRedditSessionWorkaround()
+            }
+
+            if !autoClear.isClearingEnabled {
+                // If not using autoclear, make sure there are no leftover states on disk.
+                mainViewController?.tabManager.removeLeftoverInteractionStates()
             }
         }
         unService = UNService(window: window, accountManager: accountManager)

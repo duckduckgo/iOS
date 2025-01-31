@@ -19,7 +19,12 @@
 
 import UIKit
 
+protocol RoundedPageSheetContainerViewControllerDelegate: AnyObject {
+    func roundedPageSheetContainerViewControllerDidDisappear(_ controller: RoundedPageSheetContainerViewController)
+}
+
 final class RoundedPageSheetContainerViewController: UIViewController {
+    weak var delegate: RoundedPageSheetContainerViewControllerDelegate?
     let contentViewController: UIViewController
     private let allowedOrientation: UIInterfaceOrientationMask
     let backgroundView = UIView()
@@ -57,6 +62,11 @@ final class RoundedPageSheetContainerViewController: UIViewController {
 
         setupBackgroundView()
         setupContentViewController()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.roundedPageSheetContainerViewControllerDidDisappear(self)
     }
 
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
@@ -122,10 +132,6 @@ final class RoundedPageSheetContainerViewController: UIViewController {
 
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         contentViewController.view.addGestureRecognizer(panGesture)
-    }
-
-    @objc func closeController() {
-        dismiss(animated: true, completion: nil)
     }
 }
 

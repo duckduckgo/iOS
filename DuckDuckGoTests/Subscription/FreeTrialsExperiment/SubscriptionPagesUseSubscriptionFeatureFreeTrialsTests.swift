@@ -158,6 +158,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
+        mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
 
         let params: [String: Any] = ["id": "monthly-free-trial"]
 
@@ -169,13 +170,14 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         XCTAssertFalse(mockFreeTrialsFeatureFlagExperiment.fireSubscriptionStartedYearlyPixelCalled)
     }
 
-    func testWhenMonthlySubscribeSucceedsForTreatment_thenSubscriptionPurchasedYearlyPixelFired() async throws {
+    func testWhenYearlySubscribeSucceedsForTreatment_thenSubscriptionPurchasedYearlyPixelFired() async throws {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
+        mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
 
         let params: [String: Any] = ["id": "yearly-free-trial"]
 
@@ -194,6 +196,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
+        mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
 
         let params: [String: Any] = ["id": "monthly-free-trial"]
 
@@ -205,13 +208,14 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         XCTAssertFalse(mockFreeTrialsFeatureFlagExperiment.fireSubscriptionStartedYearlyPixelCalled)
     }
 
-    func testWhenMonthlySubscribeSucceedsForControl_thenSubscriptionPurchasedYearlyPixelFired() async throws {
+    func testWhenYearlySubscribeSucceedsForControl_thenSubscriptionPurchasedYearlyPixelFired() async throws {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
         mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
+        mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
 
         let params: [String: Any] = ["id": "yearly-free-trial"]
 
@@ -221,6 +225,78 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Then
         XCTAssertFalse(mockFreeTrialsFeatureFlagExperiment.fireSubscriptionStartedMonthlyPixelCalled)
         XCTAssertTrue(mockFreeTrialsFeatureFlagExperiment.fireSubscriptionStartedYearlyPixelCalled)
+    }
+
+    func testWhenMonthlySubscribeSucceedsForTreatment_thenCompletePurchaseIncludesAdditionalParams() async throws {
+        // Given
+        mockAccountManager.accessToken = nil
+        mockSubscriptionManager.canPurchase = true
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
+        mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
+        mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
+
+        let params: [String: Any] = ["id": "monthly-free-trial"]
+
+        // When
+        _ = await sut.subscriptionSelected(params: params, original: MockWKScriptMessage(name: "", body: ""))
+
+        // Then
+        XCTAssertNotNil(mockAppStorePurchaseFlow.completeSubscriptionAdditionalParams)
+    }
+
+    func testWhenYearlySubscribeSucceedsForTreatment_thenCompletePurchaseIncludesAdditionalParams() async throws {
+        // Given
+        mockAccountManager.accessToken = nil
+        mockSubscriptionManager.canPurchase = true
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
+        mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
+        mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
+
+        let params: [String: Any] = ["id": "yearly-free-trial"]
+
+        // When
+        _ = await sut.subscriptionSelected(params: params, original: MockWKScriptMessage(name: "", body: ""))
+
+        // Then
+        XCTAssertNotNil(mockAppStorePurchaseFlow.completeSubscriptionAdditionalParams)
+    }
+
+    func testWhenMonthlySubscribeSucceedsForControl_thenCompletePurchaseIncludesAdditionalParams() async throws {
+        // Given
+        mockAccountManager.accessToken = nil
+        mockSubscriptionManager.canPurchase = true
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
+        mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
+        mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
+
+        let params: [String: Any] = ["id": "monthly-free-trial"]
+
+        // When
+        _ = await sut.subscriptionSelected(params: params, original: MockWKScriptMessage(name: "", body: ""))
+
+        // Then
+        XCTAssertNotNil(mockAppStorePurchaseFlow.completeSubscriptionAdditionalParams)
+    }
+
+    func testWhenYearlySubscribeSucceedsForControl_thenCompletePurchaseIncludesAdditionalParams() async throws {
+        // Given
+        mockAccountManager.accessToken = nil
+        mockSubscriptionManager.canPurchase = true
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
+        mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
+        mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
+
+        let params: [String: Any] = ["id": "yearly-free-trial"]
+
+        // When
+        _ = await sut.subscriptionSelected(params: params, original: MockWKScriptMessage(name: "", body: ""))
+
+        // Then
+        XCTAssertNotNil(mockAppStorePurchaseFlow.completeSubscriptionAdditionalParams)
     }
 }
 
@@ -253,7 +329,7 @@ private extension SubscriptionOptions {
 private final class MockFreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting {
     
     typealias CohortType = FreeTrialsFeatureFlagExperiment.Cohort
-    var rawValue: String = ""
+    var rawValue: String = "MockFreeTrialsFeatureFlagExperiment"
     var source: FeatureFlagSource = .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
 
     var incrementPaywallViewCountCalled = false
@@ -268,8 +344,11 @@ private final class MockFreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagEx
         cohortToReturn
     }
 
-    func freeTrialParametersIfNotPreviouslyReturned(for cohort: any FlagCohort) -> [String: String]? {
-        nil
+    func oneTimeParameters(for cohort: any FlagCohort) -> [String: String]? {
+        [
+            FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentName: rawValue,
+            FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentCohort: cohortToReturn.rawValue
+        ]
     }
 
     func incrementPaywallViewCountIfWithinConversionWindow() {

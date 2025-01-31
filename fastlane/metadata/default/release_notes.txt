@@ -1,1 +1,1 @@
-- Bug fixes and other improvements.
+You can now show or hide shortcuts to Duck.ai in the DuckDuckGo browser menu and search page. Duck.ai is our free, optional feature that lets you use popular 3rd-party AI chat models privately. Your Duck.ai chats are anonymized by us and not used to train AI models. No account needed — you can try it today by tapping the chat icon in the browser menu, or hide the icon in Settings > Duck.ai

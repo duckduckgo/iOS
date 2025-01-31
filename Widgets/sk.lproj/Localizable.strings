@@ -1,3 +1,6 @@
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Musíš povoliť VPN z aplikácie DuckDuckGo.";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Okamžite vygenerujte novú súkromnú Duck adresu.";
 
@@ -33,6 +36,24 @@
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Hlasové vyhľadávanie";
+
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Pripája sa...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Odpájanie...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Neznáma lokalita";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Nie je pripojený";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN je vypnutá";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN je zapnutá";
 
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Rýchlo vyhľadajte svoje uložené DuckDuckGo heslá.";

@@ -20,6 +20,7 @@
 
 import Core
 import Subscription
+import Common
 
 public struct UserText {
     
@@ -217,7 +218,12 @@ public struct UserText {
     
     public static let openHomeTab = NSLocalizedString("tab.open.home", value: "Open home tab", comment: "Accessibility label on tab cell")
     public static let closeHomeTab = NSLocalizedString("tab.close.home", value: "Close home tab", comment: "Accessibility label on remove button")
-    
+
+    public static func closeTabs(withCount count: Int) -> String {
+        let message = NotLocalizedString("tab.close.with.count", value: "Close All %@ Tabs", comment: "Close tabs with a count")
+        return message.format(arguments: "\(count)")
+    }
+
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.close.with.title.and.address", value: "Close \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
         return message.format(arguments: title, address)
@@ -991,6 +997,9 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let unknownErrorTryAgainMessage = NSLocalizedString("error.unknown.try.again", value: "An unknown error has occurred", comment: "Generic error message on a dialog for when the cause is not known.")
     public static let syncPausedAlertOkButton = NSLocalizedString("alert.sync-paused-alert-ok-button", value: "OK", comment: "Confirmation button in alert")
     public static let syncPausedAlertLearnMoreButton = NSLocalizedString("alert.sync-paused-alert-learn-more-button", value: "Learn More", comment: "Learn more button in alert")
+    public static let syncAlertSwitchAccountTitle = NSLocalizedString("alert.sync-switch-account-title", value: "Switch to a different Sync?", comment: "Switch account title in alert")
+    public static let syncAlertSwitchAccountMessage = NSLocalizedString("alert.sync-switch-account-message", value: "This device is already synced, are you sure you want to sync it with a different backup or device? Switching won't remove any data already synced to this device.", comment: "Description for switching sync accounts when there's two")
+    public static let syncAlertSwitchAccountButton = NSLocalizedString("alert.sync-switch-account-button", value: "Switch Sync", comment: "Switch account button in alert")
     public static let syncErrorAlertTitle = NSLocalizedString("alert.sync-error", value: "Sync & Backup Error", comment: "Title for sync error alert")
     public static let unableToSyncToServerDescription = NSLocalizedString("alert.unable-to-sync-to-server-description", value: "Unable to connect to the server.", comment: "Description for unable to sync to server error")
     public static let unableToSyncWithOtherDeviceDescription = NSLocalizedString("alert.unable-to-sync-with-other-device-description", value: "Unable to Sync with another device.", comment: "Description for unable to sync with another device error")
@@ -1388,7 +1397,7 @@ Duck.ai is an optional feature that lets you chat anonymously with popular 3rd-p
 """, comment: "Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and ()")
     public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("duckai.settings.enable.browsing-menu-toggle", value: "Show Duck.ai in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
 
-    public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("duckai.settings.enable.address-bar-toggle", value: "Show Duck.ai While Searching", comment: "Toggle text to enable/disable AI Chat in the address bar")
+    public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("duckai.settings.enable.address-bar-searching-toggle", value: "Show Duck.ai on Search Page", comment: "Toggle text to enable/disable AI Chat in the address bar")
 
     // MARK: - New Tab Page
 

@@ -1,27 +1,42 @@
-DuckDuckGo is a free browser that provides the most comprehensive online privacy protection in one app. Unlike most popular browsers, it has powerful privacy protections by default, including our search engine that doesn’t track your history and over a dozen other built-in protections. Millions of people use DuckDuckGo as their go-to browser to protect their everyday online activities, from searching to browsing, emailing, and more.
- 
-FEATURE HIGHLIGHTS
-• Search Privately by Default - DuckDuckGo Private Search comes built-in, so you can easily search the web without being tracked.
+At DuckDuckGo, we believe the best way to protect your personal information from hackers, scammers, and privacy-invasive companies is to stop it from being collected at all. That's why millions of people choose DuckDuckGo over Chrome and other browsers  to search and browse online. Our built-in search engine is like Google but never tracks your searches. And our browsing protections, such as ad tracker blocking and cookie blocking, help stop other companies from collecting your data. Oh, and our browser is free — we make money from privacy-respecting search ads, not by exploiting your data. Take back control of your personal information with the browser designed for data protection, not data collection. 
 
-• Block Tracking Cookies While Browsing - Prevent most 3rd-party Internet cookies from tracking you as you browse online.
- 
-• Escape Website Trackers Before They Load - Automatically stop most hidden trackers (3rd-party scripts) from loading, which prevents companies from collecting and using any personal data from these trackers. Stay secure with our cutting-edge tracker-blocking technology – 3rd-Party Tracker Loading Protection, which goes above and beyond what you get in most popular web browsers by default.
- 
-• Automatically Enforce Encryption - Force many sites you visit to automatically use an encrypted (HTTPS) connection, which helps shield your data from Wi-Fi snoopers and network onlookers like your Internet provider.
- 
-• Block Email Trackers (Beta) - Over 85% of emails sent to Duck Addresses (@duck.com) contain trackers that can detect when you’ve opened a message, where you were when you opened it, and what device you were using. Email Protection makes it easy to block most email trackers and hide your existing address when signing up for things online, all without switching email providers.
+FEATURE HIGHLIGHTS 
+Protect Your Searches by Default: DuckDuckGo Search comes built-in, so you can easily search online without being tracked.  
 
-• Escape Fingerprinting - Help stop companies from creating a unique identifier for you by blocking their attempts to combine specific information about your web browser and device settings.
- 
-We feature many protections not available on most Internet browsers (even incognito browsers), including protection from link tracking, Google AMP tracking, and more.
- 
-EVERYDAY PRIVACY CONTROLS
-• Tap Fire Button, Burn Data - Clear your tabs and browsing data fast with our Fire Button.
- 
-• Signal Your Privacy Preference with Global Privacy Control (GPC) - Built in to our app, GPC intends to help you express your opt-out rights automatically by telling websites not to sell or share your personal information. Whether it can be used to enforce your legal rights (for example, current or future CCPA, GDPR requirements) depends on the laws in your jurisdiction.
- 
-Read more about our free Tracking Protections at https://help.duckduckgo.com/privacy/web-tracking-protections
+Shield Your Browsing History: Our 3rd-Party Tracker Loading Protection blocks most trackers before they load, greatly exceeding what most popular browsers offer by default.  
 
-You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified. 
+Secure Your Email (Optional): Use Email Protection to block most email trackers and hide your existing email address with @duck.com addresses.   
 
-Privacy Policy: https://duckduckgo.com/privacy/
+Watch YouTube Videos Without Targeted Ads: Duck Player protects you from targeted ads and cookies with a distraction-free interface that incorporates YouTube’s strictest privacy settings for embedded video. 
+
+Automatically Enforce Encryption: Shield your data from network and Wi-Fi snoopers by forcing many sites to use an HTTPS connection.  
+
+Escape Fingerprinting: Make it harder for companies to create a unique identifier for you by blocking attempts to combine info about your browser and device.  
+
+Sync and Back Up Securely (Optional): Sync encrypted bookmarks and passwords across your devices. 
+
+Clear your tabs and browsing data in a flash with the Fire Button. 
+
+Banish cookie pop-ups and automatically set your preferences to minimize cookies and maximize privacy. 
+
+And many more protections not available on most browsers, even in private browsing mode, including protection from link tracking, Global Privacy Control (GPC), and more. 
+
+PRIVACY PRO   
+Subscribe to Privacy Pro for:   
+
+•	Our VPN: Secure your connection on up to 5 devices.     
+
+•	Identity Theft Restoration: If your identity is stolen, we’ll help restore it.   
+
+Privacy Pro Pricing & Terms   
+Payment will be charged automatically to your iTunes account until you cancel, which you can do in app settings. You have the option to provide an email address to activate your subscription on other devices, and we will only use that email address to verify your subscription. For terms of service and privacy policy, visit https://duckduckgo.com/pro/privacy-terms 
+
+You don't need to wait to take control of your personal information! Join the millions of people using DuckDuckGo to protect their everyday searching, browsing, and emailing.  
+
+Read more about our free Tracking Protections at https://help.duckduckgo.com/privacy/web-tracking-protections 
+
+Privacy Policy: https://duckduckgo.com/privacy/  
+
+Terms of Service: https://duckduckgo.com/terms 
+
+Note about 3rd-Party Tracker Protection and Search Ads: while there are some limitations following search ad clicks, viewing ads on DuckDuckGo search is anonymous. Learn more here https://help.duckduckgo.com/privacy/web-tracking-protections 

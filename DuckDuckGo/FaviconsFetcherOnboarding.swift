@@ -22,7 +22,7 @@ import Core
 import DDGSync
 import Foundation
 import SwiftUI
-import SyncUI
+import SyncUI_iOS
 
 final class FaviconsFetcherOnboarding {
 

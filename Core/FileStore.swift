@@ -19,6 +19,7 @@
 
 import Foundation
 import Configuration
+import PixelExperimentKit
 
 public class FileStore {
 
@@ -79,7 +80,15 @@ public class FileStore {
             } catch {
                 let nserror = error as NSError
                 if nserror.domain != NSCocoaErrorDomain || nserror.code != NSFileReadNoSuchFileError {
-                    Pixel.fire(pixel: .trackerDataCouldNotBeLoaded, error: error)
+                    if configuration == .trackerDataSet, let experimentName = TDSOverrideExperimentMetrics.activeTDSExperimentNameWithCohort {
+                        let parameters = [
+                            "experimentName": experimentName,
+                            "etag": UserDefaultsETagStorage().loadEtag(for: .trackerDataSet) ?? ""
+                        ]
+                        Pixel.fire(pixel: .trackerDataCouldNotBeLoaded, error: error, withAdditionalParameters: parameters)
+                    } else {
+                        Pixel.fire(pixel: .trackerDataCouldNotBeLoaded, error: error)
+                    }
                 }
             }
         }

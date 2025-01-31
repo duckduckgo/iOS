@@ -184,7 +184,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         ]
 
         // When
-        let parameters = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+        let parameters = sut.oneTimeParameters(for: cohort)
 
         // Then
         XCTAssertEqual(parameters?[FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentName], FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier)
@@ -204,7 +204,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         ]
 
         // When
-        let parameters = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+        let parameters = sut.oneTimeParameters(for: cohort)
 
         // Then
         XCTAssertEqual(parameters?[FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentCohort],
@@ -218,7 +218,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         mockUserDefaults.set(true, forKey: FreeTrialsFeatureFlagExperiment.Constants.hasReturnedFreeTrialParametersKey)
 
         // When
-        let parameters = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+        let parameters = sut.oneTimeParameters(for: cohort)
 
         // Then
         XCTAssertNil(parameters, "Parameters should not be returned if they have already been returned")
@@ -227,9 +227,10 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
     func testFreeTrialParametersIfApplicable_updatesUserDefaultsCorrectly() {
         // Given
         let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        mockFeatureFlagger.cohortToReturn = cohort
 
         // When
-        _ = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+        _ = sut.oneTimeParameters(for: cohort)
 
         // Then
         XCTAssertTrue(mockUserDefaults.bool(forKey: FreeTrialsFeatureFlagExperiment.Constants.hasReturnedFreeTrialParametersKey),
@@ -262,7 +263,6 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
     func testGetCohortIfEnabled_returnsCohortFromFeatureFlaggerWhenEnabled() {
         // Given
         let expectedCohort: FreeTrialsFeatureFlagExperiment.Cohort = .control
-        let enrollmentDate = Date()
         mockUserDefaults.set(false, forKey: FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey)
         mockFeatureFlagger.cohortToReturn = expectedCohort
 

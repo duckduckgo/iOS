@@ -89,6 +89,10 @@ extension FeatureFlag: FeatureFlagDescribing {
 
     public var supportsLocalOverriding: Bool {
         switch self {
+        case .textZoom:
+            return true
+        case .testExperiment:
+            return true
         default:
             return false
         }
@@ -190,5 +194,5 @@ public enum PrivacyProFreeTrialExperimentCohort: String, FlagCohort {
 
 public enum TestExperimentCohort: String, FlagCohort {
     case control
-    case blue
+    case treatment
 }

@@ -287,6 +287,9 @@
 		563A3CFE2D37B8FA001966FD /* ConfigurationManagerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563A3CFD2D37B8FA001966FD /* ConfigurationManagerIntegrationTests.swift */; };
 		563A3D012D37BF83001966FD /* ConfigurationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563A3D002D37BF83001966FD /* ConfigurationManagerTests.swift */; };
 		563A3D032D37C363001966FD /* AppConfigurationURLProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563A3D022D37C363001966FD /* AppConfigurationURLProviderTests.swift */; };
+		5644419D2D4D1EDD003C53B8 /* FeatureFlagsMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644419C2D4D1EDD003C53B8 /* FeatureFlagsMenuView.swift */; };
+		5644419F2D4D205C003C53B8 /* FeatureFlagsSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644419E2D4D205C003C53B8 /* FeatureFlagsSettingViewModel.swift */; };
+		564441A22D4D20D6003C53B8 /* ExperimentCohortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564441A12D4D20D6003C53B8 /* ExperimentCohortView.swift */; };
 		564DE4532C3ED1B700D23241 /* NewTabDaxDialogFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */; };
 		564DE4552C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4542C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift */; };
 		564DE4572C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4562C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift */; };
@@ -1694,6 +1697,9 @@
 		563A3CFD2D37B8FA001966FD /* ConfigurationManagerIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManagerIntegrationTests.swift; sourceTree = "<group>"; };
 		563A3D002D37BF83001966FD /* ConfigurationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManagerTests.swift; sourceTree = "<group>"; };
 		563A3D022D37C363001966FD /* AppConfigurationURLProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationURLProviderTests.swift; sourceTree = "<group>"; };
+		5644419C2D4D1EDD003C53B8 /* FeatureFlagsMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsMenuView.swift; sourceTree = "<group>"; };
+		5644419E2D4D205C003C53B8 /* FeatureFlagsSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsSettingViewModel.swift; sourceTree = "<group>"; };
+		564441A12D4D20D6003C53B8 /* ExperimentCohortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentCohortView.swift; sourceTree = "<group>"; };
 		564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabDaxDialogFactory.swift; sourceTree = "<group>"; };
 		564DE4542C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingNewTabDialogFactoryTests.swift; sourceTree = "<group>"; };
 		564DE4562C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageControllerDaxDialogTests.swift; sourceTree = "<group>"; };
@@ -4095,6 +4101,16 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		564441A02D4D2089003C53B8 /* FeatureFlagsDebugSettings */ = {
+			isa = PBXGroup;
+			children = (
+				5644419E2D4D205C003C53B8 /* FeatureFlagsSettingViewModel.swift */,
+				5644419C2D4D1EDD003C53B8 /* FeatureFlagsMenuView.swift */,
+				564441A12D4D20D6003C53B8 /* ExperimentCohortView.swift */,
+			);
+			path = FeatureFlagsDebugSettings;
+			sourceTree = "<group>";
+		};
 		5650E36D2D3E8E3100D41ECF /* PageRefreshMonitor */ = {
 			isa = PBXGroup;
 			children = (
@@ -4793,6 +4809,7 @@
 		858566F1252E55AE007501B8 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				564441A02D4D2089003C53B8 /* FeatureFlagsDebugSettings */,
 				C1047CA32CA59BDC00B916FD /* Autofill */,
 				6FB1FE9C2C24D4060075B68B /* NewTabPageSectionsDebugView */,
 				9F9A922F2C86AACB001D036D /* OnboardingDebugView */,
@@ -8096,6 +8113,7 @@
 				85DFEDED24C7CCA500973FE7 /* AppWidthObserver.swift in Sources */,
 				4B6484F327FD1E350050A7A1 /* MenuControllerView.swift in Sources */,
 				7B059F0F2D0387E900371ED0 /* NumberedParagraphView.swift in Sources */,
+				5644419F2D4D205C003C53B8 /* FeatureFlagsSettingViewModel.swift in Sources */,
 				7B059F112D0387E900371ED0 /* WidgetEducationViewController.swift in Sources */,
 				7B059F122D0387E900371ED0 /* WidgetEducationView.swift in Sources */,
 				9F9A92342C86B42B001D036D /* AppIconPicker.swift in Sources */,
@@ -8176,6 +8194,7 @@
 				CB4FA44E2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift in Sources */,
 				EE0153ED2A6FF9E6002A8B26 /* NetworkProtectionRootView.swift in Sources */,
 				EEF0F8CC2ABC832300630031 /* NetworkProtectionDebugFeatures.swift in Sources */,
+				5644419D2D4D1EDD003C53B8 /* FeatureFlagsMenuView.swift in Sources */,
 				CBECDB7A2CD981CE005B8B87 /* AppPageRefreshMonitor.swift in Sources */,
 				B60DFF072872B64B0061E7C2 /* JSAlertController.swift in Sources */,
 				981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */,
@@ -8232,6 +8251,7 @@
 				85582E0029D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift in Sources */,
 				9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */,
 				D6E83C662B23936F006C8AFB /* SettingsDebugView.swift in Sources */,
+				564441A22D4D20D6003C53B8 /* ExperimentCohortView.swift in Sources */,
 				C1641EB12BC2F52B0012607A /* ImportPasswordsView.swift in Sources */,
 				CBFCB30E2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift in Sources */,
 				6FDC64052C98515E00DB71B3 /* FavoriteAddItemView.swift in Sources */,

@@ -1,21 +1,30 @@
-Die DuckDuckGo-App bietet den umfassendsten Online-Datenschutz mit nur einem Knopfdruck. Mit einem einzigen Download erhältst du einen neuen Browser für die alltägliche Nutzung, der nahtlosen Schutz beim Suchen und Surfen bietet sowie Zugriff auf Tracking-Schutz beim Empfang von E-Mails. Viele dieser Schutzmaßnahmen werden in den meisten gängigen Browsern standardmäßig nicht angeboten.
+Wir bei DuckDuckGo glauben, dass der beste Weg, deine persönlichen Daten vor Hackern, Betrügern und Unternehmen, die deine Privatsphäre verletzen, zu schützen, darin besteht, gar nicht erst zuzulassen, dass sie gesammelt werden. Deshalb entscheiden sich Millionen von Menschen für DuckDuckGo anstelle von Chrome und anderen Browsern, um online zu suchen und zu surfen. Unsere integrierte Suchmaschine ist wie Google, aber sie trackt deine Suchanfragen nie. Und unsere Browsing-Schutzfunktionen, wie die Tracker-Blockade und das Blockieren von Cookies, helfen, zu verhindern, dass andere Unternehmen deine Daten sammeln. Oh, und unser Browser ist kostenlos – wir verdienen unser Geld mit datenschutzfreundlichen Suchanzeigen, nicht durch die Ausbeutung deiner Daten. Übernimm die Kontrolle über deine persönlichen Daten mit dem Browser, der für den Datenschutz und nicht für die Datensammlung entwickelt wurde. 
 
 HIGHLIGHTS DER FUNKTION
-• Standardmäßig privat suchen – DuckDuckGo Private Search ist integriert, damit du problemlos das Internet durchsuchen kannst, ohne getrackt zu werden.
+Schütze deine Suchanfragen standardmäßig: DuckDuckGo Search ist integriert, damit du ganz einfach online suchen kannst, ohne getrackt zu werden. 
 
-• Entkomme Website-Tracker schon bevor sie laden – stoppt automatisch das Laden der meisten versteckten Tracker (Skripte von Drittanbietern), was Unternehmen daran hindert, Daten (z. B.Verkauf, Werbung usw.) von diesen Trackern zu sammeln und zu verwenden. Unsere hochmoderne Tracker-Blockierungstechnologie – genannt 3rd-Party Tracker Loading Protection – geht über das hinaus, was du standardmäßig in den meisten gängigen Browsern erhältst.
+Schütze deinen Browserverlauf: Unsere Tracker Loading Protection blockiert die meisten Tracker, bevor sie geladen werden, und übertrifft damit bei weitem das, was die meisten gängigen Browser standardmäßig bieten. 
 
-• Verschlüsselung automatisch erzwingen – Zwinge viele der von dir besuchten Websites dazu, automatisch eine verschlüsselte Verbindung (HTTPS) zu verwenden. So werden deine Daten vor WLAN-Schnüfflern und Netzwerkzaungästen wie deinem Internetanbieter geschützt. 
+Sichere deine E-Mail (optional): Verwende Email Protection, um die meisten E-Mail-Tracker zu blockieren und deine bestehende E-Mail-Adresse mit @duck.com-Adressen zu verbergen.  
 
-• Integrierte Email Protection aktivieren – Über 85 % der an Duck-Adressen gesendeten E-Mails enthalten Tracker, die erkennen können, wann du eine Nachricht geöffnet hast, wo du warst, als du sie geöffnet hast, und welches Gerät du verwendet hast. Email Protection macht es einfach, die meisten E-Mail-Tracker zu blockieren und deine vorhandene Adresse zu verbergen, wenn du dich online anmeldest – und das alles, ohne den E-Mail-Anbieter zu wechseln.
+Sieh dir YouTube-Videos ohne gezielte Werbung an: Duck Player schützt dich vor gezielter Werbung und Cookies mit einer ablenkungsfreien Oberfläche, die die strengsten Datenschutzeinstellungen von YouTube für eingebettete Videos enthält.
 
-Wir bieten außerdem viele Schutzmechanismen, die in den meisten Browsern nicht verfügbar sind, einschließlich Schutz vor Link-Tracking, Schutz vor Fingerprinting, Cookie Blocking, Google AMP-Tracking und mehr.
+Erzwinge automatisch Verschlüsselungen: Schütze deine Daten vor Netzwerk- und WLAN-Schnüfflern, indem du viele Websites zwingst, eine HTTPS-Verbindung zu verwenden. 
 
-DATENSCHUTZKONTROLLE FÜR JEDEN TAG
-• Auf den Fire Button tippen und Daten löschen – Lösche deine Tabs und Browserdaten mit unserem Fire Button.
+Sicher synchronisieren und sichern (Optional): Verschlüsselte Lesezeichen und Passwörter auf deinen Geräten synchronisieren.
 
-• Signalisiere deine Privatsphäre-Präferenz mit Global Privacy Control (GPC) – GPC ist in unsere App integriert und hilft dir, deine Widerspruchsrechte automatisch auszuüben, indem du Websites darüber informierst, dass sie deine persönlichen Daten nicht verkaufen oder weitergeben dürfen. Ob deine Rechtsansprüche (z. B. aktuelle oder zukünftige CCPA- oder DSGVO-Anforderungen) auf diese Weise durchgesetzt werden können, hängt von den Gesetzen in deiner Gerichtsbarkeit ab.
+Lösche deine Tabs und Browserdaten mit einem Klick auf den Fire Button.
 
-Weitere Informationen hierzu sowie zu Tracking Protection unter https://help.duckduckgo.com/privacy/web-tracking-protections/
+Verbanne Cookie-Pop-ups und stelle deine Einstellungen automatisch ein, um Cookies zu minimieren und die Privatsphäre zu maximieren.
 
-Du musst nicht warten, um dir deine Privatsphäre zurückzuholen. Schließ dich den Millionen von Menschen an, die DuckDuckGo nutzen, und schütze viele deiner täglichen Online-Aktivitäten mit einer einzigen App. Das ist Datenschutz, vereinfacht.
+Und viele weitere Schutzfunktionen, die in den meisten Browsern nicht verfügbar sind, selbst im privaten Modus, einschließlich Schutz vor Link-Tracking, Global Privacy Control (GPC) und mehr.
+
+Du musst nicht warten, um die Kontrolle über deine persönlichen Informationen zu übernehmen! Schließe dich den Millionen von Menschen an, die DuckDuckGo nutzen, um ihre täglichen Suchanfragen, ihr Verhalten beim Browsen und ihre E-Mails zu schützen. 
+
+Weitere Informationen zu unserer kostenlosen Tracking Protection findest du unter https://help.duckduckgo.com/privacy/web-tracking-protections
+
+Datenschutzrichtlinie: https://duckduckgo.com/privacy/ 
+
+Nutzungsbedingungen: https://duckduckgo.com/terms
+
+Hinweis zum Schutz vor Drittanbieter-Trackern und Suchanzeigen: Es gibt zwar einige Einschränkungen nach Klicks auf Suchanzeigen, aber das Anzeigen von Werbung in der DuckDuckGo-Suche bleibt anonym. Erfahre hier mehr https://help.duckduckgo.com/privacy/web-tracking-protections

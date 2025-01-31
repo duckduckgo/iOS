@@ -1,25 +1,30 @@
-L'app DuckDuckGo offre protezioni della privacy online complete con la semplice pressione di un pulsante. Con un solo download gratuito avrai un browser Internet privato per uso quotidiano che offre una protezione perfetta durante la ricerca e la navigazione e l'accesso alla protezione del tracciamento per le e-mail che ricevi e le app che usi. Molte di queste protezioni non sono offerte automaticamente dai browser web più famosi.
+DuckDuckGo crede che il modo migliore per proteggere le tue informazioni personali da hacker, truffatori e aziende che invadono la privacy sia impedirne la raccolta. Ecco perché milioni di persone scelgono DuckDuckGo invece di Chrome e altri browser  per effettuare ricerche e navigare online. Il nostro motore di ricerca integrato è come Google, ma non traccia mai le ricerche. E le nostre protezioni per la navigazione, come il blocco dei sistemi di tracciamento e dei cookie, aiutano a impedire ad altre aziende di raccogliere i dati. Inoltre, il nostro browser è gratuito: guadagniamo con annunci di ricerca che rispettano la privacy, non sfruttando i dati. Riprendi il controllo delle informazioni personali con il browser progettato per la protezione dei dati, non per la loro raccolta. 
 
 FUNZIONALITÀ PRINCIPALI
-• Private Search disponibile automaticamente - DuckDuckGo Private Search integrato.
+Proteggi le tue ricerche per impostazione predefinita: DuckDuckGo Search è integrata, così puoi facilmente cercare online senza subire tracciamento. 
 
-• Blocco dei cookie di tracciamento - Impedisce il tracciamento alla maggior parte dei cookie di terze parti durante la navigazione online da un sito web all'altro.
+Proteggi la cronologia di navigazione: la nostra Tracker Loading Protection blocca la maggior parte dei sistemi di tracciamento prima che si carichino, superando di gran lunga quanto offerto per impostazione predefinita dai browser più diffusi. 
 
-• Blocco della maggior parte dei sistemi di tracciamento prima che vengano caricati - Impedisce alle aziende di raccogliere e utilizzare i dati personali raccolti dai sistemi di tracciamento nascosti nei siti web.
+Proteggi la tua e-mail (opzionale): usa Email Protection per bloccare la maggior parte dei sistemi di tracciamento delle e-mail e nascondere il tuo indirizzo e-mail esistente con indirizzi @duck.com.  
 
-• Crittografia imposta - Obbliga molti siti visitati a utilizzare automaticamente una connessione crittografata (HTTPS).
+Guarda i video di YouTube senza annunci mirati: Duck Player protegge dagli annunci mirati e dai cookie con un'interfaccia priva di distrazioni che incorpora le impostazioni di privacy più rigide di YouTube per i video incorporati.
 
-• Blocco dei sistemi di tracciamento e-mail (Beta) - Crea un indirizzo e-mail @duck.com personale e usa Email Protection per bloccare la maggior parte dei sistemi di tracciamento della elettronica, nascondere l'indirizzo esistente e inoltrare i messaggi alla posta in arrivo. 
+Applica automaticamente la crittografia: proteggi i dati da ficcanaso di rete e Wi-Fi costringendo molti siti a usare una connessione HTTPS. 
 
-• Elusione del fingerprinting - Aiuta a impedire alle aziende di creare un identificatore univoco per l'utente.
+Sincronizza e fai il backup in modo sicuro (opzionale): sincronizza i segnalibri e le password crittografati sui tuoi dispositivi.
 
-Offriamo molte protezioni non disponibili nella maggior parte dei browser Internet (anche i browser in incognito), inclusa la protezione dal tracciamento dei link, dal monitoraggio AMP di Google e altro ancora.
+Cancella schede e dati di navigazione in un lampo con il Fire Button.
 
-CONTROLLI QUOTIDIANI SULLA PRIVACY
-• Fire Button per l'eliminazione dei dati - Cancella rapidamente le schede e i dati di navigazione con il nostro Fire Button.
+Elimina i popup dei cookie e imposta automaticamente le preferenze per ridurre al minimo i cookie e massimizzare la privacy.
 
-• Global Privacy Control (GPC) per comunicare le proprie preferenze in materia di privacy - Per saperne di più, visita https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/ 
+E molte altre protezioni non disponibili sulla maggior parte dei browser, anche in modalità di navigazione privata, inclusa la protezione dal tracciamento dei link, Global Privacy Control (GPC) e altro ancora.
 
-Maggiori informazioni su questo e sulle nostre protezioni gratuite dal tracciamento sono disponibili all'indirizzo https://help.duckduckgo.com/privacy/web-tracking-protections
+Non devi aspettare per assumere il controllo delle tue informazioni personali! Unisciti ai milioni di persone che usano DuckDuckGo per proteggere le ricerche, la navigazione e le e-mail quotidiane. 
 
+Scopri di più sulle nostre protezioni anti-tracciamento gratuite su https://help.duckduckgo.com/privacy/web-tracking-protections
 
+Informativa sulla privacy: https://duckduckgo.com/privacy/ 
+
+Termini di servizio: https://duckduckgo.com/terms
+
+Nota sulla protezione dei sistemi di tracciamento e sugli annunci di ricerca di terze parti: sebbene siano presenti limitazioni dopo i clic sugli annunci di ricerca, la visualizzazione degli annunci su DuckDuckGo è anonima. Scopri di più https://help.duckduckgo.com/privacy/web-tracking-protections

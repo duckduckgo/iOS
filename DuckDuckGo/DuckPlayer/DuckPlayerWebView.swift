@@ -26,7 +26,7 @@ struct DuckPlayerWebView: UIViewRepresentable {
    let url: URL
        
    struct Constants {
-       static let referrerHeader: String = "Referrer"
+       static let referrerHeader: String = "Referer"
        static let referrerHeaderValue: String = "http://localhost"
    }
    

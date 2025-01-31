@@ -25,6 +25,7 @@ import WebKit
 import UserScript
 import Core
 import ContentScopeScripts
+import SwiftUI
 
 /// Values that the frontend can use to determine the current state.
 struct InitialPlayerSettings: Codable {
@@ -128,7 +129,7 @@ protocol DuckPlayerControlling: AnyObject {
     var settings: DuckPlayerSettings { get }
     
     /// The host view controller, if any.
-    var hostView: UIViewController? { get }
+    var hostView: TabViewController? { get }
     
     /// Initializes a new instance of DuckPlayer with the provided settings and feature flagger.
     ///
@@ -200,14 +201,14 @@ protocol DuckPlayerControlling: AnyObject {
     /// Sets the host view controller for presenting modals.
     ///
     /// - Parameter vc: The view controller to set as host.
-    func setHostViewController(_ vc: UIViewController)
-    
-    /// Removes the host view controller.
-    func removeHostView()
+    func setHostViewController(_ vc: TabViewController)
+
+    /// Loads a native DuckPlayerView
+    func loadNativeDuckPlayerVideo(videoID: String)
 }
 
 /// Implementation of the DuckPlayerControlling.
-final class DuckPlayer: DuckPlayerControlling {
+final class DuckPlayer: NSObject, DuckPlayerControlling {
     
     struct Constants {
         static let duckPlayerHost: String = "player"
@@ -217,13 +218,17 @@ final class DuckPlayer: DuckPlayerControlling {
         static let defaultLocale = "en"
         static let translationPath = "pages/duckplayer/locales/"
         static let featureNameKey = "featureName"
+        static let landscapeUIAutohideDelay: CGFloat = 4.0
+        static let chromeShowHideAnimationDuration: CGFloat = 0.4
     }
     
     
     private(set) var settings: DuckPlayerSettings
-    private(set) weak var hostView: UIViewController?
+    private(set) weak var hostView: TabViewController?
     
     private var featureFlagger: FeatureFlagger
+    private var hideBrowserChromeTimer: Timer?
+    private var tapGestureRecognizer: UITapGestureRecognizer?
     
     private lazy var localeStrings: String? = {
         let languageCode = Locale.current.languageCode ?? Constants.defaultLocale
@@ -255,22 +260,87 @@ final class DuckPlayer: DuckPlayerControlling {
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.settings = settings
         self.featureFlagger = featureFlagger
+        super.init()
+        registerOrientationSubscriber()
+    }
+    
+    deinit {
+        // Only remove our specific tap gesture recognizer
+        if let tapGestureRecognizer = tapGestureRecognizer {
+            hostView?.view.removeGestureRecognizer(tapGestureRecognizer)
+        }
+        hostView = nil
     }
     
     /// Sets the host view controller for presenting modals.
     ///
     /// - Parameter vc: The view controller to set as host.
-    public func setHostViewController(_ vc: UIViewController) {
+    public func setHostViewController(_ vc: TabViewController) {
         hostView = vc
     }
     
-    /// Removes the host view controller.
-    public func removeHostView() {
-        hostView = nil
+    private func addTapGestureRecognizer() {
+        guard let hostView = hostView,
+              tapGestureRecognizer == nil,
+              let url = hostView.url,
+              url.isDuckPlayer else {
+            return
+        }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tapGesture.delegate = self
+        hostView.view.addGestureRecognizer(tapGesture)
+        tapGestureRecognizer = tapGesture
     }
     
-    // MARK: - Common Message Handlers
+    private func removeTapGestureRecognizer() {
+        if let tapGestureRecognizer = tapGestureRecognizer {
+            hostView?.view.removeGestureRecognizer(tapGestureRecognizer)
+            self.tapGestureRecognizer = nil
+        }
+    }
     
+    /// Handles tap gestures in the hostViewController
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        if let url = hostView?.url, url.isDuckPlayer {
+            let orientation = UIDevice.current.orientation
+            if orientation.isLandscape {
+                hostView?.chromeDelegate?.setBarsHidden(false, animated: true, customAnimationDuration: Constants.chromeShowHideAnimationDuration)
+                setupHideBrowserChromeTimer()
+            }
+        }
+    }
+    
+    /// Sets up a hide timer for the navigation and toolbars when the user is in landscape mode
+    private func setupHideBrowserChromeTimer() {
+        // Invalidate existing timer if any
+        hideBrowserChromeTimer?.invalidate()
+        
+        // Create new timer
+        hideBrowserChromeTimer = Timer.scheduledTimer(withTimeInterval: Constants.landscapeUIAutohideDelay, repeats: false) { [weak self] _ in
+            DispatchQueue.main.async {
+                let orientation = UIDevice.current.orientation
+                if orientation.isLandscape {
+                    self?.hostView?.chromeDelegate?.setBarsHidden(true, animated: true, customAnimationDuration: Constants.chromeShowHideAnimationDuration)
+                }
+            }
+        }
+    }
+
+    // Loads a native DuckPlayerView
+    func loadNativeDuckPlayerVideo(videoID: String) {
+        let viewModel = DuckPlayerViewModel(videoID: videoID)
+        let duckPlayerView = DuckPlayerView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: duckPlayerView)
+        hostingController.modalPresentationStyle = .formSheet
+        hostingController.isModalInPresentation = false // Allows dismissal with swipe
+
+        hostView?.present(hostingController, animated: true)
+    }
+
+
+    // MARK: - Common Message Handlers
+
     /// Sets user values received from the web content.
     ///
     /// - Parameters:
@@ -299,6 +369,63 @@ final class DuckPlayer: DuckPlayerControlling {
     private func updateSettings(userValues: UserValues) async {
         settings.setMode(userValues.duckPlayerMode)
         settings.setAskModeOverlayHidden(userValues.askModeOverlayHidden)
+    }
+    
+    /// Registers an Nootification observer for orientation changes
+    private func registerOrientationSubscriber() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(orientationDidChange),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+    }
+
+    /// Called when the Orientation notification is changed
+    @objc private func orientationDidChange() {
+        let orientation = UIDevice.current.orientation
+        if let url = hostView?.url, url.isDuckPlayer {
+            handleOrientationChange(orientation)
+        }
+    }
+    
+    /// Handles UI Updates based on orientation.  When switching to landscape, we hide
+    /// Navigation and Tabbar to enable "Fake" full screen mode.
+    private func handleOrientationChange(_ orientation: UIDeviceOrientation) {
+        guard UIDevice.current.userInterfaceIdiom == .phone else { return }
+        
+        switch orientation {
+        case .portrait, .portraitUpsideDown:
+            handlePortraitOrientation()
+            removeTapGestureRecognizer()
+        case .landscapeLeft, .landscapeRight:
+            handleLandscapeOrientation()
+            addTapGestureRecognizer()
+        case .unknown, .faceUp, .faceDown:
+            handleDefaultOrientation()
+            removeTapGestureRecognizer()
+        @unknown default:
+            return
+        }
+    }
+    
+    /// Handle Portrait rotation
+    private func handlePortraitOrientation() {
+        hostView?.chromeDelegate?.omniBar.resignFirstResponder()
+        hostView?.chromeDelegate?.setBarsHidden(false, animated: true, customAnimationDuration: nil)
+        hideBrowserChromeTimer?.invalidate()
+        hideBrowserChromeTimer = nil
+        hostView?.setupWebViewForPortraitVideo()
+    }
+    
+    /// Handle Landscape rotation
+    private func handleLandscapeOrientation() {
+        hostView?.chromeDelegate?.omniBar.resignFirstResponder()
+        hostView?.setupWebViewForLandscapeVideo()
+        hostView?.chromeDelegate?.setBarsHidden(true, animated: true, customAnimationDuration: Constants.chromeShowHideAnimationDuration)
+    }
+    
+    /// Default rotation should be portrait mode
+    private func handleDefaultOrientation() {
+        hostView?.setupWebViewForPortraitVideo()
     }
     
     /// Retrieves user values to send to the web content.
@@ -368,10 +495,10 @@ final class DuckPlayer: DuckPlayerControlling {
     ///   - params: Parameters from the web content.
     ///   - message: The script message containing the parameters.
     @MainActor
-        public func telemetryEvent(params: Any, message: WKScriptMessage) async -> Encodable? {
-            // Not currently accepting any telemetry events
-            return nil
-        }
+    public func telemetryEvent(params: Any, message: WKScriptMessage) async -> Encodable? {
+        // Not currently accepting any telemetry events
+        return nil
+    }
     
     /// Opens Duck Player information modal.
     ///
@@ -457,7 +584,6 @@ final class DuckPlayer: DuckPlayerControlling {
         guard let feature = messageData.featureName else { return }
         
         // Get the webView URL
-        let webView = message.webView
         guard let webView = message.webView, let url = webView.url else {
             return
         }
@@ -487,5 +613,13 @@ final class DuckPlayer: DuckPlayerControlling {
         }
        
     }
+
     
+}
+
+extension DuckPlayer: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }

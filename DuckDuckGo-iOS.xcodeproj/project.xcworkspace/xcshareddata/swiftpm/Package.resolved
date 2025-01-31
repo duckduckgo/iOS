@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "fcappelli/authv2/adding_v2_classes",
-        "revision" : "d2d68527da33eed2221d296192a1ddfaae9b50a3"
+        "revision" : "eee15cd3202cfec593a7ae8d0801f0a29099a714",
+        "version" : "232.1.2"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "181696656f3627c1b3ca8cda06d54971e03436ef",
-        "version" : "7.10.0"
+        "revision" : "5a463e35ce86fc11394fe62392d32960de22f7d7",
+        "version" : "7.11.0"
       }
     },
     {

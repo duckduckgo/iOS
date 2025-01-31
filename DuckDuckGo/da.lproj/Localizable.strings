@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Downloads";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "AI-chat";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Rediger bogmærke";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Indsæt og fortsæt";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Print";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Print";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Opdater";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Din rapport hjælper med at gøre DuckDuckGo bedre for alle!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Nej";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Løste det problemet på denne side at slå beskyttelse af privatlivet fra?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Ja";
+/* No comment provided by engineer. */
+"Confirm" = "Bekræft";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Spring over";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Giv mig fem!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Husk: hver gang du browser med mig, mister en uhyggelig annonce sine vinger. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Du har den!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Det er DuckDuckGo Search. Privat. Hurtig. Færre annoncer.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Forstået";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Prøv at besøge en hjemmeside!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Dine DuckDuckGo-søgninger er altid anonyme.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Er du klar til at komme i gang?\nPrøv at søge!";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "skuespillere i avatar";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "lokalt vejr";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Overrask mig!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Find **DuckDuckGo** på listen, og tryk derefter på **VPN-kontrol** for at tilføje det";
@@ -1083,6 +1074,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai er en valgfri funktion, der giver dig mulighed for at chatte anonymt med populære tredjeparts AI-chatmodeller. Dine chats bruges ikke til at træne AI.\n [Læs mere](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
+"duckai.settings.enable.address-bar-searching-toggle" = "Vis Duck.ai på søgesiden";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Vis Duck.ai i browsermenuen";
@@ -1657,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsingmenu";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Værtsnavn for meddelelsespolitik";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Tilbage";
 
@@ -1948,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Vælg din browser";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Bloker pop op-vinduer om cookies";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Bloker uhyggelige annoncer";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Ryd hurtigt browserdata";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Søg fortroligt som standard";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Bloker tredjeparts-trackere";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Beskyttelse af privatlivet er aktiveret!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Let at komme til";
@@ -2019,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Lad os gøre det!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Hej\n\nEr du klar til et bedre og mere privat internet?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Tilføj widget";
@@ -2137,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Du har nået det maksimale antal adgangskoder. Slet nogle af dem for at genoptage synkroniseringen.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Synkronisering stødte på en fejl. Prøv at deaktivere synkronisering på denne enhed, og opret derefter forbindelse igen ved hjælp af en anden enhed eller din gendannelseskode.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Synkronisering sat på pause";
 
@@ -2204,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Åbn i en anden app?";
+
+/* No comment provided by engineer. */
+"Reset" = "Nulstil";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Søg eller indtast adresse";
@@ -2519,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Hvilket websted er ødelagt?";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Få adgang til dit Privacy Pro-abonnement på denne enhed via Apple ID eller en e-mailadresse.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Gemt værtsnavn: %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Tilføj e-mailadresse";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Gendan køb";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Gendan dit køb for at aktivere dit abonnement på denne enhed.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Dit abonnement er automatisk tilgængeligt i DuckDuckGo på enhver enhed, der er logget ind med dit Apple-id.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Rediger e-mailadresse";
@@ -2576,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Tilføj e-mailadresse";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro er tilgængelig på enhver enhed, der er logget ind med det samme Apple ID.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Dit abonnement blev købt gennem Google Play-butikken. Hvis du vil forny dit abonnement, skal du åbne abonnementsindstillingerne for Google Play-butikken på en enhed, der er logget ind på den samme Google-konto, som oprindeligt blev brugt til at købe dit abonnement.";
 
@@ -2612,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Abonnement ikke fundet";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Abonnementet, der er knyttet til dette Apple-id, er ikke længere aktivt.";
-
 /* FAQ Button */
 "subscription.faq" = "Ofte stillede spørgsmål og support";
 
@@ -2630,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Gendan";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Vi fandt et abonnement tilknyttet dette Apple-id.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonnement fundet";
 
@@ -2644,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Abonnement";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Der er ikke noget abonnement tilknyttet dette Apple ID.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonnement ikke fundet";

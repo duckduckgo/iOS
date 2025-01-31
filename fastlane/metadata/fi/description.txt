@@ -1,21 +1,32 @@
-DuckDuckGo-sovellus tarjoaa kattavimman yksityisyydensuojan verkossa napin painalluksella. Yhdellä latauksella saat uuden arkiselaimen, joka tarjoaa saumattoman suojan, kun haet ja selaat, ja seurantasuojaukset, kun vastaanotat sähköposteja. Monia näistä suojauksista ei tarjota oletusarvoisesti suosituimmissa selaimissa.
+DuckDuckGon mielestä paras tapa suojata henkilökohtaisia tietoja hakkereilta, huijareilta ja tietosuojaa loukkaavilta yrityksiltä on estää niiden kerääminen kokonaan. Siksi miljoonat ihmiset valitsevat DuckDuckGon Chromen ja muiden selainten sijaan  tehdäkseen hakuja ja selatakseen verkossa. Integroitu hakukoneemme on kuin Google, mutta se ei koskaan seuraa hakujasi. Selaussuojauksemme, kuten mainosten seurannan esto ja evästeiden esto, auttavat estämään muita yrityksiä keräämästä tietojasi. Selaimemme on lisäksi ilmainen – ansaitsemme tietosuojaa kunnioittavilla hakumainoksilla, emme käyttämällä tietojasi hyväksemme. Ota henkilökohtaiset tietosi takaisin hallintaasi käyttämällä selainta, joka on suunniteltu tietojen suojaamiseen, ei tietojen keräämiseen. 
 
-OMINAISUUKSIEN KOHOKOHDAT 
-• Hae yksityisesti oletuksena – DuckDuckGo Private Search on sisäänrakennettu sovellukseen, joten voit hakea verkosta ilman että sinua seurataan. 
+OMINAISUUKSIEN KOHOKOHDAT
+Suojaa hakusi oletusarvoisesti: DuckDuckGo Search on jo valmiiksi integroitu, joten voit helposti tehdä hakuja verkossa ilman, että sinua seurataan. 
 
-• Vältä sivustojen seurantalaitteet ennen kuin niitä ladataan – Estä useimpien piilotettujen seurantalaitteiden (kolmannen osapuolen komentosarjat) latautuminen automaattisesti, mikä estää yrityksiä keräämästä ja käyttämästä (esim. myynti, mainokset jne.) näiden seurantalaitteiden tietoja. Huippuluokan seurannanestoteknologiamme – 3rd-Party Tracker Loading Protection – on enemmän, kuin useimpien suosittujen selainten oletusarvoinen suojaus. 
+Suojaa selaushistoriasi: Kolmannen osapuolen Tracker Loading Protection -suojauksemme estää useimmat seurantaohjelmat ennen niiden latautumista. Tämä toimii merkittävästi paremmin kuin useimpien suosittujen selainten oletusarvoinen toiminta. 
 
-• Pakota salaus automaattisesti – pakota useat vierailemasi sivustot käyttämään salattua (HTTPS) yhteyttä automaattisesti, mikä auttaa suojaamaan tietojasi Wi-Fi-urkkijoilta ja verkon katsojilta, kuten Internet-palveluntarjoajaltasi. Useimmat suositut selaimet ohjaavat käyttäjiä sivujen salattuihin versioihin vain tietyissä tilanteissa, esimerkiksi kun siirryt sivulle suoraan osoitepalkista. Tarkistamme päivitettävien sivustojen luettelon kaikkien napsauttamiesi linkkien osalta. 
+Suojaa sähköpostisi (valinnainen): Email Protection -suojauksen avulla voit estää useimmat sähköpostin seurantaohjelmat ja piilottaa sähköpostiosoitteesi käyttämällä @duck.com-osoitetta.  
 
-• Ota käyttöön sisäänrakennettu Email Protection – Yli 85 % Duck-osoitteisiin lähetetyistä sähköposteista sisälsi seurantalaitteita, jotka voivat havaita, milloin olet avannut viestin, missä olit, kun avasit sen ja mitä laitetta käytit. Email Protectionin avulla on helppo estää useimmat sähköpostin seurantalaitteet ja piilottaa nykyinen osoitteesi, kun kirjaudut sisään verkossa, ja kaikki tämä ilman sähköpostipalveluntarjoajan vaihtamista. 
+Katsele YouTube-videoita ilman kohdennettuja mainoksia: Duck Player suojaa sinua kohdennetuilta mainoksilta ja evästeiltä häiriöttömällä käyttöliittymällä, joka sisältää YouTuben tiukimmat tietosuoja-asetukset upotetun videon osalta.
 
-Meillä on myös monia suojauksia, joita ei ole saatavilla useimmissa selaimissa, kuten muun muassa suoja linkkien seurannalta, sormenjälkien ottaminen, seurantaevästeet, ja Google AMP-seurannalta.
+Pakota salaus automaattisesti: Suojaa tietosi verkko- ja WiFi-urkkijoilta pakottamalla monet sivustot käyttämään HTTPS-yhteyttä. 
 
-JOKAPÄIVÄISTÄ YKSITYISYYDEN HALLINTAA
-• Napauta Fire Button-painiketta, Poista tiedot – Tyhjennä välilehdet ja selaustietosi Fire Button -painikkeella.
+Estä fingerprinting: Tee yrityksille vaikeammaksi luoda sinulle yksilöllinen tunniste estämällä niiden yritykset yhdistää tietoja selaimestasi ja laitteestasi. 
 
-• Ilmoita yksityisyysasetuksestasi Global Privacy Control (GPC) -toiminnolla – sovellukseemme sisäänrakennettu GPC auttaa sinua ilmaisemaan kieltäytymisoikeutesi automaattisesti käskemällä sivustoja olemaan myymättä tai jakamatta henkilötietojasi. Se, voidaanko sitä käyttää laillisten oikeuksiesi (esimerkiksi nykyisen tai tulevan CCPA:n tai yleisen tietosuoja-asetuksen vaatimusten) täytäntöönpanoon, riippuu oman lainkäyttöalueesi laeista. 
+Synkronoi ja varmuuskopioi turvallisesti (valinnainen): Synkronoi salatut kirjanmerkit ja salasanat laitteidesi välillä.
 
-Lue lisää tästä ja jäljityssuojastamme osoitteessa https://help.duckduckgo.com/privacy/web-tracking-protections/. 
+Tyhjennä välilehdet ja selaustietosi hetkessä Fire Button -painikkeella.
 
-Sinun ei tarvitse odottaa tietosuojasi takaisinottoa. Liity miljoonien DuckDuckGo-käyttäjien joukkoon ja suojaa monia päivittäisiä verkkotoimintojasi yhdellä sovelluksella. Se on tietosuojaa, yksinkertaistettuna.  
+Poista evästeiden ponnahdusikkunat ja aseta asetuksesi automaattisesti minimoidaksesi evästeet ja maksimoidaksesi tietosuojan.
+
+Ja monia muita suojauksia, joita ei ole saatavilla useimmissa selaimissa, edes yksityisessä selaustilassa, mukaan lukien suojaus linkkien seurannalta ja Global Privacy Control (GPC).
+
+Sinun ei tarvitse odottaa voidaksesi ottaa henkilökohtaiset tietosi hallintaasi! Liity miljoonien ihmisten joukkoon, ja valitse DuckDuckGo suojaamaan päivittäistä haku-, selaus- ja sähköpostitoimintaasi. 
+
+Lue lisää ilmaisista seurantasuojauksistamme osoitteessa https://help.duckduckgo.com/privacy/web-tracking-protections
+
+Tietosuojakäytäntö: https://duckduckgo.com/privacy/ 
+
+Palveluehdot: https://duckduckgo.com/terms
+
+Huomautus kolmannen osapuolen jäljityssuojauksesta ja hakumainoksista: Vaikka hakumainosten klikkauksiin liittyy joitain rajoituksia, mainosten katselu DuckDuckGo-haussa on anonyymiä. Lue lisää osoitteesta https://help.duckduckgo.com/privacy/web-tracking-protections

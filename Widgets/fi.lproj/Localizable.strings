@@ -1,6 +1,12 @@
 /* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
 "intent.vpn.needs.to.be.enabled.from.app" = "Sinun on aktivoitava VPN DuckDuckGo-sovelluksessa.";
 
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Aloita nopeasti uusi tekoälykeskustelu Duck.ai:ssa";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Luo välittömästi uusi yksityinen Duck Address.";
 
@@ -61,6 +67,12 @@
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Etsi salasanoja";
 
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Hae, keskustele Duck.ai:ssa tai katso salasanasi.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Pikavalinnat";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Tee hakuja ja käy lempisivustoillasi yhdellä napautuksella.";
 
@@ -87,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Etsi salasanoja";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Etsi";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Hae DuckDuckGo:sta";

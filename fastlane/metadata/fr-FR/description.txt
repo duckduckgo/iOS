@@ -1,21 +1,26 @@
-D'un seul clic, l'application DuckDuckGo offre la protection la plus complète en matière de confidentialité en ligne. Il suffit d'un téléchargement pour profiter d'un nouveau navigateur qui vous offrira au quotidien une protection fluide lorsque vous effectuerez des recherches et naviguerez sur le Web, et même un accès aux protections contre le suivi lorsque vous recevrez des e-mails. Bon nombre de ces protections ne sont pas proposées par défaut dans la plupart des navigateurs populaires.
+Chez DuckDuckGo, nous croyons que la meilleure façon de protéger vos informations personnelles contre les pirates, les escrocs et les entreprises qui portent atteinte à la vie privée est d'empêcher purement et simplement leur collecte. C'est pour cette raison que des millions de personnes choisissent DuckDuckGo plutôt que Chrome ou d'autres navigateurs  pour effectuer leurs recherches et naviguer en ligne. Notre moteur de recherche intégré est similaire à Google, sauf qu'il ne suit jamais vos recherches. Et nos protections de navigation, telles que le blocage des traqueurs publicitaires et le blocage des cookies, permettent d'empêcher que d'autres entreprises ne recueillent vos données. Et surtout, notre navigateur est gratuit : nous gagnons de l'argent grâce aux publicités de recherche respectueuses de la confidentialité et non grâce à l'exploitation de vos données. Reprenez le contrôle de vos informations personnelles avec le navigateur conçu pour la protection des données, pas pour leur collecte. 
 
-PRINCIPALES FONCTIONNALITÉS 
-• Faire une recherche privée par défaut – la recherche privée DuckDuckGo est intégrée pour vous permettre d'effectuer des recherches sur le Web sans être suivi(e). 
+PRINCIPALES FONCTIONNALITÉS
+Protéger vos recherches par défaut : DuckDuckGo Search est intégré, ce qui vous permet d’effectuer facilement des recherches en ligne sans être suivi(e). 
 
-• Échapper aux traqueurs de sites Web avant leur chargement – empêchez automatiquement le chargement de la plupart des traqueurs cachés (scripts tiers), ce qui empêche les entreprises de recueillir et d'utiliser (par ex. vente, publicités, etc.) les données de ces traqueurs. Notre technologie de pointe de blocage des traqueurs, appelée « 3rd-Party Tracker Loading Protection », va bien au-delà de ce que proposent par défaut les navigateurs les plus populaires. 
+Protéger votre historique de navigation : notre Tracker Loading Protection bloque la plupart des traqueurs avant qu'ils ne se chargent, ce qui va bien au-delà de ce que la plupart des navigateurs populaires proposent par défaut. 
 
-• Appliquer automatiquement le cryptage – obligez de nombreux sites que vous visitez à utiliser automatiquement une connexion cryptée (HTTPS), ce qui permet de protéger vos données contre les espions du Wi-Fi et les observateurs du réseau comme votre fournisseur d'accès Internet. 
+Regarder des vidéos YouTube sans publicités ciblées : Duck Player vous protège des publicités ciblées et des cookies grâce à une interface sans distractions qui intègre les paramètres de confidentialité les plus stricts de YouTube pour les vidéos intégrées.
 
-• Activer la protection intégrée des e-mails – plus de 85 % des e-mails envoyés à des adresses Duck contenaient des traqueurs capables de détecter quand vous aviez ouvert un message, où vous étiez, quand vous l'aviez ouvert et quel appareil vous utilisiez. La protection des e-mails permet de bloquer facilement la plupart des traqueurs d'e-mails et de masquer votre adresse existante lorsque vous procédez à une inscription en ligne, le tout sans changer de fournisseur de messagerie. 
+Appliquer automatiquement le cryptage : protégez vos données contre les espions du réseau et du Wi-Fi en forçant de nombreux sites à utiliser une connexion HTTPS. 
 
-Nous proposons également de nombreuses protections qui ne sont pas disponibles sur la plupart des navigateurs, notamment la protection, contre le suivi des liens, suivi de l'empreinte numérique, le suivi Google AMP, etc.
+Effacer vos onglets et vos données de navigation en un clin d'œil avec le Fire Button.
 
-CONTRÔLES QUOTIDIENS DE LA CONFIDENTIALITÉ
-• Appuyez sur le Fire Button, brûlez des données – effacez vos onglets et vos données de navigation avec notre Fire Button.
+Bannir les fenêtres contextuelles des cookies et configurer automatiquement vos préférences pour que les cookies soient réduits au minimum et la confidentialité maximisée.
 
-• Signalez vos préférences en matière de confidentialité avec le Global Privacy Control (GPC) – intégré à notre application, le GPC vous aide à formuler automatiquement vos droits de refus en indiquant aux sites Web de ne pas vendre ou partager vos informations personnelles. Le fait qu'il puisse être utilisé pour faire valoir vos droits légaux (par exemple, CCPA actuel ou futur, conditions du RGPD) dépend des lois de votre juridiction. 
+Et de nombreuses autres protections non disponibles sur la plupart des navigateurs, même en mode de navigation privée, y compris la protection contre le pistage des liens, le Global Privacy Control (GPC), etc.
 
-Découvrez-en plus à ce sujet et sur nos protections contre le suivi sur https://help.duckduckgo.com/privacy/web-tracking-protections/ 
+Inutile d'attendre pour reprendre le contrôle de vos informations personnelles ! Rejoignez les millions de personnes qui utilisent DuckDuckGo pour protéger leurs recherches, leur navigation et leurs e-mails au quotidien. 
 
-Inutile d'attendre pour reprendre le contrôle de votre vie privée. La confidentialité, simplifiée.  
+Découvrez-en plus sur nos protections gratuites contre le pistage sur https://help.duckduckgo.com/privacy/web-tracking-protections
+
+Politique de confidentialité : https://duckduckgo.com/privacy/ 
+
+Conditions d’utilisation : https://duckduckgo.com/terms
+
+Remarque sur la protection contre les traqueurs tiers et les publicités de recherche : bien qu’il existe certaines limitations suite aux clics sur les publicités de recherche, la visualisation des publicités sur la recherche DuckDuckGo est anonyme. Pour en savoir plus, cliquez ici : https://help.duckduckgo.com/privacy/web-tracking-protections

@@ -1642,7 +1642,7 @@ https://duckduckgo.com/mac";
 "malicious-site-protection.settings.footer.message" = "Disabling this feature can put your personal information at risk.";
 
 /* Header text for Malicious Site Protection settings */
-"malicious-site-protection.settings.header" = "Malicious Site Protection";
+"malicious-site-protection.settings.header" = "Site Safety Warnings";
 
 /* Text explaining what happens when Malicious Site Protection is enabled */
 "malicious-site-protection.settings.toggle.message" = "Warn me on sites flagged for phishing or malware";

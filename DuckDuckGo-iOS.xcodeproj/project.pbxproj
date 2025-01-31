@@ -11948,7 +11948,7 @@
 		};
 		98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
+			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit.git";
 			requirement = {
 				kind = exactVersion;
 				version = 232.1.3;

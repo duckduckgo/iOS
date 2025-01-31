@@ -45,7 +45,7 @@ struct SettingsState {
         var shouldDisplayRestoreSubscriptionError: Bool
         var subscriptionFeatures: [Entitlement.ProductName]
         var entitlements: [Entitlement.ProductName]
-        var platform: DDGSubscription.Platform
+        var platform: PrivacyProSubscription.Platform
         var isShowingStripeView: Bool
     }
 

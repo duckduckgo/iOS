@@ -1876,7 +1876,7 @@ extension TabViewController: WKNavigationDelegate {
 
                 self.delegate?.closeFindInPage(tab: self)
             }
-            // If navigating to the URL is allowed and the URL request is not sideloaded ask the specialErrorPageNavigationHandler forward the event to
+            // If navigating to the URL is allowed and we're not sideloading a special error page, forward the event to
             // the SpecialErrorPageNavigationHandler.
             if let self, decision == .allow, !self.specialErrorPageNavigationHandler.isSpecialErrorPageRequest {
                 self.specialErrorPageNavigationHandler.handleDecidePolicy(for: navigationAction, webView: webView)

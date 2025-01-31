@@ -58,6 +58,21 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
     }
 
     @MainActor
+    @Test("Test navigation backforward does not create a Malicious Detection Task")
+    func whenHandleDecidePolicyForNavigationActionIsCalledAndNavigationIsBackForwardThenDoNotCreateDetectionTask() throws {
+        // GIVEN
+        let url = try #require(URL(string: "https://www.example.com"))
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), navigationType: .backForward, targetFrame: MockFrameInfo(isMainFrame: true))
+        #expect(sut.maliciousSiteDetectionTasks.isEmpty)
+
+        // WHEN
+        sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+
+        // THEN
+        #expect(sut.maliciousSiteDetectionTasks.isEmpty)
+    }
+
+    @MainActor
     @Test("Non Bypassed Malicious Site creates a Malicious Detection Task", arguments: [ThreatKind.phishing, .malware])
     func whenBypassedMaliciousSiteThreatKindIsNotSetThenReturnNavigationHandled(threat: ThreatKind) throws {
         // GIVEN

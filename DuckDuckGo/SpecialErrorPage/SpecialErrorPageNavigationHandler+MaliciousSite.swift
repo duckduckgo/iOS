@@ -86,8 +86,11 @@ extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavig
     @MainActor
     func makeMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
 
+        // `.backForward` navigation does not trigger `decidePolicyFor navigationResponse: WKNavigationResponse`.
+        // If navigation type is `.backForward` we avoid creating a task that won't be consumed.
         guard
             let url = navigationAction.request.url,
+            navigationAction.navigationType != .backForward,
             url != URL(string: "about:blank")
         else {
             return
@@ -108,7 +111,7 @@ extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavig
                 let errorData = SpecialErrorData.maliciousSite(kind: threatKind, url: url)
                 let response = MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)
                 return .navigationHandled(.mainFrame(response))
-            } else {
+            } else { // Currently iframes are not supported.
                 Pixel.fire(MaliciousSiteProtection.Event.iframeLoaded(category: threatKind))
                 // Extract the URL of the source frame (the iframe) that initiated the navigation action
                 let iFrameTopURL = navigationAction.sourceFrame.safeRequest?.url ?? url
@@ -160,7 +163,8 @@ private extension MaliciousSiteProtectionNavigationHandler {
 
     @MainActor
     func handleMaliciousExemptions(for navigationType: WKNavigationType, url: URL) {
-        // TODO: check storing redirects
+        // Currently macOS flags all URLs in the redirect chain as malicious (and exempted) too.
+        // When integrating `DistributedNavigationDelegate` check if navigation type is `.other` and store the redirects.
         // Re-set the flag every time we load a web page
         bypassedMaliciousSiteThreatKind = maliciousURLExemptions[url]
     }

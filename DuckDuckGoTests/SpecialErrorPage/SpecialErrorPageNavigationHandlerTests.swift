@@ -442,7 +442,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         #expect(!maliciousSiteProtectionNavigationHandler.didCallCurrentThreatKind)
 
         // WHEN
-        let result = sut.currentThreatKind
+        _ = sut.currentThreatKind
 
         // THEN
         #expect(maliciousSiteProtectionNavigationHandler.didCallCurrentThreatKind)

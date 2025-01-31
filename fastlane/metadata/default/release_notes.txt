@@ -1,1 +1,1 @@
-- You can now use DuckDuckGo’s password manager as an autofill provider in other apps. To enable on iOS 18, go to iOS Settings > General > Autofill & Passwords, then toggle on for DuckDuckGo. On iOS 17 and earlier, find the option in iOS Settings > Passwords > Password Options.
+- Bug fixes and other improvements.

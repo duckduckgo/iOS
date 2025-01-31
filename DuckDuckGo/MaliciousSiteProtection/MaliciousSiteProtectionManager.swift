@@ -20,7 +20,7 @@
 import Foundation
 import MaliciousSiteProtection
 import Common
-import PixelKit
+import Core
 
 typealias MaliciousSiteProtectionManaging = MaliciousSiteDetecting & MaliciousSiteProtectionDatasetsFetching
 
@@ -31,7 +31,19 @@ final class MaliciousSiteProtectionManager {
     private let maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger
 
     private static let debugEvents = EventMapping<MaliciousSiteProtection.Event> { event, _, _, _ in
-        PixelKit.fire(event)
+        switch event {
+        case .errorPageShown,
+             .visitSite,
+             .iframeLoaded,
+             .settingToggled,
+             .matchesApiTimeout:
+            Pixel.fire(event)
+        case .matchesApiFailure(let error):
+            Logger.MaliciousSiteProtection.manager.error("Error fetching matches from API: \(error)")
+        case .failedToDownloadInitialDataSets:
+            // `.failedToDownloadInitialDataSets` Pixel is sent within the BSK library
+            break
+        }
     }
 
     init(

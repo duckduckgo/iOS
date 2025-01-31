@@ -301,7 +301,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         if let url = hostView?.url, url.isDuckPlayer {
             let orientation = UIDevice.current.orientation
             if orientation.isLandscape {
-                hostView?.chromeDelegate?.setBarsHidden(false, animated: true, animationDuration: Constants.chromeShowHideAnimationDuration)
+                hostView?.chromeDelegate?.setBarsHidden(false, animated: true, customAnimationDuration: Constants.chromeShowHideAnimationDuration)
                 setupHideBrowserChromeTimer()
             }
         }
@@ -317,7 +317,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
             DispatchQueue.main.async {
                 let orientation = UIDevice.current.orientation
                 if orientation.isLandscape {
-                    self?.hostView?.chromeDelegate?.setBarsHidden(true, animated: true, animationDuration: Constants.chromeShowHideAnimationDuration)
+                    self?.hostView?.chromeDelegate?.setBarsHidden(true, animated: true, customAnimationDuration: Constants.chromeShowHideAnimationDuration)
                 }
             }
         }
@@ -395,7 +395,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     /// Handle Portrait rotation
     private func handlePortraitOrientation() {
         hostView?.chromeDelegate?.omniBar.resignFirstResponder()
-        hostView?.chromeDelegate?.setBarsHidden(false, animated: true)
+        hostView?.chromeDelegate?.setBarsHidden(false, animated: true, customAnimationDuration: nil)
         hideBrowserChromeTimer?.invalidate()
         hideBrowserChromeTimer = nil
         hostView?.setupWebViewForPortraitVideo()
@@ -405,7 +405,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     private func handleLandscapeOrientation() {
         hostView?.chromeDelegate?.omniBar.resignFirstResponder()
         hostView?.setupWebViewForLandscapeVideo()
-        hostView?.chromeDelegate?.setBarsHidden(true, animated: true, animationDuration: Constants.chromeShowHideAnimationDuration)
+        hostView?.chromeDelegate?.setBarsHidden(true, animated: true, customAnimationDuration: Constants.chromeShowHideAnimationDuration)
     }
     
     /// Default rotation should be portrait mode

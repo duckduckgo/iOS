@@ -1771,10 +1771,10 @@ extension MainViewController: BrowserChromeDelegate {
         _ = findInPageView.resignFirstResponder()
     }
 
-    func setBarsHidden(_ hidden: Bool, animated: Bool, animationDuration: CGFloat?) {
+    func setBarsHidden(_ hidden: Bool, animated: Bool, customAnimationDuration: CGFloat?) {
         if hidden { hideKeyboard() }
 
-        setBarsVisibility(hidden ? 0 : 1.0, animated: animated, animationDuration: animationDuration)
+        setBarsVisibility(hidden ? 0 : 1.0, animated: animated, animationDuration: customAnimationDuration)
     }
     
     func setBarsVisibility(_ percent: CGFloat, animated: Bool = false, animationDuration: CGFloat?) {

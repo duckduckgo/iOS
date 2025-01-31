@@ -1062,7 +1062,7 @@ class TabViewController: UIViewController {
     }
 
     private func showBars(animated: Bool = true) {
-        chromeDelegate?.setBarsHidden(false, animated: animated)
+        chromeDelegate?.setBarsHidden(false, animated: animated, customAnimationDuration: nil)
     }
 
     func showPrivacyDashboard() {
@@ -1631,7 +1631,7 @@ extension TabViewController: WKNavigationDelegate {
             }
 
             self.chromeDelegate?.omniBar.resignFirstResponder()
-            self.chromeDelegate?.setBarsHidden(false, animated: true)
+            self.chromeDelegate?.setBarsHidden(false, animated: true, customAnimationDuration: nil)
 
             // Present the contextual onboarding
             contextualOnboardingPresenter.presentContextualOnboarding(for: spec, in: self)

@@ -244,18 +244,7 @@ class TabViewController: UIViewController {
             }
         }
     }
-    
-    public var canGoBack: Bool {
-        let webViewCanGoBack = webView.canGoBack
-        let navigatedToError = webView.url != nil && isError
-        return webViewCanGoBack || navigatedToError || openingTab != nil
-    }
-    
-    public var canGoForward: Bool {
-        let webViewCanGoForward = webView.canGoForward
-        return webViewCanGoForward && !isError
-    }
-    
+
     public var isError: Bool {
         return !error.isHidden
     }
@@ -3299,4 +3288,18 @@ extension TabViewController {
         // Clear stored settings
         savedViewSettings = nil
     }
+}
+
+extension TabViewController: Navigatable {
+    public var canGoBack: Bool {
+        let webViewCanGoBack = webView.canGoBack
+        let navigatedToError = webView.url != nil && isError
+        return webViewCanGoBack || navigatedToError || openingTab != nil
+    }
+
+    public var canGoForward: Bool {
+        let webViewCanGoForward = webView.canGoForward
+        return webViewCanGoForward && !isError
+    }
+
 }

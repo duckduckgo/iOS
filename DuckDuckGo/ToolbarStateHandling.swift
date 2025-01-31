@@ -21,7 +21,18 @@ import UIKit
 
 enum ToolbarContentState: Equatable {
     case newTab
-    case pageLoaded(currentTab: TabViewController)
+    case pageLoaded(currentTab: Navigatable)
+
+    static func == (lhs: ToolbarContentState, rhs: ToolbarContentState) -> Bool {
+        switch (lhs, rhs) {
+        case (.newTab, .newTab):
+            return true
+        case (.pageLoaded(let lhsTab), .pageLoaded(let rhsTab)):
+            return lhsTab.canGoBack == rhsTab.canGoBack && lhsTab.canGoForward == rhsTab.canGoForward
+        default:
+            return false
+        }
+    }
 }
 
 protocol ToolbarStateHandling {
@@ -29,57 +40,74 @@ protocol ToolbarStateHandling {
 }
 
 final class ToolbarHandler: ToolbarStateHandling {
-    var backButton = UIBarButtonItem(title: UserText.keyCommandBrowserBack, image: UIImage(named: "BrowsePrevious"))
-    var fireButton = UIBarButtonItem(title: UserText.actionForgetAll, image: UIImage(named: "Fire"))
-    var forwardButton = UIBarButtonItem(title: UserText.keyCommandBrowserForward, image: UIImage(named: "BrowseNext"))
-    var tabSwitcherButton = UIBarButtonItem(title: UserText.tabSwitcherAccessibilityLabel, image: UIImage(named: "Add-24"))
-    var bookmarkButton = UIBarButtonItem(title: UserText.actionOpenBookmarks, image: UIImage(named: "Book-24"))
-    var passwordsButton = UIBarButtonItem(title: UserText.actionOpenPasswords, image: UIImage(named: "Key-24"))
-    var browserMenuButton = UIBarButtonItem(title: UserText.menuButtonHint, image: UIImage(named: "Menu-Horizontal-24"))
+   lazy var backButton = createBarButtonItem(title: UserText.keyCommandBrowserBack, imageName: "BrowsePrevious")
+   lazy var fireButton = createBarButtonItem(title: UserText.actionForgetAll, imageName: "Fire")
+   lazy var forwardButton = createBarButtonItem(title: UserText.keyCommandBrowserForward, imageName: "BrowseNext")
+   lazy var tabSwitcherButton = createBarButtonItem(title: UserText.tabSwitcherAccessibilityLabel, imageName: "Add-24")
+   lazy var bookmarkButton = createBarButtonItem(title: UserText.actionOpenBookmarks, imageName: "Book-24")
+   lazy var passwordsButton = createBarButtonItem(title: UserText.actionOpenPasswords, imageName: "Key-24")
+   lazy var browserMenuButton = createBarButtonItem(title: UserText.menuButtonHint, imageName: "Menu-Horizontal-24")
 
     private var state: ToolbarContentState?
 
+    // MARK: - Public Methods
+
     func updateTabbarWithState(toolBar: UIToolbar, state: ToolbarContentState) {
-        defer {
-            self.state = state
-
-            if case let .pageLoaded(currentTab) = state {
-                updateNavigationButtons(currentTab)
-            }
+        /// We always want to update the navigation buttons if the state is page loaded
+        if case let .pageLoaded(currentTab) = state {
+            updateNavigationButtons(currentTab)
         }
 
-        if self.state == state {
-            return
-        }
+        guard self.state != state else { return }
 
-        var buttons: [UIBarButtonItem] = []
+        self.state = state
+
+        let buttons: [UIBarButtonItem]
         switch state {
         case .pageLoaded:
-            buttons = [backButton,
-                       .flexibleSpace(),
-                       forwardButton,
-                       .flexibleSpace(),
-                       fireButton,
-                       .flexibleSpace(),
-                       tabSwitcherButton,
-                       .flexibleSpace(),
-                       browserMenuButton]
+            buttons = createPageLoadedButtons()
         case .newTab:
-            buttons = [bookmarkButton,
-                       .flexibleSpace(),
-                       passwordsButton,
-                       .flexibleSpace(),
-                       fireButton,
-                       .flexibleSpace(),
-                       tabSwitcherButton,
-                       .flexibleSpace(),
-                       browserMenuButton]
+            buttons = createNewTabButtons()
         }
-
+        // TODO: Add feature flag, always return createPageLoadedButtons in case the new feature is off
         toolBar.setItems(buttons, animated: false)
     }
 
-    private func updateNavigationButtons(_ currentTab: TabViewController) {
+    // MARK: - Private Methods
+
+    private func createBarButtonItem(title: String, imageName: String) -> UIBarButtonItem {
+        return UIBarButtonItem(title: title, image: UIImage(named: imageName), primaryAction: nil)
+    }
+
+    private func createPageLoadedButtons() -> [UIBarButtonItem] {
+        return [
+            backButton,
+            .flexibleSpace(),
+            forwardButton,
+            .flexibleSpace(),
+            fireButton,
+            .flexibleSpace(),
+            tabSwitcherButton,
+            .flexibleSpace(),
+            browserMenuButton
+        ]
+    }
+
+    private func createNewTabButtons() -> [UIBarButtonItem] {
+        return [
+            bookmarkButton,
+            .flexibleSpace(),
+            passwordsButton,
+            .flexibleSpace(),
+            fireButton,
+            .flexibleSpace(),
+            tabSwitcherButton,
+            .flexibleSpace(),
+            browserMenuButton
+        ]
+    }
+
+    private func updateNavigationButtons(_ currentTab: Navigatable) {
         backButton.isEnabled = currentTab.canGoBack
         forwardButton.isEnabled = currentTab.canGoForward
     }

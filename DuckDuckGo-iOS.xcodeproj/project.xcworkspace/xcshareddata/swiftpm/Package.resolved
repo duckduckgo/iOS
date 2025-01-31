@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "20b24085284b27a7c9a5257efa77b2f1cf59f893",
-        "version" : "232.1.1"
+        "branch" : "graeme/fix-backfill-pixels",
+        "revision" : "c64a21f791f120a55833b0cb5c8683b02dadae9c"
       }
     },
     {

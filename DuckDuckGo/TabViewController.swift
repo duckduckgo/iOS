@@ -60,6 +60,27 @@ class TabViewController: UIViewController {
     @IBOutlet weak var webViewContainer: UIView!
     var webViewBottomAnchorConstraint: NSLayoutConstraint?
     var daxContextualOnboardingController: UIViewController?
+    
+    /// Stores the visual state of the web view
+    /// Used by DuckPlayer to save and restore view appearance when switching between normal browsing and fullscreen (portrail/landscape) video modes.
+    private struct ViewSettings {
+        
+        let viewBackground: UIColor?
+        let webViewBackground: UIColor?
+        let webViewOpaque: Bool
+        let scrollViewBackground: UIColor?
+        
+        /// Default view settings        
+        static var `default`: ViewSettings {
+            ViewSettings(
+                viewBackground: .systemBackground,
+                webViewBackground: nil,
+                webViewOpaque: true,
+                scrollViewBackground: .systemBackground
+            )
+        }
+    }
+    private var savedViewSettings: ViewSettings?
 
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
@@ -3238,3 +3259,45 @@ private extension TabViewController {
         return didRestoreWebViewState
     }
 }
+
+// Landscape/Portrait mode customizations
+extension TabViewController {
+    
+    /// Stores WebView settings and
+    /// Updates its properties when displaying video in landscape mode
+    // This is used by DuckPlayer when rotating to landscape
+    func setupWebViewForLandscapeVideo() {
+        guard let webView = webView else { return }
+        
+        // Store original settings
+        savedViewSettings = ViewSettings(
+            viewBackground: view.backgroundColor,
+            webViewBackground: webView.backgroundColor,
+            webViewOpaque: webView.isOpaque,
+            scrollViewBackground: webView.scrollView.backgroundColor
+        )
+        
+        // Apply landscape settings
+        view.backgroundColor = .black
+        webView.backgroundColor = .black
+        webView.isOpaque = true
+        webView.scrollView.backgroundColor = .black
+    }
+    
+    /// Resets the webview to its original settings
+    /// This is used by DuckPlayer when rotating back to portrait
+    func setupWebViewForPortraitVideo() {
+        guard let webView = webView else { return }
+        
+        // Restore original settings if they were stored
+        let settings = savedViewSettings ?? ViewSettings.default
+        view.backgroundColor = settings.viewBackground
+        webView.backgroundColor = settings.webViewBackground
+        webView.isOpaque = settings.webViewOpaque
+        webView.scrollView.backgroundColor = settings.scrollViewBackground
+        
+        // Clear stored settings
+        savedViewSettings = nil
+    }
+}
+

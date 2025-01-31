@@ -86,12 +86,18 @@ protocol DuckPlayerSettings: AnyObject {
     /// Determines if Duck Player should open videos in a new tab.
     var openInNewTab: Bool { get }
     
+    /// Determines if the native UI should be used
+    var nativeUI: Bool { get }
+    
+    /// Autoplay Videos when opening
+    var autoplay: Bool { get }
+    
     /// Initializes a new instance with the provided app settings and privacy configuration manager.
     ///
     /// - Parameters:
     ///   - appSettings: The application settings.
     ///   - privacyConfigManager: The privacy configuration manager.
-    init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging)
+    init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging, internalUserDecider: InternalUserDecider)
     
     /// Sets the Duck Player mode.
     ///
@@ -113,6 +119,7 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     private var appSettings: AppSettings
     private let privacyConfigManager: PrivacyConfigurationManaging
     private var isFeatureEnabledCancellable: AnyCancellable?
+    private var internalUserDecider: InternalUserDecider
     
     private var _isFeatureEnabled: Bool
     private var isFeatureEnabled: Bool {
@@ -138,10 +145,12 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     ///   - appSettings: The application settings.
     ///   - privacyConfigManager: The privacy configuration manager.
     init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-         privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
+         privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider) {
         self.appSettings = appSettings
         self.privacyConfigManager = privacyConfigManager
         self._isFeatureEnabled = privacyConfigManager.privacyConfig.isEnabled(featureKey: .duckPlayer)
+        self.internalUserDecider = internalUserDecider
         registerConfigPublisher()
         registerForNotificationChanges()
     }
@@ -178,6 +187,16 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     /// Determines if Duck Player should open videos in a new tab.
     var openInNewTab: Bool {
         return appSettings.duckPlayerOpenInNewTab
+    }
+    
+    // Determines if we should use the native verion of DuckPlayer (Internal only)
+    var nativeUI: Bool {
+        return appSettings.duckPlayerNativeUI && internalUserDecider.isInternalUser
+    }
+    
+    // Determines if we should use the native verion of DuckPlayer (Internal only)
+    var autoplay: Bool {
+        return appSettings.duckPlayerAutoplay && internalUserDecider.isInternalUser
     }
     
     /// Registers a publisher to listen for changes in the privacy configuration.

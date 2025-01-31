@@ -339,7 +339,6 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     }
 
 
-
     // MARK: - Common Message Handlers
 
     /// Sets user values received from the web content.

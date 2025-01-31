@@ -1,20 +1,11 @@
 /* Class = "UILabel"; text = "Title"; ObjectID = "1GE-Nf-lKM"; */
 "1GE-Nf-lKM.text" = "Название";
 
-/* Class = "UIButton"; accessibilityLabel = "Add all tabs as bookmarks"; ObjectID = "2aH-nO-H3f"; */
-"2aH-nO-H3f.accessibilityLabel" = "Добавить все вкладки в закладки";
-
 /* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "2en-CB-bYH"; */
 "2en-CB-bYH.accessibilityLabel" = "Закрыть вкладку";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "2GU-MM-UwX"; */
 "2GU-MM-UwX.text" = "Название";
-
-/* Class = "UIButton"; accessibilityLabel = "Close all tabs and clear data"; ObjectID = "5nO-MZ-vSY"; */
-"5nO-MZ-vSY.accessibilityLabel" = "Закрыть все вкладки и удалить данные";
-
-/* Class = "UILabel"; text = "Tabs"; ObjectID = "Cy7-Lb-veV"; */
-"Cy7-Lb-veV.text" = "Вкладки";
 
 /* Class = "UIButton"; accessibilityLabel = "Add new tab"; ObjectID = "cYd-YU-sSj"; */
 "cYd-YU-sSj.accessibilityLabel" = "Добавить вкладку";
@@ -31,12 +22,6 @@
 /* Class = "UIButton"; accessibilityLabel = "Clear tabs and data"; ObjectID = "Hcx-F2-HgO"; */
 "Hcx-F2-HgO.accessibilityLabel" = "Сбросить вкладки и данные";
 
-/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "kW3-ZC-Axl"; */
-"kW3-ZC-Axl.normalTitle" = "Готово";
-
-/* Class = "UIButton"; accessibilityLabel = "Toggle between grid and list view"; ObjectID = "L7l-vl-rDZ"; */
-"L7l-vl-rDZ.accessibilityLabel" = "Переключатель «список-сетка»";
-
 /* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
 "LbT-NO-T0G.text" = "Ссылка";
 
@@ -45,9 +30,6 @@
 
 /* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "qrJ-aX-XrW"; */
 "qrJ-aX-XrW.accessibilityLabel" = "Вкладка не прочитана";
-
-/* Class = "UIButton"; accessibilityLabel = "Add Tab"; ObjectID = "uIV-4q-5mj"; */
-"uIV-4q-5mj.accessibilityLabel" = "Добавить вкладку";
 
 /* Class = "UILabel"; text = "Website -- Long Title"; ObjectID = "Uu4-yR-9tN"; */
 "Uu4-yR-9tN.text" = "Сайт -- длинное название";

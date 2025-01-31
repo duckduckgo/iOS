@@ -1,6 +1,12 @@
 /* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
 "intent.vpn.needs.to.be.enabled.from.app" = "Tev ir jāiespējo VPN DuckDuckGo lietotnē.";
 
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Ātri uzsāc jaunu MI tērzēšanu vietnē Duck.ai";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Nekavējoties ģenerē jaunu privātu Duck adresi.";
 
@@ -61,6 +67,12 @@
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Meklēt paroles";
 
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Meklē, tērzē Duck.ai vai apskati savas paroles.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Saīsnes";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Meklē vai atver savas iecienītākās vietnes konfidenciāli, veicot tikai vienu pieskārienu.";
 
@@ -87,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Meklēt paroles";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Meklēt";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Meklēt DuckDuckGo";

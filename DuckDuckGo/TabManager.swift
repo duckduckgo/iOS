@@ -308,8 +308,13 @@ class TabManager {
     }
 
     func replaceTab(at index: Int, withNewTab newTab: Tab) {
-        model.remove(at: index)
-        model.insert(tab: newTab, at: index)
+        // Removing a Tab automatically inserts a new one if tabs are empty. Hence add a new one only if needed
+        if model.tabs.count == 1 {
+            model.remove(at: index)
+        } else {
+            model.remove(at: index)
+            model.insert(tab: newTab, at: index)
+        }
         save()
     }
 

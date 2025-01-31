@@ -30,10 +30,10 @@
     {
       "identity" : "browserserviceskit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
         "branch" : "graeme/fix-backfill-pixels",
-        "revision" : "c64a21f791f120a55833b0cb5c8683b02dadae9c"
+        "revision" : "b1bc5c639b5fc9652d0a8bcd11e0bdf96f7f559a"
       }
     },
     {

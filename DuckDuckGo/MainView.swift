@@ -141,25 +141,9 @@ extension MainViewFactory {
 
         coordinator.toolbar = HitTestingToolbar()
         coordinator.toolbar.isTranslucent = false
-
-        coordinator.toolbarBackButton = UIBarButtonItem(title: UserText.keyCommandBrowserBack, image: UIImage(named: "BrowsePrevious"))
-        coordinator.toolbarForwardButton = UIBarButtonItem(title: UserText.keyCommandBrowserForward, image: UIImage(named: "BrowseNext"))
-        coordinator.toolbarFireButton = UIBarButtonItem(title: UserText.actionForgetAll, image: UIImage(named: "Fire"))
-        coordinator.toolbarTabSwitcherButton = UIBarButtonItem(title: UserText.tabSwitcherAccessibilityLabel, image: UIImage(named: "Add-24"))
-        coordinator.lastToolbarButton = UIBarButtonItem(title: UserText.actionOpenBookmarks, image: UIImage(named: "Book-24"))
         superview.addSubview(coordinator.toolbar)
 
-        coordinator.toolbar.setItems([
-            coordinator.toolbarBackButton!,
-            .flexibleSpace(),
-            coordinator.toolbarForwardButton!,
-            .flexibleSpace(),
-            coordinator.toolbarFireButton!,
-            .flexibleSpace(),
-            coordinator.toolbarTabSwitcherButton!,
-            .flexibleSpace(),
-            coordinator.lastToolbarButton!,
-        ], animated: true)
+        coordinator.updateTabbarWithState(toolBar: coordinator.toolbar, state: .newTab)
     }
 
     final class LogoBackgroundView: UIView { }

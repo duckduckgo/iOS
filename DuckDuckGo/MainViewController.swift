@@ -313,6 +313,8 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbarBackButton.action = #selector(onBackPressed)
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
+        viewCoordinator.toolbarPasswordsButton.action = #selector(onPasswordsPressed)
+        viewCoordinator.toolbarBookmarksButton.action = #selector(onBookmarksPressed)
 
         installSwipeTabs()
             
@@ -717,10 +719,10 @@ class MainViewController: UIViewController {
     }
     
     private func initMenuButton() {
-        viewCoordinator.lastToolbarButton.customView = menuButton
-        viewCoordinator.lastToolbarButton.isAccessibilityElement = true
-        viewCoordinator.lastToolbarButton.accessibilityTraits = .button
-        
+        viewCoordinator.menuToolbarButton.customView = menuButton
+        viewCoordinator.menuToolbarButton.isAccessibilityElement = true
+        viewCoordinator.menuToolbarButton.accessibilityTraits = .button
+
         menuButton.delegate = self
     }
     
@@ -900,7 +902,11 @@ class MainViewController: UIViewController {
         
         performCancel()
     }
-    
+
+    @objc func onPasswordsPressed() {
+        launchAutofillLogins(source: .newTabPageToolbar)
+    }
+
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
         forgetAllWithAnimation {}
@@ -1167,9 +1173,6 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func refreshBackForwardButtons() {
-        viewCoordinator.toolbarBackButton.isEnabled = currentTab?.canGoBack ?? false
-        viewCoordinator.toolbarForwardButton.isEnabled = currentTab?.canGoForward ?? false
-        
         viewCoordinator.omniBar.backButton.isEnabled = viewCoordinator.toolbarBackButton.isEnabled
         viewCoordinator.omniBar.forwardButton.isEnabled = viewCoordinator.toolbarForwardButton.isEnabled
     }
@@ -1237,23 +1240,25 @@ class MainViewController: UIViewController {
     }
 
     func refreshMenuButtonState() {
-        let expectedState: MenuButton.State
         if !homeTabManager.isNewTabPageSectionsEnabled && newTabPageViewController != nil {
-            expectedState = .bookmarksImage
-            viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
+            viewCoordinator.updateTabbarWithState(toolBar: viewCoordinator.toolbar, state: .newTab)
+            presentedMenuButton.setState(.menuImage, animated: false)
 
         } else {
+            let expectedState: MenuButton.State
             if presentedViewController is BrowsingMenuViewController {
                 expectedState = .closeImage
             } else {
                 expectedState = .menuImage
             }
-            viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
-        }
 
-        presentedMenuButton.setState(expectedState, animated: false)
+            if let currentTab = currentTab {
+                viewCoordinator.updateTabbarWithState(toolBar: viewCoordinator.toolbar, state: .pageLoaded(currentTab: currentTab))
+            }
+            presentedMenuButton.setState(expectedState, animated: false)
+        }
     }
 
     private func applyWidthToTrayController() {

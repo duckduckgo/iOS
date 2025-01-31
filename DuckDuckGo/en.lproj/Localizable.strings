@@ -79,6 +79,9 @@
 /* Open action */
 "action.title.open" = "Open";
 
+/* Button: Open passwords list */
+"action.title.passwords" = "Passwords";
+
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Paste & Go";
 

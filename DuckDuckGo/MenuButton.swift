@@ -35,7 +35,6 @@ class MenuButton: UIView {
     enum State {
         case menuImage
         case closeImage
-        case bookmarksImage
     }
     
     struct Constants {
@@ -74,8 +73,7 @@ class MenuButton: UIView {
         addSubview(bookmarksIconView)
 
         configureAnimationView()
-        configureBookmarksView()
-        
+
         addInteraction(UIPointerInteraction(delegate: self))
 
         decorate()
@@ -88,15 +86,6 @@ class MenuButton: UIView {
         anim.center = center
         pointerView.center = center
         bookmarksIconView.center = center
-    }
-    
-    private func configureBookmarksView() {
-        bookmarksIconView.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        bookmarksIconView.image = UIImage(named: "Book-24")
-        
-        bookmarksIconView.center = CGPoint(x: bounds.midX, y: bounds.midY)
-        
-        bookmarksIconView.isHidden = true
     }
 
     private func configureAnimationView() {
@@ -122,8 +111,6 @@ class MenuButton: UIView {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         tint(alpha: 1)
         switch currentState {
-        case .bookmarksImage:
-            delegate?.showBookmarks(self)
         case .menuImage, .closeImage:
             delegate?.showMenu(self)
         }
@@ -162,9 +149,6 @@ class MenuButton: UIView {
             } else {
                 anim.currentProgress = 0.0
             }
-        case .bookmarksImage:
-            bookmarksIconView.isHidden = false
-            anim.isHidden = true
         }
         
         currentState = state

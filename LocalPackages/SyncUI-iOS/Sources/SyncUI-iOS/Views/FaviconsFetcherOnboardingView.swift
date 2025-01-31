@@ -37,10 +37,12 @@ public struct FaviconsFetcherOnboardingView: View {
 
                 Text(UserText.fetchFaviconsOnboardingTitle)
                     .daxTitle1()
+                    .multilineTextAlignment(.center)
 
                 Text(UserText.fetchFaviconsOnboardingMessage)
                     .multilineTextAlignment(.center)
                     .daxBodyRegular()
+                    .minimumScaleFactor(0.8)
             }
             .padding(.horizontal, 24)
             .padding(.vertical, 20)

@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Nerladdningar";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "AI-chatt";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Redigera bokmärke";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Klistra in och gå";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Skriv ut";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Skriv ut";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Uppdatera";
@@ -288,18 +294,6 @@
 
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "När DuckDuckGo upptäcker popup-fönster för godkännande av cookies på webbplatser som du besöker kan vi försöka att automatiskt ställa in dina cookieinställningar på att minimera cookies och maximera din integritet, och därefter stänga popup-fönstren. På vissa webbplatser finns ingen möjlighet att justera cookieinställningarna, så vi kan enbart dölja popup-fönster som dessa.";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
 
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Öppna inställningar";
@@ -538,11 +532,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Inga resultat";
 
-/* Do not translate - stringsdict entry */
-"autofill.number.of.passwords" = "autofill.number.of.passwords";
-
 /* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Lösenord krypteras och förvaras på enheten, och du låser upp dem med %@.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -701,9 +692,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Ta bort";
 
-/* Do not translate - stringsdict entry */
-"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Radera %@?";
 
@@ -782,14 +770,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Din rapport hjälper till att göra DuckDuckGo bättre för alla!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Nej";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Löstes problemet på den här webbplatsen genom att stänga av integritetsskydd?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Ja";
+/* No comment provided by engineer. */
+"Confirm" = "Bekräfta";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Hoppa över";
@@ -815,23 +797,14 @@
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Det är enkelt att lägga till mig i din Dock.";
 
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
-
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "*%1$@* försökte spåra dig här. Jag blockerade det!\n\n☝️ Tryck på skölden för mer info.";
 
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "High Five!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Kom ihåg: varje gång du surfar med mig förlorar en läskig annons sina vingar. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Du klarar det här!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Det är DuckDuckGo Search. Privat. Snabbt. Färre annonser.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Jag förstår!";
@@ -850,9 +823,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Prova att besöka en webbplats!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Dina DuckDuckGo-sökningar är alltid anonyma.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Är du redo att komma igång?\nProva att söka!";
@@ -878,8 +848,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "rollbesättningen för avatar";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "lokalt väder";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Överraska mig!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Hitta **DuckDuckGo** i listan och tryck sedan på **VPN-kontroll** för att lägga till det";
@@ -940,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "High Five!";
@@ -1109,10 +1076,12 @@
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Jag förstår!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Drunknar du i annonser på YouTube? Prova Duck Player!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "Drunknar du i annonser på YouTube? Inte med Duck Player!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1658,6 +1627,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Bläddra-meny";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Värdnamn för meddelandepolicy";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Tillbaka";
 
@@ -1934,9 +1906,6 @@
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "Öppna menyn ••• på valfri webbplats och välj **Lägg till favorit** för att lägga till den på din nya fliksida.";
 
-/* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Cookies hanteras";
 
@@ -1949,23 +1918,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Välj din webbläsare";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Blockera popup-fönster för cookies";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Blockera påträngande annonser";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Rensa snabbt surfdata";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Sök privat som standard";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Blockera spårare från tredje part";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Integritetsskydd aktiverat!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Lätt att nå";
@@ -2020,9 +1974,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Vi kör!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Hej!\n\nÄr du redo för ett bättre, mer privat internet?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Lägg till widget";
@@ -2139,9 +2090,9 @@
 "prefrences.sync.credentials-limit-exceeded-description" = "Du har nått det maximala antalet lösenord. Ta bort några för att återuppta synkroniseringen.";
 
 /* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Det inträffade ett fel under synkroniseringen. Prova att inaktivera synkronisering på den här enheten och anslut sedan på nytt från en annan enhet eller med din återställningskod.";
+Description of incorrectly formatted data error when syncing.
+Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Vissa bokmärken eller lösenord är felaktigt formaterade eller för långa och synkroniserades inte.";
 
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Synkronisering pausad";
@@ -2207,6 +2158,9 @@
 "prompt.custom.url.scheme.title" = "Öppna i annan app?";
 
 /* No comment provided by engineer. */
+"Reset" = "Återställ";
+
+/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Sök eller ange adress";
 
 /* No comment provided by engineer. */
@@ -2249,7 +2203,7 @@
 "settings.add.widget.vpn" = "Lägg till DuckDuckGo VPN-widgeten på din startsida";
 
 /* Name of the settings subsection related to the address bar
-   Settings screen cell text for addess bar position */
+Settings screen cell text for addess bar position */
 "settings.address.bar" = "Adressfält";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2307,7 +2261,7 @@
 "settings.data.clearing" = "Datarensning";
 
 /* Settings screen cell text for setting the app as default browser
-   The name of Settings category in Privacy Features related to configuration of the default browser */
+The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Standardwebbläsare";
 
 /* Label of a button disabling email protection */
@@ -2520,23 +2474,26 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Vilken webbplats är skadad?";
 
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Lagrade värdnamn: %@";
+
 /* Subscription Activation Info */
-"subscription.activate..header.description" = "Kom åt ditt Privacy Pro-abonnemang på den här enheten via Apple-ID eller en e-postadress.";
+"subscription.activate..header.description" = "Kom åt ditt Privacy Pro-abonnemang på den här enheten via ditt Apple-konto eller en e-postadress.";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Lägg till e-postadress";
 
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple-ID";
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Apple-konto";
 
-/* Button text for restoring purchase via Apple ID */
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Återställ köp";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Återställ ditt köp för att aktivera abonnemanget på den här enheten.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Ditt abonnemang är automatiskt tillgängligt i DuckDuckGo på alla enheter som är inloggade på ditt Apple-ID.";
+"subscription.activate.description" = "Ditt abonnemang är automatiskt tillgängligt i DuckDuckGo på alla enheter som är inloggade på ditt Apple-konto.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Redigera e-postadress";
@@ -2578,7 +2535,7 @@
 "subscription.add.email.title" = "Lägg till e-postadress";
 
 /* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro är tillgängligt på alla enheter som är inloggade med samma Apple-ID.";
+"subscription.available.apple" = "Privacy Pro är tillgängligt på alla enheter som är inloggade med samma Apple-konto.";
 
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Ditt abonnemang köptes genom Google Play-butiken. För att förnya abonnemanget öppnar du abonnemangsinställningarna för Google Play-butiken på en enhet som är inloggad på samma Google-konto som användes för att köpa ditt abonnemang.";
@@ -2614,7 +2571,7 @@
 "subscription.email.inactive.alert.title" = "Det gick inte att hitta abonnemanget";
 
 /* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Abonnemanget som är kopplat till detta Apple-ID är inte längre aktivt.";
+"subscription.expired.alert.message" = "Abonnemanget som är kopplat till det här Apple-kontot är inte längre aktivt.";
 
 /* FAQ Button */
 "subscription.faq" = "Vanliga frågor och support";
@@ -2632,7 +2589,7 @@
 "subscription.found.restore" = "Återställ";
 
 /* Message for the existing subscription dialog */
-"subscription.found.text" = "Vi hittade ett abonnemang som är kopplat till detta Apple-ID.";
+"subscription.found.text" = "Vi hittade ett abonnemang som är kopplat till det här Apple-kontot.";
 
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonnemang hittades";
@@ -2647,7 +2604,7 @@
 "subscription.manage.title" = "Abonnemang";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Det finns inget abonnemang som är kopplat till detta Apple-ID.";
+"subscription.notFound.alert.message" = "Det finns inget abonnemang som är kopplat till det här Apple-kontot.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Det gick inte att hitta abonnemanget";

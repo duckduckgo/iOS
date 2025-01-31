@@ -27,30 +27,26 @@ import BrowserServicesKit
 struct AppDependencies {
 
     let window: UIWindow
+    let mainCoordinator: MainCoordinator
+    let overlayWindowManager: OverlayWindowManager // TODO: perhaps we don't need to pass it here
 
-    let accountManager: AccountManager
     let vpnService: VPNService
-
-    let appSettings: AppSettings
-
-    let overlayWindowManager: OverlayWindowManager
     let authenticationService: AuthenticationService
     let screenshotService: ScreenshotService
-    let mainCoordinator: MainCoordinator
-
-    let voiceSearchHelper: VoiceSearchHelper
-    let autoClear: AutoClear
-    let marketplaceAdPostbackManager: MarketplaceAdPostbackManaging
+    let autoClearService: AutoClearService
     let syncService: SyncService
-    let privacyProDataReporter: PrivacyProDataReporting
     let remoteMessagingService: RemoteMessagingService
-
     let subscriptionService: SubscriptionService
-
-    let onboardingPixelReporter: OnboardingPixelReporter
     let autofillService: AutofillService
     let crashService: CrashService
     let keyboardService: KeyboardService
     let configurationService: ConfigurationService
+
+    // TODO: should we have a reporting service?
+    let marketplaceAdPostbackManager: MarketplaceAdPostbackManaging
+    let privacyProDataReporter: PrivacyProDataReporting
+    let onboardingPixelReporter: OnboardingPixelReporter
+
+    var cancellables = Set<AnyCancellable>()
 
 }

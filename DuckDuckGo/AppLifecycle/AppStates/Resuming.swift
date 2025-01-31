@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Combine
 
 /// Represents the transient state where the app is resuming after being backgrounded, preparing to return to the foreground.
 /// - Usage:
@@ -32,35 +33,49 @@ import UIKit
 struct Resuming: AppState {
 
     private let application: UIApplication
-    private let appDependencies: AppDependencies
+    private var appDependencies: AppDependencies
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
     private let lastBackgroundDate: Date
 
-    init(stateContext: Background.StateContext) {
+    private let didAuthenticateSubject = PassthroughSubject<Void, Never>()
+    private let didDataClearSubject = PassthroughSubject<Void, Never>()
+
+    init(stateContext: Background.StateContext) { // TODO: this method needs documentation
         application = stateContext.application
         appDependencies = stateContext.appDependencies
         lastBackgroundDate = stateContext.lastBackgroundDate
 
         ThemeManager.shared.updateUserInterfaceStyle()
 
+        didAuthenticateSubject.combineLatest(didDataClearSubject)
+            .prefix(1) // Trigger only on the first time both have emitted //todo is it needed?
+            .sink { [self] _ in self.onReady() }
+            .store(in: &appDependencies.cancellables)
+
         let authenticationService = appDependencies.authenticationService
-        authenticationService.beginAuthentication(onAuthentication: onAuthentication)
         let syncService = appDependencies.syncService
+        let autoClearService = appDependencies.autoClearService
+
+        authenticationService.beginAuthentication(onAuthenticated: onAuthenticated)
         syncService.onResuming()
+        autoClearService.onResuming()
+        autoClearService.registerForAutoClear(onDataCleared)
     }
 
-    private func onAuthentication() { // TODO: this method needs documentation
+    private func onAuthenticated() { // TODO: this method needs documentation
+        didAuthenticateSubject.send()
+    }
+
+    private func onDataCleared() { // TODO: this method needs documentation
+        didDataClearSubject.send()
+    }
+
+    private func onReady() { // TODO: this method needs documentation // TODO: check if this is called, should we store cancellables in appdependencies?
         let keyboardService = appDependencies.keyboardService
         keyboardService.showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
-        let autoClear = appDependencies.autoClear
-        Task { @MainActor in // TODO: for now we do it as it was:
-            // we used to wait for authentication to finish before we were starting autoclearing, but we should really
-            // do these task in parallel, and only when both finish we should manipulate the keyboard
-            await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
-            keyboardService.showKeyboardIfSettingOn = true
-        }
+        keyboardService.showKeyboardIfSettingOn = true
     }
 
 }

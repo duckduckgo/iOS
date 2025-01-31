@@ -54,13 +54,18 @@ final class VPNService: NSObject {
         tipKitAppEventsHandler.appDidFinishLaunching()
     }
 
-    func installRedditSessionWorkaround(autoClearTask: Task<Void, Never>? = nil) async { // TODO: optional just for now, but we always have to pass autoClearTask
-        await autoClearTask?.value
-        await vpnWorkaround.installRedditSessionWorkaround()
+    func onAutoClear() {
+        installRedditSessionWorkaround()
+    }
+
+    private func installRedditSessionWorkaround() {
+        Task {
+            await vpnWorkaround.installRedditSessionWorkaround()
+        }
     }
 
     @MainActor
-    func onForeground(autoClearTask: Task<Void, Never>? = nil) { // TODO: optional just for now, but we always have to pass autoClearTask
+    func onForeground() {
         refreshVPNWidget()
         presentExpiredEntitlementAlertIfNeeded()
         presentExpiredEntitlementNotificationIfNeeded()
@@ -68,7 +73,7 @@ final class VPNService: NSObject {
         Task {
             await stopAndRemoveVPNIfNotAuthenticated()
             await refreshVPNShortcuts()
-            await installRedditSessionWorkaround(autoClearTask: autoClearTask)
+            installRedditSessionWorkaround()
 
             if #available(iOS 17.0, *) {
                 await VPNSnoozeLiveActivityManager().endSnoozeActivityIfNecessary()

@@ -63,11 +63,11 @@ struct Launching: AppState {
     private let keyboardService: KeyboardService
     private let contentBlockingService: ContentBlockingService = ContentBlockingService()
     private let configurationService: ConfigurationService = ConfigurationService(isDebugBuild: isDebugBuild)
+    private let autoClearService: AutoClearService
 
     private let window: UIWindow
 
     private let mainCoordinator: MainCoordinator
-    private let autoClear: AutoClear
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
@@ -180,19 +180,17 @@ struct Launching: AppState {
         window.makeKeyAndVisible()
         application.setWindow(window)
 
-        let autoClear = AutoClear(worker: mainViewController)
-        self.autoClear = autoClear
-        let applicationState = application.applicationState
+        overlayWindowManager = OverlayWindowManager(window: window,
+                                                    addressBarPosition: appSettings.currentAddressBarPosition,
+                                                    voiceSearchHelper: voiceSearchHelper)
         vpnService = VPNService(mainCoordinator: mainCoordinator)
-        Task { [vpnService] in
-            await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
-            await vpnService.installRedditSessionWorkaround()
-        }
-
+        autoClearService = AutoClearService(worker: mainViewController, overlayWindowManager: overlayWindowManager)
         screenshotService = ScreenshotService(window: window)
-        overlayWindowManager = OverlayWindowManager(window: window)
         authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
         keyboardService = KeyboardService(mainViewController: mainViewController)
+
+        autoClearService.onLaunching()
+        autoClearService.registerForAutoClear(onAutoClear)
 
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
@@ -208,28 +206,30 @@ struct Launching: AppState {
         crashService.handleCrashDuringCrashHandlersSetup()
     }
 
+    // TODO: deserves some documentation
+    private func onAutoClear() {
+        vpnService.onAutoClear()
+    }
+
     private var appDependencies: AppDependencies {
         AppDependencies(
             window: window,
-            accountManager: accountManager,
-            vpnService: vpnService,
-            appSettings: appSettings,
+            mainCoordinator: mainCoordinator,
             overlayWindowManager: overlayWindowManager,
+            vpnService: vpnService,
             authenticationService: authenticationService,
             screenshotService: screenshotService,
-            mainCoordinator: mainCoordinator,
-            voiceSearchHelper: voiceSearchHelper,
-            autoClear: autoClear,
-            marketplaceAdPostbackManager: marketplaceAdPostbackManager,
+            autoClearService: autoClearService,
             syncService: syncService,
-            privacyProDataReporter: privacyProDataReporter,
             remoteMessagingService: remoteMessagingService,
             subscriptionService: subscriptionService,
-            onboardingPixelReporter: onboardingPixelReporter,
             autofillService: autofillService,
             crashService: crashService,
             keyboardService: keyboardService,
-            configurationService: configurationService
+            configurationService: configurationService,
+            marketplaceAdPostbackManager: marketplaceAdPostbackManager,
+            privacyProDataReporter: privacyProDataReporter,
+            onboardingPixelReporter: onboardingPixelReporter
         )
     }
     

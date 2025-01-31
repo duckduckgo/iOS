@@ -24,6 +24,7 @@ import Core
 import WidgetKit
 import BackgroundTasks
 import NetworkProtection
+import Combine
 
 /// Represents the state where the app is active and available for user interaction.
 /// - Usage:
@@ -40,12 +41,16 @@ import NetworkProtection
 struct Foreground: AppState {
 
     let application: UIApplication
-    let appDependencies: AppDependencies
+    var appDependencies: AppDependencies
+
+    private var urlToOpen: URL?
+    private var shortcutItemToHandle: UIApplicationShortcutItem?
 
     private let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
-    private var mainCoordinator: MainCoordinator {
-        appDependencies.mainCoordinator
-    }
+    private var mainCoordinator: MainCoordinator { appDependencies.mainCoordinator }
+
+    private let didAuthenticateSubject = PassthroughSubject<Void, Never>()
+    private let didDataClearSubject = PassthroughSubject<Void, Never>()
 
     // MARK: Handle logic when transitioning from Launched to Foreground
     // This transition occurs when the app has completed its launch process and becomes active.
@@ -54,22 +59,26 @@ struct Foreground: AppState {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
+        urlToOpen = stateContext.urlToOpen
+        shortcutItemToHandle = stateContext.shortcutItemToHandle
+
         let subscriptionService = appDependencies.subscriptionService
         subscriptionService.onFirstForeground()
 
         let authenticationService = appDependencies.authenticationService
-        authenticationService.beginAuthentication(onAuthentication: onAuthentication)
+        authenticationService.beginAuthentication(onAuthenticated: onAuthentication)
+
+        let autoClearService = appDependencies.autoClearService
+        autoClearService.registerForAutoClear(onDataCleared)
+
+        didAuthenticateSubject.combineLatest(didDataClearSubject)
+            .prefix(1) // Trigger only on the first time both have emitted //todo is it needed?
+            .sink { [self] _ in self.onReady() }
+            .store(in: &appDependencies.cancellables) // TODO: is it ok?
 
         initialiseBackgroundFetch(application)
         applyAppearanceChanges()
         appDependencies.remoteMessagingService.onForeground()
-
-        // TODO: it should happen after autoclear
-        if let url = stateContext.urlToOpen {
-            openURL(url)
-        } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
-            handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
-        }
 
         activateApp()
     }
@@ -80,12 +89,8 @@ struct Foreground: AppState {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
-        // TODO: it should happen after autoclear
-        if let url = stateContext.urlToOpen {
-            openURL(url)
-        } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
-            handleShortcutItem(shortcutItemToHandle, appIsLaunching: false)
-        }
+        let autoClearService = appDependencies.autoClearService
+        autoClearService.registerForAutoClear(onReady)
 
         activateApp()
     }
@@ -96,17 +101,28 @@ struct Foreground: AppState {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
-        if let url = stateContext.urlToOpen {
-            openURL(url)
-        } else if let shortcutItemToHandle = stateContext.shortcutItemToHandle {
-            handleShortcutItem(shortcutItemToHandle, appIsLaunching: false)
-        }
+        let autoClearService = appDependencies.autoClearService
+        autoClearService.registerForAutoClear(onReady)
 
         activateApp()
     }
 
     private func onAuthentication() {
-        appDependencies.keyboardService.showKeyboardOnLaunch()
+        didAuthenticateSubject.send()
+    }
+
+    private func onDataCleared() {
+        didDataClearSubject.send()
+    }
+
+    private func onReady() {
+        if let url = urlToOpen {
+            openURL(url)
+        } else if let shortcutItemToHandle = shortcutItemToHandle {
+            handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
+        } else {
+            appDependencies.keyboardService.showKeyboardOnLaunch() // is this logic alright? should we show keyboard on link/shortcut opening?
+        }
     }
 
     // MARK: handle applicationDidBecomeActive(_:) logic here
@@ -114,7 +130,7 @@ struct Foreground: AppState {
         appDependencies.syncService.onForeground()
         appDependencies.overlayWindowManager.removeNonAuthenticationOverlay()
 
-        StatisticsLoader.shared.load { 
+        StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
             self.reportAdAttribution()
@@ -167,11 +183,8 @@ struct Foreground: AppState {
             mainCoordinator.clearNavigationStack()
         }
 
-        Task { @MainActor in // TODO: to be removed
-            // Autoclear should have happened by now
-            appDependencies.keyboardService.showKeyboardIfSettingOn = false
-            mainCoordinator.handleURL(url)
-        }
+        appDependencies.keyboardService.showKeyboardIfSettingOn = false
+        mainCoordinator.handleURL(url)
     }
 
     private func fireAppLaunchPixel() {
@@ -255,22 +268,12 @@ struct Foreground: AppState {
 
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, appIsLaunching: Bool = false) {
         Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
-        let autoClear = appDependencies.autoClear
-        Task { @MainActor in
-            // This if/else could potentially be removed by ensuring previous autoClear calls (triggered during both Launch and Active states) are completed before proceeding. To be looked at in next milestones
-            if appIsLaunching {
-                await autoClear.clearDataIfEnabled()
-            } else {
-                await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
-            }
-
-            if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
-                mainCoordinator.handleQuery(query)
-            } else if shortcutItem.type == AppDelegate.ShortcutKey.passwords {
-                mainCoordinator.handleSearchPassword()
-            } else if shortcutItem.type == AppDelegate.ShortcutKey.openVPNSettings {
-                mainCoordinator.presentNetworkProtectionStatusSettingsModal()
-            }
+        if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+            mainCoordinator.handleQuery(query)
+        } else if shortcutItem.type == AppDelegate.ShortcutKey.passwords {
+            mainCoordinator.handleSearchPassword()
+        } else if shortcutItem.type == AppDelegate.ShortcutKey.openVPNSettings {
+            mainCoordinator.presentNetworkProtectionStatusSettingsModal()
         }
     }
 

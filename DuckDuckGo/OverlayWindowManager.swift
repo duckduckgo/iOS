@@ -23,13 +23,19 @@ final class OverlayWindowManager {
 
     private var overlayWindow: UIWindow?
     private let window: UIWindow
+    private let addressBarPosition: AddressBarPosition
+    private let voiceSearchHelper: VoiceSearchHelper
 
-    init(window: UIWindow) {
+    init(window: UIWindow,
+         addressBarPosition: AddressBarPosition,
+         voiceSearchHelper: VoiceSearchHelper) {
         self.window = window
+        self.addressBarPosition = addressBarPosition
+        self.voiceSearchHelper = voiceSearchHelper
     }
 
     @discardableResult
-    func displayBlankSnapshotWindow(addressBarPosition: AddressBarPosition, voiceSearchHelper: VoiceSearchHelper) -> BlankSnapshotViewController {
+    func displayBlankSnapshotWindow() -> BlankSnapshotViewController {
         // If `voiceSearchHelper` is not needed, remove it from here or pass nil
         let blankSnapshotViewController = BlankSnapshotViewController(addressBarPosition: addressBarPosition, voiceSearchHelper: voiceSearchHelper)
         blankSnapshotViewController.delegate = self

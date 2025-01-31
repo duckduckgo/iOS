@@ -77,22 +77,15 @@ struct Background: AppState {
     }
 
     mutating func run() {
-        let autoClear = appDependencies.autoClear
+        let autoClearService = appDependencies.autoClearService
         let privacyProDataReporter = appDependencies.privacyProDataReporter
-        let voiceSearchHelper = appDependencies.voiceSearchHelper
-        let appSettings = appDependencies.appSettings
         let autofillService = appDependencies.autofillService
         let syncService = appDependencies.syncService
-        let overlayWindowManager = appDependencies.overlayWindowManager
         let authenticationService = appDependencies.authenticationService
 
-        if autoClear.isClearingEnabled || authenticationService.isAuthenticationEnabled {
-            overlayWindowManager.displayBlankSnapshotWindow(addressBarPosition: appSettings.currentAddressBarPosition,
-                                                            voiceSearchHelper: voiceSearchHelper)
-        }
-        autoClear.startClearingTimer()
+        authenticationService.onBackground()
+        autoClearService.onBackground()
         autofillService.onBackground()
-
         syncService.onBackground()
 
         privacyProDataReporter.saveApplicationLastSessionEnded()

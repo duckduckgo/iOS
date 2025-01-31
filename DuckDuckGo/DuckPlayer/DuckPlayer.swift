@@ -327,16 +327,16 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         }
     }
 
-// Loads a native DuckPlayerView
-func loadNativeDuckPlayerVideo(videoID: String) {
-let viewModel = DuckPlayerViewModel(videoID: videoID)
-let duckPlayerView = DuckPlayerView(viewModel: viewModel)
-let hostingController = UIHostingController(rootView: duckPlayerView)
-hostingController.modalPresentationStyle = .formSheet
-hostingController.isModalInPresentation = false // Allows dismissal with swipe
+    // Loads a native DuckPlayerView
+    func loadNativeDuckPlayerVideo(videoID: String) {
+        let viewModel = DuckPlayerViewModel(videoID: videoID)
+        let duckPlayerView = DuckPlayerView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: duckPlayerView)
+        hostingController.modalPresentationStyle = .formSheet
+        hostingController.isModalInPresentation = false // Allows dismissal with swipe
 
-hostView?.present(hostingController, animated: true)
-}
+        hostView?.present(hostingController, animated: true)
+    }
 
 
 

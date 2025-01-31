@@ -30,6 +30,7 @@ struct TabSwitcherTopBarView: View {
         } label: {
             Image("Bookmark-New-24")
         }
+        .accessibilityLabel("Add all tabs as bookmarks")
     }
 
     @ViewBuilder func modeButton() -> some View {
@@ -38,6 +39,7 @@ struct TabSwitcherTopBarView: View {
         } label: {
             Image(model.tabsStyle.rawValue)
         }
+        .accessibilityLabel("Toggle between grid and list view")
     }
 
     @ViewBuilder func editButton() -> some View {

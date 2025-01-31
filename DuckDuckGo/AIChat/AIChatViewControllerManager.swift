@@ -62,7 +62,8 @@ final class AIChatViewControllerManager {
         webviewConfiguration.userContentController = userContentController
         self.userContentController = userContentController
         let aiChatViewController = AIChatViewController(settings: settings,
-                                                        webViewConfiguration: webviewConfiguration)
+                                                        webViewConfiguration: webviewConfiguration,
+                                                        requestAuthHandler: AIChatRequestAuthorizationHandler(debugSettings: AIChatDebugSettings()))
         aiChatViewController.delegate = self
 
         let roundedPageSheet = RoundedPageSheetContainerViewController(

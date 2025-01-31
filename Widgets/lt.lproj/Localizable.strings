@@ -1,6 +1,12 @@
 /* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
 "intent.vpn.needs.to.be.enabled.from.app" = "Reikia įjungti VPN iš „DuckDuckGo“ programėlės.";
 
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Greitai pradėk naują DI pokalbį „Duck.ai“";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Nedelsiant sugeneruokite naują privatų „Duck Address“.";
 
@@ -61,6 +67,12 @@
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Ieškoti slaptažodžių";
 
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Ieškok, kalbėk „Duck.ai“ arba peržiūrėk slaptažodžius.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Šaukiniai";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Ieškokite arba lankykitės savo mėgstamose svetainėse privačiai vienu bakstelėjimu.";
 
@@ -87,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Ieškoti slaptažodžių";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Paieška";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Ieškoti DuckDuckGo";

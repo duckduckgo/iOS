@@ -1,6 +1,12 @@
 /* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
 "intent.vpn.needs.to.be.enabled.from.app" = "A DuckDuckGo alkalmazásban engedélyezned kell a VPN-t.";
 
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "AI-csevegés gyors indítása a Duck.ai használatával";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Új privát Duck-cím azonnali létrehozása.";
 
@@ -61,6 +67,12 @@
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Jelszavak keresése";
 
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Keresés, csevegés a Duck.ai használatával, vagy jelszavak megtekintése.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Gyorsparancsok";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Látogasd meg a kedvenc weboldalaidat és keress rajtuk privát módon, mindössze egyetlen koppintással.";
 
@@ -87,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Jelszavak keresése";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Keresés";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "DuckDuckGo keresés";

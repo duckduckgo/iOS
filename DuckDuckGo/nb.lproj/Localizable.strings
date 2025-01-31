@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Nedlastinger";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "KI-chat";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Rediger bokmerke";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Lim inn og gå";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Skriv ut";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Skriv ut";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Oppdater";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Rapporten din bidrar til å gjøre DuckDuckGo bedre for alle!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Nei";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Ble problemet på dette nettstedet løst ved å slå av personvernbeskyttelsen?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Ja";
+/* No comment provided by engineer. */
+"Confirm" = "Bekreft";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Hopp over";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "High five!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Husk: Hver gang du surfer med meg, klippes vingene på en uhyggelig annonse. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Dette går bra!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Det er DuckDuckGo Search. Privat. Raskt. Færre annonser.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Skjønner!";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Prøv å besøke et nettsted!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "DuckDuckGo-søkene dine er alltid anonyme.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Er du klar til å komme i gang?\nPrøv et søk!";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "rollebesetningen i avatar";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "lokalt vær";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Overrask meg!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Finn **DuckDuckGo** i listen og trykk på **VPN-kontroll** for å legge den til";
@@ -1658,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Alternativer";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Vertsnavn for meldingspolicy";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Tilbake";
 
@@ -1949,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Velg nettleseren din";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Blokker popup-vinduer om informasjonskapsler";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Blokker påtrengende annonser";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Slett nettleserdata raskt";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Søk privat som standard";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Blokker tredjepartssporere";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Personvern er aktivert!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Lett å nå";
@@ -2020,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Sett i gang!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Heisann.\n\nKlar for et bedre, mer privat internett?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Legg til widget";
@@ -2138,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Du har nådd det maksimale antallet passord. Slett noen for å gjenoppta synkronisering.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Synkronisering oppdaget en feil. Prøv å slå av synkronisering på denne enheten og koble til igjen med en annen enhet eller gjenopprettingskoden.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Synkronisering satt på pause";
 
@@ -2205,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Åpne i en annen app?";
+
+/* No comment provided by engineer. */
+"Reset" = "Tilbakestill";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Søk eller skriv inn adresse";
@@ -2520,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Hvilket nettsted fungerer ikke?";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Få tilgang til Privacy Pro-abonnementet ditt på denne enheten via Apple ID eller en e-postadresse.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Lagret vertsnavn: %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Legg til e-postadresse";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Gjenopprett kjøp";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Gjenopprett kjøpet ditt for å aktivere abonnementet ditt på denne enheten.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Abonnementet ditt er automatisk tilgjengelig i DuckDuckGo på alle enheter som er logget på Apple ID-en din.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Rediger e-postadresse";
@@ -2577,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Legg til e-postadresse";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro er tilgjengelig på alle enheter som er logget inn på samme Apple ID.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Abonnementet ditt ble kjøpt gjennom Google Play Store. Hvis du vil fornye abonnementet, må du åpne abonnementsinnstillingene for Google Play Store på en enhet som er logget på den samme Google-kontoen som du brukte til å kjøpe abonnementet.";
 
@@ -2613,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Abonnementet ble ikke funnet";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Abonnementet tilknyttet denne Apple ID-en er ikke lenger aktiv.";
-
 /* FAQ Button */
 "subscription.faq" = "Vanlige spørsmål og kundestøtte";
 
@@ -2631,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Gjenopprett";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Vi fant et abonnement tilknyttet denne Apple ID-en.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonnementet er funnet";
 
@@ -2645,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Abonnement";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Det finnes ikke noe abonnement tilknyttet denne Apple ID-en.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonnementet ble ikke funnet";

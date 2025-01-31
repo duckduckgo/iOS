@@ -231,7 +231,7 @@ extension MaliciousSiteProtectionDatasetsFetcher {
                 try backgroundTaskScheduler.submit(task)
             } catch {
                 Logger.MaliciousSiteProtection.datasetsFetcher.error("Failed scheduling background task for \(datasetType.rawValue)")
-                Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error)
+                Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error, withAdditionalParameters: [PixelParameters.backgroundTaskCategory: "maliciousSiteProtection"])
             }
         }
 

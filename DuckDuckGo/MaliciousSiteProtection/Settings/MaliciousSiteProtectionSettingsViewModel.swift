@@ -24,10 +24,10 @@ import SwiftUI
 import MaliciousSiteProtection
 
 final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
-    @Published var shouldShowMaliciousSiteProtectionSection = false
-    @Published var isMaliciousSiteProtectionOn: Bool = false {
+    @Published var shouldShowMaliciousSiteProtectionSection: Bool
+    @Published var isMaliciousSiteProtectionOn: Bool {
         didSet {
-            manager.isMaliciousSiteProtectionOn = isMaliciousSiteProtectionOn
+            updateMaliciousSiteProtection(enabled: isMaliciousSiteProtectionOn)
         }
     }
 
@@ -51,4 +51,8 @@ final class MaliciousSiteProtectionSettingsViewModel: ObservableObject {
         urlOpener.open(URL.maliciousSiteProtectionLearnMore)
     }
 
+    private func updateMaliciousSiteProtection(enabled isEnabled: Bool) {
+        manager.isMaliciousSiteProtectionOn = isEnabled
+        Pixel.fire(MaliciousSiteProtection.Event.settingToggled(to: isEnabled))
+    }
 }

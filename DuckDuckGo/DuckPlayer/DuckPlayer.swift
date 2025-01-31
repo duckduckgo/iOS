@@ -607,4 +607,3 @@ extension DuckPlayer: UIGestureRecognizerDelegate {
         return true
     }
 }
-

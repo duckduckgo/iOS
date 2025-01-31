@@ -191,7 +191,7 @@ final class MockDuckPlayer: DuckPlayerControlling {
     }
     
     
-    var hostView: UIViewController?
+    var hostView: TabViewController?
     
     func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
         nil
@@ -201,7 +201,7 @@ final class MockDuckPlayer: DuckPlayerControlling {
         nil
     }
     
-    func setHostViewController(_ vc: UIViewController) {}
+    func setHostViewController(_ vc: TabViewController) {}
     func removeHostView() {}
     
     func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> (any Encodable)? {

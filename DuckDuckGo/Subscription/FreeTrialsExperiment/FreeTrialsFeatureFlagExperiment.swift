@@ -94,14 +94,6 @@ protocol FreeTrialsFeatureFlagExperimenting {
 /// Implementation of a feature flag experiment for monitoring and optimizing the impact of free trial offers.
 final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting {
 
-    /// Represents the cohorts in the experiment.
-    enum Cohort: String, FlagCohort {
-        /// Control cohort with no changes applied.
-        case control
-        /// Treatment cohort where the experiment modifications are applied.
-        case treatment
-    }
-
     /// Constants used in the experiment.
     enum Constants {
         /// Unique identifier for the subfeature being tested.
@@ -170,11 +162,11 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
     func getCohortIfEnabled() -> (any FlagCohort)? {
         let isFlagOverrideEnabled = storage.object(forKey: Constants.featureFlagOverrideKey) as? Bool ?? false
         if isFlagOverrideEnabled {
-            return FreeTrialsFeatureFlagExperiment.Cohort.treatment
+            return PrivacyProFreeTrialExperimentCohort.treatment
         }
 
         return featureFlagger.getCohortIfEnabled(for: FeatureFlag.privacyProFreeTrialJan25)
-                as? FreeTrialsFeatureFlagExperiment.Cohort
+                as? PrivacyProFreeTrialExperimentCohort
     }
 
     /// Provides one-time free trial experiment parameters for the user's cohort.

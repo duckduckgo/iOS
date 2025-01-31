@@ -20,6 +20,7 @@
 import XCTest
 import BrowserServicesKit
 import SubscriptionTestingUtilities
+import Core
 @testable import Subscription
 @testable import DuckDuckGo
 
@@ -61,7 +62,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.control
         mockStorePurchaseManager.subscriptionOptionsResult = .mockStandard
 
         // When
@@ -77,7 +78,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.treatment
         mockStorePurchaseManager.freeTrialSubscriptionOptionsResult = .mockFreeTrial
 
         // When
@@ -123,7 +124,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.control
         mockStorePurchaseManager.subscriptionOptionsResult = nil
 
         // When
@@ -138,7 +139,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.treatment
         mockStorePurchaseManager.freeTrialSubscriptionOptionsResult = nil
         mockStorePurchaseManager.subscriptionOptionsResult = .mockStandard
 
@@ -155,7 +156,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.treatment
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
         mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
@@ -174,7 +175,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.treatment
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
         mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
@@ -193,7 +194,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.control
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
         mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
@@ -212,7 +213,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.control
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
         mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
@@ -231,7 +232,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.treatment
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
         mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
@@ -249,7 +250,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.treatment
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
         mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
@@ -267,7 +268,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.control
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
         mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
@@ -285,7 +286,7 @@ final class SubscriptionPagesUseSubscriptionFeatureFreeTrialsTests: XCTestCase {
         // Given
         mockAccountManager.accessToken = nil
         mockSubscriptionManager.canPurchase = true
-        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.control
+        mockFreeTrialsFeatureFlagExperiment.cohortToReturn = PrivacyProFreeTrialExperimentCohort.control
         mockAppStorePurchaseFlow.purchaseSubscriptionResult = .success("")
         mockAppStorePurchaseFlow.completeSubscriptionPurchaseResult = .success(.completed)
         mockAppStorePurchaseFlow.purchaseSubscriptionBlock = { self.mockAccountManager.accessToken = "token" }
@@ -328,7 +329,7 @@ private extension SubscriptionOptions {
 
 private final class MockFreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting {
     
-    typealias CohortType = FreeTrialsFeatureFlagExperiment.Cohort
+    typealias CohortType = PrivacyProFreeTrialExperimentCohort
     var rawValue: String = "MockFreeTrialsFeatureFlagExperiment"
     var source: FeatureFlagSource = .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
 
@@ -338,7 +339,7 @@ private final class MockFreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagEx
     var fireOfferSelectionYearlyPixelCalled = false
     var fireSubscriptionStartedMonthlyPixelCalled = false
     var fireSubscriptionStartedYearlyPixelCalled = false
-    var cohortToReturn = FreeTrialsFeatureFlagExperiment.Cohort.treatment
+    var cohortToReturn = PrivacyProFreeTrialExperimentCohort.treatment
 
     func getCohortIfEnabled() -> (any FlagCohort)? {
         cohortToReturn

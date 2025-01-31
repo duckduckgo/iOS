@@ -80,7 +80,7 @@ jobs:
     name: Unit Tests
 
     runs-on: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 60 # temporary (vs original 20) to fix the issue with GHA slowness
 
     outputs:
       commit_author: ${{ steps.fetch_commit_author.outputs.commit_author }}
@@ -89,6 +89,8 @@ jobs:
     - name: Check out the code
       if: github.event_name == 'pull_request' || github.event_name == 'push'
       uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Check out the code
       if: github.event_name != 'pull_request' && github.event_name != 'push'
@@ -159,7 +161,7 @@ jobs:
         yq < unittests.xml -p xml -o json -r \
           $'[.testsuites.testsuite[].testcase] | flatten | map(select(.failure) | .+@classname + " " + .+@name + " \'" + .failure.+@message + "\' ${{ env.WORKFLOW_URL }}") | .[]' \
           | sort -u -k 1,2 \
-          | xargs -L 1 ./scripts/report-failed-unit-test.sh -s ${{ vars.APPLE_CI_FAILING_TESTS_FAILED_TESTS_SECTION_ID }}
+          | xargs -L 1 ./scripts/report-failed-unit-test.sh -s ${{ vars.APPLE_CI_FAILING_TESTS_IOS_FAILED_TESTS_SECTION_ID }}
 
     - name: Fetch latest commit author
       if: always() && github.ref_name == 'main'
@@ -179,7 +181,7 @@ jobs:
     if: github.actor != 'dependabot[bot]' && inputs.skip-release != true
 
     runs-on: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 60 # temporary (vs original 20) to fix the issue with GHA slowness
 
     steps:
 

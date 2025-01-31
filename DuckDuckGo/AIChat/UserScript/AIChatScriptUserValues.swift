@@ -19,7 +19,7 @@
 
 import Foundation
 
-public struct AIChatScriptUserValues: Codable {
+public struct AIChatNativeHandoffData: Codable {
     let isAIChatHandoffEnabled: Bool
     let platform: String
     let aiChatPayload: AIChatPayload?
@@ -61,4 +61,9 @@ public struct AIChatScriptUserValues: Codable {
             try container.encodeNil(forKey: .aiChatPayload)
         }
     }
+}
+
+public struct AIChatNativeConfigValues: Codable {
+    let isAIChatHandoffEnabled: Bool
+    let platform: String
 }

@@ -139,7 +139,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .textZoom:
             return .remoteReleasable(.feature(.textZoom))
         case .networkProtectionEnforceRoutes:
-            return .remoteDevelopment(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
+            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
         case .adAttributionReporting:
             return .remoteReleasable(.feature(.adAttributionReporting))
         case .crashReportOptInStatusResetting:

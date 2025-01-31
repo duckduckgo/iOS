@@ -25,6 +25,7 @@ import WebKit
 import UserScript
 import Core
 import ContentScopeScripts
+import SwiftUI
 
 /// Values that the frontend can use to determine the current state.
 struct InitialPlayerSettings: Codable {
@@ -201,6 +202,9 @@ protocol DuckPlayerControlling: AnyObject {
     ///
     /// - Parameter vc: The view controller to set as host.
     func setHostViewController(_ vc: TabViewController)
+
+    /// Loads a native DuckPlayerView
+    func loadNativeDuckPlayerVideo(videoID: String)
 }
 
 /// Implementation of the DuckPlayerControlling.
@@ -323,9 +327,20 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         }
     }
 
-    
+    // Loads a native DuckPlayerView
+    func loadNativeDuckPlayerVideo(videoID: String) {
+        let viewModel = DuckPlayerViewModel(videoID: videoID)
+        let duckPlayerView = DuckPlayerView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: duckPlayerView)
+        hostingController.modalPresentationStyle = .formSheet
+        hostingController.isModalInPresentation = false // Allows dismissal with swipe
+
+        hostView?.present(hostingController, animated: true)
+    }
+
+
     // MARK: - Common Message Handlers
-    
+
     /// Sets user values received from the web content.
     ///
     /// - Parameters:
@@ -598,6 +613,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         }
        
     }
+
     
 }
 

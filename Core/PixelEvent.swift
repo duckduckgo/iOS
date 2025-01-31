@@ -1545,7 +1545,7 @@ extension Pixel.Event {
         case .webKitWarmupUnexpectedDidFinish: return "m_d_webkit-warmup-unexpected-did-finish"
         case .webKitWarmupUnexpectedDidTerminate: return "m_d_webkit-warmup-unexpected-did-terminate"
 
-        case .backgroundTaskSubmissionFailed: return "m_bt_rf"
+        case .backgroundTaskSubmissionFailed: return "m_background-task_submission-failed"
             
         case .blankOverlayNotDismissed: return "m_d_ovs"
             

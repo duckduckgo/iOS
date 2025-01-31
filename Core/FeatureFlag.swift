@@ -184,7 +184,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .testExperiment:
             return .remoteReleasable(.subfeature(ExperimentTestSubfeatures.experimentTestAA))
         case .maliciousSiteProtection:
-            return .remoteDevelopment(.subfeature(MaliciousSiteProtectionSubfeature.onByDefault))
+            return .remoteReleasable(.subfeature(MaliciousSiteProtectionSubfeature.onByDefault))
         }
     }
 }

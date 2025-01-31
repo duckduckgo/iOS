@@ -157,37 +157,56 @@ struct SubscriptionSettingsView: View {
                     }
                 }
 
-                SettingsCustomCell(content: {
-                    Text(UserText.subscriptionRemoveFromDevice)
-                        .daxBodyRegular()
-                    .foregroundColor(Color.init(designSystemColor: .accent))},
-                                   action: { viewModel.displayRemovalNotice(true) },
-                                   isButton: true)
+                removeFromDeviceView
+                
             case .activating:
                 restorePurchaseView
+                removeFromDeviceView
             }
+        }
+    }
+
+    @ViewBuilder
+    var removeFromDeviceView: some View {
+        SettingsCustomCell(content: {
+            Text(UserText.subscriptionRemoveFromDevice)
+                .daxBodyRegular()
+            .foregroundColor(Color.init(designSystemColor: .accent))},
+                           action: { viewModel.displayRemovalNotice(true) },
+                           isButton: true)
+        .alert(isPresented: $isShowingRemovalNotice) {
+            Alert(
+                title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
+                message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
+                primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {},
+                secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
+                    Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
+                    viewModel.removeSubscription()
+                    dismiss()
+                }
+            )
         }
     }
 
     @ViewBuilder
     var restorePurchaseView: some View {
          let text = !settingsViewModel.state.subscription.isRestoring ? UserText.subscriptionActivateAppleIDButton : UserText.subscriptionRestoringTitle
-         SettingsCustomCell(content: {
-             Text(text)
-                 .daxBodyRegular()
-                 .foregroundColor(Color.init(designSystemColor: .accent)) },
-                            action: {
-                                 Task { await settingsViewModel.restoreAccountPurchase() }
-                             },
-                            isButton: !settingsViewModel.state.subscription.isRestoring )
-         .alert(isPresented: $isShowingSubscriptionError) {
-             Alert(
-                 title: Text(UserText.subscriptionAppStoreErrorTitle),
-                 message: Text(UserText.subscriptionAppStoreErrorMessage),
-                 dismissButton: .default(Text(UserText.actionOK)) {}
-             )
-         }
-     }
+        SettingsCustomCell(content: {
+            Text(text)
+                .daxBodyRegular()
+            .foregroundColor(Color.init(designSystemColor: .accent)) },
+                           action: {
+            Task { await settingsViewModel.restoreAccountPurchase() }
+        },
+                           isButton: !settingsViewModel.state.subscription.isRestoring )
+        .alert(isPresented: $isShowingSubscriptionError) {
+            Alert(
+                title: Text(UserText.subscriptionAppStoreErrorTitle),
+                message: Text(UserText.subscriptionAppStoreErrorMessage),
+                dismissButton: .default(Text(UserText.actionOK)) {}
+            )
+        }
+    }
 
     private var manageSectionFooter: some View {
         let isExpired = !(viewModel.state.subscriptionInfo?.isActive ?? false)
@@ -266,18 +285,6 @@ struct SubscriptionSettingsView: View {
                 .padding(.vertical, -10)
             if configuration == .subscribed || configuration == .expired {
                 devicesSection
-                    .alert(isPresented: $isShowingRemovalNotice) {
-                        Alert(
-                            title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
-                            message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
-                            primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {},
-                            secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
-                                Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
-                                viewModel.removeSubscription()
-                                dismiss()
-                            }
-                        )
-                    }
             }
             manageSection
             helpSection

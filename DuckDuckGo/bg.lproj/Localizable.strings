@@ -295,6 +295,18 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Когато DuckDuckGo открие изскачащи прозорци за съгласие за използване на бисквитки в сайтовете, които посещавате, можем да опитаме автоматично да настроим предпочитанията Ви за бисквитки, така че бисквитките да са сведени до минимум, а поверителността да е максимална, след което да затворим изскачащите прозорци. Някои сайтове не предоставят възможност за управление на предпочитанията за бисквитки, затова можем само да скрием техните изскачащи прозорци.";
 
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
+
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Отваряне на настройки";
 
@@ -532,8 +544,11 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Няма резултати";
 
+/* Do not translate - stringsdict entry */
+"autofill.number.of.passwords" = "autofill.number.of.passwords";
+
 /* Description of autofill onboarding prompt's secure storage feature
-Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Паролите се криптират, съхраняват се на устройството и се заключват с %@.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -692,6 +707,9 @@ Description of autofill onboarding prompt's secure storage feature with a string
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Изтриване";
 
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
+
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Изтриване на %@?";
 
@@ -796,6 +814,9 @@ Description of autofill onboarding prompt's secure storage feature with a string
 
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Лесно е да ме добавите към своя панел.";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "*%1$@* се опитва да Ви проследи тук. Блокирах го!\n\n☝️ Докоснете щита за повече информация.";
@@ -910,6 +931,9 @@ Description of autofill onboarding prompt's secure storage feature with a string
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Слава Богу!";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "Дай пет!";
@@ -1049,9 +1073,6 @@ Description of autofill onboarding prompt's secure storage feature with a string
 /* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
 "duckai.preferences.text.markdown" = "Duck.ai е незадължителна функция, чрез която можете да разговаряте анонимно с популярни AI чат модели от трети страни. Чатовете не се използват за обучение на AI.\n[Научете повече](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
-/* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Показване на Duck.ai по време на търсене";
-
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Показване на Duck.ai в менюто на браузъра";
 
@@ -1076,12 +1097,10 @@ Description of autofill onboarding prompt's secure storage feature with a string
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Разбрах!";
 
-/* Two line title (separated by 
-) for the feature explanation */
+/* Two line title (separated by \n) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Писна ли Ви от рекламите в YouTube? Опитайте Duck Player!";
 
-/* Two line title (separated by 
-) for the feature explanation */
+/* Two line title (separated by \n) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "Писна ли ви от рекламите в YouTube? Не и с Duck Player!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1906,6 +1925,9 @@ Description of autofill onboarding prompt's secure storage feature with a string
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "В който и да е сайт отворете менюто ••• и изберете **Добавяне към предпочитани**, за да го добавите към страницата с нов раздел.";
 
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Бисквитките са настроени";
 
@@ -2089,11 +2111,6 @@ Description of autofill onboarding prompt's secure storage feature with a string
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Достигнахте максималния брой пароли. Изтрийте някои от тях, за да възобновите синхронизирането.";
 
-/* Description invalid credentials error when syncing.
-Description of incorrectly formatted data error when syncing.
-Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Някои отметки или пароли са форматирани неправилно или са твърде дълги и не бяха синхронизирани.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Синхронизирането е на пауза";
 
@@ -2203,7 +2220,7 @@ Description of too many requests error when syncing. */
 "settings.add.widget.vpn" = "Добавяне на приспособлението DuckDuckGo VPN към началния екран";
 
 /* Name of the settings subsection related to the address bar
-Settings screen cell text for addess bar position */
+   Settings screen cell text for addess bar position */
 "settings.address.bar" = "Адресна лента";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2261,7 +2278,7 @@ Settings screen cell text for addess bar position */
 "settings.data.clearing" = "Изчистване на данни";
 
 /* Settings screen cell text for setting the app as default browser
-The name of Settings category in Privacy Features related to configuration of the default browser */
+   The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Браузър по подразбиране";
 
 /* Label of a button disabling email protection */
@@ -2477,23 +2494,14 @@ The name of Settings category in Privacy Features related to configuration of th
 /* No comment provided by engineer. */
 "Stored Hostname: %@" = "Запазено име на хост: %@";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Използвайте абонамента си за Privacy Pro на това устройство чрез Apple акаунт или имейл адрес.";
-
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Добавяне на имейл";
 
-/* Apple Account option for activation */
-"subscription.activate.appleid" = "Apple акаунт";
-
-/* Button text for restoring purchase via Apple Account */
+/* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Възстановяване на покупката";
 
-/* Description for Apple Account activation */
+/* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Възстановете покупката си, за да активирате абонамента на това устройство.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Достъпът с абонамент става автоматично в DuckDuckGo на всяко устройство, което е вписано във Вашия Apple акаунт.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Редактиране на имейл";
@@ -2534,9 +2542,6 @@ The name of Settings category in Privacy Features related to configuration of th
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Добавяне на имейл";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Функцията Privacy Pro може да се използва на всяко устройство, което е вписано в същия Apple акаунт.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Вашият абонамент е закупен през Google Play Store. За да подновите абонамента си, отворете настройките за абонамент в Google Play Store на устройство, вписано в същия акаунт в Google, който е използван при първоначално закупуване на абонамента.";
 
@@ -2570,9 +2575,6 @@ The name of Settings category in Privacy Features related to configuration of th
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Не е намерен абонамент";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Абонаментът, свързан с този Apple акаунт, вече не е активен.";
-
 /* FAQ Button */
 "subscription.faq" = "Често задавани въпроси и поддръжка";
 
@@ -2588,9 +2590,6 @@ The name of Settings category in Privacy Features related to configuration of th
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Възстановяване";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Открихме абонамент, свързан с този Apple акаунт.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Намерен е абонамент";
 
@@ -2602,9 +2601,6 @@ The name of Settings category in Privacy Features related to configuration of th
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Абонамент";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Няма абонамент, свързан с този Apple акаунт.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Не е намерен абонамент";

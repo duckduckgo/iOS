@@ -1210,7 +1210,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionSubscribed = NSLocalizedString("subscription.subscribed", value: "Subscribed", comment: "Subtitle in header when subscribed")
     public static let subscriptionCloseButton = NSLocalizedString("subscription.close", value: "Close", comment: "Navigation Button for closing subscription view")
 
-    static func renewingSubscriptionInfo(billingPeriod: Subscription.BillingPeriod, renewalDate: String) -> String {
+    static func renewingSubscriptionInfo(billingPeriod: PrivacyProSubscription.BillingPeriod, renewalDate: String) -> String {
         let localized: String
 
         switch billingPeriod {
@@ -1231,7 +1231,7 @@ But if you *do* want a peek under the hood, you can find more information about 
         return String(format: localized, renewalDate)
     }
 
-    static func expiringSubscriptionInfo(billingPeriod: Subscription.BillingPeriod, expiryDate: String) -> String {
+    static func expiringSubscriptionInfo(billingPeriod: PrivacyProSubscription.BillingPeriod, expiryDate: String) -> String {
         let localized: String
 
         switch billingPeriod {
@@ -1397,7 +1397,7 @@ Duck.ai is an optional feature that lets you chat anonymously with popular 3rd-p
 """, comment: "Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and ()")
     public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("duckai.settings.enable.browsing-menu-toggle", value: "Show Duck.ai in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
 
-    public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("duckai.settings.enable.address-bar-toggle", value: "Show Duck.ai While Searching", comment: "Toggle text to enable/disable AI Chat in the address bar")
+    public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("duckai.settings.enable.address-bar-searching-toggle", value: "Show Duck.ai on Search Page", comment: "Toggle text to enable/disable AI Chat in the address bar")
 
     // MARK: - New Tab Page
 

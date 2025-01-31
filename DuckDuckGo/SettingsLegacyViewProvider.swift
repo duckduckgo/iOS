@@ -22,7 +22,7 @@ import SwiftUI
 import DDGSync
 import Core
 import BrowserServicesKit
-import SyncUI
+import SyncUI_iOS
 import Persistence
 import Common
 

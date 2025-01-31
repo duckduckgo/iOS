@@ -20,7 +20,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "SyncUI",
+    name: "SyncUI-iOS",
     defaultLocalization: "en",
     platforms: [
         .iOS(.v15)
@@ -28,8 +28,8 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "SyncUI",
-            targets: ["SyncUI"])
+            name: "SyncUI-iOS",
+            targets: ["SyncUI-iOS"])
     ],
     dependencies: [
         .package(path: "../DuckUI"),
@@ -38,7 +38,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SyncUI",
+            name: "SyncUI-iOS",
             dependencies: [
                 .product(name: "DuckUI", package: "DuckUI"),
                 "DesignResourcesKit"

@@ -1,24 +1,28 @@
-Aplikacja DuckDuckGo to najbardziej wszechstronne narzędzie do ochrony prywatności w sieci, które możesz obsługiwać jednym przyciskiem. Wystarczy pobrać ją bezpłatnie tylko raz, aby korzystać z prywatnej przeglądarki internetowej, która zapewnia skuteczną ochronę podczas wyszukiwania i przeglądania, a nawet dostęp do ochrony przed śledzeniem w otrzymywanych wiadomościach e-mail i wykorzystywanych aplikacjach. Wiele z tych zabezpieczeń nie jest domyślnie oferowanych w większości popularnych przeglądarek.
+W DuckDuckGo wierzymy, że najlepszym sposobem ochrony Twoich danych osobowych przed hakerami, oszustami i firmami naruszającymi prywatność jest zapobieganie ich gromadzeniu. Dlatego miliony ludzi wybierają DuckDuckGo zamiast Chrome i innych przeglądarek  na potrzeby wyszukiwania i przeglądania online. Nasza wbudowana wyszukiwarka jest jak Google, ale nigdy nie śledzi Twoich wyszukiwań. Nasze zabezpieczenia przeglądania, takie jak blokowanie mechanizmów śledzących i blokowanie plików cookie, pomagają powstrzymać inne firmy przed gromadzeniem Twoich danych. Nasza przeglądarka jest bezpłatna — zarabiamy na reklamach szanujących prywatność, a nie na wykorzystywaniu Twoich danych. Odzyskaj kontrolę nad swoimi danymi osobowymi dzięki przeglądarce zaprojektowanej do ochrony danych, a nie ich gromadzenia. 
 
 NAJWAŻNIEJSZE FUNKCJE
-• Domyślne prywatne wyszukiwanie – funkcja prywatnego wyszukiwania DuckDuckGo jest wbudowana.
+Domyślna ochrona wyszukiwania: DuckDuckGo Search jest zintegrowana, więc możesz łatwo przeszukiwać sieć, nie narażając się na śledzenie. 
 
-• Blokowanie śledzących plików cookie – uniemożliwia większości plików cookie innych firm śledzenie użytkownika podczas przeglądania stron internetowych.
+Chroń historię przeglądania: nasza ochrona przed ładowaniem mechanizmów śledzących innych firm Tracker Loading Protection blokuje większość mechanizmów śledzących przed ich załadowaniem, znacznie przewyższając domyślne ustawienia większości popularnych przeglądarek. 
 
-• Zapobieganie śledzeniu stron internetowych jeszcze przed ich załadowaniem – dzięki temu firmy nie mogą gromadzić i wykorzystywać za ich pośrednictwem żadnych danych.
+Zabezpiecz adres e-mail (opcjonalnie): użyj funkcji ochrony poczty Email Protection, aby zablokować większość mechanizmów śledzących wiadomości e-mail i ukryć swój obecny adres e-mail za pomocą adresów @duck.com.  
 
-• Wymuszanie szyfrowania – wymuszenie w wielu odwiedzanych witrynach automatycznego korzystania z połączenia szyfrowanego (HTTPS).
+Oglądaj filmy na YouTube bez ukierunkowanych reklam: Duck Player chroni Cię przed ukierunkowanymi reklamami i plikami cookie dzięki interfejsowi, który nie rozprasza uwagi i zawiera najbardziej rygorystyczne ustawienia prywatności YouTube dla osadzonych filmów.
 
-• Blokowanie skryptów śledzących wiadomości e-mail (Beta) – utwórz prywatny adres e-mail w domenie @duck.com i używaj ochrony poczty e-mail, aby blokować skrypty śledzące pocztę e-mail i ukryć swój adres, a także przekierowywać wiadomości do Twojej skrzynki odbiorczej. 
+Automatyczne wymuszanie szyfrowania: chroń dane przed szpiegami z sieci Wi-Fi i sieci przewodowej wymuszając w wielu witrynach korzystanie z połączenia HTTPS. 
 
-• Zapobieganie tworzeniu odcisku cyfrowego – pomaga powstrzymać firmy przed tworzeniem unikalnych identyfikatorów użytkownika.
+Błyskawicznie wyczyść karty i dane przeglądania za pomocą przycisku Fire Button.
 
-Mamy też wiele zabezpieczeń niedostępnych w większości przeglądarek (nawet w tych obsługujących tryb incognito), w tym ochronę przed śledzeniem linków, śledzeniem Google AMP i nie tylko.
+Wyeliminuj wyskakujące okienka dotyczące plików cookie i automatycznie ustaw preferencje, aby zminimalizować liczbę plików cookie i zmaksymalizować prywatność.
 
-CODZIENNA KONTROLA PRYWATNOŚCI
-• Dotknij przycisku Zabezpiecz, zniszcz dane – szybko wyczyść wszystkie karty i dane dotknięciem przycisku zabezpieczenia.
+Oraz wiele innych zabezpieczeń niedostępnych w większości przeglądarek, nawet w trybie przeglądania prywatnego, w tym ochronę przed śledzeniem linków, funkcję kontroli prywatności Global Privacy Control (GPC) i nie tylko.
 
-• Zasygnalizuj swoje preferencje dotyczące prywatności za pomocą funkcji GPC (Global Privacy Control) - Więcej informacji znajdziesz na stronie https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/ 
+Nie musisz czekać na odzyskanie kontroli nad danymi osobowymi! Dołącz do milionów użytkowników DuckDuckGo, aby zapewnić ochronę codziennego wyszukiwania, przeglądania i wysyłania wiadomości e-mail w Internecie. 
 
-Więcej informacji na ten temat oraz na temat naszej bezpłatnej ochrony przed śledzeniem można znaleźć na stronie https://help.duckduckgo.com/privacy/web-tracking-protections
+Więcej informacji na temat naszej bezpłatnej ochrony przed śledzeniem można znaleźć na stronie https://help.duckduckgo.com/privacy/web-tracking-protections
 
+Polityka prywatności: https://duckduckgo.com/privacy/ 
+
+Warunki korzystania z usługi: https://duckduckgo.com/terms
+
+Uwaga dotycząca ochrony przed mechanizmami śledzącymi innych firm i reklamami w wyszukiwarce: chociaż istnieją pewne ograniczenia dotyczące kliknięć reklam w wyszukiwarce, przeglądanie reklam w wyszukiwarce DuckDuckGo jest anonimowe. Dowiedz się więcej tutaj https://help.duckduckgo.com/privacy/web-tracking-protections

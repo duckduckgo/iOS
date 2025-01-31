@@ -1,25 +1,33 @@
-DuckDuckGo uygulaması, bir düğmeye basarak en kapsamlı çevrimiçi gizlilik korumasını sağlar. Tek bir indirme ile, arama yaparken ve tarayıcıda gezinirken sürekli bir koruma ve aldığınız e-postalar için izleme korumalarına erişim sağlar. Bu korumaların çoğu en popüler tarayıcılarda varsayılan olarak sunulmaz.
+DuckDuckGo olarak, kişisel bilgilerinizi bilgisayar korsanlarından, dolandırıcılardan ve gizliliğinizi ihlal eden şirketlerden korumanın en iyi yolunun bunların toplanmasını tamamen durdurmak olduğuna inanıyoruz. Bu nedenle milyonlarca kişi  internette arama yapmak ve gezinmek için Chrome ve diğer tarayıcılar yerine DuckDuckGo'yu tercih ediyor. Dâhilî motorumuz Google gibidir ancak aramalarınızı asla izlemez. Reklam engelleyici ve çerez engelleme gibi tarama korumalarımız, diğer şirketlerin verilerinizi toplamasını engellemeye yardımcı olur. Ayrıca, tarayıcımız ücretsizdir. Gizliliğinize saygılı arama reklamlarından para kazanırız, verilerinizi sömürerek değil. Veri toplama için değil, veri koruma için tasarlanmış tarayıcı ile kişisel bilgilerinizin kontrolünü tekrar elinize alın. 
 
-ÖNE ÇIKAN ÖZELLİKLER 
-• Varsayılan Olarak Özel Arama - DuckDuckGo Özel Arama yerleşik olarak geldiği için web'de izlenmeden kolayca arama yapabilirsiniz. 
+ÖNE ÇIKAN ÖZELLİKLER
+Aramalarınızı Varsayılan Olarak Koruma Altına Alın: DuckDuckGo Search yerleşik olarak geldiği için web'de izlenmeden kolayca arama yapabilirsiniz. 
 
-• Web Sitesi İzleyicilerinden Yüklenmeden Kaçınma - Çoğu gizli izleyicinin (üçüncü taraf komut dosyalarının) yüklenmesini otomatik olarak durdurduğu için şirketlerin bu izleyicilerden veri (örn. satış, reklam vb.) toplamasını ve bunları kullanmasını engeller. Üçüncü Taraf İzleyici Yükleme Koruması adı verilen son teknoloji izleyici engelleme teknolojimiz, varsayılan olarak en popüler tarayıcılarda size sağlananın çok ötesine geçer. 
+Tarama Geçmişinizi Koruyun: Üçüncü Taraf Tracker Loading Protection özelliğimiz, çoğu izleyiciyi yüklenmeden önce engelleyerek, birçok popüler tarayıcının varsayılan olarak sunduklarının çok ötesinde koruma sağlar. 
 
-• Şifrelemeyi Otomatik Olarak Zorlama - ziyaret ettiğiniz birçok siteyi otomatik olarak şifreli (HTTPS) bir bağlantı kullanmaya zorlar, bu da verilerinizi Wi-Fi ağına gizlice sızanlardan ve İnternet sağlayıcınız gibi ağ izleyicilerinden korumaya yardımcı olur. 
+E-postanızı Güvenceye Alın (İsteğe Bağlı): Çoğu e-posta izleyicisini engellemek ve mevcut e-posta adresinizi @duck.com adresleriyle gizlemek için Email Protection hizmetini kullanın.  
 
-• Dahili E-posta Korumasını Etkinleştirme - Duck Adreslerine gönderilen e-postaların% 85'inden fazlası, bir mesajı ne zaman açtığınızı, açtığınızda nerede olduğunuzu  ve hangi cihazı kullandığınızı algılayabilen izleyiciler içeriyordu. E-posta Koruması, e-posta sağlayıcılarını değiştirmeden çoğu e-posta izleyicisini engellemeyi ve çevrimiçi girişler sırasında mevcut adresinizi gizlemeyi kolaylaştırır. 
+YouTube Videolarını Hedefli Reklamlar Olmadan İzleyin: Duck Player, YouTube'un gömülü video için en katı gizlilik ayarlarını içeren, dikkat dağıtmayan bir arayüzle sizi hedefli reklamlardan ve çerezlerden korur.
 
-• Parmak İzi Takibinden Kaçınma - şirketlerin tarayıcınız ve cihaz ayarlarınızla ilgili belirli bilgileri birleştirme girişimlerini engelleyerek sizin için benzersiz bir tanımlayıcı oluşturmalarını önlemeye yardımcı olur.  
+Şifrelemeyi Otomatik Olarak Zorunlu Tutun: Birçok siteyi HTTPS bağlantısı kullanmaya zorlayarak verilerinizi ağ ve Wi-Fi meraklılarından koruyun. 
 
-• İzleme Çerezlerini Engelleme - siteden siteye gezinirken çoğu üçüncü taraf çerezinin sizi izlemesini önler.
+Fingerprinting'i Atlatın: Tarayıcınız ve cihazınızla ilgili bilgileri birleştirme girişimlerini engelleyerek şirketlerin sizin için benzersiz bir tanımlayıcı oluşturmasını zorlaştırın. 
 
-Ayrıca, bağlantı izleme, Google AMP izleme ve daha fazlasına karşı koruma dahil olmak üzere çoğu tarayıcıda bulunmayan birçok korumaya sahibiz.
+Güvenli Bir Şekilde Senkronize Edin ve Yedekleyin (İsteğe bağlı): Şifrelenmiş yer imlerini ve parolaları cihazlarınız arasında senkronize edin.
 
-GÜNLÜK GİZLİLİK KONTROLLERİ
-• Fire Düğmesine Dokunun, Verileri Silin - Fire Düğmemiz ile sekmelerinizi ve tarama verilerinizi temizleyin.
+Fire Button ile sekmelerinizi ve tarama verilerinizi hızlıca silin.
 
-• Küresel Gizlilik Kontrolü (GPC) ile Gizlilik Tercihinizi Belirtin - uygulamamızda yerleşik olarak bulunan GPC, web sitelerine kişisel bilgilerinizi satmamalarını veya paylaşmamalarını söyleyerek devre dışı bırakma haklarınızı otomatik olarak belirtmenize yardımcı olmayı amaçlamaktadır. Yasal haklarınızı uygulamak için kullanılıp kullanılamayacağı (örneğin, mevcut veya gelecekteki CCPA, GDPR gereklilikleri) yargı alanınızdaki yasalara bağlıdır. 
+Çerez açılır pencerelerini engelleyin ve çerezleri en aza indirip gizliliği en üst düzeye çıkarmak için tercihlerinizi otomatik olarak ayarlayın.
 
-Bu konu ve İzlenme Korumalarımız hakkında daha fazla bilgi okumak için tıklayın: https://help.duckduckgo.com/privacy/web-tracking-protections/ 
+Ve bağlantı izlemeden korunma, Global Privacy Control (GPC) vb. çoğu tarayıcıda gizli tarama modunda dahi sunulmayan daha birçok koruma.
 
-Gizliliğinizi geri almak için beklemenize gerek yok. DuckDuckGo kullanan milyonlarca insana katılın ve tek bir uygulama ile internetteki günlük etkinliklerinizin çoğunu koruyun. Gizlilik, basitleştirildi.  
+Kişisel bilgilerinizin kontrolünü elinize almak için beklemenize gerek yok! Günlük aramalarını, gezinmelerini ve e-postalarını korumak için DuckDuckGo kullanan milyonlarca kişiye katılın. 
+
+Ücretsiz İzleme Korumalarımız hakkında daha fazla bilgi edinmek için https://help.duckduckgo.com/privacy/web-tracking-protections adresine gidin
+
+Gizlilik Politikası: https://duckduckgo.com/privacy/ 
+
+Hizmet Şartları: https://duckduckgo.com/terms
+
+Üçüncü Taraf Tracker Protection ve Arama Ağı Reklamları hakkında not: Arama ağı reklamlarının tıklanmasının ardından bazı sınırlamalar olsa da DuckDuckGo aramasında reklamları görüntülemek anonimdir. Daha fazla bilgi için: https://help.duckduckgo.com/privacy/web-tracking-protections
+

@@ -76,6 +76,8 @@ public enum FeatureFlag: String {
 extension FeatureFlag: FeatureFlagDescribing {
     public var cohortType: (any FlagCohort.Type)? {
         switch self {
+        case .privacyProFreeTrialJan25:
+            PrivacyProFreeTrialExperimentCohort.self
         case .testExperiment:
             TestExperimentCohort.self
         default:
@@ -155,7 +157,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .crashReportOptInStatusResetting:
             return .internalOnly()
         case .privacyProFreeTrialJan25:
-            return .remoteDevelopment(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
+            return .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
         case .aiChat:
             return .remoteReleasable(.feature(.aiChat))
         case .aiChatDeepLink:
@@ -177,6 +179,13 @@ extension FeatureFlagger {
         return isFeatureOn(for: featureFlag)
     }
 
+}
+
+public enum PrivacyProFreeTrialExperimentCohort: String, FlagCohort {
+    /// Control cohort with no changes applied.
+    case control
+    /// Treatment cohort where the experiment modifications are applied.
+    case treatment
 }
 
 public enum TestExperimentCohort: String, FlagCohort {

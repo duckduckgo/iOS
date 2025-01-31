@@ -22,6 +22,7 @@ import BrowserServicesKit
 import PixelExperimentKit
 import PixelKit
 import Persistence
+import Core
 
 /// A protocol that defines a method for firing experiment-related analytics pixels.
 ///
@@ -104,7 +105,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
     /// Constants used in the experiment.
     enum Constants {
         /// Unique identifier for the subfeature being tested.
-        static let subfeatureIdentifier = PrivacyProFreeTrialJan25ExperimentFlag.privacyProFreeTrialJan25.rawValue
+        static let subfeatureIdentifier = FeatureFlag.privacyProFreeTrialJan25.rawValue
 
         /// Metric identifiers for various user actions during the experiment.
         static let metricPaywallImpressions = "paywallImpressions"
@@ -172,7 +173,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
             return FreeTrialsFeatureFlagExperiment.Cohort.treatment
         }
 
-        return featureFlagger.getCohortIfEnabled(for: PrivacyProFreeTrialJan25ExperimentFlag.privacyProFreeTrialJan25)
+        return featureFlagger.getCohortIfEnabled(for: FeatureFlag.privacyProFreeTrialJan25)
                 as? FreeTrialsFeatureFlagExperiment.Cohort
     }
 
@@ -306,23 +307,5 @@ private extension Date {
     /// - Returns: A `Date` representing the beginning of the day.
     func startOfDay() -> Date {
         Calendar.current.startOfDay(for: self)
-    }
-}
-
-enum PrivacyProFreeTrialJan25ExperimentFlag: String, CaseIterable {
-    case privacyProFreeTrialJan25
-}
-
-extension PrivacyProFreeTrialJan25ExperimentFlag: FeatureFlagDescribing {
-    var supportsLocalOverriding: Bool {
-        return false
-    }
-    
-    var source: FeatureFlagSource {
-        .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
-    }
-    
-    var cohortType: (any FlagCohort.Type)? {
-        FreeTrialsFeatureFlagExperiment.Cohort.self
     }
 }

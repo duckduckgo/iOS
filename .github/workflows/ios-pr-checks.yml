@@ -91,7 +91,6 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: recursive
-        ref: ${{ inputs.branch || github.ref_name }}
 
     - name: Check out the code
       if: github.event_name != 'pull_request' && github.event_name != 'push'

@@ -70,7 +70,7 @@ class FeatureFlagsSettingViewModel: ObservableObject {
     }
 
     func defaultValue(for flag: FeatureFlag) -> Bool {
-        return featureFlagger.localOverrides?.currentValue(for: flag) ?? false
+        return featureFlagger.isFeatureOn(for: flag, allowOverride: false)
     }
 
     func defaultExperimentCohort(for flag: FeatureFlag) -> CohortID? {

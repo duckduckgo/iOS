@@ -42,6 +42,7 @@ final class AutoClearService {
         }
         Task { @MainActor in
             await autoClearTask.value
+            overlayWindowManager.removeNonAuthenticationOverlay()
             onAutoClear()
         }
     }

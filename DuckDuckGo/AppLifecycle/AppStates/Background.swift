@@ -17,11 +17,7 @@
 //  limitations under the License.
 //
 
-import Foundation
-import Combine
-import DDGSync
 import UIKit
-import Core
 
 /// Represents the state where the app is fully in the background and not visible to the user.
 /// - Usage:
@@ -39,7 +35,6 @@ import Core
 struct Background: AppState {
 
     private let lastBackgroundDate: Date = Date()
-    private let application: UIApplication
     private var appDependencies: AppDependencies
 
     var urlToOpen: URL?
@@ -49,9 +44,7 @@ struct Background: AppState {
     // This transition can occur if the app is protected by FaceID (e.g., the app is launched, but the user doesn't authenticate).
     // Note: In this case, the Foreground state was never shown to the user, so you may want to avoid ending sessions that were never started, etc.
     init(stateContext: Launching.StateContext) {
-        application = stateContext.application
         appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
 
         onBackground()
     }
@@ -59,9 +52,7 @@ struct Background: AppState {
     // MARK: Handle logic when transitioning from Suspending to Background
     // This transition occurs when the app moves from foreground to the background.
     init(stateContext: Suspending.StateContext) {
-        application = stateContext.application
         appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
 
         onBackground()
     }
@@ -69,9 +60,7 @@ struct Background: AppState {
     // MARK: Handle logic when transitioning from Resuming to Background
     // This transition can occur when the app returns to the background after being in the background (e.g., user doesn't authenticate on a locked app).
     init(stateContext: Resuming.StateContext) {
-        application = stateContext.application
         appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
 
         onBackground()
     }
@@ -92,18 +81,15 @@ extension Background {
 
     struct StateContext {
 
-        let application: UIApplication
         let lastBackgroundDate: Date
         let urlToOpen: URL?
         let shortcutItemToHandle: UIApplicationShortcutItem?
-
         let appDependencies: AppDependencies
 
     }
 
     func makeStateContext() -> StateContext {
-        .init(application: application,
-              lastBackgroundDate: lastBackgroundDate,
+        .init(lastBackgroundDate: lastBackgroundDate,
               urlToOpen: urlToOpen,
               shortcutItemToHandle: shortcutItemToHandle,
               appDependencies: appDependencies)

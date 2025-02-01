@@ -39,15 +39,15 @@ import UIKit
 @MainActor
 struct Suspending: AppState {
 
-    private let application: UIApplication
     private let appDependencies: AppDependencies
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
     init(stateContext: Foreground.StateContext) {
-        application = stateContext.application
         appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
+        shortcutItemToHandle = stateContext.shortcutItemToHandle
 
         onSuspending()
     }
@@ -62,7 +62,6 @@ extension Suspending {
 
     struct StateContext {
 
-        let application: UIApplication
         let urlToOpen: URL?
         let shortcutItemToHandle: UIApplicationShortcutItem?
         let appDependencies: AppDependencies
@@ -70,8 +69,7 @@ extension Suspending {
     }
 
     func makeStateContext() -> StateContext {
-        .init(application: application,
-              urlToOpen: urlToOpen,
+        .init(urlToOpen: urlToOpen,
               shortcutItemToHandle: shortcutItemToHandle,
               appDependencies: appDependencies)
     }

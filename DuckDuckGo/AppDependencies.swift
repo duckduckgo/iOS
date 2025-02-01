@@ -28,7 +28,6 @@ struct AppDependencies {
 
     let window: UIWindow
     let mainCoordinator: MainCoordinator
-    let overlayWindowManager: OverlayWindowManager // TODO: perhaps we don't need to pass it here
 
     let vpnService: VPNService
     let authenticationService: AuthenticationService
@@ -38,7 +37,7 @@ struct AppDependencies {
     let remoteMessagingService: RemoteMessagingService
     let subscriptionService: SubscriptionService
     let autofillService: AutofillService
-    let crashService: CrashService
+    let crashCollectionService: CrashCollectionService
     let keyboardService: KeyboardService
     let configurationService: ConfigurationService
     let reportingService: ReportingService

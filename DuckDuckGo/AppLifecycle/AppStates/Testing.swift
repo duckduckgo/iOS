@@ -23,7 +23,7 @@ import UIKit
 @MainActor
 struct Testing: AppState {
 
-    init(application: UIApplication) {
+    init(application: UIApplication = UIApplication.shared) {
         Pixel.isDryRun = true
         _ = DefaultUserAgentManager.shared
         Database.shared.loadStore { _, _ in }

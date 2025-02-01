@@ -45,7 +45,7 @@ import Core
     /// See: Launching.swift
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let isTesting: Bool = ProcessInfo().arguments.contains("testing")
-        appStateMachine.handle(.didFinishLaunching(application, isTesting: isTesting))
+        appStateMachine.handle(.didFinishLaunching(isTesting: isTesting))
         return true
     }
 

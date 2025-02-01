@@ -26,10 +26,10 @@ import UIKit
 @MainActor
 struct Initializing: AppState {
 
-    private let crashService = CrashService()
+    private let crashHandlersConfiguration = CrashHandlersConfiguration()
 
     init() {
-        crashService.setupCrashHandlers()
+        crashHandlersConfiguration.setupCrashHandlers()
     }
 
 }
@@ -38,14 +38,12 @@ extension Initializing {
 
     struct StateContext {
 
-        let application: UIApplication
-        let crashService: CrashService
+        let crashHandlersConfiguration: CrashHandlersConfiguration
 
     }
 
-    func makeStateContext(application: UIApplication) -> StateContext {
-        .init(application: application,
-              crashService: crashService)
+    func makeStateContext() -> StateContext {
+        .init(crashHandlersConfiguration: crashHandlersConfiguration)
     }
 
 }

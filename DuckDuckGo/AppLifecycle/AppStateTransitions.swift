@@ -23,8 +23,8 @@ import Core
 extension Initializing {
 
     func apply(event: AppEvent) -> any AppState {
-        guard case .didFinishLaunching(let application, let isTesting) = event else { return handleUnexpectedEvent(event) }
-        return isTesting ? Testing(application: application) : Launching(stateContext: makeStateContext(application: application))
+        guard case .didFinishLaunching(let isTesting) = event else { return handleUnexpectedEvent(event) }
+        return isTesting ? Testing() : Launching(stateContext: makeStateContext())
     }
 
 }

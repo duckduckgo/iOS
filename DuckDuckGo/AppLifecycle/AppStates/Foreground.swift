@@ -19,11 +19,8 @@
 
 import Foundation
 import UIKit
-import BrowserServicesKit
 import Core
-import WidgetKit
 import BackgroundTasks
-import NetworkProtection
 
 /// Represents the state where the app is active and available for user interaction.
 /// - Usage:
@@ -39,24 +36,22 @@ import NetworkProtection
 @MainActor
 struct Foreground: AppState {
 
-    let application: UIApplication
     var appDependencies: AppDependencies
+    private var mainCoordinator: MainCoordinator { appDependencies.mainCoordinator }
 
     private var urlToOpen: URL?
     private var shortcutItemToHandle: UIApplicationShortcutItem?
+    private var lastBackgroundDate: Date?
 
     private let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
-    private var mainCoordinator: MainCoordinator { appDependencies.mainCoordinator }
 
-    private var lastBackgroundDate: Date?
+    private var didEnterForeground: Bool = false
 
     // MARK: Handle logic when transitioning from Launched to Foreground
     // This transition occurs when the app has completed its launch process and becomes active.
     // Note: You want to add here code that will happen one-time per app lifecycle, but you require the UI to be active at this point!
-    init(stateContext: Launching.StateContext) {
-        application = stateContext.application
+    init(stateContext: Launching.StateContext, application: UIApplication = UIApplication.shared) {
         appDependencies = stateContext.appDependencies
-
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
 
@@ -77,9 +72,7 @@ struct Foreground: AppState {
     // MARK: Handle logic when transitioning from Resuming to Foreground
     // This transition occurs when the app returns to the foreground after being backgrounded (e.g., after unlocking the app).
     init(stateContext: Resuming.StateContext) {
-        application = stateContext.application
         appDependencies = stateContext.appDependencies
-
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
         lastBackgroundDate = stateContext.lastBackgroundDate
@@ -96,9 +89,7 @@ struct Foreground: AppState {
     // MARK: Handle logic when transitioning from Suspending to Foreground
     // This transition occurs when the app returns to the foreground after briefly being suspended (e.g., user dismisses a notification).
     init(stateContext: Suspending.StateContext) {
-        application = stateContext.application
         appDependencies = stateContext.appDependencies
-
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
 
@@ -106,7 +97,8 @@ struct Foreground: AppState {
     }
 
     // MARK: handle applicationDidBecomeActive(_:) logic here
-    private func onForeground() {
+    private mutating func onForeground() {
+        didEnterForeground = true
         appDependencies.autoClearService.registerForDataCleared(onDataCleared)
 
         appDependencies.syncService.onForeground()
@@ -133,8 +125,8 @@ struct Foreground: AppState {
     }
 
     private func onDataCleared() {
-        appDependencies.overlayWindowManager.removeNonAuthenticationOverlay()
         appDependencies.vpnService.onDataCleared()
+
         if let url = urlToOpen {
             openURL(url)
         } else if let shortcutItemToHandle = shortcutItemToHandle {
@@ -208,14 +200,28 @@ extension Foreground {
 
     struct StateContext {
 
-        let application: UIApplication
+        let urlToOpen: URL?
+        let shortcutItemToHandle: UIApplicationShortcutItem?
         let appDependencies: AppDependencies
+
+        init(urlToOpen: URL? = nil, shortcutItemToHandle: UIApplicationShortcutItem? = nil, appDependencies: AppDependencies) {
+            self.urlToOpen = urlToOpen
+            self.shortcutItemToHandle = shortcutItemToHandle
+            self.appDependencies = appDependencies
+        }
 
     }
 
     func makeStateContext() -> StateContext {
-        .init(
-            application: application,
+        /// Authentication causes the app to leave the `Foreground` state and move to the `Suspending` state.
+        /// This means we must retain `urlToOpen` and `shortcutItemToHandle` to ensure they are available
+        /// when the app resumes after authentication. Otherwise, they would be lost during state transitions.
+        if didEnterForeground {
+            return .init(appDependencies: appDependencies)
+        }
+        return .init(
+            urlToOpen: urlToOpen,
+            shortcutItemToHandle: shortcutItemToHandle,
             appDependencies: appDependencies
         )
     }

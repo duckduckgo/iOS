@@ -21,12 +21,16 @@ import UIKit
 
 struct Terminating: AppState {
 
-    init(stateContext: Launching.StateContext, terminationReason: UIApplication.TerminationReason) {
-        alertAndTerminate(application: stateContext.application, terminationReason: terminationReason)
+    init(stateContext: Launching.StateContext,
+         terminationReason: UIApplication.TerminationReason,
+         application: UIApplication = UIApplication.shared) {
+        alertAndTerminate(application: application, terminationReason: terminationReason)
     }
 
-    init(stateContext: Foreground.StateContext, terminationReason: UIApplication.TerminationReason) {
-        alertAndTerminate(application: stateContext.application, terminationReason: terminationReason)
+    init(stateContext: Foreground.StateContext,
+         terminationReason: UIApplication.TerminationReason,
+         application: UIApplication = UIApplication.shared) {
+        alertAndTerminate(application: application, terminationReason: terminationReason)
     }
 
     init(stateContext: Background.StateContext, terminationReason: UIApplication.TerminationReason) {

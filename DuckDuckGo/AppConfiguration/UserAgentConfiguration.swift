@@ -1,5 +1,5 @@
 //
-//  ContentBlockingService.swift
+//  UserAgentConfiguration.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -18,22 +18,14 @@
 //
 
 import Foundation
+import Networking
 import Core
 
-public extension NSNotification.Name {
+final class UserAgentConfiguration {
 
-    static let contentBlockingDidEncounterCompilationFatalError = Notification.Name("com.duckduckgo.contentblocking.compilation.fatal.error")
-
-}
-
-final class ContentBlockingService {
-
-    func onLaunching() {
-        ContentBlocking.shared.onCriticalError = {
-            NotificationCenter.default.post(name: .contentBlockingDidEncounterCompilationFatalError, object: nil)
-        }
-        // Explicitly prepare ContentBlockingUpdating instance before Tabs are created
-        _ = ContentBlockingUpdating.shared
+    static func configure() {
+        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
+        _ = DefaultUserAgentManager.shared
     }
 
 }

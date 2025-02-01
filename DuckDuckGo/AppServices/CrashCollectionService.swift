@@ -1,5 +1,5 @@
 //
-//  CrashService.swift
+//  CrashCollectionService.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -20,29 +20,14 @@
 import Core
 import Crashes
 
-final class CrashService {
-
-    @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
-    var didCrashDuringCrashHandlersSetUp: Bool
-
-    func setupCrashHandlers() {
-        if !didCrashDuringCrashHandlersSetUp {
-            didCrashDuringCrashHandlersSetUp = true
-            CrashLogMessageExtractor.setUp(swapCxaThrow: false)
-            didCrashDuringCrashHandlersSetUp = false
-        }
-    }
-
-    func handleCrashDuringCrashHandlersSetup() {
-        if didCrashDuringCrashHandlersSetUp {
-            Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
-            didCrashDuringCrashHandlersSetUp = false
-        }
-    }
+final class CrashCollectionService {
 
     private let appSettings: AppSettings
-    init(appSettings: AppSettings = AppUserDefaults()) {
+    private let application: UIApplication
+    init(appSettings: AppSettings = AppUserDefaults(),
+         application: UIApplication = UIApplication.shared) {
         self.appSettings = appSettings
+        self.application = application
     }
 
     private lazy var crashCollection: CrashCollection = {
@@ -55,7 +40,11 @@ final class CrashService {
         CrashCollectionOnboarding(appSettings: appSettings)
     }()
 
-    func startAttachingCrashLogMessages(application: UIApplication) {
+    func onLaunching() {
+        startAttachingCrashLogMessages()
+    }
+
+    private func startAttachingCrashLogMessages() {
         crashCollection.startAttachingCrashLogMessages { [weak self] pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
@@ -73,7 +62,7 @@ final class CrashService {
 
             // Async dispatch because rootViewController may otherwise be nil here
             DispatchQueue.main.async {
-                guard let viewController = application.window?.rootViewController else { return }
+                guard let viewController = self?.application.window?.rootViewController else { return }
                 self?.crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
             }
         }

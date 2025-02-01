@@ -31,7 +31,6 @@ import UIKit
 @MainActor
 struct Resuming: AppState {
 
-    private let application: UIApplication
     private var appDependencies: AppDependencies
     private let lastBackgroundDate: Date
 
@@ -39,9 +38,10 @@ struct Resuming: AppState {
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
     init(stateContext: Background.StateContext) {
-        application = stateContext.application
         appDependencies = stateContext.appDependencies
         lastBackgroundDate = stateContext.lastBackgroundDate
+        urlToOpen = stateContext.urlToOpen
+        shortcutItemToHandle = stateContext.shortcutItemToHandle
 
         ThemeManager.shared.updateUserInterfaceStyle()
         appDependencies.keyboardService.showKeyboardIfSettingOn = true
@@ -55,7 +55,6 @@ extension Resuming {
 
     struct StateContext {
 
-        let application: UIApplication
         let urlToOpen: URL?
         let shortcutItemToHandle: UIApplicationShortcutItem?
         let appDependencies: AppDependencies
@@ -64,8 +63,7 @@ extension Resuming {
     }
 
     func makeStateContext() -> StateContext {
-        .init(application: application,
-              urlToOpen: urlToOpen,
+        .init(urlToOpen: urlToOpen,
               shortcutItemToHandle: shortcutItemToHandle,
               appDependencies: appDependencies,
               lastBackgroundDate: lastBackgroundDate)

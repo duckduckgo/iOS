@@ -17,13 +17,10 @@
 //  limitations under the License.
 //
 
-import Foundation
 import Core
-import Networking
 import UIKit
 import BrowserServicesKit
 import WidgetKit
-import WebKit
 
 /// Represents the transient state where the app is being prepared for user interaction after being launched by the system.
 /// - Usage:
@@ -50,50 +47,41 @@ struct Launching: AppState {
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
 
     private let screenshotService: ScreenshotService
-    private let overlayWindowManager: OverlayWindowManager
     private let authenticationService: AuthenticationService
     private let syncService: SyncService
     private let vpnService: VPNService
-    private let autofillService: AutofillService = AutofillService()
+    private let autofillService = AutofillService()
     private let persistenceService = PersistenceService()
     private let remoteMessagingService: RemoteMessagingService
     private let keyboardService: KeyboardService
-    private let contentBlockingService: ContentBlockingService = ContentBlockingService()
-    private let configurationService: ConfigurationService = ConfigurationService(isDebugBuild: isDebugBuild)
+    private let configurationService = ConfigurationService(isDebugBuild: isDebugBuild)
     private let autoClearService: AutoClearService
     private let reportingService: ReportingService
+    private let subscriptionService: SubscriptionService
+    private let crashCollectionService = CrashCollectionService()
 
     private let window: UIWindow
-
     private let mainCoordinator: MainCoordinator
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
-    private let application: UIApplication
-    private let crashService: CrashService
-    private let subscriptionService: SubscriptionService
-
-    init(stateContext: Initializing.StateContext) {
-
+    init(stateContext: Initializing.StateContext, application: UIApplication = UIApplication.shared) {
         defer {
             let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
             Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
                        withAdditionalParameters: [PixelParameters.time: String(launchTime)])
         }
 
-        application = stateContext.application
-        crashService = stateContext.crashService
-
         reportingService = ReportingService(fireproofing: fireproofing)
         KeyboardConfiguration.configure()
         PixelConfiguration.configure(featureFlagger: featureFlagger)
-        contentBlockingService.onLaunching()
-        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
+        ContentBlockingConfiguration.configure()
+        UserAgentConfiguration.configure()
+
         configurationService.onLaunching()
-        crashService.startAttachingCrashLogMessages(application: application)
+        crashCollectionService.onLaunching()
         persistenceService.onLaunching()
-        _ = DefaultUserAgentManager.shared
 
         WidgetCenter.shared.reloadAllTimelines()
 
@@ -165,9 +153,9 @@ struct Launching: AppState {
         window.makeKeyAndVisible()
         application.setWindow(window)
 
-        overlayWindowManager = OverlayWindowManager(window: window,
-                                                    addressBarPosition: appSettings.currentAddressBarPosition,
-                                                    voiceSearchHelper: voiceSearchHelper)
+        let overlayWindowManager = OverlayWindowManager(window: window,
+                                                        addressBarPosition: appSettings.currentAddressBarPosition,
+                                                        voiceSearchHelper: voiceSearchHelper)
         vpnService = VPNService(mainCoordinator: mainCoordinator)
         autoClearService = AutoClearService(worker: mainViewController, overlayWindowManager: overlayWindowManager)
         screenshotService = ScreenshotService(window: window)
@@ -181,14 +169,14 @@ struct Launching: AppState {
         vpnService.onLaunching()
         subscriptionService.onLaunching()
         autofillService.onLaunching()
-        crashService.handleCrashDuringCrashHandlersSetup()
+
+        stateContext.crashHandlersConfiguration.handleCrashDuringCrashHandlersSetup()
     }
 
     private var appDependencies: AppDependencies {
         AppDependencies(
             window: window,
             mainCoordinator: mainCoordinator,
-            overlayWindowManager: overlayWindowManager,
             vpnService: vpnService,
             authenticationService: authenticationService,
             screenshotService: screenshotService,
@@ -197,7 +185,7 @@ struct Launching: AppState {
             remoteMessagingService: remoteMessagingService,
             subscriptionService: subscriptionService,
             autofillService: autofillService,
-            crashService: crashService,
+            crashCollectionService: crashCollectionService,
             keyboardService: keyboardService,
             configurationService: configurationService,
             reportingService: reportingService
@@ -210,7 +198,6 @@ extension Launching {
 
     struct StateContext {
 
-        let application: UIApplication
         let didFinishLaunchingStartTime: CFAbsoluteTime
         let urlToOpen: URL?
         let shortcutItemToHandle: UIApplicationShortcutItem?
@@ -219,8 +206,7 @@ extension Launching {
     }
 
     func makeStateContext() -> StateContext {
-        .init(application: application,
-              didFinishLaunchingStartTime: didFinishLaunchingStartTime,
+        .init(didFinishLaunchingStartTime: didFinishLaunchingStartTime,
               urlToOpen: urlToOpen,
               shortcutItemToHandle: shortcutItemToHandle,
               appDependencies: appDependencies)

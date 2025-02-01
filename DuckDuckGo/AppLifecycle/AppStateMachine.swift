@@ -21,7 +21,7 @@ import UIKit
 
 enum AppEvent {
 
-    case didFinishLaunching(UIApplication, isTesting: Bool)
+    case didFinishLaunching(isTesting: Bool)
     case didBecomeActive
     case didEnterBackground
     case willResignActive

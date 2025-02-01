@@ -94,6 +94,7 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        registerForSettingsDidDisappear()
         setUpDaxDialog()
     }
 
@@ -114,6 +115,17 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
 
         pixelFiring.fire(.homeScreenShown, withAdditionalParameters: [:])
         sendDailyDisplayPixel()
+    }
+
+    func registerForSettingsDidDisappear() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onSettingsDidDisappear), name: .settingsDidDisappear, object: nil)
+    }
+
+
+    @objc func onSettingsDidDisappear() {
+        if self.favoritesModel.hasMissingIcons {
+            self.delegate?.newTabPageDidRequestFaviconsFetcherOnboarding(self)
+        }
     }
 
     private func setUpDaxDialog() {

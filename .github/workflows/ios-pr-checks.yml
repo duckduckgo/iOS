@@ -10,6 +10,11 @@ on:
         description: "Branch name"
         required: false
         type: string
+      skip-release:
+        description: "Skip release build"
+        required: false
+        default: false
+        type: boolean
     secrets:
       APPLE_API_KEY_BASE64:
         required: true
@@ -32,7 +37,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Check out the code
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      uses: actions/checkout@v4
+
+    - name: Check out the code
+      if: github.event_name != 'pull_request' && github.event_name != 'push'
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.branch || github.ref_name }}
+
     - name: SwiftLint
       uses: docker://norionomura/swiftlint:0.54.0_swift-5.9.0
       with:
@@ -46,7 +60,14 @@ jobs:
 
     steps:
     - name: Check out the code
-      uses: actions/checkout@v3
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      uses: actions/checkout@v4
+
+    - name: Check out the code
+      if: github.event_name != 'pull_request' && github.event_name != 'push'
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.branch || github.ref_name }}
 
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
@@ -59,16 +80,24 @@ jobs:
     name: Unit Tests
 
     runs-on: macos-15
-    timeout-minutes: 20
+    timeout-minutes: 60 # temporary (vs original 20) to fix the issue with GHA slowness
 
     outputs:
       commit_author: ${{ steps.fetch_commit_author.outputs.commit_author }}
 
     steps:
     - name: Check out the code
-      uses: actions/checkout@v3
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      uses: actions/checkout@v4
       with:
         submodules: recursive
+
+    - name: Check out the code
+      if: github.event_name != 'pull_request' && github.event_name != 'push'
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        ref: ${{ inputs.branch || github.ref_name }}
 
     - name: Set cache key hash
       run: |
@@ -81,7 +110,7 @@ jobs:
 
     - name: Cache SPM
       if: env.cache_key_hash
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: DerivedData/SourcePackages
         key: ${{ runner.os }}-spm-${{ env.cache_key_hash }}
@@ -132,7 +161,7 @@ jobs:
         yq < unittests.xml -p xml -o json -r \
           $'[.testsuites.testsuite[].testcase] | flatten | map(select(.failure) | .+@classname + " " + .+@name + " \'" + .failure.+@message + "\' ${{ env.WORKFLOW_URL }}") | .[]' \
           | sort -u -k 1,2 \
-          | xargs -L 1 ./scripts/report-failed-unit-test.sh -s ${{ vars.APPLE_CI_FAILING_TESTS_FAILED_TESTS_SECTION_ID }}
+          | xargs -L 1 ./scripts/report-failed-unit-test.sh -s ${{ vars.APPLE_CI_FAILING_TESTS_IOS_FAILED_TESTS_SECTION_ID }}
 
     - name: Fetch latest commit author
       if: always() && github.ref_name == 'main'
@@ -148,11 +177,11 @@ jobs:
 
     name: Make Release Build
 
-    # Dependabot doesn't have access to all secrets, so we skip this job, also skip for nightly release bump
-    if: github.actor != 'dependabot[bot]' && github.event_name != 'workflow_call'
+    # Dependabot doesn't have access to all secrets, so we skip this job, also skip for releases
+    if: github.actor != 'dependabot[bot]' && inputs.skip-release != true
 
     runs-on: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 60 # temporary (vs original 20) to fix the issue with GHA slowness
 
     steps:
 
@@ -162,9 +191,14 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
 
     - name: Check out the code
-      uses: actions/checkout@v3
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      uses: actions/checkout@v4
+
+    - name: Check out the code
+      if: github.event_name != 'pull_request' && github.event_name != 'push'
+      uses: actions/checkout@v4
       with:
-        submodules: recursive
+        ref: ${{ inputs.branch || github.ref_name }}
 
     - name: Set cache key hash
       run: |
@@ -177,7 +211,7 @@ jobs:
 
     - name: Cache SPM
       if: env.cache_key_hash
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: DerivedData/SourcePackages
         key: ${{ runner.os }}-spm-release-${{ env.cache_key_hash }}

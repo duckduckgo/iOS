@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3300 2200">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #00aeef;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2, .cls-4, .cls-5 {
+        stroke-width: .5px;
+      }
+
+      .cls-2, .cls-3, .cls-4 {
+        stroke: #000;
+      }
+
+      .cls-6 {
+        fill: #fff;
+      }
+
+      .cls-7 {
+        font-family: Helvetica-Bold, Helvetica;
+        font-weight: 700;
+      }
+
+      .cls-7, .cls-8 {
+        font-size: 13px;
+        isolation: isolate;
+      }
+
+      .cls-3 {
+        stroke-width: .6px;
+      }
+
+      .cls-3, .cls-4 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-8 {
+        font-family: Helvetica, Helvetica;
+      }
+
+      .cls-9 {
+        fill: #27aae1;
+      }
+
+      .cls-10 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-11 {
+        letter-spacing: -.11em;
+      }
+
+      .cls-12 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-13 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-5 {
+        stroke: #27aae1;
+      }
+    </style>
+  </defs>
+  <g id="Notes">
+    <rect id="artboard" class="cls-6" width="3300" height="2200"/>
+    <line class="cls-2" x1="263" y1="292" x2="3036" y2="292"/>
+    <text class="cls-7" transform="translate(263 322)"><tspan class="cls-12" x="0" y="0">W</tspan><tspan x="12.04" y="0">eight/Scale </tspan><tspan class="cls-13" x="84.29" y="0">V</tspan><tspan x="92.25" y="0">ariations</tspan></text>
+    <text class="cls-8" transform="translate(534.06 322)"><tspan x="0" y="0">Ultralight</tspan></text>
+    <text class="cls-8" transform="translate(843.78 322)"><tspan x="0" y="0">Thin</tspan></text>
+    <text class="cls-8" transform="translate(1139.04 322)"><tspan x="0" y="0">Light</tspan></text>
+    <text class="cls-8" transform="translate(1427.08 322)"><tspan x="0" y="0">Regular</tspan></text>
+    <text class="cls-8" transform="translate(1723.44 322)"><tspan x="0" y="0">Medium</tspan></text>
+    <text class="cls-8" transform="translate(2016.17 322)"><tspan x="0" y="0">Semibold</tspan></text>
+    <text class="cls-8" transform="translate(2326.97 322)"><tspan x="0" y="0">Bold</tspan></text>
+    <text class="cls-8" transform="translate(2618.27 322)"><tspan x="0" y="0">Heavy</tspan></text>
+    <text class="cls-8" transform="translate(2917.51 322)"><tspan x="0" y="0">Black</tspan></text>
+    <line class="cls-2" x1="263" y1="1903" x2="3036" y2="1903"/>
+    <path d="M272.25,1933.83c4.36,0,7.89-3.53,7.89-7.88s-3.54-7.88-7.89-7.88-7.88,3.53-7.88,7.88,3.54,7.88,7.88,7.88ZM272.25,1932.35c-3.54,0-6.39-2.86-6.39-6.4s2.85-6.4,6.39-6.4,6.4,2.86,6.4,6.4-2.86,6.4-6.4,6.4ZM268.65,1925.95c0,.43.3.72.75.72h2.1v2.12c0,.44.29.74.72.74s.74-.3.74-.74v-2.12h2.12c.44,0,.74-.29.74-.72s-.3-.74-.74-.74h-2.12v-2.11c0-.45-.29-.75-.74-.75s-.72.3-.72.75v2.11h-2.1c-.45,0-.75.3-.75.74Z"/>
+    <path d="M293.21,1935.91c5.5,0,9.96-4.46,9.96-9.96s-4.46-9.96-9.96-9.96-9.96,4.46-9.96,9.96,4.46,9.96,9.96,9.96ZM293.21,1934.25c-4.59,0-8.3-3.71-8.3-8.3s3.71-8.3,8.3-8.3,8.3,3.71,8.3,8.3-3.71,8.3-8.3,8.3ZM288.68,1925.95c0,.48.33.8.83.8h2.87v2.88c0,.49.33.83.81.83s.83-.33.83-.83v-2.88h2.88c.49,0,.83-.32.83-.8s-.34-.83-.83-.83h-2.88v-2.87c0-.5-.34-.84-.83-.84s-.81.34-.81.84v2.87h-2.87c-.5,0-.83.34-.83.83Z"/>
+    <path d="M319.89,1938.66c7.02,0,12.72-5.69,12.72-12.71s-5.7-12.72-12.72-12.72-12.71,5.7-12.71,12.72,5.69,12.71,12.71,12.71ZM319.89,1936.85c-6.03,0-10.9-4.87-10.9-10.9s4.87-10.9,10.9-10.9,10.9,4.87,10.9,10.9-4.87,10.9-10.9,10.9ZM314.12,1925.95c0,.52.37.88.92.88h3.95v3.96c0,.54.37.92.89.92s.91-.37.91-.92v-3.96h3.96c.54,0,.92-.36.92-.88,0-.55-.37-.92-.92-.92h-3.96v-3.95c0-.55-.37-.93-.91-.93s-.89.38-.89.93v3.95h-3.95c-.55,0-.92.37-.92.92Z"/>
+    <text class="cls-7" transform="translate(263 1953)"><tspan x="0" y="0">Design </tspan><tspan class="cls-13" x="46.95" y="0">V</tspan><tspan x="54.91" y="0">ariations</tspan></text>
+    <text class="cls-8" transform="translate(263 1971)"><tspan x="0" y="0">Symbols are supported in up to nine weights and three scales.</tspan></text>
+    <text class="cls-8" transform="translate(263 1989)"><tspan x="0" y="0">For optimal layout with text and other symbols, vertically align</tspan></text>
+    <text class="cls-8" transform="translate(263 2007)"><tspan x="0" y="0">symbols with the adjacent text.</tspan></text>
+    <line class="cls-1" x1="776" y1="1919" x2="776" y2="1933"/>
+    <path d="M779.31,1933.16c.52,0,.77-.2.96-.74l1.26-3.45h5.76l1.26,3.45c.19.55.44.74.95.74s.85-.31.85-.8c0-.17-.03-.32-.11-.53l-4.58-12.2c-.22-.6-.63-.9-1.25-.9s-1.02.29-1.23.89l-4.58,12.22c-.08.21-.11.36-.11.53,0,.49.31.79.82.79ZM782.01,1927.48l2.37-6.57h.05l2.37,6.57h-4.79Z"/>
+    <line class="cls-1" x1="792.84" y1="1919" x2="792.84" y2="1933"/>
+    <text class="cls-7" transform="translate(776 1953)"><tspan x="0" y="0">Margins</tspan></text>
+    <text class="cls-8" transform="translate(776 1971)"><tspan x="0" y="0">Leading and trailing margins on the left and right side of each symbol</tspan></text>
+    <text class="cls-8" transform="translate(776 1989)"><tspan x="0" y="0">can be adjusted by modifying the x-location of the margin guidelines.</tspan></text>
+    <text class="cls-8" transform="translate(776 2007)"><tspan x="0" y="0">Modifications are automatically applied proportionally to all</tspan></text>
+    <text class="cls-8" transform="translate(776 2025)"><tspan x="0" y="0">scales and weights.</tspan></text>
+    <path d="M1291.84,1934.87l1.7,1.71c.86.87,1.85.81,2.77-.21l10.69-11.79-.97-.98-10.62,11.68c-.35.4-.68.5-1.15.03l-1.17-1.16c-.47-.46-.36-.8.04-1.16l11.47-10.8-.98-.97-11.59,10.89c-.99.92-1.06,1.89-.21,2.76h0ZM1298.26,1916.67c-.42.41-.45.99-.21,1.38.23.36.69.6,1.34.43,1.46-.34,2.99-.4,4.41.54l-.59,1.46c-.34.83-.17,1.42.37,1.96l2.29,2.31c.49.49.9.51,1.46.41l1.06-.2.66.67-.04.56c-.04.5.09.88.58,1.36l.76.74c.48.48,1.09.51,1.56.04l2.91-2.92c.47-.47.45-1.06-.03-1.54l-.77-.76c-.48-.48-.85-.63-1.33-.6l-.58.05-.64-.63.24-1.12c.13-.57-.03-1.01-.62-1.59l-2.2-2.19c-3.34-3.32-7.77-3.24-10.66-.35h0ZM1299.75,1917.04c2.43-1.78,5.72-1.47,7.95.75l2.43,2.41c.23.23.27.42.21.76l-.32,1.48,1.5,1.48.99-.06c.25,0,.33,0,.53.21l.58.58-2.44,2.44-.58-.58c-.2-.2-.22-.27-.21-.54l.07-.98-1.49-1.48-1.52.25c-.32.07-.47.04-.71-.2l-2-2c-.25-.23-.28-.4-.13-.77l.88-2.09c-1.56-1.46-3.59-2.08-5.63-1.48-.16.04-.21-.09-.09-.2h0Z"/>
+    <text class="cls-7" transform="translate(1289 1953)"><tspan x="0" y="0">Exporting</tspan></text>
+    <text class="cls-8" transform="translate(1289 1971)"><tspan x="0" y="0">Symbols should be outlined when exporting to ensure the</tspan></text>
+    <text class="cls-8" transform="translate(1289 1989)"><tspan x="0" y="0">design is preserved when submitting to Xcode.</tspan></text>
+    <text id="template-version" class="cls-8" transform="translate(2952.41 1933)"><tspan class="cls-11" x="0" y="0">T</tspan><tspan x="6.5" y="0">emplate </tspan><tspan class="cls-10" x="56.36" y="0">v</tspan><tspan x="61.9" y="0">.6.0</tspan></text>
+    <text class="cls-8" transform="translate(2865.46 1951)"><tspan x="0" y="0">Requires Xcode 16 or greater</tspan></text>
+    <text id="descriptive-name" class="cls-8" transform="translate(2911.01 1969)"><tspan x="0" y="0">Generated from circle</tspan></text>
+    <text class="cls-8" transform="translate(2901.57 1987)"><tspan class="cls-13" x="0" y="0">T</tspan><tspan x="7.23" y="0">ypeset at 100.0 points</tspan></text>
+    <text class="cls-8" transform="translate(263 726)"><tspan x="0" y="0">Small</tspan></text>
+    <text class="cls-8" transform="translate(263 1156)"><tspan x="0" y="0">Medium</tspan></text>
+    <text class="cls-8" transform="translate(263 1586)"><tspan x="0" y="0">Large</tspan></text>
+  </g>
+  <g id="Guides">
+    <g id="H-reference">
+      <path class="cls-9" d="M339.99,696h2.64l25.69-67.13h.7v-3.33h-1.91l-27.13,70.46ZM350.69,671.52h35.29l-.75-2.25h-33.79l-.75,2.25ZM394.12,696h2.64l-27.13-70.46h-1.21v3.33l25.69,67.13Z"/>
+    </g>
+    <line id="Baseline-S" class="cls-5" x1="263" y1="696" x2="3036" y2="696"/>
+    <line id="Capline-S" class="cls-5" x1="263" y1="625.54" x2="3036" y2="625.54"/>
+    <g id="H-reference-2" data-name="H-reference">
+      <path class="cls-9" d="M339.99,1126h2.64l25.69-67.13h.7v-3.33h-1.91l-27.13,70.46ZM350.69,1101.52h35.29l-.75-2.25h-33.79l-.75,2.25ZM394.12,1126h2.64l-27.13-70.46h-1.21v3.33l25.69,67.13Z"/>
+    </g>
+    <line id="Baseline-M" class="cls-5" x1="263" y1="1126" x2="3036" y2="1126"/>
+    <line id="Capline-M" class="cls-5" x1="263" y1="1055.54" x2="3036" y2="1055.54"/>
+    <g id="H-reference-3" data-name="H-reference">
+      <path class="cls-9" d="M339.99,1556h2.64l25.69-67.13h.7v-3.33h-1.91l-27.13,70.46ZM350.69,1531.52h35.29l-.75-2.25h-33.79l-.75,2.25ZM394.12,1556h2.64l-27.13-70.46h-1.21v3.33l25.69,67.13Z"/>
+    </g>
+    <line id="Baseline-L" class="cls-5" x1="263" y1="1556" x2="3036" y2="1556"/>
+    <line id="Capline-L" class="cls-5" x1="263" y1="1485.54" x2="3036" y2="1485.54"/>
+    <line id="right-margin-Black-S" class="cls-1" x1="2982.23" y1="600.78" x2="2982.23" y2="720.12"/>
+    <line id="left-margin-Black-S" class="cls-1" x1="2884.57" y1="600.78" x2="2884.57" y2="720.12"/>
+    <line id="right-margin-Regular-S" class="cls-1" x1="1496.11" y1="600.78" x2="1496.11" y2="720.12"/>
+    <line id="left-margin-Regular-S" class="cls-1" x1="1403.58" y1="600.78" x2="1403.58" y2="720.12"/>
+    <line id="right-margin-Ultralight-S" class="cls-1" x1="603.77" y1="600.78" x2="603.77" y2="720.12"/>
+    <line id="left-margin-Ultralight-S" class="cls-1" x1="515.65" y1="600.78" x2="515.65" y2="720.12"/>
+  </g>
+  <g id="Symbols">
+    <g id="Black-S">
+      <path class="st2" d="M2953.8,657.92l-6.6,1.6c-5.2,1.3-9.3,5.4-10.6,10.6l-1.6,6.6c-.4,1.8-2.9,1.8-3.4,0l-1.6-6.6c-1.3-5.2-5.4-9.3-10.6-10.6l-6.6-1.6c-1.8-.4-1.8-2.9,0-3.4l6.6-1.6c5.2-1.3,9.3-5.4,10.6-10.6l1.6-6.6c.4-1.8,2.9-1.8,3.4,0l1.6,6.6c1.3,5.2,5.4,9.3,10.6,10.6l6.6,1.6c1.8.4,1.8,2.9,0,3.4ZM2975.3,656.22c0,15.6-10.8,29-26.1,34.6-9.9,4.6-34.3,9.2-48.2,11.6h0c-3.5.6-5.7-3.5-3.4-6.1l6.8-7.8c1.5-1.7,1.1-4.3-.5-5.7-7.6-6.8-12.4-16.1-12.4-26.5,0-20.6,18.8-37.3,41.9-37.3s41.9,16.7,41.9,37.3v-.1ZM2968.3,656.22c0-16-14.9-30.4-34.9-30.4s-34.9,14.3-34.9,30.4,3.7,15.7,10,21.2c4.2,3.7,5.4,10.6,1.2,15.6l-.7.9c5.1-1,10.8-2.1,16.2-3.3,9.1-2,17-4.2,21.2-6.1h0l.3-.1h.3c13-4.8,21.5-15.9,21.5-28.1l-.2-.1Z"/>
+    </g>
+    <g id="Regular-S">
+      <path class="st2" d="M1469.14,658.12l-6.2,1.6c-4.9,1.2-8.8,5.1-10,10l-1.6,6.2c-.4,1.7-2.8,1.7-3.2,0l-1.6-6.2c-1.2-4.9-5.1-8.8-10-10l-6.2-1.6c-1.7-.4-1.7-2.8,0-3.2l6.2-1.6c4.9-1.2,8.8-5.1,10-10l1.6-6.2c.4-1.7,2.8-1.7,3.2,0l1.6,6.2c1.2,4.9,5.1,8.8,10,10l6.2,1.6c1.7.4,1.7,2.8,0,3.2ZM1489.44,656.52c0,14.8-10.2,27.5-24.7,32.8-9.4,4.3-32.5,8.7-45.6,10.9h0c-3.3.6-5.4-3.3-3.2-5.8l6.4-7.4c1.4-1.6,1.1-4-.5-5.4-7.2-6.4-11.7-15.3-11.7-25.1,0-19.5,17.8-35.3,39.7-35.3s39.7,15.8,39.7,35.3h-.1ZM1482.84,656.52c0-15.2-14.1-28.7-33.1-28.7s-33.1,13.6-33.1,28.7,3.5,14.8,9.5,20.1c4,3.5,5.1,10.1,1.1,14.7l-.7.8c4.9-.9,10.2-2,15.3-3.1,8.6-1.9,16.1-4,20.1-5.8h0l.2-.1h.3c12.4-4.6,20.4-15.1,20.4-26.6h0Z"/>
+    </g>
+    <g id="Ultralight-S">
+      <path class="st2" d="M577.89,658.08l-5.9,1.5c-4.6,1.2-8.3,4.8-9.4,9.4l-1.5,5.9c-.4,1.6-2.6,1.6-3,0l-1.5-5.9c-1.2-4.6-4.8-8.3-9.4-9.4l-5.9-1.5c-1.6-.4-1.6-2.6,0-3l5.9-1.5c4.6-1.2,8.3-4.8,9.4-9.4l1.5-5.9c.4-1.6,2.6-1.6,3,0l1.5,5.9c1.2,4.6,4.8,8.3,9.4,9.4l5.9,1.5c1.6.4,1.6,2.6,0,3ZM597.09,656.58c0,14-9.7,26-23.4,30.9-8.9,4.1-30.7,8.2-43.1,10.3h0c-3.1.5-5.1-3.1-3-5.5l6.1-7c1.3-1.5,1-3.8-.5-5.1-6.8-6-11-14.4-11-23.7,0-18.4,16.8-33.4,37.5-33.4s37.5,14.9,37.5,33.4l-.1.1ZM590.89,656.58c0-14.3-13.3-27.1-31.2-27.1s-31.2,12.8-31.2,27.1,3.3,14,8.9,19c3.7,3.3,4.9,9.5,1,13.9l-.7.8c4.6-.9,9.6-1.8,14.5-2.9,8.2-1.8,15.2-3.8,19-5.5h0l.2-.1h.2c11.7-4.3,19.2-14.2,19.2-25.1l.1-.1Z"/>
+    </g>
+  </g>
+</svg>

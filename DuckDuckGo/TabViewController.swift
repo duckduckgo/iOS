@@ -60,6 +60,27 @@ class TabViewController: UIViewController {
     @IBOutlet weak var webViewContainer: UIView!
     var webViewBottomAnchorConstraint: NSLayoutConstraint?
     var daxContextualOnboardingController: UIViewController?
+    
+    /// Stores the visual state of the web view
+    /// Used by DuckPlayer to save and restore view appearance when switching between normal browsing and fullscreen (portrail/landscape) video modes.
+    private struct ViewSettings {
+        
+        let viewBackground: UIColor?
+        let webViewBackground: UIColor?
+        let webViewOpaque: Bool
+        let scrollViewBackground: UIColor?
+        
+        /// Default view settings        
+        static var `default`: ViewSettings {
+            ViewSettings(
+                viewBackground: .systemBackground,
+                webViewBackground: nil,
+                webViewOpaque: true,
+                scrollViewBackground: .systemBackground
+            )
+        }
+    }
+    private var savedViewSettings: ViewSettings?
 
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
@@ -1041,7 +1062,7 @@ class TabViewController: UIViewController {
     }
 
     private func showBars(animated: Bool = true) {
-        chromeDelegate?.setBarsHidden(false, animated: animated)
+        chromeDelegate?.setBarsHidden(false, animated: animated, customAnimationDuration: nil)
     }
 
     func showPrivacyDashboard() {
@@ -1562,6 +1583,14 @@ extension TabViewController: WKNavigationDelegate {
             delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
             return
         }
+              
+        /// Never show onboarding Dax on Youtube or DuckPlayer, unless DuckPlayer is disabled
+        guard let url = link?.url,
+              !url.isDuckPlayer,
+              !(url.isYoutube && duckPlayer?.settings.mode != .disabled) else {
+            scheduleTrackerNetworksAnimation(collapsing: true)
+            return
+        }
 
         guard let privacyInfo = self.privacyInfo,
               !isShowingFullScreenDaxDialog else {
@@ -1602,7 +1631,7 @@ extension TabViewController: WKNavigationDelegate {
             }
 
             self.chromeDelegate?.omniBar.resignFirstResponder()
-            self.chromeDelegate?.setBarsHidden(false, animated: true)
+            self.chromeDelegate?.setBarsHidden(false, animated: true, customAnimationDuration: nil)
 
             // Present the contextual onboarding
             contextualOnboardingPresenter.presentContextualOnboarding(for: spec, in: self)
@@ -2748,7 +2777,7 @@ extension NSError {
 
 extension TabViewController: SecureVaultManagerDelegate {
 
-    private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
+    private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials, backfilled: Bool) {
         guard AutofillSettingStatus.isAutofillEnabledInSettings,
               featureFlagger.isFeatureOn(.autofillCredentialsSaving),
               let autofillUserScript = autofillUserScript else { return }
@@ -2759,7 +2788,8 @@ extension TabViewController: SecureVaultManagerDelegate {
             
             let saveLoginController = SaveLoginViewController(credentialManager: manager,
                                                               appSettings: self.appSettings,
-                                                              domainLastShownOn: self.domainSaveLoginPromptLastShownOn)
+                                                              domainLastShownOn: self.domainSaveLoginPromptLastShownOn,
+                                                              backfilled: backfilled)
             self.domainSaveLoginPromptLastShownOn = self.url?.host
             saveLoginController.delegate = self
 
@@ -2825,7 +2855,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             // Add a delay to allow propagation of pointer events to the page
             // see https://app.asana.com/0/1202427674957632/1202532842924584/f
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.presentSavePasswordModal(with: vault, credentials: credentials)
+                self.presentSavePasswordModal(with: vault, credentials: credentials, backfilled: data.backfilled)
             }
         }
     }
@@ -3228,5 +3258,46 @@ private extension TabViewController {
         }
 
         return didRestoreWebViewState
+    }
+}
+
+// Landscape/Portrait mode customizations
+extension TabViewController {
+    
+    /// Stores WebView settings and
+    /// Updates its properties when displaying video in landscape mode
+    // This is used by DuckPlayer when rotating to landscape
+    func setupWebViewForLandscapeVideo() {
+        guard let webView = webView else { return }
+        
+        // Store original settings
+        savedViewSettings = ViewSettings(
+            viewBackground: view.backgroundColor,
+            webViewBackground: webView.backgroundColor,
+            webViewOpaque: webView.isOpaque,
+            scrollViewBackground: webView.scrollView.backgroundColor
+        )
+        
+        // Apply landscape settings
+        view.backgroundColor = .black
+        webView.backgroundColor = .black
+        webView.isOpaque = true
+        webView.scrollView.backgroundColor = .black
+    }
+    
+    /// Resets the webview to its original settings
+    /// This is used by DuckPlayer when rotating back to portrait
+    func setupWebViewForPortraitVideo() {
+        guard let webView = webView else { return }
+        
+        // Restore original settings if they were stored
+        let settings = savedViewSettings ?? ViewSettings.default
+        view.backgroundColor = settings.viewBackground
+        webView.backgroundColor = settings.webViewBackground
+        webView.isOpaque = settings.webViewOpaque
+        webView.scrollView.backgroundColor = settings.scrollViewBackground
+        
+        // Clear stored settings
+        savedViewSettings = nil
     }
 }

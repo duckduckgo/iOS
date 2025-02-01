@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Lejupielādes";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "MI čats";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Rediģēt grāmatzīmi";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Ielīmēt un turpināt";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Drukāt";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Drukāt";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Atsvaidzināt";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Tavs ziņojums palīdz padarīt DuckDuckGo labāku visiem lietotājiem!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Nē";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Vai privātuma aizsardzības izslēgšana atrisināja problēmu šajā vietnē?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Jā";
+/* No comment provided by engineer. */
+"Confirm" = "Apstiprināt";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Izlaist";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Dod pieci!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Atceries: katru reizi, kad pārlūkosi kopā ar mani, uzmācīgās reklāmas zaudēs savu spēku! 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Izdevās!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Tas ir DuckDuckGo Search. Privāti. Ātri. Mazāk reklāmu.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Sapratu!";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Pamēģini apmeklēt kādu vietni!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Tavi DuckDuckGo meklējumi vienmēr ir anonīmi.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Vai esat gatavs sākt?\nIzmēģini meklēšanu!";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "avatara aktieru sastāvs";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "vietējie laikapstākļi";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Pārsteidz mani!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Atrodi sarakstā **DuckDuckGo** un pieskaries **VPN vadība**, lai to pievienotu";
@@ -1083,7 +1074,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai ir papildu līdzeklis, kas ļauj anonīmi tērzēt ar populāriem trešo pušu Ml tērzēšanas modeļiem. Tavas tērzēšanas sarunas netiek izmantotas MI apmācībai.\n[Uzzini vairāk](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Rādīt Duck.ai meklēšanas laikā";
+"duckai.settings.enable.address-bar-searching-toggle" = "Rādīt Duck.ai meklēšanas lapā";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Rādīt Duck.ai pārlūka izvēlnē";
@@ -1658,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Pārlūkošanas izvēlne";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Ziņojumu politikas resursdatora nosaukums";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Atpakaļ";
 
@@ -1949,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Izvēlies pārlūku";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Bloķē sīkfailu uznirstošos logus";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Bloķē kaitinošas reklāmas";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Ātri izdzēs pārlūkošanas datus";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Meklē privāti pēc noklusējuma";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Bloķē trešo pušu izsekotājus";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Privātuma aizsardzība ir aktivizēta!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Viegli pieejama";
@@ -2020,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Aiziet!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Sveiki!\n\nVai esi gatavs labākam, privātākam Internetam?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Pievienot logrīku";
@@ -2138,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Tu esi sasniedzis maksimālo paroļu skaitu. Lūdzu, izdzēs dažas, lai atsāktu sinhronizāciju.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Sinhronizācijā radās kļūda. Mēģini atspējot sinhronizāciju šajā ierīcē un pēc tam atkārtoti izveido savienojumu, izmantojot citu ierīci vai atgūšanas kodu.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Sinhronizācija pārtraukta";
 
@@ -2205,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Vai atvērt citā lietotnē?";
+
+/* No comment provided by engineer. */
+"Reset" = "Atiestatīt";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Meklē vai ievadi adresi";
@@ -2520,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Kura vietne ir bojāta?";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Piekļūsti savam Privacy Pro abonementam šajā ierīcē, izmantojot Apple ID vai e-pasta adresi.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Saglabātais resursdatora nosaukums: %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Pievienot e-pasta adresi";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Atjaunot pirkumu";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Atjauno savu pirkumu, lai aktivizētu abonementu šajā ierīcē.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Tavs abonements ir automātiski pieejams DuckDuckGo jebkurā ierīcē, kurā esi pierakstījies, izmantojot savu Apple ID.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Rediģēt e-pasta adresi";
@@ -2577,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Pievienot e-pasta adresi";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro ir pieejams jebkurā ierīcē, kurā esi pierakstījies, izmantojot to pašu Apple ID.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Tavs abonements tika iegādāts Google Play veikalā. Lai atjaunotu abonementu, lūdzu, atver Google Play veikala abonēšanas iestatījumus ierīcē, kas ir pierakstījusies tajā pašā Google kontā, kurā sākotnēji iegādājies abonementu.";
 
@@ -2613,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Abonements nav atrasts";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Ar šo Apple ID saistītais abonements vairs nav aktīvs.";
-
 /* FAQ Button */
 "subscription.faq" = "Bieži uzdotie jautājumi un atbalsts";
 
@@ -2631,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Atjaunot";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Mēs atradām abonementu, kas ir saistīts ar šo Apple ID.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Atrasts abonements";
 
@@ -2645,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Abonements";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Ar šo Apple ID nav saistīts neviens abonements.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonements nav atrasts";

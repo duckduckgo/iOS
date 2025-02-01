@@ -1,6 +1,12 @@
 /* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
 "intent.vpn.needs.to.be.enabled.from.app" = "Trebaš omogućiti VPN iz aplikacije DuckDuckGo.";
 
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Brzo započni novo AI čavrljanje na Duck.ai.";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Odmah generiraj novu privatnu adresu - Duck Address.";
 
@@ -61,6 +67,12 @@
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Pretraživanje lozinki";
 
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Pretražuj ili čavrljaj na Duck.ai, ili pogledaj svoje lozinke.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Prečaci";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Pretraži ili posjeti svoja omiljena web-mjesta privatno jednim dodirom.";
 
@@ -87,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Pretraživanje lozinki";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Traži";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Pretraži DuckDuckGo";

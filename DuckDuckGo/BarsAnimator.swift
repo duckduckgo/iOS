@@ -82,7 +82,7 @@ class BarsAnimator {
         barsState = .transitioning
 
         let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
-        delegate?.setBarsVisibility(1.0 - ratio, animated: false)
+        delegate?.setBarsVisibility(1.0 - ratio, animated: false, animationDuration: nil)
         transitionProgress = ratio
     }
 
@@ -113,7 +113,7 @@ class BarsAnimator {
                 return
             }
 
-            self.delegate?.setBarsVisibility(1.0 - ratio, animated: false)
+            self.delegate?.setBarsVisibility(1.0 - ratio, animated: false, animationDuration: nil)
             self.transitionProgress = ratio
         }
 
@@ -140,7 +140,7 @@ class BarsAnimator {
         barsState = .transitioning
 
         let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
-        delegate?.setBarsVisibility(1.0 - ratio, animated: false)
+        delegate?.setBarsVisibility(1.0 - ratio, animated: false, animationDuration: nil)
         transitionProgress = ratio
     }
 
@@ -200,7 +200,7 @@ class BarsAnimator {
         barsState = .revealed
         transitionProgress = 0
 
-        delegate?.setBarsVisibility(1, animated: animated && !alreadyRevealed)
+        delegate?.setBarsVisibility(1, animated: animated && !alreadyRevealed, animationDuration: nil)
     }
 
     func hideBars(animated: Bool) {
@@ -209,7 +209,7 @@ class BarsAnimator {
         barsState = .hidden
         transitionProgress = 1.0
 
-        delegate?.setBarsVisibility(0, animated: animated)
+        delegate?.setBarsVisibility(0, animated: animated, animationDuration: nil)
     }
 }
 

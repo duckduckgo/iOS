@@ -810,6 +810,15 @@ extension Pixel {
         case privacyProSubscriptionCookieRefreshedWithEmptyValue
         case privacyProSubscriptionCookieFailedToSetSubscriptionCookie
 
+        case settingsPrivacyProAccountWithNoSubscriptionFound
+
+        case privacyProActivatingRestoreErrorMissingAccountOrTransactions
+        case privacyProActivatingRestoreErrorPastTransactionAuthenticationError
+        case privacyProActivatingRestoreErrorFailedToObtainAccessToken
+        case privacyProActivatingRestoreErrorFailedToFetchAccountDetails
+        case privacyProActivatingRestoreErrorFailedToFetchSubscriptionDetails
+        case privacyProActivatingRestoreErrorSubscriptionExpired
+
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
 
@@ -956,6 +965,10 @@ extension Pixel {
         // MARK: AI Chat
         case aiChatNoRemoteSettingsFound(settings: String)
         case openAIChatFromAddressBar
+        case openAIChatFromWidgetFavorite
+        case openAIChatFromWidgetQuickAction
+        case openAIChatFromWidgetControlCenter
+        case openAIChatFromWidgetLockScreenComplication
 
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
@@ -1763,6 +1776,15 @@ extension Pixel.Event {
         case .privacyProSubscriptionCookieRefreshedWithEmptyValue: return "m_privacy-pro_subscription-cookie-refreshed_with_empty_value"
         case .privacyProSubscriptionCookieFailedToSetSubscriptionCookie: return "m_privacy-pro_subscription-cookie-failed_to_set_subscription_cookie"
 
+        case .settingsPrivacyProAccountWithNoSubscriptionFound: return "m_settings_privacy-pro_account_with_no_subscription_found"
+
+        case .privacyProActivatingRestoreErrorMissingAccountOrTransactions: return "m_privacy-pro_activating_restore_error_missing_account_or_transactions"
+        case .privacyProActivatingRestoreErrorPastTransactionAuthenticationError: return "m_privacy-pro_activating_restore_error_past_transaction_authentication_error"
+        case .privacyProActivatingRestoreErrorFailedToObtainAccessToken: return "m_privacy-pro_activating_restore_error_failed_to_obtain_access_token"
+        case .privacyProActivatingRestoreErrorFailedToFetchAccountDetails: return "m_privacy-pro_activating_restore_error_failed_to_fetch_account_details"
+        case .privacyProActivatingRestoreErrorFailedToFetchSubscriptionDetails: return "m_privacy-pro_activating_restore_error_failed_to_fetch_subscription_details"
+        case .privacyProActivatingRestoreErrorSubscriptionExpired: return "m_privacy-pro_activating_restore_error_subscription_expired"
+
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"
 
@@ -1930,6 +1952,10 @@ extension Pixel.Event {
         case .aiChatNoRemoteSettingsFound(let settings):
             return "m_aichat_no_remote_settings_found-\(settings.lowercased())"
         case .openAIChatFromAddressBar: return "m_aichat_addressbar_icon"
+        case .openAIChatFromWidgetFavorite: return "m_aichat-widget-favorite"
+        case .openAIChatFromWidgetQuickAction: return "m_aichat-widget-quickaction"
+        case .openAIChatFromWidgetControlCenter: return "m_aichat-widget-control-center"
+        case .openAIChatFromWidgetLockScreenComplication: return "m_aichat-widget-lock-screen-complication"
 
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"

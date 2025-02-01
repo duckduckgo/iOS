@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Lataukset";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "Tekoäly-chat";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Muokkaa kirjanmerkkiä";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Liitä ja avaa";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Tulosta";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Tulosta";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Päivitä";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Ilmoituksesi auttaa tekemään DuckDuckGosta paremman kaikille!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Ei";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Ratkaisiko yksityisyyden suojan käytöstä poistaminen tällä sivustolla olevan ongelman?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Kyllä";
+/* No comment provided by engineer. */
+"Confirm" = "Vahvista";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Ohita";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Ylävitonen!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Muista, että joka kerta kun käytät minua selaamiseen, rasittavat mainokset katoavat. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Hyvin menee!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Tällainen on DuckDuckGo Search. Yksityinen. Nopea. Vähemmän mainoksia.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Selvä!";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Siirry sivustolle!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "DuckDuckGo-hakusi ovat aina nimettömiä.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Oletko valmis aloittamaan?\nKokeile hakua!";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "avatarmuotti";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "paikallissää";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Yllätä minut!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Etsi luettelosta **DuckDuckGo** ja lisää se sitten napauttamalla **VPN-valvonta**.";
@@ -1083,7 +1074,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai on valinnainen ominaisuus, jonka avulla voit keskustella anonyymisti suosittujen kolmannen osapuolen tekoälykeskustelumallien kanssa. Keskustelujasi ei käytetä tekoälyn kouluttamiseen.\n[Lue lisää](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Näytä Duck.ai haun yhteydessä";
+"duckai.settings.enable.address-bar-searching-toggle" = "Näytä Duck.ai hakusivulla";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Näytä Duck.ai selainvalikossa";
@@ -1658,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Selausvalikko";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Viestikäytännön isäntänimi";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Takaisin";
 
@@ -1949,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Valitse selaimesi";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Estä evästeponnahdusikkunat";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Estä rasittavat mainokset";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Tyhjennä selaustiedot nopeasti";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Yksityinen selaus oletuksena";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Estä kolmannen osapuolen seuraimet";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Yksityisyyden suoja aktivoitu!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Helppo tavoittaa";
@@ -2020,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Aloitetaan!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Hei!\n\nOletko valmis parempaan ja yksityisempään internetiin?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Lisää widget";
@@ -2138,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Salasanakiintiösi on täynnä. Poista joitain salasanoja jatkaaksesi synkronointia.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Synkronoinnin aikana havaittiin virhe. Yritä poistaa synkronointi käytöstä tällä laitteella. Muodosta sitten yhteys uudelleen toisella laitteella tai palautuskoodilla.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Synkronointi keskeytetty";
 
@@ -2205,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Avataanko toisessa sovelluksessa?";
+
+/* No comment provided by engineer. */
+"Reset" = "Nollaa";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Hae tai anna osoite";
@@ -2520,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Mikä verkkosivusto on viallinen?";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Pääset Privacy Pro -tilaukseesi tällä laitteella Apple-tilin tai sähköpostiosoitteen kautta.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Tallennettu isäntänimi: %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Lisää sähköpostiosoite";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple-tili";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Palauta osto";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Aktivoi tilauksesi tällä laitteella palauttamalla ostosi.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Tilauksesi on automaattisesti saatavilla DuckDuckGossa kaikilla laitteilla, joilla on kirjauduttu Apple-tilillesi.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Muokkaa sähköpostiosoitetta";
@@ -2577,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Lisää sähköpostiosoite";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro on saatavilla kaikilla laitteilla, joilla on kirjauduttu samalle Apple-tilille.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Tilauksesi on ostettu Google Play Kaupasta. Jos haluat uusia tilauksesi, avaa Google Play Kaupan tilausasetukset laitteella, jolla olet kirjautunut samalle Google-tilille, jolla alun perin ostit tilauksesi.";
 
@@ -2613,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Tilausta ei löytynyt";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Tähän Apple-tiliin liitetty tilaus ei ole enää aktiivinen.";
-
 /* FAQ Button */
 "subscription.faq" = "Usein kysytyt kysymykset ja tuki";
 
@@ -2631,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Palauta";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Löysimme tähän Apple ID-tiliin liitetyn tilauksen.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Tilaus löytyi";
 
@@ -2645,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Tilaus";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Tähän Apple-tiliin ei ole liitetty tilausta.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Tilausta ei löytynyt";

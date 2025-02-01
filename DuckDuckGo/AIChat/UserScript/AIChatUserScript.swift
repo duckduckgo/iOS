@@ -21,6 +21,7 @@
 import Common
 import UserScript
 import Foundation
+import AIChat
 
 final class AIChatUserScript: NSObject, Subfeature {
 

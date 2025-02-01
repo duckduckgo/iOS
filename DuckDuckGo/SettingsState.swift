@@ -39,12 +39,13 @@ struct SettingsState {
     struct Subscription: Codable {
         var canPurchase: Bool
         var isSignedIn: Bool
+        var hasSubscription: Bool
         var hasActiveSubscription: Bool
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
         var subscriptionFeatures: [Entitlement.ProductName]
         var entitlements: [Entitlement.ProductName]
-        var platform: DDGSubscription.Platform
+        var platform: PrivacyProSubscription.Platform
         var isShowingStripeView: Bool
     }
 
@@ -107,6 +108,8 @@ struct SettingsState {
     var duckPlayerMode: DuckPlayerMode?
     var duckPlayerOpenInNewTab: Bool
     var duckPlayerOpenInNewTabEnabled: Bool
+    var duckPlayerNativeUI: Bool
+    var duckPlayerAutoplay: Bool
 
     // AI Chat
     var aiChat: AIChat
@@ -137,6 +140,7 @@ struct SettingsState {
             networkProtectionConnected: false,
             subscription: Subscription(canPurchase: false,
                                        isSignedIn: false,
+                                       hasSubscription: false,
                                        hasActiveSubscription: false,
                                        isRestoring: false,
                                        shouldDisplayRestoreSubscriptionError: false,
@@ -150,6 +154,8 @@ struct SettingsState {
             duckPlayerMode: .alwaysAsk,
             duckPlayerOpenInNewTab: true,
             duckPlayerOpenInNewTabEnabled: false,
+            duckPlayerNativeUI: false,
+            duckPlayerAutoplay: true,
             aiChat: AIChat(enabled: false,
                                   isAIChatBrowsingMenuFeatureFlagEnabled: false,
                                   isAIChatAddressBarFeatureFlagEnabled: false)

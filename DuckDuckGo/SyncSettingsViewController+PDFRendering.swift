@@ -19,7 +19,7 @@
 
 import SwiftUI
 import Combine
-import SyncUI
+import SyncUI_iOS
 import DDGSync
 
 extension SyncSettingsViewController {

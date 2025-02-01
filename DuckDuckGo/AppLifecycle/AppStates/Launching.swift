@@ -190,7 +190,6 @@ struct Launching: AppState {
         keyboardService = KeyboardService(mainViewController: mainViewController)
 
         autoClearService.onLaunching()
-        autoClearService.registerForAutoClear(onAutoClear)
 
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 

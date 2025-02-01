@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import Combine
 
 /// Represents the transient state where the app is resuming after being backgrounded, preparing to return to the foreground.
 /// - Usage:
@@ -34,48 +33,20 @@ struct Resuming: AppState {
 
     private let application: UIApplication
     private var appDependencies: AppDependencies
+    private let lastBackgroundDate: Date
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
-    private let lastBackgroundDate: Date
 
-    private let didAuthenticateSubject = PassthroughSubject<Void, Never>()
-    private let didDataClearSubject = PassthroughSubject<Void, Never>()
-
-    init(stateContext: Background.StateContext) { // TODO: this method needs documentation
+    init(stateContext: Background.StateContext) {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
         lastBackgroundDate = stateContext.lastBackgroundDate
 
         ThemeManager.shared.updateUserInterfaceStyle()
-
-        didAuthenticateSubject.combineLatest(didDataClearSubject)
-            .prefix(1) // Trigger only on the first time both have emitted //todo is it needed?
-            .sink { [self] _ in self.onReady() }
-            .store(in: &appDependencies.cancellables)
-
-        let authenticationService = appDependencies.authenticationService
-        let syncService = appDependencies.syncService
-        let autoClearService = appDependencies.autoClearService
-
-        authenticationService.beginAuthentication(onAuthenticated: onAuthenticated)
-        syncService.onResuming()
-        autoClearService.onResuming()
-        autoClearService.registerForAutoClear(onDataCleared)
-    }
-
-    private func onAuthenticated() { // TODO: this method needs documentation
-        didAuthenticateSubject.send()
-    }
-
-    private func onDataCleared() { // TODO: this method needs documentation
-        didDataClearSubject.send()
-    }
-
-    private func onReady() { // TODO: this method needs documentation // TODO: check if this is called, should we store cancellables in appdependencies?
-        let keyboardService = appDependencies.keyboardService
-        keyboardService.showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
-        keyboardService.showKeyboardIfSettingOn = true
+        appDependencies.keyboardService.showKeyboardIfSettingOn = true
+        appDependencies.syncService.onResuming()
+        appDependencies.autoClearService.onResuming()
     }
 
 }
@@ -88,6 +59,7 @@ extension Resuming {
         let urlToOpen: URL?
         let shortcutItemToHandle: UIApplicationShortcutItem?
         let appDependencies: AppDependencies
+        let lastBackgroundDate: Date
 
     }
 
@@ -95,7 +67,8 @@ extension Resuming {
         .init(application: application,
               urlToOpen: urlToOpen,
               shortcutItemToHandle: shortcutItemToHandle,
-              appDependencies: appDependencies)
+              appDependencies: appDependencies,
+              lastBackgroundDate: lastBackgroundDate)
     }
 
 }

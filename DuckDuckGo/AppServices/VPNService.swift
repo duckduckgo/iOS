@@ -54,7 +54,7 @@ final class VPNService: NSObject {
         tipKitAppEventsHandler.appDidFinishLaunching()
     }
 
-    func onAutoClear() {
+    func onDataCleared() {
         installRedditSessionWorkaround()
     }
 
@@ -73,7 +73,6 @@ final class VPNService: NSObject {
         Task {
             await stopAndRemoveVPNIfNotAuthenticated()
             await refreshVPNShortcuts()
-            installRedditSessionWorkaround()
 
             if #available(iOS 17.0, *) {
                 await VPNSnoozeLiveActivityManager().endSnoozeActivityIfNecessary()

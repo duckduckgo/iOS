@@ -77,19 +77,12 @@ struct Background: AppState {
     }
 
     mutating func run() {
-        let autoClearService = appDependencies.autoClearService
-        let privacyProDataReporter = appDependencies.privacyProDataReporter
-        let autofillService = appDependencies.autofillService
-        let syncService = appDependencies.syncService
-        let authenticationService = appDependencies.authenticationService
+        appDependencies.authenticationService.onBackground()
+        appDependencies.autoClearService.onBackground()
+        appDependencies.autofillService.onBackground()
+        appDependencies.syncService.onBackground()
 
-        authenticationService.onBackground()
-        autoClearService.onBackground()
-        autofillService.onBackground()
-        syncService.onBackground()
-
-        privacyProDataReporter.saveApplicationLastSessionEnded()
-
+        appDependencies.privacyProDataReporter.saveApplicationLastSessionEnded()
         appDependencies.mainCoordinator.resetAppStartTime()
     }
 

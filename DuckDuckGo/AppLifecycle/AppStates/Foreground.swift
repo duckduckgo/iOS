@@ -24,7 +24,6 @@ import Core
 import WidgetKit
 import BackgroundTasks
 import NetworkProtection
-import Combine
 
 /// Represents the state where the app is active and available for user interaction.
 /// - Usage:
@@ -49,8 +48,7 @@ struct Foreground: AppState {
     private let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
     private var mainCoordinator: MainCoordinator { appDependencies.mainCoordinator }
 
-    private let didAuthenticateSubject = PassthroughSubject<Void, Never>()
-    private let didDataClearSubject = PassthroughSubject<Void, Never>()
+    private var lastBackgroundDate: Date?
 
     // MARK: Handle logic when transitioning from Launched to Foreground
     // This transition occurs when the app has completed its launch process and becomes active.
@@ -63,22 +61,19 @@ struct Foreground: AppState {
         shortcutItemToHandle = stateContext.shortcutItemToHandle
 
         let subscriptionService = appDependencies.subscriptionService
-        subscriptionService.onFirstForeground()
+        subscriptionService.onFirstForeground() // could it be on launching then?
+
+        initialiseBackgroundFetch(application) // could it be on launching then?
+        applyAppearanceChanges() // could it be on launching then?
+        appDependencies.remoteMessagingService.onForeground() // could it be on launching then?
 
         let authenticationService = appDependencies.authenticationService
-        authenticationService.beginAuthentication(onAuthenticated: onAuthentication)
+        guard authenticationService.isAuthenticated else {
+            authenticationService.beginAuthentication()
+            return
+        }
 
-        let autoClearService = appDependencies.autoClearService
-        autoClearService.registerForAutoClear(onDataCleared)
-
-        didAuthenticateSubject.combineLatest(didDataClearSubject)
-            .prefix(1) // Trigger only on the first time both have emitted //todo is it needed?
-            .sink { [self] _ in self.onReady() }
-            .store(in: &appDependencies.cancellables) // TODO: is it ok?
-
-        initialiseBackgroundFetch(application)
-        applyAppearanceChanges()
-        appDependencies.remoteMessagingService.onForeground()
+        appDependencies.autoClearService.registerForAutoClear(onDataCleared)
 
         activateApp()
     }
@@ -89,8 +84,17 @@ struct Foreground: AppState {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
-        let autoClearService = appDependencies.autoClearService
-        autoClearService.registerForAutoClear(onReady)
+        urlToOpen = stateContext.urlToOpen
+        shortcutItemToHandle = stateContext.shortcutItemToHandle
+        lastBackgroundDate = stateContext.lastBackgroundDate
+
+        let authenticationService = appDependencies.authenticationService
+        guard authenticationService.isAuthenticated else {
+            authenticationService.beginAuthentication()
+            return
+        }
+
+        appDependencies.autoClearService.registerForAutoClear(onDataCleared)
 
         activateApp()
     }
@@ -101,34 +105,15 @@ struct Foreground: AppState {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
-        let autoClearService = appDependencies.autoClearService
-        autoClearService.registerForAutoClear(onReady)
+        urlToOpen = stateContext.urlToOpen
+        shortcutItemToHandle = stateContext.shortcutItemToHandle
 
         activateApp()
-    }
-
-    private func onAuthentication() {
-        didAuthenticateSubject.send()
-    }
-
-    private func onDataCleared() {
-        didDataClearSubject.send()
-    }
-
-    private func onReady() {
-        if let url = urlToOpen {
-            openURL(url)
-        } else if let shortcutItemToHandle = shortcutItemToHandle {
-            handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
-        } else {
-            appDependencies.keyboardService.showKeyboardOnLaunch() // is this logic alright? should we show keyboard on link/shortcut opening?
-        }
     }
 
     // MARK: handle applicationDidBecomeActive(_:) logic here
     private func activateApp(isTesting: Bool = false) {
         appDependencies.syncService.onForeground()
-        appDependencies.overlayWindowManager.removeNonAuthenticationOverlay()
 
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
@@ -139,10 +124,6 @@ struct Foreground: AppState {
 
         mainCoordinator.onForeground()
 
-//        if !appDependencies.privacyStore.authenticationEnabled {
-//            showKeyboardOnLaunch()
-//        } // it should in theory be called if the authentication is disabled, inside onAuthentication() method
-
         appDependencies.configurationService.onConfigurationFetch = onConfigurationFetch
         appDependencies.configurationService.onForeground()
 
@@ -151,9 +132,7 @@ struct Foreground: AppState {
         fireFailedCompilationsPixelIfNeeded()
 
         appDependencies.vpnService.onForeground()
-
-        let subscriptionService = appDependencies.subscriptionService
-        subscriptionService.onForeground()
+        appDependencies.subscriptionService.onForeground()
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: appDependencies.syncService.sync)
         importPasswordsStatusHandler.checkSyncSuccessStatus()
@@ -165,7 +144,20 @@ struct Foreground: AppState {
         AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
     }
 
-    func onConfigurationFetch() { // TODO: needs documentation
+    private func onDataCleared() {
+        appDependencies.overlayWindowManager.removeNonAuthenticationOverlay()
+        appDependencies.vpnService.onDataCleared()
+        if let url = urlToOpen {
+            openURL(url)
+        } else if let shortcutItemToHandle = shortcutItemToHandle {
+            handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
+        } else {
+            appDependencies.keyboardService.showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
+            // is this logic alright? should we show keyboard on link/shortcut opening?
+        }
+    }
+
+    private func onConfigurationFetch() { // TODO: needs documentation
         sendAppLaunchPostback(marketplaceAdPostbackManager: appDependencies.marketplaceAdPostbackManager)
     }
 

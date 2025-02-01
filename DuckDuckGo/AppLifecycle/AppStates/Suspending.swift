@@ -49,8 +49,7 @@ struct Suspending: AppState {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
-        let vpnService = appDependencies.vpnService
-        vpnService.onSuspending()
+        appDependencies.vpnService.onSuspending()
     }
 
 }

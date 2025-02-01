@@ -226,22 +226,3 @@ extension Launching {
     }
 
 }
-
-extension UIApplication {
-
-    enum TerminationReason {
-
-        case insufficientDiskSpace
-        case rulesCompilationFatalError
-
-    }
-
-    func setWindow(_ window: UIWindow?) {
-        (delegate as? AppDelegate)?.window = window
-    }
-
-    var window: UIWindow? {
-        delegate?.window ?? nil
-    }
-
-}

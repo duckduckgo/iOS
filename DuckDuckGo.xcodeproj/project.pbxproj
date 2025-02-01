@@ -1031,7 +1031,6 @@
 		CB941A6E2B96AB08000F9E7A /* PrivacyDashboard in Frameworks */ = {isa = PBXBuildFile; productRef = CB941A6D2B96AB08000F9E7A /* PrivacyDashboard */; };
 		CB9B873E278C93C2001F4906 /* HomeMessage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB9B873D278C93C2001F4906 /* HomeMessage.xcassets */; };
 		CBAA195A27BFE15600A4BD49 /* NSManagedObjectContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAA195927BFE15600A4BD49 /* NSManagedObjectContextExtension.swift */; };
-		CBAD0F0A2CFF418F006267B8 /* AppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0F092CFF4185006267B8 /* AppShortcuts.swift */; };
 		CBAD0F0C2CFF4EE1006267B8 /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0F0B2CFF4EDD006267B8 /* AppDependencies.swift */; };
 		CBAD0F102D0062A7006267B8 /* ScreenshotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0F0F2D0062A3006267B8 /* ScreenshotService.swift */; };
 		CBAD0F142D01EE45006267B8 /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0F132D01EE40006267B8 /* SubscriptionService.swift */; };
@@ -2986,7 +2985,6 @@
 		CBAD0F002CFE1D54006267B8 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		CBAD0F052CFE270D006267B8 /* AppStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateMachine.swift; sourceTree = "<group>"; };
 		CBAD0F072CFE27D5006267B8 /* AppStateTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTransitions.swift; sourceTree = "<group>"; };
-		CBAD0F092CFF4185006267B8 /* AppShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShortcuts.swift; sourceTree = "<group>"; };
 		CBAD0F0B2CFF4EDD006267B8 /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
 		CBAD0F0F2D0062A3006267B8 /* ScreenshotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotService.swift; sourceTree = "<group>"; };
 		CBAD0F132D01EE40006267B8 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
@@ -6734,8 +6732,8 @@
 			children = (
 				CBF2598C2D47B19800AC63E4 /* AppConfiguration */,
 				CBAD0F0E2D006291006267B8 /* AppServices */,
+				EE9D68D72AE15AD600B55EF4 /* UIApplicationExtension.swift */,
 				CBAD0F0B2CFF4EDD006267B8 /* AppDependencies.swift */,
-				CBAD0F092CFF4185006267B8 /* AppShortcuts.swift */,
 				CBF259912D47BFDD00AC63E4 /* OverlayWindowManager.swift */,
 				CBAD0F042CFE1DA2006267B8 /* AppLifecycle */,
 				CBF259B82D499D0B00AC63E4 /* MainCoordinator.swift */,
@@ -6871,7 +6869,6 @@
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
 				4BBBBA912B03291700D965DA /* VPNWaitlistUserText.swift */,
 				986DA94924884B18004A7E39 /* WebViewTransition.swift */,
-				EE9D68D72AE15AD600B55EF4 /* UIApplicationExtension.swift */,
 				4B412ACB2BBB3D0900A39F5E /* LazyView.swift */,
 			);
 			name = UserInterface;
@@ -8473,7 +8470,6 @@
 				314C92B827C3DD660042EC96 /* QuickLookPreviewView.swift in Sources */,
 				6F5345AF2C53F2DE00424A43 /* NewTabPageSettingsPersistentStorage.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
-				CBAD0F0A2CFF418F006267B8 /* AppShortcuts.swift in Sources */,
 				560E990F2BEE2CB800507CE0 /* SyncErrorMessage.swift in Sources */,
 				983D71B12A286E810072E26D /* SyncDebugViewController.swift in Sources */,
 				6FDA1FB32B59584400AC962A /* AddressDisplayHelper.swift in Sources */,

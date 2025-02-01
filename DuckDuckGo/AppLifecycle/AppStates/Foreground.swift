@@ -113,32 +113,25 @@ struct Foreground: AppState {
     private func onForeground() {
         appDependencies.syncService.onForeground()
 
-        StatisticsLoader.shared.load {
-            StatisticsLoader.shared.refreshAppRetentionAtb()
-            self.fireAppLaunchPixel()
-            self.reportAdAttribution()
-            self.appDependencies.onboardingPixelReporter.fireEnqueuedPixelsIfNeeded()
-        }
+        StatisticsLoader.shared.load(completion: onStatisticsLoaded)
 
         mainCoordinator.onForeground()
 
-        appDependencies.configurationService.onConfigurationFetch = onConfigurationFetch
+        appDependencies.configurationService.onConfigurationFetched = onConfigurationFetched
         appDependencies.configurationService.onForeground()
-
-        appDependencies.privacyProDataReporter.injectSyncService(appDependencies.syncService.sync)
-
-        fireFailedCompilationsPixelIfNeeded()
 
         appDependencies.vpnService.onForeground()
         appDependencies.subscriptionService.onForeground()
         appDependencies.autofillService.syncService = appDependencies.syncService
         appDependencies.autofillService.onForeground()
 
-        Task {
-            await appDependencies.privacyProDataReporter.saveWidgetAdded()
-        }
+        appDependencies.reportingService.syncService = appDependencies.syncService
+        appDependencies.reportingService.onForeground()
+    }
 
-        AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
+    private func onStatisticsLoaded() {
+        StatisticsLoader.shared.refreshAppRetentionAtb()
+        appDependencies.reportingService.onStatisticsLoaded()
     }
 
     private func onDataCleared() {
@@ -150,12 +143,12 @@ struct Foreground: AppState {
             handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
         } else {
             appDependencies.keyboardService.showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
-            // is this logic alright? should we show keyboard on link/shortcut opening?
+            // is this logic correct? should we show keyboard on link/shortcut opening?
         }
     }
 
-    private func onConfigurationFetch() { // TODO: needs documentation
-        sendAppLaunchPostback(marketplaceAdPostbackManager: appDependencies.marketplaceAdPostbackManager)
+    private func onConfigurationFetched() { // TODO: needs documentation
+        appDependencies.reportingService.onConfigurationFetched()
     }
 
     // MARK: handle application(_:open:options:) logic here
@@ -174,49 +167,6 @@ struct Foreground: AppState {
 
         appDependencies.keyboardService.showKeyboardIfSettingOn = false
         mainCoordinator.handleURL(url)
-    }
-
-    private func fireAppLaunchPixel() {
-        WidgetCenter.shared.getCurrentConfigurations { result in
-            let paramKeys: [WidgetFamily: String] = [
-                .systemSmall: PixelParameters.widgetSmall,
-                .systemMedium: PixelParameters.widgetMedium,
-                .systemLarge: PixelParameters.widgetLarge
-            ]
-
-            switch result {
-            case .failure(let error):
-                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
-                    PixelParameters.widgetError: "1",
-                    PixelParameters.widgetErrorCode: "\((error as NSError).code)",
-                    PixelParameters.widgetErrorDomain: (error as NSError).domain
-                ], includedParameters: [.appVersion, .atb])
-
-            case .success(let widgetInfo):
-                let params = widgetInfo.reduce([String: String]()) {
-                    var result = $0
-                    if let key = paramKeys[$1.family] {
-                        result[key] = "1"
-                    }
-                    return result
-                }
-                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params, includedParameters: [.appVersion, .atb])
-            }
-        }
-    }
-
-    private func sendAppLaunchPostback(marketplaceAdPostbackManager: MarketplaceAdPostbackManaging) {
-        // Attribution support
-        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
-        if privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .marketplaceAdPostback) {
-            marketplaceAdPostbackManager.sendAppLaunchPostback()
-        }
-    }
-
-    private func reportAdAttribution() {
-        Task.detached(priority: .background) {
-            await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
-        }
     }
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
@@ -241,16 +191,6 @@ struct Foreground: AppState {
 
     private func applyAppearanceChanges() {
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
-    }
-
-    private func fireFailedCompilationsPixelIfNeeded() {
-        let store = FailedCompilationsStore()
-        if store.hasAnyFailures {
-            DailyPixel.fire(pixel: .compilationFailed, withAdditionalParameters: store.summary) { error in
-                guard error != nil else { return }
-                store.cleanup()
-            }
-        }
     }
 
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, appIsLaunching: Bool = false) {

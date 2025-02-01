@@ -31,9 +31,8 @@ final class MainCoordinator {
     init(syncService: SyncService,
          persistenceService: PersistenceService,
          remoteMessagingService: RemoteMessagingService,
-         privacyProDataReporter: PrivacyProDataReporting,
          daxDialogs: DaxDialogs,
-         onboardingPixelReporter: OnboardingPixelReporter,
+         reportingService: ReportingService,
          variantManager: DefaultVariantManager,
          subscriptionService: SubscriptionService,
          voiceSearchHelper: VoiceSearchHelper,
@@ -44,38 +43,38 @@ final class MainCoordinator {
         self.accountManager = accountManager
         let homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                           remoteMessagingClient: remoteMessagingService.remoteMessagingClient,
-                                                          privacyProDataReporter: privacyProDataReporter)
+                                                          privacyProDataReporter: reportingService.privacyProDataReporter)
         let previewsSource = TabPreviewsSource()
         let historyManager = Self.makeHistoryManager()
         let tabsModel = Self.prepareTabsModel(previewsSource: previewsSource)
+        reportingService.privacyProDataReporter.injectTabsModel(tabsModel)
 
-        privacyProDataReporter.injectTabsModel(tabsModel)
-
-        let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
+        let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs,
+                                                                      contextualOnboardingPixelReporter: reportingService.onboardingPixelReporter)
         let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
         controller = MainViewController(bookmarksDatabase: persistenceService.bookmarksDatabase,
-                                                bookmarksDatabaseCleaner: syncService.syncDataProviders.bookmarksAdapter.databaseCleaner,
-                                                historyManager: historyManager,
-                                                homePageConfiguration: homePageConfiguration,
-                                                syncService: syncService.sync,
-                                                syncDataProviders: syncService.syncDataProviders,
-                                                appSettings: AppDependencyProvider.shared.appSettings,
-                                                previewsSource: previewsSource,
-                                                tabsModel: tabsModel,
-                                                syncPausedStateManager: syncService.syncErrorHandler,
-                                                privacyProDataReporter: privacyProDataReporter,
-                                                variantManager: variantManager,
-                                                contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                                contextualOnboardingLogic: daxDialogs,
-                                                contextualOnboardingPixelReporter: onboardingPixelReporter,
-                                                subscriptionFeatureAvailability: subscriptionService.subscriptionFeatureAvailability,
-                                                voiceSearchHelper: voiceSearchHelper,
-                                                featureFlagger: featureFlagger,
-                                                fireproofing: fireproofing,
-                                                subscriptionCookieManager: subscriptionService.subscriptionCookieManager,
-                                                textZoomCoordinator: Self.makeTextZoomCoordinator(),
-                                                websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
-                                                appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
+                                        bookmarksDatabaseCleaner: syncService.syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                        historyManager: historyManager,
+                                        homePageConfiguration: homePageConfiguration,
+                                        syncService: syncService.sync,
+                                        syncDataProviders: syncService.syncDataProviders,
+                                        appSettings: AppDependencyProvider.shared.appSettings,
+                                        previewsSource: previewsSource,
+                                        tabsModel: tabsModel,
+                                        syncPausedStateManager: syncService.syncErrorHandler,
+                                        privacyProDataReporter: reportingService.privacyProDataReporter,
+                                        variantManager: variantManager,
+                                        contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                        contextualOnboardingLogic: daxDialogs,
+                                        contextualOnboardingPixelReporter: reportingService.onboardingPixelReporter,
+                                        subscriptionFeatureAvailability: subscriptionService.subscriptionFeatureAvailability,
+                                        voiceSearchHelper: voiceSearchHelper,
+                                        featureFlagger: featureFlagger,
+                                        fireproofing: fireproofing,
+                                        subscriptionCookieManager: subscriptionService.subscriptionCookieManager,
+                                        textZoomCoordinator: Self.makeTextZoomCoordinator(),
+                                        websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
+                                        appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
     }
 
     func start() {

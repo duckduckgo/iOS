@@ -1067,6 +1067,7 @@
 		CBF259B72D49113E00AC63E4 /* ConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259B62D49113E00AC63E4 /* ConfigurationService.swift */; };
 		CBF259B92D499D0B00AC63E4 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259B82D499D0B00AC63E4 /* MainCoordinator.swift */; };
 		CBF259BB2D4D020200AC63E4 /* AutoClearService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259BA2D4D020200AC63E4 /* AutoClearService.swift */; };
+		CBF259BD2D4E56E900AC63E4 /* ReportingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF259BC2D4E56E900AC63E4 /* ReportingService.swift */; };
 		CBFCB30E2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */; };
 		D60170BD2BA34CE8001911B5 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60170BB2BA32DD6001911B5 /* Subscription.swift */; };
 		D6037E692C32F2E7009AAEC0 /* DuckPlayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */; };
@@ -3023,6 +3024,7 @@
 		CBF259B62D49113E00AC63E4 /* ConfigurationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationService.swift; sourceTree = "<group>"; };
 		CBF259B82D499D0B00AC63E4 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		CBF259BA2D4D020200AC63E4 /* AutoClearService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearService.swift; sourceTree = "<group>"; };
+		CBF259BC2D4E56E900AC63E4 /* ReportingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportingService.swift; sourceTree = "<group>"; };
 		CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationURLDebugViewController.swift; sourceTree = "<group>"; };
 		D60170BB2BA32DD6001911B5 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerSettings.swift; sourceTree = "<group>"; };
@@ -5818,6 +5820,7 @@
 				CBF259B42D49075D00AC63E4 /* ContentBlockingService.swift */,
 				CBF259B62D49113E00AC63E4 /* ConfigurationService.swift */,
 				CBF259BA2D4D020200AC63E4 /* AutoClearService.swift */,
+				CBF259BC2D4E56E900AC63E4 /* ReportingService.swift */,
 			);
 			path = AppServices;
 			sourceTree = "<group>";
@@ -8401,6 +8404,7 @@
 				85010502292FB1000033978F /* FireproofFaviconUpdater.swift in Sources */,
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */,
+				CBF259BD2D4E56E900AC63E4 /* ReportingService.swift in Sources */,
 				373608902ABB1E6C00629E7F /* FavoritesDisplayModeStorage.swift in Sources */,
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
 				4B0F3F502B9BFF2100392892 /* NetworkProtectionFAQView.swift in Sources */,

@@ -41,15 +41,12 @@ import WebKit
 @MainActor
 struct Launching: AppState {
 
-    private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     private let accountManager = AppDependencyProvider.shared.accountManager
     private let appSettings = AppDependencyProvider.shared.appSettings
     private let voiceSearchHelper = VoiceSearchHelper()
-    private let onboardingPixelReporter = OnboardingPixelReporter()
     private let fireproofing = UserDefaultsFireproofing.xshared
     private let featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger
 
-    private let privacyProDataReporter: PrivacyProDataReporting
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
 
     private let screenshotService: ScreenshotService
@@ -64,6 +61,7 @@ struct Launching: AppState {
     private let contentBlockingService: ContentBlockingService = ContentBlockingService()
     private let configurationService: ConfigurationService = ConfigurationService(isDebugBuild: isDebugBuild)
     private let autoClearService: AutoClearService
+    private let reportingService: ReportingService
 
     private let window: UIWindow
 
@@ -87,7 +85,7 @@ struct Launching: AppState {
         application = stateContext.application
         crashService = stateContext.crashService
 
-        privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
+        reportingService = ReportingService(fireproofing: fireproofing)
         KeyboardConfiguration.configure()
         PixelConfiguration.configure(featureFlagger: featureFlagger)
         contentBlockingService.onLaunching()
@@ -104,6 +102,7 @@ struct Launching: AppState {
         let variantManager = DefaultVariantManager()
         let daxDialogs = DaxDialogs.shared
 
+        let marketplaceAdPostbackManager = reportingService.marketplaceAdPostbackManager
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         cleanUpATBAndAssignVariant(variantManager: variantManager,
@@ -148,9 +147,8 @@ struct Launching: AppState {
         mainCoordinator = MainCoordinator(syncService: syncService,
                                           persistenceService: persistenceService,
                                           remoteMessagingService: remoteMessagingService,
-                                          privacyProDataReporter: privacyProDataReporter,
                                           daxDialogs: daxDialogs,
-                                          onboardingPixelReporter: onboardingPixelReporter,
+                                          reportingService: reportingService,
                                           variantManager: variantManager,
                                           subscriptionService: subscriptionService,
                                           voiceSearchHelper: voiceSearchHelper,
@@ -202,9 +200,7 @@ struct Launching: AppState {
             crashService: crashService,
             keyboardService: keyboardService,
             configurationService: configurationService,
-            marketplaceAdPostbackManager: marketplaceAdPostbackManager,
-            privacyProDataReporter: privacyProDataReporter,
-            onboardingPixelReporter: onboardingPixelReporter
+            reportingService: reportingService
         )
     }
     

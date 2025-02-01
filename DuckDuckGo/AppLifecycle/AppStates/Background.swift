@@ -81,8 +81,8 @@ struct Background: AppState {
         appDependencies.autoClearService.onBackground()
         appDependencies.autofillService.onBackground()
         appDependencies.syncService.onBackground()
+        appDependencies.reportingService.onBackground()
 
-        appDependencies.privacyProDataReporter.saveApplicationLastSessionEnded()
         appDependencies.mainCoordinator.resetAppStartTime()
     }
 

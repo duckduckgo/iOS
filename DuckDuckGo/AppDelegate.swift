@@ -104,7 +104,7 @@ import Core
     }
 
     var privacyProDataReporter: PrivacyProDataReporting? {
-        (appStateMachine.currentState as? Foreground)?.appDependencies.privacyProDataReporter // just for now, we have to get rid of this anti pattern
+        (appStateMachine.currentState as? Foreground)?.appDependencies.reportingService.privacyProDataReporter // just for now, we have to get rid of this anti pattern
     }
 
     /// It's public in order to allow refreshing on demand via Debug menu. Otherwise it shouldn't be called from outside.

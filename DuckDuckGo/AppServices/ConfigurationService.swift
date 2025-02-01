@@ -27,7 +27,7 @@ final class ConfigurationService {
     private var privacyConfigCustomURL: String?
     private let isDebugBuild: Bool
 
-    var onConfigurationFetch: (() -> Void)?
+    var onConfigurationFetched: (() -> Void)?
 
     init(isDebugBuild: Bool) {
         self.isDebugBuild = isDebugBuild
@@ -54,7 +54,7 @@ final class ConfigurationService {
         AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()
 
         AppConfigurationFetch().start { result in
-            self.onConfigurationFetch?()
+            self.onConfigurationFetched?()
             if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
                 ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             }

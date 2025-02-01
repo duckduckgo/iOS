@@ -41,12 +41,6 @@ struct AppDependencies {
     let crashService: CrashService
     let keyboardService: KeyboardService
     let configurationService: ConfigurationService
-
-    // TODO: should we have a reporting service?
-    let marketplaceAdPostbackManager: MarketplaceAdPostbackManaging
-    let privacyProDataReporter: PrivacyProDataReporting
-    let onboardingPixelReporter: OnboardingPixelReporter
-
-    var cancellables = Set<AnyCancellable>()
+    let reportingService: ReportingService
 
 }

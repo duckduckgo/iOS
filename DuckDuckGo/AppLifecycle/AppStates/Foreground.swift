@@ -71,8 +71,6 @@ struct Foreground: AppState {
             return
         }
 
-        appDependencies.autoClearService.registerForDataCleared(onDataCleared)
-
         onForeground()
     }
 
@@ -92,8 +90,6 @@ struct Foreground: AppState {
             return
         }
 
-        appDependencies.autoClearService.registerForDataCleared(onDataCleared)
-
         onForeground()
     }
 
@@ -111,6 +107,8 @@ struct Foreground: AppState {
 
     // MARK: handle applicationDidBecomeActive(_:) logic here
     private func onForeground() {
+        appDependencies.autoClearService.registerForDataCleared(onDataCleared)
+
         appDependencies.syncService.onForeground()
 
         StatisticsLoader.shared.load(completion: onStatisticsLoaded)

@@ -189,25 +189,14 @@ struct Launching: AppState {
         authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
         keyboardService = KeyboardService(mainViewController: mainViewController)
 
-        autoClearService.onLaunching()
-
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
-        // Temporary logic for rollout of Autofill as on by default for new installs only
-        if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
-            AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
-        }
-
         NewTabPageIntroMessageSetup().perform()
+        autoClearService.onLaunching()
         vpnService.onLaunching()
         subscriptionService.onLaunching()
         autofillService.onLaunching()
         crashService.handleCrashDuringCrashHandlersSetup()
-    }
-
-    // TODO: deserves some documentation
-    private func onAutoClear() {
-        vpnService.onAutoClear()
     }
 
     private var appDependencies: AppDependencies {

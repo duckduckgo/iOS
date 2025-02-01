@@ -53,7 +53,7 @@ struct Background: AppState {
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
 
-        run()
+        onBackground()
     }
 
     // MARK: Handle logic when transitioning from Suspending to Background
@@ -63,7 +63,7 @@ struct Background: AppState {
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
 
-        run()
+        onBackground()
     }
 
     // MARK: Handle logic when transitioning from Resuming to Background
@@ -73,10 +73,10 @@ struct Background: AppState {
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
 
-        run()
+        onBackground()
     }
 
-    mutating func run() {
+    private func onBackground() {
         appDependencies.authenticationService.onBackground()
         appDependencies.autoClearService.onBackground()
         appDependencies.autofillService.onBackground()

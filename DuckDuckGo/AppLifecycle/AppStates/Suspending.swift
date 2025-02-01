@@ -49,6 +49,10 @@ struct Suspending: AppState {
         application = stateContext.application
         appDependencies = stateContext.appDependencies
 
+        onSuspending()
+    }
+
+    private func onSuspending() {
         appDependencies.vpnService.onSuspending()
     }
 

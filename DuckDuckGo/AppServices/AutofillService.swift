@@ -59,6 +59,9 @@ final class AutofillService {
     )
 
     func onLaunching() {
+        if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
+            AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
+        }
         registerForAutofillEnabledChanges()
     }
 

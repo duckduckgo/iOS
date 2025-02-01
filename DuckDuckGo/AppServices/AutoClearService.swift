@@ -35,7 +35,7 @@ final class AutoClearService {
         self.application = application
     }
 
-    func registerForAutoClear(_ onAutoClear: @escaping () -> Void) {
+    func registerForDataCleared(_ onAutoClear: @escaping () -> Void) {
         guard let autoClearTask else {
             assertionFailure("AutoClear task must be started before registering. Call register after onLaunching or onResuming.")
             return

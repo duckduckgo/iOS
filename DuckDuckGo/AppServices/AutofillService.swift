@@ -58,11 +58,29 @@ final class AutofillService {
         installDate: StatisticsUserDefaults().installDate ?? Date()
     )
 
+    var syncService: SyncService?
+
+    init() { // TODO: this was always done after DB was initialized, so looks like this code was never being executed, to confirm
+        let autofillStorage = EmailKeychainManager()
+        if !Database.shared.isDatabaseFileInitialized {
+            try? autofillStorage.deleteAuthenticationState()
+        }
+    }
+
     func onLaunching() {
         if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
             AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
         }
         registerForAutofillEnabledChanges()
+    }
+
+    func onForeground() {
+        guard let syncService else {
+            assertionFailure("SyncService must be injected before calling onForeground.")
+            return
+        }
+        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService.sync)
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
     }
 
     func onBackground() {

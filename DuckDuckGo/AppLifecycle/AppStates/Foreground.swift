@@ -60,9 +60,7 @@ struct Foreground: AppState {
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
 
-        let subscriptionService = appDependencies.subscriptionService
-        subscriptionService.onFirstForeground() // could it be on launching then?
-
+        appDependencies.subscriptionService.onFirstForeground() // could it be on launching then?
         initialiseBackgroundFetch(application) // could it be on launching then?
         applyAppearanceChanges() // could it be on launching then?
         appDependencies.remoteMessagingService.onForeground() // could it be on launching then?
@@ -73,9 +71,9 @@ struct Foreground: AppState {
             return
         }
 
-        appDependencies.autoClearService.registerForAutoClear(onDataCleared)
+        appDependencies.autoClearService.registerForDataCleared(onDataCleared)
 
-        activateApp()
+        onForeground()
     }
 
     // MARK: Handle logic when transitioning from Resuming to Foreground
@@ -94,9 +92,9 @@ struct Foreground: AppState {
             return
         }
 
-        appDependencies.autoClearService.registerForAutoClear(onDataCleared)
+        appDependencies.autoClearService.registerForDataCleared(onDataCleared)
 
-        activateApp()
+        onForeground()
     }
 
     // MARK: Handle logic when transitioning from Suspending to Foreground
@@ -108,11 +106,11 @@ struct Foreground: AppState {
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
 
-        activateApp()
+        onForeground()
     }
 
     // MARK: handle applicationDidBecomeActive(_:) logic here
-    private func activateApp(isTesting: Bool = false) {
+    private func onForeground() {
         appDependencies.syncService.onForeground()
 
         StatisticsLoader.shared.load {
@@ -133,9 +131,8 @@ struct Foreground: AppState {
 
         appDependencies.vpnService.onForeground()
         appDependencies.subscriptionService.onForeground()
-
-        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: appDependencies.syncService.sync)
-        importPasswordsStatusHandler.checkSyncSuccessStatus()
+        appDependencies.autofillService.syncService = appDependencies.syncService
+        appDependencies.autofillService.onForeground()
 
         Task {
             await appDependencies.privacyProDataReporter.saveWidgetAdded()
@@ -180,7 +177,6 @@ struct Foreground: AppState {
     }
 
     private func fireAppLaunchPixel() {
-
         WidgetCenter.shared.getCurrentConfigurations { result in
             let paramKeys: [WidgetFamily: String] = [
                 .systemSmall: PixelParameters.widgetSmall,
@@ -206,7 +202,6 @@ struct Foreground: AppState {
                 }
                 Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params, includedParameters: [.appVersion, .atb])
             }
-
         }
     }
 

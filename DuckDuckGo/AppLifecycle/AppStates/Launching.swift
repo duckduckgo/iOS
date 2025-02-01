@@ -96,19 +96,6 @@ struct Launching: AppState {
         crashService.startAttachingCrashLogMessages(application: application)
         persistenceService.onLaunching()
         _ = DefaultUserAgentManager.shared
-        removeEmailWaitlistState()
-
-        func removeEmailWaitlistState() {
-            EmailWaitlist.removeEmailState()
-
-            let autofillStorage = EmailKeychainManager()
-            try? autofillStorage.deleteWaitlistState()
-
-            // Remove the authentication state if this is a fresh install.
-            if !Database.shared.isDatabaseFileInitialized {
-                try? autofillStorage.deleteAuthenticationState()
-            }
-        }
 
         WidgetCenter.shared.reloadAllTimelines()
 

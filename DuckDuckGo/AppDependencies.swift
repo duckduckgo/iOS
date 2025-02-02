@@ -17,13 +17,6 @@
 //  limitations under the License.
 //
 
-import Subscription
-import UIKit
-import Core
-import DDGSync
-import Combine
-import BrowserServicesKit
-
 struct AppDependencies {
 
     let mainCoordinator: MainCoordinator

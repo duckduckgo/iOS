@@ -23,6 +23,7 @@ import Configuration
 import RemoteMessaging
 import Core
 import Persistence
+import BackgroundTasks
 
 final class RemoteMessagingService {
 
@@ -49,8 +50,24 @@ final class RemoteMessagingService {
         remoteMessagingClient.registerBackgroundRefreshTaskHandler()
     }
 
-    func onForeground() {
+    func onInitialForeground() {
+        scheduleBackgroundTask()
         refreshRemoteMessages()
+    }
+
+    private func scheduleBackgroundTask() {
+        guard UIApplication.shared.backgroundRefreshStatus == .available else {
+            return
+        }
+
+        // BackgroundTasks will automatically replace an existing task in the queue if one with the same identifier is queued, so we should only
+        // schedule a task if there are none pending in order to avoid the config task getting perpetually replaced.
+        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
+            let hasRemoteMessageFetchTask = tasks.contains { $0.identifier == RemoteMessagingClient.Constants.backgroundRefreshTaskIdentifier }
+            if !hasRemoteMessageFetchTask {
+                RemoteMessagingClient.scheduleBackgroundRefreshTask()
+            }
+        }
     }
 
     // TODO:  It's public in order to allow refreshing on demand via Debug menu. Otherwise it shouldn't be called from outside.

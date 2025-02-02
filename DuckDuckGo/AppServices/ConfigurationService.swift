@@ -20,6 +20,7 @@
 import Foundation
 import Core
 import Configuration
+import BackgroundTasks
 
 final class ConfigurationService {
 
@@ -43,6 +44,24 @@ final class ConfigurationService {
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
+    }
+
+    func onInitialForeground() {
+        scheduleBackgroundTask()
+    }
+
+    private func scheduleBackgroundTask() {
+        guard UIApplication.shared.backgroundRefreshStatus == .available else {
+            return
+        }
+        // BackgroundTasks will automatically replace an existing task in the queue if one with the same identifier is queued, so we should only
+        // schedule a task if there are none pending in order to avoid the config task getting perpetually replaced.
+        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
+            let hasConfigurationTask = tasks.contains { $0.identifier == AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier }
+            if !hasConfigurationTask {
+                AppConfigurationFetch.scheduleBackgroundRefreshTask()
+            }
+        }
     }
 
     func onForeground() {

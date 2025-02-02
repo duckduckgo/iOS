@@ -50,15 +50,15 @@ struct Foreground: AppState {
     // MARK: Handle logic when transitioning from Launched to Foreground
     // This transition occurs when the app has completed its launch process and becomes active.
     // Note: You want to add here code that will happen one-time per app lifecycle, but you require the UI to be active at this point!
-    init(stateContext: Launching.StateContext, application: UIApplication = UIApplication.shared) {
+    init(stateContext: Launching.StateContext) {
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
 
-        appDependencies.subscriptionService.onFirstForeground() // could it be on launching then?
-        initialiseBackgroundFetch(application) // could it be on launching then?
-        applyAppearanceChanges() // could it be on launching then?
-        appDependencies.remoteMessagingService.onForeground() // could it be on launching then?
+        configureGlobalAppearance()
+        appDependencies.subscriptionService.onInitialForeground()
+        appDependencies.configurationService.onInitialForeground()
+        appDependencies.remoteMessagingService.onInitialForeground()
 
         let authenticationService = appDependencies.authenticationService
         guard authenticationService.isAuthenticated else {
@@ -120,20 +120,23 @@ struct Foreground: AppState {
     }
 
     private func onStatisticsLoaded() {
-        StatisticsLoader.shared.refreshAppRetentionAtb()
+        StatisticsLoader.shared.refreshAppRetentionAtb() // todo: can we move it inside StatisticsLoader.shared.load?
         appDependencies.reportingService.onStatisticsLoaded()
     }
 
     private func onDataCleared() {
         appDependencies.vpnService.onDataCleared()
+        handleLaunchActions()
+    }
 
+    private func handleLaunchActions() {
         if let url = urlToOpen {
             openURL(url)
         } else if let shortcutItemToHandle = shortcutItemToHandle {
             handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
         } else {
             appDependencies.keyboardService.showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
-            // is this logic correct? should we show keyboard on link/shortcut opening?
+            // TODO: is this logic correct? should we show keyboard on link/shortcut opening?
         }
     }
 
@@ -152,27 +155,7 @@ struct Foreground: AppState {
         mainCoordinator.handleURL(url)
     }
 
-    private func initialiseBackgroundFetch(_ application: UIApplication) {
-        guard UIApplication.shared.backgroundRefreshStatus == .available else {
-            return
-        }
-
-        // BackgroundTasks will automatically replace an existing task in the queue if one with the same identifier is queued, so we should only
-        // schedule a task if there are none pending in order to avoid the config task getting perpetually replaced.
-        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasConfigurationTask = tasks.contains { $0.identifier == AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier }
-            if !hasConfigurationTask {
-                AppConfigurationFetch.scheduleBackgroundRefreshTask()
-            }
-
-            let hasRemoteMessageFetchTask = tasks.contains { $0.identifier == RemoteMessagingClient.Constants.backgroundRefreshTaskIdentifier }
-            if !hasRemoteMessageFetchTask {
-                RemoteMessagingClient.scheduleBackgroundRefreshTask()
-            }
-        }
-    }
-
-    private func applyAppearanceChanges() {
+    private func configureGlobalAppearance() {
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
     }
 

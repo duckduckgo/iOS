@@ -77,7 +77,7 @@ final class SubscriptionService {
         return subscriptionCookieManager
     }
 
-    func onFirstForeground() {
+    func onInitialForeground() {
         handlePrivacyConfigurationUpdates()
     }
 

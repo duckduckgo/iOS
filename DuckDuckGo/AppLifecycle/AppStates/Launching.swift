@@ -51,7 +51,6 @@ struct Launching: AppState {
     private let syncService: SyncService
     private let vpnService: VPNService
     private let autofillService = AutofillService()
-    private let persistenceService = PersistenceService()
     private let remoteMessagingService: RemoteMessagingService
     private let keyboardService: KeyboardService
     private let configurationService = ConfigurationService(isDebugBuild: isDebugBuild)
@@ -62,14 +61,16 @@ struct Launching: AppState {
 
     private let onboardingConfiguration = OnboardingConfiguration()
     private let atbAndVariantConfiguration = ATBAndVariantConfiguration()
+    private let historyManagerConfiguration = HistoryManagerConfiguration()
 
     private let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
     private let mainCoordinator: MainCoordinator
+    private let persistenceCoordinator = PersistenceCoordinator()
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
-    init(stateContext: Initializing.StateContext, application: UIApplication = UIApplication.shared) {
+    init() {
         defer {
             let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
             Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
@@ -82,23 +83,25 @@ struct Launching: AppState {
         UserAgentConfiguration.configure()
         NewTabPageIntroMessageConfiguration().configure() // todo: @Mariusz can it be moved up here?
 
+        persistenceCoordinator.prepareStores()
+
         configurationService.onLaunching()
         crashCollectionService.onLaunching()
-        persistenceService.onLaunching()
 
         WidgetCenter.shared.reloadAllTimelines()
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
 
+        syncService = SyncService(bookmarksDatabase: persistenceCoordinator.bookmarksDatabase)
         let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
-        syncService = SyncService(bookmarksDatabase: persistenceService.bookmarksDatabase)
-        remoteMessagingService = RemoteMessagingService(persistenceService: persistenceService,
+        remoteMessagingService = RemoteMessagingService(bookmarksDatabase: persistenceCoordinator.bookmarksDatabase,
+                                                        database: persistenceCoordinator.database,
                                                         appSettings: appSettings,
                                                         internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
                                                         configurationStore: AppDependencyProvider.shared.configurationStore,
                                                         privacyConfigurationManager: privacyConfigurationManager)
         subscriptionService = SubscriptionService(privacyConfigurationManager: privacyConfigurationManager)
         mainCoordinator = MainCoordinator(syncService: syncService,
-                                          persistenceService: persistenceService,
+                                          bookmarksDatabase: persistenceCoordinator.bookmarksDatabase,
                                           remoteMessagingService: remoteMessagingService,
                                           daxDialogs: onboardingConfiguration.daxDialogs,
                                           reportingService: reportingService,
@@ -110,17 +113,14 @@ struct Launching: AppState {
                                           accountManager: accountManager,
                                           didFinishLaunchingStartTime: didFinishLaunchingStartTime)
         syncService.syncErrorHandler.alertPresenter = mainCoordinator.controller
-
+        vpnService = VPNService(mainCoordinator: mainCoordinator)
         let overlayWindowManager = OverlayWindowManager(window: window,
                                                         addressBarPosition: appSettings.currentAddressBarPosition,
                                                         voiceSearchHelper: voiceSearchHelper)
-        vpnService = VPNService(mainCoordinator: mainCoordinator)
         autoClearService = AutoClearService(worker: mainCoordinator.controller, overlayWindowManager: overlayWindowManager)
         screenshotService = ScreenshotService(window: window)
         authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
         keyboardService = KeyboardService(mainViewController: mainCoordinator.controller)
-
-        ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         autoClearService.onLaunching()
         vpnService.onLaunching()
@@ -128,8 +128,14 @@ struct Launching: AppState {
         autofillService.onLaunching()
 
         atbAndVariantConfiguration.configure(onVariantAssigned: onVariantAssigned)
-        stateContext.crashHandlersConfiguration.handleCrashDuringCrashHandlersSetup()
+        CrashHandlersConfiguration.handleCrashDuringCrashHandlersSetup()
 
+        setupWindow()
+    }
+
+    private func setupWindow() {
+        ThemeManager.shared.updateUserInterfaceStyle(window: window)
+        let application = UIApplication.shared
         window.rootViewController = mainCoordinator.controller
         application.setWindow(window)
         window.makeKeyAndVisible()
@@ -138,11 +144,7 @@ struct Launching: AppState {
 
     func onVariantAssigned() {
         onboardingConfiguration.onVariantAssigned()
-
-        // New users don't see the message
-        let historyMessageManager = HistoryMessageManager()
-        historyMessageManager.dismiss()
-
+        historyManagerConfiguration.onVariantAssigned()
         reportingService.onVariantAssigned()
     }
 

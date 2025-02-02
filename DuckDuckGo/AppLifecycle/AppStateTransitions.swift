@@ -24,7 +24,7 @@ extension Initializing {
 
     func apply(event: AppEvent) -> any AppState {
         guard case .didFinishLaunching(let isTesting) = event else { return handleUnexpectedEvent(event) }
-        return isTesting ? Testing() : Launching(stateContext: makeStateContext())
+        return isTesting ? Testing() : Launching()
     }
 
 }

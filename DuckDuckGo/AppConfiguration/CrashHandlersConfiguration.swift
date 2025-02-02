@@ -24,9 +24,9 @@ import Crashes
 final class CrashHandlersConfiguration {
 
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
-    var didCrashDuringCrashHandlersSetUp: Bool
+    static var didCrashDuringCrashHandlersSetUp: Bool
 
-    func setupCrashHandlers() {
+    static func setupCrashHandlers() {
         if !didCrashDuringCrashHandlersSetUp {
             didCrashDuringCrashHandlersSetUp = true
             CrashLogMessageExtractor.setUp(swapCxaThrow: false)
@@ -34,7 +34,7 @@ final class CrashHandlersConfiguration {
         }
     }
 
-    func handleCrashDuringCrashHandlersSetup() {
+    static func handleCrashDuringCrashHandlersSetup() {
         if didCrashDuringCrashHandlersSetUp {
             Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
             didCrashDuringCrashHandlersSetUp = false

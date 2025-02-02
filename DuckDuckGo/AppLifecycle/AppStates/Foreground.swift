@@ -148,13 +148,6 @@ struct Foreground: AppState {
 
         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
 
-        // TODO: to be refactored after introducing autoclearservice, we won't need clearNavigationStack, it should be hidden implementation, we
-        // TODO: should just call mainCoordinator.handleURL or processDeeplink
-        // The openVPN action handles the navigation stack on its own and does not need it to be cleared
-        if url != AppDeepLinkSchemes.openVPN.url {
-            mainCoordinator.clearNavigationStack()
-        }
-
         appDependencies.keyboardService.showKeyboardIfSettingOn = false
         mainCoordinator.handleURL(url)
     }

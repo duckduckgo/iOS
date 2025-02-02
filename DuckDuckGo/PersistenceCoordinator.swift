@@ -1,5 +1,5 @@
 //
-//  PersistenceService.swift
+//  PersistenceCoordinator.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -27,7 +27,7 @@ public extension NSNotification.Name {
 
 }
 
-final class PersistenceService {
+final class PersistenceCoordinator {
 
     let database = Database.shared
     let bookmarksDatabase = BookmarksDatabase.make()
@@ -40,7 +40,7 @@ final class PersistenceService {
         self.notificationCenter = notificationCenter
     }
 
-    func onLaunching() {
+    func prepareStores() {
         clearTemporaryDirectory()
         loadAndMigrateDatabase()
         loadAndMigrateBookmarksDatabase()
@@ -58,10 +58,8 @@ final class PersistenceService {
     private func loadAndMigrateDatabase() {
         database.loadStore { [application] context, error in
             guard let context = context else {
-
                 let parameters = [PixelParameters.applicationState: "\(application.applicationState.rawValue)",
                                   PixelParameters.dataAvailability: "\(application.isProtectedDataAvailable)"]
-
                 switch error {
                 case .none:
                     fatalError("Could not create database stack: Unknown Error")

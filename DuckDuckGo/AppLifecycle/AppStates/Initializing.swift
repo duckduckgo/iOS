@@ -26,28 +26,11 @@ import UIKit
 @MainActor
 struct Initializing: AppState {
 
-    private let crashHandlersConfiguration = CrashHandlersConfiguration()
-
     init() {
-        crashHandlersConfiguration.setupCrashHandlers()
+        CrashHandlersConfiguration.setupCrashHandlers()
     }
 
 }
-
-extension Initializing {
-
-    struct StateContext {
-
-        let crashHandlersConfiguration: CrashHandlersConfiguration
-
-    }
-
-    func makeStateContext() -> StateContext {
-        .init(crashHandlersConfiguration: crashHandlersConfiguration)
-    }
-
-}
-
 
 extension Initializing {
 

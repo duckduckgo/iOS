@@ -21,22 +21,25 @@ import Foundation
 import BrowserServicesKit
 import Configuration
 import RemoteMessaging
+import Core
+import Persistence
 
 final class RemoteMessagingService {
 
     let remoteMessagingClient: RemoteMessagingClient
 
-    init(persistenceService: PersistenceService,
+    init(bookmarksDatabase: CoreDataDatabase,
+         database: CoreDataDatabase,
          appSettings: AppSettings,
          internalUserDecider: InternalUserDecider,
          configurationStore: ConfigurationStore,
          privacyConfigurationManager: PrivacyConfigurationManaging) {
         remoteMessagingClient = RemoteMessagingClient(
-            bookmarksDatabase: persistenceService.bookmarksDatabase,
+            bookmarksDatabase: bookmarksDatabase,
             appSettings: appSettings,
             internalUserDecider: internalUserDecider,
             configurationStore: configurationStore,
-            database: persistenceService.database,
+            database: database,
             errorEvents: RemoteMessagingStoreErrorHandling(),
             remoteMessagingAvailabilityProvider: PrivacyConfigurationRemoteMessagingAvailabilityProvider(
                 privacyConfigurationManager: privacyConfigurationManager

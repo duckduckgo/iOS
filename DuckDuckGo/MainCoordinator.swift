@@ -21,6 +21,7 @@ import Foundation
 import Core
 import BrowserServicesKit
 import Subscription
+import Persistence
 
 @MainActor
 final class MainCoordinator {
@@ -29,7 +30,7 @@ final class MainCoordinator {
     private let accountManager: AccountManager
 
     init(syncService: SyncService,
-         persistenceService: PersistenceService,
+         bookmarksDatabase: CoreDataDatabase,
          remoteMessagingService: RemoteMessagingService,
          daxDialogs: DaxDialogs,
          reportingService: ReportingService,
@@ -52,7 +53,7 @@ final class MainCoordinator {
         let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs,
                                                                       contextualOnboardingPixelReporter: reportingService.onboardingPixelReporter)
         let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
-        controller = MainViewController(bookmarksDatabase: persistenceService.bookmarksDatabase,
+        controller = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                         bookmarksDatabaseCleaner: syncService.syncDataProviders.bookmarksAdapter.databaseCleaner,
                                         historyManager: historyManager,
                                         homePageConfiguration: homePageConfiguration,
@@ -140,6 +141,11 @@ final class MainCoordinator {
     }
 
     func handleAppDeepLink(url: URL, application: UIApplication = UIApplication.shared) -> Bool {
+
+        if url != AppDeepLinkSchemes.openVPN.url {
+            controller.clearNavigationStack()
+        }
+
         switch AppDeepLinkSchemes.fromURL(url) {
         case .newSearch:
             controller.newTab(reuseExisting: true)
@@ -253,14 +259,8 @@ final class MainCoordinator {
         controller.didReturnFromBackground() // TODO: why was it like this?
     }
 
-    func clearNavigationStack() {
-        controller.clearNavigationStack()
-    }
-
     func resetAppStartTime() {
         controller.appDidFinishLaunchingStartTime = nil
     }
-
-
 
 }

@@ -1,5 +1,5 @@
 //
-//  ATBAndVariantConfiguration.swift
+//  HistoryManagerConfiguration.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -18,22 +18,12 @@
 //
 
 import Foundation
-import Core
-import BrowserServicesKit
 
-final class ATBAndVariantConfiguration {
+final class HistoryManagerConfiguration {
 
-    lazy var variantManager = DefaultVariantManager()
-
-    func configure(onVariantAssigned: () -> Void) {
-        cleanUpATBAndAssignVariant(onVariantAssigned: onVariantAssigned)
-    }
-
-    private func cleanUpATBAndAssignVariant(onVariantAssigned: () -> Void) {
-        AtbAndVariantCleanup.cleanup()
-        variantManager.assignVariantIfNeeded { _ in
-            onVariantAssigned()
-        }
+    func onVariantAssigned() {
+        // New users don't see the message
+        HistoryMessageManager().dismiss()
     }
 
 }

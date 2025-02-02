@@ -41,7 +41,7 @@ jobs:
     - name: Build for tests
       run: |
         set -o pipefail && xcodebuild \
-          -scheme "DuckDuckGo" \
+          -scheme "iOS Browser" \
           -destination "platform=iOS Simulator,name=iPhone 16" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \

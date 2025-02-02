@@ -46,6 +46,7 @@ struct Resuming: AppState {
         onResuming()
     }
 
+    // MARK: - Handle applicationWillEnterForeground(_:) logic here
     private func onResuming() {
         ThemeManager.shared.updateUserInterfaceStyle()
         appDependencies.keyboardService.showKeyboardIfSettingOn = true

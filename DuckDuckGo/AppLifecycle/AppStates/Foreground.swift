@@ -43,13 +43,9 @@ struct Foreground: AppState {
     private var shortcutItemToHandle: UIApplicationShortcutItem?
     private var lastBackgroundDate: Date?
 
-    private let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
-
-    private var didEnterForeground: Bool = false
-
-    // MARK: Handle logic when transitioning from Launched to Foreground
-    // This transition occurs when the app has completed its launch process and becomes active.
-    // Note: You want to add here code that will happen one-time per app lifecycle, but you require the UI to be active at this point!
+    // MARK: - Handle logic when transitioning from Launched to Foreground
+    /// This transition occurs when the app has completed its launch process and becomes active.
+    /// Note: You want to add here code that will happen one-time per app lifecycle, but you require the UI to be active at this point!
     init(stateContext: Launching.StateContext) {
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
@@ -60,6 +56,9 @@ struct Foreground: AppState {
         appDependencies.configurationService.onInitialForeground()
         appDependencies.remoteMessagingService.onInitialForeground()
 
+        /// Authentication triggers a transition to the `Suspending` state.
+        /// Once authentication is completed, the app reenters the `Foreground` state.
+        /// We escape early here to prevent executing foreground-related code twice.
         let authenticationService = appDependencies.authenticationService
         guard authenticationService.isAuthenticated else {
             authenticationService.beginAuthentication()
@@ -69,14 +68,21 @@ struct Foreground: AppState {
         onForeground()
     }
 
-    // MARK: Handle logic when transitioning from Resuming to Foreground
-    // This transition occurs when the app returns to the foreground after being backgrounded (e.g., after unlocking the app).
+    private func configureGlobalAppearance() {
+        UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
+    }
+
+    // MARK: - Handle logic when transitioning from Resuming to Foreground
+    /// This transition occurs when the app returns to the foreground after being backgrounded (e.g., after unlocking the app).
     init(stateContext: Resuming.StateContext) {
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
         lastBackgroundDate = stateContext.lastBackgroundDate
 
+        /// Authentication triggers a transition to the `Suspending` state.
+        /// Once authentication is completed, the app reenters the `Foreground` state.
+        /// We escape early here to prevent executing foreground-related code twice.
         let authenticationService = appDependencies.authenticationService
         guard authenticationService.isAuthenticated else {
             authenticationService.beginAuthentication()
@@ -86,8 +92,8 @@ struct Foreground: AppState {
         onForeground()
     }
 
-    // MARK: Handle logic when transitioning from Suspending to Foreground
-    // This transition occurs when the app returns to the foreground after briefly being suspended (e.g., user dismisses a notification).
+    // MARK: - Handle logic when transitioning from Suspending to Foreground
+    /// This transition occurs when the app returns to the foreground after briefly being suspended (e.g., user dismisses a notification).
     init(stateContext: Suspending.StateContext) {
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
@@ -96,9 +102,12 @@ struct Foreground: AppState {
         onForeground()
     }
 
-    // MARK: handle applicationDidBecomeActive(_:) logic here
-    private mutating func onForeground() {
-        didEnterForeground = true
+    // MARK: - Handle applicationDidBecomeActive(_:) logic here
+    /// Before adding code here, ensure it does not depend on pending tasks:
+    /// - If AutoClear needs to complete, put your code in `onDataCleared`.
+    /// - If install/search statistics are required, see `onStatisticsLoaded`.
+    /// - If crucial configuration files (e.g., TDS, privacy config) are needed, see `onConfigurationFetched`.
+    private func onForeground() {
         appDependencies.autoClearService.registerForDataCleared(onDataCleared)
 
         appDependencies.syncService.onForeground()
@@ -119,11 +128,11 @@ struct Foreground: AppState {
         appDependencies.reportingService.onForeground()
     }
 
-    private func onStatisticsLoaded() {
-        StatisticsLoader.shared.refreshAppRetentionAtb() // todo: can we move it inside StatisticsLoader.shared.load?
-        appDependencies.reportingService.onStatisticsLoaded()
-    }
-
+    // MARK: - Handle AutoClear completion logic here
+    /// Callback for the AutoClear feature, triggered when all browser data is cleared.
+    /// This includes closing all tabs, clearing caches, and wiping `WKWebsiteDataStore.default()`.
+    /// Place any code here related to browser navigation or web view handling
+    /// to ensure it remains unaffected by the clearing process.
     private func onDataCleared() {
         appDependencies.vpnService.onDataCleared()
         handleLaunchActions()
@@ -140,11 +149,21 @@ struct Foreground: AppState {
         }
     }
 
-    private func onConfigurationFetched() { // TODO: needs documentation
+    // MARK: - Handle StatisticsLoader completion logic here
+    /// Place any code here that requires install and search statistics to be available before executing.
+    private func onStatisticsLoaded() {
+        StatisticsLoader.shared.refreshAppRetentionAtb() // TODO: can we move it inside StatisticsLoader.shared.load?
+        appDependencies.reportingService.onStatisticsLoaded()
+    }
+
+    // MARK: - Handle AppConfiguration fetch completion logic here
+    /// Called when crucial configuration files (e.g., TDS, privacy configuration) have been fetched.
+    /// Place any code here that depends on up-to-date configuration data before executing.
+    private func onConfigurationFetched() {
         appDependencies.reportingService.onConfigurationFetched()
     }
 
-    // MARK: handle application(_:open:options:) logic here
+    // MARK: - Handle application(_:open:options:) logic here
     func openURL(_ url: URL) {
         Logger.sync.debug("App launched with url \(url.absoluteString)")
         guard mainCoordinator.shouldProcessDeepLink(url) else { return }
@@ -155,10 +174,7 @@ struct Foreground: AppState {
         mainCoordinator.handleURL(url)
     }
 
-    private func configureGlobalAppearance() {
-        UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
-    }
-
+    // MARK: - Handle application(_:performActionFor:completionHandler:) logic here
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, appIsLaunching: Bool = false) {
         Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
         if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
@@ -192,7 +208,7 @@ extension Foreground {
         /// Authentication causes the app to leave the `Foreground` state and move to the `Suspending` state.
         /// This means we must retain `urlToOpen` and `shortcutItemToHandle` to ensure they are available
         /// when the app resumes after authentication. Otherwise, they would be lost during state transitions.
-        if didEnterForeground {
+        if appDependencies.authenticationService.isAuthenticated {
             return .init(appDependencies: appDependencies)
         }
         return .init(

@@ -70,6 +70,7 @@ struct Launching: AppState {
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
+    // MARK: - Handle application(_:didFinishLaunchingWithOptions:) logic here
     init() {
         defer {
             let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
@@ -88,8 +89,8 @@ struct Launching: AppState {
         configurationService.onLaunching()
         crashCollectionService.onLaunching()
 
-        WidgetCenter.shared.reloadAllTimelines()
-        PrivacyFeatures.httpsUpgrade.loadDataAsync()
+        WidgetCenter.shared.reloadAllTimelines() // TODO: should it be moved to some service?
+        PrivacyFeatures.httpsUpgrade.loadDataAsync() // TODO: should it be moved to some service?
 
         syncService = SyncService(bookmarksDatabase: persistenceCoordinator.bookmarksDatabase)
         let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
@@ -142,6 +143,7 @@ struct Launching: AppState {
         mainCoordinator.start()
     }
 
+    // MARK: - Handle ATB and variant assigned logic here
     func onVariantAssigned() {
         onboardingConfiguration.onVariantAssigned()
         historyManagerConfiguration.onVariantAssigned()

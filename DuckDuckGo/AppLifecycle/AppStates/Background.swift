@@ -40,31 +40,32 @@ struct Background: AppState {
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
-    // MARK: Handle logic when transitioning from Launching to Background
-    // This transition can occur if the app is protected by FaceID (e.g., the app is launched, but the user doesn't authenticate).
-    // Note: In this case, the Foreground state was never shown to the user, so you may want to avoid ending sessions that were never started, etc.
+    // MARK: - Handle logic when transitioning from Launching to Background
+    /// This transition can occur if the app is protected by FaceID (e.g., the app is launched, but the user doesn't authenticate).
+    /// Note: In this case, the Foreground state was never shown to the user, so you may want to avoid ending sessions that were never started, etc.
     init(stateContext: Launching.StateContext) {
         appDependencies = stateContext.appDependencies
 
         onBackground()
     }
 
-    // MARK: Handle logic when transitioning from Suspending to Background
-    // This transition occurs when the app moves from foreground to the background.
+    // MARK: - Handle logic when transitioning from Suspending to Background
+    /// This transition occurs when the app moves from foreground to the background.
     init(stateContext: Suspending.StateContext) {
         appDependencies = stateContext.appDependencies
 
         onBackground()
     }
 
-    // MARK: Handle logic when transitioning from Resuming to Background
-    // This transition can occur when the app returns to the background after being in the background (e.g., user doesn't authenticate on a locked app).
+    // MARK: - Handle logic when transitioning from Resuming to Background
+    /// This transition can occur when the app returns to the background after being in the background (e.g., user doesn't authenticate on a locked app).
     init(stateContext: Resuming.StateContext) {
         appDependencies = stateContext.appDependencies
 
         onBackground()
     }
 
+    // MARK: - Handle applicationDidEnterBackground(_:) logic here
     private func onBackground() {
         appDependencies.authenticationService.onBackground()
         appDependencies.autoClearService.onBackground()

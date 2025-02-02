@@ -30,15 +30,10 @@ final class CrashCollectionService {
         self.application = application
     }
 
-    private lazy var crashCollection: CrashCollection = {
-        CrashCollection(crashReportSender: CrashReportSender(platform: .iOS, pixelEvents: CrashReportSender.pixelEvents),
-                        crashCollectionStorage: UserDefaults())
-    }()
-
-    
-    private lazy var crashReportUploaderOnboarding: CrashCollectionOnboarding = {
-        CrashCollectionOnboarding(appSettings: appSettings)
-    }()
+    private lazy var crashCollection = CrashCollection(crashReportSender: CrashReportSender(platform: .iOS,
+                                                                                            pixelEvents: CrashReportSender.pixelEvents),
+                                                       crashCollectionStorage: UserDefaults())
+    private lazy var crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: appSettings)
 
     func onLaunching() {
         startAttachingCrashLogMessages()

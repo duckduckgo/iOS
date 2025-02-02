@@ -63,7 +63,7 @@ struct Launching: AppState {
     private let onboardingConfiguration = OnboardingConfiguration()
     private let atbAndVariantConfiguration = ATBAndVariantConfiguration()
 
-    private let window: UIWindow
+    private let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
     private let mainCoordinator: MainCoordinator
 
     var urlToOpen: URL?
@@ -75,7 +75,6 @@ struct Launching: AppState {
             Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
                        withAdditionalParameters: [PixelParameters.time: String(launchTime)])
         }
-
         reportingService = ReportingService(fireproofing: fireproofing)
         KeyboardConfiguration.configure()
         PixelConfiguration.configure(featureFlagger: featureFlagger)
@@ -88,7 +87,6 @@ struct Launching: AppState {
         persistenceService.onLaunching()
 
         WidgetCenter.shared.reloadAllTimelines()
-
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
 
         let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
@@ -111,21 +109,16 @@ struct Launching: AppState {
                                           fireproofing: fireproofing,
                                           accountManager: accountManager,
                                           didFinishLaunchingStartTime: didFinishLaunchingStartTime)
-        let mainViewController = mainCoordinator.controller
-        syncService.syncErrorHandler.alertPresenter = mainViewController
-
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = mainViewController
-        application.setWindow(window)
+        syncService.syncErrorHandler.alertPresenter = mainCoordinator.controller
 
         let overlayWindowManager = OverlayWindowManager(window: window,
                                                         addressBarPosition: appSettings.currentAddressBarPosition,
                                                         voiceSearchHelper: voiceSearchHelper)
         vpnService = VPNService(mainCoordinator: mainCoordinator)
-        autoClearService = AutoClearService(worker: mainViewController, overlayWindowManager: overlayWindowManager)
+        autoClearService = AutoClearService(worker: mainCoordinator.controller, overlayWindowManager: overlayWindowManager)
         screenshotService = ScreenshotService(window: window)
         authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
-        keyboardService = KeyboardService(mainViewController: mainViewController)
+        keyboardService = KeyboardService(mainViewController: mainCoordinator.controller)
 
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
@@ -137,6 +130,8 @@ struct Launching: AppState {
         atbAndVariantConfiguration.configure(onVariantAssigned: onVariantAssigned)
         stateContext.crashHandlersConfiguration.handleCrashDuringCrashHandlersSetup()
 
+        window.rootViewController = mainCoordinator.controller
+        application.setWindow(window)
         window.makeKeyAndVisible()
         mainCoordinator.start()
     }

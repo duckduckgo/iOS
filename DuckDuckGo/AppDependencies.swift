@@ -26,7 +26,6 @@ import BrowserServicesKit
 
 struct AppDependencies {
 
-    let window: UIWindow
     let mainCoordinator: MainCoordinator
 
     let vpnService: VPNService

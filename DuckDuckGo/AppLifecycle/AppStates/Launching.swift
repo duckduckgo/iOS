@@ -60,6 +60,9 @@ struct Launching: AppState {
     private let subscriptionService: SubscriptionService
     private let crashCollectionService = CrashCollectionService()
 
+    private let onboardingConfiguration = OnboardingConfiguration()
+    private let atbAndVariantConfiguration = ATBAndVariantConfiguration()
+
     private let window: UIWindow
     private let mainCoordinator: MainCoordinator
 
@@ -78,6 +81,7 @@ struct Launching: AppState {
         PixelConfiguration.configure(featureFlagger: featureFlagger)
         ContentBlockingConfiguration.configure()
         UserAgentConfiguration.configure()
+        NewTabPageIntroMessageConfiguration().configure() // todo: @Mariusz can it be moved up here?
 
         configurationService.onLaunching()
         crashCollectionService.onLaunching()
@@ -87,41 +91,6 @@ struct Launching: AppState {
 
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
 
-        let variantManager = DefaultVariantManager()
-        let daxDialogs = DaxDialogs.shared
-
-        let marketplaceAdPostbackManager = reportingService.marketplaceAdPostbackManager
-        // assign it here, because "did become active" is already too late and "viewWillAppear"
-        // has already been called on the HomeViewController so won't show the home row CTA
-        cleanUpATBAndAssignVariant(variantManager: variantManager,
-                                   daxDialogs: daxDialogs,
-                                   marketplaceAdPostbackManager: marketplaceAdPostbackManager)
-
-        func cleanUpATBAndAssignVariant(variantManager: VariantManager,
-                                        daxDialogs: DaxDialogs,
-                                        marketplaceAdPostbackManager: MarketplaceAdPostbackManager) {
-            let historyMessageManager = HistoryMessageManager()
-
-            AtbAndVariantCleanup.cleanup()
-            variantManager.assignVariantIfNeeded { _ in
-                let launchOptionsHandler = LaunchOptionsHandler()
-
-                // MARK: perform first time launch logic here
-                // If it's running UI Tests check if the onboarding should be in a completed state.
-                if launchOptionsHandler.isUITesting && launchOptionsHandler.isOnboardingCompleted {
-                    daxDialogs.dismiss()
-                } else {
-                    daxDialogs.primeForUse()
-                }
-
-                // New users don't see the message
-                historyMessageManager.dismiss()
-
-                // Setup storage for marketplace postback
-                marketplaceAdPostbackManager.updateReturningUserValue()
-            }
-        }
-
         let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
         syncService = SyncService(bookmarksDatabase: persistenceService.bookmarksDatabase)
         remoteMessagingService = RemoteMessagingService(persistenceService: persistenceService,
@@ -129,28 +98,24 @@ struct Launching: AppState {
                                                         internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
                                                         configurationStore: AppDependencyProvider.shared.configurationStore,
                                                         privacyConfigurationManager: privacyConfigurationManager)
-
         subscriptionService = SubscriptionService(privacyConfigurationManager: privacyConfigurationManager)
-
         mainCoordinator = MainCoordinator(syncService: syncService,
                                           persistenceService: persistenceService,
                                           remoteMessagingService: remoteMessagingService,
-                                          daxDialogs: daxDialogs,
+                                          daxDialogs: onboardingConfiguration.daxDialogs,
                                           reportingService: reportingService,
-                                          variantManager: variantManager,
+                                          variantManager: atbAndVariantConfiguration.variantManager,
                                           subscriptionService: subscriptionService,
                                           voiceSearchHelper: voiceSearchHelper,
                                           featureFlagger: featureFlagger,
                                           fireproofing: fireproofing,
                                           accountManager: accountManager,
                                           didFinishLaunchingStartTime: didFinishLaunchingStartTime)
-        mainCoordinator.start()
         let mainViewController = mainCoordinator.controller
         syncService.syncErrorHandler.alertPresenter = mainViewController
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = mainViewController
-        window.makeKeyAndVisible()
         application.setWindow(window)
 
         let overlayWindowManager = OverlayWindowManager(window: window,
@@ -164,18 +129,30 @@ struct Launching: AppState {
 
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
-        NewTabPageIntroMessageSetup().perform()
         autoClearService.onLaunching()
         vpnService.onLaunching()
         subscriptionService.onLaunching()
         autofillService.onLaunching()
 
+        atbAndVariantConfiguration.configure(onVariantAssigned: onVariantAssigned)
         stateContext.crashHandlersConfiguration.handleCrashDuringCrashHandlersSetup()
+
+        window.makeKeyAndVisible()
+        mainCoordinator.start()
+    }
+
+    func onVariantAssigned() {
+        onboardingConfiguration.onVariantAssigned()
+
+        // New users don't see the message
+        let historyMessageManager = HistoryMessageManager()
+        historyMessageManager.dismiss()
+
+        reportingService.onVariantAssigned()
     }
 
     private var appDependencies: AppDependencies {
         AppDependencies(
-            window: window,
             mainCoordinator: mainCoordinator,
             vpnService: vpnService,
             authenticationService: authenticationService,

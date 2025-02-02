@@ -47,6 +47,11 @@ final class ReportingService {
         AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
     }
 
+    func onVariantAssigned() {
+        // Setup storage for marketplace postback
+        marketplaceAdPostbackManager.updateReturningUserValue()
+    }
+
     func onStatisticsLoaded() {
         fireAppLaunchPixel()
         reportAdAttribution()
@@ -113,7 +118,5 @@ final class ReportingService {
             await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
         }
     }
-
-
 
 }

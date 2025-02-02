@@ -43,6 +43,10 @@ struct Resuming: AppState {
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
 
+        onResuming()
+    }
+
+    private func onResuming() {
         ThemeManager.shared.updateUserInterfaceStyle()
         appDependencies.keyboardService.showKeyboardIfSettingOn = true
         appDependencies.syncService.onResuming()

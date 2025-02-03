@@ -30,10 +30,10 @@
     {
       "identity" : "browserserviceskit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
-        "revision" : "82d0d83b13ba8d5c2211b502aa78ffb372518912",
-        "version" : "232.1.3"
+        "revision" : "b874310b6db6687ef6be5f978edf2f5d03b7fc69",
+        "version" : "233.1.0"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "47c26dc32b94cdbcef3e6157497147917678c25c",
-        "version" : "16.1.0"
+        "revision" : "676d42679296a175169e433f2332e55644151edd",
+        "version" : "16.2.0"
       }
     },
     {

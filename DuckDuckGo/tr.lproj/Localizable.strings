@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "İndirilenler";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "Yapay Zeka Sohbeti";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Yer İşaretini Düzenle";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Yapıştır ve Git";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Yazdır";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Yazdır";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Yenile";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Raporunuz DuckDuckGo'yu herkes için daha iyi hale getirmeye yardımcı oluyor!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Hayır";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Gizlilik Korumalarını kapatmak bu sitedeki sorunu çözdü mü?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Evet";
+/* No comment provided by engineer. */
+"Confirm" = "Onayla";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Atla";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Çak Bir Beşlik!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Unutmayın: İnterneti benimle ne kadar çok gezerseniz rahatsız edici reklamları da o kadar az görürsünüz. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "İşte bu kadar!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "DuckDuckGo Search bu işte. Özel. Hızlı. Daha az reklam.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Anladım!";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Bir siteyi ziyaret etmeyi deneyin!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "DuckDuckGo aramalarınız her zaman anonimdir.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Başlamaya hazır mısınız?\nBir şeyler arayın!";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "avatar oyuncu kadrosu";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "yerel hava durumu";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Şaşırt beni!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Listede **DuckDuckGo**'yu bulun, ardından eklemek için **VPN kontrolü**ne dokunun";
@@ -1658,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Göz Atma Menüsü";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Mesaj politikası ana bilgisayar adı";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Geri";
 
@@ -1949,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Tarayıcınızı Seçin";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Çerez açılır pencerelerini engelle";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Tekinsiz reklamları engelleyin";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Tarama verilerini hızlıca silin";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Varsayılan olarak gizli arama yapın";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Üçüncü taraf izleyicileri engelleyin";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Gizlilik korumaları etkinleştirildi!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Ulaşması kolay";
@@ -2020,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Hadi Başlayalım!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Merhaba.\n\nDaha iyi, daha özel bir internete hazır mısınız?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget Ekle";
@@ -2138,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Maksimum şifre sayısına ulaştınız. Lütfen senkronizasyona devam etmek için bazılarını silin.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Senkronizasyon bir hatayla karşılaştı. Bu cihazda senkronizasyonu devre dışı bırakmayı deneyin ve ardından başka bir cihaz veya kurtarma kodunuzu kullanarak yeniden bağlanın.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Senkronizasyon Duraklatıldı";
 
@@ -2205,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Başka Bir Uygulamada Açılsın mı?";
+
+/* No comment provided by engineer. */
+"Reset" = "Sıfırla";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Adres ara veya gir";
@@ -2520,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Hangi web sitesi hatalı?";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Bu cihazda Privacy Pro aboneliğinize Apple ID veya bir e-posta adresi aracılığıyla erişin.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Depolanan Ana Bilgisayar Adı: %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "E-posta Ekle";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Satın Almayı Geri Yükle";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Aboneliğinizi bu cihazda etkinleştirmek için satın alma işleminizi geri yükleyin.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Aboneliğiniz, Apple ID'niz ile oturum açtığınız tüm cihazlarda DuckDuckGo'da otomatik olarak kullanılabilir.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "E-postayı Düzenle";
@@ -2577,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "E-posta Ekle";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro, aynı Apple ID ile oturum açılmış herhangi bir cihazda kullanılabilir.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Aboneliğiniz Google Play Store üzerinden satın alınmış. Aboneliğinizi yenilemek için lütfen ilk olarak aboneliğinizi satın alırken kullandığınız Google Hesabında oturum açılmış bir cihazda Google Play Store abonelik ayarlarını açın.";
 
@@ -2613,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Abonelik Bulunamadı";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Bu Apple ID ile ilişkili abonelik artık aktif değil.";
-
 /* FAQ Button */
 "subscription.faq" = "SSS ve Destek";
 
@@ -2631,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Geri Yükle";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Bu Apple ID ile ilişkili bir abonelik bulduk.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonelik Bulundu";
 
@@ -2645,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Abonelik";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Bu Apple ID ile ilişkili bir abonelik yok.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonelik Bulunamadı";

@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Letöltések";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "AI-csevegés";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Könyvjelző szerkesztése";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Beillesztés";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Nyomtatás";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Nyomtatás";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Frissítés";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "A jelentésed segít nekünk abban, hogy a DuckDuckGo mindenki számára jobb élményt nyújthasson!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Nem";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Az adatvédelem kikapcsolása megoldotta a problémát ezen a webhelyen?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Igen";
+/* No comment provided by engineer. */
+"Confirm" = "Megerősítés";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Kihagyás";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Pacsi!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Ne feledd: minden alkalommal, amikor velem böngészel, egy undok hirdetés elveszíti az erejét. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Megvan, ez az!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Ez a DuckDuckGo Search. Privát. Gyors. Kevesebb hirdetés.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Megvan!";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Próbálj meg ellátogatni egy webhelyre!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "A DuckDuckGo-kereséseid mindig névtelenek.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Készen állsz a kezdésre?\nKeress rá!";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "avatar szereposztása";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "helyi időjárás";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Lepj meg!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Keresd meg a listában a **DuckDuckGo** elemet, majd koppints a **VPN-vezérlés** lehetőségre, hogy hozzáadd";
@@ -1658,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Tallózás a menüben";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Üzenetkezelési szabályzat állomásneve";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Vissza";
 
@@ -1949,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Böngésző kiválasztása";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Felugró sütiablakok blokkolása";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Gyanús hirdetések blokkolása";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Böngészési adatok gyors törlése";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Privát keresés alapértelmezés szerint";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Harmadik féltől származó nyomkövetők blokkolása";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Adatvédelem aktiválva!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Könnyen elérhető";
@@ -2020,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Rajta, csináljuk!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Szia!\n\nKészen állsz egy jobb, privátabb internetre?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Minialkalmazás hozzáadása";
@@ -2138,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Elérted a jelszavak maximális számát. A szinkronizálás folytatásához törölj néhányat.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Szinkronizálási hiba történt. Próbáld meg kikapcsolni a szinkronizálást ezen az eszközön, majd csatlakozz újra egy másik eszközzel vagy a helyreállítási kóddal.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Szinkronizálás szüneteltetve";
 
@@ -2205,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Megnyitás másik alkalmazásban?";
+
+/* No comment provided by engineer. */
+"Reset" = "Visszaállítás";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Keresés vagy cím megadása";
@@ -2520,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Melyik weboldal nem működik?”";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Az eszközön Apple-fiókkal vagy e-mail-címmel férhetsz hozzá a Privacy Pro-előfizetésedhez.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Tárolt állomásnév: %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "E-mail-cím hozzáadása";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple-fiók";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Vásárlás visszaállítása";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Előfizetésedet a vásárlás visszaállításával aktiválhatod ezen az eszközön.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Az előfizetésed automatikusan elérhető a DuckDuckGo-ban minden olyan eszközön, amelyen be vagy jelentkezve az Apple-fiókodba.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "E-mail-cím szerkesztése";
@@ -2577,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "E-mail-cím hozzáadása";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "A Privacy Pro az ugyanabba az Apple-fiókba bejelentkezett minden eszközön elérhető.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Előfizetésed a Google Play áruházban lett megvásárolva. Az előfizetés megújításához nyisd meg a Google Play áruház előfizetési beállításait egy olyan eszközön, amely ugyanabba a Google-fiókba van bejelentkezve, amellyel eredetileg megvásároltad az előfizetést.";
 
@@ -2613,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Előfizetés nem található";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Az ehhez az Apple-fiókhoz tartozó előfizetés már nem aktív.";
-
 /* FAQ Button */
 "subscription.faq" = "GYIK és segítségnyújtás";
 
@@ -2631,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Visszaállítás";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Találtunk egy ehhez az Apple-fiókhoz tartozó előfizetést.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Megtalált előfizetés";
 
@@ -2645,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Előfizetés";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Ehhez az Apple-fiókhoz nem tartozik előfizetés.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Előfizetés nem található";

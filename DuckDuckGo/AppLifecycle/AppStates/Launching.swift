@@ -487,7 +487,8 @@ struct Launching: AppState {
 
         let autofillUsageMonitor = AutofillUsageMonitor()
         autofillPixelReporter = AutofillPixelReporter(
-            userDefaults: .standard,
+            standardUserDefaults: .standard,
+            appGroupUserDefaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).autofill"),
             autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
             eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
                 switch event {

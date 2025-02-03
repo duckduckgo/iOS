@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Preuzimanja";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "AI Chat";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Uredi knjižnu oznaku";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Zalijepi i nastavi";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Ispis";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Ispis";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Osvježi";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Tvoje prijave pomažu nam poboljšati DuckDuckGo za sve!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Ne";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Je li isključivanje zaštite privatnosti riješilo problem na ovom web-mjestu?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Da";
+/* No comment provided by engineer. */
+"Confirm" = "Potvrdi";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Preskoči";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Daj pet!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Zapamti: svaki put kada me koristiš za pregledavanje, grozne reklame odlaze u zaborav. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Možeš ti to!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "To je DuckDuckGo Search. Privatno. Brzo. Manje oglasa.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Shvaćam!";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Pokušaj posjetiti web-mjesto!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Tvoja su DuckDuckGo pretraživanja uvijek anonimna.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Spreman za početak?\nIsprobaj pretraživanje!";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "uloge u filmu Avatar";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "lokalno vrijeme";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Iznenadi me!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Pronađi **DuckDuckGo** na popisu, zatim dodirni **VPN kontrolu** za njeno dodavanje.";
@@ -1658,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Izbornik pregledavanja";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Naziv glavnog računala za pravila poruka";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Natrag";
 
@@ -1949,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Odaberi preglednik";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Blokiraj skočne prozore kolačića";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Blokiraj neželjene oglase";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Brzo izbriši podatke pregledavanja";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Pretražuj privatno po zadanim postavkama";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Blokiraj alate za praćenje trećih strana";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Zaštita privatnosti aktivirana!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Lako dostupno";
@@ -2020,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Učinimo to!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Bok!\n\nJesi li spreman za bolji, privatniji internet?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Dodaj widget";
@@ -2138,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Dosegnut je maksimalni broj lozinki. Izbriši neke za nastavak sinkronizacije.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Sinkronizacija je naišla na pogrešku. Pokušaj onemogućiti sinkronizaciju na ovom uređaju, a zatim se ponovno poveži pomoću drugog uređaja ili šifre za oporavak.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Sinkronizacija je zaustavljena";
 
@@ -2205,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Otvori u drugoj aplikaciji?";
+
+/* No comment provided by engineer. */
+"Reset" = "Resetiraj";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Pretraži ili unesi adresu";
@@ -2520,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Koje je web-mjesto neispravno?";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Pristupi svojoj pretplati na Privacy Pro na ovom uređaju putem Apple ID-a ili adrese e-pošte.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Pohranjeno ime glavnog računala: %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Dodaj e-poštu";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Vrati kupnju";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Vrati svoju kupnju kako bi aktivirao pretplatu na ovom uređaju.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Tvoja pretplata automatski je dostupna u DuckDuckGo na bilo kojem uređaju prijavljenom na tvoj Apple ID.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Uredi e-poštu";
@@ -2577,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Dodaj e-poštu";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro je dostupan na bilo kojem uređaju koji je prijavljen na isti Apple ID.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Tvoja pretplata kupljena je putem trgovine Google Play. Za obnavljanje pretplate, otvori postavke pretplate na Google Play Storeu na uređaju koji je prijavljen na isti Google račun koji je upotrijebljen za prvobitnu kupnju pretplate.";
 
@@ -2613,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Pretplata nije pronađena";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Tvoja pretplata povezana s ovim Apple ID-om više nije aktivna.";
-
 /* FAQ Button */
 "subscription.faq" = "Često postavljana pitanja i podrška";
 
@@ -2631,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Vrati";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Pronašli smo pretplatu povezanu s ovim Apple ID-om.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Pretplata je pronađena";
 
@@ -2645,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Pretplata";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Nema pretplate povezane s ovim Apple ID-om.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Pretplata nije pronađena";

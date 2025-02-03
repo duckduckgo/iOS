@@ -2766,7 +2766,7 @@ extension NSError {
 
 extension TabViewController: SecureVaultManagerDelegate {
 
-    private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
+    private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials, backfilled: Bool) {
         guard AutofillSettingStatus.isAutofillEnabledInSettings,
               featureFlagger.isFeatureOn(.autofillCredentialsSaving),
               let autofillUserScript = autofillUserScript else { return }
@@ -2777,7 +2777,8 @@ extension TabViewController: SecureVaultManagerDelegate {
             
             let saveLoginController = SaveLoginViewController(credentialManager: manager,
                                                               appSettings: self.appSettings,
-                                                              domainLastShownOn: self.domainSaveLoginPromptLastShownOn)
+                                                              domainLastShownOn: self.domainSaveLoginPromptLastShownOn,
+                                                              backfilled: backfilled)
             self.domainSaveLoginPromptLastShownOn = self.url?.host
             saveLoginController.delegate = self
 
@@ -2843,7 +2844,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             // Add a delay to allow propagation of pointer events to the page
             // see https://app.asana.com/0/1202427674957632/1202532842924584/f
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.presentSavePasswordModal(with: vault, credentials: credentials)
+                self.presentSavePasswordModal(with: vault, credentials: credentials, backfilled: data.backfilled)
             }
         }
     }

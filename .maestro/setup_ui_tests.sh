@@ -11,8 +11,9 @@ target_device="iPhone-16"
 target_os="iOS-18-2"
 
 # Convert the target_device and target_os to the format required by the -destination flag
-destination_device="${target_device//-/' '}"
-destination_os="${target_os//-/.}"
+destination_device="${target_device//-/ }"
+destination_os_version="${target_os#iOS-}"
+destination_os_version="${destination_os_version//-/.}"
 
 ## Functions
 
@@ -54,7 +55,7 @@ build_app() {
     echo "⏲️ Building the app"
     set -o pipefail && xcodebuild -project "$project_root"/DuckDuckGo-iOS.xcodeproj \
                                   -scheme "DuckDuckGo" \
-                                  -destination "platform=iOS Simulator,name=$destination_device,OS=$destination_os" \
+                                  -destination "platform=iOS Simulator,name=$destination_device,OS=$destination_os_version" \
                                   -derivedDataPath "$derived_data_path" \
                                   -skipPackagePluginValidation \
                                   -skipMacroValidation \

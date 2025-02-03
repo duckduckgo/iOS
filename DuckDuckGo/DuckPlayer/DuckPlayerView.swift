@@ -72,10 +72,7 @@ struct DuckPlayerView: View {
                 Spacer()
                 
                 Button(action: { viewModel.openInYouTube() }, label: {
-                    Text("Watch this video on YouTube")
-                        .foregroundColor(.blue)
-                        .font(.system(size: 14))
-                        .padding(.vertical, 12)
+                    Text("Watch this video on YouTube").daxButton()                        
                 })
                 .background(Color(UIColor.systemBackground))
             }
@@ -113,3 +110,16 @@ struct DuckPlayerView: View {
         .background(Color.black)
     }
 }
+
+#if DEBUG
+struct DuckPlayerView_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = DuckPlayerViewModel(videoID: "dQw4w9WgXcQ")
+        DuckPlayerView(
+            viewModel: viewModel,
+            webView: DuckPlayerWebView(viewModel: viewModel)
+        )
+        .preferredColorScheme(.dark)
+    }
+}
+#endif

@@ -346,9 +346,9 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
             return
         }
         
-        Logger.duckplayer.debug("Creating webView for URL: \(url)")
+        Logger.duckplayer.debug("Creating webView for videoID: \(videoID)")
         // Create webView with viewModel
-        let webView = DuckPlayerWebView(url: url, viewModel: viewModel)
+        let webView = DuckPlayerWebView(viewModel: viewModel)
         
         let duckPlayerView = DuckPlayerView(viewModel: viewModel, webView: webView)
         let hostingController = UIHostingController(rootView: duckPlayerView)

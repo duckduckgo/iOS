@@ -24,7 +24,7 @@ import os.log
 import Combine
 
 struct DuckPlayerWebView: UIViewRepresentable {
-   let url: URL
+   let viewModel: DuckPlayerViewModel
    let coordinator: Coordinator
        
    struct Constants {
@@ -32,8 +32,8 @@ struct DuckPlayerWebView: UIViewRepresentable {
        static let referrerHeaderValue: String = "http://localhost"
    }
    
-   init(url: URL, viewModel: DuckPlayerViewModel) {
-       self.url = url
+   init(viewModel: DuckPlayerViewModel) {
+       self.viewModel = viewModel
        Logger.duckplayer.debug("Creating new coordinator")
        self.coordinator = Coordinator(viewModel: viewModel)
    }
@@ -70,12 +70,13 @@ struct DuckPlayerWebView: UIViewRepresentable {
        webView.uiDelegate = context.coordinator
        
        // Set DDG's agent
-       webView.customUserAgent = DefaultUserAgentManager.shared.userAgent(isDesktop: false, url: url)
+       webView.customUserAgent = DefaultUserAgentManager.shared.userAgent(isDesktop: false, url: viewModel.getVideoURL())
        
        return webView
    }
    
    func updateUIView(_ webView: WKWebView, context: Context) {
+       guard let url = viewModel.getVideoURL() else { return }
        Logger.duckplayer.debug("Updating WebView with URL: \(url)")
        var request = URLRequest(url: url)
        request.setValue(Constants.referrerHeaderValue, forHTTPHeaderField: Constants.referrerHeader)

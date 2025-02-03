@@ -20,11 +20,11 @@
 import SwiftUI
 import Foundation
 import DesignResourcesKit
-import WebKit
 
 struct DuckPlayerView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: DuckPlayerViewModel
+    var webView: DuckPlayerWebView
     
     enum Constants {
         static let headerHeight: CGFloat = 56
@@ -56,12 +56,8 @@ struct DuckPlayerView: View {
                                 RoundedRectangle(cornerRadius: Constants.cornerRadius)
                                     .stroke(Color(designSystemColor: .background).opacity(0.1), lineWidth: 1)
                             )
+                        webView.clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
                         
-                        // WebView
-                        if let videoURL = viewModel.getVideoURL() {
-                            WebView(url: videoURL)
-                                .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
-                        }
                     }
                     .frame(
                         width: geometry.size.width - (Constants.horizontalPadding * 2),
@@ -107,30 +103,5 @@ struct DuckPlayerView: View {
         }
         .padding(.horizontal, Constants.horizontalPadding)
         .background(Color.black)
-    }
-}
-
-// WebView wrapper for WKWebView
-struct WebView: UIViewRepresentable {
-    let url: URL
-    
-    func makeUIView(context: Context) -> WKWebView {
-        let configuration = WKWebViewConfiguration()
-        configuration.allowsInlineMediaPlayback = true
-        configuration.mediaTypesRequiringUserActionForPlayback = []
-        
-        let webView = WKWebView(frame: .zero, configuration: configuration)
-        webView.backgroundColor = .black
-        webView.isOpaque = false
-        webView.scrollView.backgroundColor = .black
-        webView.scrollView.bounces = false
-        
-        return webView
-    }
-    
-    func updateUIView(_ webView: WKWebView, context: Context) {
-        var request = URLRequest(url: url)
-        request.setValue("http://localhost", forHTTPHeaderField: "Referer")
-        webView.load(request)
     }
 }

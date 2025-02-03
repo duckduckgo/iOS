@@ -22,6 +22,7 @@ import XCTest
 import PixelExperimentKit
 import PixelKit
 import BrowserServicesKit
+import Core
 
 final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
@@ -63,7 +64,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testIncrementPaywallViewCount_incrementsWhenInConversionWindow() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         let enrollmentDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         mockFeatureFlagger.mockActiveExperiments = [
             FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
@@ -83,7 +84,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testIncrementPaywallViewCount_doesNotIncrementWhenNotInConversionWindow() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         let enrollmentDate = Calendar.current.date(byAdding: .day, value: -10, to: Date())!
         mockFeatureFlagger.mockActiveExperiments = [
             FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
@@ -173,7 +174,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testFreeTrialParametersIfApplicable_returnsParametersWithinConversionWindow() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         let enrollmentDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         mockFeatureFlagger.mockActiveExperiments = [
             FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
@@ -193,7 +194,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testFreeTrialParametersIfApplicable_appendsOutsideWhenNotInConversionWindow() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         let enrollmentDate = Calendar.current.date(byAdding: .day, value: -10, to: Date())!
         mockFeatureFlagger.mockActiveExperiments = [
             FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
@@ -214,7 +215,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testFreeTrialParametersIfApplicable_doesNotReturnParametersIfAlreadyReturned() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         mockUserDefaults.set(true, forKey: FreeTrialsFeatureFlagExperiment.Constants.hasReturnedFreeTrialParametersKey)
 
         // When
@@ -226,7 +227,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testFreeTrialParametersIfApplicable_updatesUserDefaultsCorrectly() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         mockFeatureFlagger.cohortToReturn = cohort
 
         // When
@@ -242,7 +243,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         mockUserDefaults.set(true, forKey: FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey)
 
         // When
-        let cohort = sut.getCohortIfEnabled() as? FreeTrialsFeatureFlagExperiment.Cohort
+        let cohort = sut.getCohortIfEnabled() as? PrivacyProFreeTrialExperimentCohort
 
         // Then
         XCTAssertEqual(cohort, .treatment, "Should return the 'treatment' cohort when the override is enabled.")
@@ -262,12 +263,12 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testGetCohortIfEnabled_returnsCohortFromFeatureFlaggerWhenEnabled() {
         // Given
-        let expectedCohort: FreeTrialsFeatureFlagExperiment.Cohort = .control
+        let expectedCohort: PrivacyProFreeTrialExperimentCohort = .control
         mockUserDefaults.set(false, forKey: FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey)
         mockFeatureFlagger.cohortToReturn = expectedCohort
 
         // When
-        let cohort = sut.getCohortIfEnabled() as? FreeTrialsFeatureFlagExperiment.Cohort
+        let cohort = sut.getCohortIfEnabled() as? PrivacyProFreeTrialExperimentCohort
 
         // Then
         XCTAssertEqual(cohort, expectedCohort, "Should return the cohort from the feature flagger when the feature flag is enabled.")

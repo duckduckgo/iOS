@@ -531,14 +531,14 @@ private extension SubscriptionPagesUseSubscriptionFeature {
     /// and whether the user can make purchases.
     ///
     /// - Returns: A `FreeTrialsFeatureFlagExperiment.Cohort` if the user is part of a cohort, otherwise `nil`.
-    func freeTrialCohortIfApplicable() -> FreeTrialsFeatureFlagExperiment.Cohort? {
+    func freeTrialCohortIfApplicable() -> PrivacyProFreeTrialExperimentCohort? {
         // Check if the user is authenticated; free trials are not applicable for authenticated users
         guard !subscriptionManager.accountManager.isUserAuthenticated else { return nil }
         // Ensure that the user can make purchases
         guard subscriptionManager.canPurchase else { return nil }
 
         // Retrieve the cohort if the feature flag is enabled
-        guard let cohort = freeTrialsExperiment.getCohortIfEnabled() as? FreeTrialsFeatureFlagExperiment.Cohort else { return nil }
+        guard let cohort = freeTrialsExperiment.getCohortIfEnabled() as? PrivacyProFreeTrialExperimentCohort else { return nil }
 
         return cohort
     }
@@ -547,7 +547,7 @@ private extension SubscriptionPagesUseSubscriptionFeature {
     ///
     /// - Parameter freeTrialsCohort: The cohort the user belongs to (`control` or `treatment`).
     /// - Returns: A `SubscriptionOptions` object containing the relevant subscription options.
-    func freeTrialSubscriptionOptions(for freeTrialsCohort: FreeTrialsFeatureFlagExperiment.Cohort) async -> SubscriptionOptions? {
+    func freeTrialSubscriptionOptions(for freeTrialsCohort: PrivacyProFreeTrialExperimentCohort) async -> SubscriptionOptions? {
         var subscriptionOptions: SubscriptionOptions?
 
         switch freeTrialsCohort {

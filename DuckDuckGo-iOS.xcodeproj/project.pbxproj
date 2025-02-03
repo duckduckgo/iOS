@@ -11958,8 +11958,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit.git";
 			requirement = {
-				kind = exactVersion;
-				version = 233.1.0;
+				branch = fcappelli/authv2/network_protection_2tokens;
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
-        "revision" : "b874310b6db6687ef6be5f978edf2f5d03b7fc69",
-        "version" : "233.1.0"
+        "branch" : "fcappelli/authv2/network_protection_2tokens",
+        "revision" : "a00f1d58e272528d5403b177b1e8b138374939de"
       }
     },
     {

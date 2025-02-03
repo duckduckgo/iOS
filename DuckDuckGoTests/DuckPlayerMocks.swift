@@ -197,6 +197,8 @@ final class MockDuckPlayer: DuckPlayerControlling {
     
     var hostView: TabViewController?
     
+    var youtubeNavigationRequest: PassthroughSubject<URL, Never>
+    
     func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
         nil
     }
@@ -226,6 +228,7 @@ final class MockDuckPlayer: DuckPlayerControlling {
     init(settings: any DuckDuckGo.DuckPlayerSettings, featureFlagger: any BrowserServicesKit.FeatureFlagger) {
         self.settings = settings
         self.featureFlagger = featureFlagger
+        self.youtubeNavigationRequest = PassthroughSubject<URL, Never>()
     }
     
     func setUserValues(params: Any, message: WKScriptMessage) -> (any Encodable)? {

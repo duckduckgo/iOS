@@ -8,14 +8,18 @@ source $(dirname $0)/common.sh
 
 # The simulator command requires the hyphens
 target_device="iPhone-16"
-target_os="iOS-18-1"
+target_os="iOS-18-2"
+
+# Convert the target_device and target_os to the format required by the -destination flag
+destination_device="${target_device//-/' '}"
+destination_os="${target_os//-/.}"
 
 ## Functions
 
 check_maestro() {
 
     local command_name="maestro"
-    local known_version="1.39.2"
+    local known_version="1.39.9"
 
     if command -v $command_name > /dev/null 2>&1; then
       local version_output=$($command_name -v 2>&1 | tail -n 1)
@@ -50,7 +54,7 @@ build_app() {
     echo "⏲️ Building the app"
     set -o pipefail && xcodebuild -project "$project_root"/DuckDuckGo-iOS.xcodeproj \
                                   -scheme "DuckDuckGo" \
-                                  -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
+                                  -destination "platform=iOS Simulator,name=$destination_device,OS=$destination_os" \
                                   -derivedDataPath "$derived_data_path" \
                                   -skipPackagePluginValidation \
                                   -skipMacroValidation \
@@ -59,7 +63,6 @@ build_app() {
         echo "‼️ Unable to build app into $derived_data_path"
         exit 1
     fi
-
 }
 
 ## Main Script

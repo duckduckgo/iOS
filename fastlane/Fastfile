@@ -91,7 +91,7 @@ platform :ios do
       output_directory: options[:output],
       output_name: output_name,
       export_method: "ad-hoc",
-      scheme: "DuckDuckGo",
+      scheme: "iOS Browser",
       export_options: "adhocExportOptions.plist",
       derived_data_path: "DerivedData",
       xcargs: "-skipPackagePluginValidation -skipMacroValidation"
@@ -163,7 +163,7 @@ platform :ios do
       output_name: output_name,
       export_method: "ad-hoc",
       configuration: "Alpha",
-      scheme: "DuckDuckGo-Alpha",
+      scheme: "iOS Browser Alpha",
       export_options: "alphaAdhocExportOptions.plist",
       derived_data_path: "DerivedData",
       xcargs: "-skipPackagePluginValidation"
@@ -293,7 +293,7 @@ platform :ios do
 
     build_app(
       export_method: "app-store",
-      scheme: "DuckDuckGo",
+      scheme: "iOS Browser",
       export_options: "appStoreExportOptions.plist",
       derived_data_path: "DerivedData",
       xcargs: "-skipPackagePluginValidation -skipMacroValidation"
@@ -306,7 +306,7 @@ platform :ios do
     build_app(
       export_method: "app-store",
       configuration: "Alpha",
-      scheme: "DuckDuckGo-Alpha",
+      scheme: "iOS Browser Alpha",
       export_options: "alphaExportOptions.plist",
       derived_data_path: "DerivedData",
       xcargs: "-skipPackagePluginValidation -skipMacroValidation"

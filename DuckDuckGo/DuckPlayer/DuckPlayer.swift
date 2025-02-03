@@ -277,6 +277,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
             hostView?.view.removeGestureRecognizer(tapGestureRecognizer)
         }
         hostView = nil
+        cancellables.removeAll()
     }
     
     /// Sets the host view controller for presenting modals.
@@ -336,11 +337,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
 
     // Loads a native DuckPlayerView
     private var cancellables = Set<AnyCancellable>()
-    
-    deinit {
-        cancellables.removeAll()
-    }
-    
+        
     func loadNativeDuckPlayerVideo(videoID: String) {
         Logger.duckplayer.debug("Starting loadNativeDuckPlayerVideo with ID: \(videoID)")
         let viewModel = DuckPlayerViewModel(videoID: videoID)

@@ -84,7 +84,7 @@ struct DuckPlayerWebView: UIViewRepresentable {
    
    class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
        
-       /// A published to notify when Youtube navigation is requested
+       /// A publisher to notify when Youtube navigation is required
        let youtubeNavigationRequestPublisher = PassthroughSubject<URL, Never>()
        
        deinit {

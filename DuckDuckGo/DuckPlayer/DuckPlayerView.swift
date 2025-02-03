@@ -71,14 +71,23 @@ struct DuckPlayerView: View {
                 
                 Spacer()
                 
-                Button(action: { viewModel.openInYouTube() }, label: {
-                    Text("Watch this video on YouTube").daxButton()                        
-                })
-                .background(Color(UIColor.systemBackground))
+                if viewModel.shouldShowYouTubeButton {
+                    Button(action: { viewModel.openInYouTube() }, label: {
+                        Text("Watch this video on YouTube")
+                            .daxBodyRegular()
+                            .background(Color(designSystemColor: .backgroundSheets))
+                    })
+                }                
             }
         }
         .onFirstAppear {
             viewModel.onFirstAppear()
+        }
+        .onAppear {
+            viewModel.onAppear()
+        }
+        .onDisappear {
+            viewModel.onDisappear()
         }
     }
     

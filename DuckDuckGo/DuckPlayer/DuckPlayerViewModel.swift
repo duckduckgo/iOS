@@ -19,11 +19,15 @@
 
 import Combine
 import Foundation
+import UIKit
 
 final class DuckPlayerViewModel: ObservableObject {
     
     /// A publisher to notify when Youtube navigation is required
     let youtubeNavigationRequestPublisher = PassthroughSubject<URL, Never>()
+    
+    /// Current interface orientation
+    @Published private var isLandscape: Bool = false
     
     enum Constants {
         static let baseURL = "https://www.youtube-nocookie.com/embed/"
@@ -69,6 +73,36 @@ final class DuckPlayerViewModel: ObservableObject {
     }
     
     func onFirstAppear() {
-        // Add any initialization logic here
+        updateOrientation()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleOrientationChange),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+    }
+    
+    func onAppear() {
+        // NOOP
+    }
+    
+    func onDisappear() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIDevice.orientationDidChangeNotification,
+                                                  object: nil)
+    }
+    
+    @objc private func handleOrientationChange() {
+        updateOrientation()
+    }
+    
+    /// Updates the current interface orientation
+    func updateOrientation() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            isLandscape = windowScene.interfaceOrientation.isLandscape
+        }
+    }
+    
+    /// Whether the YouTube button should be visible
+    var shouldShowYouTubeButton: Bool {
+        !isLandscape
     }
 }

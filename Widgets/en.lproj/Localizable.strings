@@ -1,0 +1,141 @@
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "You need to enable the VPN from the DuckDuckGo App.";
+
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Quickly start a new AI chat in Duck.ai";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
+/* Description shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.description" = "Instantly generate a new private Duck Address.";
+
+/* Title shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.title" = "Email Protection";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.favorites.description" = "Quickly open your favorite websites with a tap.";
+
+/* Title shown to the user when adding the favorites lock screen widget */
+"lock.screen.widget.favorites.title" = "Favorites";
+
+/* Description shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.description" = "Instantly delete your browsing history and start a new private search in DuckDuckGo.";
+
+/* Title shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.title" = "Fire Button";
+
+/* Description shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.description" = "Quickly search your saved DuckDuckGo passwords.";
+
+/* Title shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.title" = "Search Passwords";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.description" = "Instantly start a private search in DuckDuckGo.";
+
+/* Title shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.title" = "Private Search";
+
+/* Description shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.description" = "Instantly start a new private voice search in DuckDuckGo.";
+
+/* Title shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.title" = "Voice Search";
+
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Connecting...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Disconnecting...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Unknown Location";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Not Connected";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN is OFF";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN is ON";
+
+/* Description of search passwords widget in widget gallery */
+"widget.gallery.passwords.description" = "Quickly search your saved DuckDuckGo passwords.";
+
+/* Display name for search passwords widget in widget gallery */
+"widget.gallery.passwords.display.name" = "Search Passwords";
+
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Search, chat on Duck.ai, or view your passwords.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Shortcuts";
+
+/* Description of search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.description" = "Search or visit your favorite sites privately with just one tap.";
+
+/* Display name for search and favorites widget in widget gallery */
+"widget.gallery.search.and.favorites.display.name" = "Search and Favorites";
+
+/* Description of search only widget in widget gallery */
+"widget.gallery.search.description" = "Quickly launch a private search in DuckDuckGo.";
+
+/* Display name for search only widget in widget gallery */
+"widget.gallery.search.display.name" = "Search";
+
+/* Description of VPN widget in widget gallery */
+"widget.gallery.vpn.description" = "View and manage your VPN connection. Requires a Privacy Pro subscription.";
+
+/* Display name for VPN widget in widget gallery */
+"widget.gallery.vpn.display.name" = "VPN";
+
+/* CTA shown in the favorites widget empty state. */
+"widget.no.favorites.cta" = "Add Favorites";
+
+/* Message shown in the favorites widget empty state. */
+"widget.no.favorites.message" = "Quickly visit your favorite sites.";
+
+/* Text in passwords widget */
+"widget.passwords" = "Search Passwords";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Search";
+
+/* Placeholder text in search field on the search and favorites widget */
+"widget.search.duckduckgo" = "Search DuckDuckGo";
+
+/* VPN connect button text */
+"widget.vpn.button.connect" = "Connect";
+
+/* VPN disconnect button text */
+"widget.vpn.button.disconnect" = "Disconnect";
+
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Until %@";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Dismiss";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Wake Up";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "VPN is On";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "VPN Snoozing";
+
+/* Message describing VPN connected status */
+"widget.vpn.status.connected" = "VPN is On";
+
+/* Message describing VPN disconnected status */
+"widget.vpn.status.disconnected" = "VPN is Off";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "VPN is Snoozed";
+
+/* Subtitle describing VPN disconnected status */
+"widget.vpn.subtitle.disconnected" = "Not connected";
+

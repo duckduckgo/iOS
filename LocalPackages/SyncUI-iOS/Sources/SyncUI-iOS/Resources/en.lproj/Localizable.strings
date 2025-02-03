@@ -1,0 +1,279 @@
+/* Standard Buttons - Back Button */
+"back.button" = "Back";
+
+/* Do not translate - stringsdict entry */
+"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Some bookmarks are not syncing due to excessively long content in certain fields.";
+
+/* Camera View - Go to Settings Button */
+"camera.go.to.settings.button" = "Go to Settings";
+
+/* Camera View - Unavailable Title */
+"camera.is.unavailable.title" = "Camera is Unavailable";
+
+/* Camera View - Permission Instructions */
+"camera.permission.instructions" = "Please go to your device's settings and grant permission for this app to access your camera.";
+
+/* Camera View - Permission Required */
+"camera.permission.required" = "Camera Permission is Required";
+
+/* Camera View - Point Camera Indication */
+"camera.point.camera.indication" = "Point camera at QR code to sync";
+
+/* Standard Buttons - Cancel Button */
+"cancel.button" = "Cancel";
+
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Turn On Sync & Back Up";
+
+/* Connect With Server Sheet - Description Part 1 */
+"connect.with.server.sheet.description.part1" = "This creates an encrypted backup of your bookmarks and passwords on DuckDuckGo’s secure server, which can be synced with your other devices.";
+
+/* Connect With Server Sheet - Description Part 2 */
+"connect.with.server.sheet.description.part2" = "The encryption key is only stored on your device, DuckDuckGo cannot access it.";
+
+/* Connect With Server Sheet - Footer */
+"connect.with.server.sheet.footer" = "You can sync with your other devices later.";
+
+/* Connect With Server Sheet - Title */
+"connect.with.server.sheet.title" = "Sync and Back Up This Device";
+
+/* Standard Buttons - Copy Button */
+"copy.button" = "Copy";
+
+/* Do not translate - stringsdict entry */
+"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Some logins are not syncing due to excessively long content in certain fields.";
+
+/* Delete Server Data - Button */
+"delete.server.data" = "Turn Off and Delete Server Data...";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Get DuckDuckGo on Other Devices";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Your data is synced!";
+
+/* Standard Buttons - Done Button */
+"done.button" = "Done";
+
+/* Edit Device View - Header */
+"edit.device.header" = "Device Name";
+
+/* Edit Device View - Title */
+"edit.device.title" = "Edit %@";
+
+/* Fetch Favicons Onboarding - Button Title */
+"fetch.favicons.onboarding.button.title" = "Keep Bookmarks Icons Updated";
+
+/* Fetch Favicons Onboarding - Message */
+"fetch.favicons.onboarding.message" = "Do you want this device to automatically download icons for any new bookmarks synced from your other devices? This will expose the download to your network any time a bookmark is synced.";
+
+/* Fetch Favicons Onboarding - Title */
+"fetch.favicons.onboarding.title" = "Download Missing Icons?";
+
+/* Options - Fetch Favicons Description */
+"fetch.favicons.option.caption" = "Automatically download icons for your synced bookmarks. Icon downloads are exposed to your network.";
+
+/* Options - Fetch Favicons Title */
+"fetch.favicons.option.title" = "Auto-Download Icons";
+
+/* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
+"manually.enter.code.instruction.attributed" = "Go to %1$@ and select %2$@ in the DuckDuckGo App on another synced device and paste the code here to sync this device.";
+
+/* Manually Enter Code View - Title */
+"manually.enter.code.title" = "Manually Enter Code";
+
+/* Manually Enter Code View - Validating Code Action */
+"manually.enter.code.validating.code.action" = "Validating code";
+
+/* Manually Enter Code View - Validating Code Failed Action */
+"manually.enter.code.validating.code.failed.action" = "Invalid code.";
+
+/* Standard Buttons - Next Button */
+"next.button" = "Next";
+
+/* Standard Buttons - Not Now Button */
+"not.now.button" = "Not Now";
+
+/* Options - Section Header */
+"options.section.header" = "Options";
+
+/* Section header for other syncing options */
+"other.options.section.header" = "Other Options";
+
+/* Standard Buttons - Paste Button */
+"paste.button" = "Paste";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Manage Bookmarks";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Manage passwords…";
+
+/* Preparing To Sync Sheet - Description */
+"preparing.to.sync.sheet.description" = "Your bookmarks and passwords are being prepared to sync. This should only take a moment.";
+
+/* Preparing To Sync Sheet - Footer */
+"preparing.to.sync.sheet.footer" = "Connecting…";
+
+/* Preparing To Sync Sheet - Title */
+"preparing.to.sync.sheet.title" = "Setting Up Sync and Backup";
+
+/* Link label for recovering synced data */
+"recover.synced.data.link" = "Recover Synced Data";
+
+/* Recover Synced Data Sheet - Button */
+"recover.synced.data.sheet.button" = "Get Started";
+
+/* Recover Synced Data Sheet - Description */
+"recover.synced.data.sheet.description" = "To restore your synced data, you'll need the Recovery Code you saved when you first set up Sync. This code may have been saved as a PDF on the device you originally used to set up Sync.";
+
+/* Recover Synced Data Sheet - Title */
+"recover.synced.data.sheet.title" = "Recover Synced Data";
+
+/* Remove Device View - Button */
+"remove.device.button" = "Remove Device";
+
+/* Remove Device View - Message */
+"remove.device.message" = "\"%@\" will no longer be able to access your synced data.";
+
+/* Remove Device View - Title */
+"remove.device.title" = "Remove Device?";
+
+/* Save Recovery Code Sheet - Copy Code Toast */
+"save.recovery.code.code.copied.button" = "Recovery code copied to clipboard";
+
+/* Save Recovery Code Sheet - Copy Code Button */
+"save.recovery.code.copy.code.button" = "Copy Code";
+
+/* Save Recovery Code Sheet - Save as PDF Button */
+"save.recovery.code.save.as.pdf.button" = "Save as PDF";
+
+/* Save Recovery Code Sheet - Description */
+"save.recovery.code.sheet.description" = "If you lose access to your devices, you will need this code to recover your synced data.";
+
+/* Save Recovery Code Sheet - Footer */
+"save.recovery.code.sheet.footer" = "Anyone with access to this code can access your synced data, so please keep it in a safe place.";
+
+/* Save Recovery Code Sheet - Title */
+"save.recovery.code.sheet.title" = "Save Recovery Code";
+
+/* Save RecoveryPDF - Button */
+"save.recovery.pdf.button" = "Save Recovery PDF";
+
+/* Save RecoveryPDF - Footer */
+"save.recovery.pdf.footer" = "If you lose your device, you will need this recovery code to restore your synced data.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Enter Code Link */
+"scan.code.to.recover.synced.data.enter.code.link" = "Enter Text Code Manually";
+
+/* Scan Or Enter Code To Recover Synced Data View - Explanation */
+"scan.code.to.recover.synced.data.explanation" = "Scan the QR code on your Recovery PDF, or another synced device, to recover your data.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Footer */
+"scan.code.to.recover.synced.data.footer" = "Can’t Scan?";
+
+/* Scan Or Enter Code To Recover Synced Data View - Title */
+"scan.code.to.recover.synced.data.title" = "Recover Synced Data";
+
+/* Scan or See Code View - Footer */
+"scan.or.see.code.footer" = "Can’t Scan?";
+
+/* Scan or See Code View - Instruction */
+"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
+
+/* Scan or See Code View - Instruction with syncMenuPath */
+"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
+
+/* Scan or See Code View - Manually Enter Code Link */
+"scan.or.see.code.manually.enter.code.link" = "Manually Enter Code";
+
+/* Scan or See Code View - Scan Code Instructions Body */
+"scan.or.see.code.scan.code.instructions.body" = "Scan this code with another device to sync.";
+
+/* Scan or See Code View - Scan Code Instructions Title */
+"scan.or.see.code.scan.code.instructions.title" = "Mobile-to-Mobile?";
+
+/* Scan or See Code View - Share Code Link */
+"scan.or.see.code.share.code.link" = "Share Text Code";
+
+/* Scan or See Code View - Title */
+"scan.or.see.code.title" = "Scan QR Code";
+
+/* Link label for syncing and backing up the device */
+"sync.and.backup.this.device.link" = "Sync and Back Up This Device";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Get DuckDuckGo on Other Devices";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Share Download Link";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "To download DuckDuckGo on desktop or another mobile device, visit:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Get DuckDuckGo on other devices to sync with this one";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Get DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Install the DuckDuckGo browser on your devices to start securely syncing your bookmarks and passwords:";
+
+/* Sync Menu Path */
+"sync.menu.path" = "Settings > Sync & Backup > Sync With Another Device";
+
+/* Sync & Backup Title */
+"sync.title" = "Sync & Backup";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Sorry, but Sync & Backup is currently unavailable. Please try again later.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.";
+
+/* Title of the warning message */
+"sync.warning.sync.unavailable" = "Sync & Backup is Unavailable";
+
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Sync With Another Device";
+
+/* Footer message for syncing with another device */
+"sync.with.another.device.footer" = "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the encryption key.";
+
+/* Message for syncing with another device */
+"sync.with.another.device.message" = "Securely sync bookmarks and passwords between your devices.";
+
+/* Title for syncing with another device */
+"sync.with.another.device.title" = "Begin Syncing";
+
+/* Synced Devices - Section Header */
+"synced.devices.section.header" = "Synced Devices";
+
+/* Synced Devices - Sync with Another Device Label */
+"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
+
+/* Synced Devices - This Device Label */
+"synced.devices.this.device.label" = "This Device";
+
+/* Turn Sync Off - Button */
+"turn.sync.off" = "Turn Off Sync & Backup...";
+
+/* Turn Sync Off - Section Header */
+"turn.sync.off.section.header" = "Sync Enabled";
+
+/* Options - Unify Favorites Instruction */
+"unified.favorites.instruction" = "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Unify Favorites Across Devices";
+
+/* View Text Code menu item */
+"view.text.code.menu.item" = "View Text Code";
+

@@ -143,9 +143,26 @@ extension TabViewController {
     private func buildShortcutsEntries(includeBookmarks: Bool) -> [BrowsingMenuEntry] {
         var entries = [BrowsingMenuEntry]()
 
+        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionTabNew,
+                                                     image: UIImage(named: "Add-16")!,
+                                                     action: { [weak self] in
+                self?.onNewTabAction()
+            }))
+
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionAIChatNew,
+                                                     image: UIImage(named: "AIChat-16")!,
+                                                     action: { [weak self] in
+                self?.openAIChat()
+            }))
+
+            if !includeBookmarks {
+                entries.append(.separator)
+            }
+        }
+
         if includeBookmarks {
             entries.append(buildOpenBookmarksEntry())
-
             entries.append(.separator)
         }
 

@@ -55,6 +55,9 @@
 /* Open AI Chat action in the menu list */
 "action.title.duckai" = "AI Chat";
 
+/* Duck.ai menu item opening a new chat */
+"action.title.duckai.new" = "New Chat";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Edit Bookmark";
 
@@ -120,6 +123,9 @@
 
 /* Share action */
 "action.title.share" = "Share";
+
+/* New tab menu item opening a new tab */
+"action.title.tab.new" = "New Tab";
 
 /* Settings label for bottom position for the address bar */
 "address.bar.bottom" = "Bottom";

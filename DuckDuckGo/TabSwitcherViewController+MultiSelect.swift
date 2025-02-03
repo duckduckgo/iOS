@@ -157,7 +157,7 @@ extension TabSwitcherViewController {
         alert.addAction(UIAlertAction(title: UserText.actionCancel,
                                       style: .default) { _ in })
 
-        alert.addAction(UIAlertAction(title: UserText.closeTabs,
+        alert.addAction(UIAlertAction(title: indices.count == 1 ? UserText.closeTab : UserText.closeTabs,
                                       style: .destructive) { _ in
 
             indices.compactMap {
@@ -207,9 +207,8 @@ extension TabSwitcherViewController {
     func closeOtherTabs(retainingIndexes indices: [Int]) {
         let otherIndices = Set<Int>(tabsModel.tabs.indices).subtracting(indices)
         self.closeTabs(withIndexes: [Int](otherIndices),
-                       confirmTitle: UserText.alertTitleCloseOtherTabs(withCount: self.selectedTabs.count),
-                       confirmMessage: UserText.alertMessageCloseOtherTabs)
-
+                       confirmTitle: UserText.alertTitleCloseOtherTabs(withCount: otherIndices.count),
+                       confirmMessage: otherIndices.count == 1 ? UserText.alertMessageCloseOtherTab : UserText.alertMessageCloseOtherTabs)
     }
 
 }
@@ -409,7 +408,6 @@ extension TabSwitcherViewController {
     func createLongPressMenuItems(forIndex index: Int) -> [UIMenuElement] {
         guard let tab = tabsModel.safeGetTabAt(index) else { return [] }
 
-        let selectedPagesCount = self.selectedPagesCount
         let bookmarksModel = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
 
         let group0 = [
@@ -426,15 +424,16 @@ extension TabSwitcherViewController {
             // self.action(index, UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.longPressMenuBookmarkAllTabs),
 
             // Select Tabs -> switch to selection mode with this tab selected (if not already selected)
-            selectedTabs.contains(index) ? nil : self.action(index, UserText.tabSwitcherSelectTabs, "Check-Circle-16", self.longPressMenuSelectTabs),
+            selectedTabs.contains(index) ? nil : self.action(index, UserText.tabSwitcherSelectTab, "Check-Circle-16", self.longPressMenuSelectTabs),
         ]
 
         let group2 = [
             // Close Tab
             self.action(index, UserText.keyCommandCloseTab, "Close-16", destructive: true, self.longPressMenuCloseTab),
 
-            // Close Other Tabs
-            tabsModel.count > 1 ? self.action(index, UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.longPressMenuCloseOtherTabs) : nil,
+            // Close Other Tabs (only one of these two will be shown)
+            tabsModel.count == 2 ? self.action(index, UserText.tabSwitcherCloseOtherTab, "Tab-Close-16", destructive: true, self.longPressMenuCloseOtherTabs) : nil,
+            tabsModel.count > 2 ? self.action(index, UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.longPressMenuCloseOtherTabs) : nil,
         ]
 
         return group0.compactMap { $0 } +
@@ -614,6 +613,7 @@ extension TabSwitcherViewController {
 
         selectedTabs.insert(index)
         collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+        updateUIForSelectionMode()
     }
 
     func longPressMenuCloseTab(index: Int) {

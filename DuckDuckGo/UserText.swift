@@ -230,28 +230,46 @@ public struct UserText {
     public static let deselectAllTabs = NotLocalizedString("tab.select.none", value: "Deselect All", comment: "Deselect all tabs")
 
     public static func closeAllTabs(withCount count: Int) -> String {
-        let message = NotLocalizedString("tab.close.all.with.count", value: "Close All %@ Tabs", comment: "Close all tabs showing count")
-        return message.format(arguments: "\(count)")
+        if count == 1 {
+            return closeTab
+        } else {
+            let message = NotLocalizedString("tab.close.all.with.count", value: "Close All %@ Tabs", comment: "Close all tabs showing count")
+            return message.format(arguments: "\(count)")
+        }
     }
 
     public static func closeTabs(withCount count: Int) -> String {
-        let message = NotLocalizedString("tab.close.with.count", value: "Close %@ Tabs", comment: "Close tabs with a count")
-        return message.format(arguments: "\(count)")
+        if count == 1 {
+            return closeTab
+        } else {
+            let message = NotLocalizedString("tab.close.with.count", value: "Close %@ Tabs", comment: "Close tabs with a count")
+            return message.format(arguments: "\(count)")
+        }
     }
 
     public static func alertTitleCloseSelectedTabs(withCount count: Int) -> String {
-        let message = NotLocalizedString("tab.alert.message.close.selected.with.count", value: "Close %@ Selected Tabs", comment: "Message to confirm closing a number of selected tabs")
-        return message.format(arguments: "\(count)")
+        if count == 1 {
+            return NotLocalizedString("tab.alert.message.close.one.selected.with.count", value: "Close 1 Selected Tab", comment: "Message to confirm closing 1 selected tab")
+        } else {
+            let message = NotLocalizedString("tab.alert.message.close.selected.with.count", value: "Close %@ Selected Tabs", comment: "Message to confirm closing a number of selected tabs")
+            return message.format(arguments: "\(count)")
+        }
     }
 
     public static func alertTitleCloseOtherTabs(withCount count: Int) -> String {
-        let message = NotLocalizedString("tab.alert.message.close.other.with.count", value: "Close %@ Other Tabs", comment: "Message to confirm closing a number of other not currently selected tabs")
-        return message.format(arguments: "\(count)")
+        if count == 1 {
+            return NotLocalizedString("tab.alert.message.close.one.other.with.count", value: "Close Other Tab", comment: "Message to confirm closing 1 other tab")
+        } else {
+            let message = NotLocalizedString("tab.alert.message.close.other.with.count", value: "Close %@ Other Tabs", comment: "Message to confirm closing a number of other not currently selected tabs")
+            return message.format(arguments: "\(count)")
+        }
     }
 
     public static let alertMessageCloseTheseTabs = NotLocalizedString("tab.close.these.tabs", value: "Are you sure you want to close these tabs?", comment: "Title to confirm closing some subset of tabs")
 
-    public static let alertMessageCloseOtherTabs = NotLocalizedString("tab.close.these.tabs", value: "Are you sure you want to close the other tabs?", comment: "Title to confirm closing tabs not currently selected")
+    public static let alertMessageCloseOtherTabs = NotLocalizedString("tab.close.other.tabs", value: "Are you sure you want to close the other tabs?", comment: "Title to confirm closing tabs not currently selected")
+
+    public static let alertMessageCloseOtherTab = NotLocalizedString("tab.close.other.tab", value: "Are you sure you want to close the other tab?", comment: "Title to confirm closing single not currently selected tab")
 
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.close.with.title.and.address", value: "Close \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
@@ -264,18 +282,30 @@ public struct UserText {
 
     public static let tabSwitcherBookmarkAllTabs = NotLocalizedString("tab.switcher.bookmarkAll", value: "Bookmark All Tabs", comment: "Bookmark all tabs menu item")
 
-    public static let tabSwitcherSelectTabs = NotLocalizedString("tab.switcher.select-tabs", value: "Select Tabs", comment: "Select tabs  menu item")
+    public static let tabSwitcherSelectTabs = NotLocalizedString("tab.switcher.select-tabs", value: "Select Tabs", comment: "Select tabs menu item")
+
+    public static let tabSwitcherSelectTab = NotLocalizedString("tab.switcher.select-tab", value: "Select Tab", comment: "Select tab menu item")
 
     public static let tabSwitcherCloseOtherTabs = NotLocalizedString("tab.switcher.close-others", value: "Close Other Tabs", comment: "Close other tabs menu item")
 
+    public static let tabSwitcherCloseOtherTab = NotLocalizedString("tab.switcher.close-other", value: "Close Other Tab", comment: "Close single other tab menu item")
+
     public static func shareLink(withCount count: Int) -> String {
-        let message = NotLocalizedString("tabs.share.with.count", value: "Share %@ Tabs", comment: "Share links with a count")
-        return message.format(arguments: "\(count)")
+        if count == 1 {
+            return NotLocalizedString("tabs.share.one", value: "Share 1 Tab", comment: "Share 1 link")
+        } else {
+            let message = NotLocalizedString("tabs.share.with.count", value: "Share %@ Tabs", comment: "Share links with a count")
+            return message.format(arguments: "\(count)")
+        }
     }
 
     public static func bookmarkTabs(withCount count: Int) -> String {
-        let message = NotLocalizedString("bookmark.tabs.with.count", value: "Bookmark %@ Tabs", comment: "Bookmark tabs with a count")
-        return message.format(arguments: "\(count)")
+        if count == 1 {
+            return NotLocalizedString("bookmark.one.tabs", value: "Bookmark 1 Tab", comment: "Bookmark 1 tab")
+        } else {
+            let message = NotLocalizedString("bookmark.tabs.with.count", value: "Bookmark %@ Tabs", comment: "Bookmark tabs with a count")
+            return message.format(arguments: "\(count)")
+        }
     }
 
     public static let favorite = NSLocalizedString("favorite", value: "Favorite", comment: "")

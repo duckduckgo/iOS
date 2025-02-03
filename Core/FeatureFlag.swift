@@ -72,14 +72,30 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/1204167627774280/1209205869217377
     case aiChatNewTabPage
+
+    case testExperiment
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
+    public var cohortType: (any FeatureFlagCohortDescribing.Type)? {
+        switch self {
+        case .privacyProFreeTrialJan25:
+            PrivacyProFreeTrialExperimentCohort.self
+        case .testExperiment:
+            TestExperimentCohort.self
+        default:
+            nil
+        }
+    }
 
     public static var localOverrideStoreName: String = "com.duckduckgo.app.featureFlag.localOverrides"
 
     public var supportsLocalOverriding: Bool {
         switch self {
+        case .textZoom:
+            return true
+        case .testExperiment:
+            return true
         default:
             return false
         }
@@ -148,7 +164,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .crashReportOptInStatusResetting:
             return .internalOnly()
         case .privacyProFreeTrialJan25:
-            return .remoteDevelopment(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
+            return .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
         case .aiChat:
             return .remoteReleasable(.feature(.aiChat))
         case .aiChatDeepLink:
@@ -161,6 +177,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.subfeature(SyncSubfeature.seamlessAccountSwitching))
         case .aiChatNewTabPage:
             return .internalOnly()
+        case .testExperiment:
+            return .remoteReleasable(.subfeature(ExperimentTestSubfeatures.experimentTestAA))
         }
     }
 }
@@ -169,4 +187,17 @@ extension FeatureFlagger {
     public func isFeatureOn(_ featureFlag: FeatureFlag) -> Bool {
         return isFeatureOn(for: featureFlag)
     }
+
+}
+
+public enum PrivacyProFreeTrialExperimentCohort: String, FeatureFlagCohortDescribing {
+    /// Control cohort with no changes applied.
+    case control
+    /// Treatment cohort where the experiment modifications are applied.
+    case treatment
+}
+
+public enum TestExperimentCohort: String, FeatureFlagCohortDescribing {
+    case control
+    case treatment
 }

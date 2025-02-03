@@ -21,10 +21,12 @@ import SwiftUI
 import NetworkProtection
 import Subscription
 import Core
+import Networking
 
 struct NetworkProtectionRootView: View {
 
     let statusViewModel: NetworkProtectionStatusViewModel
+    let feedbackFormModel: UnifiedFeedbackFormViewModel
 
     init() {
         let subscriptionManager = AppDependencyProvider.shared.subscriptionManager
@@ -38,10 +40,15 @@ struct NetworkProtectionRootView: View {
                                                            locationListRepository: locationListRepository,
                                                            usesUnifiedFeedbackForm: usesUnifiedFeedbackForm,
                                                            subscriptionManager: subscriptionManager)
+
+        feedbackFormModel = UnifiedFeedbackFormViewModel(subscriptionManager: subscriptionManager,
+                                                         apiService: DefaultAPIService(),
+                                                         vpnMetadataCollector: DefaultVPNMetadataCollector(),
+                                                         source: .vpn)
     }
 
     var body: some View {
-        NetworkProtectionStatusView(statusModel: statusViewModel)
+        NetworkProtectionStatusView(statusModel: statusViewModel, feedbackFormModel: feedbackFormModel)
             .navigationTitle(UserText.netPNavTitle)
             .onFirstAppear {
                 Pixel.fire(pixel: .privacyProVPNSettings)

@@ -49,8 +49,8 @@ build_app() {
 
     echo "⏲️ Building the app"
     set -o pipefail && xcodebuild -project "$project_root"/DuckDuckGo-iOS.xcodeproj \
-                                  -scheme "DuckDuckGo" \
-                                  -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
+                                  -scheme "iOS Browser" \
+                                  -destination "platform=iOS Simulator,name=$destination_device,OS=$destination_os_version" \
                                   -derivedDataPath "$derived_data_path" \
                                   -skipPackagePluginValidation \
                                   -skipMacroValidation \

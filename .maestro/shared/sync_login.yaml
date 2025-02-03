@@ -10,7 +10,7 @@ appId: com.duckduckgo.mobile.ios
     when:
       visible: Allows you to upload photographs and videos
     commands:
-        - tapOn: "OK"
+        - tapOn: "Allow"
 - tapOn: Manually Enter Code
 - tapOn: Paste
 - assertVisible: Save Recovery Code

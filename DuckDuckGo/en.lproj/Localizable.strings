@@ -2477,22 +2477,22 @@ But if you *do* want a peek under the hood, you can find more information about 
 "siteFeedback.urlPlaceholder" = "Which website is broken?";
 
 /* Subscription Activation Info */
-"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple Account or an email address.";
+"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Add Email";
 
-/* Apple Account option for activation */
-"subscription.activate.appleid" = "Apple Account";
+/* Apple ID option for activation */
+"subscription.activate.appleid" = "Apple ID";
 
-/* Button text for restoring purchase via Apple Account */
+/* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Restore Purchase";
 
-/* Description for Apple Account activation */
+/* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple Account.";
+"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Edit Email";
@@ -2534,7 +2534,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.add.email.title" = "Add Email";
 
 /* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple Account.";
+"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
 
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Your subscription was purchased through the Google Play Store. To renew your subscription, please open Google Play Store subscription settings on a device signed in to the same Google Account used to originally purchase your subscription.";
@@ -2570,7 +2570,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.email.inactive.alert.title" = "Subscription Not Found";
 
 /* Alert content for not found subscription */
-"subscription.expired.alert.message" = "The subscription associated with this Apple Account is no longer active.";
+"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
 
 /* FAQ Button */
 "subscription.faq" = "FAQs and Support";
@@ -2588,7 +2588,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.found.restore" = "Restore";
 
 /* Message for the existing subscription dialog */
-"subscription.found.text" = "We found a subscription associated with this Apple Account.";
+"subscription.found.text" = "We found a subscription associated with this Apple ID.";
 
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Subscription Found";
@@ -2603,7 +2603,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.manage.title" = "Subscription";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "There is no subscription associated with this Apple Account.";
+"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Subscription Not Found";

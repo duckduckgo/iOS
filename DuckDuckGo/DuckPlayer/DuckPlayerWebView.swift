@@ -21,17 +21,25 @@
 import SwiftUI
 import Core
 import os.log
+import Combine
 
 struct DuckPlayerWebView: UIViewRepresentable {
    let url: URL
+   let coordinator: Coordinator
        
    struct Constants {
        static let referrerHeader: String = "Referer"
        static let referrerHeaderValue: String = "http://localhost"
    }
    
+   init(url: URL) {
+       self.url = url
+       Logger.duckplayer.debug("Creating new coordinator")
+       self.coordinator = Coordinator()
+   }
+   
    func makeCoordinator() -> Coordinator {
-       Coordinator()
+       coordinator
    }
    
    func makeUIView(context: Context) -> WKWebView {
@@ -68,6 +76,7 @@ struct DuckPlayerWebView: UIViewRepresentable {
    }
    
    func updateUIView(_ webView: WKWebView, context: Context) {
+       Logger.duckplayer.debug("Updating WebView with URL: \(url)")
        var request = URLRequest(url: url)
        request.setValue(Constants.referrerHeaderValue, forHTTPHeaderField: Constants.referrerHeader)
        webView.load(request)
@@ -75,9 +84,13 @@ struct DuckPlayerWebView: UIViewRepresentable {
    
    class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
        
+       /// A published to notify when Youtube navigation is requested
+       let youtubeNavigationRequestPublisher = PassthroughSubject<URL, Never>()
+       
        private func handleYouTubeWatchURL(_ url: URL) {
-           Logger.duckplayer.log("[DuckPlayer] Detected YouTube watch URL: \(url.absoluteString)")
-           // To be implemented: Hand over youtube.com/watch URLs to main browser
+           Logger.duckplayer.debug("Detected YouTube watch URL: \(url.absoluteString)")
+           Logger.duckplayer.debug("Sending URL to youtubeNavigationRequestPublisher")
+           youtubeNavigationRequestPublisher.send(url)
        }
        
        @MainActor

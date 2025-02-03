@@ -86,7 +86,7 @@ struct DuckPlayerView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
                 
-                Text("Duck Player")
+                Text(UserText.duckPlayerFeatureName)
                     .foregroundColor(.white)
                     .font(.headline)
                 

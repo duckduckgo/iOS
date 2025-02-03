@@ -79,6 +79,9 @@ final class DuckPlayerNavigationHandler: NSObject {
     /// Cancellable for observing DuckPlayer Mode changes
     private var duckPlayerModeCancellable: AnyCancellable?
     
+    /// Cancellable for observing DuckPlayer Navigation Request
+    private var duckPlayerNavigationRequestCancellable: AnyCancellable?
+    
     private struct Constants {
         static let SERPURL =  "duckduckgo.com/"
         static let refererHeader = "Referer"
@@ -131,6 +134,12 @@ final class DuckPlayerNavigationHandler: NSObject {
         self.duckPlayerOverlayUsagePixels = duckPlayerOverlayUsagePixels
         
         super.init()
+    }
+    
+    deinit {
+        // Clean up Combine subscriptions
+        duckPlayerModeCancellable?.cancel()
+        duckPlayerNavigationRequestCancellable?.cancel()
     }
     
     /// Returns the file path for the Duck Player HTML template.
@@ -576,6 +585,16 @@ final class DuckPlayerNavigationHandler: NSObject {
             }
     }
     
+    /// Register a DuckPlayer Youtube Navigation Request observer
+    /// Used when DuckPlayer requires direct Youtube Navigation
+    @MainActor
+    private func setupYoutubeNavigationRequestObserver(webView: WKWebView) {
+        duckPlayerNavigationRequestCancellable = duckPlayer.youtubeNavigationRequest
+            .sink { [weak self] url in
+                self?.redirectToYouTubeVideo(url: url, webView: webView)
+            }
+    }
+    
     /// // Handle "open in YouTube" links (duck://player/openInYoutube)
     ///
     /// - Parameter url: The `URL` used to determine the tab type.
@@ -600,11 +619,7 @@ final class DuckPlayerNavigationHandler: NSObject {
             redirectToYouTubeVideo(url: url, webView: webView, forceNewTab: true)
         }
     }
-    
-    deinit {
-        duckPlayerModeCancellable?.cancel()
-        duckPlayerModeCancellable = nil
-    }
+
     
     /// Checks if a URL contains a hash
     ///
@@ -860,6 +875,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         duckPlayerOverlayUsagePixels?.webView = webView
         duckPlayerOverlayUsagePixels?.duckPlayerMode = duckPlayer.settings.mode
         setupPlayerModeObserver()
+        setupYoutubeNavigationRequestObserver(webView: webView)
         
         // Ensure feature and mode are enabled
         guard isDuckPlayerFeatureEnabled,

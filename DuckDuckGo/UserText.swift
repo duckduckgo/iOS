@@ -240,11 +240,18 @@ public struct UserText {
     }
 
     public static func alertTitleCloseSelectedTabs(withCount count: Int) -> String {
-        let message = NotLocalizedString("tab.alert.message.close.selected.with.count", value: "Close All %@ Selected Tabs", comment: "Message to confirm closing a number of selected tabs")
+        let message = NotLocalizedString("tab.alert.message.close.selected.with.count", value: "Close %@ Selected Tabs", comment: "Message to confirm closing a number of selected tabs")
+        return message.format(arguments: "\(count)")
+    }
+
+    public static func alertTitleCloseOtherTabs(withCount count: Int) -> String {
+        let message = NotLocalizedString("tab.alert.message.close.other.with.count", value: "Close %@ Other Tabs", comment: "Message to confirm closing a number of other not currently selected tabs")
         return message.format(arguments: "\(count)")
     }
 
     public static let alertMessageCloseTheseTabs = NotLocalizedString("tab.close.these.tabs", value: "Are you sure you want to close these tabs?", comment: "Title to confirm closing some subset of tabs")
+
+    public static let alertMessageCloseOtherTabs = NotLocalizedString("tab.close.these.tabs", value: "Are you sure you want to close the other tabs?", comment: "Title to confirm closing tabs not currently selected")
 
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.close.with.title.and.address", value: "Close \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")

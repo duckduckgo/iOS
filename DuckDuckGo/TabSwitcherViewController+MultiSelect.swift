@@ -147,11 +147,11 @@ extension TabSwitcherViewController {
         present(alert, animated: true)
     }
 
-    func closeTabs(withIndexes indices: [Int]) {
+    func closeTabs(withIndexes indices: [Int], confirmTitle: String, confirmMessage: String) {
 
         let alert = UIAlertController(
-            title: UserText.alertTitleCloseSelectedTabs(withCount: indices.count),
-            message: UserText.alertMessageCloseTheseTabs,
+            title: confirmTitle,
+            message: confirmMessage,
             preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: UserText.actionCancel,
@@ -206,7 +206,10 @@ extension TabSwitcherViewController {
 
     func closeOtherTabs(retainingIndexes indices: [Int]) {
         let otherIndices = Set<Int>(tabsModel.tabs.indices).subtracting(indices)
-        closeTabs(withIndexes: [Int](otherIndices))
+        self.closeTabs(withIndexes: [Int](otherIndices),
+                       confirmTitle: UserText.alertTitleCloseOtherTabs(withCount: self.selectedTabs.count),
+                       confirmMessage: UserText.alertMessageCloseOtherTabs)
+
     }
 
 }
@@ -405,11 +408,13 @@ extension TabSwitcherViewController {
 
     func createLongPressMenuItems(forIndex index: Int) -> [UIMenuElement] {
         guard let tab = tabsModel.safeGetTabAt(index) else { return [] }
+
+        let selectedPagesCount = self.selectedPagesCount
         let bookmarksModel = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
 
         let group0 = [
             // Share Link
-            self.action(index, UserText.tabSwitcherShareLink, "Share-Apple-16", self.longPressMenuShareLink),
+            tabsModel.safeGetTabAt(index)?.link != nil ? self.action(index, UserText.tabSwitcherShareLink, "Share-Apple-16", self.longPressMenuShareLink) : nil,
 
             // Bookmark This Page (if not already bookmarked)
             shouldShowBookmarkThisPageLongPressMenuItem(tab, bookmarksModel) ? self.action(index, UserText.tabSwitcherBookmarkPage, "Bookmark-Add-16", self.longPressMenuBookmarkThisPage) : nil,
@@ -516,7 +521,10 @@ extension TabSwitcherViewController {
     }
 
     func createMultiSelectionMenuBarButton() -> UIBarButtonItem {
-        return UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), menu: createMultiSelectionMenu())
+        let menu = createMultiSelectionMenu()
+        let button = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), menu: menu)
+        button.isEnabled = !menu.children.isEmpty
+        return button
     }
 
     func createCloseAllTabsButton() -> UIBarButtonItem {
@@ -526,7 +534,9 @@ extension TabSwitcherViewController {
             return button
         } else {
             return UIBarButtonItem(title: UserText.closeTabs(withCount: selectedTabs.count), primaryAction: UIAction { _ in
-                self.closeTabs(withIndexes: [Int](self.selectedTabs))
+                self.closeTabs(withIndexes: [Int](self.selectedTabs),
+                               confirmTitle: UserText.alertTitleCloseSelectedTabs(withCount: self.selectedTabs.count),
+                               confirmMessage: UserText.alertMessageCloseTheseTabs)
             })
         }
     }
@@ -550,7 +560,9 @@ extension TabSwitcherViewController {
 extension TabSwitcherViewController {
 
     func selectModeCloseSelectedTabs() {
-        closeTabs(withIndexes: [Int](selectedTabs))
+        self.closeTabs(withIndexes: [Int](self.selectedTabs),
+                       confirmTitle: UserText.alertTitleCloseSelectedTabs(withCount: self.selectedTabs.count),
+                       confirmMessage: UserText.alertMessageCloseTheseTabs)
     }
 
     func selectModeCloseOtherTabs() {

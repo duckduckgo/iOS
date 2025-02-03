@@ -341,11 +341,11 @@ private final class MockFreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagEx
     var fireSubscriptionStartedYearlyPixelCalled = false
     var cohortToReturn = PrivacyProFreeTrialExperimentCohort.treatment
 
-    func getCohortIfEnabled() -> (any FlagCohort)? {
+    func getCohortIfEnabled() -> (any FeatureFlagCohortDescribing)? {
         cohortToReturn
     }
 
-    func oneTimeParameters(for cohort: any FlagCohort) -> [String: String]? {
+    func oneTimeParameters(for cohort: any FeatureFlagCohortDescribing) -> [String: String]? {
         [
             FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentName: rawValue,
             FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentCohort: cohortToReturn.rawValue

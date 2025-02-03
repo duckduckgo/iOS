@@ -74,7 +74,7 @@ public enum FeatureFlag: String {
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
-    public var cohortType: (any FlagCohort.Type)? {
+    public var cohortType: (any FeatureFlagCohortDescribing.Type)? {
         switch self {
         case .privacyProFreeTrialJan25:
             PrivacyProFreeTrialExperimentCohort.self
@@ -185,14 +185,14 @@ extension FeatureFlagger {
 
 }
 
-public enum PrivacyProFreeTrialExperimentCohort: String, FlagCohort {
+public enum PrivacyProFreeTrialExperimentCohort: String, FeatureFlagCohortDescribing {
     /// Control cohort with no changes applied.
     case control
     /// Treatment cohort where the experiment modifications are applied.
     case treatment
 }
 
-public enum TestExperimentCohort: String, FlagCohort {
+public enum TestExperimentCohort: String, FeatureFlagCohortDescribing {
     case control
     case treatment
 }

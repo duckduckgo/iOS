@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
         "branch" : "sabrina/experiment-overrides2",
-        "revision" : "f5693604430f35e10ed27587cc12fe27ba151258"
+        "revision" : "d7d28415e2b11d2d5482edabc056d783cbe8fe8f"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "47c26dc32b94cdbcef3e6157497147917678c25c",
-        "version" : "16.1.0"
+        "revision" : "676d42679296a175169e433f2332e55644151edd",
+        "version" : "16.2.0"
       }
     },
     {

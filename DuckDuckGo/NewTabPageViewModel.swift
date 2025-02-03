@@ -43,7 +43,7 @@ final class NewTabPageViewModel: ObservableObject {
         isShowingSettings = false
 
         // This is just temporarily here to run an A/A test to check the new experiment framework works as expected
-        guard let cohort = AppDependencyProvider.shared.featureFlagger.getCohortIfEnabled(for: FeatureFlag.testExperiment, allowOverride: true) as? TestExperimentCohort else { return }
+        guard let cohort = AppDependencyProvider.shared.featureFlagger.resolveCohort(for: FeatureFlag.testExperiment) as? TestExperimentCohort else { return }
         switch cohort {
 
         case .control:

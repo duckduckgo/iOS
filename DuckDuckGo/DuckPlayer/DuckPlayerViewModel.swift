@@ -59,17 +59,16 @@ final class DuckPlayerViewModel: ObservableObject {
         return URL(string: "\(Constants.baseURL)\(videoID)?\(queryString)")
     }
     
-    func onFirstAppear() {
-        // Add any initialization logic here
-    }
-    
     func handleYouTubeNavigation(_ url: URL) {
         youtubeNavigationRequestPublisher.send(url)
     }
     
     func openInYouTube() {
-        if let url = getVideoURL() {
-            handleYouTubeNavigation(url)
-        }
+        let url: URL = .youtube(videoID)
+        handleYouTubeNavigation(url)
+    }
+    
+    func onFirstAppear() {
+        // Add any initialization logic here
     }
 }

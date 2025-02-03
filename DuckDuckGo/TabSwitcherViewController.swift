@@ -53,7 +53,7 @@ class TabSwitcherViewController: UIViewController {
         }
 
         var isLarge: Bool {
-            return [InterfaceMode.singleSelectLarge, .multiSelectAvailableLarge, .multiSelectEnabledLarge].contains(self)
+            return [InterfaceMode.singleSelectLarge, .multiSelectAvailableLarge, .multiSelectedEditingLarge].contains(self)
         }
 
         var isNormal: Bool {
@@ -64,8 +64,8 @@ class TabSwitcherViewController: UIViewController {
         case singleSelectLarge
         case multiSelectAvailableNormal
         case multiSelectAvailableLarge
-        case multiSelectEnabledNormal
-        case multiSelectEnabledLarge
+        case multiSelectEditingNormal
+        case multiSelectedEditingLarge
 
     }
 

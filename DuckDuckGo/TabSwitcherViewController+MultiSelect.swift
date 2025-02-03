@@ -217,9 +217,9 @@ extension TabSwitcherViewController {
     func updateUIForSelectionMode() {
         if featureFlagger.isFeatureOn(.tabManagerMultiSelection) {
             if AppWidthObserver.shared.isLargeWidth {
-                interfaceMode = isEditing ? .multiSelectEnabledLarge : .multiSelectAvailableLarge
+                interfaceMode = isEditing ? .multiSelectedEditingLarge : .multiSelectAvailableLarge
             } else {
-                interfaceMode = isEditing ? .multiSelectEnabledNormal : .multiSelectAvailableNormal
+                interfaceMode = isEditing ? .multiSelectEditingNormal : .multiSelectAvailableNormal
             }
         } else {
             if AppWidthObserver.shared.isLargeWidth {
@@ -259,12 +259,12 @@ extension TabSwitcherViewController {
                 createTabStyleSwitcherBarButton(),
             ]
 
-        case .multiSelectEnabledNormal:
+        case .multiSelectEditingNormal:
             topBarView.topItem?.leftBarButtonItems = [
                 createSelectAllButton(),
             ]
 
-        case .multiSelectEnabledLarge:
+        case .multiSelectedEditingLarge:
             topBarView.topItem?.leftBarButtonItems = [
                 createDoneBarButton(),
             ]
@@ -292,12 +292,12 @@ extension TabSwitcherViewController {
                 createEditBarButton(),
             ]
 
-        case .multiSelectEnabledNormal:
+        case .multiSelectEditingNormal:
             topBarView.topItem?.rightBarButtonItems = [
                 createDoneBarButton(),
             ]
 
-        case .multiSelectEnabledLarge:
+        case .multiSelectedEditingLarge:
             topBarView.topItem?.rightBarButtonItems = [
                 createMultiSelectionMenuBarButton(),
             ]
@@ -319,7 +319,7 @@ extension TabSwitcherViewController {
             ]
             toolbar.isHidden = false
 
-        case .multiSelectEnabledNormal:
+        case .multiSelectEditingNormal:
             toolbar.items = [
                 createCloseAllTabsButton(),
                 UIBarButtonItem.flexibleSpace(),
@@ -327,7 +327,7 @@ extension TabSwitcherViewController {
             ]
             toolbar.isHidden = false
 
-        case .multiSelectEnabledLarge,
+        case .multiSelectedEditingLarge,
                 .multiSelectAvailableLarge,
                 .singleSelectLarge:
             toolbar.isHidden = true
@@ -335,9 +335,19 @@ extension TabSwitcherViewController {
 
     }
 
-    func createMultiSelectionMenu() -> UIMenu {
-        var children = [UIMenuElement]()
+    var selectedPagesCount: Int {
+        return selectedTabs.compactMap {
+            tabsModel.safeGetTabAt($0)
+        }.compactMap {
+            $0.link
+        }.count
+    }
 
+    func createMultiSelectionMenu() -> UIMenu {
+        let selectedPagesCount = self.selectedPagesCount
+
+        var children = [UIMenuElement]()
+        
         if self.interfaceMode.isLarge {
             if selectedTabs.count == tabsModel.count {
                 children.append(action(UserText.deselectAllTabs, systemImage: "circle", self.selectModeDeselectAllTabs))
@@ -346,26 +356,34 @@ extension TabSwitcherViewController {
             }
         }
 
-        if selectedTabs.count > 0 {
+        if selectedPagesCount > 0 {
             // share
             // bookmark
             children.append(UIMenu(title: "", options: .displayInline, children: [
-                action(UserText.shareLink(withCount: selectedTabs.count), "Share-Apple-16", self.selectModeShareLink),
-                action(UserText.bookmarkTabs(withCount: selectedTabs.count), "Bookmark-Add-16", self.selectModeBookmarkSelected),
+                action(UserText.shareLink(withCount: selectedPagesCount), "Share-Apple-16", self.selectModeShareLink),
+                action(UserText.bookmarkTabs(withCount: selectedPagesCount), "Bookmark-Add-16", self.selectModeBookmarkSelected),
             ]))
         }
 
-        children.append(UIMenu(title: "", options: .displayInline, children: [
-            action(UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.selectModeBookmarkAll),
-        ]))
-
-        if selectedTabs.count > 0 {
-            // close
-            // close other
+        if selectedTabs.count != tabsModel.count && selectedPagesCount > 0 {
+            // bookmark all
             children.append(UIMenu(title: "", options: .displayInline, children: [
-                action(UserText.closeTabs(withCount: selectedTabs.count), "Close-16", destructive: true, self.selectModeCloseSelectedTabs),
-                action(UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.selectModeCloseOtherTabs),
+                action(UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.selectModeBookmarkAll),
             ]))
+        }
+
+        if selectedTabs.count > 0 && tabsModel.count > selectedTabs.count {
+            if interfaceMode.isLarge {
+                // close
+                children.append(UIMenu(title: "", options: .displayInline, children: [
+                    action(UserText.closeTabs(withCount: selectedTabs.count), "Close-16", destructive: true, self.selectModeCloseSelectedTabs),
+                ]))
+            } else {
+                // close other (close is on the button)
+                children.append(UIMenu(title: "", options: .displayInline, children: [
+                    action(UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.selectModeCloseOtherTabs),
+                ]))
+            }
         }
 
         return UIMenu(title: "", children: children)
@@ -394,12 +412,13 @@ extension TabSwitcherViewController {
             self.action(index, UserText.tabSwitcherShareLink, "Share-Apple-16", self.longPressMenuShareLink),
 
             // Bookmark This Page (if not already bookmarked)
-            tab.link?.url != nil && bookmarksModel.bookmark(for: tab.link!.url) == nil ? self.action(index, UserText.tabSwitcherBookmarkPage, "Bookmark-Add-16", self.longPressMenuBookmarkThisPage) : nil,
+            shouldShowBookmarkThisPageLongPressMenuItem(tab, bookmarksModel) ? self.action(index, UserText.tabSwitcherBookmarkPage, "Bookmark-Add-16", self.longPressMenuBookmarkThisPage) : nil,
         ]
 
         let group1 = [
+            // IMO: Doesn't make sense
             // Bookmark All Tabs -> shortcut to same functionality at top level
-            self.action(index, UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.longPressMenuBookmarkAllTabs),
+            // self.action(index, UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.longPressMenuBookmarkAllTabs),
 
             // Select Tabs -> switch to selection mode with this tab selected (if not already selected)
             selectedTabs.contains(index) ? nil : self.action(index, UserText.tabSwitcherSelectTabs, "Check-Circle-16", self.longPressMenuSelectTabs),
@@ -421,6 +440,12 @@ extension TabSwitcherViewController {
             // -- divider --
             UIMenu(title: "", options: .displayInline, children: group2.compactMap { $0 }),
         ]
+    }
+
+    private func shouldShowBookmarkThisPageLongPressMenuItem(_ tab: Tab, _ bookmarksModel: MenuBookmarksViewModel) -> Bool {
+        return tab.link?.url != nil &&
+        bookmarksModel.bookmark(for: tab.link!.url) == nil &&
+        tabsModel.count > selectedTabs.count
     }
 
 }

@@ -48,11 +48,11 @@ final class MockFeatureFlagger: FeatureFlagger {
         return nil
     }
 
-    func getCohortIfEnabled<Flag>(for featureFlag: Flag, allowOverride: Bool) -> (any FeatureFlagCohortDescribing)? where Flag: FeatureFlagDescribing {
+    func resolveCohort<Flag>(for featureFlag: Flag, allowOverride: Bool) -> (any FeatureFlagCohortDescribing)? where Flag: FeatureFlagDescribing {
         return cohortToReturn
     }
 
-    func getAllActiveExperiments() -> Experiments {
+    var allActiveExperiments: Experiments {
         mockActiveExperiments
     }
 }

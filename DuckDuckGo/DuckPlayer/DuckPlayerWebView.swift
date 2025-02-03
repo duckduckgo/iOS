@@ -87,6 +87,10 @@ struct DuckPlayerWebView: UIViewRepresentable {
        /// A published to notify when Youtube navigation is requested
        let youtubeNavigationRequestPublisher = PassthroughSubject<URL, Never>()
        
+       deinit {
+           youtubeNavigationRequestPublisher.send(completion: .finished)
+       }
+       
        private func handleYouTubeWatchURL(_ url: URL) {
            Logger.duckplayer.debug("Detected YouTube watch URL: \(url.absoluteString)")
            Logger.duckplayer.debug("Sending URL to youtubeNavigationRequestPublisher")

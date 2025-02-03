@@ -361,7 +361,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
             .sink { [weak self, weak hostingController] url in
                 Logger.duckplayer.debug("Received YouTube navigation request: \(url)")
                 self?.youtubeNavigationRequest.send(url)
-                hostingController?.dismiss(animated: true)                
+                hostingController?.dismiss(animated: true)
             }
             .store(in: &cancellables)
 

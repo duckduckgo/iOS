@@ -21,4 +21,3 @@ protocol Navigatable {
     var canGoBack: Bool { get }
     var canGoForward: Bool { get }
 }
-

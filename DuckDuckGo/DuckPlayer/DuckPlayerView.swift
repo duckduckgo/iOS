@@ -34,6 +34,7 @@ struct DuckPlayerView: View {
         static let videoAspectRatio: CGFloat = 9/16 // 16:9 in portrait
         static let daxLogoSize: CGFloat = 24.0
         static let daxLogo = "Home"
+        static let bottomButtonHeight: CGFloat = 44
     }
     
     
@@ -48,6 +49,7 @@ struct DuckPlayerView: View {
                     .frame(height: Constants.headerHeight)
                 
                 // Video Container
+                Spacer()
                 GeometryReader { geometry in
                     ZStack {
                         RoundedRectangle(cornerRadius: Constants.cornerRadius)
@@ -68,16 +70,26 @@ struct DuckPlayerView: View {
                         y: geometry.size.height / 2
                     )
                 }
-                
-                Spacer()
-                
+        
                 if viewModel.shouldShowYouTubeButton {
-                    Button(action: { viewModel.openInYouTube() }, label: {
-                        Text("Watch this video on YouTube")
-                            .daxBodyRegular()
-                            .background(Color(designSystemColor: .backgroundSheets))
-                    })
-                }                
+                    Button {
+                        viewModel.openInYouTube()
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.gray.opacity(0.2))
+                            Text("Watch this video on YouTube")
+                                .daxButton()
+                                .daxBodyRegular()
+                                .foregroundColor(Color(designSystemColor: .accent))
+                                .colorScheme(.dark)
+                        }
+                    }
+                    .frame(height: Constants.bottomButtonHeight)
+                    .padding(.horizontal, Constants.horizontalPadding)
+                    .padding(.bottom, Constants.horizontalPadding)
+                }
+                
             }
         }
         .onFirstAppear {

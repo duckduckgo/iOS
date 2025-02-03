@@ -307,7 +307,9 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(self.view, voiceSearchHelper: voiceSearchHelper)
+        viewCoordinator = MainViewFactory.createViewHierarchy(self.view,
+                                                              voiceSearchHelper: voiceSearchHelper,
+                                                              featureFlagger: featureFlagger)
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
 
         viewCoordinator.toolbarBackButton.action = #selector(onBackPressed)
@@ -1242,7 +1244,7 @@ class MainViewController: UIViewController {
     func refreshMenuButtonState() {
         if !homeTabManager.isNewTabPageSectionsEnabled && newTabPageViewController != nil {
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
-            viewCoordinator.updateTabbarWithState(toolBar: viewCoordinator.toolbar, state: .newTab)
+            viewCoordinator.updateToolbarWithState(.newTab)
             presentedMenuButton.setState(.menuImage, animated: false)
 
         } else {
@@ -1255,7 +1257,7 @@ class MainViewController: UIViewController {
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
 
             if let currentTab = currentTab {
-                viewCoordinator.updateTabbarWithState(toolBar: viewCoordinator.toolbar, state: .pageLoaded(currentTab: currentTab))
+                viewCoordinator.updateToolbarWithState(.pageLoaded(currentTab: currentTab))
             }
             presentedMenuButton.setState(expectedState, animated: false)
         }

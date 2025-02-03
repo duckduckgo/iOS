@@ -28,23 +28,39 @@ class ToolbarHandlerTests: XCTestCase {
     var toolbarHandler: ToolbarHandler!
     var mockToolbar: UIToolbar!
     var mockNavigatable: MockNavigatable!
+    var mockFeatureFlagger: MockFeatureFlagger!
 
     override func setUp() {
         super.setUp()
-        toolbarHandler = ToolbarHandler()
         mockToolbar = UIToolbar()
         mockNavigatable = MockNavigatable(canGoBack: true, canGoForward: false)
+        mockFeatureFlagger = MockFeatureFlagger()
+        toolbarHandler = ToolbarHandler(toolbar: mockToolbar, featureFlagger: mockFeatureFlagger)
     }
 
     override func tearDown() {
         toolbarHandler = nil
         mockToolbar = nil
         mockNavigatable = nil
+        mockFeatureFlagger = nil
         super.tearDown()
     }
 
-    func testUpdateTabbarWithStateNewTab() {
-        toolbarHandler.updateTabbarWithState(toolBar: mockToolbar, state: .newTab)
+    func testUpdateToolbarWithStateNewTabFeatureOff() {
+        mockFeatureFlagger.enabledFeatureFlags = []
+        toolbarHandler.updateToolbarWithState(.newTab)
+
+        XCTAssertEqual(mockToolbar.items?.count, 9)
+        XCTAssertEqual(mockToolbar.items?[0].title, UserText.keyCommandBrowserBack)
+        XCTAssertEqual(mockToolbar.items?[2].title, UserText.keyCommandBrowserForward)
+        XCTAssertEqual(mockToolbar.items?[4].title, UserText.actionForgetAll)
+        XCTAssertEqual(mockToolbar.items?[6].title, UserText.tabSwitcherAccessibilityLabel)
+        XCTAssertEqual(mockToolbar.items?[8].title, UserText.actionOpenBookmarks)
+    }
+
+    func testUpdateToolbarWithStateNewTabFeatureOn() {
+        mockFeatureFlagger.enabledFeatureFlags = [.aiChatNewTabPage]
+        toolbarHandler.updateToolbarWithState(.newTab)
 
         XCTAssertEqual(mockToolbar.items?.count, 9)
         XCTAssertEqual(mockToolbar.items?[0].title, UserText.actionOpenBookmarks)
@@ -54,8 +70,8 @@ class ToolbarHandlerTests: XCTestCase {
         XCTAssertEqual(mockToolbar.items?[8].title, UserText.menuButtonHint)
     }
 
-    func testUpdateTabbarWithStatePageLoaded() {
-        toolbarHandler.updateTabbarWithState(toolBar: mockToolbar, state: .pageLoaded(currentTab: mockNavigatable))
+    func testUpdateToolbarWithStatePageLoaded() {
+        toolbarHandler.updateToolbarWithState(.pageLoaded(currentTab: mockNavigatable))
 
         XCTAssertEqual(mockToolbar.items?.count, 9)
         XCTAssertEqual(mockToolbar.items?[0].title, UserText.keyCommandBrowserBack)
@@ -68,16 +84,35 @@ class ToolbarHandlerTests: XCTestCase {
         XCTAssertFalse(toolbarHandler.forwardButton.isEnabled)
     }
 
-    func testUpdateTabbarWithStateNoChange() {
-        toolbarHandler.updateTabbarWithState(toolBar: mockToolbar, state: .newTab)
+    func testUpdateToolbarWithStateNoChange() {
+        toolbarHandler.updateToolbarWithState(.newTab)
         let initialItems = mockToolbar.items
 
-        toolbarHandler.updateTabbarWithState(toolBar: mockToolbar, state: .newTab)
+        toolbarHandler.updateToolbarWithState(.newTab)
 
         XCTAssertEqual(mockToolbar.items, initialItems)
     }
-}
 
+    func testBackButtonEnabledState() {
+        mockNavigatable = MockNavigatable(canGoBack: true, canGoForward: false)
+        toolbarHandler.updateToolbarWithState(.pageLoaded(currentTab: mockNavigatable))
+        XCTAssertTrue(toolbarHandler.backButton.isEnabled)
+
+        mockNavigatable = MockNavigatable(canGoBack: false, canGoForward: false)
+        toolbarHandler.updateToolbarWithState(.pageLoaded(currentTab: mockNavigatable))
+        XCTAssertFalse(toolbarHandler.backButton.isEnabled)
+    }
+
+    func testForwardButtonEnabledState() {
+        mockNavigatable = MockNavigatable(canGoBack: false, canGoForward: true)
+        toolbarHandler.updateToolbarWithState(.pageLoaded(currentTab: mockNavigatable))
+        XCTAssertTrue(toolbarHandler.forwardButton.isEnabled)
+
+        mockNavigatable = MockNavigatable(canGoBack: false, canGoForward: false)
+        toolbarHandler.updateToolbarWithState(.pageLoaded(currentTab: mockNavigatable))
+        XCTAssertFalse(toolbarHandler.forwardButton.isEnabled)
+    }
+}
 
 // MARK: - MockNavigatable
 

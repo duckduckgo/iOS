@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import BrowserServicesKit
 
 enum ToolbarContentState: Equatable {
     case newTab
@@ -36,10 +37,13 @@ enum ToolbarContentState: Equatable {
 }
 
 protocol ToolbarStateHandling {
-    func updateTabbarWithState(toolBar: UIToolbar, state: ToolbarContentState)
+    func updateToolbarWithState(_ state: ToolbarContentState)
 }
 
 final class ToolbarHandler: ToolbarStateHandling {
+    weak var toolbar: UIToolbar?
+    private let featureFlagger: FeatureFlagger
+
    lazy var backButton = createBarButtonItem(title: UserText.keyCommandBrowserBack, imageName: "BrowsePrevious")
    lazy var fireButton = createBarButtonItem(title: UserText.actionForgetAll, imageName: "Fire")
    lazy var forwardButton = createBarButtonItem(title: UserText.keyCommandBrowserForward, imageName: "BrowseNext")
@@ -50,30 +54,47 @@ final class ToolbarHandler: ToolbarStateHandling {
 
     private var state: ToolbarContentState?
 
+    init(toolbar: UIToolbar, featureFlagger: FeatureFlagger) {
+        self.toolbar = toolbar
+        self.featureFlagger = featureFlagger
+    }
+
     // MARK: - Public Methods
 
-    func updateTabbarWithState(toolBar: UIToolbar, state: ToolbarContentState) {
-        /// We always want to update the navigation buttons if the state is page loaded
-        if case let .pageLoaded(currentTab) = state {
-            updateNavigationButtons(currentTab)
-        }
+    func updateToolbarWithState(_ state: ToolbarContentState) {
+        guard let toolbar = toolbar else { return }
 
+        updateNavigationButtonsWithState(state)
+
+        /// Avoid unnecessary updates if the state hasn't changed
         guard self.state != state else { return }
-
         self.state = state
 
-        let buttons: [UIBarButtonItem]
-        switch state {
-        case .pageLoaded:
-            buttons = createPageLoadedButtons()
-        case .newTab:
-            buttons = createNewTabButtons()
-        }
-        // TODO: Add feature flag, always return createPageLoadedButtons in case the new feature is off
-        toolBar.setItems(buttons, animated: false)
+        let buttons: [UIBarButtonItem] = {
+            switch state {
+            case .pageLoaded:
+                return createPageLoadedButtons()
+            case .newTab:
+                return featureFlagger.isFeatureOn(.aiChatNewTabPage) ? createNewTabButtons() : createLegacyNewTabButtons()
+            }
+        }()
+
+        toolbar.setItems(buttons, animated: false)
     }
 
     // MARK: - Private Methods
+
+    private func updateNavigationButtonsWithState(_ state: ToolbarContentState) {
+        let currentTab: Navigatable? = {
+            if case let .pageLoaded(tab) = state {
+                return tab
+            }
+            return nil
+        }()
+
+        backButton.isEnabled = currentTab?.canGoBack ?? false
+        forwardButton.isEnabled = currentTab?.canGoForward ?? false
+    }
 
     private func createBarButtonItem(title: String, imageName: String) -> UIBarButtonItem {
         return UIBarButtonItem(title: title, image: UIImage(named: imageName), primaryAction: nil)
@@ -107,8 +128,17 @@ final class ToolbarHandler: ToolbarStateHandling {
         ]
     }
 
-    private func updateNavigationButtons(_ currentTab: Navigatable) {
-        backButton.isEnabled = currentTab.canGoBack
-        forwardButton.isEnabled = currentTab.canGoForward
+    private func createLegacyNewTabButtons() -> [UIBarButtonItem] {
+        return [
+            backButton,
+            .flexibleSpace(),
+            forwardButton,
+            .flexibleSpace(),
+            fireButton,
+            .flexibleSpace(),
+            tabSwitcherButton,
+            .flexibleSpace(),
+            bookmarkButton
+        ]
     }
 }

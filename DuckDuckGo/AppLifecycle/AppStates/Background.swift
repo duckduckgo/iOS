@@ -85,10 +85,12 @@ struct Background: AppState {
         let syncService = appDependencies.syncService
         let syncDataProviders = appDependencies.syncDataProviders
         let uiService = appDependencies.uiService
+        let featureFlagger = appDependencies.mainViewController.featureFlagger
 
         if autoClear.isClearingEnabled || privacyStore.authenticationEnabled {
             uiService.displayBlankSnapshotWindow(voiceSearchHelper: voiceSearchHelper,
-                                                 addressBarPosition: appSettings.currentAddressBarPosition)
+                                                 addressBarPosition: appSettings.currentAddressBarPosition,
+                                                 featureFlagger: featureFlagger)
         }
         autoClear.startClearingTimer()
         autofillLoginSession.endSession()

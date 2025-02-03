@@ -46,7 +46,7 @@ class MainViewCoordinator {
     var toolbarBookmarksButton: UIBarButtonItem { toolbarHandler.bookmarkButton }
 
     let constraints = Constraints()
-    private let toolbarHandler = ToolbarHandler()
+    var toolbarHandler: ToolbarHandler!
 
     // The default after creating the hiearchy is top
     var addressBarPosition: AddressBarPosition = .top
@@ -157,8 +157,8 @@ class MainViewCoordinator {
         constraints.statusBackgroundBottomToSafeAreaTop.isActive = active
     }
 
-    func updateTabbarWithState(toolBar: UIToolbar, state: ToolbarContentState) {
-        toolbarHandler.updateTabbarWithState(toolBar: toolBar, state: state)
+    func updateToolbarWithState(_ state: ToolbarContentState) {
+        toolbarHandler.updateToolbarWithState(state)
     }
 
 }

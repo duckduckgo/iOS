@@ -18,23 +18,28 @@
 //
 
 import UIKit
+import BrowserServicesKit
 
 class MainViewFactory {
 
     private let coordinator: MainViewCoordinator
     private let voiceSearchHelper: VoiceSearchHelperProtocol
+    private let featureFlagger: FeatureFlagger
 
     var superview: UIView {
         coordinator.superview
     }
 
-    private init(superview: UIView, voiceSearchHelper: VoiceSearchHelperProtocol) {
+    private init(superview: UIView, voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger) {
         coordinator = MainViewCoordinator(superview: superview)
         self.voiceSearchHelper = voiceSearchHelper
+        self.featureFlagger = featureFlagger
     }
 
-    static func createViewHierarchy(_ superview: UIView, voiceSearchHelper: VoiceSearchHelperProtocol) -> MainViewCoordinator {
-        let factory = MainViewFactory(superview: superview, voiceSearchHelper: voiceSearchHelper)
+    static func createViewHierarchy(_ superview: UIView,
+                                    voiceSearchHelper: VoiceSearchHelperProtocol,
+                                    featureFlagger: FeatureFlagger) -> MainViewCoordinator {
+        let factory = MainViewFactory(superview: superview, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
         factory.createViews()
         factory.disableAutoresizingOnImmediateSubviews(superview)
         factory.constrainViews()
@@ -142,8 +147,8 @@ extension MainViewFactory {
         coordinator.toolbar = HitTestingToolbar()
         coordinator.toolbar.isTranslucent = false
         superview.addSubview(coordinator.toolbar)
-
-        coordinator.updateTabbarWithState(toolBar: coordinator.toolbar, state: .newTab)
+        coordinator.toolbarHandler = ToolbarHandler(toolbar: coordinator.toolbar, featureFlagger: featureFlagger)
+        coordinator.updateToolbarWithState(.newTab)
     }
 
     final class LogoBackgroundView: UIView { }

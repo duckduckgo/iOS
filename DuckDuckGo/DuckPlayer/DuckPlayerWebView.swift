@@ -32,10 +32,10 @@ struct DuckPlayerWebView: UIViewRepresentable {
        static let referrerHeaderValue: String = "http://localhost"
    }
    
-   init(url: URL) {
+   init(url: URL, viewModel: DuckPlayerViewModel) {
        self.url = url
        Logger.duckplayer.debug("Creating new coordinator")
-       self.coordinator = Coordinator()
+       self.coordinator = Coordinator(viewModel: viewModel)
    }
    
    func makeCoordinator() -> Coordinator {
@@ -83,18 +83,16 @@ struct DuckPlayerWebView: UIViewRepresentable {
    }
    
    class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
+       let viewModel: DuckPlayerViewModel
        
-       /// A publisher to notify when Youtube navigation is required
-       let youtubeNavigationRequestPublisher = PassthroughSubject<URL, Never>()
-       
-       deinit {
-           youtubeNavigationRequestPublisher.send(completion: .finished)
+       init(viewModel: DuckPlayerViewModel) {
+           self.viewModel = viewModel
+           super.init()
        }
        
        private func handleYouTubeWatchURL(_ url: URL) {
            Logger.duckplayer.debug("Detected YouTube watch URL: \(url.absoluteString)")
-           Logger.duckplayer.debug("Sending URL to youtubeNavigationRequestPublisher")
-           youtubeNavigationRequestPublisher.send(url)
+           viewModel.handleYouTubeNavigation(url)
        }
        
        @MainActor

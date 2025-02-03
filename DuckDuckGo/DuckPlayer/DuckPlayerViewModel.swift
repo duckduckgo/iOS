@@ -22,6 +22,9 @@ import Foundation
 
 final class DuckPlayerViewModel: ObservableObject {
     
+    /// A publisher to notify when Youtube navigation is required
+    let youtubeNavigationRequestPublisher = PassthroughSubject<URL, Never>()
+    
     enum Constants {
         static let baseURL = "https://www.youtube-nocookie.com/embed/"
         
@@ -37,6 +40,7 @@ final class DuckPlayerViewModel: ObservableObject {
     
     let videoID: String
     var appSettings: AppSettings
+    @Published private(set) var url: URL?
     let defaultParameters: [String: String] = [
         Constants.relParameter: Constants.disabled,
         Constants.playsInlineParameter: Constants.enabled
@@ -45,6 +49,7 @@ final class DuckPlayerViewModel: ObservableObject {
     init(videoID: String, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         self.videoID = videoID
         self.appSettings = appSettings
+        self.url = getVideoURL()
     }
     
     func getVideoURL() -> URL? {
@@ -56,5 +61,15 @@ final class DuckPlayerViewModel: ObservableObject {
     
     func onFirstAppear() {
         // Add any initialization logic here
+    }
+    
+    func handleYouTubeNavigation(_ url: URL) {
+        youtubeNavigationRequestPublisher.send(url)
+    }
+    
+    func openInYouTube() {
+        if let url = getVideoURL() {
+            handleYouTubeNavigation(url)
+        }
     }
 }

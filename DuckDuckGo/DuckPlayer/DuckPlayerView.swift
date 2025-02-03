@@ -70,6 +70,14 @@ struct DuckPlayerView: View {
                 }
                 
                 Spacer()
+                
+                Button(action: { viewModel.openInYouTube() }, label: {
+                    Text("Watch this video on YouTube")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 14))
+                        .padding(.vertical, 12)
+                })
+                .background(Color(UIColor.systemBackground))
             }
         }
         .onFirstAppear {

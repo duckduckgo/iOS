@@ -347,16 +347,16 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         }
         
         Logger.duckplayer.debug("Creating webView for URL: \(url)")
-        // Create webView and subscribe to YouTube navigation events
-        let webView = DuckPlayerWebView(url: url)
+        // Create webView with viewModel
+        let webView = DuckPlayerWebView(url: url, viewModel: viewModel)
         
         let duckPlayerView = DuckPlayerView(viewModel: viewModel, webView: webView)
         let hostingController = UIHostingController(rootView: duckPlayerView)
         hostingController.modalPresentationStyle = .formSheet
         hostingController.isModalInPresentation = false
 
-        // Subscribe to the coordinator's publisher directly
-        webView.coordinator.youtubeNavigationRequestPublisher
+        // Subscribe to the viewModel's publisher
+        viewModel.youtubeNavigationRequestPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self, weak hostingController] url in
                 Logger.duckplayer.debug("Received YouTube navigation request: \(url)")

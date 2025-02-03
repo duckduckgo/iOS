@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Téléchargements";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "Chat IA";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Modifier le signet";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Coller et valider";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Imprimer";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Imprimer";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Actualiser";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Votre signalement contribue à améliorer DuckDuckGo pour tous.";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Non";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "La désactivation des protections de confidentialité a-t-elle résolu le problème sur ce site ?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Oui";
+/* No comment provided by engineer. */
+"Confirm" = "Confirmer";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Ignorer";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Bien joué !";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Pensez-y : chaque fois que vous naviguez avec moi, une publicité douteuse disparaît. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Bien joué !";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "C'est DuckDuckGo Search. Privé. Rapide. Moins de publicités.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "J'ai compris !";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Essayez de visiter un site !";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Vos recherches sur DuckDuckGo sont toujours anonymes.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Prêt(e) à commencer ?\nEssayez une recherche !";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "casting d'avatar";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "météo locale";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Surprenez-moi !";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Trouvez **DuckDuckGo** dans la liste, puis appuyez sur **Contrôle VPN** pour l'ajouter";
@@ -1083,7 +1074,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai est une fonctionnalité optionnelle qui vous permet de discuter anonymement avec des modèles de chat IA tiers populaires. Vos discussions ne servent pas à entraîner l'IA.\n[En savoir plus](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Afficher Duck.ai pendant la recherche";
+"duckai.settings.enable.address-bar-searching-toggle" = "Afficher Duck.ai sur la page de recherche";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Afficher Duck.ai dans le menu du navigateur";
@@ -1658,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Menu de navigation";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Nom d'hôte de politique des messages";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Retour";
 
@@ -1949,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Choisissez votre navigateur";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Bloquez les fenêtres contextuelles de cookies";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Bloquez les publicités douteuses";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Effacer rapidement les données de navigation";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Faire une recherche privée par défaut";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Bloquer les traqueurs tiers";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Protections de la confidentialité activées !";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Facile d'accès";
@@ -2020,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "C'est parti !";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Bonjour.\n\nEnvie de profiter d'Internet d'une meilleure façon plus confidentielle ?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Ajouter un widget";
@@ -2138,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Vous avez atteint le nombre maximal de mots de passe. Veuillez en supprimer quelques-uns pour reprendre la synchronisation.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "La synchronisation a rencontré une erreur. Essayez de désactiver la synchronisation sur cet appareil, puis reconnectez-vous à l’aide d’un autre appareil ou de votre code de récupération.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Synchronisation suspendue";
 
@@ -2205,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Ouvrir dans une autre application ?";
+
+/* No comment provided by engineer. */
+"Reset" = "Réinitialiser";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Rechercher ou saisir une adresse";
@@ -2520,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Quel site Web pose problème ?";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Accédez à votre abonnement Privacy Pro sur cet appareil via un identifiant Apple ou via une adresse e-mail.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Nom d'hôte enregistré : %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Ajouter un e-mail";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Identifiant Apple";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Rétablir l'achat";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Rétablissez votre achat pour activer votre abonnement sur cet appareil.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Votre abonnement est automatiquement disponible dans DuckDuckGo sur n'importe quel appareil connecté à votre identifiant Apple.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Modifier l'email";
@@ -2577,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Ajouter un e-mail";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro est disponible sur tous les appareils connectés au même identifiant Apple.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Votre abonnement a été acheté via le Google Play Store. Pour renouveler votre abonnement, ouvrez les paramètres d'abonnement du Google Play Store sur un appareil connecté au même compte Google que celui utilisé lors de l'achat initial de votre abonnement.";
 
@@ -2613,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Abonnement introuvable";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "L'abonnement associé à cet identifiant Apple n'est plus actif.";
-
 /* FAQ Button */
 "subscription.faq" = "FAQ et assistance";
 
@@ -2631,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Rétablir";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Nous avons trouvé un abonnement associé à cet identifiant Apple.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonnement trouvé";
 
@@ -2645,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Abonnement";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Aucun abonnement n'est associé à cet identifiant Apple.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonnement introuvable";

@@ -31,6 +31,9 @@ struct NetworkProtectionStatusView: View {
     @ObservedObject
     public var statusModel: NetworkProtectionStatusViewModel
 
+    @StateObject
+    public var feedbackFormModel: UnifiedFeedbackFormViewModel
+
     var tipsModel: VPNTipsModel {
         statusModel.tipsModel
     }
@@ -283,22 +286,20 @@ struct NetworkProtectionStatusView: View {
 
     @ViewBuilder
     private func about() -> some View {
-        let viewModel = UnifiedFeedbackFormViewModel(subscriptionManager: statusModel.subscriptionManager,
-                                                     apiService: DefaultAPIService(),
-                                                     vpnMetadataCollector: DefaultVPNMetadataCollector(),
-                                                     source: .vpn)
-
         Section {
             NavigationLink(UserText.netPVPNSettingsFAQ, destination: LazyView(NetworkProtectionFAQView()))
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textPrimary))
 
             if statusModel.usesUnifiedFeedbackForm {
-                NavigationLink(UserText.subscriptionFeedback, destination: UnifiedFeedbackRootView(viewModel: viewModel))
+                NavigationLink(
+                    UserText.subscriptionFeedback,
+                    destination: LazyView(UnifiedFeedbackRootView(viewModel: feedbackFormModel))
+                )
                     .daxBodyRegular()
                     .foregroundColor(.init(designSystemColor: .textPrimary))
             } else {
-                NavigationLink(UserText.netPVPNSettingsShareFeedback, destination: VPNFeedbackFormCategoryView())
+                NavigationLink(UserText.netPVPNSettingsShareFeedback, destination: LazyView(VPNFeedbackFormCategoryView()))
                     .daxBodyRegular()
                     .foregroundColor(.init(designSystemColor: .textPrimary))
             }

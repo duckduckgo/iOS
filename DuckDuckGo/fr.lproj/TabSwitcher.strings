@@ -1,20 +1,11 @@
 /* Class = "UILabel"; text = "Title"; ObjectID = "1GE-Nf-lKM"; */
 "1GE-Nf-lKM.text" = "Titre";
 
-/* Class = "UIButton"; accessibilityLabel = "Add all tabs as bookmarks"; ObjectID = "2aH-nO-H3f"; */
-"2aH-nO-H3f.accessibilityLabel" = "Ajouter tous les onglets aux signets";
-
 /* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "2en-CB-bYH"; */
 "2en-CB-bYH.accessibilityLabel" = "Fermer l'onglet";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "2GU-MM-UwX"; */
 "2GU-MM-UwX.text" = "Titre";
-
-/* Class = "UIButton"; accessibilityLabel = "Close all tabs and clear data"; ObjectID = "5nO-MZ-vSY"; */
-"5nO-MZ-vSY.accessibilityLabel" = "Fermer tous les onglets et effacer les données";
-
-/* Class = "UILabel"; text = "Tabs"; ObjectID = "Cy7-Lb-veV"; */
-"Cy7-Lb-veV.text" = "Onglets";
 
 /* Class = "UIButton"; accessibilityLabel = "Add new tab"; ObjectID = "cYd-YU-sSj"; */
 "cYd-YU-sSj.accessibilityLabel" = "Ajouter un nouvel onglet";
@@ -31,12 +22,6 @@
 /* Class = "UIButton"; accessibilityLabel = "Clear tabs and data"; ObjectID = "Hcx-F2-HgO"; */
 "Hcx-F2-HgO.accessibilityLabel" = "Effacer les onglets et données";
 
-/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "kW3-ZC-Axl"; */
-"kW3-ZC-Axl.normalTitle" = "Terminé";
-
-/* Class = "UIButton"; accessibilityLabel = "Toggle between grid and list view"; ObjectID = "L7l-vl-rDZ"; */
-"L7l-vl-rDZ.accessibilityLabel" = "Basculer entre la vue en grille et la vue en liste";
-
 /* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
 "LbT-NO-T0G.text" = "Lien";
 
@@ -45,9 +30,6 @@
 
 /* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "qrJ-aX-XrW"; */
 "qrJ-aX-XrW.accessibilityLabel" = "Onglet non lu";
-
-/* Class = "UIButton"; accessibilityLabel = "Add Tab"; ObjectID = "uIV-4q-5mj"; */
-"uIV-4q-5mj.accessibilityLabel" = "Ajouter onglet";
 
 /* Class = "UILabel"; text = "Website -- Long Title"; ObjectID = "Uu4-yR-9tN"; */
 "Uu4-yR-9tN.text" = "Site Web -- Long titre";

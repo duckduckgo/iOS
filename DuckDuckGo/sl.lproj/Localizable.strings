@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Prenosi";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "Klepet z umetno inteligenco";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Uredi zaznamek";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Prilepi in nadaljuj";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Natisni";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Natisni";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Osveži";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Vaše poročilo pripomore k temu, da lahko DuckDuckGo postane boljši za vse!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Ne";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Ali je izklop zaščite zasebnosti odpravil težavo na tem spletnem mestu?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Da";
+/* No comment provided by engineer. */
+"Confirm" = "Potrdi";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Preskoči";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Petka!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Ne pozabite: Vedno kadar brskate z mano, shrljivemu oglasu pristrižete peruti. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Uspelo ti bo!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "To je iskanje DuckDuckGo Search. Zasebno. Hitro. Z manj oglasi.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Razumem!";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Poskusite obiskati spletno stran!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Vaša iskanja v DuckDuckGo so vedno anonimna.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Ste pripravljeni začeti?\nPreizkusite iskanje!";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "igralska zasedba avatarja";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "lokalno vreme";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Preseneti me!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Poiščite **DuckDuckGo** na seznamu, nato tapnite **Nadzor VPN**, da ga dodate.";
@@ -1083,7 +1074,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai je izbirna funkcija, ki vam omogoča anonimen klepet s priljubljenimi modeli za klepet z umetno inteligenco drugih ponudnikov. Vaši klepeti se ne uporabljajo za usposabljanje umetne inteligence.\n[Več o tem] (ddgquicklink: //duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Prikaži Duck.ai med iskanjem";
+"duckai.settings.enable.address-bar-searching-toggle" = "Prikaži Duck.ai na strani za iskanje";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Prikaži Duck.ai v meniju brskalnika";
@@ -1658,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Brskanje po meniju";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Ime gostitelja pravilnika za sporočila";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Nazaj";
 
@@ -1949,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Izberite brskalnik";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Blokirajte pojavna okna za piškotke";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Blokirajte srhljive oglase";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Hitro izbrišite podatke brskanja";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Privzeto išče zasebno";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Blokirajte sledilnike tretjih oseb";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Zaščite zasebnosti so aktivirane!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Preprosto dosegljivo";
@@ -2020,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Pa začnimo!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Pozdravljeni.\n\nSte pripravljeni na boljši, bolj zasebni internet?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Dodaj gradnik";
@@ -2138,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Dosegli ste največje število gesel. Izbrišite jih nekaj, če želite nadaljevati sinhronizacijo.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Sinhronizacija je naletela na napako. Poskusite onemogočiti sinhronizacijo v tej napravi in nato znova vzpostavite povezavo z drugo napravo ali obnovitveno kodo.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Sinhronizacija je začasno zaustavljena";
 
@@ -2205,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Odpri v drugi aplikaciji?";
+
+/* No comment provided by engineer. */
+"Reset" = "Ponastavi";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Poišči ali vnesi naslov";
@@ -2520,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Katera spletna stran je poškodovana?";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Dostopajte do svoje naročnine Privacy Pro v tej napravi prek storitve Apple ID ali e-poštnega naslova.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Shranjeno ime gostitelja: %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Dodajte e-naslov";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Obnovitev nakupa";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Obnovite nakup, da aktivirate naročnino v tej napravi.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Vaša naročnina je samodejno na voljo v DuckDuckGo v kateri koli napravi, kjer ste prijavljeni v svoj račun Apple ID.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Urejanje e-naslova";
@@ -2577,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Dodajte e-naslov";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro je na voljo v vseh napravah, v katerih ste prijavljeni v isti Apple ID.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Vaša naročnina je bila kupljena v trgovini Google Play. Če želite podaljšati naročnino, odprite nastavitve naročnine v trgovini Google Play v napravi, v kateri ste prijavljeni v isti račun Google, kot ste ga uporabili za prvotni nakup naročnine.";
 
@@ -2613,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Naročnina ni najdena";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Naročnina, povezana s tem Apple ID-jem, ni več aktivna.";
-
 /* FAQ Button */
 "subscription.faq" = "Pogosta vprašanja in podpora";
 
@@ -2631,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Obnovitev";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Našli smo naročnino, povezano s tem Apple ID-jem.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Najdena je bila naročnina";
 
@@ -2645,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Naročnina";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "S tem Apple ID-jem ni povezana nobena naročnina.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Naročnina ni najdena";

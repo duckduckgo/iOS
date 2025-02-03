@@ -19,19 +19,19 @@
 
 import Foundation
 
-protocol AIChatDebugSettingsHandling {
+public protocol AIChatDebugSettingsHandling {
     var messagePolicyHostname: String? { get set }
 }
 
-struct AIChatDebugSettings: AIChatDebugSettingsHandling {
+public struct AIChatDebugSettings: AIChatDebugSettingsHandling {
     private let userDefaultsKey = "aichat.debug.messagePolicyHostname"
     private let userDefault: UserDefaults
 
-    init(userDefault: UserDefaults = .standard) {
+    public init(userDefault: UserDefaults = .standard) {
         self.userDefault = userDefault
     }
 
-    var messagePolicyHostname: String? {
+    public var messagePolicyHostname: String? {
         get {
             let value = userDefault.string(forKey: userDefaultsKey)
             return value?.isEmpty == true ? nil : value

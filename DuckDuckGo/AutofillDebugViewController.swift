@@ -66,7 +66,8 @@ class AutofillDebugViewController: UITableViewController {
                 let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
                 try? secureVault?.deleteAllWebsiteCredentials()
                 let autofillPixelReporter = AutofillPixelReporter(
-                        userDefaults: .standard,
+                        standardUserDefaults: .standard,
+                        appGroupUserDefaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).autofill"),
                         autofillEnabled: AppUserDefaults().autofillCredentialsEnabled,
                         eventMapping: EventMapping<AutofillPixelEvent> { _, _, _, _ in })
                 autofillPixelReporter.resetStoreDefaults()
@@ -101,7 +102,7 @@ class AutofillDebugViewController: UITableViewController {
     }
 
     private func promptForNumberOfLoginsToAdd() {
-        let alertController = UIAlertController(title: "Enter number of Logins to add", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Enter number of Logins to add for autofill.me", message: nil, preferredStyle: .alert)
 
         alertController.addTextField { textField in
             textField.placeholder = "Number"
@@ -123,7 +124,7 @@ class AutofillDebugViewController: UITableViewController {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
 
         for i in 1...count {
-            let account = SecureVaultModels.WebsiteAccount(title: "", username: "Dax \(i)", domain: "fill.dev", notes: "")
+            let account = SecureVaultModels.WebsiteAccount(title: "", username: "Dax \(i)", domain: "autofill.me", notes: "")
             let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: "password".data(using: .utf8))
             do {
                 _ = try secureVault?.storeWebsiteCredentials(credentials)

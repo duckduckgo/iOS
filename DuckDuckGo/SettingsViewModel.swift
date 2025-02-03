@@ -23,7 +23,7 @@ import Persistence
 import SwiftUI
 import Common
 import Combine
-import SyncUI
+import SyncUI_iOS
 import DuckPlayer
 import Crashes
 
@@ -335,6 +335,26 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
+    
+    var duckPlayerNativeUI: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.duckPlayerNativeUI },
+            set: {
+                self.appSettings.duckPlayerNativeUI = $0
+                self.state.duckPlayerNativeUI = $0
+            }
+        )
+    }
+    
+    var duckPlayerAutoplay: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.duckPlayerAutoplay },
+            set: {
+                self.appSettings.duckPlayerAutoplay = $0
+                self.state.duckPlayerAutoplay = $0
+            }
+        )
+    }
 
     func setVoiceSearchEnabled(to value: Bool) {
         if value {
@@ -479,6 +499,8 @@ extension SettingsViewModel {
             duckPlayerMode: appSettings.duckPlayerMode,
             duckPlayerOpenInNewTab: appSettings.duckPlayerOpenInNewTab,
             duckPlayerOpenInNewTabEnabled: featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab),
+            duckPlayerNativeUI: appSettings.duckPlayerNativeUI,
+            duckPlayerAutoplay: appSettings.duckPlayerAutoplay,
             aiChat: SettingsState.AIChat(enabled: aiChatSettings.isAIChatFeatureEnabled,
                                          isAIChatBrowsingMenuFeatureFlagEnabled: aiChatSettings.isAIChatBrowsingMenubarShortcutFeatureEnabled,
                                          isAIChatAddressBarFeatureFlagEnabled: aiChatSettings.isAIChatAddressBarShortcutFeatureEnabled)
@@ -515,7 +537,7 @@ extension SettingsViewModel {
                 || syncPausedStateManager.isSyncCredentialsPaused {
                 return "⚠️ \(UserText.settingsSync)"
             }
-            return SyncUI.UserText.syncTitle
+            return SyncUI_iOS.UserText.syncTitle
         }())
     }
 
@@ -766,6 +788,7 @@ extension SettingsViewModel {
         // Active subscription check
         guard let token = subscriptionManager.accountManager.accessToken else {
             // Reset state in case cache was outdated
+            state.subscription.hasSubscription = false
             state.subscription.hasActiveSubscription = false
             state.subscription.entitlements = []
             state.subscription.platform = .unknown
@@ -779,6 +802,7 @@ extension SettingsViewModel {
             
         case .success(let subscription):
             state.subscription.platform = subscription.platform
+            state.subscription.hasSubscription = true
             state.subscription.hasActiveSubscription = subscription.isActive
 
             // Check entitlements and update state
@@ -794,8 +818,18 @@ extension SettingsViewModel {
             self.state.subscription.entitlements = currentEntitlements
             self.state.subscription.subscriptionFeatures = await subscriptionManager.currentSubscriptionFeatures()
 
-        case .failure:
-            break
+        case .failure(let subscriptionServiceError):
+            if case let .apiError(apiError) = subscriptionServiceError,
+               case let .serverError(statusCode, error) = apiError {
+                if statusCode == 400 && error == "No subscription found" {
+                    state.subscription.hasSubscription = false
+                    state.subscription.hasActiveSubscription = false
+                    state.subscription.entitlements = []
+                    state.subscription.platform = .unknown
+
+                    DailyPixel.fireDailyAndCount(pixel: .settingsPrivacyProAccountWithNoSubscriptionFound)
+                }
+            }
         }
         
         // Sync Cache
@@ -843,12 +877,29 @@ extension SettingsViewModel {
             }
             await self.setupSubscriptionEnvironment()
             
-        case .failure:
+        case .failure(let restoreFlowError):
             DispatchQueue.main.async {
                 self.state.subscription.isRestoring = false
                 self.state.subscription.shouldDisplayRestoreSubscriptionError = true
-                self.state.subscription.shouldDisplayRestoreSubscriptionError = false
                 
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.state.subscription.shouldDisplayRestoreSubscriptionError = false
+                }
+            }
+
+            switch restoreFlowError {
+            case .missingAccountOrTransactions:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorMissingAccountOrTransactions)
+            case .pastTransactionAuthenticationError:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorPastTransactionAuthenticationError)
+            case .failedToObtainAccessToken:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorFailedToObtainAccessToken)
+            case .failedToFetchAccountDetails:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorFailedToFetchAccountDetails)
+            case .failedToFetchSubscriptionDetails:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorFailedToFetchSubscriptionDetails)
+            case .subscriptionExpired:
+                DailyPixel.fireDailyAndCount(pixel: .privacyProActivatingRestoreErrorSubscriptionExpired)
             }
         }
     }

@@ -1,6 +1,12 @@
 /* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
 "intent.vpn.needs.to.be.enabled.from.app" = "Devi abilitare la VPN dall'app DuckDuckGo.";
 
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Avvia rapidamente una nuova chat AI su Duck.ai";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Genera istantaneamente un nuovo Duck Address privato.";
 
@@ -61,6 +67,12 @@
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Cerca password";
 
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Cerca, chatta su Duck.ai o visualizza le tue password.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Scorciatoie";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Effettua ricerche o visita i tuoi siti preferiti in incognito con un solo tocco.";
 
@@ -87,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Cerca password";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Ricerca";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Cerca DuckDuckGo";

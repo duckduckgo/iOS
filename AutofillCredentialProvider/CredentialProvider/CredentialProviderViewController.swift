@@ -52,6 +52,28 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
     private lazy var vaultCredentialManager: VaultCredentialManaging = VaultCredentialManager(secureVault: secureVault,
                                                                                               credentialIdentityStoreManager: credentialIdentityStoreManager)
 
+    private lazy var autofillPixelReporter: AutofillPixelReporter? = {
+        guard let sharedUserDefaults = UserDefaults(suiteName: "\(Global.groupIdPrefix).autofill"), sharedUserDefaults.bool(forKey: AutofillPixelReporter.Keys.autofillDauMigratedKey) else {
+            return nil
+        }
+
+        return AutofillPixelReporter(
+            standardUserDefaults: .standard,
+            appGroupUserDefaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).autofill"),
+            autofillEnabled: true,
+            eventMapping: EventMapping<AutofillPixelEvent> { event, _, params, _ in
+                switch event {
+                case .autofillActiveUser:
+                    Pixel.fire(pixel: .autofillActiveUser)
+                case .autofillLoginsStacked:
+                    Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
+                default:
+                    break
+                }
+            },
+            installDate: StatisticsUserDefaults().installDate ?? Date())
+    }()
+
     // MARK: - ASCredentialProviderViewController Overrides
 
     override func prepareCredentialList(for serviceIdentifiers: [ASCredentialServiceIdentifier]) {
@@ -148,10 +170,12 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
             let credential = self.vaultCredentialManager.fetchCredential(for: item.account)
 
             self.extensionContext.completeRequest(withSelectedCredential: credential, completionHandler: nil)
+            reportFillEvent()
 
         }, onTextProvided: { [weak self] text in
             if #available(iOSApplicationExtension 18.0, *) {
                 self?.extensionContext.completeRequest(withTextToInsert: text)
+                self?.reportFillEvent()
             }
         }, onDismiss: {
             self.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain,
@@ -178,6 +202,7 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
 
         self.extensionContext.completeRequest(withSelectedCredential: passwordCredential)
         Pixel.fire(pixel: .autofillExtensionQuickTypeConfirmed)
+        reportFillEvent()
     }
 
     private func provideCredential(for credentialIdentity: ASPasswordCredentialIdentity) {
@@ -190,6 +215,7 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
 
         self.extensionContext.completeRequest(withSelectedCredential: passwordCredential)
         Pixel.fire(pixel: .autofillExtensionQuickTypeConfirmed)
+        reportFillEvent()
     }
 
     private func authenticateAndHandleCredential(provideCredential: @escaping () -> Void) {
@@ -238,5 +264,11 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
         }
 
         return !itemsWithV4.isEmpty
+    }
+
+    private func reportFillEvent() {
+        guard let autofillPixelReporter = autofillPixelReporter else { return }
+
+        NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
     }
 }

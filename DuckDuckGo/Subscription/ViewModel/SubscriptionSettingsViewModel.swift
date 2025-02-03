@@ -40,7 +40,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var isShowingGoogleView: Bool = false
         var isShowingFAQView: Bool = false
         var isShowingLearnMoreView: Bool = false
-        var subscriptionInfo: Subscription?
+        var subscriptionInfo: PrivacyProSubscription?
         var isLoadingSubscriptionInfo: Bool = false
         var isLoadingEmailInfo: Bool = false
 
@@ -101,11 +101,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             async let reloadedSubscription = await self.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData,
                                                                                           loadingIndicator: !hasLoadedSubscriptionFromCache)
             let (hasReloadedEmail, hasReloadedSubscription) = await (reloadedEmail, reloadedSubscription)
-
-            // In case any fetch fails show an error
-            if !hasReloadedEmail || !hasReloadedSubscription {
-                self.showConnectionError(true)
-            }
         }
     }
 
@@ -211,7 +206,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     @MainActor
-    private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
+    private func updateSubscriptionsStatusMessage(status: PrivacyProSubscription.Status, date: Date, product: String, billingPeriod: PrivacyProSubscription.BillingPeriod) {
         let date = dateFormatter.string(from: date)
 
         switch status {
@@ -271,7 +266,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
 
     @MainActor
     func showTermsOfService() {
-        self.openURL(SettingsSubscriptionView.ViewConstants.privacyPolicyURL)
+        let privacyPolicyQuickLinkURL = URL(string: AppDeepLinkSchemes.quickLink.appending(SettingsSubscriptionView.ViewConstants.privacyPolicyURL.absoluteString))!
+        openURL(privacyPolicyQuickLinkURL)
     }
 
     // MARK: -

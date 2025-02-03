@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import AIChat
 
 struct WebViewStateRestorationDebugView: View {
     @StateObject private var viewModel = WebViewStateRestorationDebugViewModel()

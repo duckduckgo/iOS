@@ -30,7 +30,7 @@
     {
       "identity" : "browserserviceskit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
         "branch" : "sabrina/experiment-overrides2",
         "revision" : "f5693604430f35e10ed27587cc12fe27ba151258"

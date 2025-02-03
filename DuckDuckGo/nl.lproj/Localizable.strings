@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Downloads";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "AI-chat";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Bladwijzer bewerken";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Plakken en gaan";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Afdrukken";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Afdrukken";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Vernieuwen";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Jouw melding helpt DuckDuckGo beter te maken voor iedereen!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Nee";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Is het probleem op deze site opgelost door de Privacy Beveiligingen uit te schakelen?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Ja";
+/* No comment provided by engineer. */
+"Confirm" = "Bevestigen";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Overslaan";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "High five!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Denk eraan: elke keer als je met mij browset, verliest een enge advertentie zijn vleugels. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Je kunt het!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Dat is DuckDuckGo Search. Privé. Snel. Minder advertenties.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Ik snap het!";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Bezoek eens een site!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Je DuckDuckGo-zoekopdrachten zijn altijd anoniem.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Klaar om te beginnen?\nProbeer een zoekopdracht!";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "cast van avatar";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "lokaal weer";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Verras me!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Zoek **DuckDuckGo** in de lijst en tik vervolgens op **VPN-bediening** om het toe te voegen.";
@@ -1658,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Optiemenu";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Hostnaam van berichtenbeleid";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Terug";
 
@@ -1949,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Kies je browser";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Blokkeer cookiepop-ups";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Blokkeer enge advertenties";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Wis browsegegevens in een handomdraai";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Standaard privé zoeken";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Blokkeer trackers van derden";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Privacybescherming geactiveerd!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Gemakkelijk te bereiken";
@@ -2020,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Laten we het doen!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Hoi.\n\nKlaar voor een beter internet met meer privacy?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget toevoegen";
@@ -2138,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Je hebt het maximumaantal wachtwoorden bereikt. Verwijder er een paar om de synchronisatie te hervatten.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Er is een fout opgetreden bij het synchroniseren. Probeer synchronisatie op dit apparaat uit te schakelen en maak dan opnieuw verbinding met een ander apparaat of met je herstelcode.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Synchronisatie onderbroken";
 
@@ -2205,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Openen in een andere app?";
+
+/* No comment provided by engineer. */
+"Reset" = "Herstel";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Zoek of voer een adres in";
@@ -2520,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Welke website is defect?";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Krijg toegang tot je Privacy Pro-abonnement op dit apparaat via je Apple-ID of e-mailadres.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Opgeslagen hostnaam: %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "E-mailadres toevoegen";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple-ID";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Aankoop herstellen";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Herstel je aankoop om je abonnement op dit apparaat te activeren.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Je abonnement is automatisch beschikbaar in DuckDuckGo op elk apparaat dat is aangemeld bij je Apple-ID.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "E-mailadres bewerken";
@@ -2577,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "E-mailadres toevoegen";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro is beschikbaar op elk apparaat dat is aangemeld bij dezelfde Apple-ID.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Je abonnement is aangeschaft via de Google Play Store. Om je abonnement te verlengen, open je de abonnementsinstellingen van de Google Play Store op een apparaat dat is aangemeld bij hetzelfde Google-account waarmee je het abonnement hebt gekocht.";
 
@@ -2613,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Abonnement niet gevonden";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Je abonnement dat aan deze Apple-ID is gekoppeld, is niet langer actief.";
-
 /* FAQ Button */
 "subscription.faq" = "Veelgestelde vragen en ondersteuning";
 
@@ -2631,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Herstellen";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "We hebben een abonnement gevonden dat aan deze Apple-ID is gekoppeld.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonnement gevonden";
 
@@ -2645,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Abonnement";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Er is geen abonnement gekoppeld aan deze Apple-ID.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonnement niet gevonden";

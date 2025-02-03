@@ -20,6 +20,7 @@
 
 import SwiftUI
 import Combine
+import AIChat
 
 struct AIChatDebugView: View {
     @StateObject private var viewModel = AIChatDebugViewModel()

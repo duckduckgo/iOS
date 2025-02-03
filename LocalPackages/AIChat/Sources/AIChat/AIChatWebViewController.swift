@@ -108,15 +108,15 @@ extension AIChatWebViewController {
 extension AIChatWebViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
-        if let url = navigationAction.request.url {
-            if url.isDuckAIURL || navigationAction.targetFrame?.isMainFrame == false {
-                return .allow
-            } else {
-                delegate?.aiChatWebViewController(self, didRequestToLoad: url)
-                return .cancel
-            }
-        } else {
+        guard let url = navigationAction.request.url else {
             return .allow
+        }
+
+        if chatModel.shouldAllowRequestWithNavigationAction(navigationAction) {
+            return .allow
+        } else {
+            delegate?.aiChatWebViewController(self, didRequestToLoad: url)
+            return .cancel
         }
     }
 

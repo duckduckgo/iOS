@@ -272,7 +272,7 @@ class FavoritesHomeViewSectionRenderer {
               let dragItem = coordinator.items.first?.dragItem,
               let sourcePath = coordinator.items.first?.sourceIndexPath,
               let destinationPath = coordinator.destinationIndexPath,
-              let cell = self.collectionView(collectionView, cellForItemAt: sourcePath) as? FavoriteHomeCell,
+              let cell = collectionView.cellForItem(at: sourcePath) as? FavoriteHomeCell,
               let favorite = cell.favorite
         else { return }
 

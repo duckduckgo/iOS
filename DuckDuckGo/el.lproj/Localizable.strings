@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Λήψεις";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "Συνομιλία με ΤΝ";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Επεξεργασία σελιδοδείκτη";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Επικόλληση & μετάβαση";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Εκτύπωση";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Εκτύπωση";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Ανανέωση";
@@ -782,14 +788,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Η αναφορά σας βοηθάει ώστε να γίνει το DuckDuckGo καλύτερο για όλους!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Όχι";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Η απενεργοποίηση της Προστασίας προσωπικών δεδομένων επέλυσε το πρόβλημα σε αυτόν τον ιστότοπο;";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Ναί";
+/* No comment provided by engineer. */
+"Confirm" = "Επιβεβαίωση";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Παράλειψη";
@@ -824,14 +824,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Κόλλα πέντε!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Να θυμάστε: κάθε φορά που περιηγείστε μαζί μου, μια ανατριχιαστική διαφήμιση χάνει τη δύναμή της! 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Το έχετε!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Αυτό είναι το DuckDuckGo Search. Ιδιωτικά. Γρήγορα. Λιγότερες διαφημίσεις.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Το κατάλαβα!";
@@ -850,9 +844,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Δοκιμάστε να επισκεφτείτε έναν ιστότοπο!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Οι αναζητήσεις σας στο DuckDuckGo είναι πάντα ανώνυμες.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Έτοιμοι να αρχίσετε;\nΔοκίμασε μια αναζήτηση!";
@@ -878,8 +869,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "οι ηθοποιοί του avatar";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "τοπικός καιρός";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Κάνε μου έκπληξη!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Βρείτε το **DuckDuckGo** στη λίστα και έπειτα πατήστε **Έλεγχος VPN** για να το προσθέσετε";
@@ -1658,6 +1649,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Μενού περιήγησης";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Όνομα κεντρικού υπολογιστή πολιτικής μηνυμάτων";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Πίσω";
 
@@ -1949,23 +1943,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Επιλέξτε το πρόγραμμα περιήγησής σας";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Αποκλεισμός αναδυόμενων παραθύρων cookie";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Αποκλεισμός στοχευμένων διαφημίσεων";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Γρήγορη διαγραφή δεδομένων περιήγησης";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Ιδιωτική αναζήτηση βάσει προεπιλογής";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Αποκλείστε εφαρμογές παρακολούθησης τρίτων";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "H προστασία προσωπικών δεδομένων energopoi;huhke!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Εύκολη πρόσβαση";
@@ -2020,9 +1999,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Ας το δοκιμάσουμε!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Γεια σας.\n\nΈτοιμοι για ένα καλύτερο και πιο ιδιωτικό διαδίκτυο;";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Προσθήκη γραφικού στοιχείου";
@@ -2138,11 +2114,6 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Έχετε φτάσει στον μέγιστο αριθμό κωδικών πρόσβασης. Διαγράψτε ορισμένους για να συνεχίσετε τον συγχρονισμό.";
 
-/* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Ο συγχρονισμός αντιμετώπισε σφάλμα. Δοκιμάστε να απενεργοποιήσετε τον συγχρονισμό στη συσκευή αυτή και έπειτα συνδεθείτε ξανά χρησιμοποιώντας άλλη συσκευή ή τον κωδικό ανάκτησής σας.";
-
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Παύση συγχρονισμού";
 
@@ -2205,6 +2176,9 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Άνοιγμα σε άλλη εφαρμογή;";
+
+/* No comment provided by engineer. */
+"Reset" = "Επαναφορά";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Αναζήτηση ή εισαγωγή διεύθυνσης";
@@ -2520,23 +2494,17 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Ποιος ιστότοπος είναι κατεστραμμένος;";
 
-/* Subscription Activation Info */
-"subscription.activate..header.description" = "Αποκτήστε πρόσβαση στη συνδρομή σας Privacy Pro σε αυτήν τη συσκευή μέσω Apple ID ή διεύθυνσης email.";
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Αποθηκευμένο όνομα κεντρικού υπολογιστή: %@";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Προσθήκη email";
-
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
 
 /* Button text for restoring purchase via Apple ID */
 "subscription.activate.appleid.button" = "Επαναφορά αγοράς";
 
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Κάντε επαναφορά της αγοράς σας για να ενεργοποιήσετε τη συνδρομή σας σε αυτήν τη συσκευή.";
-
-/* Subscription Activation Info */
-"subscription.activate.description" = "Η συνδρομή σας είναι αυτόματα διαθέσιμη στο DuckDuckGo σε οποιαδήποτε συσκευή είναι συνδεδεμένη στον λογαριασμό σας στο Apple ID.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Επεξεργασία email";
@@ -2577,9 +2545,6 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Προσθήκη email";
 
-/* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Το Privacy Pro είναι διαθέσιμο σε οποιαδήποτε συσκευή που είναι συνδεδεμένη στο ίδιο Apple ID.";
-
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Η συνδρομή σας αγοράστηκε μέσω του Google Play Store. Για να ανανεώσετε τη συνδρομή σας, ανοίξτε τις ρυθμίσεις συνδρομής στο Google Play Store σε συσκευή που είναι συνδεδεμένη στον ίδιο λογαριασμό Google που χρησιμοποιήθηκε για την αρχική αγορά της συνδρομής σας.";
 
@@ -2613,9 +2578,6 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Η συνδρομή δεν βρέθηκε";
 
-/* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Η συνδρομή που συνδέεται με αυτό το Apple ID δεν είναι πλέον ενεργή.";
-
 /* FAQ Button */
 "subscription.faq" = "Συχνές ερωτήσεις και υποστήριξη";
 
@@ -2631,9 +2593,6 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Επαναφορά";
 
-/* Message for the existing subscription dialog */
-"subscription.found.text" = "Βρήκαμε μια συνδρομή που σχετίζεται με αυτό το Apple ID.";
-
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Βρέθηκε συνδρομή";
 
@@ -2645,9 +2604,6 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Συνδρομή";
-
-/* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Δεν υπάρχει συνδρομή που να συνδέεται με αυτό το Apple ID.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Η συνδρομή δεν βρέθηκε";

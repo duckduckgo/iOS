@@ -71,7 +71,7 @@ extension NetworkProtectionLocationListCompositeRepository {
         let settings = AppDependencyProvider.shared.vpnSettings
         self.init(
             environment: settings.selectedEnvironment,
-            tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore,
+            tokenHandler: AppDependencyProvider.shared.networkProtectionKeychainTokenStore,
             errorEvents: .networkProtectionAppDebugEvents
         )
     }

@@ -136,7 +136,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .quality(let quality):
                 guard quality != .unknown else { return }
                 DailyPixel.fireDailyAndCount(
-                    pixel: .networkProtectionLatency(quality: quality),
+                    pixel: .networkProtectionLatency(quality: quality.rawValue),
                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                     includedParameters: [.appVersion, .atb]
                 )
@@ -475,7 +475,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    snoozeTimingStore: NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults),
                    wireGuardInterface: DefaultWireGuardInterface(),
                    keychainType: .dataProtection(.unspecified),
-                   tokenStore: tokenStore,
+                   tokenHandler: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,

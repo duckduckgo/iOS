@@ -142,7 +142,7 @@ final class MainCoordinator {
 
     func handleAppDeepLink(url: URL, application: UIApplication = UIApplication.shared) -> Bool {
 
-        if url != AppDeepLinkSchemes.openVPN.url {
+        if url != AppDeepLinkSchemes.openVPN.url && url.scheme != AppDeepLinkSchemes.openAIChat.url.scheme {
             controller.clearNavigationStack()
         }
 
@@ -188,6 +188,8 @@ final class MainCoordinator {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 self.controller.launchAutofillLogins(openSearch: true, source: source)
             }
+        case .openAIChat:
+            AIChatDeepLinkHandler().handleDeepLink(url, on: controller)
 
         default:
             guard application.applicationState == .active,

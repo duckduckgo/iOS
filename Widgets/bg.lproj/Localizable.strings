@@ -1,3 +1,12 @@
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Трябва да активирате VPN от приложението DuckDuckGo.";
+
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Започнете бързо нов AI чат в Duck.ai";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Незабавно генериране на нов личен Duck Address.";
 
@@ -34,11 +43,35 @@
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Гласово търсене";
 
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Свързване...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Прекъсване...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Неизвестно местоположение";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Няма връзка";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN е изключена";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN е включена";
+
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Бързо търсене на запазените пароли за DuckDuckGo.";
 
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Търсене на пароли";
+
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Търсете, разговаряйте в Duck.ai или прегледайте паролите си.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Бързи Връзки";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Насладете се на поверително търсене и сърфиране в любимите си сайтове само с едно докосване.";
@@ -66,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Търсене на пароли";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Търсене";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Търси с DuckDuckGo";

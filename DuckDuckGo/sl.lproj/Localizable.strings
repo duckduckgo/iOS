@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Prenosi";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "Klepet z umetno inteligenco";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Uredi zaznamek";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Prilepi in nadaljuj";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Natisni";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Natisni";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Osveži";
@@ -131,13 +137,16 @@
 "addWidget.description" = "Zagotovite si hiter dostop do zasebnega iskanja in spletnih mest, ki so vam všeč.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Pritisnite in pridržite točko na začetnem zaslonu, da vstopite v način premikanja.";
+"addWidget.settings.firstParagraph" = "Pritisnite in pridržite kjer koli na začetnem zaslonu, dokler se aplikacije ne začnejo premikati.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Tapnite gumb **Uredi**, nato izberite **Dodaj pripomoček**.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tapnite gumb plus %@.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Poiščite in izberite DuckDuckGo. Nato izberite pripomoček.";
+"addWidget.settings.title" = "Poiščite in izberite **DuckDuckGo**. Nato izberite pripomoček.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "En dotik do vaših priljubljenih spletnih mest.";
@@ -180,6 +189,15 @@
 
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Sinhronizacija je začasno zaustavljena";
+
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Preklop sinhronizacije";
+
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "Ta naprava je že sinhronizirana, ste prepričani, da jo želite sinhronizirati z drugo varnostno kopijo ali napravo? Preklop ne bo odstranil nobenih podatkov, ki so že sinhronizirani s to napravo.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "Želite preklopiti na drugo sinhronizacijo?";
 
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "Sinhronizacija in varnostno kopiranje sta začasno nedostopna.";
@@ -276,18 +294,6 @@
 
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "DuckDuckGo na spletnih mestih, ki jih obiščete, zazna pojavna okna s soglasjem za piškotke, zato lahko samodejno nastavimo vaše nastavitve piškotkov, da zmanjšamo uporabo piškotkov in povečamo zasebnost, nato pa pojavna okna zapremo. Nekatera spletna mesta pa ne omogočajo upravljanja nastavitev piškotkov, zato lahko takšna pojavna okna le skrijemo.";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
 
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Odpri nastavitve";
@@ -526,11 +532,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Ni rezultatov";
 
-/* Do not translate - stringsdict entry */
-"autofill.number.of.passwords" = "autofill.number.of.passwords";
-
 /* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Gesla so šifrirana, shranjena v napravi in zaklenjena %@.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -689,9 +692,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Izbriši";
 
-/* Do not translate - stringsdict entry */
-"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Želite izbrisati %@?";
 
@@ -770,14 +770,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Vaše poročilo pripomore k temu, da lahko DuckDuckGo postane boljši za vse!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Ne";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Ali je izklop zaščite zasebnosti odpravil težavo na tem spletnem mestu?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Da";
+/* No comment provided by engineer. */
+"Confirm" = "Potrdi";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Preskoči";
@@ -803,23 +797,14 @@
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Na svoj domači zaslon me lahko dodate povsem preprosto";
 
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
-
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "Domena *%1$@* vam je tukaj poskušala slediti. Blokiral sem jo!\n\n☝️ Tapnite ščit za več informacij.";
 
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Petka!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Ne pozabite: Vedno kadar brskate z mano, shrljivemu oglasu pristrižete peruti. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Uspelo ti bo!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "To je iskanje DuckDuckGo Search. Zasebno. Hitro. Z manj oglasi.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Razumem!";
@@ -838,9 +823,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Poskusite obiskati spletno stran!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Vaša iskanja v DuckDuckGo so vedno anonimna.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Ste pripravljeni začeti?\nPreizkusite iskanje!";
@@ -866,17 +848,20 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "igralska zasedba avatarja";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "lokalno vreme";
-
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "recepti za čokoladne piškote";
-
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "recepti za večerjo";
-
 /* Title for a button that triggers an unknown search query for the user. */
 "contextual.onboarding.try-search.surprise-me-title" = "Preseneti me!";
+
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Poiščite **DuckDuckGo** na seznamu, nato tapnite **Nadzor VPN**, da ga dodate.";
+
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Podrsnite navzdol iz zgornjega desnega kota zaslona.";
+
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Tapnite gumb **+** v zgornjem levem kotu **Nadzornega centra**.";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Tapnite **Dodaj kontrolnik** na dnu zaslona.";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Vedno pošlji poročila o zrušitvah";
@@ -925,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Fuj!";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "Petka!";
@@ -1055,6 +1037,9 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Naslov Duck Address";
 
+/* No comment provided by engineer. */
+"Duck Player" = "Duck Player";
+
 /* Title for message explaining to the user that Duck Player is not available */
 "duck-player.contingency-title" = "Predvajalnik Duck Player ni na voljo";
 
@@ -1063,6 +1048,18 @@
 
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "Nedavne spremembe v YouTubu so vplivale na delovanje predvajalnika Duck Player. Prizadevamo si za odpravljanje teh težav in cenimo vaše razumevanje.";
+
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"duckai.preferences.text.markdown" = "Duck.ai je izbirna funkcija, ki vam omogoča anonimen klepet s priljubljenimi modeli za klepet z umetno inteligenco drugih ponudnikov. Vaši klepeti se ne uporabljajo za usposabljanje umetne inteligence.\n[Več o tem] (ddgquicklink: //duckduckgo.com/duckduckgo-help-pages/aichat/)";
+
+/* Toggle text to enable/disable AI Chat in the address bar */
+"duckai.settings.enable.address-bar-searching-toggle" = "Prikaži Duck.ai na strani za iskanje";
+
+/* Toggle text to enable/disable AI Chat in the browsing menu */
+"duckai.settings.enable.browsing-menu-toggle" = "Prikaži Duck.ai v meniju brskalnika";
+
+/* Settings screen cell text for AI Chat settings */
+"duckai.settings.title" = "Duck.ai";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo za iOS";
@@ -1082,10 +1079,12 @@
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Razumem!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Se utapljate v oglasih na YouTubu? Preizkusite Duck Player!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "Se utapljate v oglasih na YouTubu? S predvajalnikom Duck Player bo to preteklost!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1517,6 +1516,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "VPN morate omogočiti v aplikaciji DuckDuckGo.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1627,6 +1629,9 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Brskanje po meniju";
+
+/* No comment provided by engineer. */
+"Message policy hostname" = "Ime gostitelja pravilnika za sporočila";
 
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Nazaj";
@@ -1859,6 +1864,9 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Nastavitve VPN";
 
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Bližnjice";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Prilagodite zavihek Priljubljene in izbrane funkcije. Preuredite stvari ali jih skrijte, da boste imeli vse urejeno.";
 
@@ -1901,9 +1909,6 @@
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "Na katerem koli spletnem mestu odprite meni ••• in izberite **Dodaj priljubljene**, da ga dodate na stran novega zavihka.";
 
-/* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Upravljani piškotki";
 
@@ -1916,23 +1921,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Izberite brskalnik";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Blokirajte pojavna okna za piškotke";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Blokirajte srhljive oglase";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Hitro izbrišite podatke brskanja";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Privzeto išče zasebno";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Blokirajte sledilnike tretjih oseb";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Zaščite zasebnosti so aktivirane!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Preprosto dosegljivo";
@@ -1987,9 +1977,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Pa začnimo!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Pozdravljeni.\n\nSte pripravljeni na boljši, bolj zasebni internet?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Dodaj gradnik";
@@ -2106,9 +2093,9 @@
 "prefrences.sync.credentials-limit-exceeded-description" = "Dosegli ste največje število gesel. Izbrišite jih nekaj, če želite nadaljevati sinhronizacijo.";
 
 /* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Sinhronizacija je naletela na napako. Poskusite onemogočiti sinhronizacijo v tej napravi in nato znova vzpostavite povezavo z drugo napravo ali obnovitveno kodo.";
+Description of incorrectly formatted data error when syncing.
+Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Nekateri zaznamki ali gesla so napačno oblikovani ali predolgi in niso bili sinhronizirani.";
 
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Sinhronizacija je začasno zaustavljena";
@@ -2174,6 +2161,9 @@
 "prompt.custom.url.scheme.title" = "Odpri v drugi aplikaciji?";
 
 /* No comment provided by engineer. */
+"Reset" = "Ponastavi";
+
+/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Poišči ali vnesi naslov";
 
 /* No comment provided by engineer. */
@@ -2212,8 +2202,11 @@
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Dodajte pripomoček na domači zaslon";
 
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Dodajte pripomoček DuckDuckGo VPN na začetni zaslon";
+
 /* Name of the settings subsection related to the address bar
-   Settings screen cell text for addess bar position */
+Settings screen cell text for addess bar position */
 "settings.address.bar" = "Naslovna vrstica";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2271,7 +2264,7 @@
 "settings.data.clearing" = "Počiščenje podatkov";
 
 /* Settings screen cell text for setting the app as default browser
-   The name of Settings category in Privacy Features related to configuration of the default browser */
+The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Privzet brskalnik";
 
 /* Label of a button disabling email protection */
@@ -2484,23 +2477,26 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Katera spletna stran je poškodovana?";
 
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Shranjeno ime gostitelja: %@";
+
 /* Subscription Activation Info */
-"subscription.activate..header.description" = "Dostopajte do svoje naročnine Privacy Pro v tej napravi prek storitve Apple ID ali e-poštnega naslova.";
+"subscription.activate..header.description" = "Dostopajte do svoje naročnine Privacy Pro v tej napravi prek računa Apple ali e-poštnega naslova.";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Dodajte e-naslov";
 
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Račun Apple";
 
-/* Button text for restoring purchase via Apple ID */
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Obnovitev nakupa";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Obnovite nakup, da aktivirate naročnino v tej napravi.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Vaša naročnina je samodejno na voljo v DuckDuckGo v kateri koli napravi, kjer ste prijavljeni v svoj račun Apple ID.";
+"subscription.activate.description" = "Vaša naročnina je samodejno na voljo v DuckDuckGo v kateri koli napravi, kjer ste prijavljeni v svoj račun Apple.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Urejanje e-naslova";
@@ -2542,7 +2538,7 @@
 "subscription.add.email.title" = "Dodajte e-naslov";
 
 /* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro je na voljo v vseh napravah, v katerih ste prijavljeni v isti Apple ID.";
+"subscription.available.apple" = "Privacy Pro je na voljo v vseh napravah, v katerih ste prijavljeni v isti račun Apple.";
 
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Vaša naročnina je bila kupljena v trgovini Google Play. Če želite podaljšati naročnino, odprite nastavitve naročnine v trgovini Google Play v napravi, v kateri ste prijavljeni v isti račun Google, kot ste ga uporabili za prvotni nakup naročnine.";
@@ -2578,7 +2574,7 @@
 "subscription.email.inactive.alert.title" = "Naročnina ni najdena";
 
 /* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Naročnina, povezana s tem Apple ID-jem, ni več aktivna.";
+"subscription.expired.alert.message" = "Naročnina, povezana s tem računom Apple, ni več aktivna.";
 
 /* FAQ Button */
 "subscription.faq" = "Pogosta vprašanja in podpora";
@@ -2596,7 +2592,7 @@
 "subscription.found.restore" = "Obnovitev";
 
 /* Message for the existing subscription dialog */
-"subscription.found.text" = "Našli smo naročnino, povezano s tem Apple ID-jem.";
+"subscription.found.text" = "Našli smo naročnino, povezano s tem računom Apple.";
 
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Najdena je bila naročnina";
@@ -2611,7 +2607,7 @@
 "subscription.manage.title" = "Naročnina";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "S tem Apple ID-jem ni povezana nobena naročnina.";
+"subscription.notFound.alert.message" = "S tem računom Apple ni povezana nobena naročnina.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Naročnina ni najdena";
@@ -2866,7 +2862,28 @@
 "vpn.access-revoked.alert.title" = "VPN je prekinjen zaradi potekle naročnine.";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Poiščite in izberite DuckDuckGo. Nato povlecite do VPN in izberite Dodaj pripomoček.";
+"vpn.addWidget.settings.title" = "Poiščite in izberite **DuckDuckGo**, nato povlecite do **VPN** in izberite **Dodaj pripomoček**.";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "Omrežje VPN DuckDuckGo je povezano";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Z bližnjicami Siri lahko vzpostavite povezavo z omrežjem VPN s hitrim glasovnim ukazom, kot je »Siri, vklopi DuckDuckGo VPN«. To je hiter in prostoročen način za uporabo omrežja VPN.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, zaženi DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, omogoči DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, zaščiti mojo napravo z DuckDuckGo.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Upravljajte DuckDuckGo VPN s Siri!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "Omrežje DuckDuckGo VPN je povezano";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Prekliči";
@@ -2937,8 +2954,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Pomagajte izboljšati DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Dodajte VPN v nadzorno središče";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Dodajte pripomoček VPN na začetni zaslon";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Upravljaj VPN s Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Uporaba strežnika DNS po meri lahko vpliva na hitrost brskanja, če strežnik ni varen ali zanesljiv, pa lahko vaše dejavnosti razkrije tretjim osebam.";

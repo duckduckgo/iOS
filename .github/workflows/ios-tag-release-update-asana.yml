@@ -1,0 +1,187 @@
+name: iOS - Tag Release and Update Asana
+
+on:
+  workflow_dispatch:
+    inputs:
+      asana-task-url:
+        description: "Asana release task URL"
+        required: true
+        type: string
+      tag:
+        description: "Tag to publish"
+        required: true
+        type: string
+      release-type:
+        description: "Release type"
+        required: true
+        type: choice
+        options:
+        - internal
+        - public
+        - hotfix
+  workflow_call:
+    inputs:
+      asana-task-url:
+        description: "Asana release task URL"
+        required: true
+        type: string
+      base-branch:
+        description: "Base branch name (defaults to main, only override for testing)"
+        required: false
+        type: string
+      branch:
+        description: "Branch name"
+        required: false
+        type: string
+      release-type:
+        description: "Release type"
+        required: true
+        type: string
+      internal-release-bump:
+        description: "Is this an internal release bump? (the subsequent internal release of the current week)"
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      ASANA_ACCESS_TOKEN:
+        required: true
+      GHA_ELEVATED_PERMISSIONS_TOKEN:
+        required: true
+
+jobs:
+
+  tag-release:
+
+    name: Tag Release
+
+    uses: ./.github/workflows/ios-tag-release.yml
+    with:
+      asana-task-url: ${{ inputs.asana-task-url || github.event.inputs.asana-task-url }}
+      base-branch: ${{ github.event.inputs.base-branch || 'main' }}
+      branch: ${{ inputs.branch || github.ref_name }}
+      internal-release-bump: ${{ inputs.internal-release-bump || false }}
+      prerelease: ${{ inputs.release-type == 'internal' }}
+    secrets:
+      ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+      GHA_ELEVATED_PERMISSIONS_TOKEN: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }}
+
+  update-asana-for-release:
+
+    name: Update Asana for release
+
+    env:
+      RELEASE_TYPE: ${{ github.event.inputs.release-type || 'internal' }}
+      TAG: ${{ github.event.inputs.tag }}
+      asana-task-url: ${{ inputs.asana-task-url || github.event.inputs.asana-task-url }}
+
+    needs: [ tag-release ]
+
+    runs-on: macos-15-xlarge
+    timeout-minutes: 10
+
+    steps:
+
+      - name: Download tag artifact
+        id: download-tag
+        # Only look for the tag artifact when the tag input is empty
+        if: github.event.inputs.tag == null || github.event.inputs.tag == ''
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: tag
+          path: .github
+
+      - name: Set tag variable
+        run: |
+          if [[ "${{ steps.download-tag.outcome }}" == 'success' ]]; then
+            echo "TAG=$(<.github/tag)" >> $GITHUB_ENV
+          else
+            echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          fi
+
+      - name: Verify the tag
+        id: verify-tag
+        run: |
+          tag_regex='^[0-9]+\.[0-9]+\.[0-9]+-[0-9]+$'
+
+          if [[ ! "$TAG" =~ $tag_regex ]]; then
+            echo "::error::The provided tag ($TAG) has incorrect format (attempted to match ${tag_regex})."
+            exit 1
+          fi
+          echo "release-version=${TAG//-/.}" >> $GITHUB_OUTPUT
+
+      # Always check out main first, because the release branch might have been deleted (for public releases)
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+          ref: main
+
+      - name: Check out the branch if it exists
+        env:
+          branch: ${{ inputs.branch || github.ref_name }}
+        run: |
+          if [[ -z "${branch}" ]] || git ls-remote --exit-code --heads origin "${branch}"; then
+            echo "::notice::Checking out ${branch} branch."
+            git checkout "${branch}"
+          else
+            echo "::notice::Branch ${branch} doesn't exist on the remote repository, staying on main."
+          fi
+
+      - name: Set up fastlane
+        run: bundle install
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
+
+      - name: Extract Asana Task ID
+        id: task-id
+        run: bundle exec fastlane run asana_extract_task_id task_url:"${{ env.asana-task-url }}"
+
+      - name: Update Asana for the release
+        id: update-asana
+        if: ${{ env.RELEASE_TYPE != 'internal' }}
+        continue-on-error: true
+        env:
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          bundle exec fastlane run update_asana_for_release \
+            platform:ios \
+            release_type:public \
+            github_handle:"${{ github.actor }}" \
+            is_scheduled_release:"${{ github.event_name == 'schedule' }}" \
+            release_task_id:"${{ steps.task-id.outputs.asana_task_id }}" \
+            target_section_id:"${{ vars.IOS_APP_BOARD_DONE_SECTION_ID }}" \
+            tag:"${{ env.TAG }}"
+      
+      - name: Get tasks since last internal release and set vars
+        id: asana-templates
+        env:
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ "${RELEASE_TYPE}" == "internal" ]]; then
+            tasks="$(./scripts/get_tasks_in_last_internal_release.sh)"
+            echo "WORKFLOW_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
+            echo "TASKS_SINCE_LAST_INTERNAL_RELEASE=$tasks" >> $GITHUB_ENV
+            if [[ -n "$tasks" ]]; then
+              echo "release-task-comment-template=internal-release-complete-with-tasks" >> $GITHUB_OUTPUT
+            else
+              echo "release-task-comment-template=internal-release-complete" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "release-task-comment-template=public-release-complete-ios" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Add a comment to the release task
+        if: success()
+        env:
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          bundle exec fastlane run asana_add_comment \
+            task_url:"${{ env.asana-task-url }}" \
+            template_name:"${{ steps.asana-templates.outputs.release-task-comment-template }}"

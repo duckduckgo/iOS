@@ -170,8 +170,12 @@ final class MockDuckPlayerSettings: DuckPlayerSettings {
     var askModeOverlayHidden: Bool = false
     var allowFirstVideo: Bool = false
     var openInNewTab: Bool = false
+    var nativeUI: Bool = false
+    var autoplay: Bool = false
+
     
-    init(appSettings: AppSettings = AppSettingsMock(), privacyConfigManager: any BrowserServicesKit.PrivacyConfigurationManaging) {}
+    init(appSettings: any DuckDuckGo.AppSettings, privacyConfigManager: any BrowserServicesKit.PrivacyConfigurationManaging, internalUserDecider: any BrowserServicesKit.InternalUserDecider) {}
+    
     func triggerNotification() {}
     
     func setMode(_ mode: DuckPlayerMode) {
@@ -191,7 +195,7 @@ final class MockDuckPlayer: DuckPlayerControlling {
     }
     
     
-    var hostView: UIViewController?
+    var hostView: TabViewController?
     
     func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
         nil
@@ -201,7 +205,7 @@ final class MockDuckPlayer: DuckPlayerControlling {
         nil
     }
     
-    func setHostViewController(_ vc: UIViewController) {}
+    func setHostViewController(_ vc: TabViewController) {}
     func removeHostView() {}
     
     func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
@@ -210,6 +214,10 @@ final class MockDuckPlayer: DuckPlayerControlling {
     
     func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
         nil
+    }
+    
+    func loadNativeDuckPlayerVideo(videoID: String) {
+        return
     }
     
     var settings: any DuckPlayerSettings
@@ -259,13 +267,11 @@ final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
         return nil
     }
 
-    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag: FeatureFlagExperimentDescribing {
+    func resolveCohort<Flag>(for featureFlag: Flag, allowOverride: Bool) -> (any FeatureFlagCohortDescribing)? where Flag: FeatureFlagDescribing {
         return nil
     }
 
-    func getAllActiveExperiments() -> Experiments {
-        return [:]
-    }
+    var allActiveExperiments: Experiments = [:]
 }
 
 final class MockDuckPlayerStorage: DuckPlayerStorage {
@@ -282,5 +288,25 @@ final class MockDuckPlayerTabNavigator: DuckPlayerTabNavigationHandling {
 
     func closeTab() {
         closeTabCalled = true
+    }
+}
+
+final class MockDuckPlayerInternalUserDecider: InternalUserDecider {
+    var mockIsInternalUser: Bool = false
+    var mockIsInternalUserPublisher: AnyPublisher<Bool, Never> {
+        Just(mockIsInternalUser).eraseToAnyPublisher()
+    }
+
+    var isInternalUser: Bool {
+        return mockIsInternalUser
+    }
+
+    var isInternalUserPublisher: AnyPublisher<Bool, Never> {
+        return mockIsInternalUserPublisher
+    }
+
+    @discardableResult
+    func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) -> Bool {
+        return mockIsInternalUser
     }
 }

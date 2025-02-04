@@ -130,7 +130,7 @@ class MainViewController: UIViewController {
     private let subscriptionCookieManager: SubscriptionCookieManaging
     let privacyProDataReporter: PrivacyProDataReporting
 
-    private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    private(set) lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var faviconLoader: FavoritesFaviconLoading = FavoritesFaviconLoader()
     private lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 
@@ -240,8 +240,10 @@ class MainViewController: UIViewController {
 
         self.previewsSource = previewsSource
 
+        let interactionStateSource = WebViewStateRestorationManager(featureFlagger: featureFlagger).isFeatureEnabled ? TabInteractionStateDiskSource() : nil
         self.tabManager = TabManager(model: tabsModel,
                                      previewsSource: previewsSource,
+                                     interactionStateSource: interactionStateSource,
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
                                      syncService: syncService,
@@ -1182,12 +1184,16 @@ class MainViewController: UIViewController {
         }
 
         self.showMenuHighlighterIfNeeded()
-        
-        coordinator.animate { _ in
-            self.swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model, scrollToSelected: true)
 
+        let isKeyboardShowing = omniBar.textField.isFirstResponder
+        coordinator.animate { _ in
+            self.swipeTabsCoordinator?.invalidateLayout()
             self.deferredFireOrientationPixel()
         } completion: { _ in
+            if isKeyboardShowing {
+                self.omniBar.becomeFirstResponder()
+            }
+
             ViewHighlighter.updatePositions()
         }
 
@@ -1723,7 +1729,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    private func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
+    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
         aiChatViewControllerManager.openAIChat(query, payload: payload, on: self)
     }
 }
@@ -1765,13 +1771,13 @@ extension MainViewController: BrowserChromeDelegate {
         _ = findInPageView.resignFirstResponder()
     }
 
-    func setBarsHidden(_ hidden: Bool, animated: Bool) {
+    func setBarsHidden(_ hidden: Bool, animated: Bool, customAnimationDuration: CGFloat?) {
         if hidden { hideKeyboard() }
 
-        setBarsVisibility(hidden ? 0 : 1.0, animated: animated)
+        setBarsVisibility(hidden ? 0 : 1.0, animated: animated, animationDuration: customAnimationDuration)
     }
     
-    func setBarsVisibility(_ percent: CGFloat, animated: Bool = false) {
+    func setBarsVisibility(_ percent: CGFloat, animated: Bool = false, animationDuration: CGFloat?) {
         if percent < 1 {
             hideKeyboard()
             hideMenuHighlighter()
@@ -1789,7 +1795,7 @@ extension MainViewController: BrowserChromeDelegate {
         }
            
         if animated {
-            UIView.animate(withDuration: ChromeAnimationConstants.duration) {
+            UIView.animate(withDuration: animationDuration ?? ChromeAnimationConstants.duration) {
                 updateBlock()
                 self.view.layoutIfNeeded()
             }
@@ -2590,7 +2596,14 @@ extension MainViewController: TabSwitcherDelegate {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }
-    
+
+    func tabSwitcherDidRequestCloseAll(tabSwitcher: TabSwitcherViewController) {
+        // TODO polish
+        self.forgetTabs()
+        self.refreshUIAfterClear()
+        tabSwitcher.dismiss()
+    }
+
 }
 
 extension MainViewController: BookmarksDelegate {

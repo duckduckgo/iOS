@@ -60,10 +60,32 @@ class TabViewController: UIViewController {
     @IBOutlet weak var webViewContainer: UIView!
     var webViewBottomAnchorConstraint: NSLayoutConstraint?
     var daxContextualOnboardingController: UIViewController?
+    
+    /// Stores the visual state of the web view
+    /// Used by DuckPlayer to save and restore view appearance when switching between normal browsing and fullscreen (portrail/landscape) video modes.
+    private struct ViewSettings {
+        
+        let viewBackground: UIColor?
+        let webViewBackground: UIColor?
+        let webViewOpaque: Bool
+        let scrollViewBackground: UIColor?
+        
+        /// Default view settings        
+        static var `default`: ViewSettings {
+            ViewSettings(
+                viewBackground: .systemBackground,
+                webViewBackground: nil,
+                webViewOpaque: true,
+                scrollViewBackground: .systemBackground
+            )
+        }
+    }
+    private var savedViewSettings: ViewSettings?
 
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     private let instrumentation = TabInstrumentation()
+    let tabInteractionStateSource: TabInteractionStateSource?
 
     var isLinkPreview = false
 
@@ -338,7 +360,8 @@ class TabViewController: UIViewController {
                                    subscriptionCookieManager: SubscriptionCookieManaging,
                                    textZoomCoordinator: TextZoomCoordinating,
                                    websiteDataManager: WebsiteDataManaging,
-                                   fireproofing: Fireproofing) -> TabViewController {
+                                   fireproofing: Fireproofing,
+                                   tabInteractionStateSource: TabInteractionStateSource?) -> TabViewController {
 
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -358,7 +381,8 @@ class TabViewController: UIViewController {
                               subscriptionCookieManager: subscriptionCookieManager,
                               textZoomCoordinator: textZoomCoordinator,
                               fireproofing: fireproofing,
-                              websiteDataManager: websiteDataManager
+                              websiteDataManager: websiteDataManager,
+                              tabInteractionStateSource: tabInteractionStateSource
             )
         })
         return controller
@@ -398,7 +422,8 @@ class TabViewController: UIViewController {
                    subscriptionCookieManager: SubscriptionCookieManaging,
                    textZoomCoordinator: TextZoomCoordinating,
                    fireproofing: Fireproofing,
-                   websiteDataManager: WebsiteDataManaging) {
+                   websiteDataManager: WebsiteDataManaging,
+                   tabInteractionStateSource: TabInteractionStateSource?) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -421,6 +446,7 @@ class TabViewController: UIViewController {
         self.textZoomCoordinator = textZoomCoordinator
         self.fireproofing = fireproofing
         self.websiteDataManager = websiteDataManager
+        self.tabInteractionStateSource = tabInteractionStateSource
 
         self.tabURLInterceptor = TabURLInterceptorDefault(featureFlagger: featureFlagger) {
             return AppDependencyProvider.shared.subscriptionManager.canPurchase
@@ -454,7 +480,20 @@ class TabViewController: UIViewController {
 
         observeNetPConnectionStatusChanges()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        registerForResignActive()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        unregisterFromResignActive()
+        tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
+    }
+
     private func registerForAddressBarLocationNotifications() {
         NotificationCenter.default.addObserver(self, selector:
                                                 #selector(onAddressBarPositionChanged),
@@ -541,6 +580,8 @@ class TabViewController: UIViewController {
         
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
+
+        tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
     }
     
     func applyInheritedAttribution(_ attribution: AdClickAttributionLogic.State?) {
@@ -550,6 +591,7 @@ class TabViewController: UIViewController {
     // The `consumeCookies` is legacy behaviour from the previous Fireproofing implementation. Cookies no longer need to be consumed after invocations
     // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
     func attachWebView(configuration: WKWebViewConfiguration,
+                       interactionStateData: Data? = nil,
                        andLoadRequest request: URLRequest?,
                        consumeCookies: Bool,
                        loadingInitiatedByParentTab: Bool = false,
@@ -598,6 +640,8 @@ class TabViewController: UIViewController {
             updateWebViewInspectability()
         }
 
+        let didRestoreWebViewState = restoreInteractionStateToWebView(interactionStateData)
+
         instrumentation.didPrepareWebView()
 
         // Initialize DuckPlayerNavigationHandler
@@ -608,7 +652,7 @@ class TabViewController: UIViewController {
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
-        } else if let urlRequest = request {
+        } else if !didRestoreWebViewState, let urlRequest = request {
             var loadingStopped = false
             linkProtection.getCleanURLRequest(from: urlRequest, onStartExtracting: { [weak self] in
                 if loadingInitiatedByParentTab {
@@ -952,8 +996,6 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-            privacyDashboard?.delegate = self
-            breakageCategory = nil
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -1020,7 +1062,7 @@ class TabViewController: UIViewController {
     }
 
     private func showBars(animated: Bool = true) {
-        chromeDelegate?.setBarsHidden(false, animated: animated)
+        chromeDelegate?.setBarsHidden(false, animated: animated, customAnimationDuration: nil)
     }
 
     func showPrivacyDashboard() {
@@ -1226,42 +1268,12 @@ class TabViewController: UIViewController {
         job()
     }
 
-    private var alertPresenter: AlertViewPresenter?
-    var breakageCategory: String?
-    private func schedulePrivacyProtectionsOffAlert() {
-        guard let breakageCategory else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.alertPresenter?.hide()
-            self.alertPresenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
-                                                     image: "SiteBreakage",
-                                                     leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { [weak self] in
-                Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
-                                                                                                              didToggleProtectionsFixIssue: true))
-            }),
-                                                     rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { [weak self] in
-                Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
-                                                                                                              didToggleProtectionsFixIssue: false))
-            }))
-            self.alertPresenter?.present(in: self, animated: true)
-        }
-    }
-
     deinit {
         rulesCompilationMonitor.tabWillClose(tabModel.uid)
         removeObservers()
         temporaryDownloadForPreviewedFile?.cancel()
         cleanUpBeforeClosing()
     }
-}
-
-extension TabViewController: PrivacyDashboardViewControllerDelegate {
-
-    func privacyDashboardViewController(_ privacyDashboardViewController: PrivacyDashboardViewController, didSelectBreakageCategory breakageCategory: String) {
-        self.breakageCategory = breakageCategory
-    }
-
 }
 
 // MARK: - LoginFormDetectionDelegate
@@ -1554,6 +1566,8 @@ extension TabViewController: WKNavigationDelegate {
                 inferredOpenerContext = .serp
             }
         }
+        
+        tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
     }
 
     func trackSecondSiteVisitIfNeeded(url: URL?) {
@@ -1567,6 +1581,14 @@ extension TabViewController: WKNavigationDelegate {
 
         if DaxDialogs.shared.isAddFavoriteFlow {
             delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
+            return
+        }
+              
+        /// Never show onboarding Dax on Youtube or DuckPlayer, unless DuckPlayer is disabled
+        guard let url = link?.url,
+              !url.isDuckPlayer,
+              !(url.isYoutube && duckPlayer?.settings.mode != .disabled) else {
+            scheduleTrackerNetworksAnimation(collapsing: true)
             return
         }
 
@@ -1609,7 +1631,7 @@ extension TabViewController: WKNavigationDelegate {
             }
 
             self.chromeDelegate?.omniBar.resignFirstResponder()
-            self.chromeDelegate?.setBarsHidden(false, animated: true)
+            self.chromeDelegate?.setBarsHidden(false, animated: true, customAnimationDuration: nil)
 
             // Present the contextual onboarding
             contextualOnboardingPresenter.presentContextualOnboarding(for: spec, in: self)
@@ -1770,9 +1792,7 @@ extension TabViewController: WKNavigationDelegate {
             if !tabURLInterceptor.allowsNavigatingTo(url: url) {
                 decisionHandler(.cancel)
                 // If there is history or a page loaded keep the tab open
-                if self.currentlyLoadedURL != nil {
-                    refresh()
-                } else {
+                if self.currentlyLoadedURL == nil {
                     delegate?.tabDidRequestClose(self)
                 }
                 return
@@ -2124,6 +2144,23 @@ extension TabViewController: WKNavigationDelegate {
                                                selector: #selector(autofillBreakageReport),
                                                name: .autofillFailureReport,
                                                object: nil)
+    }
+
+    private func registerForResignActive() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onApplicationWillResignActive),
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
+    }
+
+    private func unregisterFromResignActive() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
     }
 
     @objc private func autofillBreakageReport(_ notification: Notification) {
@@ -2592,7 +2629,6 @@ extension TabViewController: UserContentControllerDelegate {
             }) {
 
             reload()
-            schedulePrivacyProtectionsOffAlert()
         }
     }
 
@@ -2741,7 +2777,7 @@ extension NSError {
 
 extension TabViewController: SecureVaultManagerDelegate {
 
-    private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
+    private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials, backfilled: Bool) {
         guard AutofillSettingStatus.isAutofillEnabledInSettings,
               featureFlagger.isFeatureOn(.autofillCredentialsSaving),
               let autofillUserScript = autofillUserScript else { return }
@@ -2752,7 +2788,8 @@ extension TabViewController: SecureVaultManagerDelegate {
             
             let saveLoginController = SaveLoginViewController(credentialManager: manager,
                                                               appSettings: self.appSettings,
-                                                              domainLastShownOn: self.domainSaveLoginPromptLastShownOn)
+                                                              domainLastShownOn: self.domainSaveLoginPromptLastShownOn,
+                                                              backfilled: backfilled)
             self.domainSaveLoginPromptLastShownOn = self.url?.host
             saveLoginController.delegate = self
 
@@ -2818,7 +2855,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             // Add a delay to allow propagation of pointer events to the page
             // see https://app.asana.com/0/1202427674957632/1202532842924584/f
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.presentSavePasswordModal(with: vault, credentials: credentials)
+                self.presentSavePasswordModal(with: vault, credentials: credentials, backfilled: data.backfilled)
             }
         }
     }
@@ -3199,4 +3236,68 @@ extension TabViewController: DuckPlayerTabNavigationHandling {
         }
     }
     
+}
+
+private extension TabViewController {
+
+    func restoreInteractionStateToWebView(_ interactionStateData: Data?) -> Bool {
+        var didRestoreWebViewState = false
+        if let interactionStateData {
+            let startTime = CFAbsoluteTimeGetCurrent()
+            webView.interactionState = interactionStateData
+            if webView.url != nil {
+                self.url = tabModel.link?.url
+                didRestoreWebViewState = true
+                tabInteractionStateSource?.saveState(webView.interactionState, for: tabModel)
+            } else {
+                Pixel.fire(pixel: .tabInteractionStateFailedToRestore)
+            }
+
+            let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+            Pixel.fire(pixel: .tabInteractionStateRestorationTime(Pixel.Event.BucketAggregation(number: timeElapsed)))
+        }
+
+        return didRestoreWebViewState
+    }
+}
+
+// Landscape/Portrait mode customizations
+extension TabViewController {
+    
+    /// Stores WebView settings and
+    /// Updates its properties when displaying video in landscape mode
+    // This is used by DuckPlayer when rotating to landscape
+    func setupWebViewForLandscapeVideo() {
+        guard let webView = webView else { return }
+        
+        // Store original settings
+        savedViewSettings = ViewSettings(
+            viewBackground: view.backgroundColor,
+            webViewBackground: webView.backgroundColor,
+            webViewOpaque: webView.isOpaque,
+            scrollViewBackground: webView.scrollView.backgroundColor
+        )
+        
+        // Apply landscape settings
+        view.backgroundColor = .black
+        webView.backgroundColor = .black
+        webView.isOpaque = true
+        webView.scrollView.backgroundColor = .black
+    }
+    
+    /// Resets the webview to its original settings
+    /// This is used by DuckPlayer when rotating back to portrait
+    func setupWebViewForPortraitVideo() {
+        guard let webView = webView else { return }
+        
+        // Restore original settings if they were stored
+        let settings = savedViewSettings ?? ViewSettings.default
+        view.backgroundColor = settings.viewBackground
+        webView.backgroundColor = settings.webViewBackground
+        webView.isOpaque = settings.webViewOpaque
+        webView.scrollView.backgroundColor = settings.scrollViewBackground
+        
+        // Clear stored settings
+        savedViewSettings = nil
+    }
 }

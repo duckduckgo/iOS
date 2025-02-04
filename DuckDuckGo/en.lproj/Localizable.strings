@@ -25,9 +25,6 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
-/* Open AI Chat action in the menu list */
-"action.title.aichat" = "Chat";
-
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Passwords";
 
@@ -54,6 +51,9 @@
 
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Downloads";
+
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "AI Chat";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Edit Bookmark";
@@ -145,10 +145,6 @@
 /* No comment provided by engineer. */
 "addWidget.title" = "One tap to your favorite sites.";
 
-/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
-"ai-chat.preferences.text.markdown" = "Duck.ai is an optional feature that lets you have private conversations with popular 3rd-party Al chat models. Your chats are not used to train chat models.
-[Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
-
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
@@ -187,6 +183,15 @@
 
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Sync is Paused";
+
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Switch Sync";
+
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "This device is already synced, are you sure you want to sync it with a different backup or device? Switching won't remove any data already synced to this device.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "Switch to a different Sync?";
 
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "Sync & Backup is temporarily unavailable.";
@@ -777,15 +782,6 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Your report helps make DuckDuckGo better for everyone!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "No";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Did turning Privacy Protections off resolve the issue on this site?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Yes";
-
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Skip";
 
@@ -1059,8 +1055,12 @@
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "Duck Player's functionality has been affected by recent changes to YouTube. We’re working to fix these issues and appreciate your understanding.";
 
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"duckai.preferences.text.markdown" = "Duck.ai is an optional feature that lets you chat anonymously with popular 3rd-party Al chat models. Your chats are not used to train AI.
+[Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
+
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Show Duck.ai While Searching";
+"duckai.settings.enable.address-bar-searching-toggle" = "Show Duck.ai on Search Page";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Show Duck.ai in Browser Menu";
@@ -2477,22 +2477,22 @@ But if you *do* want a peek under the hood, you can find more information about 
 "siteFeedback.urlPlaceholder" = "Which website is broken?";
 
 /* Subscription Activation Info */
-"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple Account or an email address.";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Add Email";
 
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Apple Account";
 
-/* Button text for restoring purchase via Apple ID */
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Restore Purchase";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
+"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple Account.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Edit Email";
@@ -2534,7 +2534,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.add.email.title" = "Add Email";
 
 /* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
+"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple Account.";
 
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Your subscription was purchased through the Google Play Store. To renew your subscription, please open Google Play Store subscription settings on a device signed in to the same Google Account used to originally purchase your subscription.";
@@ -2570,7 +2570,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.email.inactive.alert.title" = "Subscription Not Found";
 
 /* Alert content for not found subscription */
-"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+"subscription.expired.alert.message" = "The subscription associated with this Apple Account is no longer active.";
 
 /* FAQ Button */
 "subscription.faq" = "FAQs and Support";
@@ -2588,7 +2588,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.found.restore" = "Restore";
 
 /* Message for the existing subscription dialog */
-"subscription.found.text" = "We found a subscription associated with this Apple ID.";
+"subscription.found.text" = "We found a subscription associated with this Apple Account.";
 
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Subscription Found";
@@ -2603,7 +2603,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.manage.title" = "Subscription";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
+"subscription.notFound.alert.message" = "There is no subscription associated with this Apple Account.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Subscription Not Found";

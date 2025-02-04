@@ -1,0 +1,146 @@
+name: iOS - Bump Internal Release
+
+on:
+  schedule:
+    - cron: '0 5 * * 2-5' # Run at 05:00 UTC, Tuesday through Friday
+  workflow_dispatch:
+    inputs:
+      asana-task-url:
+        description: "Asana release task URL"
+        required: false
+        type: string
+      base-branch:
+        description: "Base branch (defaults to main, only override for testing)"
+        required: false
+        type: string
+
+jobs:
+
+  validate_input_conditions:
+
+    name: Validate Input Conditions
+    runs-on: macos-15
+    timeout-minutes: 10
+
+    outputs:
+      skip-release: ${{ steps.prepare-release-bump.outputs.skip_release }}
+      asana-task-id: ${{ steps.prepare-release-bump.outputs.release_task_id }}
+      asana-task-url: ${{ steps.prepare-release-bump.outputs.release_task_url }}
+      release-branch: ${{ steps.prepare-release-bump.outputs.release_branch }}
+
+    steps:
+
+      - name: Assert release branch
+        run: |
+          case "${{ github.ref_name }}" in
+            *release/*) ;;
+            *main) ;;
+            *) echo "👎 Not a release or main branch"; exit 1 ;;
+          esac
+
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0 # Required to compute the git diff during validate_internal_release_bump
+
+      - name: Set up fastlane
+        run: bundle install
+
+      - name: Prepare release bump
+        id: prepare-release-bump
+        env:
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          bundle exec fastlane run validate_internal_release_bump \
+            platform:"ios" \
+            is_scheduled_release:"${{ github.event_name == 'schedule' }}" \
+            release_task_url:"${{ inputs.asana-task-url }}"
+
+  run_tests:
+
+    name: Run Tests
+
+    needs: validate_input_conditions
+
+    if: needs.validate_input_conditions.outputs.skip-release != 'true'
+    uses: ./.github/workflows/ios-pr-checks.yml
+    with:
+      branch: ${{ needs.validate_input_conditions.outputs.release-branch }}
+      skip-release: true
+    secrets:
+      APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+      APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+      APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
+      ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      SSH_PRIVATE_KEY_FASTLANE_MATCH: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
+
+  increment_build_number:
+
+    name: Increment Build Number
+    needs: [ validate_input_conditions, run_tests ]
+    runs-on: macos-15-xlarge
+    timeout-minutes: 10
+
+    steps:
+
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history and tags in order to extract Asana task URLs from git log
+          ref: ${{ needs.validate_input_conditions.outputs.release-branch }}
+          submodules: recursive
+
+      - name: Set up fastlane
+        run: bundle install
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
+
+      - name: Increment build number
+        env:
+          APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          bundle exec fastlane run bump_build_number platform:ios
+          bundle exec fastlane run update_asana_for_release \
+            platform:ios \
+            release_type:internal \
+            release_task_id:"${{ needs.validate_input_conditions.outputs.asana-task-id }}" \
+            target_section_id:"${{ vars.IOS_APP_BOARD_VALIDATION_SECTION_ID }}"
+
+  prepare_release:
+    name: Prepare Release
+    needs: [ validate_input_conditions, increment_build_number ]
+    uses: ./.github/workflows/ios-release.yml
+    with:
+      asana-task-url: ${{ needs.validate_input_conditions.outputs.asana-task-url }}
+      branch: ${{ needs.validate_input_conditions.outputs.release-branch }}
+    secrets:
+      APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+      APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+      APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
+      ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MM_WEBHOOK_URL: ${{ secrets.MM_WEBHOOK_URL }}
+      SSH_PRIVATE_KEY_FASTLANE_MATCH: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
+      
+  tag_and_merge:
+    name: Tag and Merge Branch
+    needs: [ validate_input_conditions, prepare_release ]
+    uses: ./.github/workflows/ios-tag-release-update-asana.yml
+    with:
+      asana-task-url: ${{ needs.validate_input_conditions.outputs.asana-task-url }}
+      branch: ${{ needs.validate_input_conditions.outputs.release-branch }}
+      base-branch: ${{ github.event.inputs.base-branch || 'main' }}
+      internal-release-bump: true
+      release-type: internal
+    secrets:
+      ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+      GHA_ELEVATED_PERMISSIONS_TOKEN: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }}

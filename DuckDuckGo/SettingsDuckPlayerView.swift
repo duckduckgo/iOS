@@ -2,7 +2,7 @@
 //  SettingsDuckPlayerView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2024 DuckDuckGo. All rights reserved.
+//  Copyright © 2025 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -73,10 +73,22 @@ struct SettingsDuckPlayerView: View {
                                        selectedOption: viewModel.duckPlayerModeBinding)
                 .disabled(viewModel.shouldDisplayDuckPlayerContingencyMessage)
                 
-                if viewModel.state.duckPlayerOpenInNewTabEnabled || viewModel.isInternalUser {
-                    SettingsCellView(label: UserText.settingsOpenDuckPlayerNewTabLabel,
-                                     accessory: .toggle(isOn: viewModel.duckPlayerOpenInNewTabBinding))
+                if (viewModel.state.duckPlayerOpenInNewTabEnabled || viewModel.isInternalUser) && !viewModel.state.duckPlayerNativeUI {
+                        SettingsCellView(label: UserText.settingsOpenDuckPlayerNewTabLabel,
+                                         accessory: .toggle(isOn: viewModel.duckPlayerOpenInNewTabBinding))
+                    
                 }
+                
+            }
+            
+            /// Experimental features for internal users
+            if viewModel.isInternalUser {
+                Section("Experimental (Internal only)", content: {
+                    SettingsCellView(label: "Use Native UI (Alpha)", accessory: .toggle(isOn: viewModel.duckPlayerNativeUI))
+                    if viewModel.appSettings.duckPlayerNativeUI {
+                        SettingsCellView(label: "Autoplay Videos", accessory: .toggle(isOn: viewModel.duckPlayerAutoplay))
+                    }
+                })
             }
         }
         .applySettingsListModifiers(title: UserText.duckPlayerFeatureName,

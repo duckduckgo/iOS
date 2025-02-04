@@ -1,3 +1,12 @@
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Tienes que habilitar la VPN desde la aplicación DuckDuckGo.";
+
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Inicia rápidamente un nuevo chat de IA en Duck.ai";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Genera al instante una nueva Duck Address privada.";
 
@@ -34,11 +43,35 @@
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Búsqueda por voz";
 
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Conectando...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Desconectando...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Ubicación desconocida";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "No conectado";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "La VPN está desactivada";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "La VPN está activada";
+
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Busca rápidamente tus contraseñas de DuckDuckGo guardadas.";
 
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Buscar contraseñas";
+
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Busca, chatea en Duck.ai o visualiza tus contraseñas.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Accesos directos";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Busca o visita tus sitios web de forma privada con solo pulsar un botón.";
@@ -66,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Buscar contraseñas";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Buscar";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Buscar en DuckDuckGo";

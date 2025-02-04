@@ -22,6 +22,7 @@ import XCTest
 import PixelExperimentKit
 import PixelKit
 import BrowserServicesKit
+import Core
 
 final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
@@ -63,7 +64,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testIncrementPaywallViewCount_incrementsWhenInConversionWindow() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         let enrollmentDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         mockFeatureFlagger.mockActiveExperiments = [
             FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
@@ -83,7 +84,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testIncrementPaywallViewCount_doesNotIncrementWhenNotInConversionWindow() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         let enrollmentDate = Calendar.current.date(byAdding: .day, value: -10, to: Date())!
         mockFeatureFlagger.mockActiveExperiments = [
             FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
@@ -173,7 +174,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testFreeTrialParametersIfApplicable_returnsParametersWithinConversionWindow() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         let enrollmentDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         mockFeatureFlagger.mockActiveExperiments = [
             FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
@@ -184,7 +185,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         ]
 
         // When
-        let parameters = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+        let parameters = sut.oneTimeParameters(for: cohort)
 
         // Then
         XCTAssertEqual(parameters?[FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentName], FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier)
@@ -193,7 +194,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testFreeTrialParametersIfApplicable_appendsOutsideWhenNotInConversionWindow() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         let enrollmentDate = Calendar.current.date(byAdding: .day, value: -10, to: Date())!
         mockFeatureFlagger.mockActiveExperiments = [
             FreeTrialsFeatureFlagExperiment.Constants.subfeatureIdentifier: ExperimentData(
@@ -204,7 +205,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         ]
 
         // When
-        let parameters = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+        let parameters = sut.oneTimeParameters(for: cohort)
 
         // Then
         XCTAssertEqual(parameters?[FreeTrialsFeatureFlagExperiment.Constants.freeTrialParameterExperimentCohort],
@@ -214,11 +215,11 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testFreeTrialParametersIfApplicable_doesNotReturnParametersIfAlreadyReturned() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
         mockUserDefaults.set(true, forKey: FreeTrialsFeatureFlagExperiment.Constants.hasReturnedFreeTrialParametersKey)
 
         // When
-        let parameters = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+        let parameters = sut.oneTimeParameters(for: cohort)
 
         // Then
         XCTAssertNil(parameters, "Parameters should not be returned if they have already been returned")
@@ -226,10 +227,11 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testFreeTrialParametersIfApplicable_updatesUserDefaultsCorrectly() {
         // Given
-        let cohort: FreeTrialsFeatureFlagExperiment.Cohort = .treatment
+        let cohort: PrivacyProFreeTrialExperimentCohort = .treatment
+        mockFeatureFlagger.cohortToReturn = cohort
 
         // When
-        _ = sut.freeTrialParametersIfNotPreviouslyReturned(for: cohort)
+        _ = sut.oneTimeParameters(for: cohort)
 
         // Then
         XCTAssertTrue(mockUserDefaults.bool(forKey: FreeTrialsFeatureFlagExperiment.Constants.hasReturnedFreeTrialParametersKey),
@@ -241,7 +243,7 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
         mockUserDefaults.set(true, forKey: FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey)
 
         // When
-        let cohort = sut.getCohortIfEnabled() as? FreeTrialsFeatureFlagExperiment.Cohort
+        let cohort = sut.getCohortIfEnabled() as? PrivacyProFreeTrialExperimentCohort
 
         // Then
         XCTAssertEqual(cohort, .treatment, "Should return the 'treatment' cohort when the override is enabled.")
@@ -261,13 +263,12 @@ final class FreeTrialsFeatureFlagExperimentTests: XCTestCase {
 
     func testGetCohortIfEnabled_returnsCohortFromFeatureFlaggerWhenEnabled() {
         // Given
-        let expectedCohort: FreeTrialsFeatureFlagExperiment.Cohort = .control
-        let enrollmentDate = Date()
+        let expectedCohort: PrivacyProFreeTrialExperimentCohort = .control
         mockUserDefaults.set(false, forKey: FreeTrialsFeatureFlagExperiment.Constants.featureFlagOverrideKey)
         mockFeatureFlagger.cohortToReturn = expectedCohort
 
         // When
-        let cohort = sut.getCohortIfEnabled() as? FreeTrialsFeatureFlagExperiment.Cohort
+        let cohort = sut.getCohortIfEnabled() as? PrivacyProFreeTrialExperimentCohort
 
         // Then
         XCTAssertEqual(cohort, expectedCohort, "Should return the cohort from the feature flagger when the feature flag is enabled.")

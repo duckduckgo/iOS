@@ -90,6 +90,8 @@ class AppSettingsMock: AppSettings {
     var duckPlayerMode: DuckDuckGo.DuckPlayerMode = .alwaysAsk
     var duckPlayerAskModeOverlayHidden: Bool = false
     var duckPlayerOpenInNewTab: Bool = false
+    var duckPlayerNativeUI: Bool = false
+    var duckPlayerAutoplay: Bool = false
     
     var newTabPageShortcutsSettings: Data?
     var newTabPageSectionsSettings: Data?

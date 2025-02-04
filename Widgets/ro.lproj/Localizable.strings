@@ -1,3 +1,12 @@
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Trebuie să activezi VPN-ul din aplicația DuckDuckGo.";
+
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Începe rapid un nou chat AI în Duck.ai";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Generează instantaneu o nouă Duck Address privată.";
 
@@ -34,11 +43,35 @@
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Căutare vocală";
 
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Se conectează...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Se deconectează...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Locație necunoscută";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Nu este conectat";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN este dezactivat";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN este activat";
+
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Caută rapid parolele tale DuckDuckGo salvate.";
 
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Caută parole";
+
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Caută, fă chat pe Duck.ai sau vezi parolele tale.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Scurtături";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Caută sau vizitează site-urile preferate în mod privat cu o singură atingere.";
@@ -66,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Caută parole";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Caută";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Căutare DuckDuckGo";

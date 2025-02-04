@@ -1,3 +1,12 @@
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Musíš povolit VPN v aplikaci DuckDuckGo.";
+
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Rychle zahaj nový chat s umělou inteligencí pomocí Duck.ai";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Okamžitě vygeneruje novou soukromou adresu Duck Address.";
 
@@ -34,11 +43,35 @@
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Hlasové vyhledávání";
 
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Připojování...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Odpojování...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Neznámé místo";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Nepřipojeno";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN je vypnutá";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN je zapnutá";
+
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Rychle hledej svá hesla uložená v DuckDuckGo.";
 
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Prohledat hesla";
+
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Vyhledávej, chatuj na Duck.ai nebo si připomeň hesla.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Zkratky";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Vyhledávejte nebo navštěvujte své oblíbené weby soukromě jediným klepnutím.";
@@ -66,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Prohledat hesla";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Hledat";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Vyhledat prostřednictvím DuckDuckGo";

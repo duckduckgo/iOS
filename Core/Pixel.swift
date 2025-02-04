@@ -187,6 +187,13 @@ public class Pixel {
         DefaultInternalUserDecider(store: InternalUserStore()).isInternalUser
     }
 
+    public static let defaultPixelUserAgent: String = {
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersion
+        // Strip patch version component as per https://app.asana.com/0/69071770703008/1209176655620013/f
+        let trimmedOSVersion = "\(osVersion.majorVersion).\(osVersion.minorVersion)"
+        return DefaultUserAgentManager.duckduckGoUserAgent(for: AppVersion.shared, osVersion: trimmedOSVersion)
+    }()
+
     public enum QueryParameters: Codable {
         case atb
         case appVersion
@@ -236,7 +243,7 @@ public class Pixel {
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             allowedQueryReservedCharacters: CharacterSet? = nil,
-                            withHeaders headers: APIRequest.Headers = APIRequest.Headers(),
+                            withHeaders headers: APIRequest.Headers = APIRequest.Headers(userAgent: defaultPixelUserAgent),
                             includedParameters: [QueryParameters] = [.appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         var newParams = params

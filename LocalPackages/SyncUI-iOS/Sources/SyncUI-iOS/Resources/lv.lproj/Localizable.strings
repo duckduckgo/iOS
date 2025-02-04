@@ -1,0 +1,297 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Lai izmantotu Sync & Backup, nepieciešama ierīces parole.";
+
+/* Standard Buttons - Back Button */
+"back.button" = "Atpakaļ";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Dažas grāmatzīmes netiek sinhronizētas, jo dažos laukos ir pārāk garš saturs.";
+
+/* Camera View - Go to Settings Button */
+"camera.go.to.settings.button" = "Doties uz Iestatījumiem";
+
+/* Camera View - Unavailable Title */
+"camera.is.unavailable.title" = "Kamera nav pieejama";
+
+/* Camera View - Permission Instructions */
+"camera.permission.instructions" = "Lūdzu, dodies uz ierīces iestatījumiem un piešķir atļauju šai lietotnei piekļūt kamerai.";
+
+/* Camera View - Permission Required */
+"camera.permission.required" = "Nepieciešama kameras atļauja";
+
+/* Camera View - Point Camera Indication */
+"camera.point.camera.indication" = "Pavērs kameru pret kvadrātkodu, lai sinhronizētu";
+
+/* No comment provided by engineer. */
+"Cancel" = "Atcelt";
+
+/* Standard Buttons - Cancel Button */
+"cancel.button" = "Atcelt";
+
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Ieslēgt sinhronizāciju un dublēšanu";
+
+/* Connect With Server Sheet - Description Part 1 */
+"connect.with.server.sheet.description.part1" = "Tādējādi DuckDuckGo drošajā serverī tiek izveidota šifrēta grāmatzīmju un paroļu dublējumkopija, ko var sinhronizēt ar citām ierīcēm.";
+
+/* Connect With Server Sheet - Description Part 2 */
+"connect.with.server.sheet.description.part2" = "Šifrēšanas atslēga tiek saglabāta tikai tavā ierīcē – DuckDuckGo tai nevar piekļūt.";
+
+/* Connect With Server Sheet - Footer */
+"connect.with.server.sheet.footer" = "Vēlāk vari sinhronizēt ar citām ierīcēm.";
+
+/* Connect With Server Sheet - Title */
+"connect.with.server.sheet.title" = "Šīs ierīces sinhronizācija un dublēšana";
+
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopēt";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Daži pieteikšanās dati netiek sinhronizēti, jo noteiktos laukos saturs ir pārāk garš.";
+
+/* Delete Server Data - Button */
+"delete.server.data" = "Izslēgt un dzēst servera datus...";
+
+/* No comment provided by engineer. */
+"Dev environment" = "Izstrādes vide";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Iegūt DuckDuckGo citās ierīcēs";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Tavi dati ir sinhronizēti!";
+
+/* Standard Buttons - Done Button */
+"done.button" = "Gatavs";
+
+/* Edit Device View - Header */
+"edit.device.header" = "Ierīces nosaukums";
+
+/* Edit Device View - Title */
+"edit.device.title" = "Rediģēt %@";
+
+/* Fetch Favicons Onboarding - Button Title */
+"fetch.favicons.onboarding.button.title" = "Atjaunināt grāmatzīmju ikonas";
+
+/* Fetch Favicons Onboarding - Message */
+"fetch.favicons.onboarding.message" = "Vai vēlies, lai šī ierīce automātiski lejupielādētu ikonas visām jaunajām grāmatzīmēm, kas sinhronizētas no citām ierīcēm? Tādējādi lejupielāde tiks atklāta tavam tīklam ikreiz, kad tiks sinhronizēta kāda grāmatzīme.";
+
+/* Fetch Favicons Onboarding - Title */
+"fetch.favicons.onboarding.title" = "Lejupielādēt trūkstošās ikonas?";
+
+/* Options - Fetch Favicons Description */
+"fetch.favicons.option.caption" = "Automātiski lejupielādē sinhronizēto grāmatzīmju ikonas. Ikonu lejupielādes ir atklātas tavam tīklam.";
+
+/* Options - Fetch Favicons Title */
+"fetch.favicons.option.title" = "Automātiski lejupielādēt ikonas";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Doties uz Iestatījumiem";
+
+/* No comment provided by engineer. */
+"Keep Development" = "Paturēt izstrādi";
+
+/* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
+"manually.enter.code.instruction.attributed" = "Dodies uz %1$@ un izvēlies %2$@ DuckDuckGo lietotnē citā sinhronizētā ierīcē, un ielīmē kodu šeit, lai sinhronizētu šo ierīci.";
+
+/* Manually Enter Code View - Title */
+"manually.enter.code.title" = "Manuāla koda ievadīšana";
+
+/* Manually Enter Code View - Validating Code Action */
+"manually.enter.code.validating.code.action" = "Notiek koda apstiprināšana";
+
+/* Manually Enter Code View - Validating Code Failed Action */
+"manually.enter.code.validating.code.failed.action" = "Nederīgs kods.";
+
+/* Standard Buttons - Next Button */
+"next.button" = "Nākamais";
+
+/* Standard Buttons - Not Now Button */
+"not.now.button" = "Ne tagad";
+
+/* Options - Section Header */
+"options.section.header" = "Opcijas";
+
+/* Section header for other syncing options */
+"other.options.section.header" = "Citas iespējas";
+
+/* Standard Buttons - Paste Button */
+"paste.button" = "Ielīmēt";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Pārvaldīt grāmatzīmes";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Pārvaldīt paroles…";
+
+/* Preparing To Sync Sheet - Description */
+"preparing.to.sync.sheet.description" = "Tavas grāmatzīmes un paroles tiek sagatavotas sinhronizēšanai. Tam vajadzētu aizņemt tikai neilgu brīdi.";
+
+/* Preparing To Sync Sheet - Footer */
+"preparing.to.sync.sheet.footer" = "Notiek savienojuma izveide…";
+
+/* Preparing To Sync Sheet - Title */
+"preparing.to.sync.sheet.title" = "Sinhronizācijas un dublēšanas sagatavošana";
+
+/* Link label for recovering synced data */
+"recover.synced.data.link" = "Sinhronizēto datu atgūšana";
+
+/* Recover Synced Data Sheet - Button */
+"recover.synced.data.sheet.button" = "Sākt darbu";
+
+/* Recover Synced Data Sheet - Description */
+"recover.synced.data.sheet.description" = "Lai atjaunotu sinhronizētos datus, ir nepieciešams atgūšanas kods, ko saglabāji, kad pirmo reizi iestatīji sinhronizāciju. Šis kods, iespējams, ir saglabāts PDF formātā ierīcē, kuru sākotnēji izmantoji sinhronizācijas iestatīšanai.";
+
+/* Recover Synced Data Sheet - Title */
+"recover.synced.data.sheet.title" = "Sinhronizēto datu atgūšana";
+
+/* Remove Device View - Button */
+"remove.device.button" = "Noņemt ierīci";
+
+/* Remove Device View - Message */
+"remove.device.message" = "\"%@\" vairs nevarēs piekļūt taviem sinhronizētajiem datiem.";
+
+/* Remove Device View - Title */
+"remove.device.title" = "Noņemt ierīci?";
+
+/* Save Recovery Code Sheet - Copy Code Toast */
+"save.recovery.code.code.copied.button" = "Atgūšanas kods ir nokopēts starpliktuvē";
+
+/* Save Recovery Code Sheet - Copy Code Button */
+"save.recovery.code.copy.code.button" = "Kopēt kodu";
+
+/* Save Recovery Code Sheet - Save as PDF Button */
+"save.recovery.code.save.as.pdf.button" = "Saglabāt kā PDF";
+
+/* Save Recovery Code Sheet - Description */
+"save.recovery.code.sheet.description" = "Ja zaudēsi piekļuvi savām ierīcēm, šis kods būs nepieciešams, lai atjaunotu sinhronizētos datus.";
+
+/* Save Recovery Code Sheet - Footer */
+"save.recovery.code.sheet.footer" = "Sinhronizētajiem datiem var piekļūt ikviens, kam ir šis kods, tāpēc glabā to drošā vietā.";
+
+/* Save Recovery Code Sheet - Title */
+"save.recovery.code.sheet.title" = "Saglabāt atgūšanas kodu";
+
+/* Save RecoveryPDF - Button */
+"save.recovery.pdf.button" = "Saglabāt atgūšanas PDF";
+
+/* Save RecoveryPDF - Footer */
+"save.recovery.pdf.footer" = "Ja pazaudēsi savu ierīci, šis atgūšanas kods būs nepieciešams, lai atjaunotu sinhronizētos datus.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Enter Code Link */
+"scan.code.to.recover.synced.data.enter.code.link" = "Ievadīt teksta kodu manuāli";
+
+/* Scan Or Enter Code To Recover Synced Data View - Explanation */
+"scan.code.to.recover.synced.data.explanation" = "Skenē kvadrātkodu savā atgūšanas PDF failā vai citā sinhronizētā ierīcē, lai atgūtu datus.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Footer */
+"scan.code.to.recover.synced.data.footer" = "Nevari skenēt?";
+
+/* Scan Or Enter Code To Recover Synced Data View - Title */
+"scan.code.to.recover.synced.data.title" = "Sinhronizēto datu atgūšana";
+
+/* Scan or See Code View - Footer */
+"scan.or.see.code.footer" = "Nevari skenēt?";
+
+/* Scan or See Code View - Instruction */
+"scan.or.see.code.instruction" = "Dodies uz Iestatījumi › Sinhronizācija un dublēšana DuckDuckGo pārlūkprogrammā citā ierīcē un izvēlies \"Sinhronizēt ar citu ierīci\".";
+
+/* Scan or See Code View - Instruction with syncMenuPath */
+"scan.or.see.code.instruction.attributed" = "Dodies uz %@ DuckDuckGo pārlūkā citā ierīcē un izvēlies \"Sinhronizēt ar citu ierīci.\".";
+
+/* Scan or See Code View - Manually Enter Code Link */
+"scan.or.see.code.manually.enter.code.link" = "Ievadīt kodu manuāli";
+
+/* Scan or See Code View - Scan Code Instructions Body */
+"scan.or.see.code.scan.code.instructions.body" = "Lai sinhronizētu, skenē šo kodu ar citu ierīci.";
+
+/* Scan or See Code View - Scan Code Instructions Title */
+"scan.or.see.code.scan.code.instructions.title" = "No mobilā uz mobilo?";
+
+/* Scan or See Code View - Share Code Link */
+"scan.or.see.code.share.code.link" = "Kopīgot teksta kodu";
+
+/* Scan or See Code View - Title */
+"scan.or.see.code.title" = "Kvadrātkoda skenēšana";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Aizsargā savu ierīci, lai izmantotu Sync & Backup";
+
+/* No comment provided by engineer. */
+"Switch to Production" = "Pārslēgties uz ražošanu";
+
+/* Link label for syncing and backing up the device */
+"sync.and.backup.this.device.link" = "Sinhronizēt un dublēt šo ierīci";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Iegūt DuckDuckGo citās ierīcēs";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Kopīgot lejupielādes saiti";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Lai lejupielādētu DuckDuckGo datorā vai citā mobilajā ierīcē, apmeklē:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Iegūsti DuckDuckGo citās ierīcēs, lai sinhronizētu ar šo ierīci";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Iegūsti DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Instalē DuckDuckGo pārlūkprogrammu savās ierīcēs, lai sāktu droši sinhronizēt grāmatzīmes un paroles:";
+
+/* Sync Menu Path */
+"sync.menu.path" = "Iestatījumi > Sinhronizācija un dublēšana > Sinhronizācija ar citu ierīci";
+
+/* Sync & Backup Title */
+"sync.title" = "Sinhronizācija un dublēšana";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Diemžēl sinhronizācija un dublēšana pašlaik nav pieejama. Lūdzu, mēģini vēlreiz vēlāk.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Diemžēl sinhronizācija un dublēšana šajā lietotnes versijā vairs nav pieejama. Lai turpinātu, lūdzu, atjaunini DuckDuckGo uz jaunāko versiju.";
+
+/* Title of the warning message */
+"sync.warning.sync.unavailable" = "Sinhronizācija un dublēšana nav pieejama";
+
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Sinhronizēt ar citu ierīci";
+
+/* Footer message for syncing with another device */
+"sync.with.another.device.footer" = "Tavi dati tiek šifrēti no gala līdz galam, un DuckDuckGo nav piekļuves šifrēšanas atslēgai.";
+
+/* Message for syncing with another device */
+"sync.with.another.device.message" = "Droši sinhronizē grāmatzīmes un paroles starp ierīcēm.";
+
+/* Title for syncing with another device */
+"sync.with.another.device.title" = "Sinhronizācijas sākšana";
+
+/* Synced Devices - Section Header */
+"synced.devices.section.header" = "Sinhronizētās ierīces";
+
+/* Synced Devices - Sync with Another Device Label */
+"synced.devices.sync.with.another.device.label" = "Sinhronizēt ar citu ierīci";
+
+/* Synced Devices - This Device Label */
+"synced.devices.this.device.label" = "Šī ierīce";
+
+/* Turn Sync Off - Button */
+"turn.sync.off" = "Izslēgt sinhronizāciju un dublēšanu...";
+
+/* Turn Sync Off - Section Header */
+"turn.sync.off.section.header" = "Sinhronizācija iespējota";
+
+/* Options - Unify Favorites Instruction */
+"unified.favorites.instruction" = "Izmanto vienas grāmatzīmes visās savās ierīcēs. Atstāj opciju izslēgtu, lai nodalītu mobilās un galddatora izlases.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Izlases apvienošana visās ierīcēs";
+
+/* View Text Code menu item */
+"view.text.code.menu.item" = "Skatīt teksta kodu";
+
+/* No comment provided by engineer. */
+"You're using Sync Development environment" = "Jūs izmantojat Sync Development vidi";
+

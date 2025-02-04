@@ -1,3 +1,12 @@
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Peate lubama VPN-i rakenduses DuckDuckGo.";
+
+/* Description shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.description" = "Alustage kiiresti uut AI-vestlust Duck.ai-s.";
+
+/* Title shown to the user when adding the Duck.ai lock screen widget */
+"lock.screen.widget.aichat.title" = "Duck.ai";
+
 /* Description shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.description" = "Loo hetkega uus privaatne Duck Address.";
 
@@ -34,11 +43,35 @@
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Häälotsing";
 
+/* Description for the control widget when connecting */
+"vpn.control.widget.connecting" = "Ühendamine...";
+
+/* Description for the control widget when disconnecting */
+"vpn.control.widget.disconnecting" = "Katkestamine...";
+
+/* Description for the control widget when the location is unknown */
+"vpn.control.widget.location-unknown" = "Tundmatu asukoht";
+
+/* Description for the control widget when not connected */
+"vpn.control.widget.not-connected" = "Ei ole ühendatud";
+
+/* Title for the control widget when disabled */
+"vpn.control.widget.off" = "VPN on Väljas";
+
+/* Title for the control widget when enabled */
+"vpn.control.widget.on" = "VPN on Sees";
+
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Otsi kiiresti oma salvestatud DuckDuckGo paroole.";
 
 /* Display name for search passwords widget in widget gallery */
 "widget.gallery.passwords.display.name" = "Otsi paroole";
+
+/* Description of quickActions widget in widget gallery */
+"widget.gallery.quickactions.description" = "Otsige, vestelge Duck.ai-s või vaadake oma paroole.";
+
+/* Display name for quick actions widget in widget gallery */
+"widget.gallery.quickactions.display.name" = "Otseteed";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Otsi või külasta oma lemmiksaite privaatselt vaid ühe puudutusega.";
@@ -66,6 +99,9 @@
 
 /* Text in passwords widget */
 "widget.passwords" = "Otsi paroole";
+
+/* Placeholder text in search field on the quick actions widget */
+"widget.quickactions.search" = "Otsi";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Otsi DuckDuckGo'st";

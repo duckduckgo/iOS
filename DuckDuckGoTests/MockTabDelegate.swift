@@ -140,7 +140,7 @@ extension TabViewController {
             bookmarksDatabase: CoreDataDatabase.bookmarksMock,
             historyManager: MockHistoryManager(historyCoordinator: MockHistoryCoordinator(), isEnabledByUser: true, historyFeatureEnabled: true),
             syncService: MockDDGSyncing(authState: .active, isSyncInProgress: false),
-            duckPlayer: MockDuckPlayer(settings: MockDuckPlayerSettings(privacyConfigManager: PrivacyConfigurationManagerMock()), featureFlagger: featureFlagger),
+            duckPlayer: MockDuckPlayer(settings: MockDuckPlayerSettings(appSettings: AppSettingsMock(), privacyConfigManager: PrivacyConfigurationManagerMock(), internalUserDecider: MockDuckPlayerInternalUserDecider()), featureFlagger: featureFlagger),
             privacyProDataReporter: MockPrivacyProDataReporter(),
             contextualOnboardingPresenter: contextualOnboardingPresenter,
             contextualOnboardingLogic: contextualOnboardingLogic,
@@ -150,7 +150,8 @@ extension TabViewController {
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
             textZoomCoordinator: MockTextZoomCoordinator(),
             websiteDataManager: MockWebsiteDataManager(),
-            fireproofing: MockFireproofing()
+            fireproofing: MockFireproofing(),
+            tabInteractionStateSource: MockTabInteractionStateSource()
         )
         tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false, customWebView: customWebView)
         return tab

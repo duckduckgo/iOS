@@ -56,6 +56,11 @@ class MockPrivacyConfiguration: PrivacyConfiguration {
     var exceptionsList: (PrivacyFeature) -> [String] = { _ in [] }
     var featureSettings: PrivacyConfigurationData.PrivacyFeature.FeatureSettings = [:]
 
+    var subfeatureSettings: String?
+    func settings(for subfeature: any PrivacySubfeature) -> PrivacyConfigurationData.PrivacyFeature.SubfeatureSettings? {
+        return subfeatureSettings
+    }
+
     func exceptionsList(forFeature featureKey: PrivacyFeature) -> [String] { exceptionsList(featureKey) }
     var isFeatureKeyEnabled: ((PrivacyFeature, AppVersionProvider) -> Bool)?
     func isEnabled(featureKey: PrivacyFeature, versionProvider: AppVersionProvider) -> Bool {

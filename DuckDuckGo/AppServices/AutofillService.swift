@@ -27,7 +27,8 @@ final class AutofillService {
     private let autofillLoginSession = AppDependencyProvider.shared.autofillLoginSession
     private let autofillUsageMonitor = AutofillUsageMonitor()
     private lazy var autofillPixelReporter = AutofillPixelReporter(
-        userDefaults: .standard,
+        standardUserDefaults: .standard,
+        appGroupUserDefaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).autofill"),
         autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
         eventMapping: EventMapping<AutofillPixelEvent> { [weak self] event, _, params, _ in
             switch event {

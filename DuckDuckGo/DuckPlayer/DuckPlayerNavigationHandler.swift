@@ -278,6 +278,11 @@ final class DuckPlayerNavigationHandler: NSObject {
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
         
+        if duckPlayer.settings.nativeUI {
+            loadNativeDuckPlayerVideo(videoID: videoID)
+            return
+        }
+        
         let duckPlayerURL = URL.duckPlayer(videoID)
         self.loadWithDuckPlayerParameters(URLRequest(url: duckPlayerURL), referrer: self.referrer, webView: webView, forceNewTab: forceNewTab, disableNewTab: disableNewTab)
     }
@@ -304,6 +309,11 @@ final class DuckPlayerNavigationHandler: NSObject {
         
         // When redirecting to YouTube, we always allow the first video
         loadWithDuckPlayerParameters(URLRequest(url: redirectURL), referrer: referrer, webView: webView, forceNewTab: forceNewTab, allowFirstVideo: allowFirstVideo, disableNewTab: disableNewTab)
+    }
+    
+    @MainActor
+    private func loadNativeDuckPlayerVideo(videoID: String) {
+        duckPlayer.loadNativeDuckPlayerVideo(videoID: videoID)
     }
     
     
@@ -813,18 +823,15 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Reset DuckPlayer status
         duckPlayer.settings.allowFirstVideo = false
+                
+        guard let url = webView.url else {
+            return
+        }
         
         guard isDuckPlayerFeatureEnabled else {
             webView.reload()
             return
         }
-        
-        guard let url = webView.url else {
-            return
-        }
-        
-        // Fire Reload Pixel
-        duckPlayerOverlayUsagePixels?.fireReloadPixelIfNeeded(url: url)
                     
         if url.isDuckPlayer, duckPlayerMode != .disabled {
             redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: true)

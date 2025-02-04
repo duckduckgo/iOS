@@ -108,10 +108,6 @@ extension MainViewController {
             return
         }
 
-        if entryPoint == .report {
-            fireBrokenSiteReportShown()
-        }
-
         let storyboard = UIStoryboard(name: "PrivacyDashboard", bundle: nil)
         let controller = storyboard.instantiateInitialViewController { coder in
             PrivacyDashboardViewController(coder: coder,
@@ -128,8 +124,6 @@ extension MainViewController {
         }
         
         currentTab?.privacyDashboard = controller
-        controller.delegate = currentTab
-        currentTab?.breakageCategory = nil
 
         controller.popoverPresentationController?.delegate = controller
         controller.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
@@ -143,14 +137,7 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
-    private func fireBrokenSiteReportShown() {
-        let parameters = [
-            PrivacyDashboardEvents.Parameters.source: BrokenSiteReport.Source.appMenu.rawValue
-        ]
-        Pixel.fire(pixel: .reportBrokenSiteShown, withAdditionalParameters: parameters)
-    }
-
-    func segueToNegativeFeedbackForm(isFromBrokenSiteReportFlow: Bool = false) {
+    func segueToNegativeFeedbackForm() {
         Logger.lifecycle.debug(#function)
         hideAllHighlightsIfNeeded()
 
@@ -160,7 +147,7 @@ extension MainViewController {
         feedbackPicker.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
         feedbackPicker.modalPresentationStyle = isPad ? .formSheet : .pageSheet
         feedbackPicker.loadViewIfNeeded()
-        feedbackPicker.configure(with: Feedback.Category.allCases, isFromBrokenSiteReportFlow: isFromBrokenSiteReportFlow)
+        feedbackPicker.configure(with: Feedback.Category.allCases)
 
         present(UINavigationController(rootViewController: feedbackPicker), animated: true)
     }
@@ -185,7 +172,8 @@ extension MainViewController {
         guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
             TabSwitcherViewController(coder: coder,
                                       bookmarksDatabase: self.bookmarksDatabase,
-                                      syncService: self.syncService)
+                                      syncService: self.syncService,
+                                      featureFlagger: self.featureFlagger)
         }) else {
             assertionFailure()
             return
@@ -300,7 +288,7 @@ extension MainViewController {
             let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
 
             // We are still presenting legacy views, so use a Navcontroller
-            let navController = UINavigationController(rootViewController: settingsController)
+            let navController = SettingsUINavigationController(rootViewController: settingsController)
             settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
 
             present(navController, animated: true) {
@@ -336,4 +324,27 @@ extension MainViewController {
         }
     }
     
+}
+
+// Exists to fire a did disappear notification for settings when the controller did disappear
+//  so that we get the event regarldess of where in the UI hierarchy it happens.
+class SettingsUINavigationController: UINavigationController {
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    init(rootViewController: SettingsHostingController) {
+        super.init(rootViewController: rootViewController)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.post(name: .settingsDidDisappear, object: nil)
+    }
+
+}
+
+extension NSNotification.Name {
+    static let settingsDidDisappear: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.settings.didDisappear")
 }

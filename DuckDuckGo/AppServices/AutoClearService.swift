@@ -65,5 +65,9 @@ final class AutoClearService {
         }
         autoClear.startClearingTimer()
     }
-    
+
+    var isClearingEnabled: Bool {
+        autoClear.isClearingEnabled
+    }
+
 }

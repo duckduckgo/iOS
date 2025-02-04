@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Downloads";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "AI-chat";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Bladwijzer bewerken";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Plakken en gaan";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Afdrukken";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Afdrukken";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Vernieuwen";
@@ -131,13 +137,16 @@
 "addWidget.description" = "Krijg snel toegang tot privézoekopdrachten en de sites die je leuk vindt.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Druk lang op het startscherm om de schudmodus te gebruiken.";
+"addWidget.settings.firstParagraph" = "Druk lang op het startscherm tot de apps beginnen te schudden.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.secondParagraph" = "Tik op de knop **Bewerken** en kies vervolgens **Widget toevoegen**.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tik op de plus %@-knop.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Zoek en selecteer DuckDuckGo. Kies vervolgens een widget.";
+"addWidget.settings.title" = "Zoek en selecteer **DuckDuckGo**. Kies vervolgens een widget.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "Eén tik naar uw favoriete sites.";
@@ -180,6 +189,15 @@
 
 /* Title for alert shown when sync paused for an error */
 "alert.sync-paused-title" = "Synchronisatie is gepauzeerd";
+
+/* Switch account button in alert */
+"alert.sync-switch-account-button" = "Schakelen tussen synchronisatie";
+
+/* Description for switching sync accounts when there's two */
+"alert.sync-switch-account-message" = "Dit apparaat is al gesynchroniseerd, weet je zeker dat je het met een andere back-up of een ander apparaat wilt synchroniseren? Als je overschakelt, worden er geen gegevens verwijderd die al met dit apparaat zijn gesynchroniseerd.";
+
+/* Switch account title in alert */
+"alert.sync-switch-account-title" = "Overschakelen naar een andere synchronisatie?";
 
 /* Description for alert shown when sync error occurs because of too many requests */
 "alert.sync-too-many-requests-error-description" = "'Synchronisatie en back-up' is tijdelijk niet beschikbaar.";
@@ -276,18 +294,6 @@
 
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Wanneer DuckDuckGo pop-ups voor cookietoestemming op bezochte websites detecteert, kunnen we proberen automatisch je cookievoorkeuren in te stellen om het aantal cookies tot een minimum te beperken en je privacy te maximaliseren. De pop-ups worden vervolgens gesloten. Sommige sites bieden geen optie om cookievoorkeuren te beheren, zodat we pop-ups zoals deze alleen kunnen verbergen.";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
 
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Open Instellingen";
@@ -526,11 +532,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Geen resultaten";
 
-/* Do not translate - stringsdict entry */
-"autofill.number.of.passwords" = "autofill.number.of.passwords";
-
 /* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Wachtwoorden worden versleuteld, opgeslagen op het apparaat en vergrendeld met %@.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -689,9 +692,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Verwijderen";
 
-/* Do not translate - stringsdict entry */
-"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "%@ verwijderen?";
 
@@ -770,14 +770,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Jouw melding helpt DuckDuckGo beter te maken voor iedereen!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Nee";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Is het probleem op deze site opgelost door de Privacy Beveiligingen uit te schakelen?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Ja";
+/* No comment provided by engineer. */
+"Confirm" = "Bevestigen";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Overslaan";
@@ -803,23 +797,14 @@
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Voeg me eenvoudig toe aan je Dock.";
 
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
-
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "*%1$@* probeerde je hier te volgen. Ik heb dit geblokkeerd!\n\n☝️ Tik op het schild voor meer informatie.";
 
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "High five!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Denk eraan: elke keer als je met mij browset, verliest een enge advertentie zijn vleugels. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Je kunt het!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Dat is DuckDuckGo Search. Privé. Snel. Minder advertenties.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Ik snap het!";
@@ -838,9 +823,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Bezoek eens een site!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Je DuckDuckGo-zoekopdrachten zijn altijd anoniem.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Klaar om te beginnen?\nProbeer een zoekopdracht!";
@@ -866,17 +848,20 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "cast van avatar";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "lokaal weer";
-
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "Recepten voor chocoladekoekjes";
-
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "recepten voor het avondeten";
-
 /* Title for a button that triggers an unknown search query for the user. */
 "contextual.onboarding.try-search.surprise-me-title" = "Verras me!";
+
+/* Fourth paragraph of the Control Center VPN Widget Education screen */
+"control.center.vpn.widget.education.paragraph" = "Zoek **DuckDuckGo** in de lijst en tik vervolgens op **VPN-bediening** om het toe te voegen.";
+
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Veeg omlaag vanuit de rechterbovenhoek van het scherm";
+
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Tik op de **+**-knop in de linkerbovenhoek van **Bedieningspaneel**";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Tik op **Een besturingselement toevoegen** onderaan het scherm";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Crashrapporten altijd verzenden";
@@ -925,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Opluchting!";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "High five!";
@@ -1055,6 +1037,9 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
 
+/* No comment provided by engineer. */
+"Duck Player" = "Duck Player";
+
 /* Title for message explaining to the user that Duck Player is not available */
 "duck-player.contingency-title" = "Duck Player is niet beschikbaar";
 
@@ -1063,6 +1048,18 @@
 
 /* Message explaining to the user that Duck Player is not available */
 "duck-player.video-contingency-message" = "Recente wijzigingen in YouTube hebben invloed op de functionaliteit van Duck Player. We werken aan een oplossing voor deze problemen. Bedankt voor je begrip.";
+
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"duckai.preferences.text.markdown" = "Duck.ai is een optionele functie waarmee je anoniem kunt chatten met populaire AI-chatmodellen van derden. Je chats worden niet gebruikt om AI te trainen.\n[Meer informatie](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
+
+/* Toggle text to enable/disable AI Chat in the address bar */
+"duckai.settings.enable.address-bar-searching-toggle" = "Duck.ai weergeven op de zoekpagina";
+
+/* Toggle text to enable/disable AI Chat in the browsing menu */
+"duckai.settings.enable.browsing-menu-toggle" = "Duck.ai weergeven in browsermenu";
+
+/* Settings screen cell text for AI Chat settings */
+"duckai.settings.title" = "Duck.ai";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo voor iOS";
@@ -1082,10 +1079,12 @@
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Ik snap het!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Te veel advertenties op YouTube? Probeer Duck Player!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "Te veel advertenties op YouTube? Niet met Duck Player!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1517,6 +1516,9 @@
 /* No comment provided by engineer. */
 "ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
+/* Message that comes up when trying to enable the VPN from intents, asking the user to enable it from the app so it's configured */
+"intent.vpn.needs.to.be.enabled.from.app" = "Je moet de VPN inschakelen vanuit de DuckDuckGo-app.";
+
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1627,6 +1629,9 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Optiemenu";
+
+/* No comment provided by engineer. */
+"Message policy hostname" = "Hostnaam van berichtenbeleid";
 
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Terug";
@@ -1859,6 +1864,9 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-instellingen";
 
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Sneltoetsen";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Pas je favorieten en go-to-functies aan. Herschik dingen of verberg ze om de tabbladpagina overzichtelijk te maken.";
 
@@ -1901,9 +1909,6 @@
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "Open op een willekeurige site het menu ••• en selecteer **Favoriet toevoegen** om deze toe te voegen aan je nieuwe tabbladpagina.";
 
-/* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Beheerde cookies";
 
@@ -1916,23 +1921,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Kies je browser";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Blokkeer cookiepop-ups";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Blokkeer enge advertenties";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Wis browsegegevens in een handomdraai";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Standaard privé zoeken";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Blokkeer trackers van derden";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Privacybescherming geactiveerd!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Gemakkelijk te bereiken";
@@ -1987,9 +1977,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Laten we het doen!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Hoi.\n\nKlaar voor een beter internet met meer privacy?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget toevoegen";
@@ -2106,9 +2093,9 @@
 "prefrences.sync.credentials-limit-exceeded-description" = "Je hebt het maximumaantal wachtwoorden bereikt. Verwijder er een paar om de synchronisatie te hervatten.";
 
 /* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Er is een fout opgetreden bij het synchroniseren. Probeer synchronisatie op dit apparaat uit te schakelen en maak dan opnieuw verbinding met een ander apparaat of met je herstelcode.";
+Description of incorrectly formatted data error when syncing.
+Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Sommige bladwijzers of wachtwoorden hebben de verkeerd indeling of te lang en werden niet gesynchroniseerd.";
 
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Synchronisatie onderbroken";
@@ -2174,6 +2161,9 @@
 "prompt.custom.url.scheme.title" = "Openen in een andere app?";
 
 /* No comment provided by engineer. */
+"Reset" = "Herstel";
+
+/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Zoek of voer een adres in";
 
 /* No comment provided by engineer. */
@@ -2212,8 +2202,11 @@
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Widget toevoegen aan startscherm";
 
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.vpn" = "Voeg de DuckDuckGo VPN-widget toe aan je startscherm";
+
 /* Name of the settings subsection related to the address bar
-   Settings screen cell text for addess bar position */
+Settings screen cell text for addess bar position */
 "settings.address.bar" = "Adresbalk";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2271,7 +2264,7 @@
 "settings.data.clearing" = "Gegevens wissen";
 
 /* Settings screen cell text for setting the app as default browser
-   The name of Settings category in Privacy Features related to configuration of the default browser */
+The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Standaardbrowser";
 
 /* Label of a button disabling email protection */
@@ -2484,23 +2477,26 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Welke website is defect?";
 
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Opgeslagen hostnaam: %@";
+
 /* Subscription Activation Info */
-"subscription.activate..header.description" = "Krijg toegang tot je Privacy Pro-abonnement op dit apparaat via je Apple-ID of e-mailadres.";
+"subscription.activate..header.description" = "Krijg op dit apparaat toegang tot je Privacy Pro-abonnement via je Apple-account of e-mailadres.";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "E-mailadres toevoegen";
 
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple-ID";
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Apple-account";
 
-/* Button text for restoring purchase via Apple ID */
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Aankoop herstellen";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Herstel je aankoop om je abonnement op dit apparaat te activeren.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Je abonnement is automatisch beschikbaar in DuckDuckGo op elk apparaat dat is aangemeld bij je Apple-ID.";
+"subscription.activate.description" = "Je abonnement is automatisch beschikbaar in DuckDuckGo op elk apparaat dat is aangemeld bij je Apple-account.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "E-mailadres bewerken";
@@ -2542,7 +2538,7 @@
 "subscription.add.email.title" = "E-mailadres toevoegen";
 
 /* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro is beschikbaar op elk apparaat dat is aangemeld bij dezelfde Apple-ID.";
+"subscription.available.apple" = "Privacy Pro is beschikbaar op elk apparaat dat is aangemeld bij hetzelfde Apple-account.";
 
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Je abonnement is aangeschaft via de Google Play Store. Om je abonnement te verlengen, open je de abonnementsinstellingen van de Google Play Store op een apparaat dat is aangemeld bij hetzelfde Google-account waarmee je het abonnement hebt gekocht.";
@@ -2578,7 +2574,7 @@
 "subscription.email.inactive.alert.title" = "Abonnement niet gevonden";
 
 /* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Je abonnement dat aan deze Apple-ID is gekoppeld, is niet langer actief.";
+"subscription.expired.alert.message" = "Je abonnement dat aan dit Apple-account is gekoppeld, is niet langer actief.";
 
 /* FAQ Button */
 "subscription.faq" = "Veelgestelde vragen en ondersteuning";
@@ -2596,7 +2592,7 @@
 "subscription.found.restore" = "Herstellen";
 
 /* Message for the existing subscription dialog */
-"subscription.found.text" = "We hebben een abonnement gevonden dat aan deze Apple-ID is gekoppeld.";
+"subscription.found.text" = "We hebben een abonnement gevonden dat aan dit Apple-account is gekoppeld.";
 
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonnement gevonden";
@@ -2611,7 +2607,7 @@
 "subscription.manage.title" = "Abonnement";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Er is geen abonnement gekoppeld aan deze Apple-ID.";
+"subscription.notFound.alert.message" = "Er is geen abonnement gekoppeld aan dit Apple-account.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonnement niet gevonden";
@@ -2866,7 +2862,28 @@
 "vpn.access-revoked.alert.title" = "De verbinding met de VPN is verbroken omdat het abonnement is beëindigd";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Zoek en selecteer DuckDuckGo. Veeg vervolgens naar VPN en selecteer Widget toevoegen.";
+"vpn.addWidget.settings.title" = "Zoek en selecteer **DuckDuckGo**, veeg vervolgens naar **VPN** en selecteer **Widget toevoegen**.";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.disable.vpn.intent.success" = "DuckDuckGo VPN is verbonden";
+
+/* No comment provided by engineer. */
+"vpn.control-widget.education.screen.description" = "Met Siri-snelkoppelingen kun je verbinding maken met je VPN met een snel spraakcommando, zoals \"Siri, zet DuckDuckGo VPN aan\". Het is een snelle, handsfree manier om je VPN te gebruiken.";
+
+/* Siri commands education screen: example 1 */
+"vpn.control-widget.education.screen.example1" = "Siri, start DuckDuckGo VPN.";
+
+/* Siri commands education screen: example 2 */
+"vpn.control-widget.education.screen.example2" = "Siri, schakel DuckDuckGo VPN in.";
+
+/* Siri commands education screen: example 3 */
+"vpn.control-widget.education.screen.example3" = "Siri, bescherm mijn apparaat met DuckDuckGo.";
+
+/* Title for the VPN Control Widget education screen title */
+"vpn.control-widget.education.screen.title" = "Bedien DuckDuckGo VPN met Siri!";
+
+/* Message for success when running the intent to enable the DuckDuckGo VPN */
+"vpn.control-widget.enable.vpn.intent.success" = "DuckDuckGo VPN is verbonden";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Annuleren";
@@ -2937,8 +2954,14 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help de VPN-functie van DuckDuckGo te verbeteren";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "VPN toevoegen aan het bedieningspaneel";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "VPN-widget toevoegen aan startscherm";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Gebruik VPN met Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Het gebruik van een aangepaste DNS-server kan de surfsnelheid beïnvloeden en je activiteiten blootstellen aan derden als de server niet veilig of betrouwbaar is.";

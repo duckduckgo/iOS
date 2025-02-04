@@ -1,0 +1,99 @@
+name: iOS - Code Freeze
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New release version (calculated automatically if not provided)"
+        required: false
+        type: string
+
+
+jobs:
+
+  create_release_branch:
+
+    name: Create Release Branch
+
+    runs-on: macos-15-xlarge
+    timeout-minutes: 10
+
+    outputs:
+      release_branch_name: ${{ steps.make_release_branch.outputs.release_branch_name }}
+      asana_task_url: ${{ steps.make_release_branch.outputs.asana_task_url }}
+
+    steps:
+
+      - name: Assert main branch
+        run: |
+          if [ "${{ github.ref_name }}" != "main" ]; then
+            echo "👎 Not the main branch"
+            exit 1
+          fi
+      
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Prepare fastlane
+        run: bundle install
+
+      - name: Make release branch
+        id: make_release_branch
+        env:
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          bundle exec fastlane run start_new_release \
+            platform:"ios" \
+            version:"${{ inputs.version }}" \
+            github_handle:"${{ github.actor }}" \
+            target_section_id:"${{ vars.IOS_APP_BOARD_VALIDATION_SECTION_ID }}"
+
+  run_tests:
+    name: Run Tests
+
+    needs: create_release_branch
+    uses: ./.github/workflows/ios-pr-checks.yml
+    with:
+      branch: ${{ needs.create_release_branch.outputs.release_branch_name }}
+      skip-release: true
+    secrets:
+      APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+      APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+      APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
+      ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      SSH_PRIVATE_KEY_FASTLANE_MATCH: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
+
+  prepare_release:
+    name: Prepare Release
+    needs: [ create_release_branch, run_tests ]
+    uses: ./.github/workflows/ios-release.yml
+    with:
+      asana-task-url: ${{ needs.create_release_branch.outputs.asana_task_url }}
+      branch: ${{ needs.create_release_branch.outputs.release_branch_name }}
+    secrets:
+      APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+      APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+      APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
+      ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MM_WEBHOOK_URL: ${{ secrets.MM_WEBHOOK_URL }}
+      SSH_PRIVATE_KEY_FASTLANE_MATCH: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
+
+  tag_and_merge:
+    name: Tag and Merge Branch
+    needs: [ create_release_branch, prepare_release ]
+    uses: ./.github/workflows/ios-tag-release-update-asana.yml
+    with:
+      asana-task-url: ${{ needs.create_release_branch.outputs.asana_task_url }}
+      branch: ${{ needs.create_release_branch.outputs.release_branch_name }}
+      release-type: internal
+    secrets:
+      ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+      GHA_ELEVATED_PERMISSIONS_TOKEN: ${{ secrets.GHA_ELEVATED_PERMISSIONS_TOKEN }}

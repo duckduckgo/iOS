@@ -23,8 +23,11 @@ import Core
 
 final class UserAgentConfiguration {
 
-    static func configure() {
+    static func configureAPIRequestUserAgent() {
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
+    }
+
+    static func configureUserBrowsingUserAgent() {
         _ = DefaultUserAgentManager.shared
     }
 

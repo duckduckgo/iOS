@@ -81,7 +81,7 @@ struct Launching: AppState {
         KeyboardConfiguration.configure()
         PixelConfiguration.configure(featureFlagger: featureFlagger)
         ContentBlockingConfiguration.configure()
-        UserAgentConfiguration.configure()
+        UserAgentConfiguration.configureAPIRequestUserAgent()
         NewTabPageIntroMessageConfiguration().configure() // TODO: @Mariusz can it be moved up here?
 
         persistentStoresConfiguration.configure()
@@ -133,6 +133,7 @@ struct Launching: AppState {
         atbAndVariantConfiguration.configure(onVariantAssigned: onVariantAssigned)
         CrashHandlersConfiguration.handleCrashDuringCrashHandlersSetup()
         TabInteractionStateConfiguration.configure(autoClearService: autoClearService, mainViewController: mainCoordinator.controller)
+        UserAgentConfiguration.configureUserBrowsingUserAgent()
 
         setupWindow()
     }

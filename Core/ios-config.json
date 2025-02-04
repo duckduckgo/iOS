@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1738568676812,
+    "version": 1738617060063,
     "features": {
         "adAttributionReporting": {
             "state": "disabled",
@@ -501,6 +501,9 @@
                     "domain": "ib3.org"
                 },
                 {
+                    "domain": "bibliotheek.be"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -684,7 +687,7 @@
                     }
                 }
             },
-            "hash": "8c574ca7f63ca3c43b61bc7a610e9382"
+            "hash": "8c8daddfd6e27dcd7ef593f24d9a4073"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -3563,6 +3566,10 @@
                                 "type": "hide"
                             },
                             {
+                                "selector": "div:has(> iframe[src*='prid=19031497'])",
+                                "type": "hide"
+                            },
+                            {
                                 "selector": "div:has(> iframe[src*='prid=19043282'])",
                                 "type": "hide"
                             },
@@ -5396,11 +5403,20 @@
                                 "type": "hide-empty"
                             }
                         ]
+                    },
+                    {
+                        "domain": "tdpri.com",
+                        "rules": [
+                            {
+                                "selector": "[data-aa-adunit]",
+                                "type": "closest-empty"
+                            }
+                        ]
                     }
                 ]
             },
             "state": "enabled",
-            "hash": "2270e8bd839d78d31d29563123472275"
+            "hash": "17bde32dfb0af9fafb6c808adf7145cb"
         },
         "exceptionHandler": {
             "exceptions": [

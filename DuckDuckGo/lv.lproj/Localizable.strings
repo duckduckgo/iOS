@@ -295,18 +295,6 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Ja DuckDuckGo tevis apmeklētajās vietnēs atklāj sīkfailu piekrišanas uznirstošos logus, mēs varam automātiski iestatīt tavas sīkfailu preferences, lai samazinātu sīkfailus un stiprinātu privātumu, un pēc tam aizvērt šos uznirstošos logus. Dažās vietnēs nav iespējas pārvaldīt sīkfailu preferences, tāpēc mēs varam tikai paslēpt šādus uznirstošos logus.";
 
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
-
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Atvērt iestatījumus";
 
@@ -544,11 +532,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Nav rezultātu";
 
-/* Do not translate - stringsdict entry */
-"autofill.number.of.passwords" = "autofill.number.of.passwords";
-
 /* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Paroles tiek šifrētas, saglabātas ierīcē un bloķētas ar %@.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -707,9 +692,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Dzēst";
 
-/* Do not translate - stringsdict entry */
-"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Vai dzēst %@?";
 
@@ -814,9 +796,6 @@
 
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Viegli pievieno mani dokam.";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "*%1$@* mēģināja tevi šeit izsekot. Es to nobloķēju!\n\n☝️ Pieskaries vairogam, lai uzzinātu vairāk.";
@@ -931,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pē!";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "Dod pieci!";
@@ -1061,6 +1037,9 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck adrese";
 
+/* No comment provided by engineer. */
+"Duck Player" = "Duck Player";
+
 /* Title for message explaining to the user that Duck Player is not available */
 "duck-player.contingency-title" = "Duck Player nav pieejams";
 
@@ -1100,10 +1079,12 @@
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Sapratu!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Vai tevi nomāc YouTube reklāmas? Izmēģini Duck Player!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "Vai tevi nomāc YouTube reklāmas? Ne ar Duck Player!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1928,9 +1909,6 @@
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "Jebkurā vietnē atver izvēlni ••• un izvēlies **Pievienot izlasei**, lai to pievienotu savai jaunas cilnes lapai.";
 
-/* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Pārvaldītie sīkfaili";
 
@@ -2114,6 +2092,11 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Tu esi sasniedzis maksimālo paroļu skaitu. Lūdzu, izdzēs dažas, lai atsāktu sinhronizāciju.";
 
+/* Description invalid credentials error when syncing.
+Description of incorrectly formatted data error when syncing.
+Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Dažas grāmatzīmes vai paroles ir formatētas nepareizi vai pārāk garas un netika sinhronizētas.";
+
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Sinhronizācija pārtraukta";
 
@@ -2223,7 +2206,7 @@
 "settings.add.widget.vpn" = "Pievieno DuckDuckGo VPN logrīku savam sākuma ekrānam";
 
 /* Name of the settings subsection related to the address bar
-   Settings screen cell text for addess bar position */
+Settings screen cell text for addess bar position */
 "settings.address.bar" = "Adreses josla";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2281,7 +2264,7 @@
 "settings.data.clearing" = "Datu notīrīšana";
 
 /* Settings screen cell text for setting the app as default browser
-   The name of Settings category in Privacy Features related to configuration of the default browser */
+The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Noklusējuma pārlūks";
 
 /* Label of a button disabling email protection */
@@ -2497,14 +2480,23 @@
 /* No comment provided by engineer. */
 "Stored Hostname: %@" = "Saglabātais resursdatora nosaukums: %@";
 
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Piekļūsti savam Privacy Pro abonementam šajā ierīcē, izmantojot Apple kontu vai e-pasta adresi.";
+
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Pievienot e-pasta adresi";
 
-/* Button text for restoring purchase via Apple ID */
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Apple konts";
+
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Atjaunot pirkumu";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Atjauno savu pirkumu, lai aktivizētu abonementu šajā ierīcē.";
+
+/* Subscription Activation Info */
+"subscription.activate.description" = "Tavs abonements ir automātiski pieejams DuckDuckGo jebkurā ierīcē, kurā esi pierakstījies savā Apple kontā.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Rediģēt e-pasta adresi";
@@ -2545,6 +2537,9 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Pievienot e-pasta adresi";
 
+/* Subscription availability message on Apple devices */
+"subscription.available.apple" = "Privacy Pro ir pieejams jebkurā ierīcē, kurā esi pierakstījies, izmantojot to pašu Apple kontu.";
+
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Tavs abonements tika iegādāts Google Play veikalā. Lai atjaunotu abonementu, lūdzu, atver Google Play veikala abonēšanas iestatījumus ierīcē, kas ir pierakstījusies tajā pašā Google kontā, kurā sākotnēji iegādājies abonementu.";
 
@@ -2578,6 +2573,9 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Abonements nav atrasts";
 
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "Ar šo Apple kontu saistītais abonements vairs nav spēkā.";
+
 /* FAQ Button */
 "subscription.faq" = "Bieži uzdotie jautājumi un atbalsts";
 
@@ -2593,6 +2591,9 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Atjaunot";
 
+/* Message for the existing subscription dialog */
+"subscription.found.text" = "Mēs atradām abonementu, kas ir saistīts ar šo Apple kontu.";
+
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Atrasts abonements";
 
@@ -2604,6 +2605,9 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Abonements";
+
+/* Alert content for not found subscription */
+"subscription.notFound.alert.message" = "Ar šo Apple kontu nav saistīts neviens abonements.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonements nav atrasts";

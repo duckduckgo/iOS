@@ -4,9 +4,6 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Takaisin";
 
-/* Do not translate - stringsdict entry */
-"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
-
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Joitakin kirjanmerkkejä ei synkronoida, koska tiettyjen kenttien sisältö on liian pitkä.";
 
@@ -48,9 +45,6 @@
 
 /* Standard Buttons - Copy Button */
 "copy.button" = "Kopioi";
-
-/* Do not translate - stringsdict entry */
-"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Joitakin kirjautumisia ei synkronoida, koska tiettyjen kenttien sisältö on liian pitkä.";

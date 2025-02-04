@@ -1,0 +1,67 @@
+name: iOS - PR Checks
+
+on:
+  push:
+    branches: [ main, "release/**", 'jkt/shared-web-tests' ]
+  pull_request:
+  workflow_call:
+    inputs:
+      branch:
+        description: "Branch name"
+        required: false
+        type: string
+      skip-release:
+        description: "Skip release build"
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      APPLE_API_KEY_BASE64:
+        required: true
+      APPLE_API_KEY_ID:
+        required: true
+      APPLE_API_KEY_ISSUER:
+        required: true
+      ASANA_ACCESS_TOKEN:
+        required: true
+      MATCH_PASSWORD:
+        required: true
+      SSH_PRIVATE_KEY_FASTLANE_MATCH:
+        required: true
+
+jobs:
+  shared-web-tests:
+    name: Shared web tests
+
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+    - name: Check out the code
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
+
+    - name: Build iOS
+      run: |
+        bash .maestro/setup_ui_tests.sh --only-build
+
+    - name: Checkout shared web tests
+      uses: actions/checkout@v4
+      with:
+        repository: duckduckgo/shared-web-tests
+        path: ../shared-web-tests
+
+    - name: Build and Test
+      run: |
+          cd ../shared-web-tests
+          npm run build
+          cd web-driver
+          cargo build
+          cd ../build
+          ./wpt run  --product duckduckgo --binary ../webdriver/target/debug/ddgdriver --log-mach - --log-mach-level info duckduckgo
+
+  

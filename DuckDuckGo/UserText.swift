@@ -1270,7 +1270,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionTitle = NSLocalizedString("subscription.title", value: "Privacy Pro", comment: "Navigation bar Title for subscriptions")
     public static let subscriptionSubscribed = NSLocalizedString("subscription.subscribed", value: "Subscribed", comment: "Subtitle in header when subscribed")
     public static let subscriptionCloseButton = NSLocalizedString("subscription.close", value: "Close", comment: "Navigation Button for closing subscription view")
-    public static let trialSubscription = NSLocalizedString("subscription.trial", value: "Free Trial", comment: "Subtitle in header when on a free trial subscription")
+    public static let trialSubscription = NSLocalizedString("subscription.trial", value: "Free Trial Active", comment: "Subtitle in header when on a free trial subscription")
 
 
     static func renewingSubscriptionInfo(billingPeriod: PrivacyProSubscription.BillingPeriod, renewalDate: String) -> String {
@@ -1328,12 +1328,12 @@ But if you *do* want a peek under the hood, you can find more information about 
         switch billingPeriod {
         case .monthly:
             localized = NSLocalizedString("subscription.subscription.renewing.trial.monthly.caption",
-                                          value: "Your free trial renews into a paid monthly subscription on %@.",
-                                          comment: "Monthly trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial renews into a paid monthly subscription on (date)'")
+                                          value: "Your free trial ends on %@, and will convert to a monthly paid subscription.",
+                                          comment: "Monthly trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date), and will convert to a monthly paid subscription.'")
         case .yearly:
             localized = NSLocalizedString("subscription.subscription.renewing.trial.yearly.caption",
-                                          value: "Your free trial renews into a paid yearly subscription on %@.",
-                                          comment: "Annual trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial renews into a paid yearly subscription on (date)'")
+                                          value: "Your free trial ends on %@, and will convert to an annual paid subscription.",
+                                          comment: "Annual trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date), and will convert to a annual paid subscription.'")
         case .unknown:
             localized = NSLocalizedString("subscription.subscription.renewing.unknown.caption",
                                           value: "Your subscription renews on %@.",
@@ -1345,8 +1345,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     static func expiringTrialSubscriptionInfo(expiryDate: String) -> String {
         let localized = NSLocalizedString("subscription.subscription.expiring.trial.monthly.caption",
-                                          value: "Your free trial ends on %@.",
-                                          comment: "Trial subscription expiration info where parameter is expiration date. This reads as 'Your free trial ends on (date)'")
+                                          value: "Your free trial ends on %@, and will not convert to a paid subscription.",
+                                          comment: "Trial subscription expiration info where parameter is expiration date. This reads as 'Your free trial ends on (date) and will not convert to a paid subscription.'")
         return String(format: localized, expiryDate)
     }
 

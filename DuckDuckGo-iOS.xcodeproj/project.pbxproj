@@ -5899,6 +5899,7 @@
 		CBF2598C2D47B19800AC63E4 /* AppConfiguration */ = {
 			isa = PBXGroup;
 			children = (
+				CBF2597A2D414B6D00AC63E4 /* PersistentStoresConfiguration.swift */,
 				CBF259802D42852B00AC63E4 /* PixelConfiguration.swift */,
 				CBF2598D2D47B1A500AC63E4 /* KeyboardConfiguration.swift */,
 				CBF259BE2D4EBCAF00AC63E4 /* UserAgentConfiguration.swift */,
@@ -6812,7 +6813,6 @@
 				EE9D68D72AE15AD600B55EF4 /* UIApplicationExtension.swift */,
 				CBF259912D47BFDD00AC63E4 /* OverlayWindowManager.swift */,
 				CBAD0F0B2CFF4EDD006267B8 /* AppDependencies.swift */,
-				CBF2597A2D414B6D00AC63E4 /* PersistentStoresConfiguration.swift */,
 				CBF259B82D499D0B00AC63E4 /* MainCoordinator.swift */,
 				CBAD0F042CFE1DA2006267B8 /* AppLifecycle */,
 				83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */,

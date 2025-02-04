@@ -38,6 +38,7 @@ struct LargeOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
@@ -80,6 +81,7 @@ struct LargeOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
@@ -115,6 +117,7 @@ struct LargeOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
@@ -148,6 +151,7 @@ struct LargeOmniBarState {
         let showMenu = true
         let showSettings = false
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
@@ -182,6 +186,7 @@ struct LargeOmniBarState {
         let showMenu = true
         let showSettings = false
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
@@ -217,6 +222,7 @@ struct LargeOmniBarState {
         let showMenu = true
         let showSettings = false
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         let showVoiceSearch = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }

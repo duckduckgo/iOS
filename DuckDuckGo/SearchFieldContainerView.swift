@@ -29,7 +29,7 @@ class SearchFieldContainerView: UIView {
         if state.showPrivacyIcon {
             offset = 30
         } else {
-            offset = state.showSearchLoupe ? 0 : 8
+            offset = state.showSearchLoupe || state.showDismiss ? 0 : 8
         }
         
         textFieldOffset.constant = offset

@@ -37,6 +37,7 @@ enum UniversalOmniBarState {
         var showPrivacyIcon: Bool { baseState.showPrivacyIcon }
         var showBackground: Bool { baseState.showBackground }
         var showClear: Bool { false }
+        var showDismiss: Bool { false }
         var showAbort: Bool { baseState.showAbort }
         var showRefresh: Bool { baseState.showRefresh }
         var showMenu: Bool { baseState.showMenu }

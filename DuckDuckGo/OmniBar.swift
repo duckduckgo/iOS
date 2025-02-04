@@ -75,6 +75,12 @@ class OmniBar: UIView {
     @IBOutlet var omniBarTrailingConstraint: NSLayoutConstraint!
     @IBOutlet var separatorToBottom: NSLayoutConstraint!
 
+    @IBOutlet weak var dismissButton: UIButton!
+
+    /// A container view designed to maintain visual consistency among various items within this space.
+    /// Additionally, it facilitates smooth animations for the elements it contains.
+    @IBOutlet weak var leftIconContainerView: UIView!
+
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState!
     var accessoryType: AccessoryType = .share {
@@ -99,7 +105,6 @@ class OmniBar: UIView {
         let omniBar = OmniBar.load(nibName: "OmniBar")
         omniBar.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: false)
         omniBar.refreshState(omniBar.state)
-
         return omniBar
     }
 
@@ -376,6 +381,7 @@ class OmniBar: UIView {
     }
 
     fileprivate func refreshState(_ newState: any OmniBarState) {
+        let oldState: OmniBarState = self.state
         if state.requiresUpdate(transitioningInto: newState) {
             Logger.general.debug("OmniBar entering \(newState.description) from \(self.state.description)")
 
@@ -385,14 +391,14 @@ class OmniBar: UIView {
                 }
                 cancelAllAnimations()
             }
-
             state = newState
         }
 
         searchFieldContainer.adjustTextFieldOffset(for: state)
-        
+
+        updateLeftIconContainerState(oldState: oldState, newState: state)
+
         setVisibility(privacyInfoContainer, hidden: !state.showPrivacyIcon)
-        setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(settingsButton, hidden: !state.showSettings)
@@ -405,7 +411,7 @@ class OmniBar: UIView {
         setVisibility(forwardButton, hidden: !state.showForwardButton)
         setVisibility(bookmarksButton, hidden: !state.showBookmarksButton)
         setVisibility(accessoryButton, hidden: !state.showAccessoryButton)
-        
+
         searchContainerCenterConstraint.isActive = state.hasLargeWidth
         searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
         leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
@@ -418,7 +424,28 @@ class OmniBar: UIView {
         UIView.animate(withDuration: 0.0) { [weak self] in
             self?.layoutIfNeeded()
         }
-        
+    }
+
+    private func updateLeftIconContainerState(oldState: any OmniBarState, newState: any OmniBarState) {
+        if state.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            if oldState.showSearchLoupe && newState.showDismiss {
+                animateTransition(from: searchLoupe, to: dismissButton)
+            } else if oldState.showDismiss && newState.showSearchLoupe {
+                animateTransition(from: dismissButton, to: searchLoupe)
+            } else {
+                setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
+                setVisibility(dismissButton, hidden: !state.showDismiss)
+            }
+        } else {
+            setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
+            setVisibility(dismissButton, hidden: !state.showDismiss)
+        }
+
+        if !state.showDismiss && !state.showSearchLoupe {
+            leftIconContainerView.isHidden = true
+        } else {
+            leftIconContainerView.isHidden = false
+        }
     }
 
     func updateOmniBarPadding(left: CGFloat, right: CGFloat) {
@@ -549,7 +576,12 @@ class OmniBar: UIView {
     @IBAction func onAccessoryPressed(_ sender: Any) {
         omniDelegate?.onAccessoryPressed(accessoryType: accessoryType)
     }
-    
+
+    @IBAction func onDismissPressed(_ sender: Any) {
+        omniDelegate?.onCancelPressed()
+        refreshState(state.onEditingStoppedState)
+    }
+
     func enterPhoneState() {
         refreshState(state.onEnterPhoneState)
     }
@@ -563,6 +595,28 @@ class OmniBar: UIView {
         NotificationCenter.default.post(name: OmniBar.didLayoutNotification, object: self)
     }
 
+    private func animateTransition(from oldView: UIView, to newView: UIView) {
+        newView.alpha = 0
+        newView.transform = CGAffineTransform(translationX: -20, y: 0)
+        newView.isHidden = false
+        oldView.isHidden = false
+
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.7,
+                       initialSpringVelocity: 0.5, options: [], animations: {
+            oldView.alpha = 0
+            oldView.transform = CGAffineTransform(translationX: -20, y: 0)
+
+            if newView == self.searchLoupe {
+                newView.alpha = 0.5
+            } else {
+                newView.alpha = 1
+            }
+            newView.transform = .identity
+        }, completion: { _ in
+            oldView.isHidden = true
+            oldView.transform = .identity
+        })
+    }
 }
 
 extension OmniBar: UITextFieldDelegate {

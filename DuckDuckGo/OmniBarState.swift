@@ -33,7 +33,7 @@ protocol OmniBarState: CustomStringConvertible {
     var clearTextOnStart: Bool { get }
     var allowsTrackersAnimation: Bool { get }
     var showSearchLoupe: Bool { get }
-    var showCancel: Bool { get }
+    var showCancel: Bool { get } // Cancel button outside the address bar
     var showPrivacyIcon: Bool { get }
     var showBackground: Bool { get }
     var showClear: Bool { get }
@@ -42,6 +42,7 @@ protocol OmniBarState: CustomStringConvertible {
     var showSettings: Bool { get }
     var showVoiceSearch: Bool { get }
     var showAbort: Bool { get }
+    var showDismiss: Bool { get } // < button inside the address bar
 
     var onEditingStoppedState: OmniBarState { get }
     var onEditingSuspendedState: OmniBarState { get }

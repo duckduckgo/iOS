@@ -2102,7 +2102,6 @@ extension MainViewController: OmniBarDelegate {
 
     func onAccessoryPressed(accessoryType: OmniBar.AccessoryType) {
         hideSuggestionTray()
-        guard let link = currentTab?.link else { return }
 
         switch accessoryType {
         case .chat:
@@ -2110,6 +2109,7 @@ extension MainViewController: OmniBarDelegate {
             openAIChat(queryItem)
             Pixel.fire(pixel: .openAIChatFromAddressBar)
         case .share:
+            guard let link = currentTab?.link else { return }
             Pixel.fire(pixel: .addressBarShare)
             currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.accessoryButton)
         }

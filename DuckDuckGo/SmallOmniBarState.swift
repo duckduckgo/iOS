@@ -38,6 +38,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         var showCancel: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        var showDismiss: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
@@ -72,6 +73,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         var showCancel: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        var showDismiss: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         let showVoiceSearch = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
@@ -106,6 +108,7 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         var showSettings: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        let showDismiss: Bool = false
         let showCancel: Bool = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
@@ -141,6 +144,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         var showCancel: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        var showDismiss: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
@@ -176,6 +180,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         var showCancel: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        var showDismiss: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         let showVoiceSearch = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
@@ -213,6 +218,7 @@ struct SmallOmniBarState {
         let showSettings = false
         let showCancel: Bool = false
         let showVoiceSearch = false
+        let showDismiss: Bool = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return BrowsingTextEditingStartedState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
@@ -244,6 +250,7 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         let showSettings = false
+        var showDismiss: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         var showCancel: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }

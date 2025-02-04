@@ -104,6 +104,8 @@ class TabSwitcherViewController: UIViewController {
 
     let featureFlagger: FeatureFlagger
 
+    let barsHandler = TabSwitcherBarsStateHandler()
+
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
                    syncService: DDGSyncing,
@@ -137,6 +139,7 @@ class TabSwitcherViewController: UIViewController {
         currentSelection = tabsModel.currentIndex
         decorate()
         becomeFirstResponder()
+        updateUIForSelectionMode()
 
         if !tabSwitcherSettings.hasSeenNewLayout {
             Pixel.fire(pixel: .tabSwitcherNewLayoutSeen)

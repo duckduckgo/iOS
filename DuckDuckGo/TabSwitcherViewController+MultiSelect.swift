@@ -231,110 +231,16 @@ extension TabSwitcherViewController {
             }
         }
 
-        updateTopLeftButtons()
-        updateTopRightButtons()
-        updateBottomBar()
-    }
+        barsHandler.update(interfaceMode,
+                           selectedTabsCount: selectedTabs.count,
+                           totalTabsCount: tabsModel.count)
 
-    func updateTopLeftButtons() {
+        topBarView.topItem?.leftBarButtonItems = barsHandler.topBarLeftButtonItems
+        topBarView.topItem?.rightBarButtonItems = barsHandler.topBarRightButtonItems
+        toolbar.items = barsHandler.bottomBarItems
+        toolbar.isHidden = barsHandler.isBottomBarHidden
 
-        switch interfaceMode {
-        case .singleSelectNormal:
-            topBarView.topItem?.leftBarButtonItems = [
-                createAddAllBookmarksBarButton(),
-            ]
-
-        case .singleSelectLarge:
-            topBarView.topItem?.leftBarButtonItems = [
-                createAddAllBookmarksBarButton(),
-                createTabStyleSwitcherBarButton(),
-            ]
-
-        case .multiSelectAvailableNormal:
-            topBarView.topItem?.leftBarButtonItems = [
-                createTabStyleSwitcherBarButton(),
-            ]
-
-        case .multiSelectAvailableLarge:
-            topBarView.topItem?.leftBarButtonItems = [
-                createEditBarButton(),
-                createTabStyleSwitcherBarButton(),
-            ]
-
-        case .multiSelectEditingNormal:
-            topBarView.topItem?.leftBarButtonItems = [
-                createSelectAllButton(),
-            ]
-
-        case .multiSelectedEditingLarge:
-            topBarView.topItem?.leftBarButtonItems = [
-                createDoneBarButton(),
-            ]
-
-        }
-    }
-
-    func updateTopRightButtons() {
-
-        switch interfaceMode {
-        case .singleSelectNormal:
-            topBarView.topItem?.rightBarButtonItems = [
-                createTabStyleSwitcherBarButton(),
-            ]
-
-        case .singleSelectLarge, .multiSelectAvailableLarge:
-            topBarView.topItem?.rightBarButtonItems = [
-                createDoneBarButton(),
-                createFireBarButton(),
-                createPlusBarButton(),
-            ]
-
-        case .multiSelectAvailableNormal:
-            topBarView.topItem?.rightBarButtonItems = [
-                createEditBarButton(),
-            ]
-
-        case .multiSelectEditingNormal:
-            topBarView.topItem?.rightBarButtonItems = [
-                createDoneBarButton(),
-            ]
-
-        case .multiSelectedEditingLarge:
-            topBarView.topItem?.rightBarButtonItems = [
-                createMultiSelectionMenuBarButton(),
-            ]
-
-        }
-    }
-
-    func updateBottomBar() {
-
-        switch interfaceMode {
-        case .singleSelectNormal,
-                .multiSelectAvailableNormal:
-            toolbar.items = [
-                createPlusBarButton(),
-                UIBarButtonItem.flexibleSpace(),
-                createFireBarButton(),
-                UIBarButtonItem.flexibleSpace(),
-                createDoneBarButton(),
-            ]
-            toolbar.isHidden = false
-
-        case .multiSelectEditingNormal:
-            toolbar.items = [
-                createCloseAllTabsButton(),
-                UIBarButtonItem.flexibleSpace(),
-                createMultiSelectionMenuBarButton(),
-            ]
-            toolbar.isHidden = false
-
-        case .multiSelectedEditingLarge,
-                .multiSelectAvailableLarge,
-                .singleSelectLarge:
-            toolbar.isHidden = true
-        }
-
+        refreshBarButtons()
     }
 
     var selectedPagesCount: Int {
@@ -345,8 +251,15 @@ extension TabSwitcherViewController {
         }.count
     }
 
+    var allPagesCount: Int {
+        return tabsModel.tabs.compactMap {
+            $0.link
+        }.count
+    }
+
     func createMultiSelectionMenu() -> UIMenu {
         let selectedPagesCount = self.selectedPagesCount
+        let allPagesCount = self.allPagesCount
 
         var children = [UIMenuElement]()
         
@@ -367,7 +280,7 @@ extension TabSwitcherViewController {
             ]))
         }
 
-        if selectedTabs.count != tabsModel.count && selectedPagesCount > 0 {
+        if allPagesCount > 0 {
             // bookmark all
             children.append(UIMenu(title: "", options: .displayInline, children: [
                 action(UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.selectModeBookmarkAll),
@@ -456,86 +369,45 @@ extension TabSwitcherViewController {
 // MARK: Button factories
 extension TabSwitcherViewController {
 
-    func createTabStyleSwitcherBarButton() -> UIBarButtonItem {
-        let image = UIImage(named: tabsStyle.rawValue)
-        return UIBarButtonItem(title: nil, image: image, primaryAction: UIAction { _ in
-            self.onTabStyleChange()
-        })
-    }
+    func refreshBarButtons() {
+        barsHandler.tabSwitcherStyleButton.primaryAction = action(image: tabsStyle.rawValue, self.onTabStyleChange)
 
-    func createAddAllBookmarksBarButton() -> UIBarButtonItem {
-        let image = UIImage(named: "Bookmark-New-24")
-        let button = UIBarButtonItem(title: nil, image: image, primaryAction: UIAction { _ in
+        barsHandler.addAllBookmarksButton.accessibilityLabel = UserText.bookmarkAllTabs
+        barsHandler.addAllBookmarksButton.primaryAction = action(image: "Bookmark-New-24") {
             self.bookmarkTabs(withIndexes: self.tabsModel.tabs.indices.map { $0 })
-        })
-        button.accessibilityLabel = UserText.bookmarkAllTabs
-        return button
-    }
-
-    func createPlusBarButton() -> UIBarButtonItem {
-        let image = UIImage(named: "Add-24")
-        let button = UIBarButtonItem(title: nil, image: image, primaryAction: UIAction { _ in
-            self.addNewTab()
-        })
-        button.accessibilityLabel = UserText.keyCommandNewTab
-        return button
-    }
-
-    func createFireBarButton() -> UIBarButtonItem {
-        let image = UIImage(named: "Fire")
-        var captured: UIBarButtonItem?
-        let button = UIBarButtonItem(title: nil, image: image, primaryAction: UIAction { _ in
-            guard let captured else { return }
-            self.burn(sender: captured)
-        })
-        captured = button
-        return button
-    }
-
-    func createDoneBarButton() -> UIBarButtonItem {
-        var captured: UIBarButtonItem?
-        let button = UIBarButtonItem(title: UserText.navigationTitleDone, image: nil, primaryAction: UIAction { _ in
-            guard let captured else { return }
-            self.onDonePressed(captured)
-        })
-        captured = button
-        return button
-    }
-
-    func createEditBarButton() -> UIBarButtonItem {
-        return UIBarButtonItem(title: UserText.actionGenericEdit, menu: createEditMenu())
-    }
-
-    func createSelectAllButton() -> UIBarButtonItem {
-        if selectedTabs.count == tabsModel.count {
-            return UIBarButtonItem(title: UserText.deselectAllTabs, primaryAction: UIAction { _ in
-                self.deselectAllTabs()
-            })
-        } else {
-            return UIBarButtonItem(title: UserText.selectAllTabs, primaryAction: UIAction { _ in
-                self.selectAllTabs()
-            })
         }
-    }
 
-    func createMultiSelectionMenuBarButton() -> UIBarButtonItem {
-        let menu = createMultiSelectionMenu()
-        let button = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), menu: menu)
-        button.isEnabled = !menu.children.isEmpty
-        return button
-    }
+        barsHandler.plusButton.accessibilityLabel = UserText.keyCommandNewTab
+        barsHandler.plusButton.primaryAction = action(image: "Add-24", self.addNewTab)
 
-    func createCloseAllTabsButton() -> UIBarButtonItem {
-        if selectedTabs.count == 0 {
-            let button = UIBarButtonItem(title: UserText.keyCommandCloseTab)
-            button.isEnabled = false
-            return button
-        } else {
-            return UIBarButtonItem(title: UserText.closeTabs(withCount: selectedTabs.count), primaryAction: UIAction { _ in
-                self.closeTabs(withIndexes: [Int](self.selectedTabs),
-                               confirmTitle: UserText.alertTitleCloseSelectedTabs(withCount: self.selectedTabs.count),
-                               confirmMessage: UserText.alertMessageCloseTabs(withCount: self.selectedTabs.count))
-            })
+        barsHandler.fireButton.primaryAction = action(image: "Fire") {
+            self.burn(sender: self.barsHandler.fireButton)
+        }
+
+        barsHandler.doneButton.primaryAction = action(title: UserText.navigationTitleDone) {
+            self.onDonePressed(self.barsHandler.doneButton)
+        }
+
+        barsHandler.editButton.title = UserText.actionGenericEdit
+        barsHandler.editButton.menu = createEditMenu()
+
+        barsHandler.selectAllButton.primaryAction = action(title: UserText.selectAllTabs) {
+            self.selectAllTabs()
+        }
+
+        barsHandler.deselectAllButton.primaryAction = action(title: UserText.deselectAllTabs) {
+            self.deselectAllTabs()
+        }
+
+        barsHandler.menuButton.image = UIImage(systemName: "ellipsis.circle")
+        barsHandler.menuButton.menu = createMultiSelectionMenu()
+        barsHandler.menuButton.isEnabled = barsHandler.menuButton.menu?.children.isEmpty == false
+
+        barsHandler.closeTabsButton.isEnabled = selectedTabs.count > 0
+        barsHandler.closeTabsButton.primaryAction = action(title: UserText.closeTabs(withCount: selectedTabs.count)) {
+            self.closeTabs(withIndexes: [Int](self.selectedTabs),
+                           confirmTitle: UserText.alertTitleCloseSelectedTabs(withCount: self.selectedTabs.count),
+                           confirmMessage: UserText.alertMessageCloseTabs(withCount: self.selectedTabs.count))
         }
     }
 
@@ -635,6 +507,18 @@ extension TabSwitcherViewController {
 
 // MARK: UIAction factories
 extension TabSwitcherViewController {
+
+    func action(title: String, _ handler: @escaping () -> Void) -> UIAction {
+        return UIAction(title: title) { _ in
+            handler()
+        }
+    }
+
+    func action(image: String, _ handler: @escaping () -> Void) -> UIAction {
+        return UIAction(title: "", image: UIImage(named: image)) { _ in
+            handler()
+        }
+    }
 
     func action(_ title: String, _ imageNamed: String, destructive: Bool = false, _ handler: @escaping () -> Void) -> UIAction {
         let attributes: UIAction.Attributes = destructive ? .destructive : []

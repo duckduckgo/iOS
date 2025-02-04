@@ -565,6 +565,7 @@
 		8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */; };
 		8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */; };
 		8567E29D2CF77A700035926F /* MockFireproofing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C503FC2CF0E7B10075DF6F /* MockFireproofing.swift */; };
+		8569E1702D52C9A4004A3CB7 /* TabSwitcherBarsStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8569E16F2D52C993004A3CB7 /* TabSwitcherBarsStateHandler.swift */; };
 		856F28D72D3EC5FA00A88211 /* TabSwitcherViewController+MultiSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856F28D62D3EC5FA00A88211 /* TabSwitcherViewController+MultiSelect.swift */; };
 		857229882BBEE74100E2E802 /* AppRatingPromptDatabaseMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857229872BBEE74100E2E802 /* AppRatingPromptDatabaseMigrationTests.swift */; };
 		8572298A2BBEF0C800E2E802 /* AppRatingPrompt_v1 in Resources */ = {isa = PBXBuildFile; fileRef = 857229892BBEF0C800E2E802 /* AppRatingPrompt_v1 */; };
@@ -1981,6 +1982,7 @@
 		8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChromeManager.swift; sourceTree = "<group>"; };
 		8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotification.swift; sourceTree = "<group>"; };
 		8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotificationTests.swift; sourceTree = "<group>"; };
+		8569E16F2D52C993004A3CB7 /* TabSwitcherBarsStateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherBarsStateHandler.swift; sourceTree = "<group>"; };
 		856F28D62D3EC5FA00A88211 /* TabSwitcherViewController+MultiSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabSwitcherViewController+MultiSelect.swift"; sourceTree = "<group>"; };
 		857229872BBEE74100E2E802 /* AppRatingPromptDatabaseMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingPromptDatabaseMigrationTests.swift; sourceTree = "<group>"; };
 		857229892BBEF0C800E2E802 /* AppRatingPrompt_v1 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AppRatingPrompt_v1; sourceTree = "<group>"; };
@@ -6321,6 +6323,7 @@
 		F1386BA21E6846320062FC3C /* TabSwitcher */ = {
 			isa = PBXGroup;
 			children = (
+				8569E16F2D52C993004A3CB7 /* TabSwitcherBarsStateHandler.swift */,
 				9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */,
 				85DFEDF824CF3D0E00973FE7 /* TabsBarCell.swift */,
 				8586A10F24CCCD040049720E /* TabsBarViewController.swift */,
@@ -8042,6 +8045,7 @@
 				D664C7C92B289AA200CBFA76 /* AsyncHeadlessWebView.swift in Sources */,
 				F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */,
 				1E8AD1C727BE9B2900ABA377 /* DownloadsListDataSource.swift in Sources */,
+				8569E1702D52C9A4004A3CB7 /* TabSwitcherBarsStateHandler.swift in Sources */,
 				9FE08BDC2C2A88FA001D5EBC /* OnboardingIntroViewController.swift in Sources */,
 				3157B43527F497F50042D3D7 /* SaveLoginViewController.swift in Sources */,
 				C14D43012B45D6CD00ACA4DC /* AutofillDebugViewController.swift in Sources */,

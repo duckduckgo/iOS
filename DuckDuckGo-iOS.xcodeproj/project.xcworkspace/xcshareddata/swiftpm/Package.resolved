@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
-        "revision" : "8ea6cdb74fed2e9ff9d60aafe636291dff8024dc",
-        "version" : "235.0.0"
+        "branch" : "sam/monorepo-demo",
+        "revision" : "e1a8c072e5abb2d1da1b11cd3c5b6c7c746da8d9"
       }
     },
     {

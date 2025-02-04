@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Common
 
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -37,6 +38,9 @@ import Core
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let isTesting: Bool = ProcessInfo().arguments.contains("testing")
         appStateMachine.handle(.didFinishLaunching(application, isTesting: isTesting))
+
+        AppVersion.shared.someNewFunction()
+
         return true
     }
 

@@ -131,14 +131,14 @@ extension TabSwitcherViewController {
 
     func closeAllTabs() {
         let alert = UIAlertController(
-            title: UserText.closeAllTabs(withCount: tabsModel.count),
-            message: UserText.alertMessageCloseTheseTabs,
+            title: UserText.closeTabs(withCount: tabsModel.count),
+            message: UserText.alertMessageCloseTabs(withCount: tabsModel.count),
             preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: UserText.actionCancel,
                                       style: .default) { _ in })
 
-        alert.addAction(UIAlertAction(title: UserText.closeTabs,
+        alert.addAction(UIAlertAction(title: UserText.closeTabs(withCount: tabsModel.count),
                                       style: .destructive) { _ in
 
             self.delegate?.tabSwitcherDidRequestCloseAll(tabSwitcher: self)
@@ -157,7 +157,7 @@ extension TabSwitcherViewController {
         alert.addAction(UIAlertAction(title: UserText.actionCancel,
                                       style: .default) { _ in })
 
-        alert.addAction(UIAlertAction(title: indices.count == 1 ? UserText.closeTab : UserText.closeTabs,
+        alert.addAction(UIAlertAction(title: UserText.closeTabs(withCount: indices.count),
                                       style: .destructive) { _ in
 
             indices.compactMap {
@@ -208,7 +208,7 @@ extension TabSwitcherViewController {
         let otherIndices = Set<Int>(tabsModel.tabs.indices).subtracting(indices)
         self.closeTabs(withIndexes: [Int](otherIndices),
                        confirmTitle: UserText.alertTitleCloseOtherTabs(withCount: otherIndices.count),
-                       confirmMessage: otherIndices.count == 1 ? UserText.alertMessageCloseOtherTab : UserText.alertMessageCloseOtherTabs)
+                       confirmMessage: UserText.alertMessageCloseOtherTabs(withCount: otherIndices.count))
     }
 
 }
@@ -383,7 +383,7 @@ extension TabSwitcherViewController {
             } else {
                 // close other (close is on the button)
                 children.append(UIMenu(title: "", options: .displayInline, children: [
-                    action(UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.selectModeCloseOtherTabs),
+                    action(UserText.tabSwitcherCloseOtherTabs(withCount: tabsModel.count - selectedTabs.count), "Tab-Close-16", destructive: true, self.selectModeCloseOtherTabs),
                 ]))
             }
         }
@@ -393,8 +393,8 @@ extension TabSwitcherViewController {
 
     func createEditMenu() -> UIMenu {
         return UIMenu(children: [
-            action(UserText.tabSwitcherSelectTabs, systemImage: "checkmark.cicle", self.editMenuSelectAll),
-            action(UserText.closeAllTabs(withCount: tabsModel.count), "Tab-Close-16", destructive: true, self.editMenuCloseAllTabs),
+            action(UserText.tabSwitcherSelectTabs(withCount: tabsModel.count), systemImage: "checkmark.cicle", self.editMenuSelectAll),
+            action(UserText.closeTabs(withCount: tabsModel.count), "Tab-Close-16", destructive: true, self.editMenuCloseAllTabs),
         ])
     }
 
@@ -424,7 +424,7 @@ extension TabSwitcherViewController {
             // self.action(index, UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.longPressMenuBookmarkAllTabs),
 
             // Select Tabs -> switch to selection mode with this tab selected (if not already selected)
-            selectedTabs.contains(index) ? nil : self.action(index, UserText.tabSwitcherSelectTab, "Check-Circle-16", self.longPressMenuSelectTabs),
+            selectedTabs.contains(index) ? nil : self.action(index, UserText.tabSwitcherSelectTabs(withCount: 1), "Check-Circle-16", self.longPressMenuSelectTabs),
         ]
 
         let group2 = [
@@ -432,8 +432,7 @@ extension TabSwitcherViewController {
             self.action(index, UserText.keyCommandCloseTab, "Close-16", destructive: true, self.longPressMenuCloseTab),
 
             // Close Other Tabs (only one of these two will be shown)
-            tabsModel.count == 2 ? self.action(index, UserText.tabSwitcherCloseOtherTab, "Tab-Close-16", destructive: true, self.longPressMenuCloseOtherTabs) : nil,
-            tabsModel.count > 2 ? self.action(index, UserText.tabSwitcherCloseOtherTabs, "Tab-Close-16", destructive: true, self.longPressMenuCloseOtherTabs) : nil,
+            tabsModel.count > 1 ? self.action(index, UserText.tabSwitcherCloseOtherTabs(withCount: tabsModel.count - selectedTabs.count), "Tab-Close-16", destructive: true, self.longPressMenuCloseOtherTabs) : nil,
         ]
 
         return group0.compactMap { $0 } +
@@ -528,14 +527,14 @@ extension TabSwitcherViewController {
 
     func createCloseAllTabsButton() -> UIBarButtonItem {
         if selectedTabs.count == 0 {
-            let button = UIBarButtonItem(title: UserText.closeTab)
+            let button = UIBarButtonItem(title: UserText.keyCommandCloseTab)
             button.isEnabled = false
             return button
         } else {
             return UIBarButtonItem(title: UserText.closeTabs(withCount: selectedTabs.count), primaryAction: UIAction { _ in
                 self.closeTabs(withIndexes: [Int](self.selectedTabs),
                                confirmTitle: UserText.alertTitleCloseSelectedTabs(withCount: self.selectedTabs.count),
-                               confirmMessage: UserText.alertMessageCloseTheseTabs)
+                               confirmMessage: UserText.alertMessageCloseTabs(withCount: self.selectedTabs.count))
             })
         }
     }
@@ -561,7 +560,7 @@ extension TabSwitcherViewController {
     func selectModeCloseSelectedTabs() {
         self.closeTabs(withIndexes: [Int](self.selectedTabs),
                        confirmTitle: UserText.alertTitleCloseSelectedTabs(withCount: self.selectedTabs.count),
-                       confirmMessage: UserText.alertMessageCloseTheseTabs)
+                       confirmMessage: UserText.alertMessageCloseTabs(withCount: self.selectedTabs.count))
     }
 
     func selectModeCloseOtherTabs() {
@@ -617,8 +616,15 @@ extension TabSwitcherViewController {
     }
 
     func longPressMenuCloseTab(index: Int) {
-        guard let tab = tabsModel.safeGetTabAt(index) else { return }
-        deleteTab(tab: tab)
+        let alert = UIAlertController(title: UserText.alertTitleCloseTabs(withCount: 1),
+                                      message: UserText.alertTitleCloseTabs(withCount: 1),
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        alert.addAction(title: UserText.closeTabs(withCount: 1), style: .destructive) {
+            guard let tab = self.tabsModel.safeGetTabAt(index) else { return }
+            self.deleteTab(tab: tab)
+        }
+        present(alert, animated: true, completion: nil)
     }
 
     func longPressMenuCloseOtherTabs(index: Int) {

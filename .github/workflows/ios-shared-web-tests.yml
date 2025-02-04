@@ -45,17 +45,13 @@ jobs:
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
 
-    - name: Build iOS
-      run: |
-        source .maestro/common.sh
-        project_root=$(pwd)
-        build_app
-
     - name: Checkout shared web tests
       uses: actions/checkout@v4
       with:
         repository: duckduckgo/shared-web-tests
-        path: ../shared-web-tests
+        path: shared-web-tests
+        ref: jkt/webdriver
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and Test
       run: |
@@ -63,6 +59,12 @@ jobs:
           npm run build
           cd web-driver
           cargo build
+
+    - name: Build iOS
+      run: |
+        source .maestro/common.sh
+        project_root=$(pwd)
+        build_app
 
     - name: Add CA key
       run: |

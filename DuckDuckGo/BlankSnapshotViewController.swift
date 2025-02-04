@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import Suggestions
+import BrowserServicesKit
 
 protocol BlankSnapshotViewRecoveringDelegate: AnyObject {
     
@@ -38,14 +39,16 @@ class BlankSnapshotViewController: UIViewController {
     var tabSwitcherButton: TabSwitcherButton!
     let addressBarPosition: AddressBarPosition
     let voiceSearchHelper: VoiceSearchHelperProtocol
+    let featureFlagger: FeatureFlagger
 
     var viewCoordinator: MainViewCoordinator!
 
     weak var delegate: BlankSnapshotViewRecoveringDelegate?
 
-    init(addressBarPosition: AddressBarPosition, voiceSearchHelper: VoiceSearchHelperProtocol) {
+    init(addressBarPosition: AddressBarPosition, voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger) {
         self.addressBarPosition = addressBarPosition
         self.voiceSearchHelper = voiceSearchHelper
+        self.featureFlagger = featureFlagger
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,7 +61,7 @@ class BlankSnapshotViewController: UIViewController {
 
         tabSwitcherButton = TabSwitcherButton()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(view, voiceSearchHelper: voiceSearchHelper)
+        viewCoordinator = MainViewFactory.createViewHierarchy(view, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
         if addressBarPosition.isBottom {
             viewCoordinator.moveAddressBarToPosition(.bottom)
             viewCoordinator.hideToolbarSeparator()
@@ -75,9 +78,9 @@ class BlankSnapshotViewController: UIViewController {
             viewCoordinator.toolbarTabSwitcherButton.customView = tabSwitcherButton
             tabSwitcherButton.delegate = self
             
-            viewCoordinator.lastToolbarButton.customView = menuButton
+            viewCoordinator.menuToolbarButton.customView = menuButton
             menuButton.setState(.menuImage, animated: false)
-            viewCoordinator.lastToolbarButton.customView = menuButton
+            viewCoordinator.menuToolbarButton.customView = menuButton
         }
 
         decorate()
@@ -91,8 +94,7 @@ class BlankSnapshotViewController: UIViewController {
 
     private func configureToolbarButtons() {
         viewCoordinator.toolbarFireButton.action = #selector(buttonPressed(sender:))
-        viewCoordinator.toolbarFireButton.action = #selector(buttonPressed(sender:))
-        viewCoordinator.lastToolbarButton.action = #selector(buttonPressed(sender:))
+        viewCoordinator.menuToolbarButton.action = #selector(buttonPressed(sender:))
     }
 
     private func configureTabBar() {

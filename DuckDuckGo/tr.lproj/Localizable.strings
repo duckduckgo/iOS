@@ -295,18 +295,6 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "DuckDuckGo ziyaret ettiğiniz sitelerde çerez onayı açılır pencereleri tespit ederse çerez tercihlerinizi çerezleri en aza indirecek ve gizliliği en üst düzeye çıkaracak şekilde otomatik olarak ayarlayabilir ve ardından açılır pencereleri kapatabiliriz. Bazı siteler çerez tercihlerini yönetmek için bir seçenek sunmaz. Bu nedenle yalnızca bu gibi açılır pencereleri gizleyebiliriz.";
 
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
-
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Ayarları Aç";
 
@@ -544,11 +532,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Sonuç yok";
 
-/* Do not translate - stringsdict entry */
-"autofill.number.of.passwords" = "autofill.number.of.passwords";
-
 /* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Parolalar şifrelenir, cihazda saklanır ve %@ ile kilitlenir.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -707,9 +692,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Sil";
 
-/* Do not translate - stringsdict entry */
-"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "%@ silinsin mi?";
 
@@ -814,9 +796,6 @@
 
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Beni Dock'unuza eklemek çok kolay.";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "*%1$@* sizi burada izlemeye çalışıyordu. Onları engelledik!\n\n☝️ Daha fazla bilgi için kalkana dokunun.";
@@ -931,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "Çak Bir Beşlik!";
@@ -1061,6 +1037,9 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
 
+/* No comment provided by engineer. */
+"Duck Player" = "Duck Player";
+
 /* Title for message explaining to the user that Duck Player is not available */
 "duck-player.contingency-title" = "Duck Player Kullanılamıyor";
 
@@ -1100,10 +1079,12 @@
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Anladım!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title" = "YouTube'da reklama mı boğuluyorsunuz? Duck Player'ı deneyin!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "YouTube'da reklama mı boğuluyorsunuz? Duck Player ile bundan kurtulun!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1928,9 +1909,6 @@
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "Herhangi bir sitedeyken, ••• menüsünü açın ve siteyi yeni sekme sayfanıza eklemek için **Favori Ekle**'yi seçin.";
 
-/* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Yönetilen Çerezler";
 
@@ -2114,6 +2092,11 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Maksimum şifre sayısına ulaştınız. Lütfen senkronizasyona devam etmek için bazılarını silin.";
 
+/* Description invalid credentials error when syncing.
+Description of incorrectly formatted data error when syncing.
+Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Bazı yer işaretleri veya parolalar yanlış veya çok uzun biçimlendirilmiş ve senkronize edilmemiş.";
+
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Senkronizasyon Duraklatıldı";
 
@@ -2223,7 +2206,7 @@
 "settings.add.widget.vpn" = "DuckDuckGo VPN Widget'ını Ana Ekranına Ekle";
 
 /* Name of the settings subsection related to the address bar
-   Settings screen cell text for addess bar position */
+Settings screen cell text for addess bar position */
 "settings.address.bar" = "Adres Çubuğu";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2281,7 +2264,7 @@
 "settings.data.clearing" = "Veri Temizleme";
 
 /* Settings screen cell text for setting the app as default browser
-   The name of Settings category in Privacy Features related to configuration of the default browser */
+The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Varsayılan Tarayıcı";
 
 /* Label of a button disabling email protection */
@@ -2497,14 +2480,23 @@
 /* No comment provided by engineer. */
 "Stored Hostname: %@" = "Depolanan Ana Bilgisayar Adı: %@";
 
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Bu cihazda Privacy Pro aboneliğinize bir Apple Hesabı veya e-posta adresi ile erişebilirsiniz.";
+
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "E-posta Ekle";
 
-/* Button text for restoring purchase via Apple ID */
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Apple Hesabı";
+
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Satın Almayı Geri Yükle";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Aboneliğinizi bu cihazda etkinleştirmek için satın alma işleminizi geri yükleyin.";
+
+/* Subscription Activation Info */
+"subscription.activate.description" = "Aboneliğiniz, Apple Hesabınızda oturum açtığınız tüm cihazlarda DuckDuckGo'da otomatik olarak kullanılabilir.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "E-postayı Düzenle";
@@ -2545,6 +2537,9 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "E-posta Ekle";
 
+/* Subscription availability message on Apple devices */
+"subscription.available.apple" = "Privacy Pro, aynı Apple Hesabında oturum açılmış herhangi bir cihazda kullanılabilir.";
+
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Aboneliğiniz Google Play Store üzerinden satın alınmış. Aboneliğinizi yenilemek için lütfen ilk olarak aboneliğinizi satın alırken kullandığınız Google Hesabında oturum açılmış bir cihazda Google Play Store abonelik ayarlarını açın.";
 
@@ -2578,6 +2573,9 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Abonelik Bulunamadı";
 
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "Bu Apple Hesabıyla ilişkili abonelik artık aktif değil.";
+
 /* FAQ Button */
 "subscription.faq" = "SSS ve Destek";
 
@@ -2593,6 +2591,9 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Geri Yükle";
 
+/* Message for the existing subscription dialog */
+"subscription.found.text" = "Bu Apple Hesabı ile ilişkili bir abonelik bulduk.";
+
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonelik Bulundu";
 
@@ -2604,6 +2605,9 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Abonelik";
+
+/* Alert content for not found subscription */
+"subscription.notFound.alert.message" = "Bu Apple Hesabıyla ilişkili bir abonelik yok.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonelik Bulunamadı";

@@ -4,9 +4,6 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Atpakaļ";
 
-/* Do not translate - stringsdict entry */
-"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
-
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Dažas grāmatzīmes netiek sinhronizētas, jo dažos laukos ir pārāk garš saturs.";
 
@@ -48,9 +45,6 @@
 
 /* Standard Buttons - Copy Button */
 "copy.button" = "Kopēt";
-
-/* Do not translate - stringsdict entry */
-"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Daži pieteikšanās dati netiek sinhronizēti, jo noteiktos laukos saturs ir pārāk garš.";

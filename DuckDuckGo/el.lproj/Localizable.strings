@@ -295,18 +295,6 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Όταν το DuckDuckGo εντοπίζει αναδυόμενα παράθυρα συναίνεσης για cookies σε ιστότοπους που επισκέπτεστε, μπορούμε να προσπαθήσουμε να ρυθμίσουμε αυτόματα τις προτιμήσεις σας για τα cookies ώστε να ελαχιστοποιήσετε τα cookies και να μεγιστοποιήσετε το απόρρητο. Έπειτα μπορείτε να κλείσετε τα αναδυόμενα παράθυρα. Ορισμένοι ιστότοποι δεν παρέχουν επιλογή για διαχείριση των προτιμήσεων cookies, οπότε μπορούμε μόνο να αποκρύψουμε αναδυόμενα παράθυρα όπως αυτά.";
 
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
-
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Άνοιγμα ρυθμίσεων";
 
@@ -544,11 +532,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Κανένα αποτέλεσμα";
 
-/* Do not translate - stringsdict entry */
-"autofill.number.of.passwords" = "autofill.number.of.passwords";
-
 /* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Οι κωδικοί πρόσβασης κρυπτογραφούνται, αποθηκεύονται στη συσκευή και κλειδώνονται με %@.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -707,9 +692,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Διαγραφή";
 
-/* Do not translate - stringsdict entry */
-"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Διαγραφή %@;";
 
@@ -814,9 +796,6 @@
 
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Η προσθήκη μου στο Dock σας είναι εύκολη.";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "Το *%1$@* προσπαθούσε να σας παρακολουθήσει εδώ. Τους εμπόδισα!\n\n☝️ Πατήστε την ασπίδα για περισσότερες πληροφορίες.";
@@ -931,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Φιου!";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "Κόλλα πέντε!";
@@ -1061,6 +1037,9 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
 
+/* No comment provided by engineer. */
+"Duck Player" = "Duck Player";
+
 /* Title for message explaining to the user that Duck Player is not available */
 "duck-player.contingency-title" = "Το Duck Player δεν είναι διαθέσιμο";
 
@@ -1100,10 +1079,12 @@
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Το κατάλαβα!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Πνίγεστε από τις διαφημίσεις στο YouTube; Δοκιμάστε το Duck Player!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "Πνίγεστε από τις διαφημίσεις στο YouTube; Όχι με το Duck Player!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1928,9 +1909,6 @@
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "Σε οποιονδήποτε ιστότοπο, ανοίξτε το μενού ••• και επιλέξτε **Προσθήκη αγαπημένου** για προσθήκη στη σελίδα νέας καρτέλας σας.";
 
-/* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Διαχειριζόμενα cookies";
 
@@ -2114,6 +2092,11 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Έχετε φτάσει στον μέγιστο αριθμό κωδικών πρόσβασης. Διαγράψτε ορισμένους για να συνεχίσετε τον συγχρονισμό.";
 
+/* Description invalid credentials error when syncing.
+Description of incorrectly formatted data error when syncing.
+Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Ορισμένοι σελιδοδείκτες ή κωδικοί πρόσβασης δεν έχουν μορφοποιηθεί σωστά ή είναι πολύ μεγάλοι και δεν συγχρονίστηκαν.";
+
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Παύση συγχρονισμού";
 
@@ -2223,7 +2206,7 @@
 "settings.add.widget.vpn" = "Προσθέστε τη μικροεφαρμογή VPN DuckDuckGo στην αρχική οθόνη σας";
 
 /* Name of the settings subsection related to the address bar
-   Settings screen cell text for addess bar position */
+Settings screen cell text for addess bar position */
 "settings.address.bar" = "Γραμμή διευθύνσεων";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2281,7 +2264,7 @@
 "settings.data.clearing" = "Διαγραφή δεδομένων";
 
 /* Settings screen cell text for setting the app as default browser
-   The name of Settings category in Privacy Features related to configuration of the default browser */
+The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Προεπιλεγμένο πρόγραμμα περιήγησης";
 
 /* Label of a button disabling email protection */
@@ -2497,14 +2480,23 @@
 /* No comment provided by engineer. */
 "Stored Hostname: %@" = "Αποθηκευμένο όνομα κεντρικού υπολογιστή: %@";
 
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Αποκτήστε πρόσβαση στη συνδρομή σας Privacy Pro σε αυτήν τη συσκευή μέσω Λογαριασμού Apple ή διεύθυνσης email.";
+
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Προσθήκη email";
 
-/* Button text for restoring purchase via Apple ID */
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Λογαριασμός Apple";
+
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Επαναφορά αγοράς";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Κάντε επαναφορά της αγοράς σας για να ενεργοποιήσετε τη συνδρομή σας σε αυτήν τη συσκευή.";
+
+/* Subscription Activation Info */
+"subscription.activate.description" = "Η συνδρομή σας είναι αυτόματα διαθέσιμη στο DuckDuckGo σε οποιαδήποτε συσκευή είναι συνδεδεμένη στον Λογαριασμό Apple που διαθέτετε.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Επεξεργασία email";
@@ -2545,6 +2537,9 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Προσθήκη email";
 
+/* Subscription availability message on Apple devices */
+"subscription.available.apple" = "Το Privacy Pro είναι διαθέσιμο σε οποιαδήποτε συσκευή που είναι συνδεδεμένη στον ίδιο Λογαριασμό Apple.";
+
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Η συνδρομή σας αγοράστηκε μέσω του Google Play Store. Για να ανανεώσετε τη συνδρομή σας, ανοίξτε τις ρυθμίσεις συνδρομής στο Google Play Store σε συσκευή που είναι συνδεδεμένη στον ίδιο λογαριασμό Google που χρησιμοποιήθηκε για την αρχική αγορά της συνδρομής σας.";
 
@@ -2578,6 +2573,9 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Η συνδρομή δεν βρέθηκε";
 
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "Η συνδρομή που συνδέεται με αυτόν τον Λογαριασμό Apple δεν είναι πλέον ενεργή.";
+
 /* FAQ Button */
 "subscription.faq" = "Συχνές ερωτήσεις και υποστήριξη";
 
@@ -2593,6 +2591,9 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Επαναφορά";
 
+/* Message for the existing subscription dialog */
+"subscription.found.text" = "Βρήκαμε μια συνδρομή που σχετίζεται με αυτόν τον Λογαριασμό Apple.";
+
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Βρέθηκε συνδρομή";
 
@@ -2604,6 +2605,9 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Συνδρομή";
+
+/* Alert content for not found subscription */
+"subscription.notFound.alert.message" = "Δεν υπάρχει συνδρομή που να συνδέεται με αυτόν τον Λογαριασμό Apple.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Η συνδρομή δεν βρέθηκε";

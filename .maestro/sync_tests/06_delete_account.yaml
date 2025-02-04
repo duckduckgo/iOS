@@ -31,7 +31,7 @@ name: 06_delete_account
     when:
       visible: Allows you to upload photographs and videos
     commands:
-        - tapOn: "OK"
+        - tapOn: "Allow"
 - tapOn: Manually Enter Code
 - tapOn: Paste
 - assertVisible: Sync & Backup Error

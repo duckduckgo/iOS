@@ -4,9 +4,6 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Обратно";
 
-/* Do not translate - stringsdict entry */
-"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
-
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Някои отметки не се синхронизират поради прекалено дълго съдържание в определени полета.";
 
@@ -48,9 +45,6 @@
 
 /* Standard Buttons - Copy Button */
 "copy.button" = "Копиране";
-
-/* Do not translate - stringsdict entry */
-"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Някои данни за вход не се синхронизират поради прекалено дълго съдържание в определени полета.";

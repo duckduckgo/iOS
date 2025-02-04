@@ -34,6 +34,7 @@ struct DuckPlayerView: View {
         static let videoAspectRatio: CGFloat = 9/16 // 16:9 in portrait
         static let daxLogoSize: CGFloat = 24.0
         static let daxLogo = "Home"
+        static let bottomButtonHeight: CGFloat = 44
     }
     
     
@@ -48,6 +49,7 @@ struct DuckPlayerView: View {
                     .frame(height: Constants.headerHeight)
                 
                 // Video Container
+                Spacer()
                 GeometryReader { geometry in
                     ZStack {
                         RoundedRectangle(cornerRadius: Constants.cornerRadius)
@@ -68,12 +70,36 @@ struct DuckPlayerView: View {
                         y: geometry.size.height / 2
                     )
                 }
+        
+                if viewModel.shouldShowYouTubeButton {
+                    Button {
+                        viewModel.openInYouTube()
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.gray.opacity(0.2))
+                            Text("Watch this video on YouTube")
+                                .daxButton()
+                                .daxBodyRegular()
+                                .foregroundColor(Color(designSystemColor: .accent))
+                                .colorScheme(.dark)
+                        }
+                    }
+                    .frame(height: Constants.bottomButtonHeight)
+                    .padding(.horizontal, Constants.horizontalPadding)
+                    .padding(.bottom, Constants.horizontalPadding)
+                }
                 
-                Spacer()
             }
         }
         .onFirstAppear {
             viewModel.onFirstAppear()
+        }
+        .onAppear {
+            viewModel.onAppear()
+        }
+        .onDisappear {
+            viewModel.onDisappear()
         }
     }
     
@@ -86,7 +112,7 @@ struct DuckPlayerView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
                 
-                Text("Duck Player")
+                Text(UserText.duckPlayerFeatureName)
                     .foregroundColor(.white)
                     .font(.headline)
                 
@@ -105,3 +131,16 @@ struct DuckPlayerView: View {
         .background(Color.black)
     }
 }
+
+#if DEBUG
+struct DuckPlayerView_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = DuckPlayerViewModel(videoID: "dQw4w9WgXcQ")
+        DuckPlayerView(
+            viewModel: viewModel,
+            webView: DuckPlayerWebView(viewModel: viewModel)
+        )
+        .preferredColorScheme(.dark)
+    }
+}
+#endif

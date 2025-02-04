@@ -22,6 +22,7 @@ import BrowserServicesKit
 import PixelExperimentKit
 import PixelKit
 import Persistence
+import Core
 
 /// A protocol that defines a method for firing experiment-related analytics pixels.
 ///
@@ -49,7 +50,7 @@ protocol ExperimentPixelFiring {
 extension PixelKit: ExperimentPixelFiring {}
 
 /// Protocol defining the functionality required for a feature flag experiment related to free trials.
-protocol FreeTrialsFeatureFlagExperimenting: FeatureFlagExperimentDescribing {
+protocol FreeTrialsFeatureFlagExperimenting {
 
     /// Retrieves the cohort assigned to the user for the experiment.
     ///
@@ -57,7 +58,7 @@ protocol FreeTrialsFeatureFlagExperimenting: FeatureFlagExperimentDescribing {
     /// for differentiation of behavior or configurations.
     ///
     /// - Returns: The user's cohort, or `nil` if the experiment is not enabled.
-    func getCohortIfEnabled() -> (any FlagCohort)?
+    func getCohortIfEnabled() -> (any FeatureFlagCohortDescribing)?
 
     /// Implementations can use this method to provide a dictionary of parameters
     /// associated with an experiment and the user's cohort.
@@ -69,7 +70,7 @@ protocol FreeTrialsFeatureFlagExperimenting: FeatureFlagExperimentDescribing {
     ///   - Experiment name.
     ///   - Cohort value, which may be adjusted based on criteria (e.g., adding `"_outside"`).
     ///   Returns `nil` if parameters are not applicable.
-    func oneTimeParameters(for cohort: any FlagCohort) -> [String: String]?
+    func oneTimeParameters(for cohort: any FeatureFlagCohortDescribing) -> [String: String]?
 
     /// Increments the count of paywall views if the user's enrollment date is within the conversion window.
     func incrementPaywallViewCountIfWithinConversionWindow()
@@ -93,19 +94,10 @@ protocol FreeTrialsFeatureFlagExperimenting: FeatureFlagExperimentDescribing {
 /// Implementation of a feature flag experiment for monitoring and optimizing the impact of free trial offers.
 final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting {
 
-    /// Represents the cohorts in the experiment.
-    typealias CohortType = Cohort
-    enum Cohort: String, FlagCohort {
-        /// Control cohort with no changes applied.
-        case control
-        /// Treatment cohort where the experiment modifications are applied.
-        case treatment
-    }
-
     /// Constants used in the experiment.
     enum Constants {
         /// Unique identifier for the subfeature being tested.
-        static let subfeatureIdentifier = "privacyProFreeTrialJan25"
+        static let subfeatureIdentifier = FeatureFlag.privacyProFreeTrialJan25.rawValue
 
         /// Metric identifiers for various user actions during the experiment.
         static let metricPaywallImpressions = "paywallImpressions"
@@ -133,9 +125,6 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
 
     /// Identifier for the experiment.
     let rawValue = Constants.subfeatureIdentifier
-
-    /// Source of the feature flag, defining how it is retrieved and enabled.
-    let source: FeatureFlagSource = .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
 
     /// Persistent storage for experiment-related data.
     private let storage: KeyValueStoring
@@ -170,14 +159,14 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
     /// based on the feature flag configuration.
     ///
     /// - Returns: The `treatment` cohort if the override is enabled, the assigned cohort if the feature flag is enabled, or `nil` otherwise.
-    func getCohortIfEnabled() -> (any FlagCohort)? {
+    func getCohortIfEnabled() -> (any FeatureFlagCohortDescribing)? {
         let isFlagOverrideEnabled = storage.object(forKey: Constants.featureFlagOverrideKey) as? Bool ?? false
         if isFlagOverrideEnabled {
-            return FreeTrialsFeatureFlagExperiment.Cohort.treatment
+            return PrivacyProFreeTrialExperimentCohort.treatment
         }
 
-        return featureFlagger.getCohortIfEnabled(for: self)
-                as? FreeTrialsFeatureFlagExperiment.Cohort
+        return featureFlagger.resolveCohort(for: FeatureFlag.privacyProFreeTrialJan25)
+                as? PrivacyProFreeTrialExperimentCohort
     }
 
     /// Provides one-time free trial experiment parameters for the user's cohort.
@@ -198,7 +187,7 @@ final class FreeTrialsFeatureFlagExperiment: FreeTrialsFeatureFlagExperimenting 
     ///   - `Constants.freeTrialParameterExperimentName`: The experiment name.
     ///   - `Constants.freeTrialParameterExperimentCohort`: The cohort name.
     ///   Returns `nil` if the parameters have already been provided.
-    func oneTimeParameters(for cohort: any FlagCohort) -> [String: String]? {
+    func oneTimeParameters(for cohort: any FeatureFlagCohortDescribing) -> [String: String]? {
         let hasReturnedParameters = storage.object(forKey: Constants.hasReturnedFreeTrialParametersKey) as? Bool ?? false
 
         // Return parameters only if they haven't been returned before
@@ -286,7 +275,7 @@ private extension FreeTrialsFeatureFlagExperiment {
 
     /// Determines if the user is within the conversion window for the experiment.
     var userIsInConversionWindow: Bool {
-        guard let enrollmentDate = featureFlagger.getAllActiveExperiments()[rawValue]?.enrollmentDate else {
+        guard let enrollmentDate = featureFlagger.allActiveExperiments[rawValue]?.enrollmentDate else {
             return false
         }
 

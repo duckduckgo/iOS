@@ -21,17 +21,25 @@
 import SwiftUI
 import Core
 import os.log
+import Combine
 
 struct DuckPlayerWebView: UIViewRepresentable {
-   let url: URL
+   let viewModel: DuckPlayerViewModel
+   let coordinator: Coordinator
        
    struct Constants {
        static let referrerHeader: String = "Referer"
        static let referrerHeaderValue: String = "http://localhost"
    }
    
+   init(viewModel: DuckPlayerViewModel) {
+       self.viewModel = viewModel
+       Logger.duckplayer.debug("Creating new coordinator")
+       self.coordinator = Coordinator(viewModel: viewModel)
+   }
+   
    func makeCoordinator() -> Coordinator {
-       Coordinator()
+       coordinator
    }
    
    func makeUIView(context: Context) -> WKWebView {
@@ -62,22 +70,30 @@ struct DuckPlayerWebView: UIViewRepresentable {
        webView.uiDelegate = context.coordinator
        
        // Set DDG's agent
-       webView.customUserAgent = DefaultUserAgentManager.shared.userAgent(isDesktop: false, url: url)
+       webView.customUserAgent = DefaultUserAgentManager.shared.userAgent(isDesktop: false, url: viewModel.getVideoURL())
        
        return webView
    }
    
    func updateUIView(_ webView: WKWebView, context: Context) {
+       guard let url = viewModel.getVideoURL() else { return }
+       Logger.duckplayer.debug("Updating WebView with URL: \(url)")
        var request = URLRequest(url: url)
        request.setValue(Constants.referrerHeaderValue, forHTTPHeaderField: Constants.referrerHeader)
        webView.load(request)
    }
    
    class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
+       let viewModel: DuckPlayerViewModel
+       
+       init(viewModel: DuckPlayerViewModel) {
+           self.viewModel = viewModel
+           super.init()
+       }
        
        private func handleYouTubeWatchURL(_ url: URL) {
-           Logger.duckplayer.log("[DuckPlayer] Detected YouTube watch URL: \(url.absoluteString)")
-           // To be implemented: Hand over youtube.com/watch URLs to main browser
+           Logger.duckplayer.debug("Detected YouTube watch URL: \(url.absoluteString)")
+           viewModel.handleYouTubeNavigation(url)
        }
        
        @MainActor

@@ -295,18 +295,6 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Wanneer DuckDuckGo pop-ups voor cookietoestemming op bezochte websites detecteert, kunnen we proberen automatisch je cookievoorkeuren in te stellen om het aantal cookies tot een minimum te beperken en je privacy te maximaliseren. De pop-ups worden vervolgens gesloten. Sommige sites bieden geen optie om cookievoorkeuren te beheren, zodat we pop-ups zoals deze alleen kunnen verbergen.";
 
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
-
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Open Instellingen";
 
@@ -544,11 +532,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Geen resultaten";
 
-/* Do not translate - stringsdict entry */
-"autofill.number.of.passwords" = "autofill.number.of.passwords";
-
 /* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Wachtwoorden worden versleuteld, opgeslagen op het apparaat en vergrendeld met %@.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -707,9 +692,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Verwijderen";
 
-/* Do not translate - stringsdict entry */
-"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "%@ verwijderen?";
 
@@ -814,9 +796,6 @@
 
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Voeg me eenvoudig toe aan je Dock.";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "*%1$@* probeerde je hier te volgen. Ik heb dit geblokkeerd!\n\n☝️ Tik op het schild voor meer informatie.";
@@ -931,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Opluchting!";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "High five!";
@@ -1061,6 +1037,9 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
 
+/* No comment provided by engineer. */
+"Duck Player" = "Duck Player";
+
 /* Title for message explaining to the user that Duck Player is not available */
 "duck-player.contingency-title" = "Duck Player is niet beschikbaar";
 
@@ -1100,10 +1079,12 @@
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Ik snap het!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Te veel advertenties op YouTube? Probeer Duck Player!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "Te veel advertenties op YouTube? Niet met Duck Player!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1928,9 +1909,6 @@
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "Open op een willekeurige site het menu ••• en selecteer **Favoriet toevoegen** om deze toe te voegen aan je nieuwe tabbladpagina.";
 
-/* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Beheerde cookies";
 
@@ -2114,6 +2092,11 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Je hebt het maximumaantal wachtwoorden bereikt. Verwijder er een paar om de synchronisatie te hervatten.";
 
+/* Description invalid credentials error when syncing.
+Description of incorrectly formatted data error when syncing.
+Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Sommige bladwijzers of wachtwoorden hebben de verkeerd indeling of te lang en werden niet gesynchroniseerd.";
+
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Synchronisatie onderbroken";
 
@@ -2223,7 +2206,7 @@
 "settings.add.widget.vpn" = "Voeg de DuckDuckGo VPN-widget toe aan je startscherm";
 
 /* Name of the settings subsection related to the address bar
-   Settings screen cell text for addess bar position */
+Settings screen cell text for addess bar position */
 "settings.address.bar" = "Adresbalk";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2281,7 +2264,7 @@
 "settings.data.clearing" = "Gegevens wissen";
 
 /* Settings screen cell text for setting the app as default browser
-   The name of Settings category in Privacy Features related to configuration of the default browser */
+The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Standaardbrowser";
 
 /* Label of a button disabling email protection */
@@ -2497,14 +2480,23 @@
 /* No comment provided by engineer. */
 "Stored Hostname: %@" = "Opgeslagen hostnaam: %@";
 
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Krijg op dit apparaat toegang tot je Privacy Pro-abonnement via je Apple-account of e-mailadres.";
+
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "E-mailadres toevoegen";
 
-/* Button text for restoring purchase via Apple ID */
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Apple-account";
+
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Aankoop herstellen";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Herstel je aankoop om je abonnement op dit apparaat te activeren.";
+
+/* Subscription Activation Info */
+"subscription.activate.description" = "Je abonnement is automatisch beschikbaar in DuckDuckGo op elk apparaat dat is aangemeld bij je Apple-account.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "E-mailadres bewerken";
@@ -2545,6 +2537,9 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "E-mailadres toevoegen";
 
+/* Subscription availability message on Apple devices */
+"subscription.available.apple" = "Privacy Pro is beschikbaar op elk apparaat dat is aangemeld bij hetzelfde Apple-account.";
+
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Je abonnement is aangeschaft via de Google Play Store. Om je abonnement te verlengen, open je de abonnementsinstellingen van de Google Play Store op een apparaat dat is aangemeld bij hetzelfde Google-account waarmee je het abonnement hebt gekocht.";
 
@@ -2578,6 +2573,9 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Abonnement niet gevonden";
 
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "Je abonnement dat aan dit Apple-account is gekoppeld, is niet langer actief.";
+
 /* FAQ Button */
 "subscription.faq" = "Veelgestelde vragen en ondersteuning";
 
@@ -2593,6 +2591,9 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Herstellen";
 
+/* Message for the existing subscription dialog */
+"subscription.found.text" = "We hebben een abonnement gevonden dat aan dit Apple-account is gekoppeld.";
+
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonnement gevonden";
 
@@ -2604,6 +2605,9 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Abonnement";
+
+/* Alert content for not found subscription */
+"subscription.notFound.alert.message" = "Er is geen abonnement gekoppeld aan dit Apple-account.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonnement niet gevonden";

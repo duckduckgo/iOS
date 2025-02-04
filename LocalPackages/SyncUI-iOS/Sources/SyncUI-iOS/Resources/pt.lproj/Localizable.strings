@@ -4,9 +4,6 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Retroceder";
 
-/* Do not translate - stringsdict entry */
-"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
-
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Alguns marcadores não estão a sincronizar devido ao conteúdo excessivamente longo em certos campos.";
 
@@ -48,9 +45,6 @@
 
 /* Standard Buttons - Copy Button */
 "copy.button" = "Copiar";
-
-/* Do not translate - stringsdict entry */
-"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Alguns dados de início de sessão não estão a sincronizar devido ao conteúdo excessivamente longo em certos campos.";

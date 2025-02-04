@@ -50,6 +50,7 @@ class RootDebugViewController: UITableViewController {
         case resetTipKit = 681
         case aiChat = 682
         case webViewStateRestoration = 683
+        case featureFlags = 684
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -201,6 +202,9 @@ class RootDebugViewController: UITableViewController {
             case .webViewStateRestoration:
                 let controller = UIHostingController(rootView: WebViewStateRestorationDebugView())
                 navigationController?.pushViewController(controller, animated: true)
+            case .featureFlags:
+                let hostingController = UIHostingController(rootView: FeatureFlagsMenuView())
+                navigationController?.pushViewController(hostingController, animated: true)
             }
         }
     }

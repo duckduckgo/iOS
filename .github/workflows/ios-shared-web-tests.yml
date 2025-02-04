@@ -47,7 +47,9 @@ jobs:
 
     - name: Build iOS
       run: |
-        bash .maestro/setup_ui_tests.sh --only-build
+        source .maestro/common.sh
+        project_root=$(pwd)
+        build_app
 
     - name: Checkout shared web tests
       uses: actions/checkout@v4
@@ -61,7 +63,14 @@ jobs:
           npm run build
           cd web-driver
           cargo build
-          cd ../build
-          ./wpt run  --product duckduckgo --binary ../webdriver/target/debug/ddgdriver --log-mach - --log-mach-level info duckduckgo
+
+    - name: Add CA key
+      run: |
+        xcrun simctl keychain booted add-root-cert ../shared-web-tests/web-platform-tests/build/tools/certs/cacert.pem
+
+    - name: Run tests
+      run: |
+        cd ../build
+        ./wpt run  --product duckduckgo --binary ../webdriver/target/debug/ddgdriver --log-mach - --log-mach-level info duckduckgo
 
   

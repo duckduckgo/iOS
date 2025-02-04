@@ -4,17 +4,6 @@
 
 source $(dirname $0)/common.sh
 
-## Constants
-
-# The simulator command requires the hyphens
-target_device="iPhone-16"
-target_os="iOS-18-2"
-
-# Convert the target_device and target_os to the format required by the -destination flag
-destination_device="${target_device//-/ }"
-destination_os_version="${target_os#iOS-}"
-destination_os_version="${destination_os_version//-/.}"
-
 ## Functions
 
 check_maestro() {
@@ -44,28 +33,6 @@ check_maestro() {
     fi
 }
 
-build_app() {
-    if [ -d "$derived_data_path" ] && [ "$1" -eq "0" ]; then
-        echo "⚠️ Removing previously created $derived_data_path"
-        rm -rf $derived_data_path
-    else
-        echo "ℹ️ Not cleaning derived data at $derived_data_path"
-    fi
-
-    echo "⏲️ Building the app"
-    set -o pipefail && xcodebuild -project "$project_root"/DuckDuckGo-iOS.xcodeproj \
-                                  -scheme "iOS Browser" \
-                                  -destination "platform=iOS Simulator,name=$destination_device,OS=$destination_os_version" \
-                                  -derivedDataPath "$derived_data_path" \
-                                  -skipPackagePluginValidation \
-                                  -skipMacroValidation \
-                                  ONLY_ACTIVE_ARCH=NO | tee xcodebuild.log
-    if [ $? -ne 0 ]; then
-        echo "‼️ Unable to build app into $derived_data_path"
-        exit 1
-    fi
-}
-
 ## Main Script
 
 echo
@@ -83,9 +50,7 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         --skip-build)
             skip_build=1 ;;
-        --only-build) 
-            only_build=1 ;;
-        --rebuild) 
+        --rebuild)
             rebuild=1 ;;
         *)
     esac
@@ -96,11 +61,6 @@ if [ -n "$skip_build" ]; then
     echo "Skipping build"
 else
     build_app $rebuild
-fi
-
-if [ -n "$only_build" ]; then
-    echo "ℹ️ Only building the app. Exiting."
-    exit 0
 fi
 
 echo "ℹ️ Closing all simulators"
@@ -118,8 +78,6 @@ fi
 echo "📱 Using simulator $device_uuid"
 
 xcrun simctl boot $device_uuid
-xcrun simctl keychain booted add-root-cert  ../shared-web-tests/web-platform-tests/tools/certs/cacert.pem
-xcrun simctl keychain booted add-root-cert  ../shared-web-tests/web-platform-tests/build/tools/certs/cacert.pem
 if [ $? -ne 0 ]; then
     echo "‼️ Unable to boot simulator"
     exit 1

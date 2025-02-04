@@ -59,13 +59,13 @@ struct Launching: AppState {
     private let subscriptionService: SubscriptionService
     private let crashCollectionService = CrashCollectionService()
 
+    private let persistentStoresConfiguration = PersistentStoresConfiguration()
     private let onboardingConfiguration = OnboardingConfiguration()
     private let atbAndVariantConfiguration = ATBAndVariantConfiguration()
     private let historyManagerConfiguration = HistoryManagerConfiguration()
 
     private let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
     private let mainCoordinator: MainCoordinator
-    private let persistenceCoordinator = PersistenceCoordinator()
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
@@ -82,9 +82,9 @@ struct Launching: AppState {
         PixelConfiguration.configure(featureFlagger: featureFlagger)
         ContentBlockingConfiguration.configure()
         UserAgentConfiguration.configure()
-        NewTabPageIntroMessageConfiguration().configure() // todo: @Mariusz can it be moved up here?
+        NewTabPageIntroMessageConfiguration().configure() // TODO: @Mariusz can it be moved up here?
 
-        persistenceCoordinator.prepareStores()
+        persistentStoresConfiguration.configure()
 
         configurationService.onLaunching()
         crashCollectionService.onLaunching()
@@ -92,19 +92,19 @@ struct Launching: AppState {
         WidgetCenter.shared.reloadAllTimelines() // TODO: should it be moved to some service?
         PrivacyFeatures.httpsUpgrade.loadDataAsync() // TODO: should it be moved to some service?
 
-        syncService = SyncService(bookmarksDatabase: persistenceCoordinator.bookmarksDatabase)
+        syncService = SyncService(bookmarksDatabase: persistentStoresConfiguration.bookmarksDatabase)
         reportingService.syncService = syncService
         autofillService.syncService = syncService
         let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
-        remoteMessagingService = RemoteMessagingService(bookmarksDatabase: persistenceCoordinator.bookmarksDatabase,
-                                                        database: persistenceCoordinator.database,
+        remoteMessagingService = RemoteMessagingService(bookmarksDatabase: persistentStoresConfiguration.bookmarksDatabase,
+                                                        database: persistentStoresConfiguration.database,
                                                         appSettings: appSettings,
                                                         internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
                                                         configurationStore: AppDependencyProvider.shared.configurationStore,
                                                         privacyConfigurationManager: privacyConfigurationManager)
         subscriptionService = SubscriptionService(privacyConfigurationManager: privacyConfigurationManager)
         mainCoordinator = MainCoordinator(syncService: syncService,
-                                          bookmarksDatabase: persistenceCoordinator.bookmarksDatabase,
+                                          bookmarksDatabase: persistentStoresConfiguration.bookmarksDatabase,
                                           remoteMessagingService: remoteMessagingService,
                                           daxDialogs: onboardingConfiguration.daxDialogs,
                                           reportingService: reportingService,
@@ -154,7 +154,7 @@ struct Launching: AppState {
     }
 
     private var appDependencies: AppDependencies {
-        AppDependencies(
+        .init(
             mainCoordinator: mainCoordinator,
             vpnService: vpnService,
             authenticationService: authenticationService,

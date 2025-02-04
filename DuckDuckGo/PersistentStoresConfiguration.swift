@@ -1,5 +1,5 @@
 //
-//  PersistenceCoordinator.swift
+//  PersistentStoresConfiguration.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -27,7 +27,7 @@ public extension NSNotification.Name {
 
 }
 
-final class PersistenceCoordinator {
+final class PersistentStoresConfiguration {
 
     let database = Database.shared
     let bookmarksDatabase = BookmarksDatabase.make()
@@ -40,7 +40,7 @@ final class PersistenceCoordinator {
         self.notificationCenter = notificationCenter
     }
 
-    func prepareStores() {
+    func configure() {
         clearTemporaryDirectory()
         loadAndMigrateDatabase()
         loadAndMigrateBookmarksDatabase()

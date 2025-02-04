@@ -30,10 +30,10 @@
     {
       "identity" : "browserserviceskit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
-        "branch" : "dominik/htmlntp-recent-activity",
-        "revision" : "81dddfb2978bb5d6b824903be318e729a0d43f6b"
+        "revision" : "bd4691f789bbfd48347339cf8bd09f44487e596b",
+        "version" : "235.1.0"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "branch" : "pr-releases/pr-1419",
-        "revision" : "9ab1ce0a523bbab4acbdd4c09707cd16ac6fd431"
+        "revision" : "78cb93809c05ed9b9f58131ac90fa66d16393ae5",
+        "version" : "7.14.0"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "47c26dc32b94cdbcef3e6157497147917678c25c",
-        "version" : "16.1.0"
+        "revision" : "676d42679296a175169e433f2332e55644151edd",
+        "version" : "16.2.0"
       }
     },
     {

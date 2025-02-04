@@ -24,7 +24,7 @@ import Combine
 @testable import DDGSync
 import Persistence
 import Common
-import SyncUI
+import SyncUI_iOS
 
 final class SyncSettingsViewControllerErrorTests: XCTestCase {
 

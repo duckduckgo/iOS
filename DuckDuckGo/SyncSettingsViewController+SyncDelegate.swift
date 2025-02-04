@@ -20,7 +20,7 @@
 import Core
 import UIKit
 import SwiftUI
-import SyncUI
+import SyncUI_iOS
 import DDGSync
 import AVFoundation
 

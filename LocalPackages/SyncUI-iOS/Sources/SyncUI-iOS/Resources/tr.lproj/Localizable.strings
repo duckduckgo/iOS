@@ -1,0 +1,297 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Sync & Backup'ı kullanmak için cihaz şifresi gerekir.";
+
+/* Standard Buttons - Back Button */
+"back.button" = "Geri";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Bazı yer işaretleri, belirli alanlardaki aşırı uzun içerik nedeniyle senkronize edilmiyor.";
+
+/* Camera View - Go to Settings Button */
+"camera.go.to.settings.button" = "Ayarlar'a gidin";
+
+/* Camera View - Unavailable Title */
+"camera.is.unavailable.title" = "Kamera Kullanılamıyor";
+
+/* Camera View - Permission Instructions */
+"camera.permission.instructions" = "Lütfen cihazınızın ayarlarına gidin ve bu uygulamanın kameranıza erişmesine izin verin.";
+
+/* Camera View - Permission Required */
+"camera.permission.required" = "Kamera İzni Gereklidir";
+
+/* Camera View - Point Camera Indication */
+"camera.point.camera.indication" = "Senkronize etmek için kamerayı QR koduna doğrultun";
+
+/* No comment provided by engineer. */
+"Cancel" = "İptal";
+
+/* Standard Buttons - Cancel Button */
+"cancel.button" = "İptal";
+
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Senkronizasyon ve Yedekleme'yi açın";
+
+/* Connect With Server Sheet - Description Part 1 */
+"connect.with.server.sheet.description.part1" = "Bu, DuckDuckGo'nun güvenli sunucusunda yer imlerinizin ve şifrelerinizi diğer cihazlarınızla senkronize edilebilen şifrelenmiş bir yedeğini oluşturur.";
+
+/* Connect With Server Sheet - Description Part 2 */
+"connect.with.server.sheet.description.part2" = "Şifreleme anahtarı sadece cihazınızda saklanır, DuckDuckGo buna erişemez.";
+
+/* Connect With Server Sheet - Footer */
+"connect.with.server.sheet.footer" = "Daha sonra diğer cihazlarınızla senkronize edebilirsiniz.";
+
+/* Connect With Server Sheet - Title */
+"connect.with.server.sheet.title" = "Bu Cihazı Senkronize Et ve Yedekle";
+
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopyala";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Bazı girişler, belirli alanlardaki aşırı uzun içerik nedeniyle senkronize edilmiyor.";
+
+/* Delete Server Data - Button */
+"delete.server.data" = "Sunucu Verilerini Kapat ve Sil...";
+
+/* No comment provided by engineer. */
+"Dev environment" = "Geliştirme ortamı";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "DuckDuckGo'yu Diğer Cihazlarda Edinin";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Verileriniz Senkronize Edildi!";
+
+/* Standard Buttons - Done Button */
+"done.button" = "Bitti";
+
+/* Edit Device View - Header */
+"edit.device.header" = "Cihaz Adı";
+
+/* Edit Device View - Title */
+"edit.device.title" = "Düzenle %@";
+
+/* Fetch Favicons Onboarding - Button Title */
+"fetch.favicons.onboarding.button.title" = "Yer İmi Simgelerini Güncel Tut";
+
+/* Fetch Favicons Onboarding - Message */
+"fetch.favicons.onboarding.message" = "Bu cihazın diğer cihazlarınızdan senkronize edilen yeni yer imleri için simgeleri otomatik olarak indirmesini istiyor musunuz? Bu, bir yer imi her senkronize edildiğinde indirmeyi ağınıza gösterecektir.";
+
+/* Fetch Favicons Onboarding - Title */
+"fetch.favicons.onboarding.title" = "Kayıp Simgeler İndirilsin mi?";
+
+/* Options - Fetch Favicons Description */
+"fetch.favicons.option.caption" = "Senkronize edilmiş yer imleriniz için simgeleri otomatik olarak indirin. İndirilen simgeler ağınıza açık olur.";
+
+/* Options - Fetch Favicons Title */
+"fetch.favicons.option.title" = "Simgeleri Otomatik İndir";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Ayarlar'a gidin";
+
+/* No comment provided by engineer. */
+"Keep Development" = "Geliştirmeye Devam Et";
+
+/* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
+"manually.enter.code.instruction.attributed" = "Senkronize edilmiş başka bir cihazdaki DuckDuckGo Uygulamasında %1$@ ögesine gidin ve %2$@ ögesini seçin ve bu cihazı senkronize etmek için kodu buraya yapıştırın.";
+
+/* Manually Enter Code View - Title */
+"manually.enter.code.title" = "Kodu Manuel Olarak Yaz";
+
+/* Manually Enter Code View - Validating Code Action */
+"manually.enter.code.validating.code.action" = "Kod doğrulanıyor";
+
+/* Manually Enter Code View - Validating Code Failed Action */
+"manually.enter.code.validating.code.failed.action" = "Geçersiz kod.";
+
+/* Standard Buttons - Next Button */
+"next.button" = "Sonraki";
+
+/* Standard Buttons - Not Now Button */
+"not.now.button" = "Şimdi Değil";
+
+/* Options - Section Header */
+"options.section.header" = "Seçenekler";
+
+/* Section header for other syncing options */
+"other.options.section.header" = "Diğer Seçenekler";
+
+/* Standard Buttons - Paste Button */
+"paste.button" = "Yapıştır";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Yer İmlerini Yönet";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Şifreleri yönet…";
+
+/* Preparing To Sync Sheet - Description */
+"preparing.to.sync.sheet.description" = "Yer imleriniz ve şifreler senkronize edilmek üzere hazırlanıyor. Bu sadece bir dakikanızı alacaktır.";
+
+/* Preparing To Sync Sheet - Footer */
+"preparing.to.sync.sheet.footer" = "Bağlantı kuruluyor...";
+
+/* Preparing To Sync Sheet - Title */
+"preparing.to.sync.sheet.title" = "Senkronizasyon ve Yedeklemeyi Ayarlama";
+
+/* Link label for recovering synced data */
+"recover.synced.data.link" = "Senkronize Edilen Verileri Kurtar";
+
+/* Recover Synced Data Sheet - Button */
+"recover.synced.data.sheet.button" = "Başlayın";
+
+/* Recover Synced Data Sheet - Description */
+"recover.synced.data.sheet.description" = "Senkronize edilmiş verilerinizi geri yüklemek için Senkronizasyonu ilk kez ayarlarken belirlediğiniz Kurtarma Koduna ihtiyacınız olacaktır. Bu kod, Senkronizasyonu yapmak üzere kullandığınız cihaza PDF olarak kaydedilmiş olabilir.";
+
+/* Recover Synced Data Sheet - Title */
+"recover.synced.data.sheet.title" = "Senkronize Edilen Verileri Kurtar";
+
+/* Remove Device View - Button */
+"remove.device.button" = "Cihazı Kaldır";
+
+/* Remove Device View - Message */
+"remove.device.message" = "\"%@\" artık senkronize edilmiş verilerinize erişemeyecektir.";
+
+/* Remove Device View - Title */
+"remove.device.title" = "Cihaz Kaldırılsın mı?";
+
+/* Save Recovery Code Sheet - Copy Code Toast */
+"save.recovery.code.code.copied.button" = "Kurtarma kodu panoya kopyalandı";
+
+/* Save Recovery Code Sheet - Copy Code Button */
+"save.recovery.code.copy.code.button" = "Kodu Kopyala";
+
+/* Save Recovery Code Sheet - Save as PDF Button */
+"save.recovery.code.save.as.pdf.button" = "PDF olarak kaydet";
+
+/* Save Recovery Code Sheet - Description */
+"save.recovery.code.sheet.description" = "Cihazlarınıza erişiminizi kaybederseniz, senkronize edilmiş verilerinizi kurtarmak için bu koda ihtiyacınız olacaktır.";
+
+/* Save Recovery Code Sheet - Footer */
+"save.recovery.code.sheet.footer" = "Bu koda erişimi olan herkes senkronize edilmiş verilerinize erişebileceği için lütfen bu kodu güvenli bir yerde saklayın.";
+
+/* Save Recovery Code Sheet - Title */
+"save.recovery.code.sheet.title" = "Kurtarma Kodunu Kaydet";
+
+/* Save RecoveryPDF - Button */
+"save.recovery.pdf.button" = "Kurtarma PDF'ini Kaydet";
+
+/* Save RecoveryPDF - Footer */
+"save.recovery.pdf.footer" = "Cihazınızı kaybederseniz senkronize edilmiş verilerinizi geri yüklemek için bu kurtarma koduna ihtiyacınız olacaktır.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Enter Code Link */
+"scan.code.to.recover.synced.data.enter.code.link" = "Metin Kodunu Manuel Olarak Yaz";
+
+/* Scan Or Enter Code To Recover Synced Data View - Explanation */
+"scan.code.to.recover.synced.data.explanation" = "Verilerinizi kurtarmak için Kurtarma PDF'ndeki veya senkronize edilmiş başka bir cihazdaki QR kodunu tarayın.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Footer */
+"scan.code.to.recover.synced.data.footer" = "Tarama yapamıyor musunuz?";
+
+/* Scan Or Enter Code To Recover Synced Data View - Title */
+"scan.code.to.recover.synced.data.title" = "Senkronize Edilen Verileri Kurtar";
+
+/* Scan or See Code View - Footer */
+"scan.or.see.code.footer" = "Tarama yapamıyor musunuz?";
+
+/* Scan or See Code View - Instruction */
+"scan.or.see.code.instruction" = "Başka bir cihazdaki DuckDuckGo Tarayıcısında Ayarlar › Senkronizasyon ve Yedekleme bölümüne gidin ve \"Başka Bir Cihazla Senkronize Et\" seçeneğini seçin.";
+
+/* Scan or See Code View - Instruction with syncMenuPath */
+"scan.or.see.code.instruction.attributed" = "Başka bir cihazdaki DuckDuckGo Tarayıcısında %@ bölümüne gidin ve \"Başka Bir Cihazla Senkronize Et\" seçeneğini seçin.";
+
+/* Scan or See Code View - Manually Enter Code Link */
+"scan.or.see.code.manually.enter.code.link" = "Kodu Manuel Olarak Yaz";
+
+/* Scan or See Code View - Scan Code Instructions Body */
+"scan.or.see.code.scan.code.instructions.body" = "Senkronize etmek için bu kodu başka bir cihazla tarayın.";
+
+/* Scan or See Code View - Scan Code Instructions Title */
+"scan.or.see.code.scan.code.instructions.title" = "Mobilden Mobile mi?";
+
+/* Scan or See Code View - Share Code Link */
+"scan.or.see.code.share.code.link" = "Metin Kodu Paylaşılsın mı?";
+
+/* Scan or See Code View - Title */
+"scan.or.see.code.title" = "QR Kodunu Tara";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Sync & Backup'ı kullanmak için cihazınızı güvenli hale getirin";
+
+/* No comment provided by engineer. */
+"Switch to Production" = "Üretime Geç";
+
+/* Link label for syncing and backing up the device */
+"sync.and.backup.this.device.link" = "Bu Cihazı Senkronize Et ve Yedekle";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "DuckDuckGo'yu Diğer Cihazlarda Edinin";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "İndirme Bağlantısını Paylaş";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "DuckDuckGo'yu masaüstüne veya başka bir mobil cihaza indirmek için şu adresi ziyaret edin:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Bu cihazla senkronize etmek için DuckDuckGo'yu diğer cihazlara yükleyin";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "DuckDuckGo'yu edinin";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Yer işaretlerinizi ve şifrelerinizi güvenli bir şekilde senkronize etmeye başlamak için DuckDuckGo tarayıcısını cihazlarınıza yükleyin:";
+
+/* Sync Menu Path */
+"sync.menu.path" = "Ayarlar > Senkronizasyon ve Yedekleme > Başka Bir Cihazla Senkronize Et";
+
+/* Sync & Backup Title */
+"sync.title" = "Senkronizasyon ve Yedekleme";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Üzgünüz, ancak Senkronizasyon ve Yedekleme şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Üzgünüz, Senkronizasyon ve Yedekleme bu uygulama sürümünde artık kullanılamıyor. Devam etmek için lütfen DuckDuckGo'yu en son sürüme güncelleyin.";
+
+/* Title of the warning message */
+"sync.warning.sync.unavailable" = "Senkronizasyon ve Yedekleme Kullanılamıyor";
+
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Başka Bir Cihazla Senkronize Et";
+
+/* Footer message for syncing with another device */
+"sync.with.another.device.footer" = "Verileriniz uçtan uca şifrelenir ve DuckDuckGo'nun şifreleme anahtarına erişimi yoktur.";
+
+/* Message for syncing with another device */
+"sync.with.another.device.message" = "Yer imlerini ve parolaları cihazlarınız arasında güvenli bir şekilde senkronize edin.";
+
+/* Title for syncing with another device */
+"sync.with.another.device.title" = "Senkronizasyonu Başlat";
+
+/* Synced Devices - Section Header */
+"synced.devices.section.header" = "Senkronize Edilmiş Cihazlar";
+
+/* Synced Devices - Sync with Another Device Label */
+"synced.devices.sync.with.another.device.label" = "Başka Bir Cihazla Senkronize Et";
+
+/* Synced Devices - This Device Label */
+"synced.devices.this.device.label" = "Bu Cihaz";
+
+/* Turn Sync Off - Button */
+"turn.sync.off" = "Senkronizasyon ve Yedeklemeyi Kapat...";
+
+/* Turn Sync Off - Section Header */
+"turn.sync.off.section.header" = "Senkronizasyon Etkin";
+
+/* Options - Unify Favorites Instruction */
+"unified.favorites.instruction" = "Tüm cihazlarınızda aynı favori yer imlerini kullanın. Mobil ve masaüstü favorilerini ayrı tutmak için kapalı bırakın.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Favorileri Cihazlar Arasında Birleştirin";
+
+/* View Text Code menu item */
+"view.text.code.menu.item" = "Metin Kodunu Görüntüle";
+
+/* No comment provided by engineer. */
+"You're using Sync Development environment" = "Senkronizasyon Geliştirme ortamını kullanıyorsunuz";
+

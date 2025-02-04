@@ -51,6 +51,10 @@ class FavoritesViewModel: ObservableObject {
     @Published private(set) var allFavorites: [FavoriteItem] = []
     @Published private(set) var isCollapsed: Bool = true
 
+    // In memory only so that when settings is dismissed we can show the prompt.
+    //  Missing icons will trigger the prompt from elsewhere too so we don't need to persist this.
+    private(set) var hasMissingIcons = false
+
     private(set) var faviconLoader: FavoritesFaviconLoading?
 
     private var cancellables = Set<AnyCancellable>()
@@ -128,6 +132,7 @@ class FavoritesViewModel: ObservableObject {
 
     var onFaviconMissing: () -> Void = {}
     func faviconMissing() {
+        hasMissingIcons = true
         onFaviconMissing()
     }
 

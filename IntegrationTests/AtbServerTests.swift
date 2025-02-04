@@ -142,11 +142,11 @@ class MockFeatureFlagger: FeatureFlagger {
 
     var localOverrides: (any BrowserServicesKit.FeatureFlagLocalOverriding)?
     
-    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag: FeatureFlagExperimentDescribing {
+    func resolveCohort<Flag>(for featureFlag: Flag, allowOverride: Bool) -> (any FeatureFlagCohortDescribing)? where Flag: FeatureFlagDescribing {
         return nil
     }
     
-    func getAllActiveExperiments() -> Experiments {
+    var allActiveExperiments: Experiments {
         return [:]
     }
 

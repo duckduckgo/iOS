@@ -1,0 +1,297 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Este necesară o parolă pentru dispozitiv pentru a utiliza Sync & Backup.";
+
+/* Standard Buttons - Back Button */
+"back.button" = "Înapoi";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Unele marcaje nu se sincronizează din cauza conținutului excesiv de lung din anumite câmpuri.";
+
+/* Camera View - Go to Settings Button */
+"camera.go.to.settings.button" = "Mergi la Setări";
+
+/* Camera View - Unavailable Title */
+"camera.is.unavailable.title" = "Camera nu este disponibilă";
+
+/* Camera View - Permission Instructions */
+"camera.permission.instructions" = "Accesează setările dispozitivului tău și acordă permisiunea ca această aplicație să îți acceseze camera.";
+
+/* Camera View - Permission Required */
+"camera.permission.required" = "Este necesară permisiunea pentru cameră";
+
+/* Camera View - Point Camera Indication */
+"camera.point.camera.indication" = "Îndreaptă camera spre codul QR pentru a sincroniza";
+
+/* No comment provided by engineer. */
+"Cancel" = "Renunță";
+
+/* Standard Buttons - Cancel Button */
+"cancel.button" = "Renunță";
+
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Activează Sincronizare și backup";
+
+/* Connect With Server Sheet - Description Part 1 */
+"connect.with.server.sheet.description.part1" = "Aceasta creează o copie de rezervă criptată a marcajelor și parolelor tale pe serverul securizat DuckDuckGo, care poate fi sincronizată cu celelalte dispozitive ale tale.";
+
+/* Connect With Server Sheet - Description Part 2 */
+"connect.with.server.sheet.description.part2" = "Cheia de criptare este stocată doar pe dispozitivul tău, DuckDuckGo nu o poate accesa.";
+
+/* Connect With Server Sheet - Footer */
+"connect.with.server.sheet.footer" = "Poți sincroniza mai târziu cu celelalte dispozitive ale tale.";
+
+/* Connect With Server Sheet - Title */
+"connect.with.server.sheet.title" = "Sincronizează și fă backup pentru acest dispozitiv";
+
+/* Standard Buttons - Copy Button */
+"copy.button" = "Copiere";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Unele date de conectare nu se sincronizează din cauza conținutului excesiv de lung din anumite câmpuri.";
+
+/* Delete Server Data - Button */
+"delete.server.data" = "Oprește și șterge datele serverului...";
+
+/* No comment provided by engineer. */
+"Dev environment" = "Mediu de dezvoltare";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Obține DuckDuckGo pe alte dispozitive";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Datele tale sunt sincronizate!";
+
+/* Standard Buttons - Done Button */
+"done.button" = "Terminat";
+
+/* Edit Device View - Header */
+"edit.device.header" = "Numele dispozitivului";
+
+/* Edit Device View - Title */
+"edit.device.title" = "Editează %@";
+
+/* Fetch Favicons Onboarding - Button Title */
+"fetch.favicons.onboarding.button.title" = "Păstrează pictogramele de marcaje actualizate";
+
+/* Fetch Favicons Onboarding - Message */
+"fetch.favicons.onboarding.message" = "Dorești ca acest dispozitiv să descarce automat pictograme pentru orice marcaje noi sincronizate de pe celelalte dispozitive ale tale? Acest lucru va expune descărcarea în rețeaua ta de fiecare dată când un marcaj este sincronizat.";
+
+/* Fetch Favicons Onboarding - Title */
+"fetch.favicons.onboarding.title" = "Descarci pictogramele lipsă?";
+
+/* Options - Fetch Favicons Description */
+"fetch.favicons.option.caption" = "Descarcă automat pictograme pentru marcajele tale sincronizate. Descărcările de pictograme sunt expuse în rețeaua ta.";
+
+/* Options - Fetch Favicons Title */
+"fetch.favicons.option.title" = "Descărcare automată a pictogramelor";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Mergi la Setări";
+
+/* No comment provided by engineer. */
+"Keep Development" = "Continuă dezvoltarea";
+
+/* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
+"manually.enter.code.instruction.attributed" = "Mergi la %1$@ și selectează %2$@ în aplicația DuckDuckGo pe un alt dispozitiv sincronizat și lipește codul aici pentru a sincroniza acest dispozitiv.";
+
+/* Manually Enter Code View - Title */
+"manually.enter.code.title" = "Completează manual codul";
+
+/* Manually Enter Code View - Validating Code Action */
+"manually.enter.code.validating.code.action" = "Se validează codul";
+
+/* Manually Enter Code View - Validating Code Failed Action */
+"manually.enter.code.validating.code.failed.action" = "Cod nevalid.";
+
+/* Standard Buttons - Next Button */
+"next.button" = "Următorul";
+
+/* Standard Buttons - Not Now Button */
+"not.now.button" = "Nu acum";
+
+/* Options - Section Header */
+"options.section.header" = "Opțiuni";
+
+/* Section header for other syncing options */
+"other.options.section.header" = "Alte opțiuni";
+
+/* Standard Buttons - Paste Button */
+"paste.button" = "Lipește";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Gestionează marcajele";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Gestionează parolele…";
+
+/* Preparing To Sync Sheet - Description */
+"preparing.to.sync.sheet.description" = "Marcajele și parolele tale sunt pregătite pentru sincronizare. Acest lucru ar trebui să dureze doar un moment.";
+
+/* Preparing To Sync Sheet - Footer */
+"preparing.to.sync.sheet.footer" = "Se conectează…";
+
+/* Preparing To Sync Sheet - Title */
+"preparing.to.sync.sheet.title" = "Se configurează sincronizarea și backupul";
+
+/* Link label for recovering synced data */
+"recover.synced.data.link" = "Recuperează datele sincronizate";
+
+/* Recover Synced Data Sheet - Button */
+"recover.synced.data.sheet.button" = "Să începem";
+
+/* Recover Synced Data Sheet - Description */
+"recover.synced.data.sheet.description" = "Pentru a restabili datele sincronizate, vei avea nevoie de codul de recuperare pe care l-ai salvat atunci când ai configurat prima dată Sincronizarea. Este posibil ca acest cod să fi fost salvat ca PDF pe dispozitivul pe care l-ai folosit inițial pentru a configura Sincronizarea.";
+
+/* Recover Synced Data Sheet - Title */
+"recover.synced.data.sheet.title" = "Recuperează datele sincronizate";
+
+/* Remove Device View - Button */
+"remove.device.button" = "Elimină dispozitivul";
+
+/* Remove Device View - Message */
+"remove.device.message" = "„%@” nu va mai putea accesa datele tale sincronizate.";
+
+/* Remove Device View - Title */
+"remove.device.title" = "Elimini dispozitivul?";
+
+/* Save Recovery Code Sheet - Copy Code Toast */
+"save.recovery.code.code.copied.button" = "Codul de recuperare a fost copiat în clipboard";
+
+/* Save Recovery Code Sheet - Copy Code Button */
+"save.recovery.code.copy.code.button" = "Copiază codul";
+
+/* Save Recovery Code Sheet - Save as PDF Button */
+"save.recovery.code.save.as.pdf.button" = "Salvează ca PDF";
+
+/* Save Recovery Code Sheet - Description */
+"save.recovery.code.sheet.description" = "Dacă pierzi accesul la dispozitivele tale, vei avea nevoie de acest cod pentru a-ți recupera datele sincronizate.";
+
+/* Save Recovery Code Sheet - Footer */
+"save.recovery.code.sheet.footer" = "Oricine are acces la acest cod poate accesa datele sincronizate, așa că te rugăm să îl păstrezi într-un loc sigur.";
+
+/* Save Recovery Code Sheet - Title */
+"save.recovery.code.sheet.title" = "Salvează codul de recuperare";
+
+/* Save RecoveryPDF - Button */
+"save.recovery.pdf.button" = "Salvează PDF de recuperare";
+
+/* Save RecoveryPDF - Footer */
+"save.recovery.pdf.footer" = "Dacă îți pierzi dispozitivul, vei avea nevoie de acest cod de recuperare pentru a-ți restaura datele sincronizate.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Enter Code Link */
+"scan.code.to.recover.synced.data.enter.code.link" = "Completează manual codul text";
+
+/* Scan Or Enter Code To Recover Synced Data View - Explanation */
+"scan.code.to.recover.synced.data.explanation" = "Scanează codul QR de pe PDF-ul de recuperare sau de pe un alt dispozitiv sincronizat pentru a-ți recupera datele.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Footer */
+"scan.code.to.recover.synced.data.footer" = "Nu poți scana?";
+
+/* Scan Or Enter Code To Recover Synced Data View - Title */
+"scan.code.to.recover.synced.data.title" = "Recuperează datele sincronizate";
+
+/* Scan or See Code View - Footer */
+"scan.or.see.code.footer" = "Nu poți scana?";
+
+/* Scan or See Code View - Instruction */
+"scan.or.see.code.instruction" = "Accesează Setări > Sincronizare și backup din browserul DuckDuckGo de pe un alt dispozitiv și selectează „Sincronizează cu un alt dispozitiv”.";
+
+/* Scan or See Code View - Instruction with syncMenuPath */
+"scan.or.see.code.instruction.attributed" = "Accesează %@ în browserul DuckDuckGo pe un alt dispozitiv și selectează „Sincronizează cu un alt dispozitiv”.";
+
+/* Scan or See Code View - Manually Enter Code Link */
+"scan.or.see.code.manually.enter.code.link" = "Introdu manual codul";
+
+/* Scan or See Code View - Scan Code Instructions Body */
+"scan.or.see.code.scan.code.instructions.body" = "Scanează acest cod cu un alt dispozitiv pentru a sincroniza.";
+
+/* Scan or See Code View - Scan Code Instructions Title */
+"scan.or.see.code.scan.code.instructions.title" = "De la mobil la mobil?";
+
+/* Scan or See Code View - Share Code Link */
+"scan.or.see.code.share.code.link" = "Distribuie codul textului";
+
+/* Scan or See Code View - Title */
+"scan.or.see.code.title" = "Scanează codul QR";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Securizează-ți dispozitivul pentru a utiliza Sync & Backup";
+
+/* No comment provided by engineer. */
+"Switch to Production" = "Treci la producție";
+
+/* Link label for syncing and backing up the device */
+"sync.and.backup.this.device.link" = "Sincronizează și fă backup pentru acest dispozitiv";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Descarcă DuckDuckGo pe alte dispozitive";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Trimite linkul de descărcare";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Pentru a descărca DuckDuckGo pe desktop sau pe un alt dispozitiv mobil, vizitează:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Obține DuckDuckGo pe alte dispozitive pentru a le sincroniza cu acesta";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Obține DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Instalează browserul DuckDuckGo pe dispozitivele tale pentru a începe să îți sincronizezi în siguranță marcajele și parolele:";
+
+/* Sync Menu Path */
+"sync.menu.path" = "Setări > Sincronizare și backup > Sincronizează cu un alt dispozitiv";
+
+/* Sync & Backup Title */
+"sync.title" = "Sincronizare și copiere de rezervă";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Ne pare rău, dar Sincronizarea și copierea de rezervă nu este disponibilă momentan. Încearcă din nou mai târziu.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Ne pare rău, dar Sincronizarea și copierea de rezervă nu mai este disponibilă în această versiune de aplicație. Te rugăm să actualizezi DuckDuckGo la cea mai recentă versiune pentru a continua.";
+
+/* Title of the warning message */
+"sync.warning.sync.unavailable" = "Sincronizare și backup nu este disponibil";
+
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Sincronizează cu un alt dispozitiv";
+
+/* Footer message for syncing with another device */
+"sync.with.another.device.footer" = "Datele tale sunt criptate integral, iar DuckDuckGo nu are acces la cheia de criptare.";
+
+/* Message for syncing with another device */
+"sync.with.another.device.message" = "Sincronizează în siguranță marcajele și parolele între dispozitivele tale.";
+
+/* Title for syncing with another device */
+"sync.with.another.device.title" = "Începe sincronizarea";
+
+/* Synced Devices - Section Header */
+"synced.devices.section.header" = "Dispozitive sincronizate";
+
+/* Synced Devices - Sync with Another Device Label */
+"synced.devices.sync.with.another.device.label" = "Sincronizează cu un alt dispozitiv";
+
+/* Synced Devices - This Device Label */
+"synced.devices.this.device.label" = "Acest dispozitiv";
+
+/* Turn Sync Off - Button */
+"turn.sync.off" = "Oprește sincronizarea și backupul...";
+
+/* Turn Sync Off - Section Header */
+"turn.sync.off.section.header" = "Sincronizare activată";
+
+/* Options - Unify Favorites Instruction */
+"unified.favorites.instruction" = "Utilizează aceleași marcaje favorite pe toate dispozitivele tale. Lasă dezactivat pentru a păstra favoritele pentru mobil și desktop separate.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Unifică favoritele pe toate dispozitivele";
+
+/* View Text Code menu item */
+"view.text.code.menu.item" = "Vezi codul text";
+
+/* No comment provided by engineer. */
+"You're using Sync Development environment" = "Utilizează mediul de dezvoltare a sincronizării";
+

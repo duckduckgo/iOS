@@ -26,9 +26,8 @@ struct DeepLinks {
     static let newEmail = AppDeepLinkSchemes.newEmail.url
     static let fireButton = AppDeepLinkSchemes.fireButton.url
     static let favorites = AppDeepLinkSchemes.favorites.url
-
     static let addFavorite = AppDeepLinkSchemes.addFavorite.url
-
     static let openVPN = AppDeepLinkSchemes.openVPN.url
     static let openPasswords = AppDeepLinkSchemes.openPasswords.url
+    static let openAIChat = AppDeepLinkSchemes.openAIChat.url
 }

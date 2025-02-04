@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Check out the code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -27,7 +27,7 @@ jobs:
 
     - name: Cache SPM
       if: env.cache_key_hash
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: DerivedData/SourcePackages
         key: ${{ runner.os }}-spm-${{ env.cache_key_hash }}
@@ -43,7 +43,7 @@ jobs:
     - name: Build and test
       run: |
         set -o pipefail && xcodebuild test \
-          -scheme "AtbUITests" \
+          -scheme "iOS ATB UI Tests" \
           -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
@@ -73,7 +73,7 @@ jobs:
 
     steps:
     - name: Check out the code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -86,7 +86,7 @@ jobs:
     - name: Build and test
       run: |
         set -o pipefail && xcodebuild test \
-          -scheme "FingerprintingUITests" \
+          -scheme "iOS Fingerprinting UI Tests" \
           -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \

@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Check out the code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -28,7 +28,7 @@ jobs:
 
     - name: Cache SPM
       if: env.cache_key_hash
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: DerivedData/SourcePackages
         key: ${{ runner.os }}-spm-${{ env.cache_key_hash }}
@@ -41,7 +41,7 @@ jobs:
     - name: Build for tests
       run: |
         set -o pipefail && xcodebuild \
-          -scheme "DuckDuckGo" \
+          -scheme "iOS Browser" \
           -destination "platform=iOS Simulator,name=iPhone 16" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
@@ -78,7 +78,7 @@ jobs:
 
     steps:
     - name: Check out the code
-      uses: actions/checkout@v3 # Don't need submodules here as this is only for the tests folder
+      uses: actions/checkout@v4 # Don't need submodules here as this is only for the tests folder
 
     - name: Create test account for Sync and return the recovery code
       uses: duckduckgo/sync_crypto/action@main

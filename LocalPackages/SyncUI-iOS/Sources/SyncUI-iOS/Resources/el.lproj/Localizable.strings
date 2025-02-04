@@ -1,0 +1,297 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Απαιτείται κωδικός πρόσβασης συσκευής για χρήση του Sync & Backup.";
+
+/* Standard Buttons - Back Button */
+"back.button" = "Πίσω";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Ορισμένοι σελιδοδείκτες δεν συγχρονίζονται λόγω υπερβολικά μεγάλου περιεχομένου σε ορισμένα πεδία.";
+
+/* Camera View - Go to Settings Button */
+"camera.go.to.settings.button" = "Μεταβείτε στις Ρυθμίσεις";
+
+/* Camera View - Unavailable Title */
+"camera.is.unavailable.title" = "Η κάμερα δεν είναι διαθέσιμη";
+
+/* Camera View - Permission Instructions */
+"camera.permission.instructions" = "Μεταβείτε στις ρυθμίσεις της συσκευής σας και παρέχετε σε αυτήν την εφαρμογή άδεια πρόσβασης στην κάμερά σας.";
+
+/* Camera View - Permission Required */
+"camera.permission.required" = "Απαιτείται άδεια κάμερας";
+
+/* Camera View - Point Camera Indication */
+"camera.point.camera.indication" = "Στρέψτε την κάμερα στον κωδικό QR για συγχρονισμό";
+
+/* No comment provided by engineer. */
+"Cancel" = "Ακύρωση";
+
+/* Standard Buttons - Cancel Button */
+"cancel.button" = "Ακύρωση";
+
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Ενεργοποίηση συγχρονισμού και δημιουργίας αντιγράφων ασφαλείας";
+
+/* Connect With Server Sheet - Description Part 1 */
+"connect.with.server.sheet.description.part1" = "Αυτό δημιουργεί ένα κρυπτογραφημένο αντίγραφο ασφάλειας των σελιδοδεικτών και των κωδικών πρόσβασής σας στον ασφαλή διακομιστή του DuckDuckGo, το οποίο μπορεί να συγχρονιστεί με τις άλλες συσκευές σας.";
+
+/* Connect With Server Sheet - Description Part 2 */
+"connect.with.server.sheet.description.part2" = "Το κλειδί κρυπτογράφησης αποθηκεύεται μόνο στη συσκευή σας. Δεν μπορεί να έχει πρόσβαση σε αυτό το DuckDuckGo.";
+
+/* Connect With Server Sheet - Footer */
+"connect.with.server.sheet.footer" = "Μπορείτε να προβείτε σε συγχρονισμό με τις άλλες συσκευές σας αργότερα.";
+
+/* Connect With Server Sheet - Title */
+"connect.with.server.sheet.title" = "Συγχρονισμός και δημιουργία αντιγράφων ασφάλειας αυτής της συσκευής";
+
+/* Standard Buttons - Copy Button */
+"copy.button" = "Αντιγραφή";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Ορισμένες συνδέσεις δεν συγχρονίζονται λόγω υπερβολικά μεγάλου περιεχομένου σε ορισμένα πεδία.";
+
+/* Delete Server Data - Button */
+"delete.server.data" = "Απενεργοποίηση και διαγραφή δεδομένων διακομιστή...";
+
+/* No comment provided by engineer. */
+"Dev environment" = "Περιβάλλον ανάπτυξης";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Αποκτήστε το DuckDuckGo σε άλλες συσκευές";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Τα δεδομένα σας είναι συγχρονισμένα!";
+
+/* Standard Buttons - Done Button */
+"done.button" = "Ολοκληρώθηκε";
+
+/* Edit Device View - Header */
+"edit.device.header" = "Όνομα συσκευής";
+
+/* Edit Device View - Title */
+"edit.device.title" = "Επεξεργασία %@";
+
+/* Fetch Favicons Onboarding - Button Title */
+"fetch.favicons.onboarding.button.title" = "Διατηρήστε ενημερωμένα τα εικονίδια σελιδοδεικτών";
+
+/* Fetch Favicons Onboarding - Message */
+"fetch.favicons.onboarding.message" = "Θέλετε η συσκευή αυτή να κάνει αυτόματα λήψη εικονιδίων για κάθε νέο σελιδοδείκτη που συγχρονίζεται από τις άλλες συσκευές σας; Αυτό θα αποκαλύπτει τη λήψη στο δίκτυό σας κάθε φορά που συγχρονίζεται ένας σελιδοδείκτης.";
+
+/* Fetch Favicons Onboarding - Title */
+"fetch.favicons.onboarding.title" = "Λήψη των εικονιδίων που λείπουν;";
+
+/* Options - Fetch Favicons Description */
+"fetch.favicons.option.caption" = "Αυτόματη λήψη εικονιδίων για τους συγχρονισμένους σελιδοδείκτες σας. Οι λήψεις εικονιδίων αποκαλύπτονται στο δίκτυό σας.";
+
+/* Options - Fetch Favicons Title */
+"fetch.favicons.option.title" = "Αυτόματη λήψη εικονιδίων";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Μεταβείτε στις Ρυθμίσεις";
+
+/* No comment provided by engineer. */
+"Keep Development" = "Συνεχίστε την ανάπτυξη";
+
+/* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
+"manually.enter.code.instruction.attributed" = "Μεταβείτε στη %1$@ και επιλέξτε %2$@ στην εφαρμογή DuckDuckGo σε μια άλλη συγχρονισμένη συσκευή και επικολλήστε τον κωδικό εδώ για να συγχρονίσετε αυτήν τη συσκευή.";
+
+/* Manually Enter Code View - Title */
+"manually.enter.code.title" = "Μη αυτόματη εισαγωγή κωδικού";
+
+/* Manually Enter Code View - Validating Code Action */
+"manually.enter.code.validating.code.action" = "Επικύρωση κώδικα";
+
+/* Manually Enter Code View - Validating Code Failed Action */
+"manually.enter.code.validating.code.failed.action" = "Μη έγκυρος κωδικός.";
+
+/* Standard Buttons - Next Button */
+"next.button" = "Επόμενο";
+
+/* Standard Buttons - Not Now Button */
+"not.now.button" = "Όχι τώρα";
+
+/* Options - Section Header */
+"options.section.header" = "Επιλογές";
+
+/* Section header for other syncing options */
+"other.options.section.header" = "Άλλες επιλογές";
+
+/* Standard Buttons - Paste Button */
+"paste.button" = "Επικόλληση";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Διαχείριση σελιδοδεικτών";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Διαχείριση κωδικών πρόσβασης…";
+
+/* Preparing To Sync Sheet - Description */
+"preparing.to.sync.sheet.description" = "Οι σελιδοδείκτες και οι κωδικοί πρόσβασής σας προετοιμάζονται για συγχρονισμό. Αυτό θα πρέπει να διαρκέσει ελάχιστο χρόνο.";
+
+/* Preparing To Sync Sheet - Footer */
+"preparing.to.sync.sheet.footer" = "Σύνδεση...";
+
+/* Preparing To Sync Sheet - Title */
+"preparing.to.sync.sheet.title" = "Ρύθμιση συγχρονισμού και δημιουργίας αντιγράφων ασφάλειας";
+
+/* Link label for recovering synced data */
+"recover.synced.data.link" = "Ανάκτηση συγχρονισμένων δεδομένων";
+
+/* Recover Synced Data Sheet - Button */
+"recover.synced.data.sheet.button" = "Ξεκινήστε";
+
+/* Recover Synced Data Sheet - Description */
+"recover.synced.data.sheet.description" = "Για να κάνετε επαναφορά των συγχρονισμένων δεδομένων σας, θα χρειαστείτε τον Κωδικό ανάκτησης που αποθηκεύσατε κατά την πρώτη ρύθμιση του Συγχρονισμού. Αυτός ο κωδικός ενδέχεται να έχει αποθηκευτεί ως PDF στη συσκευή που χρησιμοποιήσατε αρχικά για ρύθμιση του Συγχρονισμού.";
+
+/* Recover Synced Data Sheet - Title */
+"recover.synced.data.sheet.title" = "Ανάκτηση συγχρονισμένων δεδομένων";
+
+/* Remove Device View - Button */
+"remove.device.button" = "Αφαίρεση συσκευής";
+
+/* Remove Device View - Message */
+"remove.device.message" = "Το «%@» δεν θα μπορεί πλέον να έχει πρόσβαση στα συγχρονισμένα δεδομένα σας.";
+
+/* Remove Device View - Title */
+"remove.device.title" = "Αφαίρεση συσκευής;";
+
+/* Save Recovery Code Sheet - Copy Code Toast */
+"save.recovery.code.code.copied.button" = "Ο κωδικός ανάκτησης αντιγράφηκε στο πρόχειρο";
+
+/* Save Recovery Code Sheet - Copy Code Button */
+"save.recovery.code.copy.code.button" = "Αντιγραφή κωδικού";
+
+/* Save Recovery Code Sheet - Save as PDF Button */
+"save.recovery.code.save.as.pdf.button" = "Αποθήκευση ως PDF";
+
+/* Save Recovery Code Sheet - Description */
+"save.recovery.code.sheet.description" = "Σε περίπτωση που χάσετε την πρόσβαση στις συσκευές σας, θα χρειαστείτε αυτόν τον κωδικό για να ανακτήσετε τα συγχρονισμένα δεδομένα σας.";
+
+/* Save Recovery Code Sheet - Footer */
+"save.recovery.code.sheet.footer" = "Οποιοσδήποτε με πρόσβαση σε αυτόν τον κωδικό μπορεί να έχει πρόσβαση στα συγχρονισμένα δεδομένα σας. Γι' αυτό φυλάξτε τον σε ασφαλές μέρος.";
+
+/* Save Recovery Code Sheet - Title */
+"save.recovery.code.sheet.title" = "Αποθήκευση κωδικού ανάκτησης";
+
+/* Save RecoveryPDF - Button */
+"save.recovery.pdf.button" = "Αποθήκευση ανάκτησης PDF";
+
+/* Save RecoveryPDF - Footer */
+"save.recovery.pdf.footer" = "Εάν χάσετε τη συσκευή σας, θα χρειαστείτε αυτόν τον κωδικό ανάκτησης για να κάνετε επαναφορά των συγχρονισμένων δεδομένων σας.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Enter Code Link */
+"scan.code.to.recover.synced.data.enter.code.link" = "Εισαγάγετε τον Κωδικό κειμένου μη αυτόματα";
+
+/* Scan Or Enter Code To Recover Synced Data View - Explanation */
+"scan.code.to.recover.synced.data.explanation" = "Σαρώστε τον κωδικό QR στο PDF ανάκτησης ή σε άλλη συγχρονισμένη συσκευή για ανάκτηση των δεδομένων σας.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Footer */
+"scan.code.to.recover.synced.data.footer" = "Δεν μπορείτε να πραγματοποιήσετε σάρωση;";
+
+/* Scan Or Enter Code To Recover Synced Data View - Title */
+"scan.code.to.recover.synced.data.title" = "Ανάκτηση συγχρονισμένων δεδομένων";
+
+/* Scan or See Code View - Footer */
+"scan.or.see.code.footer" = "Δεν μπορείτε να πραγματοποιήσετε σάρωση;";
+
+/* Scan or See Code View - Instruction */
+"scan.or.see.code.instruction" = "Μεταβείτε στην ενότητα Ρυθμίσεις › Συγχρονισμός και δημιουργία αντιγράφων ασφάλειας στο πρόγραμμα περιήγησης DuckDuckGo σε άλλη συσκευή και επιλέξτε «Συγχρονισμός με άλλη συσκευή».";
+
+/* Scan or See Code View - Instruction with syncMenuPath */
+"scan.or.see.code.instruction.attributed" = "Μεταβείτε στη %@ στο πρόγραμμα περιήγησης DuckDuckGo σε μια άλλη συσκευή και επιλέξτε «Συγχρονισμός με άλλη συσκευή».";
+
+/* Scan or See Code View - Manually Enter Code Link */
+"scan.or.see.code.manually.enter.code.link" = "Μη αυτόματη εισαγωγή κωδικού";
+
+/* Scan or See Code View - Scan Code Instructions Body */
+"scan.or.see.code.scan.code.instructions.body" = "Σαρώστε αυτόν τον κωδικό με άλλη συσκευή για συγχρονισμό.";
+
+/* Scan or See Code View - Scan Code Instructions Title */
+"scan.or.see.code.scan.code.instructions.title" = "Από κινητό σε κινητό;";
+
+/* Scan or See Code View - Share Code Link */
+"scan.or.see.code.share.code.link" = "Κοινοποίηση κωδικού κειμένου";
+
+/* Scan or See Code View - Title */
+"scan.or.see.code.title" = "Σάρωση κώδικα QR";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Ασφαλίστε τη συσκευή σας για να χρησιμοποιείτε τη λειτουργία Sync & Backup";
+
+/* No comment provided by engineer. */
+"Switch to Production" = "Μετάβαση στην παραγωγή";
+
+/* Link label for syncing and backing up the device */
+"sync.and.backup.this.device.link" = "Συγχρονισμός και δημιουργία αντιγράφων ασφάλειας αυτής της συσκευής";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Αποκτήστε το DuckDuckGo σε άλλες συσκευές";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Κοινή χρήση συνδέσμου λήψης";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Για λήψη του DuckDuckGo σε υπολογιστή ή άλλη φορητή συσκευή, επισκεφθείτε τη διεύθυνση:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Αποκτήστε το DuckDuckGo σε άλλες συσκευές για συγχρονισμό μεταξύ τους";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Αποκτήστε το DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Εγκαταστήστε το πρόγραμμα περιήγησης DuckDuckGo στις συσκευές σας για να αρχίσετε να συγχρονίζετε με ασφάλεια τους σελιδοδείκτες και τους κωδικούς πρόσβασής σας:";
+
+/* Sync Menu Path */
+"sync.menu.path" = "Ρυθμίσεις > Συγχρονισμός και δημιουργία αντιγράφων ασφάλειας > Συγχρονισμός με άλλη συσκευή";
+
+/* Sync & Backup Title */
+"sync.title" = "Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Δυστυχώς, η λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας δεν είναι διαθέσιμη προς το παρόν. Ξαναδοκιμάστε αργότερα.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Δυστυχώς, η λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας δεν είναι διαθέσιμη πλέον σε αυτήν την έκδοση της εφαρμογής. Ενημερώστε το DuckDuckGo στην πιο πρόσφατη έκδοση για να συνεχίσετε.";
+
+/* Title of the warning message */
+"sync.warning.sync.unavailable" = "Ο συγχρονισμός και η δημιουργία αντιγράφων ασφάλειας δεν είναι διαθέσιμος";
+
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Συγχρονισμός με άλλη συσκευή";
+
+/* Footer message for syncing with another device */
+"sync.with.another.device.footer" = "Τα δεδομένα σας είναι κρυπτογραφημένα από άκρο σε άκρο και το DuckDuckGo δεν έχει πρόσβαση στο κλειδί κρυπτογράφησης.";
+
+/* Message for syncing with another device */
+"sync.with.another.device.message" = "Συγχρονίστε με ασφάλεια σελιδοδείκτες και κωδικούς πρόσβασης μεταξύ των συσκευών σας.";
+
+/* Title for syncing with another device */
+"sync.with.another.device.title" = "Έναρξη συγχρονισμού";
+
+/* Synced Devices - Section Header */
+"synced.devices.section.header" = "Συγχρονισμένες συσκευές";
+
+/* Synced Devices - Sync with Another Device Label */
+"synced.devices.sync.with.another.device.label" = "Συγχρονισμός με άλλη συσκευή";
+
+/* Synced Devices - This Device Label */
+"synced.devices.this.device.label" = "Αυτή η συσκευή";
+
+/* Turn Sync Off - Button */
+"turn.sync.off" = "Απενεργοποίηση Συγχρονισμού και δημιουργίας αντιγράφων ασφάλειας...";
+
+/* Turn Sync Off - Section Header */
+"turn.sync.off.section.header" = "Ο συγχρονισμός ενεργοποιήθηκε";
+
+/* Options - Unify Favorites Instruction */
+"unified.favorites.instruction" = "Χρησιμοποιήστε τους ίδιους αγαπημένους σελιδοδείκτες σε όλες τις συσκευές σας. Διακόψτε τη διαδικασία για να διατηρήσετε τα Αγαπημένα σας για κινητά και υπολογιστές ξεχωριστά.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Ενοποίηση αγαπημένων σε όλες τις συσκευές";
+
+/* View Text Code menu item */
+"view.text.code.menu.item" = "Προβολή κωδικού κειμένου";
+
+/* No comment provided by engineer. */
+"You're using Sync Development environment" = "Χρησιμοποιείτε περιβάλλον Ανάπτυξης συγχρονισμού";
+

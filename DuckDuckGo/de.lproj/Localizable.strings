@@ -58,6 +58,9 @@
 /* Downloads menu item opening the downlods list */
 "action.title.downloads" = "Downloads";
 
+/* Open AI Chat action in the menu list */
+"action.title.duckai" = "KI-Chat";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Lesezeichen bearbeiten";
 
@@ -85,8 +88,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Einfügen & los";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Drucken";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Drucken";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Aktualisieren";
@@ -288,18 +294,6 @@
 
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Wenn DuckDuckGo Pop-ups zur Cookie-Zustimmung auf den von dir besuchten Websites erkennt, können wir deine Cookie-Einstellungen automatisch so festlegen, dass Cookies minimiert werden und der Datenschutz maximiert wird, und dann die Pop-ups schließen. Einige Websites bieten keine Option zur Verwaltung von Cookie-Einstellungen, sodass wir Pop-ups wie diese nur ausblenden können.";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
 
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Einstellungen öffnen";
@@ -538,11 +532,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Keine Ergebnisse";
 
-/* Do not translate - stringsdict entry */
-"autofill.number.of.passwords" = "autofill.number.of.passwords";
-
 /* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Passwörter werden verschlüsselt, auf dem Gerät gespeichert und mit %@ gesperrt.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -701,9 +692,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Löschen";
 
-/* Do not translate - stringsdict entry */
-"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "%@ löschen?";
 
@@ -782,14 +770,8 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Dein Bericht hilft, DuckDuckGo für alle zu verbessern!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "Nein";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Wurde das Problem auf dieser Website durch das Deaktivieren des Datenschutzes behoben?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Ja";
+/* No comment provided by engineer. */
+"Confirm" = "Bestätigen";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Überspringen";
@@ -815,23 +797,14 @@
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Es ist ganz einfach, mich zu deinem Dock hinzuzufügen.";
 
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
-
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "*%1$@* hat versucht, dich hier zu tracken. Ich hab die Domain blockiert!\n\n☝️ Tippe auf das Schild, um mehr Informationen zu erhalten.";
 
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "Schlag ein!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Hinweis: Jedes Mal, wenn du mit mir browst, verliert eine gruselige Anzeige ihren Schrecken. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "Gut gemacht!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Das ist DuckDuckGo Search. Privat. Schnell. Weniger Werbung.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Verstanden.";
@@ -850,9 +823,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Versuche, eine Website zu besuchen!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Deine DuckDuckGo-Suchanfragen sind immer anonym.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Bereit anzufangen?\nProbiere eine Suche aus!";
@@ -878,8 +848,8 @@
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "Besetzung von Avatar";
 
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "Lokales Wetter";
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Überrasche mich!";
 
 /* Fourth paragraph of the Control Center VPN Widget Education screen */
 "control.center.vpn.widget.education.paragraph" = "Finde **DuckDuckGo** in der Liste und tippe dann auf **VPN-Steuerung**, um es hinzuzufügen";
@@ -940,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "Schlag ein!";
@@ -1070,6 +1037,9 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
 
+/* No comment provided by engineer. */
+"Duck Player" = "Duck Player";
+
 /* Title for message explaining to the user that Duck Player is not available */
 "duck-player.contingency-title" = "Duck Player nicht verfügbar";
 
@@ -1083,7 +1053,7 @@
 "duckai.preferences.text.markdown" = "Duck.ai ist eine optionale Funktion, mit der du anonym mit beliebten KI-Chatmodellen von Drittanbietern chatten kannst. Deine Chats werden nicht dazu verwendet, die KI zu trainieren.\n[Mehr erfahren](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-toggle" = "Duck.ai während der Suche anzeigen";
+"duckai.settings.enable.address-bar-searching-toggle" = "Duck.ai auf der Suchseite anzeigen";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Duck.ai im Browser-Menü anzeigen";
@@ -1109,10 +1079,12 @@
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Verstanden.";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Ertrinkst du in Werbung auf YouTube? Teste Duck Player!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "Ertrinkst du in Werbung auf YouTube? Nicht mit Duck Player!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1658,6 +1630,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing-Optionen";
 
+/* No comment provided by engineer. */
+"Message policy hostname" = "Hostname der Nachrichtenrichtlinie";
+
 /* Title for back button in navigation bar */
 "navbar.back-button.title" = "Zurück";
 
@@ -1934,9 +1909,6 @@
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "Öffne auf einer beliebigen Site das Menü ••• und wähle **Favorit hinzufügen**, um sie zu deiner neuen Tab-Seite hinzuzufügen.";
 
-/* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Cookies verwaltet";
 
@@ -1949,23 +1921,8 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Wähle deinen Browser";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Cookie-Pop-ups blockieren";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Aufdringliche Werbung blockieren";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Browserdaten schnell löschen";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Standardmäßig privat suchen";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Blockiert Tracker von Drittanbietern";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Datenschutz aktiviert!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Leicht erreichbar";
@@ -2020,9 +1977,6 @@
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Los geht's!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Hallo.\n\nBereit für ein besseres, privateres Internet?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget hinzufügen";
@@ -2139,9 +2093,9 @@
 "prefrences.sync.credentials-limit-exceeded-description" = "Du hast die maximale Anzahl von Passwörtern erreicht. Lösche einige, um die Synchronisierung fortzusetzen.";
 
 /* Description invalid credentials error when syncing.
-   Description of incorrectly formatted data error when syncing.
-   Description of too many requests error when syncing. */
-"prefrences.sync.invalid-login-description" = "Bei der Synchronisierung ist ein Fehler aufgetreten. Versuche, die Synchronisierung auf diesem Gerät zu deaktivieren, und stelle dann die Verbindung mit einem anderen Gerät oder deinem Wiederherstellungscode wieder her.";
+Description of incorrectly formatted data error when syncing.
+Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Einige Lesezeichen oder Passwörter sind falsch formatiert oder zu lang und wurden nicht synchronisiert.";
 
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Synchronisierung angehalten";
@@ -2207,6 +2161,9 @@
 "prompt.custom.url.scheme.title" = "In einer anderen App öffnen?";
 
 /* No comment provided by engineer. */
+"Reset" = "Zurücksetzen";
+
+/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Adresse suchen oder eingeben";
 
 /* No comment provided by engineer. */
@@ -2249,7 +2206,7 @@
 "settings.add.widget.vpn" = "Füge deinem Startbildschirm das DuckDuckGo VPN-Widget hinzu";
 
 /* Name of the settings subsection related to the address bar
-   Settings screen cell text for addess bar position */
+Settings screen cell text for addess bar position */
 "settings.address.bar" = "Adresszeile";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2307,7 +2264,7 @@
 "settings.data.clearing" = "Datenlöschung";
 
 /* Settings screen cell text for setting the app as default browser
-   The name of Settings category in Privacy Features related to configuration of the default browser */
+The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Standard-Browser";
 
 /* Label of a button disabling email protection */
@@ -2520,23 +2477,26 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Welche Website ist fehlerhaft?";
 
+/* No comment provided by engineer. */
+"Stored Hostname: %@" = "Gespeicherter Hostname: %@";
+
 /* Subscription Activation Info */
-"subscription.activate..header.description" = "Greife auf diesem Gerät über Apple ID oder eine E-Mail Adresse auf dein Privacy-Pro-Abonnement zu.";
+"subscription.activate..header.description" = "Greife auf diesem Gerät über dein Apple-Konto oder eine E-Mail-Adresse auf dein Privacy Pro-Abonnement zu.";
 
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "E-Mail-Adresse hinzufügen";
 
-/* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Apple-Konto";
 
-/* Button text for restoring purchase via Apple ID */
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Kauf wiederherstellen";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Stelle deinen Kauf wieder her, um dein Abonnement auf diesem Gerät zu aktivieren.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Dein Abonnement ist automatisch in DuckDuckGo auf jedem Gerät verfügbar, das bei deinem Apple ID-Konto angemeldet ist.";
+"subscription.activate.description" = "Dein Abonnement ist automatisch in DuckDuckGo auf jedem Gerät verfügbar, das bei deinem Apple-Konto angemeldet ist.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "E-Mail bearbeiten";
@@ -2578,7 +2538,7 @@
 "subscription.add.email.title" = "E-Mail-Adresse hinzufügen";
 
 /* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro ist auf jedem Gerät verfügbar, das mit derselben Apple-ID angemeldet ist.";
+"subscription.available.apple" = "Privacy Pro ist auf jedem Gerät verfügbar, das mit demselben Apple-Konto angemeldet ist.";
 
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Dein Abonnement wurde über den Google Play Store erworben. Um dein Abonnement zu verlängern, öffne bitte die Abonnementeinstellungen im Google Play Store auf einem Gerät, das mit demselben Google-Konto angemeldet ist, mit dem du dein Abonnement ursprünglich gekauft hast.";
@@ -2614,7 +2574,7 @@
 "subscription.email.inactive.alert.title" = "Abonnement nicht gefunden";
 
 /* Alert content for not found subscription */
-"subscription.expired.alert.message" = "Das mit dieser Apple ID verknüpfte Abonnement ist nicht mehr aktiv.";
+"subscription.expired.alert.message" = "Das mit diesem Apple-Konto verknüpfte Abonnement ist nicht mehr aktiv.";
 
 /* FAQ Button */
 "subscription.faq" = "F&A und Support";
@@ -2632,7 +2592,7 @@
 "subscription.found.restore" = "Wiederherstellen";
 
 /* Message for the existing subscription dialog */
-"subscription.found.text" = "Wir haben ein Abonnement gefunden, das mit dieser Apple ID verknüpft ist.";
+"subscription.found.text" = "Wir haben ein Abonnement gefunden, das mit diesem Apple-Konto verknüpft ist.";
 
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonnement gefunden";
@@ -2647,7 +2607,7 @@
 "subscription.manage.title" = "Abonnement";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "Mit dieser Apple-ID ist kein Abonnement verknüpft.";
+"subscription.notFound.alert.message" = "Mit diesem Apple-Konto ist kein Abonnement verknüpft.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonnement nicht gefunden";

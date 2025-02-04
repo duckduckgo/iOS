@@ -24,6 +24,7 @@ import TrackerRadarKit
 import UserScript
 import WebKit
 import SpecialErrorPages
+import AIChat
 
 final class UserScripts: UserScriptsProvider {
 

@@ -194,11 +194,11 @@ class MainViewController: UIViewController {
         return manager
     }()
 
-    private var omnibarAccessoryHandler: OmnibarAccessoryHandler = {
+    private lazy var omnibarAccessoryHandler: OmnibarAccessoryHandler = {
         let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
 
-        return OmnibarAccessoryHandler(settings: settings)
+        return OmnibarAccessoryHandler(settings: settings, featureFlagger: featureFlagger)
     }()
 
     init(
@@ -1134,6 +1134,7 @@ class MainViewController: UIViewController {
 
     private func refreshOmniBar() {
         updateOmniBarLoadingState()
+        viewCoordinator.omniBar.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: currentTab?.url)
 
         guard let tab = currentTab, tab.link != nil else {
             viewCoordinator.omniBar.stopBrowsing()
@@ -1149,8 +1150,6 @@ class MainViewController: UIViewController {
         } else {
             viewCoordinator.omniBar.resetPrivacyIcon(for: tab.url)
         }
-
-        viewCoordinator.omniBar.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: tab.url)
 
         viewCoordinator.omniBar.startBrowsing()
     }

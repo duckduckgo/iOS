@@ -1949,7 +1949,10 @@ extension MainViewController: OmniBarDelegate {
 
         let menuEntries: [BrowsingMenuEntry]
         let headerEntries: [BrowsingMenuEntry]
-        if homeTabManager.isNewTabPageSectionsEnabled && newTabPageViewController != nil {
+
+        let isNewTabPageEnabled = homeTabManager.isNewTabPageSectionsEnabled || featureFlagger.isFeatureOn(.aiChatNewTabPage)
+
+        if isNewTabPageEnabled && newTabPageViewController != nil {
             menuEntries = tab.buildShortcutsMenu()
             headerEntries = []
         } else {

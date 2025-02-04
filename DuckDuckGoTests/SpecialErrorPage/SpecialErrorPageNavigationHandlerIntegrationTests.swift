@@ -357,7 +357,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             #expect(sut.isSpecialErrorPageRequest)
             #expect(sut.isSpecialErrorPageVisible)
             let html = try #require(expectedHTML)
-            #expect(html.contains("Warning: This site may put your personal information at risk"))
+            #expect(html.contains("Warning: This site may be a{newline}security risk"))
             #expect(html.contains("This website may be impersonating a legitimate site in order to trick you into providing personal information, such as passwords or credit card numbers."))
         }
     }

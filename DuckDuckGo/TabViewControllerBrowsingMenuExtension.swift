@@ -150,11 +150,13 @@ extension TabViewController {
                 self?.onNewTabAction()
             }))
 
-            entries.append(BrowsingMenuEntry.regular(name: UserText.actionAIChatNew,
-                                                     image: UIImage(named: "AIChat-16")!,
-                                                     action: { [weak self] in
-                self?.openAIChat()
-            }))
+            if featureFlagger.isFeatureOn(.aiChat) {
+                entries.append(BrowsingMenuEntry.regular(name: UserText.actionAIChatNew,
+                                                         image: UIImage(named: "AIChat-16")!,
+                                                         action: { [weak self] in
+                    self?.openAIChat()
+                }))
+            }
 
             if !includeBookmarks {
                 entries.append(.separator)

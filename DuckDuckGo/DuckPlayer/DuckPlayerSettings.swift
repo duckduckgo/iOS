@@ -191,12 +191,12 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     
     // Determines if we should use the native verion of DuckPlayer (Internal only)
     var nativeUI: Bool {
-        return appSettings.duckPlayerNativeUI && internalUserDecider.isInternalUser
+        return appSettings.duckPlayerNativeUI && internalUserDecider.isInternalUser && UIDevice.current.userInterfaceIdiom == .phone
     }
     
     // Determines if we should use the native verion of DuckPlayer (Internal only)
     var autoplay: Bool {
-        return appSettings.duckPlayerAutoplay && internalUserDecider.isInternalUser
+        return appSettings.duckPlayerAutoplay && internalUserDecider.isInternalUser && UIDevice.current.userInterfaceIdiom == .phone
     }
     
     /// Registers a publisher to listen for changes in the privacy configuration.

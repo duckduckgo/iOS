@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import BrowserServicesKit
 
 enum UniversalOmniBarState {
     struct EditingSuspendedState: OmniBarState {
@@ -53,14 +54,15 @@ enum UniversalOmniBarState {
         var onReloadState: any OmniBarState { baseState.onReloadState }
 
         let voiceSearchHelper: VoiceSearchHelperProtocol
+        let featureFlagger: FeatureFlagger
         let isLoading: Bool
 
         func withLoading() -> UniversalOmniBarState.EditingSuspendedState {
-            Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, isLoading: true)
+            Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: true)
         }
 
         func withoutLoading() -> UniversalOmniBarState.EditingSuspendedState {
-            Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, isLoading: false)
+            Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: false)
         }
     }
 }

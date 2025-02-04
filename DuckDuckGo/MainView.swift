@@ -77,7 +77,7 @@ extension MainViewFactory {
     }
 
     private func createOmniBar() {
-        coordinator.omniBar = OmniBar.loadFromXib(voiceSearchHelper: voiceSearchHelper)
+        coordinator.omniBar = OmniBar.loadFromXib(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
         coordinator.omniBar.translatesAutoresizingMaskIntoConstraints = false
     }
     

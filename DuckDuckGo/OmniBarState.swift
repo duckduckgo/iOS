@@ -19,7 +19,7 @@
 
 import Foundation
 import Core
-
+import BrowserServicesKit
 protocol OmniBarState: CustomStringConvertible {
 
     var name: String { get }
@@ -55,7 +55,7 @@ protocol OmniBarState: CustomStringConvertible {
     var onReloadState: OmniBarState { get }
 
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
-
+    var featureFlagger: FeatureFlagger { get }
     var isLoading: Bool { get }
 
     func withLoading() -> Self
@@ -84,20 +84,21 @@ extension OmniBarState {
     var onEditingSuspendedState: OmniBarState {
         UniversalOmniBarState.EditingSuspendedState(baseState: onEditingStartedState,
                                                     voiceSearchHelper: voiceSearchHelper,
+                                                    featureFlagger: featureFlagger,
                                                     isLoading: isLoading)
     }
 }
 
 protocol OmniBarLoadingBearerStateCreating {
-    init(voiceSearchHelper: VoiceSearchHelperProtocol, isLoading: Bool)
+    init(voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger, isLoading: Bool)
 }
 
 extension OmniBarLoadingBearerStateCreating where Self: OmniBarState {
     func withLoading() -> Self {
-        Self.init(voiceSearchHelper: voiceSearchHelper, isLoading: true)
+        Self.init(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: true)
     }
 
     func withoutLoading() -> Self {
-        Self.init(voiceSearchHelper: voiceSearchHelper, isLoading: false)
+        Self.init(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: false)
     }
 }

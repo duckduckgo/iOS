@@ -24,6 +24,7 @@ import PrivacyDashboard
 import DesignResourcesKit
 import DuckPlayer
 import os.log
+import BrowserServicesKit
 
 extension OmniBar: NibLoading {}
 
@@ -94,9 +95,9 @@ class OmniBar: UIView {
     // Set up a view to add a custom icon to the Omnibar
     private var customIconView: UIImageView = UIImageView(frame: CGRect(x: 4, y: 8, width: 26, height: 26))
 
-    static func loadFromXib(voiceSearchHelper: VoiceSearchHelperProtocol) -> OmniBar {
+    static func loadFromXib(voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger) -> OmniBar {
         let omniBar = OmniBar.load(nibName: "OmniBar")
-        omniBar.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: false)
+        omniBar.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: false)
         omniBar.refreshState(omniBar.state)
 
         return omniBar
@@ -107,8 +108,8 @@ class OmniBar: UIView {
     }
 
     // Tests require this
-    init(voiceSearchHelper: VoiceSearchHelperProtocol, frame: CGRect) {
-        self.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: false)
+    init(voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger, frame: CGRect) {
+        self.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: false)
         super.init(frame: frame)
     }
 

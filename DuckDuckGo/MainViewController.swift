@@ -404,6 +404,7 @@ class MainViewController: UIViewController {
                                                     tabPreviewsSource: previewsSource,
                                                     appSettings: appSettings,
                                                     voiceSearchHelper: voiceSearchHelper,
+                                                    featureFlagger: featureFlagger,
                                                     omnibarAccessoryHandler: omnibarAccessoryHandler) { [weak self] in
 
             guard $0 != self?.tabManager.model.currentIndex else { return }

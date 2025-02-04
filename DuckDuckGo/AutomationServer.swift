@@ -19,28 +19,15 @@
 import Foundation
 import Network
 
-/*
-// WebDriver BiDi automation server
-class AutomationServerBidi {
-    let listener: NWListener
-    let main: MainViewController
-    
-    init(main: MainViewController, port: Int?) {
-        self.main = main
-        listener = try! NWListener(using: .tcp, on: NWEndpoint.Port(integerLiteral: UInt16(port ?? 8786)))
-        listener.newConnectionHandler = handleConnection
-        // listener.start(queue: .global())
-        listener.start(queue: .main)
-    }
+extension Logger {
+    static var automationServer = { Logger(subsystem: Bundle.main.bundleIdentifier ?? "DuckDuckGo", category: "Automation Server") }()
 }
-*/
-
 
 struct Log: TextOutputStream {
 
     func write(_ string: String) {
         let fm = FileManager.default
-        let log = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
+        let log = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log-automation.txt")
         if let handle = try? FileHandle(forWritingTo: log) {
             handle.seekToEndOfFile()
             handle.write(string.data(using: .utf8)!)
@@ -54,16 +41,18 @@ struct Log: TextOutputStream {
 class AutomationServer {
     let listener: NWListener
     let main: MainViewController
-    var logger: Log
 
     init(main: MainViewController, port: Int?) {
-        self.logger = Log()
-
+        var port = port ?? 8786
         self.main = main
-        listener = try! NWListener(using: .tcp, on: NWEndpoint.Port(integerLiteral: UInt16(port ?? 8786)))
+        var log = Log()
+        print("Starting automation server on port \(port)", to: &log)
+        print("Bundle: \(Bundle.main.bundleIdentifier)", to: &log)
+        listener = try! NWListener(using: .tcp, on: NWEndpoint.Port(integerLiteral: UInt16(port)))
         listener.newConnectionHandler = handleConnection
-        // listener.start(queue: .global())
         listener.start(queue: .main)
+        // Output server started
+        Logger.automationServer.info("Automation server started on port \(port)")
     }
     
     @MainActor
@@ -76,28 +65,28 @@ class AutomationServer {
             case .ready:
                 break // Connection is valid, continue
             case .cancelled, .failed:
-                print("Connection is no longer valid \(connection.state) \(error) \(content).", to: &self.logger)
+                print("Connection is no longer valid \(connection.state) \(String(describing: error)) \(String(describing: content)).")
                 return
             default:
-                print("Connection is in state \(connection.state).", to: &self.logger)
+                print("Connection is in state \(connection.state).")
                 return
             }
-            print("Received request! \(content) \(isComplete) \(error)", to: &self.logger)
+            Logger.automationServer.info("Received request! \(String(describing: content)) \(isComplete) \(String(describing: error))")
             
             if let error {
-                print("Error: \(error)", to: &self.logger)
+                Logger.automationServer.error("Error: \(error)")
                 return
             }
             
             if let content {
-                print("Handling content", to: &self.logger)
+                Logger.automationServer.info("Handling content")
                 Task {
                     await self.processContentWhenReady(connection: connection, content: content)
                 }
             }
 
             if !isComplete {
-                print("Handling not complete", to: &self.logger)
+                Logger.automationServer.info("Handling not complete")
                 self.receive(from: connection)
             }
         }
@@ -112,17 +101,17 @@ class AutomationServer {
         }
 
         // Proceed when loading is complete
-        print("Handling content", to: &self.logger)
+        Logger.automationServer.info("Handling content")
         self.handleConnection(connection, content)
     }
     
     @MainActor
     func handleConnection(_ connection: NWConnection, _ content: Data) {
-        print("Handling request!", to: &self.logger)
+        Logger.automationServer.info("Handling request!")
         let stringContent = String(decoding: content, as: UTF8.self)
         // Log first line of string:
         if let firstLine = stringContent.components(separatedBy: CharacterSet.newlines).first {
-            print(firstLine, to: &self.logger)
+            Logger.automationServer.info("First line: \(firstLine)")
         }
         
         func getQueryStringParameter(url: String, param: String) -> String? {
@@ -134,7 +123,7 @@ class AutomationServer {
         if #available(iOS 16.0, *) {
             let path = /^(GET|POST) (\/[^ ]*) HTTP/
             if let match = stringContent.firstMatch(of: path) {
-                print("Path: \(match.2)", to: &logger)
+                Logger.automationServer.info("Path: \(match.2)")
                 // Convert the path into a URL object
                 guard let url = URL(string: String(match.2)) else {
                     print("Invalid URL: \(match.2)")
@@ -143,12 +132,11 @@ class AutomationServer {
                 if url.path == "/navigate" {
                     let navigateUrlString = getQueryStringParameter(url: String(match.2), param: "url") ?? ""
                     let navigateUrl = URL(string: navigateUrlString)!
-                    self.main.navigateTo(url: navigateUrl)
+                    self.main.loadUrl(navigateUrl)
                     self.respond(on: connection, response: "done")
                 } else if url.path == "/execute" {
                     let script = getQueryStringParameter(url: String(match.2), param: "script") ?? ""
                     var args: [String: String] = [:]
-                    print("Script: \(script)", to: &self.logger)
                     // json decode args
                     if let argsString = getQueryStringParameter(url: String(match.2), param: "args") {
                         if let argsData = argsString.data(using: .utf8) {
@@ -192,7 +180,7 @@ class AutomationServer {
                     self.respond(on: connection, response: "{\"success\":true}")
                 } else if url.path == "/switchToWindow" {
                     if let handleString = getQueryStringParameter(url: String(match.2), param: "handle") {
-                        print("Switch to window \(handleString)", to: &logger)
+                        Logger.automationServer.info("Switch to window \(handleString)")
                         let tabToSelect: TabViewController? = nil
                         if let tabIndex = self.main.tabManager.model.tabs.firstIndex(where: { tab in
                             guard let tabView = self.main.tabManager.controller(for: tab) else {
@@ -200,7 +188,7 @@ class AutomationServer {
                             }
                             return String(UInt(bitPattern: ObjectIdentifier(tabView))) == handleString
                         }) {
-                            print("found tab \(tabIndex)", to: &logger)
+                            Logger.automationServer.info("found tab \(tabIndex)")
                             self.main.tabManager.select(tabAt: tabIndex)
                             self.respond(on: connection, response: "{\"success\":true}")
                         } else {
@@ -243,9 +231,9 @@ class AutomationServer {
     }
 
     func executeScript(_ script: String, args: [String: Any], on connection: NWConnection) async {
-        print("Going to execute script: \(script)", to: &self.logger)
+        Logger.automationServer.info("Going to execute script: \(script)")
         var result = await main.executeScript(script, args: args)
-        print("Have result to execute script: \(result)", to: &self.logger)
+        Logger.automationServer.info("Have result to execute script: \(String(describing: result))")
         guard var result else {
             return
         }
@@ -259,9 +247,12 @@ class AutomationServer {
                 // Try to encode the value to JSON
                 let encoder = JSONEncoder()
                 encoder.outputFormatting = .prettyPrinted
+                Logger.automationServer.info("Have success value to execute script: \(String(describing: value))")
                 
                 // Serialize the value to JSON if possible
-                if JSONSerialization.isValidJSONObject(value) {
+                if value == nil {
+                    jsonString = "{}"
+                } else if JSONSerialization.isValidJSONObject(value) {
                     do {
                         let jsonData = try JSONSerialization.data(withJSONObject: value, options: [.prettyPrinted])
                         jsonString = String(data: jsonData, encoding: .utf8) ?? "{}"
@@ -269,6 +260,7 @@ class AutomationServer {
                         jsonString = "{\"error\": \"Failed to serialize value: \(error.localizedDescription)\"}"
                     }
                 } else {
+                    Logger.automationServer.info("Have value that can't be encoded: \(String(describing: value))")
                     jsonString = "{\"error\": \"Value is not a valid JSON object\"}"
                 }
                 
@@ -306,14 +298,14 @@ class AutomationServer {
                     content: response.data(using: .utf8),
                     completion: .contentProcessed({ error in
                         if let error = error {
-                            print("Error sending response: \(error)", to: &self.logger)
+                            Logger.automationServer.error("Error sending response: \(error)")
                         }
                         connection.cancel()
                     })
                 )
             }
         } catch {
-            print("Got error encoding JSON: \(error)", to: &logger)
+            Logger.automationServer.error("Got error encoding JSON: \(error)")
         }
     }
     

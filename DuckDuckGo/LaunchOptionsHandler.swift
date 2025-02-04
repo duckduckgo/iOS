@@ -25,7 +25,7 @@ public final class LaunchOptionsHandler {
     private static let appVariantName = "currentAppVariant"
     private static let automationPort = "automationPort"
 
-    private let launchArguments: [String]
+    public let launchArguments: [String]
     private let userDefaults: UserDefaults
 
     public init(launchArguments: [String] = ProcessInfo.processInfo.arguments, userDefaults: UserDefaults = .app) {
@@ -34,7 +34,7 @@ public final class LaunchOptionsHandler {
     }
 
     public var isUITesting: Bool {
-        launchArguments.contains(Self.isUITesting)
+        launchArguments.contains(Self.isUITesting) || userDefaults.bool(forKey: Self.isUITesting)
     }
 
     public var isOnboardingCompleted: Bool {

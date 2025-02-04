@@ -35,6 +35,7 @@ import Combine
 import PixelKit
 import PixelExperimentKit
 
+
 /// Represents the transient state where the app is being prepared for user interaction after being launched by the system.
 /// - Usage:
 ///   - This state is typically associated with the `application(_:didFinishLaunchingWithOptions:)` method.
@@ -524,6 +525,7 @@ struct Launching: AppState {
         }
 
         tipKitAppEventsHandler.appDidFinishLaunching()
+        startAutomationServer()
     }
 
     private var appDependencies: AppDependencies {
@@ -632,6 +634,15 @@ struct Launching: AppState {
         return WebCacheManager(cookieStorage: MigratableCookieStorage(),
                                fireproofing: fireproofing,
                                dataStoreIDManager: dataStoreIDManager)
+    }
+
+    private func startAutomationServer() {
+//#if DEBUG
+        let launchOptionsHandler = LaunchOptionsHandler()
+        if launchOptionsHandler.isUITesting && launchOptionsHandler.automationPort != nil {
+            AutomationServer(main: mainViewController!, port: launchOptionsHandler.automationPort)
+        }
+//#endif
     }
 
 }

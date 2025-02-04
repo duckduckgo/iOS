@@ -35,13 +35,6 @@ import Core
 
     /// See: Launching.swift
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//#if DEBUG
-            print("Automation port: \(launchOptionsHandler.automationPort ?? 0)")
-            if launchOptionsHandler.isUITesting {
-                AutomationServer(main: main, port: launchOptionsHandler.automationPort)
-            }
-//#endif
-
         let isTesting: Bool = ProcessInfo().arguments.contains("testing")
         appStateMachine.handle(.didFinishLaunching(application, isTesting: isTesting))
         return true

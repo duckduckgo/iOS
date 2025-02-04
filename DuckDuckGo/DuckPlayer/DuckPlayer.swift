@@ -130,6 +130,9 @@ protocol DuckPlayerControlling: AnyObject {
     
     /// The host view controller, if any.
     var hostView: TabViewController? { get }
+        
+    // Navigation Request Publisher to notify when DuckPlayer needs direct Youtube Nav
+    var youtubeNavigationRequest: PassthroughSubject<URL, Never> { get }
     
     /// Initializes a new instance of DuckPlayer with the provided settings and feature flagger.
     ///
@@ -251,6 +254,9 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         case overlay = "duckPlayer"
     }
     
+    // A published subject to notify when a Youtube navigation request is needed
+    var youtubeNavigationRequest: PassthroughSubject<URL, Never>
+    
     /// Initializes a new instance of DuckPlayer with the provided settings and feature flagger.
     ///
     /// - Parameters:
@@ -260,6 +266,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.settings = settings
         self.featureFlagger = featureFlagger
+        self.youtubeNavigationRequest = PassthroughSubject<URL, Never>()
         super.init()
         registerOrientationSubscriber()
     }
@@ -270,6 +277,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
             hostView?.view.removeGestureRecognizer(tapGestureRecognizer)
         }
         hostView = nil
+        cancellables.removeAll()
     }
     
     /// Sets the host view controller for presenting modals.
@@ -328,17 +336,34 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     }
 
     // Loads a native DuckPlayerView
+    private var cancellables = Set<AnyCancellable>()
+        
     func loadNativeDuckPlayerVideo(videoID: String) {
+        Logger.duckplayer.debug("Starting loadNativeDuckPlayerVideo with ID: \(videoID)")
         let viewModel = DuckPlayerViewModel(videoID: videoID)
         guard let url = viewModel.getVideoURL() else {
+            Logger.duckplayer.debug("Failed to get video URL for ID: \(videoID)")
             return
         }
-        let webView = DuckPlayerWebView(url: url)
+        
+        Logger.duckplayer.debug("Creating webView for videoID: \(videoID)")
+        // Create webView with viewModel
+        let webView = DuckPlayerWebView(viewModel: viewModel)
         
         let duckPlayerView = DuckPlayerView(viewModel: viewModel, webView: webView)
         let hostingController = UIHostingController(rootView: duckPlayerView)
         hostingController.modalPresentationStyle = .formSheet
         hostingController.isModalInPresentation = false
+
+        // Subscribe to the viewModel's publisher
+        viewModel.youtubeNavigationRequestPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self, weak hostingController] url in
+                Logger.duckplayer.debug("Received YouTube navigation request: \(url)")
+                self?.youtubeNavigationRequest.send(url)
+                hostingController?.dismiss(animated: true)
+            }
+            .store(in: &cancellables)
 
         hostView?.present(hostingController, animated: true)
     }

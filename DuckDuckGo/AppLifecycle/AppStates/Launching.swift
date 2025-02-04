@@ -93,6 +93,8 @@ struct Launching: AppState {
         PrivacyFeatures.httpsUpgrade.loadDataAsync() // TODO: should it be moved to some service?
 
         syncService = SyncService(bookmarksDatabase: persistenceCoordinator.bookmarksDatabase)
+        reportingService.syncService = syncService
+        autofillService.syncService = syncService
         let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
         remoteMessagingService = RemoteMessagingService(bookmarksDatabase: persistenceCoordinator.bookmarksDatabase,
                                                         database: persistenceCoordinator.database,

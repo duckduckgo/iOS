@@ -112,20 +112,16 @@ struct Foreground: AppState {
 
         appDependencies.syncService.onForeground()
 
-        StatisticsLoader.shared.load(completion: onStatisticsLoaded)
-
-        mainCoordinator.onForeground()
-
         appDependencies.configurationService.onConfigurationFetched = onConfigurationFetched
         appDependencies.configurationService.onForeground()
 
         appDependencies.vpnService.onForeground()
         appDependencies.subscriptionService.onForeground()
-        appDependencies.autofillService.syncService = appDependencies.syncService
         appDependencies.autofillService.onForeground()
-
-        appDependencies.reportingService.syncService = appDependencies.syncService
         appDependencies.reportingService.onForeground()
+
+        StatisticsLoader.shared.load(completion: onStatisticsLoaded)
+        mainCoordinator.onForeground()
     }
 
     // MARK: - Handle AutoClear completion logic here

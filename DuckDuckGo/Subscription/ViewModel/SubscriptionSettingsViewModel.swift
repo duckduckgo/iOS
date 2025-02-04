@@ -207,7 +207,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     @MainActor
-    private func updateSubscriptionsStatusMessage(status: Subscription.Status, activeOffers: [Subscription.OfferType], date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
+    private func updateSubscriptionsStatusMessage(status: PrivacyProSubscription.Status, activeOffers: [PrivacyProSubscription.OfferType], date: Date, product: String, billingPeriod: PrivacyProSubscription.BillingPeriod) {
         let date = dateFormatter.string(from: date)
 
         let hasActiveTrialOffer = activeOffers.contains(.trial)

@@ -2708,7 +2708,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.subscription.expiring.monthly.caption" = "Your monthly subscription expires on %@.";
 
 /* Trial subscription expiration info where parameter is expiration date. This reads as 'Your free trial ends on (date) and will not convert to a paid subscription.' */
-"subscription.subscription.expiring.trial.monthly.caption" = "Your free trial ends on %@ and will not convert to a paid subscription.";
+"subscription.subscription.expiring.trial.monthly.caption" = "Your free trial ends on %@, and will not convert to a paid subscription.";
 
 /* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
 "subscription.subscription.expiring.unknown.caption" = "Your subscription expires on %@.";

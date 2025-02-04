@@ -1322,7 +1322,7 @@ But if you *do* want a peek under the hood, you can find more information about 
         return String(format: localized, expiration)
     }
 
-    static func renewingTrialSubscriptionInfo(billingPeriod: Subscription.BillingPeriod, renewalDate: String) -> String {
+    static func renewingTrialSubscriptionInfo(billingPeriod: PrivacyProSubscription.BillingPeriod, renewalDate: String) -> String {
         let localized: String
 
         switch billingPeriod {

@@ -29,7 +29,7 @@ import History
 
 @testable import Core
 @testable import DuckDuckGo
-@testable import TestUtils
+@testable import PersistenceTestingUtils
 
 final class AutocompleteSuggestionsDataSourceTests: XCTestCase {
 

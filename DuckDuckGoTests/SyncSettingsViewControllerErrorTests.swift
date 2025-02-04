@@ -21,15 +21,18 @@ import XCTest
 @testable import DuckDuckGo
 import Core
 import Combine
-import DDGSync
+@testable import DDGSync
 import Persistence
 import Common
+import SyncUI_iOS
 
 final class SyncSettingsViewControllerErrorTests: XCTestCase {
 
     var cancellables: Set<AnyCancellable>!
     var vc: SyncSettingsViewController!
     var errorHandler: CapturingSyncPausedStateManager!
+    var ddgSyncing: MockDDGSyncing!
+    var testRecoveryCode = "eyJyZWNvdmVyeSI6eyJ1c2VyX2lkIjoiMDZGODhFNzEtNDFBRS00RTUxLUE2UkRtRkEwOTcwMDE5QkYwIiwicHJpbWFyeV9rZXkiOiI1QTk3U3dsQVI5RjhZakJaU09FVXBzTktnSnJEYnE3aWxtUmxDZVBWazgwPSJ9fQ=="
 
     @MainActor
     override func setUpWithError() throws {
@@ -46,7 +49,7 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
                                         model: model,
                                         readOnly: true,
                                         options: [:])
-        let ddgSyncing = MockDDGSyncing(authState: .active, isSyncInProgress: false)
+        ddgSyncing = MockDDGSyncing(authState: .active, isSyncInProgress: false)
         let bookmarksAdapter = SyncBookmarksAdapter(
             database: database,
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
@@ -56,11 +59,14 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
             secureVaultErrorReporter: MockSecureVaultReporting(),
             syncErrorHandler: CapturingAdapterErrorHandler(),
             tld: TLD())
+        let featureFlagger = MockFeatureFlagger(enabledFeatureFlags: [.syncSeamlessAccountSwitching])
         vc = SyncSettingsViewController(
             syncService: ddgSyncing,
             syncBookmarksAdapter: bookmarksAdapter,
             syncCredentialsAdapter: credentialsAdapter,
-            syncPausedStateManager: errorHandler)
+            syncPausedStateManager: errorHandler,
+            featureFlagger: featureFlagger
+        )
     }
 
     override func tearDown() {
@@ -161,6 +167,93 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
         }
         await fulfillment(of: [expectation], timeout: 5.0)
         XCTAssertTrue(errorHandler.syncDidTurnOffCalled)
+    }
+
+    func x_test_syncCodeEntered_accountAlreadyExists_oneDevice_disconnectsThenLogsInAgain() async {
+        await setUpWithSingleDevice(id: "1")
+
+        var secondLoginCalled = false
+
+        ddgSyncing.spyLogin = { [weak self] _, _, _ in
+            guard let self else { return [] }
+            ddgSyncing.spyLogin = { [weak self] _, _, _ in
+                secondLoginCalled = true
+                guard let self else { return [] }
+                // Assert disconnect was called first
+                XCTAssert(ddgSyncing.disconnectCalled)
+                return [RegisteredDevice(id: "1", name: "iPhone", type: "iPhone"), RegisteredDevice(id: "2", name: "Macbook Pro", type: "Macbook Pro")]
+            }
+            throw SyncError.accountAlreadyExists
+        }
+
+        _ = await vc.syncCodeEntered(code: testRecoveryCode)
+
+        XCTAssert(secondLoginCalled)
+    }
+
+    func x_test_syncCodeEntered_accountAlreadyExists_oneDevice_updatesDevicesWithReturnedDevices() async throws {
+        await setUpWithSingleDevice(id: "1")
+
+        ddgSyncing.spyLogin = { [weak self] _, _, _ in
+            self?.ddgSyncing.spyLogin = { _, _, _ in
+                return [RegisteredDevice(id: "1", name: "iPhone", type: "iPhone"), RegisteredDevice(id: "2", name: "Macbook Pro", type: "Macbook Pro")]
+            }
+            throw SyncError.accountAlreadyExists
+        }
+
+        _ = await vc.syncCodeEntered(code: testRecoveryCode)
+
+        let deviceIDs = await vc.viewModel?.devices.flatMap(\.id)
+        XCTAssertEqual(deviceIDs, ["1", "2"])
+    }
+
+    func x_test_switchAccounts_disconnectsThenLogsInAgain() async throws {
+        var loginCalled = false
+
+        ddgSyncing.spyLogin = { [weak self] _, _, _ in
+            guard let self else { return [] }
+            // Assert disconnect before returning from login to ensure correct order
+            XCTAssert(ddgSyncing.disconnectCalled)
+            loginCalled = true
+            return [RegisteredDevice(id: "1", name: "iPhone", type: "iPhone"), RegisteredDevice(id: "2", name: "Macbook Pro", type: "Macbook Pro")]
+        }
+
+        guard let syncCode = try? SyncCode.decodeBase64String(testRecoveryCode),
+            let recoveryKey = syncCode.recovery else {
+            XCTFail("Could not create RecoveryKey from code")
+            return
+        }
+
+        await vc.switchAccounts(recoveryKey: recoveryKey)
+
+        XCTAssert(loginCalled)
+    }
+
+    func x_test_switchAccounts_updatesDevicesWithReturnedDevices() async throws {
+        ddgSyncing.spyLogin = { [weak self] _, _, _ in
+            guard let self else { return [] }
+            // Assert disconnect before returning from login to ensure correct order
+            XCTAssert(ddgSyncing.disconnectCalled)
+            return [RegisteredDevice(id: "1", name: "iPhone", type: "iPhone"), RegisteredDevice(id: "2", name: "Macbook Pro", type: "Macbook Pro")]
+        }
+
+        guard let syncCode = try? SyncCode.decodeBase64String(testRecoveryCode),
+              let recoveryKey = syncCode.recovery else {
+            XCTFail("Could not create RecoveryKey from code")
+            return
+        }
+
+        await vc.switchAccounts(recoveryKey: recoveryKey)
+
+        let deviceIDs = await vc.viewModel?.devices.flatMap(\.id)
+        XCTAssertEqual(deviceIDs, ["1", "2"])
+    }
+
+    @MainActor
+    private func setUpWithSingleDevice(id: String) {
+        ddgSyncing.account = SyncAccount(deviceId: id, deviceName: "iPhone", deviceType: "iPhone", userId: "", primaryKey: Data(), secretKey: Data(), token: nil, state: .active)
+        ddgSyncing.registeredDevices = [RegisteredDevice(id: id, name: "iPhone", type: "iPhone")]
+        vc.viewModel?.devices = [SyncSettingsViewModel.Device(id: id, name: "iPhone", type: "iPhone", isThisDevice: true)]
     }
 }
 

@@ -29,7 +29,7 @@ jobs:
         task_id=$(grep -i "task/issue url.*https://app.asana.com/" <<< "$BODY" \
           | sed -E 's|.*https://(.*)|\1|' \
           | cut -d '/' -f 4)
-        echo "task_id=$task_id" >> $GITHUB_OUTPUT
+        echo "task_id=${task_id//[^0-9]/}" >> $GITHUB_OUTPUT
 
     - name: Check App Board Project Membership
       id: check-board-membership

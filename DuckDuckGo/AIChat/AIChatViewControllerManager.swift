@@ -34,34 +34,43 @@ final class AIChatViewControllerManager {
     private var payloadHandler = AIChatPayloadHandler()
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let internalUserDecider: InternalUserDecider
-    
+    private weak var userContentController: UserContentController?
+
     init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider) {
         self.privacyConfigurationManager = privacyConfigurationManager
         self.internalUserDecider = internalUserDecider
     }
-    
+
     @MainActor
-    lazy var aiChatViewController: AIChatViewController = {
+    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil, on viewController: UIViewController) {
         let settings = AIChatSettings(privacyConfigurationManager: privacyConfigurationManager,
                                       internalUserDecider: internalUserDecider)
-        
+
+        // Check if the viewController is already presenting a RoundedPageSheetContainerViewController with AIChatViewController inside
+        if let presentedVC = viewController.presentedViewController as? RoundedPageSheetContainerViewController,
+           presentedVC.contentViewController is AIChatViewController {
+            return
+        } else {
+            viewController.dismiss(animated: true)
+        }
+
         let webviewConfiguration = WKWebViewConfiguration.persistent()
         let userContentController = UserContentController()
         userContentController.delegate = self
 
         webviewConfiguration.userContentController = userContentController
+        self.userContentController = userContentController
         let aiChatViewController = AIChatViewController(settings: settings,
-                                                        webViewConfiguration: webviewConfiguration)
+                                                        webViewConfiguration: webviewConfiguration,
+                                                        requestAuthHandler: AIChatRequestAuthorizationHandler(debugSettings: AIChatDebugSettings()))
         aiChatViewController.delegate = self
-        return aiChatViewController
-    }()
 
-    @MainActor
-    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil, on viewController: UIViewController) {
         let roundedPageSheet = RoundedPageSheetContainerViewController(
             contentViewController: aiChatViewController,
             allowedOrientation: .portrait)
+
+        roundedPageSheet.delegate = self
 
         if let query = query {
             aiChatViewController.loadQuery(query)
@@ -73,6 +82,13 @@ final class AIChatViewControllerManager {
             aiChatViewController.reload()
         }
         viewController.present(roundedPageSheet, animated: true, completion: nil)
+    }
+
+    private func cleanUpUserContent() {
+        Task {
+            await userContentController?.removeAllContentRuleLists()
+            await userContentController?.cleanUpBeforeClosing()
+        }
     }
 }
 
@@ -98,6 +114,12 @@ extension AIChatViewControllerManager: AIChatViewControllerDelegate {
 
     func aiChatViewControllerDidFinish(_ viewController: AIChatViewController) {
         viewController.dismiss(animated: true)
-        
+    }
+}
+
+// MARK: - RoundedPageSheetContainerViewControllerDelegate
+extension AIChatViewControllerManager: RoundedPageSheetContainerViewControllerDelegate {
+    func roundedPageSheetContainerViewControllerDidDisappear(_ controller: RoundedPageSheetContainerViewController) {
+        cleanUpUserContent()
     }
 }

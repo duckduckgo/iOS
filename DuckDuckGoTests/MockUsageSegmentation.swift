@@ -18,7 +18,7 @@
 //
 
 import Foundation
-@testable import Core
+@testable import BrowserServicesKit
 
 final class MockUsageSegmentation: UsageSegmenting {
 

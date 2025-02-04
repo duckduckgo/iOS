@@ -66,14 +66,33 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/1206226850447395/1206307878076518
     case webViewStateRestoration
+
+    /// https://app.asana.com/0/72649045549333/1208944782348823/f
+    case syncSeamlessAccountSwitching
+
+    case testExperiment
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
+    public var cohortType: (any FeatureFlagCohortDescribing.Type)? {
+        switch self {
+        case .privacyProFreeTrialJan25:
+            PrivacyProFreeTrialExperimentCohort.self
+        case .testExperiment:
+            TestExperimentCohort.self
+        default:
+            nil
+        }
+    }
 
     public static var localOverrideStoreName: String = "com.duckduckgo.app.featureFlag.localOverrides"
 
     public var supportsLocalOverriding: Bool {
         switch self {
+        case .textZoom:
+            return true
+        case .testExperiment:
+            return true
         default:
             return false
         }
@@ -136,13 +155,13 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .textZoom:
             return .remoteReleasable(.feature(.textZoom))
         case .networkProtectionEnforceRoutes:
-            return .remoteDevelopment(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
+            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
         case .adAttributionReporting:
             return .remoteReleasable(.feature(.adAttributionReporting))
         case .crashReportOptInStatusResetting:
             return .internalOnly()
         case .privacyProFreeTrialJan25:
-            return .remoteDevelopment(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
+            return .remoteReleasable(.subfeature(PrivacyProSubfeature.privacyProFreeTrialJan25))
         case .aiChat:
             return .remoteReleasable(.feature(.aiChat))
         case .aiChatDeepLink:
@@ -151,6 +170,10 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .internalOnly()
         case .webViewStateRestoration:
             return .remoteReleasable(.feature(.webViewStateRestoration))
+        case .syncSeamlessAccountSwitching:
+            return .remoteReleasable(.subfeature(SyncSubfeature.seamlessAccountSwitching))
+        case .testExperiment:
+            return .remoteReleasable(.subfeature(ExperimentTestSubfeatures.experimentTestAA))
         }
     }
 }
@@ -159,4 +182,17 @@ extension FeatureFlagger {
     public func isFeatureOn(_ featureFlag: FeatureFlag) -> Bool {
         return isFeatureOn(for: featureFlag)
     }
+
+}
+
+public enum PrivacyProFreeTrialExperimentCohort: String, FeatureFlagCohortDescribing {
+    /// Control cohort with no changes applied.
+    case control
+    /// Treatment cohort where the experiment modifications are applied.
+    case treatment
+}
+
+public enum TestExperimentCohort: String, FeatureFlagCohortDescribing {
+    case control
+    case treatment
 }

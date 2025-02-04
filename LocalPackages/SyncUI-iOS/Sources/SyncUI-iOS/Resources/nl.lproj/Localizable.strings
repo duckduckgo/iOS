@@ -1,0 +1,297 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Er is een apparaatwachtwoord vereist om 'Synchronisatie  en back-up' te kunnen gebruiken.";
+
+/* Standard Buttons - Back Button */
+"back.button" = "Terug";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Sommige bladwijzers worden niet gesynchroniseerd vanwege te lange inhoud in bepaalde velden.";
+
+/* Camera View - Go to Settings Button */
+"camera.go.to.settings.button" = "Ga naar Instellingen";
+
+/* Camera View - Unavailable Title */
+"camera.is.unavailable.title" = "De camera is niet beschikbaar";
+
+/* Camera View - Permission Instructions */
+"camera.permission.instructions" = "Ga naar je apparaatinstellingen om deze app toegang te geven tot je camera.";
+
+/* Camera View - Permission Required */
+"camera.permission.required" = "Cameramachtiging is vereist";
+
+/* Camera View - Point Camera Indication */
+"camera.point.camera.indication" = "Richt de camera op QR-code om te synchroniseren";
+
+/* No comment provided by engineer. */
+"Cancel" = "Annuleren";
+
+/* Standard Buttons - Cancel Button */
+"cancel.button" = "Annuleren";
+
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "'Synchronisatie en back-up' inschakelen";
+
+/* Connect With Server Sheet - Description Part 1 */
+"connect.with.server.sheet.description.part1" = "Hiermee maak je een versleutelde back-up van je bladwijzers en wachtwoorden op de beveiligde server van DuckDuckGo. Deze back-up kan met je andere apparaten worden gesynchroniseerd.";
+
+/* Connect With Server Sheet - Description Part 2 */
+"connect.with.server.sheet.description.part2" = "De versleutelingscode wordt alleen op je apparaat opgeslagen. DuckDuckGo heeft er geen toegang toe.";
+
+/* Connect With Server Sheet - Footer */
+"connect.with.server.sheet.footer" = "Je kunt later synchroniseren met je andere apparaten.";
+
+/* Connect With Server Sheet - Title */
+"connect.with.server.sheet.title" = "Dit apparaat synchroniseren en back-up maken";
+
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopiëren";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Sommige aanmeldingen worden niet gesynchroniseerd vanwege te lange inhoud in bepaalde velden.";
+
+/* Delete Server Data - Button */
+"delete.server.data" = "Servergegevens uitschakelen en verwijderen ...";
+
+/* No comment provided by engineer. */
+"Dev environment" = "Ontwikkelomgeving";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "DuckDuckGo downloaden op andere apparaten";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Je gegevens zijn gesynchroniseerd!";
+
+/* Standard Buttons - Done Button */
+"done.button" = "Klaar";
+
+/* Edit Device View - Header */
+"edit.device.header" = "Naam apparaat";
+
+/* Edit Device View - Title */
+"edit.device.title" = "%@ bewerken";
+
+/* Fetch Favicons Onboarding - Button Title */
+"fetch.favicons.onboarding.button.title" = "Zorg dat bladwijzerpictogrammen up-to-date blijven";
+
+/* Fetch Favicons Onboarding - Message */
+"fetch.favicons.onboarding.message" = "Wil je dat dit apparaat automatisch pictogrammen downloadt voor nieuwe bladwijzers die zijn gesynchroniseerd met je andere apparaten? Je download wordt dan zichtbaar voor je netwerk wanneer een bladwijzer wordt gesynchroniseerd.";
+
+/* Fetch Favicons Onboarding - Title */
+"fetch.favicons.onboarding.title" = "Ontbrekende pictogrammen downloaden?";
+
+/* Options - Fetch Favicons Description */
+"fetch.favicons.option.caption" = "Download automatisch pictogrammen voor je gesynchroniseerde bladwijzers. Pictogramdownloads worden weergegeven in je netwerk.";
+
+/* Options - Fetch Favicons Title */
+"fetch.favicons.option.title" = "Pictogrammen automatisch downloaden";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Ga naar Instellingen";
+
+/* No comment provided by engineer. */
+"Keep Development" = "In ontwikkelen houden";
+
+/* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
+"manually.enter.code.instruction.attributed" = "Ga naar %1$@ en selecteer %2$@ in de DuckDuckGo-app op een ander gesynchroniseerd apparaat en plak de code hier om dit apparaat te synchroniseren.";
+
+/* Manually Enter Code View - Title */
+"manually.enter.code.title" = "Code handmatig invoeren";
+
+/* Manually Enter Code View - Validating Code Action */
+"manually.enter.code.validating.code.action" = "Code valideren";
+
+/* Manually Enter Code View - Validating Code Failed Action */
+"manually.enter.code.validating.code.failed.action" = "Ongeldige code.";
+
+/* Standard Buttons - Next Button */
+"next.button" = "Volgende";
+
+/* Standard Buttons - Not Now Button */
+"not.now.button" = "Niet nu";
+
+/* Options - Section Header */
+"options.section.header" = "Opties";
+
+/* Section header for other syncing options */
+"other.options.section.header" = "Andere opties";
+
+/* Standard Buttons - Paste Button */
+"paste.button" = "Plakken";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Bladwijzers beheren";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Wachtwoorden beheren …";
+
+/* Preparing To Sync Sheet - Description */
+"preparing.to.sync.sheet.description" = "Je bladwijzers en wachtwoorden worden voorbereid voor synchronisatie. Dit hoeft niet zo lang te duren.";
+
+/* Preparing To Sync Sheet - Footer */
+"preparing.to.sync.sheet.footer" = "Er wordt verbinding gemaakt ...";
+
+/* Preparing To Sync Sheet - Title */
+"preparing.to.sync.sheet.title" = "'Synchronisatie en back-up' instellen";
+
+/* Link label for recovering synced data */
+"recover.synced.data.link" = "Gesynchroniseerde gegevens herstellen";
+
+/* Recover Synced Data Sheet - Button */
+"recover.synced.data.sheet.button" = "Aan de slag";
+
+/* Recover Synced Data Sheet - Description */
+"recover.synced.data.sheet.description" = "Om je gesynchroniseerde gegevens te herstellen, heb je de herstelcode nodig die je hebt opgeslagen tijdens het instellen van 'Synchronisatie'. Deze code is mogelijk als PDF opgeslagen op het apparaat dat je gebruikte om 'Synchronisatie' in te stellen.";
+
+/* Recover Synced Data Sheet - Title */
+"recover.synced.data.sheet.title" = "Gesynchroniseerde gegevens herstellen";
+
+/* Remove Device View - Button */
+"remove.device.button" = "Apparaat verwijderen";
+
+/* Remove Device View - Message */
+"remove.device.message" = "'%@' heeft geen toegang meer tot je gesynchroniseerde gegevens.";
+
+/* Remove Device View - Title */
+"remove.device.title" = "Apparaat verwijderen?";
+
+/* Save Recovery Code Sheet - Copy Code Toast */
+"save.recovery.code.code.copied.button" = "Herstelcode gekopieerd naar klembord";
+
+/* Save Recovery Code Sheet - Copy Code Button */
+"save.recovery.code.copy.code.button" = "Code kopiëren";
+
+/* Save Recovery Code Sheet - Save as PDF Button */
+"save.recovery.code.save.as.pdf.button" = "Opslaan als PDF";
+
+/* Save Recovery Code Sheet - Description */
+"save.recovery.code.sheet.description" = "Als je geen toegang meer hebt tot je apparaten, heb je deze code nodig om je gesynchroniseerde gegevens te herstellen.";
+
+/* Save Recovery Code Sheet - Footer */
+"save.recovery.code.sheet.footer" = "Iedereen met toegang tot deze code kan bij je gesynchroniseerde gegevens. Bewaar de code daarom op een veilige plek.";
+
+/* Save Recovery Code Sheet - Title */
+"save.recovery.code.sheet.title" = "Herstelcode opslaan";
+
+/* Save RecoveryPDF - Button */
+"save.recovery.pdf.button" = "PDF voor herstel opslaan";
+
+/* Save RecoveryPDF - Footer */
+"save.recovery.pdf.footer" = "Als je je apparaat verliest, heb je deze code nodig om je gesynchroniseerde gegevens te herstellen.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Enter Code Link */
+"scan.code.to.recover.synced.data.enter.code.link" = "Voer de tekstcode handmatig in";
+
+/* Scan Or Enter Code To Recover Synced Data View - Explanation */
+"scan.code.to.recover.synced.data.explanation" = "Scan de QR-code in het PDF-bestand of op een ander gesynchroniseerd apparaat om je gegevens te herstellen.";
+
+/* Scan Or Enter Code To Recover Synced Data View - Footer */
+"scan.code.to.recover.synced.data.footer" = "Kun je niet scannen?";
+
+/* Scan Or Enter Code To Recover Synced Data View - Title */
+"scan.code.to.recover.synced.data.title" = "Gesynchroniseerde gegevens herstellen";
+
+/* Scan or See Code View - Footer */
+"scan.or.see.code.footer" = "Kun je niet scannen?";
+
+/* Scan or See Code View - Instruction */
+"scan.or.see.code.instruction" = "Ga naar 'Instellingen' › 'Synchronisatie en back-up' in de DuckDuckGo-browser op een ander apparaat en selecteer 'Synchroniseren met een ander apparaat'.";
+
+/* Scan or See Code View - Instruction with syncMenuPath */
+"scan.or.see.code.instruction.attributed" = "Ga naar %@ in de DuckDuckGo-browser op een ander apparaat en selecteer 'Synchroniseren met een ander apparaat'.";
+
+/* Scan or See Code View - Manually Enter Code Link */
+"scan.or.see.code.manually.enter.code.link" = "Code handmatig invoeren";
+
+/* Scan or See Code View - Scan Code Instructions Body */
+"scan.or.see.code.scan.code.instructions.body" = "Scan deze code met een ander apparaat om te synchroniseren.";
+
+/* Scan or See Code View - Scan Code Instructions Title */
+"scan.or.see.code.scan.code.instructions.title" = "Mobiel-naar-mobiel?";
+
+/* Scan or See Code View - Share Code Link */
+"scan.or.see.code.share.code.link" = "Tekstcode delen?";
+
+/* Scan or See Code View - Title */
+"scan.or.see.code.title" = "QR-code scannen";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Beveilig je apparaat om 'Synchronisatie en back-up' te gebruiken";
+
+/* No comment provided by engineer. */
+"Switch to Production" = "Overschakelen naar productie";
+
+/* Link label for syncing and backing up the device */
+"sync.and.backup.this.device.link" = "Dit apparaat synchroniseren en back-up maken";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "DuckDuckGo downloaden op andere apparaten";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Downloadlink delen";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Om DuckDuckGo te downloaden op een desktop of een ander mobiel apparaat, ga naar:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Download DuckDuckGo op andere apparaten om met dit apparaat te synchroniseren";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Download DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Installeer de DuckDuckGo-browser op je apparaten om je bladwijzers en wachtwoorden veilig te synchroniseren:";
+
+/* Sync Menu Path */
+"sync.menu.path" = "'Instellingen' > 'Synchronisatie en back-up' > 'Synchroniseren met een ander apparaat'";
+
+/* Sync & Backup Title */
+"sync.title" = "Synchronisatie en back-up";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Sorry, maar synchroniseren en back-up is momenteel niet beschikbaar. Probeer het later opnieuw.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Synchroniseren en back-up is helaas niet langer beschikbaar in deze versie van de app. Werk DuckDuckGo bij naar de nieuwste versie om door te gaan.";
+
+/* Title of the warning message */
+"sync.warning.sync.unavailable" = "'Synchronisatie en back-up' is niet beschikbaar";
+
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Synchroniseren met een ander apparaat";
+
+/* Footer message for syncing with another device */
+"sync.with.another.device.footer" = "Je gegevens zijn volledig versleuteld en DuckDuckGo heeft geen toegang tot de versleutelingscode.";
+
+/* Message for syncing with another device */
+"sync.with.another.device.message" = "Synchroniseer bladwijzers en wachtwoorden veilig tussen je apparaten.";
+
+/* Title for syncing with another device */
+"sync.with.another.device.title" = "Synchroniseren starten";
+
+/* Synced Devices - Section Header */
+"synced.devices.section.header" = "Gesynchroniseerde apparaten";
+
+/* Synced Devices - Sync with Another Device Label */
+"synced.devices.sync.with.another.device.label" = "Synchroniseren met een ander apparaat";
+
+/* Synced Devices - This Device Label */
+"synced.devices.this.device.label" = "Dit apparaat";
+
+/* Turn Sync Off - Button */
+"turn.sync.off" = "'Synchronisatie en back-up' uitschakelen ...";
+
+/* Turn Sync Off - Section Header */
+"turn.sync.off.section.header" = "Synchronisatie ingeschakeld";
+
+/* Options - Unify Favorites Instruction */
+"unified.favorites.instruction" = "Gebruik dezelfde favoriete bladwijzers op al je apparaten. Schakel deze optie uit als je je favoriete bladwijzers niet wilt synchroniseren tussen je mobiele apparaat en pc.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Beschik over dezelfde favorieten op verschillende apparaten";
+
+/* View Text Code menu item */
+"view.text.code.menu.item" = "Tekstcode weergeven";
+
+/* No comment provided by engineer. */
+"You're using Sync Development environment" = "Je gebruikt de ontwikkelomgeving van Sync";
+

@@ -21,7 +21,7 @@ import XCTest
 @testable import Core
 import WebKit
 import Persistence
-import TestUtils
+import PersistenceTestingUtils
 
 public class CookieStorageTests: XCTestCase {
 

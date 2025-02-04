@@ -1193,12 +1193,16 @@ class MainViewController: UIViewController {
         }
 
         self.showMenuHighlighterIfNeeded()
-        
-        coordinator.animate { _ in
-            self.swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model, scrollToSelected: true)
 
+        let isKeyboardShowing = omniBar.textField.isFirstResponder
+        coordinator.animate { _ in
+            self.swipeTabsCoordinator?.invalidateLayout()
             self.deferredFireOrientationPixel()
         } completion: { _ in
+            if isKeyboardShowing {
+                self.omniBar.becomeFirstResponder()
+            }
+
             ViewHighlighter.updatePositions()
         }
 
@@ -1734,7 +1738,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    private func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
+    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
         aiChatViewControllerManager.openAIChat(query, payload: payload, on: self)
     }
 }
@@ -1776,13 +1780,13 @@ extension MainViewController: BrowserChromeDelegate {
         _ = findInPageView.resignFirstResponder()
     }
 
-    func setBarsHidden(_ hidden: Bool, animated: Bool) {
+    func setBarsHidden(_ hidden: Bool, animated: Bool, customAnimationDuration: CGFloat?) {
         if hidden { hideKeyboard() }
 
-        setBarsVisibility(hidden ? 0 : 1.0, animated: animated)
+        setBarsVisibility(hidden ? 0 : 1.0, animated: animated, animationDuration: customAnimationDuration)
     }
     
-    func setBarsVisibility(_ percent: CGFloat, animated: Bool = false) {
+    func setBarsVisibility(_ percent: CGFloat, animated: Bool = false, animationDuration: CGFloat?) {
         if percent < 1 {
             hideKeyboard()
             hideMenuHighlighter()
@@ -1800,7 +1804,7 @@ extension MainViewController: BrowserChromeDelegate {
         }
            
         if animated {
-            UIView.animate(withDuration: ChromeAnimationConstants.duration) {
+            UIView.animate(withDuration: animationDuration ?? ChromeAnimationConstants.duration) {
                 updateBlock()
                 self.view.layoutIfNeeded()
             }

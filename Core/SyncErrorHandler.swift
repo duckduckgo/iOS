@@ -22,7 +22,7 @@ import DDGSync
 import Combine
 import Persistence
 import Foundation
-import SyncUI
+import SyncUI_iOS
 import SyncDataProviders
 import os.log
 

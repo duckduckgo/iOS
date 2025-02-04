@@ -1,25 +1,33 @@
-DuckDuckGo-appen gir det mest omfattende personvernet på nettet med et trykk på en knapp. Med én nedlasting får du en hverdagsnettleser som tilbyr sømløs beskyttelse mens du søker og surfer samt tilgang til sporingsbeskyttelse på e-poster du får. Mange av disse beskyttelsene tilbys ikke som standard i de fleste populære nettleserne. 
+Hos DuckDuckGo mener vi at den beste metoden for å beskytte personopplysninger mot hackere, svindlere og selskaper som krenker personvernet, er å hindre at den blir samlet inn i det hele tatt. Det er derfor millioner av mennesker velger DuckDuckGo fremfor Chrome og andre nettlesere  til å søke og surfe på nettet. Den innebygde søkemotoren vår er som Google, men sporer aldri søkene dine. Og surfebeskyttelsene våre, som blokkering av annonsesporing og informasjonskapsler, hindrer andre selskaper i å samle inn dataene dine. Dessuten er nettleseren vår gratis. Vi tjener penger på søkeannonser som respekterer personvern, ikke ved å utnytte dataene dine. Ta tilbake kontroll over din personlige informasjon med nettleseren som er utviklet for databeskyttelse, ikke datainnsamling. 
 
-HØYDEPUNKTER 
-• Søk privat som standard – DuckDuckGos Private Search er innebygd, slik at du lett kan søke på nettet uten å bli sporet. 
+HØYDEPUNKTER
+Beskytt søkene dine som standard: DuckDuckGo Search er innebygd, så du lett kan søke på nettet uten å bli sporet. 
 
-• Unngå nettstedssporere før de lastes – hindre automatisk de fleste skjulte sporere (tredjepartsskript) fra å bli lastet. Dette forhindrer selskaper i å samle inn og bruke data fra disse sporerne (som salg, annonser osv.) Vår banebrytende sporingsblokkeringsteknologi, kalt beskyttelse mot tredjeparts sporingslasting, går langt utover det du vanligvis får som standard i de fleste populære nettlesere. 
+Beskytt nettleserhistorikken din: Vår tredjeparts Tracker Loading Protection blokkerer de fleste sporere før de blir lastet, noe som i stor grad overgår hva de fleste populære nettlesere tilbyr som standard. 
 
-• Fremtving kryptering automatisk – tving mange nettsteder du besøker, til å automatisk bruke en kryptert tilkobling (HTTPS), som verner dataene dine mot wifi-snokere og nettverkstilskuere som internettleverandøren din. De fleste populære nettlesere bare omdirigerer brukerne til krypterte versjoner av sider under visse omstendigheter, som når du går direkte til en side i adressefeltet. Vi sjekker listen vår over oppgraderbare nettsteder for alle lenker du klikker på. 
+Sikre e-posten din (valgfritt): Bruk Email Protection til å blokkere de fleste e-postsporere og skjule den eksisterende e-postadressen din med @duck.com-adresser.  
 
-• Aktiver innebygd Email Protection – over 85 % av e-poster som ble sendt til Duck-adresser, inneholdt sporere som kan oppdage når du har åpnet en e-post, hvor du var da du åpnet den, og hvilken enhet du brukte. Email Protection gjør det lett å blokkere de fleste e-postsporere og skjule den eksisterende adressen din når du registrerer deg for ting på nettet, og alt dette uten å bytte e-postleverandør. 
+Se YouTube-videoer uten målrettede annonser: Duck Player beskytter deg mot målrettede annonser og informasjonskapsler med et forstyrrelsesfritt grensesnitt som bruker YouTubes strengeste personverninnstillinger for innebygd video.
 
-• Unngå digitalt fingeravtrykk – hindre selskaper i å opprette en unik identifikator for deg ved å blokkere forsøkene deres på å kombinere spesifikk informasjon om nettleseren og enhetsinnstillingene dine.  
+Fremtving kryptering automatisk: Beskytt dataene dine mot nettverks- og wifi-snokere ved å tvinge mange nettsteder til å bruke en HTTPS-tilkobling. 
 
-• Blokker sporingsinformasjonskapsler – hindre de fleste tredjeparts informasjonskapsler i å spore deg når du surfer fra nettsted til nettsted.
+Unngå fingerprinting: Gjør det vanskeligere for selskaper å opprette en unik identifikator for deg ved å blokkere forsøk på å kombinere informasjon om nettleseren og enheten din. 
 
-Vi har også mange beskyttelser som ikke er tilgjengelige i de fleste nettlesere, inkludert beskyttelse mot lenkesporing, Google AMP-sporing med mer.
+Synkroniser og sikkerhetskopier på en sikker måte (valgfritt): Synkroniser krypterte bokmerker og passord mellom alle enhetene dine.
 
-PERSONVERNKONTROLLER I HVERDAGEN
-• Trykk på Fire Button-knappen og brenn data – tøm faner og nettleserdata med Fire Button.
+Tøm fane- og nettleserdata på et blunk med Fire Button.
 
-• Signaliser personvernreferansene dine med GPC (Global Privacy Control) – som er innebygd i appen og uttrykker automatisk reservasjonsretten din ved å gi beskjed til nettstedene om at de ikke kan selge eller dele personopplysningene dine. Om dette kan brukes til å håndheve dine juridiske rettigheter (for eksempel i henhold til nåværende eller fremtidige CCPA- og GDPR-krav), avhenger av lovene i din jurisdiksjon.  
- 
-Les mer om dette og sporingsbeskyttelsene våre på https://help.duckduckgo.com/privacy/web-tracking-protections/  
+Bli kvitt popup-vinduer for informasjonskapsler og angi preferansene dine automatisk til å minimere informasjonskapsler og maksimere personvernet.
 
-Du trenger ikke å vente for å ta tilbake personvernet ditt. Slutt deg til millionene av mennesker som bruker DuckDuckGo og beskytt mange av dine daglige nettaktiviteter med én app. Dette er personvern gjort enkelt. 
+Og mange flere beskyttelser som ikke er tilgjengelige på de fleste nettlesere, selv i privat surfemodus, inkludert beskyttelse mot lenkesporing, Global Privacy Control (GPC) m.m.
+
+Du behøver ikke å vente med å ta kontroll over din personlige informasjon! Bli en av de millionene av mennesker som bruker DuckDuckGo til å beskytte sine søk og sin surfing og e-post hver dag. 
+
+Les mer om våre gratis sporingsbeskyttelser på https://help.duckduckgo.com/privacy/web-tracking-protections
+
+Personvernerklæring: https://duckduckgo.com/privacy/ 
+
+Vilkår for bruk: https://duckduckgo.com/terms
+
+Merknad om tredjeparts sporingsbeskyttelse og søkeannonser: Selv om det er noen begrensninger etter klikk på søkeannonser, ser du på annonser anonymt i DuckDuckGo-søk. Les mer her https://help.duckduckgo.com/privacy/web-tracking-protections
+

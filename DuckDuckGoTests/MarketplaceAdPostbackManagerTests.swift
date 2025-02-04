@@ -19,6 +19,7 @@
 
 import XCTest
 @testable import Core
+import BrowserServicesKit
 import Foundation
 
 class MarketplaceAdPostbackManagerTests: XCTestCase {
@@ -65,9 +66,9 @@ class MarketplaceAdPostbackManagerTests: XCTestCase {
 }
 
 private final class MockReturnUserMeasurement: ReturnUserMeasurement {
-    func installCompletedWithATB(_ atb: Core.Atb) { }
+    func installCompletedWithATB(_ atb: Atb) { }
 
-    func updateStoredATB(_ atb: Core.Atb) { }
+    func updateStoredATB(_ atb: Atb) { }
 
     var isReturningUser: Bool
 

@@ -1,23 +1,33 @@
-De DuckDuckGo-app biedt met een druk op de knop de uitgebreidste online privacybescherming. Met één gratis download krijg je een privéwebbrowser voor dagelijks gebruik die naadloze bescherming biedt tijdens het zoeken en browsen, en die je beschermt tegen tracking in e-mails die je ontvangt en apps die je gebruikt. Veel van deze beschermingsmethoden worden standaard niet aangeboden in de meeste populaire webbrowsers.
+Bij DuckDuckGo zijn we ervan overtuigd dat de beste manier om je persoonlijke gegevens te beschermen tegen hackers, oplichters en privacy-invasieve bedrijven is om te voorkomen dat ze worden verzameld. Daarom verkiezen miljoenen mensen DuckDuckGo boven Chrome en andere browsers  om online te zoeken en te surfen. Onze ingebouwde zoekmachine is zoals Google, maar volgt je zoekopdrachten nooit. En met onze browsebescherming, zoals blokkering van advertentietrackers en cookieblokkering, voorkom je dat andere bedrijven je gegevens verzamelen. Bovendien is onze browser gratis - we verdienen geld met zoekadvertenties die de privacy respecteren, niet door je gegevens uit te buiten. Krijg weer controle over je persoonlijke gegevens met de browser die is ontworpen voor gegevensbescherming, niet voor gegevensverzameling. 
 
 BELANGRIJKSTE FUNCTIEKENMERKEN
-• Zoek standaard via privézoekopdrachten - DuckDuckGo Private Search is ingebouwd.
+Bescherm je zoekopdrachten standaard: DuckDuckGo Search is ingebouwd, zodat je gemakkelijk online kunt zoeken zonder te worden gevolgd. 
 
-• Blokkeer trackingcookies - Voorkom dat de meeste cookies van derden je volgen terwijl je surft.
+Scherm je browsegeschiedenis af: onze externe Tracker Loading Protection blokkeert de meeste trackers voordat ze worden geladen en gaat daarmee aanzienlijk verder dan wat de meeste populaire browsers standaard bieden. 
 
-• Blokkeer de meeste trackers voordat ze worden geladen - Voorkom dat bedrijven persoonlijke gegevens verzamelen en gebruiken met trackers die op websites zijn verborgen.
+Beveilig je e-mail (optioneel): gebruik Email Protection om de meeste e-mailtrackers te blokkeren en je bestaande e-mailadres te verbergen met @duck.com-adressen.  
 
-• Dwing versleuteling af - Dwing veel sites die je bezoekt om automatisch een versleutelde verbinding (HTTPS) te gebruiken.
+Bekijk YouTube-video's zonder gerichte advertenties: Duck Player beschermt je tegen gerichte advertenties en cookies met een interface zonder afleiding die de strengste privacy-instellingen van YouTube voor ingesloten video's hanteert.
 
-• Blokkeer e-mailtrackers (bèta) - Maak je eigen @duck.com-e-mailadres aan en gebruik Email Protection om de meeste e-mailtrackers te blokkeren, je bestaande adres te verbergen en berichten door te sturen naar je inbox. 
+Dwing versleuteling automatisch af: bescherm je gegevens tegen netwerk- en wifi-snoopers door veel sites te dwingen een HTTPS-verbinding te gebruiken. 
 
-• Ontsnap aan fingerprinting - Help voorkomen dat bedrijven een unieke id voor je maken.
+Ontsnap aan fingerprinting: blokkeer pogingen om informatie over je browser en apparaat te combineren en maak het op die manier moeilijker voor bedrijven om een unieke ID voor je te maken. 
 
-We hebben veel beveiligingsmethoden die in de meeste internetbrowsers (zelfs incognitobrowsers) niet beschikbaar zijn, waaronder bescherming tegen linktracking, Google AMP-tracking en meer.
+Synchroniseer en maak veilig back-ups (Optioneel): synchroniseer versleutelde bladwijzers en wachtwoorden op je apparaten.
 
-PRIVACYCONTROLES VOOR ELKE DAG
-• Tik op de Fire Button om gegevens te verbranden - Wis je tabbladen en browsegegevens met één tik op onze Fire Button.
+Wis je tabbladen en browsegegevens in een oogwenk met de Fire Button.
 
-• Geef je privacyvoorkeuren aan met Global Privacy Control (GPC) - Meer informatie vind je op https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/ 
+Verban cookie pop-ups en stel automatisch je voorkeuren in om cookies te minimaliseren en privacy te maximaliseren.
 
-Lees meer over deze functie en onze gratis trackingbescherming op https://help.duckduckgo.com/privacy/web-tracking-protections
+En nog veel meer beveiligingsmethoden die niet beschikbaar zijn in de meeste internetbrowsers, zelfs niet in de privémodus, waaronder bescherming tegen linktracking, Global Privacy Control (GPC) en meer.
+
+Je hoeft niet te wachten om weer controle over je persoonlijke informatie te krijgen. Sluit je aan bij de miljoenen mensen die DuckDuckGo gebruiken om hun dagelijkse zoekopdrachten, browsesessies en e-mails te beschermen. 
+
+Lees meer over onze gratis trackingbescherming op https://help.duckduckgo.com/privacy/web-tracking-protections
+
+Privacybeleid: https://duckduckgo.com/privacy/ 
+
+Algemene voorwaarden: https://duckduckgo.com/terms
+
+Opmerking over externe Tracker Protection en zoekadvertenties: hoewel er enkele beperkingen zijn nadat je op zoekadvertenties hebt geklikt, is het bekijken van advertenties op DuckDuckGo anoniem. Meer informatie vind je hier https://help.duckduckgo.com/privacy/web-tracking-protections
+

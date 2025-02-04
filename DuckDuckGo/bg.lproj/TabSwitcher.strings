@@ -1,20 +1,11 @@
 /* Class = "UILabel"; text = "Title"; ObjectID = "1GE-Nf-lKM"; */
 "1GE-Nf-lKM.text" = "Заглавие";
 
-/* Class = "UIButton"; accessibilityLabel = "Add all tabs as bookmarks"; ObjectID = "2aH-nO-H3f"; */
-"2aH-nO-H3f.accessibilityLabel" = "Добавяне на всички раздели като отметки";
-
 /* Class = "UIButton"; accessibilityLabel = "Close Tab"; ObjectID = "2en-CB-bYH"; */
 "2en-CB-bYH.accessibilityLabel" = "Затваряне на раздел";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "2GU-MM-UwX"; */
 "2GU-MM-UwX.text" = "Заглавие";
-
-/* Class = "UIButton"; accessibilityLabel = "Close all tabs and clear data"; ObjectID = "5nO-MZ-vSY"; */
-"5nO-MZ-vSY.accessibilityLabel" = "Затваряне на всички раздели и изчистване на данните";
-
-/* Class = "UILabel"; text = "Tabs"; ObjectID = "Cy7-Lb-veV"; */
-"Cy7-Lb-veV.text" = "Раздели";
 
 /* Class = "UIButton"; accessibilityLabel = "Add new tab"; ObjectID = "cYd-YU-sSj"; */
 "cYd-YU-sSj.accessibilityLabel" = "Добавяне на нов раздел";
@@ -31,12 +22,6 @@
 /* Class = "UIButton"; accessibilityLabel = "Clear tabs and data"; ObjectID = "Hcx-F2-HgO"; */
 "Hcx-F2-HgO.accessibilityLabel" = "Изчистване на раздели и данни";
 
-/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "kW3-ZC-Axl"; */
-"kW3-ZC-Axl.normalTitle" = "Готово";
-
-/* Class = "UIButton"; accessibilityLabel = "Toggle between grid and list view"; ObjectID = "L7l-vl-rDZ"; */
-"L7l-vl-rDZ.accessibilityLabel" = "Превключване между изглед в мрежа и списък";
-
 /* Class = "UILabel"; text = "Link"; ObjectID = "LbT-NO-T0G"; */
 "LbT-NO-T0G.text" = "Линк";
 
@@ -45,9 +30,6 @@
 
 /* Class = "UIImageView"; accessibilityLabel = "Tab Unread"; ObjectID = "qrJ-aX-XrW"; */
 "qrJ-aX-XrW.accessibilityLabel" = "Непрочетен раздел";
-
-/* Class = "UIButton"; accessibilityLabel = "Add Tab"; ObjectID = "uIV-4q-5mj"; */
-"uIV-4q-5mj.accessibilityLabel" = "Добавяне на раздел";
 
 /* Class = "UILabel"; text = "Website -- Long Title"; ObjectID = "Uu4-yR-9tN"; */
 "Uu4-yR-9tN.text" = "Уебсайт -- Дълго заглавие";

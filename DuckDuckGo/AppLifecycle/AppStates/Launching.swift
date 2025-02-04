@@ -130,7 +130,7 @@ struct Launching: AppState {
 
         atbAndVariantConfiguration.configure(onVariantAssigned: onVariantAssigned)
         CrashHandlersConfiguration.handleCrashDuringCrashHandlersSetup()
-        TabInteractionStateConfiguration.configure(with: autoClearService, mainViewController: mainCoordinator.controller)
+        TabInteractionStateConfiguration.configure(autoClearService: autoClearService, mainViewController: mainCoordinator.controller)
 
         setupWindow()
     }

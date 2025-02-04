@@ -1,5 +1,5 @@
 //
-//  Logger+MaliciousSiteProtection.swift
+//  MaliciousSiteProtectionEventMapper.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -18,11 +18,24 @@
 //
 
 import Foundation
-import os.log
+import Common
+import Core
+import MaliciousSiteProtection
 
-extension Logger {
-    enum MaliciousSiteProtection {
-        static let datasetsFetcher = Logger(subsystem: "MalSite", category: "DatasetsFetcher")
-        static let manager = Logger(subsystem: "MalSite", category: "Manager")
+enum MaliciousSiteProtectionEventMapper {
+
+    static let debugEvents = EventMapping<MaliciousSiteProtection.Event> { event, _, _, _ in
+        switch event {
+        case .errorPageShown,
+             .visitSite,
+             .iframeLoaded,
+             .settingToggled,
+             .matchesApiTimeout,
+             .failedToDownloadInitialDataSets:
+            Pixel.fire(event)
+        case .matchesApiFailure(let error):
+            Logger.MaliciousSiteProtection.manager.error("Error fetching matches from API: \(error)")
+        }
     }
+    
 }

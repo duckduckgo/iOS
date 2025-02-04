@@ -30,22 +30,6 @@ final class MaliciousSiteProtectionManager {
     private let preferencesManager: MaliciousSiteProtectionPreferencesReading
     private let maliciousSiteProtectionFeatureFlagger: MaliciousSiteProtectionFeatureFlagger
 
-    private static let debugEvents = EventMapping<MaliciousSiteProtection.Event> { event, _, _, _ in
-        switch event {
-        case .errorPageShown,
-             .visitSite,
-             .iframeLoaded,
-             .settingToggled,
-             .matchesApiTimeout:
-            Pixel.fire(event)
-        case .matchesApiFailure(let error):
-            Logger.MaliciousSiteProtection.manager.error("Error fetching matches from API: \(error)")
-        case .failedToDownloadInitialDataSets:
-            // `.failedToDownloadInitialDataSets` Pixel is sent within the BSK library
-            break
-        }
-    }
-
     init(
         dataFetcher: MaliciousSiteProtectionDatasetsFetching,
         api: MaliciousSiteProtectionAPI,
@@ -61,7 +45,7 @@ final class MaliciousSiteProtectionManager {
             apiEnvironment: api.environment,
             service: api.service,
             dataManager: dataManager,
-            eventMapping: Self.debugEvents
+            eventMapping: MaliciousSiteProtectionEventMapper.debugEvents
         )
     }
 }

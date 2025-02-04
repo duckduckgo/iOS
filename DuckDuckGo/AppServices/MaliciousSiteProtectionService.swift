@@ -56,6 +56,7 @@ final class MaliciousSiteProtectionService {
             apiEnvironment: maliciousSiteProtectionAPI.environment,
             service: maliciousSiteProtectionAPI.service,
             dataManager: maliciousSiteProtectionDataManager,
+            eventMapping: MaliciousSiteProtectionEventMapper.debugEvents,
             updateIntervalProvider: remoteIntervalProvider
         )
 

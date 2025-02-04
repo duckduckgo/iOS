@@ -1968,7 +1968,7 @@ extension Pixel.Event {
         case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
 
         // MARK: Malicious Site Protection
-        case .maliciousSiteProtection(let event): return event.name
+        case .maliciousSiteProtection(let event): return "m_\(event.name)"
         }
     }
 }

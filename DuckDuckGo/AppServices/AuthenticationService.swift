@@ -36,6 +36,7 @@ final class AuthenticationService {
 
     func beginAuthentication() {
         let authenticationViewController = showAuthenticationScreen()
+        authenticationViewController.delegate = self
         Task { @MainActor in
             await authenticate(with: authenticationViewController)
         }

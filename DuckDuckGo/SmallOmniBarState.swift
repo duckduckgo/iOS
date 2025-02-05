@@ -49,7 +49,13 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var showSearchLoupe: Bool { !voiceSearchHelper.isSpeechRecognizerAvailable }
+        var showSearchLoupe: Bool {
+            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+                return false
+            } else {
+                return !voiceSearchHelper.isVoiceSearchEnabled
+            }
+        }
         var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
 
         let voiceSearchHelper: VoiceSearchHelperProtocol
@@ -113,7 +119,7 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         var showSettings: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
-        let showDismiss: Bool = false
+        let showDismiss = false
         let showCancel: Bool = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
@@ -161,9 +167,15 @@ struct SmallOmniBarState {
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
 
-        var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
+        var showSearchLoupe: Bool {
+            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+                return false
+            } else {
+                return !voiceSearchHelper.isVoiceSearchEnabled
+            }
+        }
+        
         var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
-
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let featureFlagger: FeatureFlagger
         let isLoading: Bool

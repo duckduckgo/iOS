@@ -81,6 +81,17 @@ final public class BookmarksImporter {
         }
     }
 
+    public static func totalValidBookmarks(in htmlContent: String) -> Int {
+        do {
+            let normalizedHtml = try normalizeBookmarkHtml(htmlContent)
+            var count = 0
+            try countBookmarks(in: normalizedHtml, count: &count)
+            return count
+        } catch {
+            return 0
+        }
+    }
+
     func parseHtml(_ htmlContent: String) async throws {
         // remove irrelevant DD tags used in older firefox and netscape bookmark files
         let normalizedHtml = try Self.normalizeBookmarkHtml(htmlContent)
@@ -98,7 +109,6 @@ final public class BookmarksImporter {
         // Get all direct children
         let children = try root.children()
             .filter { try !$0.select("DT").isEmpty() }
-//            .filter { !Self.isSafariReadingList(node: $0) }
 
         // If multiple root elements, wrap them in DL
         let rootElement: Element
@@ -115,33 +125,26 @@ final public class BookmarksImporter {
         return rootElement
     }
 
-//    private static func isSafariReadingList(node: Node) -> Bool {
-//        if let element = node as? Element {
-//            for childElement in element.children() {
-//                if let folder = try? childElement.select("H3").first(),
-//                    let attribute = try? folder.attr(Constants.idAttribute),
-//                    attribute == Constants.readingListId {
-//                    return true
-//                }
-//            }
-//        }
-//        return false
-//    }
-
-        return newDocument
-    }
-
-    func isSafariReadingList(node: Node) -> Bool {
-        if let element = node as? Element {
-            for childElement in element.children() {
-                if let folder = try? childElement.select("H3").first(),
-                    let attribute = try? folder.attr(Constants.idAttribute),
-                    attribute == Constants.readingListId {
-                    return true
-                }
-            }
+    private static func countBookmarks(in documentElement: Element, count: inout Int) throws {
+        guard let firstDL = try documentElement.select("DL").first() else {
+            throw BookmarksImportError.invalidHtmlNoDLTag
         }
-        return false
+
+        try firstDL.children()
+            .filter({ try $0.select("DT").hasText() })
+            .forEach({ element in
+                let folder = try? element.select("H3").first()
+
+                if folder != nil {
+                    // Recursively count contents of folder
+                    try? countBookmarks(in: element, count: &count)
+                } else {
+                    let linkItem = try element.select("A")
+                    if !linkItem.isEmpty() {
+                        count += 1
+                    }
+                }
+            })
     }
 
     private func parse(documentElement: Element, importedBookmark: BookmarkOrFolder?, inFavorite: Bool = false) throws {

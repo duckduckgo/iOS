@@ -56,7 +56,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let viewModel: AutofillLoginListViewModel
     private lazy var emptyView: UIView = {
         let emptyView = AutofillItemsEmptyView(importButtonAction: { [weak self] in
-            self?.segueToImport()
+            self?.segueToFileImport()
             // TODO - new pixel
 //            Pixel.fire(pixel: .autofillLoginsImportNoPasswords)
         }, importViaSyncButtonAction: { [weak self] in
@@ -103,7 +103,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     private lazy var moreMenu: UIMenu = {
         if #available(iOS 18.2, *) {
-            return UIMenu(children: [editAction(), importAction(), importViaSyncAction()])
+            return UIMenu(children: [editAction(), importFileAction(), importViaSyncAction()])
         } else {
             return UIMenu(children: [editAction(), importViaSyncAction()])
         }
@@ -192,6 +192,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     var selectedAccount: SecureVaultModels.WebsiteAccount?
     var openSearch: Bool
     let source: AutofillSettingsSource
+    private let bookmarksDatabase: CoreDataDatabase
+    private let favoritesDisplayMode: FavoritesDisplayMode
 
     init(appSettings: AppSettings,
          currentTabUrl: URL? = nil,
@@ -200,7 +202,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
          syncDataProviders: SyncDataProviders,
          selectedAccount: SecureVaultModels.WebsiteAccount?,
          openSearch: Bool = false,
-         source: AutofillSettingsSource) {
+         source: AutofillSettingsSource,
+         bookmarksDatabase: CoreDataDatabase,
+         favoritesDisplayMode: FavoritesDisplayMode) {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
         if secureVault == nil {
             Logger.autofill.fault("Failed to make vault")
@@ -210,6 +214,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         self.selectedAccount = selectedAccount
         self.openSearch = openSearch
         self.source = source
+        self.bookmarksDatabase = bookmarksDatabase
+        self.favoritesDisplayMode = favoritesDisplayMode
         super.init(nibName: nil, bundle: nil)
 
         authenticate()

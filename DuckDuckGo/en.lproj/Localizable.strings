@@ -322,57 +322,6 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
 
-/* Title of button to dismiss the screen */
-"autofill.import.passwords.complete.button.title.done" = "Done";
-
-/* Data import summary of how many passwords were not imported as they were duplicates. */
-"autofill.import.passwords.complete.duplicates" = "Duplicates Skipped";
-
-/* Data import summary of how many passwords failed to import. */
-"autofill.import.passwords.complete.failed" = "Failed to import";
-
-/* Subtitle for screen shown after after attempting to import passwords */
-"autofill.import.passwords.complete.subtitle" = "You can now delete the passwords file";
-
-/* Data import summary of how many passwords were successfully imported. */
-"autofill.import.passwords.complete.success" = "Passwords";
-
-/* Title for screen shown after attempting to import passwords */
-"autofill.import.passwords.complete.title" = "Import complete!";
-
-/* Button label to select zip or csv file for importing */
-"autofill.import.passwords.file-button" = "Upload Passwords File...";
-
-/* Title for button to select zip or csn file for importing */
-"autofill.import.passwords.instructions.button.title" = "Upload Passwords File...";
-
-/* Step 1 for instructions to import passwords from Safari. This reads as 'On your iPhone|iPad|device, open ⚙️ System Settings and go to Safari' */
-"autofill.import.passwords.instructions.step1" = "On your %1$@, open ⚙️ %2$@ and go to %3$@";
-
-/* second parameter for autofill.import.passwords.instructions.step1 */
-"autofill.import.passwords.instructions.step1.safari" = "Safari";
-
-/* first parameter for autofill.import.passwords.instructions.step1 */
-"autofill.import.passwords.instructions.step1.system-settings" = "System Settings";
-
-/* Step 2 for instructions to import passwords. Select Export, check the box for Passwords, and save the file in a folder that you can remember' */
-"autofill.import.passwords.instructions.step2" = "Select %1$@, check the box for %2$@, and save the file in a folder that you can remember";
-
-/* first parameter for autofill.import.passwords.instructions.step2 */
-"autofill.import.passwords.instructions.step2.export" = "Export";
-
-/* second parameter for autofill.import.passwords.instructions.step2 */
-"autofill.import.passwords.instructions.step2.passwords" = "Passwords";
-
-/* Title for section with instructions to export passwords from Safari */
-"autofill.import.passwords.instructions.title" = "How to export Passwords from Safari:";
-
-/* Subtitle for screen to import passwords */
-"autofill.import.passwords.subtitle" = "Select the file containing passwords exported from Safari. This is usually a ZIP or CSV file.";
-
-/* Title for screen to import passwords */
-"autofill.import.passwords.title" = " Import Passwords to DuckDuckGo";
-
 /* Button label to get link to download the desktop browser */
 "autofill.import.passwords.via.sync.get-browser-button" = "Get Desktop Browser";
 
@@ -955,6 +904,111 @@
 
 /* Crash Report dialog title */
 "crash.report.dialog.title" = "Automatically send crash reports?";
+
+/* Error message displayed when import fails */
+"data.import.failed.error-message" = "Data failed to import";
+
+/* Error message displayed when no supported data is found in the zip file */
+"data.import.failed.no-data-in-zip-error-message" = "No supported data found in the zip file";
+
+/* Error message displayed when the file sele */
+"data.import.failed.unsupported-file-error-message" = "The file selected is not supported. Please select a different file and try again.";
+
+/* Error message displayed when the zip file can't be opened */
+"data.import.failed.zip-read-error-message" = "The zip file could not be read.";
+
+/* Button label to select zip or csv file for importing */
+"data.import.passwords.file-button" = "Import Passwords File...";
+
+/* Step 1 for instructions to import passwords from Chrome -> 'In Chrome, go to Google Password Manager and then Settings' */
+"data.import.passwords.instructions.chrome.step1" = "In Chrome, go to %1$@ and then %2$@.";
+
+/* first parameter for autofill.import.passwords.instructions.chrome.step1 */
+"data.import.passwords.instructions.chrome.step1.google" = "Google Password Manager";
+
+/* second parameter for autofill.import.passwords.instructions.chrome.step1 */
+"data.import.passwords.instructions.chrome.step1.settings" = "Settings";
+
+/* Step 2 for instructions to import passwords. 'Select Export passwords, then Save to Files and save the file in a folder that you can remember' */
+"data.import.passwords.instructions.chrome.step2" = "Select %1$@, then %2$@ and save the file in a folder that you can remember.";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"data.import.passwords.instructions.chrome.step2.export" = "Export passwords";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"data.import.passwords.instructions.chrome.step2.save" = "Save to Files";
+
+/* Header for section with instructions for how to export passwords from Safari or Chrome */
+"data.import.passwords.instructions.header" = "How to export passwords";
+
+/* Step 1 for instructions to import passwords from Safari. 'On your iPhone, open ⚙️ Settings → Apps → Safari.' */
+"data.import.passwords.instructions.safari.step1" = "On your %1$@, open ⚙️ %2$@.";
+
+/* second parameter for autofill.import.passwords.instructions.safari.step1 */
+"data.import.passwords.instructions.safari.step1.system-settings" = "Settings → Apps → Safari";
+
+/* Step 2 for instructions to import passwords.'Scroll to History and Website Data and select Export, check the box for Passwords, and save the file.' */
+"data.import.passwords.instructions.safari.step2" = "Scroll to %1$@ and select %2$@, check the box for %3$@, and save the file.";
+
+/* second parameter for autofill.import.passwords.instructions.safari.step2 */
+"data.import.passwords.instructions.safari.step2.export" = "Export";
+
+/* first parameter for autofill.import.passwords.instructions.safari.step2 */
+"data.import.passwords.instructions.safari.step2.history" = "History and Website Data";
+
+/* third parameter for autofill.import.passwords.instructions.safari.step2 */
+"data.import.passwords.instructions.safari.step2.passwords" = "Passwords";
+
+/* Text next to selector for which browser to export passwords from (Safari | Chrome) */
+"data.import.passwords.instructions.selector" = "Export From";
+
+/* Export instructions selector for Chrome */
+"data.import.passwords.instructions.selector.chrome" = "Google Chrome";
+
+/* Export instructions selector for Safari */
+"data.import.passwords.instructions.selector.safari" = "Safari";
+
+/* Title for section with instructions to export passwords from Safari */
+"data.import.passwords.instructions.title" = "How to export Passwords from Safari:";
+
+/* Subtitle for screen to import passwords */
+"data.import.passwords.subtitle" = "Select the file containing passwords exported from Safari or Chrome. This is usually a ZIP or CSV file.";
+
+/* Title for screen to import passwords */
+"data.import.passwords.title" = "Import Passwords to DuckDuckGo";
+
+/* Data import summary of how many bookmarks were successfully imported. */
+"data.import.summary.bookmarks.success" = "Bookmarks";
+
+/* Title of button to dismiss the screen */
+"data.import.summary.button.title.done" = "Done";
+
+/* Title of button to prompt users to sync and back up their imported data. Reads as 'Sync & Back Up Passwords | Bookmarks | Data' depending on what the user has chosen to import */
+"data.import.summary.button.title.sync" = "Sync & Back Up %@";
+
+/* Parameter for autofill.import.passwords.complete.button.title.sync */
+"data.import.summary.button.title.sync.bookmarks" = "Bookmarks";
+
+/* Parameter for data.import.summary.button.title.sync */
+"data.import.summary.button.title.sync.data" = "Data";
+
+/* Parameter for autofill.import.passwords.complete.button.title.sync */
+"data.import.summary.button.title.sync.passwords" = "Passwords";
+
+/* Title for screen shown after attempting to import data (passwords / bookmarks) */
+"data.import.summary.complete.title" = "Import complete!";
+
+/* Data import summary of how many items were not imported as they were duplicates. */
+"data.import.summary.duplicates" = "Duplicates Skipped";
+
+/* Data import summary of how many items failed to import. */
+"data.import.summary.failed" = "Failed to import";
+
+/* Subtitle for screen shown after after attempting to import passwords from file */
+"data.import.summary.passwords.subtitle" = "You can now delete the passwords file";
+
+/* Data import summary of how many passwords were successfully imported. */
+"data.import.summary.passwords.success" = "Passwords";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Past month";
@@ -3165,4 +3219,16 @@ https://duckduckgo.com/windows";
 
 /* Title for the Windows browser download link page */
 "windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Get DuckDuckGo for Windows!";
+
+/* Option to select to import bookmarks */
+"zip.content.import.type.bookmarks" = "Bookmarks";
+
+/* Title of button to continue after selecting what data to import */
+"zip.content.import.type.button.title.continue" = "Continue";
+
+/* Option to select to import passwords */
+"zip.content.import.type.passwords" = "Passwords";
+
+/* Title for screen to screen confirming what data to import from a zip file (bookmarks and /or passwords) */
+"zip.content.import.types.title" = "What do you want to import?";
 

@@ -136,7 +136,9 @@ class SettingsLegacyViewProvider: ObservableObject {
                                                        syncService: self.syncService,
                                                        syncDataProviders: self.syncDataProviders,
                                                        selectedAccount: selectedAccount,
-                                                       source: .settings)
+                                                       source: .settings,
+                                                       bookmarksDatabase: self.bookmarksDatabase,
+                                                       favoritesDisplayMode: self.appSettings.favoritesDisplayMode)
     }
 
 }

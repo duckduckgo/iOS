@@ -1,5 +1,5 @@
 //
-//  ImportPasswordsCompleteViewController.swift
+//  DataImportSummaryViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -21,41 +21,53 @@ import Foundation
 import UIKit
 import SwiftUI
 import BrowserServicesKit
+import DDGSync
 
-final class ImportPasswordsCompleteViewController: UIViewController {
-
-    private var viewModel: ImportPasswordsCompleteViewModel
-
-    init(summary: DataImportSummary) {
-        self.viewModel = ImportPasswordsCompleteViewModel(summary: summary)
-
+final class DataImportSummaryViewController: UIViewController {
+    
+    private var viewModel: DataImportSummaryViewModel
+    
+    init(summary: DataImportSummary, syncService: DDGSyncing) {
+        self.viewModel = DataImportSummaryViewModel(summary: summary, syncService: syncService)
+        
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupView()
     }
-
+    
     private func setupView() {
         viewModel.delegate = self
-        let controller = UIHostingController(rootView: ImportPasswordsCompleteView(viewModel: viewModel))
+        let controller = UIHostingController(rootView: DataImportSummaryView(viewModel: viewModel))
         controller.view.backgroundColor = .clear
         installChildViewController(controller)
     }
-
+    
 }
 
-extension ImportPasswordsCompleteViewController: ImportPasswordsCompleteViewModelDelegate {
+// MARK: - DataImportSummaryViewModelDelegate
 
-    func importPasswordsCompleteViewModelComplete(_ viewModel: ImportPasswordsCompleteViewModel) {
+extension DataImportSummaryViewController: DataImportSummaryViewModelDelegate {
+    
+    func dataImportSummaryViewModelDidRequestLaunchSync(_ viewModel: DataImportSummaryViewModel) {
+        if let navigationController = presentingViewController as? UINavigationController, let parent = navigationController.topViewController as? AutofillLoginSettingsListViewController {
+            // TODO - pass source?
+            dismiss(animated: true) {
+                parent.segueToSync()
+            }
+        }
+    }
+    
+    
+    func dataImportSummaryViewModelComplete(_ viewModel: DataImportSummaryViewModel) {
         dismiss(animated: true)
     }
-
-    // TODO - also need to capture the drag down to dismiss screen action
+    
 }

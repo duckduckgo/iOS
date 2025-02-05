@@ -33,7 +33,6 @@ public enum BookmarksImportError: Error {
     case unknown
 }
 
-@MainActor
 final public class BookmarksImporter {
 
     public enum Notifications {
@@ -45,11 +44,13 @@ final public class BookmarksImporter {
     private(set) var coreDataStorage: BookmarkCoreDataImporter
     private let htmlContent: String
 
+    @MainActor
     public init(coreDataStore: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode, htmlContent: String) {
         coreDataStorage = BookmarkCoreDataImporter(database: coreDataStore, favoritesDisplayMode: favoritesDisplayMode)
         self.htmlContent = htmlContent
     }
 
+    @MainActor
     public func parseAndSave() async -> Result<BookmarksImportSummary, BookmarksImportError> {
         NotificationCenter.default.post(name: Notifications.importDidBegin, object: nil)
 

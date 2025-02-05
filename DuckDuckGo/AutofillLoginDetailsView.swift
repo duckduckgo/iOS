@@ -569,6 +569,11 @@ private struct Copyable: ViewModifier {
     
     public func body(content: Content) -> some View {
         ZStack {
+            content
+                .allowsHitTesting(false)
+                .contentShape(Rectangle())
+                .frame(maxWidth: .infinity)
+                .frame(minHeight: Constants.minRowHeight)
             Rectangle()
                 .foregroundColor(.clear)
                 .menuController(menuTitle,
@@ -577,12 +582,6 @@ private struct Copyable: ViewModifier {
                                 secondaryAction: menuSecondaryAction,
                                 onOpen: menuOpenedAction,
                                 onClose: menuClosedAction)
-
-            content
-                .allowsHitTesting(false)
-                .contentShape(Rectangle())
-                .frame(maxWidth: .infinity)
-                .frame(minHeight: Constants.minRowHeight)
 
         }
     }

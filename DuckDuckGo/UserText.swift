@@ -228,27 +228,33 @@ public struct UserText {
     public static let deselectAllTabs = NotLocalizedString("tab.select.none", value: "Deselect All", comment: "Deselect all tabs")
 
     public static func closeTabs(withCount count: Int) -> String {
-        return NotLocalizedString("tab.close", value: "Close X Tab(s)?", comment: "DO NOT TRANSLATE, see strings dict")
+        let format = Bundle.main.localizedString(forKey: "tab.close", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
     public static func alertTitleCloseSelectedTabs(withCount count: Int) -> String {
-        return NotLocalizedString("alertTitleCloseSelectedTabs.withCount", value: "Close X Selected Tab(s)", comment: "DO NOT TRANSLATE, see strings dict")
+        let format = Bundle.main.localizedString(forKey: "alertTitleCloseSelectedTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
     public static func alertTitleCloseOtherTabs(withCount count: Int) -> String {
-        return NotLocalizedString("alertTitleCloseOtherTabs.withCount", value: "Close X Other Tab(s)", comment: "DO NOT TRANSLATE, see strings dict")
+        let format = Bundle.main.localizedString(forKey: "alertTitleCloseOtherTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
     public static func alertTitleCloseTabs(withCount count: Int) -> String {
-        return NotLocalizedString("alertTitleCloseTabs.withCount", value: "Close X tab(s)?", comment: "DO NOT TRANSLATE, see strings dict")
+        let format = Bundle.main.localizedString(forKey: "alertTitleCloseTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
     public static func alertMessageCloseTabs(withCount count: Int) -> String {
-        return NotLocalizedString("alertMessageCloseTabs.withCount", value: "Are you sure you want to close X tab(s)?", comment: "DO NOT TRANSLATE, see strings dict")
+        let format = Bundle.main.localizedString(forKey: "alertMessageCloseTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
-    public static func alertMessageCloseOtherTabs(withCount: Int) -> String {
-        return NotLocalizedString("alertMessageCloseOtherTabs.withCount", value: "Are you sure you want to close X other tab(s)?", comment: "DO NOT TRANSLATE, see strings dict")
+    public static func alertMessageCloseOtherTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "alertMessageCloseOtherTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
@@ -262,19 +268,24 @@ public struct UserText {
 
     public static let tabSwitcherBookmarkAllTabs = NotLocalizedString("tab.switcher.bookmarkAll", value: "Bookmark All Tabs", comment: "Bookmark all tabs menu item")
 
-    public static func tabSwitcherSelectTabs(withCount count: Int) -> String { return NotLocalizedString("tab.switcher.select-tabs", value: "Select Tabs", comment: "DO NOT TRANSLATE, see strings dict.")
+    public static func tabSwitcherSelectTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "tab.switcher.select-tabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
     public static func tabSwitcherCloseOtherTabs(withCount count: Int)  -> String {
-        return NotLocalizedString("tab.switcher.close-others", value: "Close Other Tabs", comment: "DO NOT TRANSLATE, see strings dict.")
+        let format = Bundle.main.localizedString(forKey: "tab.switcher.close-others.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
-    public static func shareLink(withCount count: Int) -> String {
-        return NotLocalizedString("tabs.share.with.count", value: "Share X Tab(s)", comment: "DO NOT TRANSLATE, see strings dict.")
+    public static func shareSelectedLink(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "tabs.share.selected.with.count", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
-    public static func bookmarkTabs(withCount count: Int) -> String {
-        return NotLocalizedString("bookmark.tabs.with.count", value: "Bookmark X Tab(s)", comment: "DO NOT TRANSLATE, see strings dict.")
+    public static func bookmarkSelectedTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "bookmark.selected.tabs.with.count", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
     public static let favorite = NSLocalizedString("favorite", value: "Favorite", comment: "")

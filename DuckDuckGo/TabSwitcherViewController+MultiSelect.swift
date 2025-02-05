@@ -131,7 +131,7 @@ extension TabSwitcherViewController {
 
     func closeAllTabs() {
         let alert = UIAlertController(
-            title: UserText.closeTabs(withCount: tabsModel.count),
+            title: UserText.alertTitleCloseTabs(withCount: tabsModel.count),
             message: UserText.alertMessageCloseTabs(withCount: tabsModel.count),
             preferredStyle: .alert)
 
@@ -275,12 +275,12 @@ extension TabSwitcherViewController {
             // share
             // bookmark
             children.append(UIMenu(title: "", options: .displayInline, children: [
-                action(UserText.shareLink(withCount: selectedPagesCount), "Share-Apple-16", self.selectModeShareLink),
-                action(UserText.bookmarkTabs(withCount: selectedPagesCount), "Bookmark-Add-16", self.selectModeBookmarkSelected),
+                action(UserText.shareSelectedLink(withCount: selectedPagesCount), "Share-Apple-16", self.selectModeShareLink),
+                action(UserText.bookmarkSelectedTabs(withCount: selectedPagesCount), "Bookmark-Add-16", self.selectModeBookmarkSelected),
             ]))
         }
 
-        if allPagesCount > 0 {
+        if allPagesCount > 0 && selectedPagesCount < allPagesCount {
             // bookmark all
             children.append(UIMenu(title: "", options: .displayInline, children: [
                 action(UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.selectModeBookmarkAll),
@@ -306,7 +306,9 @@ extension TabSwitcherViewController {
 
     func createEditMenu() -> UIMenu {
         return UIMenu(children: [
-            action(UserText.tabSwitcherSelectTabs(withCount: tabsModel.count), systemImage: "checkmark.cicle", self.editMenuSelectAll),
+            // Force plural version for the menu - this really means "switch to select tabs mode"
+            action(UserText.tabSwitcherSelectTabs(withCount: 2), systemImage: "checkmark.cicle", self.editMenuSelectAll),
+
             action(UserText.closeTabs(withCount: tabsModel.count), "Tab-Close-16", destructive: true, self.editMenuCloseAllTabs),
         ])
     }

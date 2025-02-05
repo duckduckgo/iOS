@@ -2707,8 +2707,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)' */
 "subscription.subscription.expiring.monthly.caption" = "Your monthly subscription expires on %@.";
 
-/* Trial subscription expiration info where parameter is expiration date. This reads as 'Your free trial ends on (date) and will not convert to a paid subscription.' */
-"subscription.subscription.expiring.trial.monthly.caption" = "Your free trial ends on %@, and will not convert to a paid subscription.";
+/* Trial subscription expiration info where parameter is expiration date. This reads as 'Your free trial ends on (date) & will not convert to a paid subscription.' */
+"subscription.subscription.expiring.trial.monthly.caption" = "Your free trial ends on %@ & will not convert to a paid subscription.";
 
 /* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
 "subscription.subscription.expiring.unknown.caption" = "Your subscription expires on %@.";
@@ -2719,11 +2719,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)' */
 "subscription.subscription.renewing.monthly.caption" = "Your monthly subscription renews on %@.";
 
-/* Monthly trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date), and will convert to a monthly paid subscription.' */
-"subscription.subscription.renewing.trial.monthly.caption" = "Your free trial ends on %@, and will convert to a monthly paid subscription.";
+/* Monthly trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date) & automatically converts to a monthly paid subscription on that day.' */
+"subscription.subscription.renewing.trial.monthly.caption" = "Your free trial ends on %@ & automatically converts to a monthly paid subscription on that day.";
 
-/* Annual trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date), and will convert to a annual paid subscription.' */
-"subscription.subscription.renewing.trial.yearly.caption" = "Your free trial ends on %@, and will convert to an annual paid subscription.";
+/* Annual trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date) & automatically converts to an annual paid subscription on that day.' */
+"subscription.subscription.renewing.trial.yearly.caption" = "Your free trial ends on %@ & automatically converts to an annual paid subscription on that day.";
 
 /* Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)' */
 "subscription.subscription.renewing.unknown.caption" = "Your subscription renews on %@.";

@@ -1328,12 +1328,12 @@ But if you *do* want a peek under the hood, you can find more information about 
         switch billingPeriod {
         case .monthly:
             localized = NSLocalizedString("subscription.subscription.renewing.trial.monthly.caption",
-                                          value: "Your free trial ends on %@, and will convert to a monthly paid subscription.",
-                                          comment: "Monthly trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date), and will convert to a monthly paid subscription.'")
+                                          value: "Your free trial ends on %@ & automatically converts to a monthly paid subscription on that day.",
+                                          comment: "Monthly trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date) & automatically converts to a monthly paid subscription on that day.'")
         case .yearly:
             localized = NSLocalizedString("subscription.subscription.renewing.trial.yearly.caption",
-                                          value: "Your free trial ends on %@, and will convert to an annual paid subscription.",
-                                          comment: "Annual trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date), and will convert to a annual paid subscription.'")
+                                          value: "Your free trial ends on %@ & automatically converts to an annual paid subscription on that day.",
+                                          comment: "Annual trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date) & automatically converts to an annual paid subscription on that day.'")
         case .unknown:
             localized = NSLocalizedString("subscription.subscription.renewing.unknown.caption",
                                           value: "Your subscription renews on %@.",
@@ -1345,8 +1345,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     static func expiringTrialSubscriptionInfo(expiryDate: String) -> String {
         let localized = NSLocalizedString("subscription.subscription.expiring.trial.monthly.caption",
-                                          value: "Your free trial ends on %@, and will not convert to a paid subscription.",
-                                          comment: "Trial subscription expiration info where parameter is expiration date. This reads as 'Your free trial ends on (date) and will not convert to a paid subscription.'")
+                                          value: "Your free trial ends on %@ & will not convert to a paid subscription.",
+                                          comment: "Trial subscription expiration info where parameter is expiration date. This reads as 'Your free trial ends on (date) & will not convert to a paid subscription.'")
         return String(format: localized, expiryDate)
     }
 

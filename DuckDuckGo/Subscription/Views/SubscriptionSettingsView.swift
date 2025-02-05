@@ -286,7 +286,7 @@ struct SubscriptionSettingsView: View {
             headerSection
                 .padding(.horizontal, -20)
                 .padding(.vertical, -10)
-            if configuration == .subscribed || configuration == .expired {
+            if configuration == .subscribed || configuration == .expired || configuration == .trial {
                 devicesSection
             }
             manageSection

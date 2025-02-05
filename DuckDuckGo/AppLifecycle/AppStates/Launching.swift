@@ -341,6 +341,9 @@ struct Launching: AppState {
                                         eventTracker: ExperimentEventTracker(store: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()))
 
         let syncErrorHandler = SyncErrorHandler()
+        
+        let decider = AppDependencyProvider.shared.internalUserDecider
+        (decider as? DefaultInternalUserDecider)?.debugSetInternalUserState(true)
 
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,

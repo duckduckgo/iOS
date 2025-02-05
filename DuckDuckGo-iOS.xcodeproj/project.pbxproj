@@ -5823,6 +5823,13 @@
 			name = PageRefreshMonitor;
 			sourceTree = "<group>";
 		};
+		CB69F3142D52C541008550E7 /* AppLifecycle */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AppLifecycle;
+			sourceTree = "<group>";
+		};
 		CBAA195627BFDD9800A4BD49 /* SmarterEncryption */ = {
 			isa = PBXGroup;
 			children = (
@@ -6963,6 +6970,7 @@
 		F1E092B31E92A6B900732CCC /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				CB69F3142D52C541008550E7 /* AppLifecycle */,
 				C1BF4BA82D26E08F00A83C77 /* Autofill */,
 				316790E32C9350980090B0A2 /* MarketplaceAdPostback */,
 				858479CA2B8795BF00D156C1 /* History */,

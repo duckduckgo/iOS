@@ -38,11 +38,9 @@ final class SubscriptionService {
         subscriptionCookieManager = Self.makeSubscriptionCookieManager(application: application,
                                                                        subscriptionManager: subscriptionManager,
                                                                        privacyConfigurationManager: privacyConfigurationManager)
-        subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            purchasePlatform: .appStore)
+        subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(privacyConfigurationManager: privacyConfigurationManager,
+                                                                                 purchasePlatform: .appStore)
         self.privacyConfigurationManager = privacyConfigurationManager
-
         privacyConfigurationManager.updatesPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in

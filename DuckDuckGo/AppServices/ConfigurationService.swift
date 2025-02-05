@@ -67,7 +67,7 @@ final class ConfigurationService {
     func onForeground() {
         if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
             ContentBlocking.shared.contentBlockingManager.scheduleCompilation() // TODO: should compilation happen in line here
-            // or should other service be responsible for it?
+            // or should other service be responsible for it? e.g. ContentBlockingService
             AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
         }
         AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()

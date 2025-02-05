@@ -27,6 +27,7 @@ final class UserAgentConfiguration {
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
+    // Called at the end of launching due to some race condition in the IPC layer when spawning a WebView for content blocking compilation.
     static func configureUserBrowsingUserAgent() {
         _ = DefaultUserAgentManager.shared
     }

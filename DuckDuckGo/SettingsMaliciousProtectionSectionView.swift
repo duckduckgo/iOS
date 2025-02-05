@@ -1,5 +1,5 @@
 //
-//  SettingsMaliciousSiteProtectionView.swift
+//  SettingsMaliciousProtectionSectionView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,10 +20,16 @@
 import SwiftUI
 import DuckUI
 
-struct SettingsMaliciousProtectionView: View {
+struct SettingsMaliciousProtectionSectionView: View {
+    private enum Constants {
+        static let sectionIdentifier = "MaliciousSiteProtectionSettingsSection"
+    }
+
+    private let proxy: ScrollViewProxy
     @ObservedObject private var model: MaliciousSiteProtectionSettingsViewModel
 
-    init(model: MaliciousSiteProtectionSettingsViewModel) {
+    init(proxy: ScrollViewProxy, model: MaliciousSiteProtectionSettingsViewModel) {
+        self.proxy = proxy
         self.model = model
     }
 
@@ -49,6 +55,14 @@ struct SettingsMaliciousProtectionView: View {
                     accessory: .toggle(isOn: $model.isMaliciousSiteProtectionOn)
                 )
             }
+            .id(Constants.sectionIdentifier)
+            .onChange(of: model.isMaliciousSiteProtectionOn) { isMaliciousSiteProtectionOn in
+                if !isMaliciousSiteProtectionOn {
+                    withAnimation {
+                        proxy.scrollTo(Constants.sectionIdentifier, anchor: .top)
+                    }
+                }
+            }
         } else {
             EmptyView()
         }
@@ -56,5 +70,10 @@ struct SettingsMaliciousProtectionView: View {
 }
 
 #Preview {
-    SettingsMaliciousProtectionView(model: MaliciousSiteProtectionSettingsViewModel(manager: MaliciousSiteProtectionPreferencesManager()))
+    ScrollViewReader { proxy in
+        SettingsMaliciousProtectionSectionView(
+            proxy: proxy,
+            model: MaliciousSiteProtectionSettingsViewModel(manager: MaliciousSiteProtectionPreferencesManager())
+        )
+    }
 }

@@ -798,7 +798,7 @@
 		98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D7217B37010011A0D4 /* Theme.swift */; };
 		98F6EA472863124100720957 /* ContentBlockerRulesLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F6EA462863124100720957 /* ContentBlockerRulesLists.swift */; };
 		98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */; };
-		9F06EB8A2D10560200905426 /* SettingsMaliciousSiteProtectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB892D10560200905426 /* SettingsMaliciousSiteProtectionView.swift */; };
+		9F06EB8A2D10560200905426 /* SettingsMaliciousProtectionSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB892D10560200905426 /* SettingsMaliciousProtectionSectionView.swift */; };
 		9F06EB8C2D10578000905426 /* MaliciousSiteProtectionSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB8B2D10578000905426 /* MaliciousSiteProtectionSettingsViewModelTests.swift */; };
 		9F06EB922D10740500905426 /* MaliciousSiteProtectionPreferencesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F06EB912D10740500905426 /* MaliciousSiteProtectionPreferencesManagerTests.swift */; };
 		9F0949A02D372AE60079291B /* MaliciousSiteProtectionDatasetsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F09499F2D372ADB0079291B /* MaliciousSiteProtectionDatasetsFetcher.swift */; };
@@ -2735,7 +2735,7 @@
 		98F3A1D7217B37010011A0D4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		98F6EA462863124100720957 /* ContentBlockerRulesLists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesLists.swift; sourceTree = "<group>"; };
 		98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemableNavigationController.swift; sourceTree = "<group>"; };
-		9F06EB892D10560200905426 /* SettingsMaliciousSiteProtectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMaliciousSiteProtectionView.swift; sourceTree = "<group>"; };
+		9F06EB892D10560200905426 /* SettingsMaliciousProtectionSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMaliciousProtectionSectionView.swift; sourceTree = "<group>"; };
 		9F06EB8B2D10578000905426 /* MaliciousSiteProtectionSettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionSettingsViewModelTests.swift; sourceTree = "<group>"; };
 		9F06EB912D10740500905426 /* MaliciousSiteProtectionPreferencesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionPreferencesManagerTests.swift; sourceTree = "<group>"; };
 		9F09499F2D372ADB0079291B /* MaliciousSiteProtectionDatasetsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaliciousSiteProtectionDatasetsFetcher.swift; sourceTree = "<group>"; };
@@ -3589,6 +3589,7 @@
 		1DEAADE42BA386D100E25A97 /* MainSettings */ = {
 			isa = PBXGroup;
 			children = (
+				9F7ED8122D52EEBA00CCF4F5 /* Sub Sections */,
 				1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */,
 				1DEAADE72BA38AA500E25A97 /* SettingsGeneralView.swift */,
 				1DEAADE92BA4539800E25A97 /* SettingsAppearanceView.swift */,
@@ -3596,7 +3597,6 @@
 				1DEAADED2BA45DFE00E25A97 /* SettingsDataClearingView.swift */,
 				D65625A02C232F5E006EF297 /* SettingsDuckPlayerView.swift */,
 				317CA3422CFF82DB00F88848 /* SettingsAIChatView.swift */,
-				9F06EB892D10560200905426 /* SettingsMaliciousSiteProtectionView.swift */,
 			);
 			name = MainSettings;
 			sourceTree = "<group>";
@@ -5463,6 +5463,14 @@
 				9F74B7972D518FFF00A7F174 /* MaliciousSiteProtectionEventMapper.swift */,
 			);
 			path = Events;
+			sourceTree = "<group>";
+		};
+		9F7ED8122D52EEBA00CCF4F5 /* Sub Sections */ = {
+			isa = PBXGroup;
+			children = (
+				9F06EB892D10560200905426 /* SettingsMaliciousProtectionSectionView.swift */,
+			);
+			name = "Sub Sections";
 			sourceTree = "<group>";
 		};
 		9F8E0F282CCA577E001EA7C5 /* AddToDock */ = {
@@ -8713,7 +8721,7 @@
 				9FCFCD852C75C91A006EB7A0 /* ProgressBarView.swift in Sources */,
 				6F3537A42C4AC140009F8717 /* NewTabPageDaxLogoView.swift in Sources */,
 				314C92B827C3DD660042EC96 /* QuickLookPreviewView.swift in Sources */,
-				9F06EB8A2D10560200905426 /* SettingsMaliciousSiteProtectionView.swift in Sources */,
+				9F06EB8A2D10560200905426 /* SettingsMaliciousProtectionSectionView.swift in Sources */,
 				6F5345AF2C53F2DE00424A43 /* NewTabPageSettingsPersistentStorage.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				CBAD0F0A2CFF418F006267B8 /* AppShortcuts.swift in Sources */,

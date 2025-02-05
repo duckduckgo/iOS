@@ -26,38 +26,7 @@ final class AutofillService {
 
     private let autofillLoginSession = AppDependencyProvider.shared.autofillLoginSession
     private let autofillUsageMonitor = AutofillUsageMonitor()
-    private lazy var autofillPixelReporter = AutofillPixelReporter(
-        standardUserDefaults: .standard,
-        appGroupUserDefaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).autofill"),
-        autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
-        eventMapping: EventMapping<AutofillPixelEvent> { [weak self] event, _, params, _ in
-            switch event {
-            case .autofillActiveUser:
-                Pixel.fire(pixel: .autofillActiveUser)
-            case .autofillEnabledUser:
-                Pixel.fire(pixel: .autofillEnabledUser)
-            case .autofillOnboardedUser:
-                Pixel.fire(pixel: .autofillOnboardedUser)
-            case .autofillToggledOn:
-                Pixel.fire(pixel: .autofillToggledOn, withAdditionalParameters: params ?? [:])
-                if let autofillExtensionToggled = self?.autofillUsageMonitor.autofillExtensionEnabled {
-                    Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
-                               withAdditionalParameters: params ?? [:])
-                }
-            case .autofillToggledOff:
-                Pixel.fire(pixel: .autofillToggledOff, withAdditionalParameters: params ?? [:])
-                if let autofillExtensionToggled = self?.autofillUsageMonitor.autofillExtensionEnabled {
-                    Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
-                               withAdditionalParameters: params ?? [:])
-                }
-            case .autofillLoginsStacked:
-                Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
-            default:
-                break
-            }
-        },
-        installDate: StatisticsUserDefaults().installDate ?? Date()
-    )
+    private var autofillPixelReporter: AutofillPixelReporter?
 
     var syncService: SyncService?
 
@@ -72,7 +41,43 @@ final class AutofillService {
         if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
             AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
         }
+        autofillPixelReporter = makeAutofillPixelReporter()
         registerForAutofillEnabledChanges()
+    }
+
+    private func makeAutofillPixelReporter() -> AutofillPixelReporter {
+        AutofillPixelReporter(
+            standardUserDefaults: .standard,
+            appGroupUserDefaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).autofill"),
+            autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
+            eventMapping: EventMapping<AutofillPixelEvent> { [weak self] event, _, params, _ in
+                switch event {
+                case .autofillActiveUser:
+                    Pixel.fire(pixel: .autofillActiveUser)
+                case .autofillEnabledUser:
+                    Pixel.fire(pixel: .autofillEnabledUser)
+                case .autofillOnboardedUser:
+                    Pixel.fire(pixel: .autofillOnboardedUser)
+                case .autofillToggledOn:
+                    Pixel.fire(pixel: .autofillToggledOn, withAdditionalParameters: params ?? [:])
+                    if let autofillExtensionToggled = self?.autofillUsageMonitor.autofillExtensionEnabled {
+                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+                                   withAdditionalParameters: params ?? [:])
+                    }
+                case .autofillToggledOff:
+                    Pixel.fire(pixel: .autofillToggledOff, withAdditionalParameters: params ?? [:])
+                    if let autofillExtensionToggled = self?.autofillUsageMonitor.autofillExtensionEnabled {
+                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+                                   withAdditionalParameters: params ?? [:])
+                    }
+                case .autofillLoginsStacked:
+                    Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
+                default:
+                    break
+                }
+            },
+            installDate: StatisticsUserDefaults().installDate ?? Date()
+        )
     }
 
     func onForeground() {
@@ -92,7 +97,7 @@ final class AutofillService {
         NotificationCenter.default.addObserver(forName: AppUserDefaults.Notifications.autofillEnabledChange,
                                                object: nil,
                                                queue: nil) { _ in
-            self.autofillPixelReporter.updateAutofillEnabledStatus(AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled)
+            self.autofillPixelReporter?.updateAutofillEnabledStatus(AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled)
         }
     }
 

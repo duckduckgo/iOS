@@ -32,6 +32,12 @@ final class SyncService {
     private var syncDidFinishCancellable: AnyCancellable?
     private let application: UIApplication
 
+    weak var presenter: SyncAlertsPresenting? {
+        didSet {
+            syncErrorHandler.alertPresenter = presenter
+        }
+    }
+
     init(bookmarksDatabase: CoreDataDatabase,
          privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          application: UIApplication = UIApplication.shared) {

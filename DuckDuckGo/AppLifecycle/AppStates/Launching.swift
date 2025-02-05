@@ -115,7 +115,7 @@ struct Launching: AppState {
                                           fireproofing: fireproofing,
                                           accountManager: accountManager,
                                           didFinishLaunchingStartTime: didFinishLaunchingStartTime)
-        syncService.syncErrorHandler.alertPresenter = mainCoordinator.controller
+        syncService.presenter = mainCoordinator.controller
         vpnService = VPNService(mainCoordinator: mainCoordinator)
         let overlayWindowManager = OverlayWindowManager(window: window,
                                                         addressBarPosition: appSettings.currentAddressBarPosition,

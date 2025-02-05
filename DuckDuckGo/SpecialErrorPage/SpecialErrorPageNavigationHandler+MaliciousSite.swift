@@ -64,6 +64,7 @@ final class MaliciousSiteProtectionNavigationHandler {
     @MainActor private(set) var maliciousURLExemptions: [URL: ThreatKind] = [:]
     @MainActor private(set) var bypassedMaliciousSiteThreatKind: ThreatKind?
     @MainActor private(set) var maliciousSiteDetectionTasks: [URL: Task<MaliciousSiteProtectionNavigationResult, Never>] = [:]
+    private var lastMainFrameNavigationURL: URL?
 
     init(
         maliciousSiteProtectionManager: MaliciousSiteDetecting,
@@ -86,15 +87,17 @@ extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavig
     @MainActor
     func makeMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
 
-        // `.backForward` navigation does not trigger `decidePolicyFor navigationResponse: WKNavigationResponse`.
-        // If navigation type is `.backForward` we avoid creating a task that won't be consumed.
         guard
             let url = navigationAction.request.url,
-            navigationAction.navigationType != .backForward,
             url != URL(string: "about:blank")
         else {
             return
         }
+
+        // Purge Detection tasks when a new main frame navigation happens
+        purgeMaliciousDectionTasksIfNeeded(navigationAction: navigationAction, url: url)
+        // Save last main frame navigation
+        lastMainFrameNavigationURL = url
 
         handleMaliciousExemptions(for: navigationAction.navigationType, url: url)
 
@@ -172,6 +175,19 @@ private extension MaliciousSiteProtectionNavigationHandler {
     @MainActor
     func shouldBypassMaliciousSiteProtection(for url: URL) -> Bool {
         bypassedMaliciousSiteThreatKind != .none || url.isDuckDuckGo || url.isDuckURLScheme
+    }
+
+    @MainActor
+    func purgeMaliciousDectionTasksIfNeeded(navigationAction: WKNavigationAction, url: URL) {
+        // Purge task storage if new main frame navigation to avoid creating tasks that won't be consumed and will continue to be stored causing unnecessary memory usage.
+        // The following navigations don't trigger `decidePolicyForNavigationResponse`:
+        // - same-document navigations (with #hash suffix)
+        // - custom app URL schemes
+        // - early failing navigations
+        // - navigations whose .request.cachePolicy == .returnCacheDataElseLoad and other cacheable requests including session restoration.
+        if navigationAction.isTargetingMainFrame() && url != lastMainFrameNavigationURL {
+            maliciousSiteDetectionTasks = [:]
+        }
     }
 
 }

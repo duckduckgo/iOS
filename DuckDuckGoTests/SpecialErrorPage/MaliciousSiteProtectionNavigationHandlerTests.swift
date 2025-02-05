@@ -58,18 +58,66 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
     }
 
     @MainActor
-    @Test("Test navigation backforward does not create a Malicious Detection Task")
-    func whenHandleDecidePolicyForNavigationActionIsCalledAndNavigationIsBackForwardThenDoNotCreateDetectionTask() throws {
+    @Test("New Main Frame Navigation Purges Malicious Detection Tasks")
+    func whenHandleDecidePolicyForNavigationActionIsCalled_AndNavigationIsMainFrame_AndNavigationIsNew_ThenPurgeDetectionTasks() throws {
         // GIVEN
-        let url = try #require(URL(string: "https://www.example.com"))
-        let navigationAction = MockNavigationAction(request: URLRequest(url: url), navigationType: .backForward, targetFrame: MockFrameInfo(isMainFrame: true))
-        #expect(sut.maliciousSiteDetectionTasks.isEmpty)
+        let firstNavigationURL = try #require(URL(string: "https://www.example.com"))
+        let secondNavigationURL = try #require(URL(string: "https://www.example.com/page123"))
+        let thirdNavigationURL = try #require(URL(string: "https://www.test.com"))
+        let fourthNavigationURL = try #require(URL.ddg)
+        let firstNavigationAction = MockNavigationAction(request: URLRequest(url: firstNavigationURL), targetFrame: MockFrameInfo(isMainFrame: true))
+        let secondNavigationAction = MockNavigationAction(request: URLRequest(url: secondNavigationURL), targetFrame: MockFrameInfo(isMainFrame: true))
+        let thirdNavigationAction = MockNavigationAction(request: URLRequest(url: thirdNavigationURL), targetFrame: MockFrameInfo(isMainFrame: true))
+        let fourthNavigationAction = MockNavigationAction(request: URLRequest(url: fourthNavigationURL), targetFrame: MockFrameInfo(isMainFrame: true))
 
         // WHEN
-        sut.makeMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        sut.makeMaliciousSiteDetectionTask(for: firstNavigationAction, webView: webView)
+
+        // THEN
+        #expect(sut.maliciousSiteDetectionTasks.count == 1)
+        #expect(sut.maliciousSiteDetectionTasks[firstNavigationURL] != nil)
+
+        // WHEN
+        sut.makeMaliciousSiteDetectionTask(for: secondNavigationAction, webView: webView)
+
+        // THEN
+        #expect(sut.maliciousSiteDetectionTasks.count == 1)
+        #expect(sut.maliciousSiteDetectionTasks[secondNavigationURL] != nil)
+
+        // WHEN
+        sut.makeMaliciousSiteDetectionTask(for: thirdNavigationAction, webView: webView)
+
+        // THEN
+        #expect(sut.maliciousSiteDetectionTasks.count == 1)
+        #expect(sut.maliciousSiteDetectionTasks[thirdNavigationURL] != nil)
+
+        // WHEN
+        sut.makeMaliciousSiteDetectionTask(for: fourthNavigationAction, webView: webView)
 
         // THEN
         #expect(sut.maliciousSiteDetectionTasks.isEmpty)
+    }
+
+    @MainActor
+    @Test("Same Main Frame Navigation Does Not Purge Malicious Detection Tasks")
+    func whenHandleDecidePolicyForNavigationActionIsCalled_AndNavigationIsMainFrame_AndNavigationIsNotNew_ThenDoNotPurgeDetectionTasks() throws {
+        // GIVEN
+        let firstNavigationURL = try #require(URL(string: "https://www.example.com"))
+        let secondNavigationURL = try #require(URL(string: "https://www.test.com"))
+        let mainFrameNavigationAction = MockNavigationAction(request: URLRequest(url: firstNavigationURL), targetFrame: MockFrameInfo(isMainFrame: true))
+        let subFrameNavigationAction = MockNavigationAction(request: URLRequest(url: secondNavigationURL), targetFrame: MockFrameInfo(isMainFrame: false))
+        sut.makeMaliciousSiteDetectionTask(for: mainFrameNavigationAction, webView: webView)
+        #expect(sut.maliciousSiteDetectionTasks.count == 1)
+        #expect(sut.maliciousSiteDetectionTasks[firstNavigationURL] != nil)
+
+        // WHEN
+        sut.makeMaliciousSiteDetectionTask(for: subFrameNavigationAction, webView: webView)
+
+        // THEN
+        #expect(sut.maliciousSiteDetectionTasks.count == 2)
+        #expect(sut.maliciousSiteDetectionTasks[firstNavigationURL] != nil)
+        #expect(sut.maliciousSiteDetectionTasks[secondNavigationURL] != nil)
+
     }
 
     @MainActor

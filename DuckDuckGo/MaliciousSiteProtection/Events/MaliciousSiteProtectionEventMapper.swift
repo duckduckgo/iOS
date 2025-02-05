@@ -30,9 +30,10 @@ enum MaliciousSiteProtectionEventMapper {
              .visitSite,
              .iframeLoaded,
              .settingToggled,
-             .matchesApiTimeout,
-             .failedToDownloadInitialDataSets:
+             .matchesApiTimeout:
             Pixel.fire(event)
+        case .failedToDownloadInitialDataSets:
+            Pixel.fireDailyAndCount(event)
         case .matchesApiFailure(let error):
             Logger.MaliciousSiteProtection.manager.error("Error fetching matches from API: \(error)")
         }

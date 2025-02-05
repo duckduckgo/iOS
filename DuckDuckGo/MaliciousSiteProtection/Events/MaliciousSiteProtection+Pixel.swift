@@ -28,4 +28,9 @@ extension Pixel {
         Pixel.fire(.maliciousSiteProtection(event: convertedPixelEvent), withAdditionalParameters: convertedPixelEvent.parameters)
     }
 
+    static func fireDailyAndCount(_ event: MaliciousSiteProtection.Event) {
+        guard let convertedPixelEvent = Event.MaliciousSiteProtectionEvent(event) else { return }
+        DailyPixel.fireDailyAndCount(pixel: .maliciousSiteProtection(event: convertedPixelEvent), withAdditionalParameters: convertedPixelEvent.parameters)
+    }
+
 }

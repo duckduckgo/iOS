@@ -2140,7 +2140,12 @@ public extension Pixel.Event {
         }
 
         var name: String {
-            event.name
+            switch self {
+            case .failedToDownloadInitialDataSets:
+                return "debug_\(event.name)"
+            default:
+                return event.name
+            }
         }
 
         public var parameters: [String: String] {

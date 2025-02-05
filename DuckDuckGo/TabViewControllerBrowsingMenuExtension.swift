@@ -166,8 +166,11 @@ extension TabViewController {
 
 
             }
-            entries.append(buildOpenBookmarksEntry())
             entries.append(.separator)
+        }
+
+        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            entries.append(buildOpenBookmarksEntry())
         }
 
         if featureFlagger.isFeatureOn(.autofillAccessCredentialManagement) {
@@ -203,8 +206,10 @@ extension TabViewController {
         entries.append(bookmarkEntries.bookmark)
         assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
         entries.append(bookmarkEntries.favorite)
-                
-        entries.append(buildOpenBookmarksEntry())
+
+        if !featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            entries.append(buildOpenBookmarksEntry())
+        }
 
         entries.append(.separator)
 

@@ -686,8 +686,8 @@ extension OmniBar {
     private func animateTransition(from oldView: UIView, to newView: UIView) {
         dismissButtonAnimator?.stopAnimation(true)
         let animationOffset: CGFloat = 20
-        let animationDuration: CGFloat = 0.2
-        let animationDampingRatio: CGFloat = 0.7
+        let animationDuration: CGFloat = 0.6
+        let animationDampingRatio: CGFloat = 0.9
 
         newView.alpha = 0
         newView.transform = CGAffineTransform(translationX: -animationOffset, y: 0)

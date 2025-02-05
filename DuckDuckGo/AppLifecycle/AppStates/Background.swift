@@ -46,7 +46,7 @@ struct Background: AppState {
     init(stateContext: Launching.StateContext) {
         appDependencies = stateContext.appDependencies
 
-        onBackground()
+        appDependencies.mainCoordinator.resetAppStartTime()
     }
 
     // MARK: - Handle logic when transitioning from Suspending to Background

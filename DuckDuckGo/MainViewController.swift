@@ -2132,6 +2132,20 @@ extension MainViewController: OmniBarDelegate {
             }
         }
     }
+
+    /// We always want to show the AI Chat button if the keyboard is on focus
+    func onDidBeginEditing() {
+        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            omniBar.accessoryType = .chat
+        }
+    }
+
+    /// When the keyboard is dismissed we'll apply the previous rule to define the accessory button back to whatever it was
+    func onDidEndEditing() {
+        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            omniBar.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: currentTab?.url)
+        }
+    }
 }
 
 extension MainViewController: FavoritesOverlayDelegate {

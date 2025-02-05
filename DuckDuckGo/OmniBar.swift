@@ -594,6 +594,7 @@ extension OmniBar: UITextFieldDelegate {
             if highlightText {
                 self.textField.selectAll(nil)
             }
+            self.omniDelegate?.onDidBeginEditing()
         }
     }
     
@@ -609,6 +610,7 @@ extension OmniBar: UITextFieldDelegate {
         case .suspended:
             refreshState(state.onEditingSuspendedState)
         }
+        self.omniDelegate?.onDidEndEditing()
     }
 }
 

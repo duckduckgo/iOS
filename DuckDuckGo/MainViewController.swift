@@ -1339,7 +1339,9 @@ class MainViewController: UIViewController {
             syncDataProviders: syncDataProviders,
             selectedAccount: nil,
             openSearch: openSearch,
-            source: source
+            source: source,
+            bookmarksDatabase: self.bookmarksDatabase,
+            favoritesDisplayMode: self.appSettings.favoritesDisplayMode
         )
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)

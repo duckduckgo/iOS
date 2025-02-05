@@ -26,6 +26,8 @@ import DDGSync
 import DesignResourcesKit
 import SwiftUI
 import os.log
+import Persistence
+import Bookmarks
 
 enum AutofillSettingsSource: String {
     case settings
@@ -412,9 +414,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
 
-    private func importAction() -> UIAction {
+    private func importFileAction() -> UIAction {
         return UIAction(title: UserText.autofillEmptyViewImportButtonTitle, image: UIImage(named: "Import-16")) { [weak self] _ in
-            self?.segueToImport()
+            self?.segueToFileImport()
             // TODO - new pixel
 //            Pixel.fire(pixel: .autofillLoginsImport)
         }
@@ -427,10 +429,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
 
-    private func segueToImport() {
-        let importController = ImportPasswordsViewController()
-        importController.delegate = self
-        navigationController?.pushViewController(importController, animated: true)
+    private func segueToFileImport() {
+        let dataImportManager = DataImportManager(reporter: SecureVaultReporter(),
+                                                  bookmarksDatabase: bookmarksDatabase,
+                                                  favoritesDisplayMode: favoritesDisplayMode)
+        let dataImportViewController = DataImportViewController(importManager: dataImportManager, importScreen: DataImportViewModel.ImportScreen.passwords, syncService: syncService)
+        dataImportViewController.delegate = self
+        navigationController?.pushViewController(dataImportViewController, animated: true)
     }
 
     private func segueToImportViaSync() {
@@ -439,7 +444,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         navigationController?.pushViewController(importController, animated: true)
     }
 
-    private func segueToSync(source: String? = nil) {
+    func segueToSync(source: String? = nil) {
         if let settingsVC = self.navigationController?.children.first as? SettingsHostingController {
             navigationController?.popToRootViewController(animated: true)
             if let source = source {
@@ -1224,9 +1229,9 @@ extension AutofillLoginSettingsListViewController: AutofillHeaderViewDelegate {
 
 // MARK: ImportPasswordsViewControllerDelegate
 
-extension AutofillLoginSettingsListViewController: ImportPasswordsViewControllerDelegate {
+extension AutofillLoginSettingsListViewController: DataImportViewControllerDelegate {
 
-    func importPasswordsViewControllerDidFinish(_ viewController: ImportPasswordsViewController) {
+    func dataImportViewControllerDidFinish(_ viewController: DataImportViewController) {
         viewModel.updateData()
     }
 }

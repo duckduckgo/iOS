@@ -43,7 +43,7 @@ final class AIChatViewControllerManager {
     }
 
     @MainActor
-    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil, on viewController: UIViewController) {
+    func openAIChat(_ query: String? = nil, payload: Any? = nil, autoSend: Bool = false, on viewController: UIViewController) {
         let settings = AIChatSettings(privacyConfigurationManager: privacyConfigurationManager,
                                       internalUserDecider: internalUserDecider)
 
@@ -73,7 +73,7 @@ final class AIChatViewControllerManager {
         roundedPageSheet.delegate = self
 
         if let query = query {
-            aiChatViewController.loadQuery(query)
+            aiChatViewController.loadQuery(query, autoSend: autoSend)
         }
 
         // Force a reload to trigger the user script getUserValues

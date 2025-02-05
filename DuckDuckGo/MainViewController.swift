@@ -1736,8 +1736,8 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
-        aiChatViewControllerManager.openAIChat(query, payload: payload, on: self)
+    func openAIChat(_ query: String? = nil, autoSend: Bool = false, payload: Any? = nil) {
+        aiChatViewControllerManager.openAIChat(query, payload: payload, autoSend: autoSend, on: self)
     }
 }
 
@@ -2105,14 +2105,42 @@ extension MainViewController: OmniBarDelegate {
 
         switch accessoryType {
         case .chat:
-            let queryItem = currentTab?.url?.getQueryItems()?.filter { $0.name == "q" }.first
-            openAIChat(queryItem)
-            Pixel.fire(pixel: .openAIChatFromAddressBar)
+            openAIChatFromAddressBar()
         case .share:
             guard let link = currentTab?.link else { return }
             Pixel.fire(pixel: .addressBarShare)
             currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.accessoryButton)
         }
+    }
+
+    private func openAIChatFromAddressBar() {
+        /// https://app.asana.com/0/1204167627774280/1209322943444951
+
+
+        if omniBar.textField.isEditing {
+            let textFieldValue = omniBar.textField.text
+            omniBar.textField.resignFirstResponder()
+
+            /// Check if the URL in the text field is the same as the one loaded
+            /// If it is, open the chat normally (no auto-send)
+            /// If the URLs differ, open the chat with the new text and auto-send enabled
+            if let currentURLString = currentTab?.url?.absoluteString, currentURLString == textFieldValue {
+                openAIChat()
+            } else {
+                openAIChat(textFieldValue, autoSend: true)
+            }
+        } else {
+            /// Check if the current tab's URL is a DuckDuckGo search page
+            /// If it is, get the query item and open the chat with the query item's value
+            if currentTab?.url?.isDuckDuckGoSearch == true {
+                let queryItem = currentTab?.url?.getQueryItems()?.filter { $0.name == "q" }.first
+                openAIChat(queryItem?.value)
+            } else {
+                openAIChat()
+            }
+        }
+
+        Pixel.fire(pixel: .openAIChatFromAddressBar)
     }
 
     func onAccessoryLongPressed(accessoryType: OmniBar.AccessoryType) {

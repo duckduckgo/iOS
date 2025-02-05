@@ -34,7 +34,7 @@ class BookmarksImporterTests: XCTestCase {
         try super.setUpWithError()
 
         htmlLoader = HtmlTestDataLoader()
-        importer = BookmarksImporter(coreDataStore: storage, favoritesDisplayMode: .displayNative(.mobile))
+        importer = BookmarksImporter(coreDataStore: storage, favoritesDisplayMode: .displayNative(.mobile), htmlContent: "")
     }
 
     override func tearDownWithError() throws {
@@ -46,67 +46,67 @@ class BookmarksImporterTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func test_WhenDocumentIsOfSafariFormat_ThenReturnTrue() throws {
-        let document: Document = try SwiftSoup.parse(htmlLoader.fromHtmlFile("MockFiles/bookmarks_safari.html"))
-        XCTAssertTrue(importer.isDocumentInSafariFormat(document))
-    }
-
     func test_WhenParseChromeHtml_ThenImportSuccess() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_chrome.html"))
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_chrome.html"))
         XCTAssertEqual(importer.importedBookmarks.count, 9)
     }
 
     func test_WhenParseSafariHtml_ThenImportSuccess() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_safari.html"))
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_safari.html"))
         XCTAssertEqual(importer.importedBookmarks.count, 10)
     }
 
     func test_WhenParseSafariHtml_ThenReadingListExcluded() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_safari.html"))
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_safari.html"))
 
         let result = importer.importedBookmarks.filter { $0.name == "Reading List" }
         XCTAssertEqual(result.count, 0)
     }
 
     func test_WhenParseFirefoxHtml_ThenImportSuccess() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_firefox.html"))
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_firefox.html"))
         XCTAssertEqual(importer.importedBookmarks.count, 10)
     }
 
     func test_WhenParseBraveHtml_ThenImportSuccess() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_brave.html"))
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_brave.html"))
         XCTAssertEqual(importer.importedBookmarks.count, 1)
     }
 
     func test_WhenParseDDGAndroidHtml_ThenImportSuccess() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_ddg_android.html"))
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_ddg_android.html"))
         XCTAssertEqual(importer.importedBookmarks.count, 2)
     }
 
     func test_WhenParseDDGMacOSHtml_ThenImportSuccess() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_ddg_macos.html"))
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_ddg_macos.html"))
         XCTAssertEqual(importer.importedBookmarks.count, 9)
     }
 
     func test_WhenParseNetscapeHtml_ThenImportSuccess() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_netscape_nested.html"))
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_netscape_nested.html"))
         XCTAssertEqual(importer.importedBookmarks.count, 5)
     }
 
     func test_WhenParseFirefoxFlatHtml_ThenImportSuccess() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_firefox_flat.html"))
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_firefox_flat.html"))
         XCTAssertEqual(importer.importedBookmarks.count, 23)
     }
 
     func test_WhenParseFirefoxNestedHtml_ThenImportSuccess() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_firefox_nested.html"))
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_firefox_nested.html"))
         XCTAssertEqual(importer.importedBookmarks.count, 8)
+    }
+
+    func test_WhenParseDirtyHtml_ThenImportSuccess() async throws {
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_dirty.html"))
+        XCTAssertEqual(importer.importedBookmarks.count, 3)
     }
 
     func test_WhenParseInvalidHtml_ThenImportFail() async throws {
         // Note: wanted to use XCTAssertThrowsError but it doesn't support concurrency yet
         do {
-            try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_invalid.html"))
+            try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_invalid.html"))
             XCTFail("Expected parsing of HTML to fail, but succeeded")
         } catch {
             XCTAssertEqual(error as? BookmarksImportError, .invalidHtmlNoDLTag)
@@ -139,8 +139,9 @@ class BookmarksImporterTests: XCTestCase {
                                                  urlString: existingFavoriteURL,
                                                  children: nil)]
         
-        try await importer.saveBookmarks(initialBookmarks)
-        
+        let firstSummary = try await importer.saveBookmarks(initialBookmarks)
+        XCTAssertEqual(firstSummary.successful, 2)
+
         let countRequest = BookmarkEntity.fetchRequest()
         countRequest.predicate = NSPredicate(format: "%K == false AND %K == false",
                                              #keyPath(BookmarkEntity.isFolder),
@@ -163,14 +164,15 @@ class BookmarksImporterTests: XCTestCase {
                                                   urlString: otherURL,
                                                   children: nil)]
         
-        try await importer.saveBookmarks(importedBookmarks)
+        let _ = try await importer.saveBookmarks(importedBookmarks)
         let newCount = try storage.makeContext(concurrencyType: .mainQueueConcurrencyType).count(for: countRequest)
         XCTAssertEqual(newCount, 3)
     }
 
     func test_WhenSaveBookmarks_ThenDataSaved() async throws {
-        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_safari.html"))
-        try await importer.saveBookmarks(importer.importedBookmarks)
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_safari.html"))
+        let summary = try await importer.saveBookmarks(importer.importedBookmarks)
+        XCTAssertEqual(summary.successful, 13)
 
         // Note: exhaustive hierarchy is tested in BookmarksExporterTests.testExportHtml
         let context = storage.makeContext(concurrencyType: .mainQueueConcurrencyType)
@@ -182,10 +184,11 @@ class BookmarksImporterTests: XCTestCase {
     }
 
     func test_WhenParseHtmlAndSave_ThenDataSaved() async {
-        let result = await importer.parseAndSave(html: htmlLoader.fromHtmlFile("MockFiles/bookmarks_chrome.html"))
+        importer = BookmarksImporter(coreDataStore: storage, favoritesDisplayMode: .displayNative(.mobile), htmlContent: htmlLoader.fromHtmlFile("MockFiles/bookmarks/bookmarks_chrome.html"))
+        let result = await importer.parseAndSave()
         switch result {
         case .success(let importedBookmarks):
-            XCTAssertEqual(importedBookmarks.count, 9)
+            XCTAssertEqual(importedBookmarks.successful, 12)
         case .failure(let bookmarksImportError):
             XCTFail("Failed to parse and save HTML \(bookmarksImportError.localizedDescription)")
         }

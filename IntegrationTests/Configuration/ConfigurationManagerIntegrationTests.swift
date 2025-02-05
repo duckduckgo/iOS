@@ -42,6 +42,7 @@ final class ConfigurationManagerIntegrationTests: XCTestCase {
         configManager = nil
     }
 
+    // Test temporarily disabled due to failure
     func testTdsAreFetchedFromURLBasedOnPrivacyConfigExperiment() async {
         // GIVEN
         await configManager.fetchAndUpdateTrackerBlockingDependencies()

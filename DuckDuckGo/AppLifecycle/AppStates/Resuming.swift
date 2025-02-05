@@ -31,7 +31,7 @@ import UIKit
 @MainActor
 struct Resuming: AppState {
 
-    private var appDependencies: AppDependencies
+    private let appDependencies: AppDependencies
     private let lastBackgroundDate: Date
 
     var urlToOpen: URL?

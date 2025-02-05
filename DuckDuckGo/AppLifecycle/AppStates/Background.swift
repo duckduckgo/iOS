@@ -35,7 +35,7 @@ import UIKit
 struct Background: AppState {
 
     private let lastBackgroundDate: Date = Date()
-    private var appDependencies: AppDependencies
+    private let appDependencies: AppDependencies
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?

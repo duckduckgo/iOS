@@ -97,6 +97,7 @@ class OmniBar: UIView {
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()
     private let privacyIconContextualOnboardingAnimator = PrivacyIconContextualOnboardingAnimator()
+    private var dismissButtonAnimator: UIViewPropertyAnimator?
 
     // Set up a view to add a custom icon to the Omnibar
     private var customIconView: UIImageView = UIImageView(frame: CGRect(x: 4, y: 8, width: 26, height: 26))
@@ -426,28 +427,6 @@ class OmniBar: UIView {
         }
     }
 
-    private func updateLeftIconContainerState(oldState: any OmniBarState, newState: any OmniBarState) {
-        if state.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
-            if oldState.showSearchLoupe && newState.showDismiss {
-                animateTransition(from: searchLoupe, to: dismissButton)
-            } else if oldState.showDismiss && newState.showSearchLoupe {
-                animateTransition(from: dismissButton, to: searchLoupe)
-            } else {
-                setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
-                setVisibility(dismissButton, hidden: !state.showDismiss)
-            }
-        } else {
-            setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
-            setVisibility(dismissButton, hidden: !state.showDismiss)
-        }
-
-        if !state.showDismiss && !state.showSearchLoupe {
-            leftIconContainerView.isHidden = true
-        } else {
-            leftIconContainerView.isHidden = false
-        }
-    }
-
     func updateOmniBarPadding(left: CGFloat, right: CGFloat) {
         omniBarLeadingConstraint.constant = (state.hasLargeWidth ? 24 : 8) + left
         omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : 14) + right
@@ -594,29 +573,6 @@ class OmniBar: UIView {
         super.layoutSubviews()
         NotificationCenter.default.post(name: OmniBar.didLayoutNotification, object: self)
     }
-
-    private func animateTransition(from oldView: UIView, to newView: UIView) {
-        newView.alpha = 0
-        newView.transform = CGAffineTransform(translationX: -20, y: 0)
-        newView.isHidden = false
-        oldView.isHidden = false
-
-        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.7,
-                       initialSpringVelocity: 0.5, options: [], animations: {
-            oldView.alpha = 0
-            oldView.transform = CGAffineTransform(translationX: -20, y: 0)
-
-            if newView == self.searchLoupe {
-                newView.alpha = 0.5
-            } else {
-                newView.alpha = 1
-            }
-            newView.transform = .identity
-        }, completion: { _ in
-            oldView.isHidden = true
-            oldView.transform = .identity
-        })
-    }
 }
 
 extension OmniBar: UITextFieldDelegate {
@@ -692,5 +648,68 @@ extension OmniBar {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             privacyIconAndTrackersAnimator.resetImageProvider()
         }
+    }
+}
+
+extension OmniBar {
+
+    private func updateLeftIconContainerState(oldState: any OmniBarState, newState: any OmniBarState) {
+        if state.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            if oldState.showSearchLoupe && newState.showDismiss {
+                animateTransition(from: searchLoupe, to: dismissButton)
+            } else if oldState.showDismiss && newState.showSearchLoupe {
+                animateTransition(from: dismissButton, to: searchLoupe)
+            } else if dismissButtonAnimator == nil || dismissButtonAnimator?.isRunning == false {
+                updateLeftContainerVisibility(state: newState)
+            }
+
+        } else {
+            updateLeftContainerVisibility(state: newState)
+        }
+
+        if !state.showDismiss && !newState.showSearchLoupe {
+            leftIconContainerView.isHidden = true
+        } else {
+            leftIconContainerView.isHidden = false
+        }
+    }
+
+    private func updateLeftContainerVisibility(state: any OmniBarState) {
+        setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
+        setVisibility(dismissButton, hidden: !state.showDismiss)
+        dismissButton.alpha = state.showDismiss ? 1 : 0
+        searchLoupe.alpha = state.showSearchLoupe ? 0.5 : 0
+    }
+
+    private func animateTransition(from oldView: UIView, to newView: UIView) {
+        dismissButtonAnimator?.stopAnimation(true)
+        let animationOffset: CGFloat = 20
+        let animationDuration: CGFloat = 0.2
+        let animationDampingRatio: CGFloat = 0.7
+
+        newView.alpha = 0
+        newView.transform = CGAffineTransform(translationX: -animationOffset, y: 0)
+        newView.isHidden = false
+        oldView.isHidden = false
+
+        let targetAlpha: CGFloat = (newView == searchLoupe) ? 0.5 : 1.0
+
+        dismissButtonAnimator = UIViewPropertyAnimator(duration: animationDuration, dampingRatio: animationDampingRatio) {
+            oldView.alpha = 0
+            oldView.transform = CGAffineTransform(translationX: -animationOffset, y: 0)
+            newView.alpha = targetAlpha
+            newView.transform = .identity
+        }
+
+        dismissButtonAnimator?.isInterruptible = true
+
+        dismissButtonAnimator?.addCompletion { position in
+            if position == .end {
+                oldView.isHidden = true
+                oldView.transform = .identity
+            }
+        }
+
+        dismissButtonAnimator?.startAnimation()
     }
 }

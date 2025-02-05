@@ -85,8 +85,13 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var showSearchLoupe: Bool { !voiceSearchHelper.isSpeechRecognizerAvailable }
-
+        var showSearchLoupe: Bool {
+            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+                return false
+            } else {
+                return !voiceSearchHelper.isVoiceSearchEnabled
+            }
+        }
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let featureFlagger: FeatureFlagger
         let isLoading: Bool
@@ -193,7 +198,13 @@ struct SmallOmniBarState {
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
 
-        var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
+        var showSearchLoupe: Bool {
+            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+                return false
+            } else {
+                return !voiceSearchHelper.isVoiceSearchEnabled
+            }
+        }
 
         let voiceSearchHelper: VoiceSearchHelperProtocol
         let featureFlagger: FeatureFlagger
@@ -262,7 +273,13 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return BrowsingTextEditingStartedState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
+        var showSearchLoupe: Bool {
+            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+                return false
+            } else {
+                return !voiceSearchHelper.isVoiceSearchEnabled
+            }
+        }
         var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
 
         let voiceSearchHelper: VoiceSearchHelperProtocol

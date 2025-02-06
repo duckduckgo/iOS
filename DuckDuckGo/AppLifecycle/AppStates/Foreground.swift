@@ -20,7 +20,7 @@
 import Foundation
 import UIKit
 import Core
-import BackgroundTasks
+import Combine
 
 /// Represents the state where the app is active and available for user interaction.
 /// - Usage:
@@ -43,6 +43,10 @@ struct Foreground: AppState {
     private var shortcutItemToHandle: UIApplicationShortcutItem?
     private var lastBackgroundDate: Date?
 
+    private let didAuthenticate = PassthroughSubject<Void, Never>()
+    private let didSetupWebView = PassthroughSubject<Void, Never>()
+    private var cancellables = Set<AnyCancellable>()
+
     // MARK: - Handle logic when transitioning from Launched to Foreground
     /// This transition occurs when the app has completed its launch process and becomes active.
     /// Note: You want to add here code that will happen one-time per app lifecycle, but you require the UI to be active at this point!
@@ -51,12 +55,25 @@ struct Foreground: AppState {
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
 
+        observeAppReadiness()
+
+        onInitialForeground()
+        onForeground()
+    }
+
+    private mutating func observeAppReadiness() {
+        Publishers.CombineLatest(didAuthenticate, didSetupWebView)
+            .sink { [self] _, _ in
+                self.onAppReadyForInteraction()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func onInitialForeground() {
         configureGlobalAppearance()
         appDependencies.subscriptionService.onInitialForeground()
         appDependencies.configurationService.onInitialForeground()
         appDependencies.remoteMessagingService.onInitialForeground()
-
-        onForeground()
     }
 
     private func configureGlobalAppearance() {
@@ -71,18 +88,9 @@ struct Foreground: AppState {
         shortcutItemToHandle = stateContext.shortcutItemToHandle
         lastBackgroundDate = stateContext.lastBackgroundDate
 
+        observeAppReadiness()
+
         onForeground()
-    }
-
-    // MARK: - Handle logic when transitioning from Suspending to Foreground
-    /// This transition occurs when the app returns to the foreground after briefly being suspended (e.g., user dismisses a notification).
-    init(stateContext: Suspending.StateContext) {
-        appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
-        shortcutItemToHandle = stateContext.shortcutItemToHandle
-
-        // No known use case yet, as nothing in Suspending requires reversal here.
-        // Since Suspending is very brief, we should not call `onForeground` again, as it has already been executed.
     }
 
     // MARK: - Handle applicationDidBecomeActive(_:) logic here
@@ -91,14 +99,13 @@ struct Foreground: AppState {
     /// - If install/search statistics are required, see `onStatisticsLoaded`.
     /// - If crucial configuration files (e.g., TDS, privacy config) are needed, see `onConfigurationFetched`.
     ///
-    /// This is THE LAST POINT for setting up anything. If you need something to happen earlier,
+    /// This is **THE LAST POINT** for setting up anything. If you need something to happen earlier,
     /// add it to Launching and Resuming to ensure it runs both on a cold start and when the app wakes up.
     private func onForeground() {
         /// Please note that authentication triggers a transition to the `Suspending` state.
         /// Once authentication is completed, the app reenters the `Foreground` state.
-        appDependencies.authenticationService.beginAuthentication()
-
-        appDependencies.autoClearService.registerForDataCleared(onWebViewSetupComplete)
+        appDependencies.authenticationService.beginAuthentication(onAuthenticated: onAuthenticated)
+        appDependencies.autoClearService.registerForDataCleared(onWebViewReadyForInteraction)
 
         appDependencies.syncService.onForeground()
 
@@ -115,14 +122,25 @@ struct Foreground: AppState {
         mainCoordinator.onForeground()
     }
 
+    private func onAuthenticated() {
+        didAuthenticate.send()
+    }
+
     // MARK: - Handle any WebView related logic here
     /// Callback for the AutoClear feature, triggered when all browser data is cleared.
     /// This includes closing all tabs, clearing caches, and wiping `WKWebsiteDataStore.default()`.
     /// Place any code here related to browser navigation or web view handling
     /// to ensure it remains unaffected by the clearing process.
-    private func onWebViewSetupComplete() {
+    private func onWebViewReadyForInteraction() {
         appDependencies.vpnService.onWebViewSetupComplete()
         handleLaunchActions()
+        didSetupWebView.send()
+    }
+
+    private func onAppReadyForInteraction() {
+        if urlToOpen == nil && shortcutItemToHandle == nil {
+            appDependencies.keyboardService.showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
+        }
     }
 
     private func handleLaunchActions() {
@@ -130,9 +148,6 @@ struct Foreground: AppState {
             openURL(url)
         } else if let shortcutItemToHandle = shortcutItemToHandle {
             handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
-        } else {
-            appDependencies.keyboardService.showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
-            // TODO: is this logic correct? should we show keyboard on link/shortcut opening?
         }
     }
 
@@ -172,6 +187,29 @@ struct Foreground: AppState {
             mainCoordinator.presentNetworkProtectionStatusSettingsModal()
         }
     }
+
+    // MARK: - Suspending logic
+
+    // MARK: - Handle application suspension (applicationWillResignActive(_:))
+    /// Called when the app is **briefly suspended** due to user actions or system interruptions.
+    /// This happens when the app is about to move to the background but has not fully transitioned yet.
+    ///
+    /// **Scenarios when this happens:**
+    /// - The user presses the home button or swipes up to enter the App Switcher.
+    /// - The app triggers an authentication prompt, causing a temporary suspension.
+    /// - A system alert (e.g., incoming call, notification) appears, momentarily pausing the app.
+    func onSuspended() { }
+
+    // MARK: - Handle app reactivation after suspension (applicationDidBecomeActive(_:))
+    /// Called when the app **reenters the foreground after being suspended**.
+    /// This is the counterpart to `onSuspended()`, triggered when the app **was previously suspended**
+    /// and is now becoming active again.
+    ///
+    /// **Scenarios when this happens:**
+    /// - The user successfully authenticates and returns to the app.
+    /// - The user switches back to the app from the App Switcher.
+    /// - The app was interrupted by a system alert and is now resuming.
+    func onReenteredForeground() { }
 
 }
 

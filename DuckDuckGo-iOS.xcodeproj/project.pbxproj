@@ -1071,7 +1071,6 @@
 		CB3C788C2D06D3A700A7E4ED /* AppStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0F052CFE270D006267B8 /* AppStateMachine.swift */; };
 		CB3C788D2D06D3A700A7E4ED /* AppStateTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0F072CFE27D5006267B8 /* AppStateTransitions.swift */; };
 		CB3C788E2D06D3A700A7E4ED /* Initializing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0EF82CFE1D35006267B8 /* Initializing.swift */; };
-		CB3C788F2D06D3A700A7E4ED /* Suspending.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAD0EFE2CFE1D4E006267B8 /* Suspending.swift */; };
 		CB4FA44E2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */; };
 		CB5516D0286500290079B175 /* TrackerRadarIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */; };
 		CB5516D1286500290079B175 /* ContentBlockingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904C24FD2DB000D41DDF /* ContentBlockingRulesTests.swift */; };
@@ -3086,7 +3085,6 @@
 		CBAD0EF82CFE1D35006267B8 /* Initializing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializing.swift; sourceTree = "<group>"; };
 		CBAD0EFA2CFE1D3F006267B8 /* Launching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launching.swift; sourceTree = "<group>"; };
 		CBAD0EFC2CFE1D48006267B8 /* Foreground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foreground.swift; sourceTree = "<group>"; };
-		CBAD0EFE2CFE1D4E006267B8 /* Suspending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suspending.swift; sourceTree = "<group>"; };
 		CBAD0F002CFE1D54006267B8 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		CBAD0F052CFE270D006267B8 /* AppStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateMachine.swift; sourceTree = "<group>"; };
 		CBAD0F072CFE27D5006267B8 /* AppStateTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTransitions.swift; sourceTree = "<group>"; };
@@ -6088,7 +6086,6 @@
 				CBAD0EF82CFE1D35006267B8 /* Initializing.swift */,
 				CBAD0EFA2CFE1D3F006267B8 /* Launching.swift */,
 				CBAD0EFC2CFE1D48006267B8 /* Foreground.swift */,
-				CBAD0EFE2CFE1D4E006267B8 /* Suspending.swift */,
 				CBAD0F002CFE1D54006267B8 /* Background.swift */,
 				CBF2594F2D37ED6100AC63E4 /* Resuming.swift */,
 				CBF2597C2D41734700AC63E4 /* Terminating.swift */,
@@ -8315,7 +8312,6 @@
 				CB3C788C2D06D3A700A7E4ED /* AppStateMachine.swift in Sources */,
 				CB3C788D2D06D3A700A7E4ED /* AppStateTransitions.swift in Sources */,
 				CB3C788E2D06D3A700A7E4ED /* Initializing.swift in Sources */,
-				CB3C788F2D06D3A700A7E4ED /* Suspending.swift in Sources */,
 				1EA513782866039400493C6A /* TrackerAnimationLogic.swift in Sources */,
 				854A01332A558B3A00FCC628 /* UIView+Constraints.swift in Sources */,
 				9FB0271B2C2927D0009EA190 /* OnboardingView.swift in Sources */,

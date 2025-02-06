@@ -49,9 +49,8 @@ struct Background: AppState {
         appDependencies.mainCoordinator.resetAppStartTime()
     }
 
-    // MARK: - Handle logic when transitioning from Suspending to Background
-    /// This transition occurs when the app moves from foreground to the background.
-    init(stateContext: Suspending.StateContext) {
+    // MARK: - Handle logic when transitioning from Foreground to Background
+    init(stateContext: Foreground.StateContext) {
         appDependencies = stateContext.appDependencies
 
         onBackground()

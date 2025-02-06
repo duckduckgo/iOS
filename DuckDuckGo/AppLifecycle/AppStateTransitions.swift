@@ -51,24 +51,15 @@ extension Foreground {
     func apply(event: AppEvent) -> any AppState {
         switch event {
         case .willResignActive:
-            return Suspending(stateContext: makeStateContext())
+            onSuspended()
+            return self
+        case .didBecomeActive:
+            onReenteredForeground()
+            return self
         case .willTerminate(let terminationReason):
             return Terminating(stateContext: makeStateContext(), terminationReason: terminationReason)
-        default:
-            return handleUnexpectedEvent(event)
-        }
-    }
-
-}
-
-extension Suspending {
-
-    func apply(event: AppEvent) -> any AppState {
-        switch event {
         case .didEnterBackground:
             return Background(stateContext: makeStateContext())
-        case .didBecomeActive:
-            return Foreground(stateContext: makeStateContext())
         default:
             return handleUnexpectedEvent(event)
         }

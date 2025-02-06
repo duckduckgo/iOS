@@ -32,7 +32,12 @@ class AutomationServer {
         var port = port ?? 8786
         self.main = main
         Logger.automationServer.info("Starting automation server on port \(port)")
-        listener = try! NWListener(using: .tcp, on: NWEndpoint.Port(integerLiteral: UInt16(port)))
+        do {
+            listener = try NWListener(using: .tcp, on: NWEndpoint.Port(integerLiteral: UInt16(port)))
+        } catch {
+            Logger.automationServer.error("Failed to start listener: \(error)")
+            fatalError("Failed to start automation listener: \(error)")
+        }
         listener.newConnectionHandler = handleConnection
         listener.start(queue: .main)
         // Output server started

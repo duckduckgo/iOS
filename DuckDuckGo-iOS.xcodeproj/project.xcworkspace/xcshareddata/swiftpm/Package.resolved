@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
-        "revision" : "1169c5565a1d6e3091e93448a28485a736dfa6d4",
-        "version" : "236.0.0"
+        "branch" : "jacek/fix-toggle-report-prompting",
+        "revision" : "b7afc621500a41d030d89a2afd56f8343fc7115e"
       }
     },
     {

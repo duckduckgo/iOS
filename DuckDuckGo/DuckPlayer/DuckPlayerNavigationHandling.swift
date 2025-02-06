@@ -135,6 +135,9 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     ///   - webView: The web view where navigation is occurring.
     /// - Returns: `true` if the navigation should be canceled, `false` otherwise.
     func handleDelegateNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
+    
+    /// Sets the host view controller for the navigation handler.
+    func setHostViewController(_ hostViewController: TabViewController)
 }
 
 /// Protocol defining the tab navigation handling for Duck Player.

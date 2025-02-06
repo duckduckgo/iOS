@@ -35,7 +35,8 @@ extension TabSwitcherViewController {
                                       message: UserText.alertBookmarkAllMessage,
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        alert.addAction(title: UserText.actionBookmark, style: .default) {
+        alert.addAction(title: UserText.actionBookmark, style: .default) { [weak self] in
+            guard let self else { return }
             let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
             model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
             let result = self.bookmarkTabs(withIndices: indices, viewModel: model)
@@ -139,8 +140,8 @@ extension TabSwitcherViewController {
                                       style: .default) { _ in })
 
         alert.addAction(UIAlertAction(title: UserText.closeTabs(withCount: tabsModel.count),
-                                      style: .destructive) { _ in
-
+                                      style: .destructive) { [weak self] _ in
+            guard let self else { return }
             self.delegate?.tabSwitcherDidRequestCloseAll(tabSwitcher: self)
         })
 
@@ -158,7 +159,8 @@ extension TabSwitcherViewController {
                                       style: .default) { _ in })
 
         alert.addAction(UIAlertAction(title: UserText.closeTabs(withCount: indices.count),
-                                      style: .destructive) { _ in
+                                      style: .destructive) { [weak self] _ in
+            guard let self else { return }
 
             indices.compactMap {
                 self.tabsModel.safeGetTabAt($0)
@@ -255,49 +257,83 @@ extension TabSwitcherViewController {
         tabsModel.tabs.compactMap(\.link).count
     }
 
+    fileprivate func addLargeInterfaceMultiSelectMenuItemsIfNeeded(_ children: inout [UIMenuElement]) {
+        guard self.interfaceMode.isLarge else { return }
+
+        if selectedTabs.count == tabsModel.count {
+            children.append(action(UserText.deselectAllTabs, systemImage: "circle") { [weak self] in
+                guard let self else { return }
+                self.selectModeDeselectAllTabs()
+            })
+        } else {
+            children.append(action(UserText.selectAllTabs, systemImage: "checkmark.circle", { [weak self] in
+                guard let self else { return }
+                self.selectModeSelectAllTabs()
+            }))
+        }
+    }
+    
+    fileprivate func addSelectedPagesMultiSelectMenuItemsIfNeeded(_ selectedPagesCount: Int, _ children: inout [UIMenuElement]) {
+        guard selectedPagesCount > 0 else { return }
+        children.append(UIMenu(title: "", options: .displayInline, children: [
+            action(UserText.shareSelectedLink(withCount: selectedPagesCount), "Share-Apple-16", { [weak self] in
+                guard let self else { return }
+                self.selectModeShareLink()
+            }),
+            action(UserText.bookmarkSelectedTabs(withCount: selectedPagesCount), "Bookmark-Add-16", { [weak self] in
+                guard let self else { return }
+                self.selectModeBookmarkSelected()
+            }),
+        ]))
+    }
+    
+    fileprivate func addBookmarkMultiSelectMenuItemIfNeeded(_ allPagesCount: Int, _ selectedPagesCount: Int, _ children: inout [UIMenuElement]) {
+        guard allPagesCount > 0 && selectedPagesCount < allPagesCount else { return  }
+        children.append(UIMenu(title: "", options: .displayInline, children: [
+            action(UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", { [weak self] in
+                guard let self else { return }
+                self.selectModeBookmarkAll()
+            }),
+        ]))
+    }
+    
+    fileprivate func addCloseOptionsToMultiSelectMenuItemIfNeeded(_ children: inout [UIMenuElement]) {
+        guard selectedTabs.count > 0 && tabsModel.count > selectedTabs.count else { return }
+        if interfaceMode.isLarge {
+            children.append(UIMenu(title: "", options: .displayInline, children: [
+                action(UserText.closeTabs(withCount: selectedTabs.count), "Close-16", destructive: true, { [weak self] in
+                    guard let self else { return }
+                    self.selectModeCloseSelectedTabs()
+                }),
+            ]))
+        } else {
+            children.append(UIMenu(title: "", options: .displayInline, children: [
+                action(UserText.tabSwitcherCloseOtherTabs(withCount: tabsModel.count - selectedTabs.count), "Tab-Close-16", destructive: true, { [weak self] in
+                    guard let self else { return }
+                    self.selectModeCloseOtherTabs()
+                }),
+            ]))
+        }
+    }
+    
     func createMultiSelectionMenu() -> UIMenu {
         let selectedPagesCount = self.selectedPagesCount
         let allPagesCount = self.allPagesCount
 
         var children = [UIMenuElement]()
         
-        if self.interfaceMode.isLarge {
-            if selectedTabs.count == tabsModel.count {
-                children.append(action(UserText.deselectAllTabs, systemImage: "circle", self.selectModeDeselectAllTabs))
-            } else {
-                children.append(action(UserText.selectAllTabs, systemImage: "checkmark.circle", self.selectModeSelectAllTabs))
-            }
-        }
+        addLargeInterfaceMultiSelectMenuItemsIfNeeded(&children)
 
-        if selectedPagesCount > 0 {
-            // share
-            // bookmark
-            children.append(UIMenu(title: "", options: .displayInline, children: [
-                action(UserText.shareSelectedLink(withCount: selectedPagesCount), "Share-Apple-16", self.selectModeShareLink),
-                action(UserText.bookmarkSelectedTabs(withCount: selectedPagesCount), "Bookmark-Add-16", self.selectModeBookmarkSelected),
-            ]))
-        }
+        // share
+        // bookmark
+        addSelectedPagesMultiSelectMenuItemsIfNeeded(selectedPagesCount, &children)
 
-        if allPagesCount > 0 && selectedPagesCount < allPagesCount {
-            // bookmark all
-            children.append(UIMenu(title: "", options: .displayInline, children: [
-                action(UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.selectModeBookmarkAll),
-            ]))
-        }
+        // bookmark all
+        addBookmarkMultiSelectMenuItemIfNeeded(allPagesCount, selectedPagesCount, &children)
 
-        if selectedTabs.count > 0 && tabsModel.count > selectedTabs.count {
-            if interfaceMode.isLarge {
-                // close
-                children.append(UIMenu(title: "", options: .displayInline, children: [
-                    action(UserText.closeTabs(withCount: selectedTabs.count), "Close-16", destructive: true, self.selectModeCloseSelectedTabs),
-                ]))
-            } else {
-                // close other (close is on the button)
-                children.append(UIMenu(title: "", options: .displayInline, children: [
-                    action(UserText.tabSwitcherCloseOtherTabs(withCount: tabsModel.count - selectedTabs.count), "Tab-Close-16", destructive: true, self.selectModeCloseOtherTabs),
-                ]))
-            }
-        }
+        // close (large UI only)
+        // close other
+        addCloseOptionsToMultiSelectMenuItemIfNeeded(&children)
 
         return UIMenu(title: "", children: children)
     }
@@ -305,9 +341,15 @@ extension TabSwitcherViewController {
     func createEditMenu() -> UIMenu {
         return UIMenu(children: [
             // Force plural version for the menu - this really means "switch to select tabs mode"
-            action(UserText.tabSwitcherSelectTabs(withCount: 2), systemImage: "checkmark.cicle", self.editMenuSelectAll),
+            action(UserText.tabSwitcherSelectTabs(withCount: 2), systemImage: "checkmark.cicle", { [weak self] in
+                guard let self else { return }
+                self.editMenuSelectAll()
+            }),
 
-            action(UserText.closeTabs(withCount: tabsModel.count), "Tab-Close-16", destructive: true, self.editMenuCloseAllTabs),
+            action(UserText.closeTabs(withCount: tabsModel.count), "Tab-Close-16", destructive: true, { [weak self] in
+                guard let self else { return }
+                self.editMenuCloseAllTabs()
+            }),
         ])
     }
 
@@ -325,10 +367,16 @@ extension TabSwitcherViewController {
 
         let group0 = [
             // Share Link
-            tabsModel.safeGetTabAt(index)?.link != nil ? self.action(index, UserText.tabSwitcherShareLink, "Share-Apple-16", self.longPressMenuShareLink) : nil,
+            tabsModel.safeGetTabAt(index)?.link != nil ? self.action(index, UserText.tabSwitcherShareLink, "Share-Apple-16", { [weak self] index in
+                guard let self else { return }
+                self.longPressMenuShareLink(index: index)
+            }) : nil,
 
             // Bookmark This Page (if not already bookmarked)
-            shouldShowBookmarkThisPageLongPressMenuItem(tab, bookmarksModel) ? self.action(index, UserText.tabSwitcherBookmarkPage, "Bookmark-Add-16", self.longPressMenuBookmarkThisPage) : nil,
+            shouldShowBookmarkThisPageLongPressMenuItem(tab, bookmarksModel) ? self.action(index, UserText.tabSwitcherBookmarkPage, "Bookmark-Add-16", { [weak self] index in
+                guard let self else { return }
+                self.longPressMenuBookmarkThisPage(index: index)
+            }) : nil,
         ]
 
         let group1 = [
@@ -337,15 +385,24 @@ extension TabSwitcherViewController {
             // self.action(index, UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.longPressMenuBookmarkAllTabs),
 
             // Select Tabs -> switch to selection mode with this tab selected (if not already selected)
-            selectedTabs.contains(index) ? nil : self.action(index, UserText.tabSwitcherSelectTabs(withCount: 1), "Check-Circle-16", self.longPressMenuSelectTabs),
+            selectedTabs.contains(index) ? nil : self.action(index, UserText.tabSwitcherSelectTabs(withCount: 1), "Check-Circle-16", { [weak self] index in
+                guard let self else { return }
+                self.longPressMenuSelectTabs(index: index)
+            }),
         ]
 
         let group2 = [
             // Close Tab
-            self.action(index, UserText.keyCommandCloseTab, "Close-16", destructive: true, self.longPressMenuCloseTab),
+            self.action(index, UserText.keyCommandCloseTab, "Close-16", destructive: true, { [weak self] index in
+                guard let self else { return }
+                self.longPressMenuCloseTab(index: index)
+            }),
 
             // Close Other Tabs (only one of these two will be shown)
-            tabsModel.count > 1 ? self.action(index, UserText.tabSwitcherCloseOtherTabs(withCount: tabsModel.count - selectedTabs.count), "Tab-Close-16", destructive: true, self.longPressMenuCloseOtherTabs) : nil,
+            tabsModel.count > 1 ? self.action(index, UserText.tabSwitcherCloseOtherTabs(withCount: tabsModel.count - selectedTabs.count), "Tab-Close-16", destructive: true, { [weak self] index in
+                guard let self else { return }
+                self.longPressMenuCloseOtherTabs(index: index)
+            }) : nil,
         ]
 
         return group0.compactMap { $0 } +
@@ -370,32 +427,43 @@ extension TabSwitcherViewController {
 extension TabSwitcherViewController {
 
     func refreshBarButtons() {
-        barsHandler.tabSwitcherStyleButton.primaryAction = action(image: tabsStyle.rawValue, self.onTabStyleChange)
+        barsHandler.tabSwitcherStyleButton.primaryAction = action(image: tabsStyle.rawValue, { // [weak self] in
+            // guard let self else { return }
+            self.onTabStyleChange()
+        })
 
         barsHandler.addAllBookmarksButton.accessibilityLabel = UserText.bookmarkAllTabs
-        barsHandler.addAllBookmarksButton.primaryAction = action(image: "Bookmark-New-24") {
+        barsHandler.addAllBookmarksButton.primaryAction = action(image: "Bookmark-New-24") { [weak self] in
+            guard let self else { return }
             self.bookmarkTabs(withIndexes: self.tabsModel.tabs.indices.map { $0 })
         }
 
         barsHandler.plusButton.accessibilityLabel = UserText.keyCommandNewTab
-        barsHandler.plusButton.primaryAction = action(image: "Add-24", self.addNewTab)
+        barsHandler.plusButton.primaryAction = action(image: "Add-24", { [weak self] in
+            guard let self else { return }
+            self.addNewTab()
+        })
 
-        barsHandler.fireButton.primaryAction = action(image: "Fire") {
+        barsHandler.fireButton.primaryAction = action(image: "Fire") { [weak self] in
+            guard let self else { return }
             self.burn(sender: self.barsHandler.fireButton)
         }
 
-        barsHandler.doneButton.primaryAction = action(title: UserText.navigationTitleDone) {
+        barsHandler.doneButton.primaryAction = action(title: UserText.navigationTitleDone) { [weak self] in
+            guard let self else { return }
             self.onDonePressed(self.barsHandler.doneButton)
         }
 
         barsHandler.editButton.title = UserText.actionGenericEdit
         barsHandler.editButton.menu = createEditMenu()
 
-        barsHandler.selectAllButton.primaryAction = action(title: UserText.selectAllTabs) {
+        barsHandler.selectAllButton.primaryAction = action(title: UserText.selectAllTabs) { [weak self] in
+            guard let self else { return }
             self.selectAllTabs()
         }
 
-        barsHandler.deselectAllButton.primaryAction = action(title: UserText.deselectAllTabs) {
+        barsHandler.deselectAllButton.primaryAction = action(title: UserText.deselectAllTabs) { [weak self] in
+            guard let self else { return }
             self.deselectAllTabs()
         }
 
@@ -404,7 +472,8 @@ extension TabSwitcherViewController {
         barsHandler.menuButton.isEnabled = barsHandler.menuButton.menu?.children.isEmpty == false
 
         barsHandler.closeTabsButton.isEnabled = selectedTabs.count > 0
-        barsHandler.closeTabsButton.primaryAction = action(title: UserText.closeTabs(withCount: selectedTabs.count)) {
+        barsHandler.closeTabsButton.primaryAction = action(title: UserText.closeTabs(withCount: selectedTabs.count)) { [weak self] in
+            guard let self else { return }
             self.closeTabs(withIndexes: [Int](self.selectedTabs),
                            confirmTitle: UserText.alertTitleCloseSelectedTabs(withCount: self.selectedTabs.count),
                            confirmMessage: UserText.alertMessageCloseTabs(withCount: self.selectedTabs.count))
@@ -492,7 +561,8 @@ extension TabSwitcherViewController {
                                       message: UserText.alertTitleCloseTabs(withCount: 1),
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        alert.addAction(title: UserText.closeTabs(withCount: 1), style: .destructive) {
+        alert.addAction(title: UserText.closeTabs(withCount: 1), style: .destructive) { [weak self] in
+            guard let self else { return }
             guard let tab = self.tabsModel.safeGetTabAt(index) else { return }
             self.deleteTab(tab: tab)
         }
@@ -534,10 +604,10 @@ extension TabSwitcherViewController {
         }
     }
 
-    func action<T>(_ argument: T, _ title: String, _ imageName: String, destructive: Bool = false, _ action: @escaping (T) -> Void) -> UIAction {
+    func action<T>(_ argument: T, _ title: String, _ imageName: String, destructive: Bool = false, _ handler: @escaping (T) -> Void) -> UIAction {
         let attributes: UIAction.Attributes = destructive ? .destructive : []
         return UIAction(title: title, image: UIImage(named: imageName), attributes: attributes) { _ in
-            action(argument)
+            handler(argument)
         }
     }
 

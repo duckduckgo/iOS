@@ -24,7 +24,7 @@ extension Initializing {
 
     func apply(event: AppEvent) -> any AppState {
         guard case .didFinishLaunching(let application, let isTesting) = event else { return handleUnexpectedEvent(event) }
-        return isTesting ? Testing(application: application) : Launching(stateContext: makeStateContext(application: application))
+        return isTesting ? AppTesting(application: application) : Launching(stateContext: makeStateContext(application: application))
     }
 
 }
@@ -92,7 +92,7 @@ extension Resuming {
 
 }
 
-extension Testing {
+extension AppTesting {
 
     func apply(event: AppEvent) -> any AppState { self }
 

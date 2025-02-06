@@ -1,5 +1,5 @@
 //
-//  Testing.swift
+//  AppTesting.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import Core
 import UIKit
 
 @MainActor
-struct Testing: AppState {
+struct AppTesting: AppState {
 
     init(application: UIApplication) {
         Pixel.isDryRun = true
@@ -46,7 +46,7 @@ struct Testing: AppState {
 
 }
 
-extension Testing {
+extension AppTesting {
 
     mutating func handle(action: AppAction) { }
 

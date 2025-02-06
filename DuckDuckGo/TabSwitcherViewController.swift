@@ -141,6 +141,10 @@ class TabSwitcherViewController: UIViewController {
         becomeFirstResponder()
         updateUIForSelectionMode()
 
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = true
+        collectionView.allowsMultipleSelectionDuringEditing = true
+
         if !tabSwitcherSettings.hasSeenNewLayout {
             Pixel.fire(pixel: .tabSwitcherNewLayoutSeen)
             tabSwitcherSettings.hasSeenNewLayout = true
@@ -347,7 +351,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tabsModel.count
     }
@@ -380,14 +384,26 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
         Pixel.fire(pixel: .tabSwitcherSwitchTabs)
         currentSelection = indexPath.row
         if isEditing {
-            if !selectedTabs.insert(indexPath.row).inserted {
-                selectedTabs.remove(indexPath.row)
+            selectedTabs.insert(indexPath.row)
+            if let tab = tabsModel.safeGetTabAt(indexPath.row) {
+                (collectionView.cellForItem(at: indexPath) as? TabViewCell)?.update(withTab: tab, isSelectionModeEnabled: interfaceMode.isMultiSelection, preview: nil)
+                updateUIForSelectionMode()
             }
-            collectionView.reloadItems(at: [indexPath])
-            updateUIForSelectionMode()
         } else {
             markCurrentAsViewedAndDismiss()
         }
+
+        print("*** selected", collectionView.indexPathsForSelectedItems ?? [])
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        selectedTabs.remove(indexPath.row)
+        if let tab = tabsModel.safeGetTabAt(indexPath.row) {
+            (collectionView.cellForItem(at: indexPath) as? TabViewCell)?.update(withTab: tab, isSelectionModeEnabled: interfaceMode.isMultiSelection, preview: nil)
+            updateUIForSelectionMode()
+        }
+
+        print("*** deselected", collectionView.indexPathsForSelectedItems ?? [])
     }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -408,18 +424,37 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
         currentSelection = tabsModel.currentIndex
     }
 
-    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        guard interfaceMode.isMultiSelection,
-              let tab = tabsModel.safeGetTabAt(indexPath.row) else { return nil }
+//    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+//        guard interfaceMode.isMultiSelection,
+//              let tab = tabsModel.safeGetTabAt(indexPath.row) else { return nil }
+//
+//        // Arbitrary but limit size of title. UIMenu supports display preferences on iOS 17.4 to
+//        //  limit the number of title lines but that doesn't appear to work here.
+//        let title = trimMenuTitleIfNeeded(tab.link?.displayTitle ?? "", 50)
+//
+//        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+//            let menuItems = self.createLongPressMenuItems(forIndex: indexPath.row)
+//            return UIMenu(title: title, children: menuItems.compactMap { $0 })
+//        }
+//    }
 
-        // Arbitrary but limit size of title. UIMenu supports display preferences on iOS 17.4 to
-        //  limit the number of title lines but that doesn't appear to work here.
-        let title = trimMenuTitleIfNeeded(tab.link?.displayTitle ?? "", 50)
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        
+        guard interfaceMode.isMultiSelection else { return nil }
+        
+        let tabs = indexPaths.map {
+            tabsModel.get(tabAt: $0.row)
+        }
+
+        let title = indexPaths.count == 1 ?
+            trimMenuTitleIfNeeded(tabs[0].link?.displayTitle ?? "", 50) :
+            UserText.numberOfTabs(tabsModel.count)
 
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let menuItems = self.createLongPressMenuItems(forIndex: indexPath.row)
+            let menuItems = self.createLongPressMenuItems(forIndex: 0)
             return UIMenu(title: title, children: menuItems.compactMap { $0 })
         }
+
     }
 
 }

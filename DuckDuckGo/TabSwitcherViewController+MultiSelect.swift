@@ -353,6 +353,8 @@ extension TabSwitcherViewController {
         ])
     }
 
+    /// Trim title text explicitly. UIMenu supports display preferences on iOS 17.4 to
+    ///  limit the number of title lines but that doesn't appear to work here.
     func trimMenuTitleIfNeeded(_ s: String, _ maxLength: Int) -> String {
         if s.count > maxLength {
             return s.prefix(maxLength) + "..."

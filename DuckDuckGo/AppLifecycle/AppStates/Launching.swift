@@ -104,6 +104,7 @@ struct Launching: AppState {
                                                         configurationStore: AppDependencyProvider.shared.configurationStore,
                                                         privacyConfigurationManager: privacyConfigurationManager)
         subscriptionService = SubscriptionService(privacyConfigurationManager: privacyConfigurationManager)
+        maliciousSiteProtectionService = MaliciousSiteProtectionService(featureFlagger: featureFlagger)
         mainCoordinator = MainCoordinator(syncService: syncService,
                                           bookmarksDatabase: persistentStoresConfiguration.bookmarksDatabase,
                                           remoteMessagingService: remoteMessagingService,
@@ -127,7 +128,6 @@ struct Launching: AppState {
         screenshotService = ScreenshotService(window: window)
         authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
         keyboardService = KeyboardService(mainViewController: mainCoordinator.controller)
-        maliciousSiteProtectionService = MaliciousSiteProtectionService(featureFlagger: featureFlagger)
 
         autoClearService.onLaunching()
         vpnService.onLaunching()

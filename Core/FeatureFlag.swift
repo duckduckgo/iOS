@@ -74,6 +74,10 @@ public enum FeatureFlag: String {
     case aiChatNewTabPage
 
     case testExperiment
+
+    /// Feature flag to enable / disable phishing and malware protection
+    /// https://app.asana.com/0/1206329551987282/1207149365636877/f
+    case maliciousSiteProtection
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
@@ -179,6 +183,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .internalOnly()
         case .testExperiment:
             return .remoteReleasable(.subfeature(ExperimentTestSubfeatures.experimentTestAA))
+        case .maliciousSiteProtection:
+            return .remoteReleasable(.subfeature(MaliciousSiteProtectionSubfeature.onByDefault))
         }
     }
 }

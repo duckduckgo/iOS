@@ -30,6 +30,7 @@ extension OmniBar: NibLoading {}
 
 public enum OmniBarIcon: String {
     case duckPlayer = "DuckPlayerURLIcon"
+    case specialError = "Globe-24"
 }
 
 class OmniBar: UIView {
@@ -307,10 +308,15 @@ class OmniBar: UIView {
             showCustomIcon(icon: .duckPlayer)
             return
         }
-        
-        privacyInfoContainer.privacyIcon.isHidden = privacyInfo.isSpecialErrorPageVisible
+
+        if privacyInfo.isSpecialErrorPageVisible {
+            showCustomIcon(icon: .specialError)
+            return
+        }
+
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
+        privacyInfoContainer.privacyIcon.isHidden = false
         customIconView.isHidden = true
     }
     

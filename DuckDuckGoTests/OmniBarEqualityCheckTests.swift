@@ -72,8 +72,7 @@ final class OmniBarEqualityCheckTests: XCTestCase {
 private struct DummyOmniBarState: OmniBarState, OmniBarLoadingBearerStateCreating {
     var name: String
     var isLoading: Bool
-    var voiceSearchHelper: VoiceSearchHelperProtocol
-    var featureFlagger: FeatureFlagger
+    var dependencies: OmnibarDependencyProvider
 
     var hasLargeWidth = false
     var showBackButton = false
@@ -104,14 +103,13 @@ private struct DummyOmniBarState: OmniBarState, OmniBarLoadingBearerStateCreatin
     var onEnterPadState: OmniBarState { DummyOmniBarState() }
     var onReloadState: OmniBarState { DummyOmniBarState() }
 
-    init(voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger, isLoading: Bool) {
-        self.init(isLoading: isLoading, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
+    init(dependencies: OmnibarDependencyProvider, isLoading: Bool) {
+        self.init(isLoading: isLoading, dependencies: dependencies)
     }
 
-    init(name: String = "DummyOmniBarState", isLoading: Bool = false, voiceSearchHelper: VoiceSearchHelperProtocol = MockVoiceSearchHelper(), featureFlagger: FeatureFlagger = MockFeatureFlagger()) {
+    init(name: String = "DummyOmniBarState", isLoading: Bool = false, dependencies: OmnibarDependencyProvider = MockOmnibarDependency()) {
         self.name = name
         self.isLoading = isLoading
-        self.voiceSearchHelper = voiceSearchHelper
-        self.featureFlagger = featureFlagger
+        self.dependencies = dependencies
     }
 }

@@ -90,20 +90,3 @@ class OmnibarAccessoryHandlerTests: XCTestCase {
         XCTAssertEqual(accessoryType, OmniBar.AccessoryType.share)
     }
 }
-
-private final class MockAIChatSettingsProvider: AIChatSettingsProvider {
-    var aiChatURL: URL = URL(string: "https://example.com")!
-    var isAIChatAddressBarUserSettingsEnabled: Bool = false
-    var isAIChatBrowsingMenuUserSettingsEnabled: Bool = false
-    var isAIChatFeatureEnabled: Bool = false
-    var isAIChatBrowsingMenubarShortcutFeatureEnabled: Bool = false
-    var isAIChatAddressBarShortcutFeatureEnabled: Bool = false
-
-    func enableAIChatBrowsingMenuUserSettings(enable: Bool) {
-        isAIChatBrowsingMenuUserSettingsEnabled = enable
-    }
-
-    func enableAIChatAddressBarUserSettings(enable: Bool) {
-        isAIChatAddressBarUserSettingsEnabled = enable
-    }
-}

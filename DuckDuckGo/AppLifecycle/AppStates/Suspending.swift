@@ -54,7 +54,6 @@ struct Suspending: AppState {
 
     // MARK: - Handle applicationWillResignActive(_:) logic here
     private func onSuspending() {
-        appDependencies.vpnService.onSuspending()
     }
 
 }

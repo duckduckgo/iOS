@@ -67,6 +67,7 @@ struct Background: AppState {
 
     // MARK: - Handle applicationDidEnterBackground(_:) logic here
     private func onBackground() {
+        appDependencies.vpnService.onBackground()
         appDependencies.authenticationService.onBackground()
         appDependencies.autoClearService.onBackground()
         appDependencies.autofillService.onBackground()

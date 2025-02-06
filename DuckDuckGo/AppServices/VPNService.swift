@@ -80,7 +80,7 @@ final class VPNService: NSObject {
         }
     }
 
-    func onSuspending() {
+    func onBackground() {
         Task { @MainActor in
             await refreshVPNShortcuts()
             await vpnWorkaround.removeRedditSessionWorkaround()

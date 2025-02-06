@@ -99,7 +99,7 @@ struct Foreground: AppState {
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
 
-        onForeground()
+        // No known use case yet, as nothing in Suspending requires reversal here.
     }
 
     // MARK: - Handle applicationDidBecomeActive(_:) logic here

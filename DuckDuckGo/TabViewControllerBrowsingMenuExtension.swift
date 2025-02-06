@@ -34,12 +34,12 @@ extension TabViewController {
         case pageLoaded
     }
 
-    private var shouldShowAIChatInMenuHeader: Bool {
+    private var shouldShowAIChatInMenu: Bool {
         let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
         return settings.isAIChatBrowsingMenuUserSettingsEnabled
     }
 
-    private var shouldShowPrintButtonInBrowsingMenuList: Bool { shouldShowAIChatInMenuHeader }
+    private var shouldShowPrintButtonInBrowsingMenuList: Bool { shouldShowAIChatInMenu }
 
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
         var entries = [BrowsingMenuEntry]()
@@ -82,7 +82,7 @@ extension TabViewController {
             self?.openAIChat()
         })
 
-        if shouldShowAIChatInMenuHeader {
+        if shouldShowAIChatInMenu {
             entries.append(newTabEntry)
             entries.append(chatEntry)
             entries.append(shareEntry)
@@ -155,7 +155,7 @@ extension TabViewController {
                     self?.onNewTabAction()
                 }))
 
-                if featureFlagger.isFeatureOn(.aiChat) {
+                if featureFlagger.isFeatureOn(.aiChat) && shouldShowAIChatInMenu {
                     entries.append(BrowsingMenuEntry.regular(name: UserText.actionAIChatNew,
                                                              image: UIImage(named: "AIChat-16")!,
                                                              action: { [weak self] in

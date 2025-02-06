@@ -82,8 +82,7 @@ final class VPNService: NSObject {
 
     func onSuspending() {
         Task { @MainActor in
-            await application.refreshVPNShortcuts(vpnFeatureVisibility: vpnFeatureVisibility,
-                                                  accountManager: accountManager)
+            await refreshVPNShortcuts()
             await vpnWorkaround.removeRedditSessionWorkaround()
         }
     }

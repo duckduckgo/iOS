@@ -59,26 +59,6 @@ extension UIApplication {
         return foregroundSceneWindows.first(where: \.isKeyWindow)
     }
 
-    // MARK: app shortcut items
-
-    func refreshVPNShortcuts(vpnFeatureVisibility: DefaultNetworkProtectionVisibility, accountManager: AccountManager) async {
-        guard vpnFeatureVisibility.shouldShowVPNShortcut(),
-              case .success(true) = await accountManager.hasEntitlement(forProductName: .networkProtection,
-                                                                        cachePolicy: .returnCacheDataDontLoad)
-        else {
-            shortcutItems = nil
-            return
-        }
-
-        shortcutItems = [
-            UIApplicationShortcutItem(type: AppDelegate.ShortcutKey.openVPNSettings,
-                                      localizedTitle: UserText.netPOpenVPNQuickAction,
-                                      localizedSubtitle: nil,
-                                      icon: UIApplicationShortcutIcon(templateImageName: "VPN-16"),
-                                      userInfo: nil)
-        ]
-    }
-
     // MARK: app delegate helpers
 
     enum TerminationReason {

@@ -422,7 +422,9 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
             UserText.numberOfTabs(indexPaths.count)
 
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let menuItems = self.createLongPressMenuItems(forIndex: 0)
+            let menuItems = indexPaths.count == 1 ?
+                self.createLongPressMenuItemsForSingleTab(forIndex: indexPaths[0].row) :
+                self.createLongPressMenuItemsForMultipleTabs()
             return UIMenu(title: title, children: menuItems.compactMap { $0 })
         }
 

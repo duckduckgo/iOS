@@ -56,10 +56,6 @@ struct Foreground: AppState {
         appDependencies.configurationService.onInitialForeground()
         appDependencies.remoteMessagingService.onInitialForeground()
 
-        /// Please note that authentication triggers a transition to the `Suspending` state.
-        /// Once authentication is completed, the app reenters the `Foreground` state.
-        appDependencies.authenticationService.beginAuthentication()
-
         onForeground()
     }
 
@@ -75,10 +71,6 @@ struct Foreground: AppState {
         shortcutItemToHandle = stateContext.shortcutItemToHandle
         lastBackgroundDate = stateContext.lastBackgroundDate
 
-        /// Please note that authentication triggers a transition to the `Suspending` state.
-        /// Once authentication is completed, the app reenters the `Foreground` state.
-        appDependencies.authenticationService.beginAuthentication()
-
         onForeground()
     }
 
@@ -90,15 +82,23 @@ struct Foreground: AppState {
         shortcutItemToHandle = stateContext.shortcutItemToHandle
 
         // No known use case yet, as nothing in Suspending requires reversal here.
+        // Since Suspending is very brief, we should not call `onForeground` again, as it has already been executed.
     }
 
     // MARK: - Handle applicationDidBecomeActive(_:) logic here
     /// Before adding code here, ensure it does not depend on pending tasks:
-    /// - If AutoClear needs to complete, put your code in `onDataCleared`.
+    /// - If your app needs to be ready for web navigations, see `onReadyToPerformWebNavigations` — this runs after AutoClear is complete.
     /// - If install/search statistics are required, see `onStatisticsLoaded`.
     /// - If crucial configuration files (e.g., TDS, privacy config) are needed, see `onConfigurationFetched`.
+    ///
+    /// This is THE LAST POINT for setting up anything. If you need something to happen earlier,
+    /// add it to Launching and Resuming to ensure it runs both on a cold start and when the app wakes up.
     private func onForeground() {
-        appDependencies.autoClearService.registerForDataCleared(onDataCleared)
+        /// Please note that authentication triggers a transition to the `Suspending` state.
+        /// Once authentication is completed, the app reenters the `Foreground` state.
+        appDependencies.authenticationService.beginAuthentication()
+
+        appDependencies.autoClearService.registerForDataCleared(onWebViewSetupComplete)
 
         appDependencies.syncService.onForeground()
 
@@ -115,13 +115,13 @@ struct Foreground: AppState {
         mainCoordinator.onForeground()
     }
 
-    // MARK: - Handle AutoClear completion logic here
+    // MARK: - Handle any WebView related logic here
     /// Callback for the AutoClear feature, triggered when all browser data is cleared.
     /// This includes closing all tabs, clearing caches, and wiping `WKWebsiteDataStore.default()`.
     /// Place any code here related to browser navigation or web view handling
     /// to ensure it remains unaffected by the clearing process.
-    private func onDataCleared() {
-        appDependencies.vpnService.onDataCleared()
+    private func onWebViewSetupComplete() {
+        appDependencies.vpnService.onWebViewSetupComplete()
         handleLaunchActions()
     }
 

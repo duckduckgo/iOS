@@ -459,7 +459,7 @@ public struct UserText {
     public static let autofillDisablePromptAction = NSLocalizedString("autofill.disable.prompt.action.open-settings", value: "Open Settings", comment: "Open Settings action for disabling autofill in Settings")
 
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Passwords", comment: "Autofill Logins menu item opening the login list")
-    public static let actionAIChatNew = NSLocalizedString("action.title.duckai.new", value: "New Chat", comment: "Duck.ai menu item opening a new chat")
+    public static let actionAIChatNew = NSLocalizedString("action.title.duckai.new", value: "AI Chat", comment: "Duck.ai menu item opening a new chat")
     public static let actionTabNew = NSLocalizedString("action.title.tab.new", value: "New Tab", comment: "New tab menu item opening a new tab")
 
     // MARK: - Control Center Widget Education

@@ -653,12 +653,10 @@ struct Launching: AppState {
     }
 
     private func startAutomationServer() {
-//#if DEBUG
         let launchOptionsHandler = LaunchOptionsHandler()
         if launchOptionsHandler.isUITesting && launchOptionsHandler.automationPort != nil {
             AutomationServer(main: mainViewController!, port: launchOptionsHandler.automationPort)
         }
-//#endif
     }
 
 }

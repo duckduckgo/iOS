@@ -27,7 +27,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -67,7 +67,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -106,7 +106,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -141,7 +141,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -183,7 +183,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -259,7 +259,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false

@@ -25,9 +25,8 @@ final class AuthenticationService {
     private let overlayWindowManager: OverlayWindowManager
     private let privacyStore: PrivacyStore = PrivacyUserDefaults()
 
-    private var didAuthenticate: Bool = false
-    var isAuthenticated: Bool {
-        didAuthenticate || !privacyStore.authenticationEnabled || !authenticator.canAuthenticate()
+    private var shouldAuthenticate: Bool {
+         privacyStore.authenticationEnabled && authenticator.canAuthenticate()
     }
 
     init(overlayWindowManager: OverlayWindowManager) {
@@ -35,6 +34,7 @@ final class AuthenticationService {
     }
 
     func beginAuthentication() {
+        guard shouldAuthenticate else { return }
         let authenticationViewController = showAuthenticationScreen()
         authenticationViewController.delegate = self
         Task { @MainActor in
@@ -46,7 +46,6 @@ final class AuthenticationService {
         if privacyStore.authenticationEnabled {
             overlayWindowManager.displayBlankSnapshotWindow()
         }
-        didAuthenticate = false
     }
 
     @MainActor
@@ -55,7 +54,6 @@ final class AuthenticationService {
         if didAuthenticate {
             overlayWindowManager.removeOverlay()
             authenticationViewController.dismiss(animated: true)
-            self.didAuthenticate = true
         } else {
             authenticationViewController.showUnlockInstructions()
         }

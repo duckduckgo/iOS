@@ -56,14 +56,9 @@ struct Foreground: AppState {
         appDependencies.configurationService.onInitialForeground()
         appDependencies.remoteMessagingService.onInitialForeground()
 
-        /// Authentication triggers a transition to the `Suspending` state.
+        /// Please note that authentication triggers a transition to the `Suspending` state.
         /// Once authentication is completed, the app reenters the `Foreground` state.
-        /// We escape early here to prevent executing foreground-related code twice.
-        let authenticationService = appDependencies.authenticationService
-        guard authenticationService.isAuthenticated else {
-            authenticationService.beginAuthentication()
-            return
-        }
+        appDependencies.authenticationService.beginAuthentication()
 
         onForeground()
     }
@@ -80,14 +75,9 @@ struct Foreground: AppState {
         shortcutItemToHandle = stateContext.shortcutItemToHandle
         lastBackgroundDate = stateContext.lastBackgroundDate
 
-        /// Authentication triggers a transition to the `Suspending` state.
+        /// Please note that authentication triggers a transition to the `Suspending` state.
         /// Once authentication is completed, the app reenters the `Foreground` state.
-        /// We escape early here to prevent executing foreground-related code twice.
-        let authenticationService = appDependencies.authenticationService
-        guard authenticationService.isAuthenticated else {
-            authenticationService.beginAuthentication()
-            return
-        }
+        appDependencies.authenticationService.beginAuthentication()
 
         onForeground()
     }
@@ -189,30 +179,16 @@ extension Foreground {
 
     struct StateContext {
 
-        let urlToOpen: URL?
-        let shortcutItemToHandle: UIApplicationShortcutItem?
         let appDependencies: AppDependencies
 
-        init(urlToOpen: URL? = nil, shortcutItemToHandle: UIApplicationShortcutItem? = nil, appDependencies: AppDependencies) {
-            self.urlToOpen = urlToOpen
-            self.shortcutItemToHandle = shortcutItemToHandle
+        init(appDependencies: AppDependencies) {
             self.appDependencies = appDependencies
         }
 
     }
 
     func makeStateContext() -> StateContext {
-        /// Authentication causes the app to leave the `Foreground` state and move to the `Suspending` state.
-        /// This means we must retain `urlToOpen` and `shortcutItemToHandle` to ensure they are available
-        /// when the app resumes after authentication. Otherwise, they would be lost during state transitions.
-        if appDependencies.authenticationService.isAuthenticated {
-            return .init(appDependencies: appDependencies)
-        }
-        return .init(
-            urlToOpen: urlToOpen,
-            shortcutItemToHandle: shortcutItemToHandle,
-            appDependencies: appDependencies
-        )
+        .init(appDependencies: appDependencies)
     }
 
 }

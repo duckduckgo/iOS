@@ -46,8 +46,6 @@ struct Suspending: AppState {
 
     init(stateContext: Foreground.StateContext) {
         appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
-        shortcutItemToHandle = stateContext.shortcutItemToHandle
 
         onSuspending()
     }

@@ -56,7 +56,7 @@
 "action.title.duckai" = "AI Chat";
 
 /* Duck.ai menu item opening a new chat */
-"action.title.duckai.new" = "AI Chat";
+"action.title.duckai.new" = "New AI Chat";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Edit Bookmark";

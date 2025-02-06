@@ -30,17 +30,20 @@ extension URL {
     }
 
     func addingOrReplacingQueryItem(_ queryItem: URLQueryItem) -> URL {
-        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
+        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false),
+              let queryValue = queryItem.value,
+              !queryValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return self
         }
 
         var queryItems = urlComponents.queryItems ?? []
         queryItems.removeAll { $0.name == queryItem.name }
         queryItems.append(queryItem)
-
         urlComponents.queryItems = queryItems
+
         return urlComponents.url ?? self
     }
+
 
     public var isDuckAIURL: Bool {
         guard let host = self.host, host == Constants.duckDuckGoHost else {

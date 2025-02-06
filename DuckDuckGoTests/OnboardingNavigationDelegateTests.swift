@@ -88,7 +88,10 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
             textZoomCoordinator: MockTextZoomCoordinator(),
             websiteDataManager: MockWebsiteDataManager(),
-            appDidFinishLaunchingStartTime: nil)
+            appDidFinishLaunchingStartTime: nil,
+            maliciousSiteProtectionManager: MockMaliciousSiteProtectionManager(),
+            maliciousSiteProtectionPreferencesManager: MockMaliciousSiteProtectionPreferencesManager()
+        )
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()
         window.makeKeyAndVisible()

@@ -56,6 +56,8 @@ public struct UserText {
     public static let actionOpenAIChat = NSLocalizedString("action.title.duckai", value: "AI Chat", comment: "Open AI Chat action in the menu list")
 
     public static let actionOpenBookmarks = NSLocalizedString("action.title.bookmarks", value: "Bookmarks", comment: "Button: Open bookmarks list")
+    public static let actionOpenPasswords = NSLocalizedString("action.title.passwords", value: "Passwords", comment: "Button: Open passwords list")
+
     public static let actionEnableProtection = NSLocalizedString("action.title.enable.protection", value: "Enable Privacy Protection", comment: "Enable protection action")
     public static let actionDisableProtection = NSLocalizedString("action.title.disable.protection", value: "Disable Privacy Protection", comment: "Disable protection action")
     public static let actionRequestDesktopSite = NSLocalizedString("action.title.request.desktop.site", value: "Desktop Site", comment: "Action to reload current page in desktop mode")
@@ -457,6 +459,8 @@ public struct UserText {
     public static let autofillDisablePromptAction = NSLocalizedString("autofill.disable.prompt.action.open-settings", value: "Open Settings", comment: "Open Settings action for disabling autofill in Settings")
 
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Passwords", comment: "Autofill Logins menu item opening the login list")
+    public static let actionAIChatNew = NSLocalizedString("action.title.duckai.new", value: "New Chat", comment: "Duck.ai menu item opening a new chat")
+    public static let actionTabNew = NSLocalizedString("action.title.tab.new", value: "New Tab", comment: "New tab menu item opening a new tab")
 
     // MARK: - Control Center Widget Education
 
@@ -1398,6 +1402,13 @@ Duck.ai is an optional feature that lets you chat anonymously with popular 3rd-p
     public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("duckai.settings.enable.browsing-menu-toggle", value: "Show Duck.ai in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
 
     public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("duckai.settings.enable.address-bar-searching-toggle", value: "Show Duck.ai on Search Page", comment: "Toggle text to enable/disable AI Chat in the address bar")
+
+    public enum MaliciousSiteProtectionSettings {
+        public static let header = NSLocalizedString("malicious-site-protection.settings.header", value: "Site Safety Warnings", comment: "Header text for Malicious Site Protection settings")
+        public static let toggleMessage = NSLocalizedString("malicious-site-protection.settings.toggle.message", value: "Warn me on sites flagged for phishing or malware", comment: "Text explaining what happens when Malicious Site Protection is enabled")
+        public static let footerLearnMore = NSLocalizedString("malicious-site-protection.settings.footer.button.learn-more", value: "Learn More", comment: "Button that redirect the user to a web page explaining what Malicious Site Protection is")
+        public static let footerDisabledMessage = NSLocalizedString("malicious-site-protection.settings.footer.message", value: "Disabling this feature can put your personal information at risk.", comment: "Footer text for Malicious Site Protection settings warning the user about the risks of disabling the feature")
+    }
 
     // MARK: - New Tab Page
 

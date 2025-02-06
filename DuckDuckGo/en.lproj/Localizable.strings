@@ -55,6 +55,9 @@
 /* Open AI Chat action in the menu list */
 "action.title.duckai" = "AI Chat";
 
+/* Duck.ai menu item opening a new chat */
+"action.title.duckai.new" = "New Chat";
+
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Edit Bookmark";
 
@@ -78,6 +81,9 @@
 
 /* Open action */
 "action.title.open" = "Open";
+
+/* Button: Open passwords list */
+"action.title.passwords" = "Passwords";
 
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Paste & Go";
@@ -117,6 +123,9 @@
 
 /* Share action */
 "action.title.share" = "Share";
+
+/* New tab menu item opening a new tab */
+"action.title.tab.new" = "New Tab";
 
 /* Settings label for bottom position for the address bar */
 "address.bar.bottom" = "Bottom";
@@ -1625,6 +1634,18 @@ https://duckduckgo.com/mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo App for Mac";
+
+/* Button that redirect the user to a web page explaining what Malicious Site Protection is */
+"malicious-site-protection.settings.footer.button.learn-more" = "Learn More";
+
+/* Footer text for Malicious Site Protection settings warning the user about the risks of disabling the feature */
+"malicious-site-protection.settings.footer.message" = "Disabling this feature can put your personal information at risk.";
+
+/* Header text for Malicious Site Protection settings */
+"malicious-site-protection.settings.header" = "Site Safety Warnings";
+
+/* Text explaining what happens when Malicious Site Protection is enabled */
+"malicious-site-protection.settings.toggle.message" = "Warn me on sites flagged for phishing or malware";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing Menu";

@@ -187,6 +187,7 @@ class MainViewController: UIViewController {
     var viewCoordinator: MainViewCoordinator!
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
+    let maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
 
     private lazy var aiChatViewControllerManager: AIChatViewControllerManager = {
         let manager = AIChatViewControllerManager()
@@ -226,7 +227,9 @@ class MainViewController: UIViewController {
         subscriptionCookieManager: SubscriptionCookieManaging,
         textZoomCoordinator: TextZoomCoordinating,
         websiteDataManager: WebsiteDataManaging,
-        appDidFinishLaunchingStartTime: CFAbsoluteTime?
+        appDidFinishLaunchingStartTime: CFAbsoluteTime?,
+        maliciousSiteProtectionManager: MaliciousSiteProtectionManaging,
+        maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -256,7 +259,9 @@ class MainViewController: UIViewController {
                                      appSettings: appSettings,
                                      textZoomCoordinator: textZoomCoordinator,
                                      websiteDataManager: websiteDataManager,
-                                     fireproofing: fireproofing)
+                                     fireproofing: fireproofing,
+                                     maliciousSiteProtectionManager: maliciousSiteProtectionManager,
+                                     maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionPreferencesManager)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -272,6 +277,7 @@ class MainViewController: UIViewController {
         self.textZoomCoordinator = textZoomCoordinator
         self.websiteDataManager = websiteDataManager
         self.appDidFinishLaunchingStartTime = appDidFinishLaunchingStartTime
+        self.maliciousSiteProtectionPreferencesManager = maliciousSiteProtectionPreferencesManager
 
         super.init(nibName: nil, bundle: nil)
         
@@ -307,12 +313,16 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(self.view, voiceSearchHelper: voiceSearchHelper)
+        viewCoordinator = MainViewFactory.createViewHierarchy(self.view,
+                                                              voiceSearchHelper: voiceSearchHelper,
+                                                              featureFlagger: featureFlagger)
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
 
         viewCoordinator.toolbarBackButton.action = #selector(onBackPressed)
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
+        viewCoordinator.toolbarPasswordsButton.action = #selector(onPasswordsPressed)
+        viewCoordinator.toolbarBookmarksButton.action = #selector(onBookmarksPressed)
 
         installSwipeTabs()
             
@@ -716,10 +726,10 @@ class MainViewController: UIViewController {
     }
     
     private func initMenuButton() {
-        viewCoordinator.lastToolbarButton.customView = menuButton
-        viewCoordinator.lastToolbarButton.isAccessibilityElement = true
-        viewCoordinator.lastToolbarButton.accessibilityTraits = .button
-        
+        viewCoordinator.menuToolbarButton.customView = menuButton
+        viewCoordinator.menuToolbarButton.isAccessibilityElement = true
+        viewCoordinator.menuToolbarButton.accessibilityTraits = .button
+
         menuButton.delegate = self
     }
     
@@ -899,7 +909,11 @@ class MainViewController: UIViewController {
         
         performCancel()
     }
-    
+
+    @objc func onPasswordsPressed() {
+        launchAutofillLogins(source: .newTabPageToolbar)
+    }
+
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
         forgetAllWithAnimation {}
@@ -1166,9 +1180,6 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func refreshBackForwardButtons() {
-        viewCoordinator.toolbarBackButton.isEnabled = currentTab?.canGoBack ?? false
-        viewCoordinator.toolbarForwardButton.isEnabled = currentTab?.canGoForward ?? false
-        
         viewCoordinator.omniBar.backButton.isEnabled = viewCoordinator.toolbarBackButton.isEnabled
         viewCoordinator.omniBar.forwardButton.isEnabled = viewCoordinator.toolbarForwardButton.isEnabled
     }
@@ -1236,23 +1247,25 @@ class MainViewController: UIViewController {
     }
 
     func refreshMenuButtonState() {
-        let expectedState: MenuButton.State
         if !homeTabManager.isNewTabPageSectionsEnabled && newTabPageViewController != nil {
-            expectedState = .bookmarksImage
-            viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
+            viewCoordinator.updateToolbarWithState(.newTab)
+            presentedMenuButton.setState(.menuImage, animated: false)
 
         } else {
+            let expectedState: MenuButton.State
             if presentedViewController is BrowsingMenuViewController {
                 expectedState = .closeImage
             } else {
                 expectedState = .menuImage
             }
-            viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
-        }
 
-        presentedMenuButton.setState(expectedState, animated: false)
+            if let currentTab = currentTab {
+                viewCoordinator.updateToolbarWithState(.pageLoaded(currentTab: currentTab))
+            }
+            presentedMenuButton.setState(expectedState, animated: false)
+        }
     }
 
     private func applyWidthToTrayController() {
@@ -1941,7 +1954,10 @@ extension MainViewController: OmniBarDelegate {
 
         let menuEntries: [BrowsingMenuEntry]
         let headerEntries: [BrowsingMenuEntry]
-        if homeTabManager.isNewTabPageSectionsEnabled && newTabPageViewController != nil {
+
+        let isNewTabPageEnabled = homeTabManager.isNewTabPageSectionsEnabled || featureFlagger.isFeatureOn(.aiChatNewTabPage)
+
+        if isNewTabPageEnabled && newTabPageViewController != nil {
             menuEntries = tab.buildShortcutsMenu()
             headerEntries = []
         } else {
@@ -2329,8 +2345,8 @@ extension MainViewController: TabDelegate {
         return newTab.webView
     }
 
-    func tabDidRequestClose(_ tab: TabViewController) {
-        closeTab(tab.tabModel)
+    func tabDidRequestClose(_ tab: TabViewController, shouldCreateEmptyTabAtSamePosition: Bool) {
+        closeTab(tab.tabModel, andOpenEmptyOneAtSamePosition: shouldCreateEmptyTabAtSamePosition)
     }
 
     func tabLoadingStateDidChange(tab: TabViewController) {
@@ -2580,12 +2596,20 @@ extension MainViewController: TabSwitcherDelegate {
             showFireButtonPulse()
         }
     }
-    
-    func closeTab(_ tab: Tab) {
+
+    func closeTab(_ tab: Tab, andOpenEmptyOneAtSamePosition shouldOpen: Bool = false) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
         hideNotificationBarIfBrokenSitePromptShown()
-        tabManager.remove(at: index)
+
+        if shouldOpen {
+            let newTab = Tab()
+            tabManager.replaceTab(at: index, withNewTab: newTab)
+            tabManager.selectTab(newTab)
+        } else {
+            tabManager.remove(at: index)
+        }
+
         updateCurrentTab()
         tabsBarController?.refresh(tabsModel: tabManager.model)
     }

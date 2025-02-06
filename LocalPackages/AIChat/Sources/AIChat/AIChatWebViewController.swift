@@ -105,10 +105,10 @@ extension AIChatWebViewController {
 
     func loadQuery(_ query: String, autoSend: Bool) {
         let urlQuery = URLQueryItem(name: QueryParameters.queryKey, value: query)
-        var queryURL = chatModel.aiChatURL.addingOrReplacingQueryItem(urlQuery)
+        var queryURL = chatModel.aiChatURL.addingOrReplacing(urlQuery)
         if autoSend {
             let autoSendQuery = URLQueryItem(name: QueryParameters.autoSendKey, value: QueryParameters.autoSendValue)
-            queryURL = queryURL.addingOrReplacingQueryItem(autoSendQuery)
+            queryURL = queryURL.addingOrReplacing(autoSendQuery)
         }
         webView.load(URLRequest(url: queryURL))
     }

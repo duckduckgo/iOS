@@ -1015,16 +1015,6 @@ class MainViewController: UIViewController {
             currentTab?.executeBookmarklet(url: url)
         }
     }
-    
-    func executeScript(_ javaScriptString: String,
-                       args: [String: Any] = [:]) async -> Result<Any, any Error>? {
-        var result = await currentTab?.executeScript(javaScriptString, args: args)
-        return result! // TODO fix !
-    }
-
-    func currentUrl() -> String? {
-        return currentTab?.getUrl()
-    }
 
     private func loadBackForwardItem(_ item: WKBackForwardListItem) {
         prepareTabForRequest {

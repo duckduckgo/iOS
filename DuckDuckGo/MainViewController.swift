@@ -2116,7 +2116,6 @@ extension MainViewController: OmniBarDelegate {
     private func openAIChatFromAddressBar() {
         /// https://app.asana.com/0/1204167627774280/1209322943444951
 
-
         if omniBar.textField.isEditing {
             let textFieldValue = omniBar.textField.text
             omniBar.textField.resignFirstResponder()
@@ -2134,7 +2133,7 @@ extension MainViewController: OmniBarDelegate {
             /// If it is, get the query item and open the chat with the query item's value
             if currentTab?.url?.isDuckDuckGoSearch == true {
                 let queryItem = currentTab?.url?.getQueryItems()?.filter { $0.name == "q" }.first
-                openAIChat(queryItem?.value)
+                openAIChat(queryItem?.value, autoSend: true)
             } else {
                 openAIChat()
             }

@@ -103,9 +103,9 @@ class OmniBar: UIView {
     // Set up a view to add a custom icon to the Omnibar
     private var customIconView: UIImageView = UIImageView(frame: CGRect(x: 4, y: 8, width: 26, height: 26))
 
-    static func loadFromXib(voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger) -> OmniBar {
+    static func loadFromXib(dependencies: OmnibarDependencyProvider) -> OmniBar {
         let omniBar = OmniBar.load(nibName: "OmniBar")
-        omniBar.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: false)
+        omniBar.state = SmallOmniBarState.HomeNonEditingState(dependencies: dependencies, isLoading: false)
         omniBar.refreshState(omniBar.state)
         return omniBar
     }
@@ -115,8 +115,8 @@ class OmniBar: UIView {
     }
 
     // Tests require this
-    init(voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger, frame: CGRect) {
-        self.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: false)
+    init(dependencies: OmnibarDependencyProvider, frame: CGRect) {
+        self.state = SmallOmniBarState.HomeNonEditingState(dependencies: dependencies, isLoading: false)
         super.init(frame: frame)
     }
 
@@ -662,7 +662,7 @@ extension OmniBar {
 extension OmniBar {
 
     private func updateLeftIconContainerState(oldState: any OmniBarState, newState: any OmniBarState) {
-        if state.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+        if state.dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
             if oldState.showSearchLoupe && newState.showDismiss {
                 animateTransition(from: searchLoupe, to: dismissButton)
             } else if oldState.showDismiss && newState.showSearchLoupe {

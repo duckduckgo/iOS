@@ -27,7 +27,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -37,29 +37,28 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         let showSettings = false
-        var showCancel: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
-        var showDismiss: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showCancel: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        var showDismiss: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         var name: String { return "Phone" + Type.name(self) }
-        var onEditingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onEditingStoppedState: OmniBarState { return HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
         var onTextClearedState: OmniBarState { return self }
-        var onTextEnteredState: OmniBarState { return HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onTextEnteredState: OmniBarState { return HomeTextEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onBrowsingStoppedState: OmniBarState { return self }
-        var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
-        var onReloadState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var showSearchLoupe: Bool {
-            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            if dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
                 return false
             } else {
-                return !voiceSearchHelper.isVoiceSearchEnabled
+                return !dependencies.voiceSearchHelper.isVoiceSearchEnabled
             }
         }
-        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
+        var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
-        let featureFlagger: FeatureFlagger
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
 
@@ -68,7 +67,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -78,28 +77,27 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         let showSettings = false
-        var showCancel: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
-        var showDismiss: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showCancel: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        var showDismiss: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         let showVoiceSearch = false
         var name: String { return "Phone" + Type.name(self) }
-        var onEditingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onEditingStoppedState: OmniBarState { return HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
-        var onTextClearedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onTextClearedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onTextEnteredState: OmniBarState { return self }
-        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
-        var onReloadState: OmniBarState { return HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return HomeTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var showSearchLoupe: Bool {
-            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            if dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
                 return false
             } else {
-                return !voiceSearchHelper.isVoiceSearchEnabled
+                return !dependencies.voiceSearchHelper.isVoiceSearchEnabled
             }
         }
-        let voiceSearchHelper: VoiceSearchHelperProtocol
-        let featureFlagger: FeatureFlagger
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
 
@@ -108,7 +106,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -118,24 +116,23 @@ struct SmallOmniBarState {
         let showAbort = false
         let showRefresh = false
         let showMenu = false
-        var showSettings: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        var showSettings: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
         let showDismiss = false
         let showCancel: Bool = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
-        var onEditingStartedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onTextClearedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onTextEnteredState: OmniBarState { return HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onEditingStartedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onTextClearedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onTextEnteredState: OmniBarState { return HomeTextEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
-        var onReloadState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
 
-        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
+        var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
-        let featureFlagger: FeatureFlagger
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
 
@@ -144,7 +141,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -154,39 +151,39 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         let showSettings = false
-        var showCancel: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
-        var showDismiss: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showCancel: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        var showDismiss: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         var name: String { return "Phone" + Type.name(self) }
-        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
         var onTextClearedState: OmniBarState { return self }
-        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onBrowsingStartedState: OmniBarState { return self }
-        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
-        var onReloadState: OmniBarState { return BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
 
         var showSearchLoupe: Bool {
-            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            if dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
                 return false
             } else {
-                return !voiceSearchHelper.isVoiceSearchEnabled
+                return !dependencies.voiceSearchHelper.isVoiceSearchEnabled
             }
         }
-        
-        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
-        let voiceSearchHelper: VoiceSearchHelperProtocol
-        let featureFlagger: FeatureFlagger
+
+        var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
+
 
     struct BrowsingTextEditingState: OmniBarState, OmniBarLoadingBearerStateCreating {
         let hasLargeWidth: Bool = false
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -196,32 +193,32 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         let showSettings = false
-        var showCancel: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
-        var showDismiss: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showCancel: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        var showDismiss: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         let showVoiceSearch = false
         var name: String { return "Phone" + Type.name(self) }
-        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
-        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onTextEnteredState: OmniBarState { return self }
         var onBrowsingStartedState: OmniBarState { return self }
-        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
-        var onReloadState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
 
         var showSearchLoupe: Bool {
-            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            if dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
                 return false
             } else {
-                return !voiceSearchHelper.isVoiceSearchEnabled
+                return !dependencies.voiceSearchHelper.isVoiceSearchEnabled
             }
         }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
-        let featureFlagger: FeatureFlagger
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
+
 
     struct BrowsingNonEditingState: OmniBarState, OmniBarLoadingBearerStateCreating {
         let hasLargeWidth: Bool = false
@@ -244,17 +241,16 @@ struct SmallOmniBarState {
         let showDismiss: Bool = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
-        var onEditingStartedState: OmniBarState { return BrowsingTextEditingStartedState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onEditingStartedState: OmniBarState { return BrowsingTextEditingStartedState(dependencies: dependencies, isLoading: isLoading) }
+        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onBrowsingStartedState: OmniBarState { return self }
-        var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
-        var onReloadState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
-        let featureFlagger: FeatureFlagger
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
 
@@ -263,7 +259,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showAccessoryButton: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -273,29 +269,28 @@ struct SmallOmniBarState {
         let showRefresh = false
         let showMenu = false
         let showSettings = false
-        var showDismiss: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
-        var showCancel: Bool { featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
+        var showDismiss: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showCancel: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
         var name: String { return "Phone" + Type.name(self) }
-        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
-        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onBrowsingStartedState: OmniBarState { return self }
-        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
-        var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
-        var onReloadState: OmniBarState { return BrowsingTextEditingStartedState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return BrowsingTextEditingStartedState(dependencies: dependencies, isLoading: isLoading) }
         var showSearchLoupe: Bool {
-            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            if dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
                 return false
             } else {
-                return !voiceSearchHelper.isVoiceSearchEnabled
+                return !dependencies.voiceSearchHelper.isVoiceSearchEnabled
             }
         }
-        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
+        var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
-        let featureFlagger: FeatureFlagger
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
 }

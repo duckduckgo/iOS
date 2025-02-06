@@ -206,6 +206,7 @@
 		31C7D71C27515A6300A95D0A /* MockVoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */; };
 		31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */; };
 		31CC224928369B38001654A4 /* AutofillLoginSettingsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CC224828369B38001654A4 /* AutofillLoginSettingsListViewController.swift */; };
+		31CE145C2D5505520027F11D /* OmnibarDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CE145B2D5505520027F11D /* OmnibarDependencyProvider.swift */; };
 		31D2D2A22D40F7E900549D12 /* AIChatDeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D2D2A12D40F7E900549D12 /* AIChatDeepLinkHandler.swift */; };
 		31D2D2A42D40F98800549D12 /* WidgetSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D2D2A32D40F98800549D12 /* WidgetSourceType.swift */; };
 		31D2D2A52D40F99100549D12 /* WidgetSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D2D2A32D40F98800549D12 /* WidgetSourceType.swift */; };
@@ -1674,6 +1675,7 @@
 		31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerProtocol.swift; sourceTree = "<group>"; };
 		31CC224828369B38001654A4 /* AutofillLoginSettingsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginSettingsListViewController.swift; sourceTree = "<group>"; };
+		31CE145B2D5505520027F11D /* OmnibarDependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmnibarDependencyProvider.swift; sourceTree = "<group>"; };
 		31D2D2A12D40F7E900549D12 /* AIChatDeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatDeepLinkHandler.swift; sourceTree = "<group>"; };
 		31D2D2A32D40F98800549D12 /* WidgetSourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSourceType.swift; sourceTree = "<group>"; };
 		31D4CD4A2D4D1C2600BC27C6 /* ToolbarStateHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarStateHandling.swift; sourceTree = "<group>"; };
@@ -6947,6 +6949,7 @@
 		F1C4A70C1E5771F800A6CA1B /* OmniBar */ = {
 			isa = PBXGroup;
 			children = (
+				31CE145B2D5505520027F11D /* OmnibarDependencyProvider.swift */,
 				F114C55A1E66EB020018F95F /* NibLoading.swift */,
 				F1C4A70D1E57725800A6CA1B /* OmniBar.swift */,
 				6FDA1FB22B59584400AC962A /* AddressDisplayHelper.swift */,
@@ -8796,6 +8799,7 @@
 				BD10B8AA2C7629740033115D /* Logger+Subscription.swift in Sources */,
 				D6E0C1892B7A2E0D00D5E1E9 /* DesktopDownloadViewModel.swift in Sources */,
 				8524CC9A246DA81700E59D45 /* FullscreenDaxDialogViewController.swift in Sources */,
+				31CE145C2D5505520027F11D /* OmnibarDependencyProvider.swift in Sources */,
 				9F23B8012C2BC94400950875 /* OnboardingBackground.swift in Sources */,
 				9FE08BD32C2A5B88001D5EBC /* OnboardingTextStyles.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,

@@ -54,16 +54,15 @@ enum UniversalOmniBarState {
         var onEnterPadState: any OmniBarState { baseState.onEnterPadState }
         var onReloadState: any OmniBarState { baseState.onReloadState }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
-        let featureFlagger: FeatureFlagger
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
 
         func withLoading() -> UniversalOmniBarState.EditingSuspendedState {
-            Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: true)
+            Self.init(baseState: baseState, dependencies: dependencies, isLoading: true)
         }
 
         func withoutLoading() -> UniversalOmniBarState.EditingSuspendedState {
-            Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: false)
+            Self.init(baseState: baseState, dependencies: dependencies, isLoading: false)
         }
     }
 }

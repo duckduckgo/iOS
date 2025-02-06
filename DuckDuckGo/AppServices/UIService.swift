@@ -31,7 +31,7 @@ final class UIService: NSObject {
         self.window = window
     }
 
-    func displayBlankSnapshotWindow(voiceSearchHelper: VoiceSearchHelper,
+    func displayBlankSnapshotWindow(omnibarDependencies: OmnibarDependencyProvider,
                                     addressBarPosition: AddressBarPosition,
                                     featureFlagger: FeatureFlagger) {
         guard overlayWindow == nil else { return }
@@ -41,7 +41,7 @@ final class UIService: NSObject {
 
         // TODO: most likely we do not need voiceSearchHelper for BlankSnapshotVC
         let overlay = BlankSnapshotViewController(addressBarPosition: addressBarPosition,
-                                                  voiceSearchHelper: voiceSearchHelper,
+                                                  omnibarDependencies: omnibarDependencies,
                                                   featureFlagger: featureFlagger)
         overlay.delegate = self
 

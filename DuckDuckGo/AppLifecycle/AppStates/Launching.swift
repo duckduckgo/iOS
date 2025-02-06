@@ -407,8 +407,9 @@ struct Launching: AppState {
 
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
             window = UIWindow(frame: UIScreen.main.bounds)
+            let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper, featureFlagger: AppDependencyProvider.shared.featureFlagger)
             window.rootViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
-                                                                    voiceSearchHelper: voiceSearchHelper,
+                                                                    omnibarDependencies: omnibarDependencies,
                                                                     featureFlagger: AppDependencyProvider.shared.featureFlagger)
             window.makeKeyAndVisible()
             application.setWindow(window)

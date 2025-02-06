@@ -313,8 +313,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
+
         viewCoordinator = MainViewFactory.createViewHierarchy(self.view,
-                                                              voiceSearchHelper: voiceSearchHelper,
+                                                              omnibarDependencies: omnibarDependencies,
                                                               featureFlagger: featureFlagger)
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
 
@@ -405,12 +407,13 @@ class MainViewController: UIViewController {
 
     private func installSwipeTabs() {
         guard swipeTabsCoordinator == nil else { return }
-        
+
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
+
         swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
                                                     tabPreviewsSource: previewsSource,
                                                     appSettings: appSettings,
-                                                    voiceSearchHelper: voiceSearchHelper,
-                                                    featureFlagger: featureFlagger,
+                                                    omnibarDependencies: omnibarDependencies,
                                                     omnibarAccessoryHandler: omnibarAccessoryHandler) { [weak self] in
 
             guard $0 != self?.tabManager.model.currentIndex else { return }

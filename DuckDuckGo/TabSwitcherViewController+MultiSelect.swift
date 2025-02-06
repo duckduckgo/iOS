@@ -427,8 +427,8 @@ extension TabSwitcherViewController {
 extension TabSwitcherViewController {
 
     func refreshBarButtons() {
-        barsHandler.tabSwitcherStyleButton.primaryAction = action(image: tabsStyle.rawValue, { // [weak self] in
-            // guard let self else { return }
+        barsHandler.tabSwitcherStyleButton.primaryAction = action(image: tabsStyle.rawValue, { [weak self] in
+            guard let self else { return }
             self.onTabStyleChange()
         })
 

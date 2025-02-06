@@ -142,10 +142,14 @@ class TabViewCell: UICollectionViewCell {
         }
     }
 
+    /// ABSTRACT function
     func update(withTab tab: Tab,
                 isSelectionModeEnabled: Bool,
                 preview: UIImage?) {}
-    
+
+    /// ABSTRACT function
+    func toggleSelection() {}
+
     func closeTab() {
         guard let tab = tab else { return }
         self.delegate?.deleteTab(tab: tab)

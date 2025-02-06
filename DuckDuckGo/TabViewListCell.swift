@@ -96,6 +96,11 @@ class TabViewListCell: TabViewCell {
         updateUIForSelectionMode(removeButton, selectionIndicator)
     }
 
+    override func toggleSelection() {
+        updateSelectionIndicator(selectionIndicator)
+        updateCurrentTabBorder(background)
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 

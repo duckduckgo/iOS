@@ -180,6 +180,11 @@ class TabViewGridCell: TabViewCell {
         updateUIForSelectionMode(removeButton, selectionIndicator)
     }
 
+    override func toggleSelection() {
+        updateSelectionIndicator(selectionIndicator)
+        updateCurrentTabBorder(border)
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 

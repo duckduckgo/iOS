@@ -26,6 +26,12 @@ import Bookmarks
 // TODO fire pixels from the source specific action implementations
 extension TabSwitcherViewController {
 
+    var selectedTabs: [Int] {
+        collectionView.indexPathsForSelectedItems?.map {
+            $0.row
+        } ?? []
+    }
+
     var tabCount: Int {
         tabsModel.count
     }
@@ -118,14 +124,12 @@ extension TabSwitcherViewController {
 
     func transitionToMultiSelect() {
         self.isEditing = true
-        selectedTabs = Set<Int>()
         collectionView.reloadData()
         updateUIForSelectionMode()
     }
 
     func transitionFromMultiSelect() {
         self.isEditing = false
-        selectedTabs = Set<Int>()
         collectionView.reloadData()
         updateUIForSelectionMode()
     }
@@ -167,7 +171,6 @@ extension TabSwitcherViewController {
             }.forEach {
                 self.delegate.tabSwitcher(self, didRemoveTab: $0)
             }
-            self.selectedTabs = Set<Int>()
             self.collectionView.reloadData()
             self.refreshTitle()
             self.updateUIForSelectionMode()
@@ -177,13 +180,11 @@ extension TabSwitcherViewController {
     }
 
     func deselectAllTabs() {
-        selectedTabs = Set<Int>()
         collectionView.reloadData()
         updateUIForSelectionMode()
     }
 
     func selectAllTabs() {
-        selectedTabs = Set<Int>(tabsModel.tabs.indices)
         collectionView.reloadData()
         updateUIForSelectionMode()
     }
@@ -553,8 +554,9 @@ extension TabSwitcherViewController {
             transitionToMultiSelect()
         }
 
-        selectedTabs.insert(index)
-        collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+        let path = IndexPath(row: index, section: 0)
+        collectionView.selectItem(at: path, animated: true, scrollPosition: .centeredVertically)
+        (collectionView.cellForItem(at: path) as? TabViewCell)?.toggleSelection()
         updateUIForSelectionMode()
     }
 

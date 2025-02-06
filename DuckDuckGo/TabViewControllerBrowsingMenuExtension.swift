@@ -35,8 +35,7 @@ extension TabViewController {
     }
 
     private var shouldShowAIChatInMenuHeader: Bool {
-        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
         return settings.isAIChatBrowsingMenuUserSettingsEnabled
     }
 

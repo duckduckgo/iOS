@@ -185,8 +185,10 @@ class MainViewController: UIViewController {
 
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
+    let aiChatSettings: AIChatSettingsProvider
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
+    let maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
 
     private lazy var aiChatViewControllerManager: AIChatViewControllerManager = {
         let manager = AIChatViewControllerManager()
@@ -195,8 +197,7 @@ class MainViewController: UIViewController {
     }()
 
     private lazy var omnibarAccessoryHandler: OmnibarAccessoryHandler = {
-        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
 
         return OmnibarAccessoryHandler(settings: settings, featureFlagger: featureFlagger)
     }()
@@ -226,7 +227,10 @@ class MainViewController: UIViewController {
         subscriptionCookieManager: SubscriptionCookieManaging,
         textZoomCoordinator: TextZoomCoordinating,
         websiteDataManager: WebsiteDataManaging,
-        appDidFinishLaunchingStartTime: CFAbsoluteTime?
+        appDidFinishLaunchingStartTime: CFAbsoluteTime?,
+        maliciousSiteProtectionManager: MaliciousSiteProtectionManaging,
+        maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging,
+        aichatSettings: AIChatSettingsProvider
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -237,7 +241,7 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-
+        self.aiChatSettings = aichatSettings
         self.previewsSource = previewsSource
 
         let interactionStateSource = WebViewStateRestorationManager(featureFlagger: featureFlagger).isFeatureEnabled ? TabInteractionStateDiskSource() : nil
@@ -256,7 +260,9 @@ class MainViewController: UIViewController {
                                      appSettings: appSettings,
                                      textZoomCoordinator: textZoomCoordinator,
                                      websiteDataManager: websiteDataManager,
-                                     fireproofing: fireproofing)
+                                     fireproofing: fireproofing,
+                                     maliciousSiteProtectionManager: maliciousSiteProtectionManager,
+                                     maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionPreferencesManager)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -272,6 +278,7 @@ class MainViewController: UIViewController {
         self.textZoomCoordinator = textZoomCoordinator
         self.websiteDataManager = websiteDataManager
         self.appDidFinishLaunchingStartTime = appDidFinishLaunchingStartTime
+        self.maliciousSiteProtectionPreferencesManager = maliciousSiteProtectionPreferencesManager
 
         super.init(nibName: nil, bundle: nil)
         
@@ -307,8 +314,12 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                      featureFlagger: featureFlagger,
+                                                      aiChatSettings: aiChatSettings)
+
         viewCoordinator = MainViewFactory.createViewHierarchy(self.view,
-                                                              voiceSearchHelper: voiceSearchHelper,
+                                                              omnibarDependencies: omnibarDependencies,
                                                               featureFlagger: featureFlagger)
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
 
@@ -399,12 +410,15 @@ class MainViewController: UIViewController {
 
     private func installSwipeTabs() {
         guard swipeTabsCoordinator == nil else { return }
-        
+
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                      featureFlagger: featureFlagger,
+                                                      aiChatSettings: aiChatSettings)
+
         swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
                                                     tabPreviewsSource: previewsSource,
                                                     appSettings: appSettings,
-                                                    voiceSearchHelper: voiceSearchHelper,
-                                                    featureFlagger: featureFlagger,
+                                                    omnibarDependencies: omnibarDependencies,
                                                     omnibarAccessoryHandler: omnibarAccessoryHandler) { [weak self] in
 
             guard $0 != self?.tabManager.model.currentIndex else { return }
@@ -2116,7 +2130,6 @@ extension MainViewController: OmniBarDelegate {
     private func openAIChatFromAddressBar() {
         /// https://app.asana.com/0/1204167627774280/1209322943444951
 
-
         if omniBar.textField.isEditing {
             let textFieldValue = omniBar.textField.text
             omniBar.textField.resignFirstResponder()
@@ -2134,7 +2147,7 @@ extension MainViewController: OmniBarDelegate {
             /// If it is, get the query item and open the chat with the query item's value
             if currentTab?.url?.isDuckDuckGoSearch == true {
                 let queryItem = currentTab?.url?.getQueryItems()?.filter { $0.name == "q" }.first
-                openAIChat(queryItem?.value)
+                openAIChat(queryItem?.value, autoSend: true)
             } else {
                 openAIChat()
             }
@@ -2382,8 +2395,8 @@ extension MainViewController: TabDelegate {
         return newTab.webView
     }
 
-    func tabDidRequestClose(_ tab: TabViewController) {
-        closeTab(tab.tabModel)
+    func tabDidRequestClose(_ tab: TabViewController, shouldCreateEmptyTabAtSamePosition: Bool) {
+        closeTab(tab.tabModel, andOpenEmptyOneAtSamePosition: shouldCreateEmptyTabAtSamePosition)
     }
 
     func tabLoadingStateDidChange(tab: TabViewController) {
@@ -2633,12 +2646,20 @@ extension MainViewController: TabSwitcherDelegate {
             showFireButtonPulse()
         }
     }
-    
-    func closeTab(_ tab: Tab) {
+
+    func closeTab(_ tab: Tab, andOpenEmptyOneAtSamePosition shouldOpen: Bool = false) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
         hideNotificationBarIfBrokenSitePromptShown()
-        tabManager.remove(at: index)
+
+        if shouldOpen {
+            let newTab = Tab()
+            tabManager.replaceTab(at: index, withNewTab: newTab)
+            tabManager.selectTab(newTab)
+        } else {
+            tabManager.remove(at: index)
+        }
+
         updateCurrentTab()
         tabsBarController?.refresh(tabsModel: tabManager.model)
     }

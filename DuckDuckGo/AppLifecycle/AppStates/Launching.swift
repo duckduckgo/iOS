@@ -78,6 +78,7 @@ struct Launching: AppState {
     private let crashReportUploaderOnboarding: CrashCollectionOnboarding
 
     // These should ideally be let properties instead of force-unwrapped. However, due to various initialization paths, such as database completion blocks, setting them up in advance is currently not feasible. Refactoring will be done once this code is streamlined.
+    private let maliciousSiteProtectionService: MaliciousSiteProtectionService
     private let uiService: UIService
     private let unService: UNService
     private let syncDataProviders: SyncDataProviders
@@ -404,10 +405,16 @@ struct Launching: AppState {
 
         privacyProDataReporter.injectTabsModel(tabsModel)
 
+        // Malicious Site Protection
+        maliciousSiteProtectionService = MaliciousSiteProtectionService(featureFlagger: AppDependencyProvider.shared.featureFlagger)
+
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
             window = UIWindow(frame: UIScreen.main.bounds)
+            let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                          featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                                          aiChatSettings: AIChatSettings())
             window.rootViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
-                                                                    voiceSearchHelper: voiceSearchHelper,
+                                                                    omnibarDependencies: omnibarDependencies,
                                                                     featureFlagger: AppDependencyProvider.shared.featureFlagger)
             window.makeKeyAndVisible()
             application.setWindow(window)
@@ -439,7 +446,10 @@ struct Launching: AppState {
                                                     subscriptionCookieManager: subscriptionCookieManager,
                                                     textZoomCoordinator: Self.makeTextZoomCoordinator(),
                                                     websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
-                                                    appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
+                                                    appDidFinishLaunchingStartTime: didFinishLaunchingStartTime,
+                                                    maliciousSiteProtectionManager: maliciousSiteProtectionService.manager,
+                                                    maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionService.preferencesManager,
+                                                    aichatSettings: AIChatSettings())
 
             mainViewController!.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = mainViewController
@@ -533,6 +543,9 @@ struct Launching: AppState {
         }
 
         tipKitAppEventsHandler.appDidFinishLaunching()
+
+        // Register Malicious Site Protection background tasks to fetch datasets
+        maliciousSiteProtectionService.onLaunching()
     }
 
     private var appDependencies: AppDependencies {
@@ -558,7 +571,8 @@ struct Launching: AppState {
             onboardingPixelReporter: onboardingPixelReporter,
             widgetRefreshModel: widgetRefreshModel,
             autofillPixelReporter: autofillPixelReporter,
-            crashReportUploaderOnboarding: crashReportUploaderOnboarding
+            crashReportUploaderOnboarding: crashReportUploaderOnboarding,
+            maliciousSiteProtectionService: maliciousSiteProtectionService
         )
     }
 

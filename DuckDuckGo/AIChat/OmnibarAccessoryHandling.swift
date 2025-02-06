@@ -30,14 +30,13 @@ struct OmnibarAccessoryHandler: OmnibarAccessoryHandling {
     let featureFlagger: FeatureFlagger
 
     func omnibarAccessory(for url: URL?) -> OmniBar.AccessoryType {
-
-        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
-            return (url?.isDuckDuckGoSearch == false) ? .share : .chat
-        }
-
         guard settings.isAIChatFeatureEnabled,
               settings.isAIChatAddressBarUserSettingsEnabled else {
             return .share
+        }
+
+        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            return (url?.isDuckDuckGoSearch == false) ? .share : .chat
         }
 
         return (url?.isDuckDuckGoSearch == true) ? .chat : .share

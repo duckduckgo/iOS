@@ -30,6 +30,7 @@ extension OmniBar: NibLoading {}
 
 public enum OmniBarIcon: String {
     case duckPlayer = "DuckPlayerURLIcon"
+    case specialError = "Globe-24"
 }
 
 class OmniBar: UIView {
@@ -102,9 +103,9 @@ class OmniBar: UIView {
     // Set up a view to add a custom icon to the Omnibar
     private var customIconView: UIImageView = UIImageView(frame: CGRect(x: 4, y: 8, width: 26, height: 26))
 
-    static func loadFromXib(voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger) -> OmniBar {
+    static func loadFromXib(dependencies: OmnibarDependencyProvider) -> OmniBar {
         let omniBar = OmniBar.load(nibName: "OmniBar")
-        omniBar.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: false)
+        omniBar.state = SmallOmniBarState.HomeNonEditingState(dependencies: dependencies, isLoading: false)
         omniBar.refreshState(omniBar.state)
         return omniBar
     }
@@ -114,8 +115,8 @@ class OmniBar: UIView {
     }
 
     // Tests require this
-    init(voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger, frame: CGRect) {
-        self.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger, isLoading: false)
+    init(dependencies: OmnibarDependencyProvider, frame: CGRect) {
+        self.state = SmallOmniBarState.HomeNonEditingState(dependencies: dependencies, isLoading: false)
         super.init(frame: frame)
     }
 
@@ -307,10 +308,15 @@ class OmniBar: UIView {
             showCustomIcon(icon: .duckPlayer)
             return
         }
-        
-        privacyInfoContainer.privacyIcon.isHidden = privacyInfo.isSpecialErrorPageVisible
+
+        if privacyInfo.isSpecialErrorPageVisible {
+            showCustomIcon(icon: .specialError)
+            return
+        }
+
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
+        privacyInfoContainer.privacyIcon.isHidden = false
         customIconView.isHidden = true
     }
     
@@ -416,11 +422,15 @@ class OmniBar: UIView {
         searchContainerCenterConstraint.isActive = state.hasLargeWidth
         searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
         leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
-        rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
+        rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : trailingConstraintValueForSmallWidth
 
         if state.showVoiceSearch && state.showClear {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }
+
+        /// When a setting that affects the accessory button is modified, `refreshState` is called.
+        /// This requires updating the padding to ensure consistent layout.
+        updateOmniBarPadding(left: 0, right: 0)
 
         UIView.animate(withDuration: 0.0) { [weak self] in
             self?.layoutIfNeeded()
@@ -429,7 +439,11 @@ class OmniBar: UIView {
 
     func updateOmniBarPadding(left: CGFloat, right: CGFloat) {
         omniBarLeadingConstraint.constant = (state.hasLargeWidth ? 24 : 8) + left
-        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : 14) + right
+        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : trailingConstraintValueForSmallWidth) + right
+    }
+
+    private var trailingConstraintValueForSmallWidth: CGFloat {
+        state.showAccessoryButton ? 14 : 4
     }
 
     /*
@@ -656,7 +670,7 @@ extension OmniBar {
 extension OmniBar {
 
     private func updateLeftIconContainerState(oldState: any OmniBarState, newState: any OmniBarState) {
-        if state.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+        if state.dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
             if oldState.showSearchLoupe && newState.showDismiss {
                 animateTransition(from: searchLoupe, to: dismissButton)
             } else if oldState.showDismiss && newState.showSearchLoupe {
@@ -686,8 +700,8 @@ extension OmniBar {
     private func animateTransition(from oldView: UIView, to newView: UIView) {
         dismissButtonAnimator?.stopAnimation(true)
         let animationOffset: CGFloat = 20
-        let animationDuration: CGFloat = 0.6
-        let animationDampingRatio: CGFloat = 0.9
+        let animationDuration: CGFloat = 0.7
+        let animationDampingRatio: CGFloat = 0.6
 
         newView.alpha = 0
         newView.transform = CGAffineTransform(translationX: -animationOffset, y: 0)

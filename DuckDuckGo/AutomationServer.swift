@@ -23,20 +23,6 @@ extension Logger {
     static var automationServer = { Logger(subsystem: Bundle.main.bundleIdentifier ?? "DuckDuckGo", category: "Automation Server") }()
 }
 
-struct Log: TextOutputStream {
-
-    func write(_ string: String) {
-        let fm = FileManager.default
-        let log = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log-automation.txt")
-        if let handle = try? FileHandle(forWritingTo: log) {
-            handle.seekToEndOfFile()
-            handle.write(string.data(using: .utf8)!)
-            handle.closeFile()
-        } else {
-            try? string.data(using: .utf8)?.write(to: log)
-        }
-    }
-}
 
 class AutomationServer {
     let listener: NWListener
@@ -45,9 +31,7 @@ class AutomationServer {
     init(main: MainViewController, port: Int?) {
         var port = port ?? 8786
         self.main = main
-        var log = Log()
-        print("Starting automation server on port \(port)", to: &log)
-        print("Bundle: \(Bundle.main.bundleIdentifier)", to: &log)
+        Logger.automationServer.info("Starting automation server on port \(port)")
         listener = try! NWListener(using: .tcp, on: NWEndpoint.Port(integerLiteral: UInt16(port)))
         listener.newConnectionHandler = handleConnection
         listener.start(queue: .main)
@@ -72,12 +56,12 @@ class AutomationServer {
                 return
             }
             Logger.automationServer.info("Received request! \(String(describing: content)) \(isComplete) \(String(describing: error))")
-            
+
             if let error {
                 Logger.automationServer.error("Error: \(error)")
                 return
             }
-            
+
             if let content {
                 Logger.automationServer.info("Handling content")
                 Task {
@@ -105,6 +89,10 @@ class AutomationServer {
         self.handleConnection(connection, content)
     }
     
+    func getQueryStringParameter(url: URLComponents, param: String) -> String? {
+        return url.queryItems?.first(where: { $0.name == param })?.value
+    }
+
     @MainActor
     func handleConnection(_ connection: NWConnection, _ content: Data) {
         Logger.automationServer.info("Handling request!")
@@ -113,11 +101,7 @@ class AutomationServer {
         if let firstLine = stringContent.components(separatedBy: CharacterSet.newlines).first {
             Logger.automationServer.info("First line: \(firstLine)")
         }
-        
-        func getQueryStringParameter(url: String, param: String) -> String? {
-          guard let url = URLComponents(string: url) else { return nil }
-          return url.queryItems?.first(where: { $0.name == param })?.value
-        }
+
         // Get url parameter from path
         // GET / HTTP/1.1
         if #available(iOS 16.0, *) {
@@ -125,116 +109,149 @@ class AutomationServer {
             if let match = stringContent.firstMatch(of: path) {
                 Logger.automationServer.info("Path: \(match.2)")
                 // Convert the path into a URL object
-                guard let url = URL(string: String(match.2)) else {
-                    print("Invalid URL: \(match.2)")
+                guard let url = URLComponents(string: String(match.2)) else {
+                    Logger.automationServer.error("Invalid URL: \(match.2)")
                     return // Or handle the error appropriately
                 }
-                if url.path == "/navigate" {
-                    let navigateUrlString = getQueryStringParameter(url: String(match.2), param: "url") ?? ""
-                    let navigateUrl = URL(string: navigateUrlString)!
-                    self.main.loadUrl(navigateUrl)
-                    self.respond(on: connection, response: "done")
-                } else if url.path == "/execute" {
-                    let script = getQueryStringParameter(url: String(match.2), param: "script") ?? ""
-                    var args: [String: String] = [:]
-                    // json decode args
-                    if let argsString = getQueryStringParameter(url: String(match.2), param: "args") {
-                        if let argsData = argsString.data(using: .utf8) {
-                            do {
-                                let jsonDecoder = JSONDecoder()
-                                args = try jsonDecoder.decode([String: String].self, from: argsData)
-                            } catch {
-                                self.respond(on: connection, response: "{\"error\": \"\(error.localizedDescription)\", \"args\": \"\(argsString)\"}")
-                            }
-                        } else {
-                            self.respond(on: connection, response: "{\"error\": \"Unable to decode args\"}")
-                        }
-                    }
-                    Task {
-                        await self.executeScript(script, args: args, on: connection)
-                    }
-                } else if url.path == "/getUrl" {
+                switch url.path {
+                case "/navigate":
+                    self.navigate(on: connection, url: url)
+                case "/execute":
+                    self.execute(on: connection, url: url)
+                case "/getUrl":
                     self.respond(on: connection, response: self.main.currentUrl() ?? "")
-                } else if url.path == "/getWindowHandles" {
-                    // TODO get all tabs
-                    let handle = self.main.tabManager.current(createIfNeeded: true)
-                    guard let handle else {
-                        self.respond(on: connection, response: "no window")
-                        return
-                    }
-                    
-                    let handles = self.main.tabManager.model.tabs.map({ tab in
-                        let tabView = self.main.tabManager.controller(for: tab)!
-                        return String(UInt(bitPattern: ObjectIdentifier(tabView)))
-                    })
-                    
-                    if let jsonData = try? JSONEncoder().encode(handles),
-                       let jsonString = String(data: jsonData, encoding: .utf8) {
-                        self.respond(on: connection, response: jsonString)
-                    } else {
-                        // Handle JSON encoding failure
-                        self.respond(on: connection, response: "{\"error\":\"Failed to encode response\"}")
-                    }
-                } else if url.path == "/closeWindow" {
-                    self.main.closeTab(self.main.currentTab!.tabModel)
-                    self.respond(on: connection, response: "{\"success\":true}")
-                } else if url.path == "/switchToWindow" {
-                    if let handleString = getQueryStringParameter(url: String(match.2), param: "handle") {
-                        Logger.automationServer.info("Switch to window \(handleString)")
-                        let tabToSelect: TabViewController? = nil
-                        if let tabIndex = self.main.tabManager.model.tabs.firstIndex(where: { tab in
-                            guard let tabView = self.main.tabManager.controller(for: tab) else {
-                                return false
-                            }
-                            return String(UInt(bitPattern: ObjectIdentifier(tabView))) == handleString
-                        }) {
-                            Logger.automationServer.info("found tab \(tabIndex)")
-                            self.main.tabManager.select(tabAt: tabIndex)
-                            self.respond(on: connection, response: "{\"success\":true}")
-                        } else {
-                            self.respond(on: connection, response: "{\"error\":\"Invalid window handle\"}")
-                        }
-                    } else {
-                        self.respond(on: connection, response: "{\"error\":\"Invalid window handle\"}")
-                    }
-                } else if url.path == "/newWindow" {
-                    self.main.newTab()
-                    let handle = self.main.tabManager.current(createIfNeeded: true)
-                    guard let handle else {
-                        self.respond(on: connection, response: "no window")
-                        return
-                    }
-                    // Response {handle: "", type: "tab"}
-                    let response: [String: String] = ["handle": String(UInt(bitPattern: ObjectIdentifier(handle))), "type": "tab"]
-                    if let jsonData = try? JSONEncoder().encode(response),
-                    let jsonString = String(data: jsonData, encoding: .utf8) {
-                        self.respond(on: connection, response: jsonString)
-                    } else {
-                        self.respond(on: connection, response: "{\"error\":\"Failed to encode response\"}")
-                    }
-                } else if url.path == "/getWindowHandle" {
-                    let handle = self.main.currentTab
-                    guard let handle else {
-                        self.respond(on: connection, response: "no window")
-                        return
-                    }
-                    self.respond(on: connection, response: String(UInt(bitPattern: ObjectIdentifier(handle))))
-                } else {
-                    self.respond(on: connection, response: "unknown")
+                case "/getWindowHandles":
+                    self.getWindowHandles(on: connection, url: url)
+                case "/closeWindow":
+                    self.closeWindow(on: connection, url: url)
+                case "/switchToWindow":
+                    self.switchToWindow(on: connection, url: url)
+                case "/newWindow":
+                    self.newWindow(on: connection, url: url)
+                case "/getWindowHandle":
+                    self.getWindowHandle(on: connection, url: url)
+                default:
+                    self.respondError(on: connection, error: "unknown")
                 }
             } else {
-                self.respond(on: connection, response: "unknown method")
+                self.respondError(on: connection, error: "unknown method")
             }
         } else {
-            self.respond(on: connection, response: "unhandled")
+            self.respondError(on: connection, error: "unhandled")
         }
+    }
+
+    @MainActor
+    func navigate(on connection: NWConnection, url: URLComponents) {
+        let navigateUrlString = getQueryStringParameter(url: url, param: "url") ?? ""
+        let navigateUrl = URL(string: navigateUrlString)!
+        self.main.loadUrl(navigateUrl)
+        self.respond(on: connection, response: "done")
+    }
+
+    @MainActor
+    func execute(on connection: NWConnection, url: URLComponents) {
+        let script = getQueryStringParameter(url: url, param: "script") ?? ""
+        var args: [String: String] = [:]
+        // json decode args
+        if let argsString = getQueryStringParameter(url: url, param: "args") {
+            if let argsData = argsString.data(using: .utf8) {
+                do {
+                    let jsonDecoder = JSONDecoder()
+                    args = try jsonDecoder.decode([String: String].self, from: argsData)
+                } catch {
+                    self.respondError(on: connection, error: error.localizedDescription)
+                }
+            } else {
+                self.respondError(on: connection, error: "Unable to decode args")
+            }
+        }
+        Task {
+            await self.executeScript(script, args: args, on: connection)
+        }
+    }
+
+    @MainActor
+    func getWindowHandle(on connection: NWConnection, url: URLComponents) {
+        let handle = self.main.currentTab
+        guard let handle else {
+            self.respondError(on: connection, error: "no window")
+            return
+        }
+        self.respond(on: connection, response: String(UInt(bitPattern: ObjectIdentifier(handle))))
+    }
+
+    @MainActor
+    func getWindowHandles(on connection: NWConnection, url: URLComponents) {
+        let handles = self.main.tabManager.model.tabs.map({ tab in
+            let tabView = self.main.tabManager.controller(for: tab)!
+            return String(UInt(bitPattern: ObjectIdentifier(tabView)))
+        })
+
+        if let jsonData = try? JSONEncoder().encode(handles),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            self.respond(on: connection, response: jsonString)
+        } else {
+            // Handle JSON encoding failure
+            self.respondError(on: connection, error: "Failed to encode response")
+        }
+    }
+
+    @MainActor
+    func closeWindow(on connection: NWConnection, url: URLComponents) {
+        self.main.closeTab(self.main.currentTab!.tabModel)
+        self.respond(on: connection, response: "{\"success\":true}")
+    }
+
+    @MainActor
+    func switchToWindow(on connection: NWConnection, url: URLComponents) {
+        if let handleString = getQueryStringParameter(url: url, param: "handle") {
+            Logger.automationServer.info("Switch to window \(handleString)")
+            let tabToSelect: TabViewController? = nil
+            if let tabIndex = self.main.tabManager.model.tabs.firstIndex(where: { tab in
+                guard let tabView = self.main.tabManager.controller(for: tab) else {
+                    return false
+                }
+                return String(UInt(bitPattern: ObjectIdentifier(tabView))) == handleString
+            }) {
+                Logger.automationServer.info("found tab \(tabIndex)")
+                self.main.tabManager.select(tabAt: tabIndex)
+                self.respond(on: connection, response: "{\"success\":true}")
+            } else {
+                self.respondError(on: connection, error: "Invalid window handle")
+            }
+        } else {
+            self.respondError(on: connection, error: "Invalid window handle")
+        }
+    }
+
+    @MainActor
+    func newWindow(on connection: NWConnection, url: URLComponents) {
+        self.main.newTab()
+        let handle = self.main.tabManager.current(createIfNeeded: true)
+        guard let handle else {
+            self.respondError(on: connection, error: "no window")
+            return
+        }
+        // Response {handle: "", type: "tab"}
+        let response: [String: String] = ["handle": String(UInt(bitPattern: ObjectIdentifier(handle))), "type": "tab"]
+        if let jsonData = try? JSONEncoder().encode(response),
+        let jsonString = String(data: jsonData, encoding: .utf8) {
+            self.respond(on: connection, response: jsonString)
+        } else {
+            self.respondError(on: connection, error: "Failed to encode response")
+        }
+    }
+
+    func respondError(on connection: NWConnection, error: String) {
+        self.respond(on: connection, response: "{\"error\": \"\(error)\"}")
     }
 
     func executeScript(_ script: String, args: [String: Any], on connection: NWConnection) async {
         Logger.automationServer.info("Going to execute script: \(script)")
-        var result = await main.executeScript(script, args: args)
+        let result = await main.executeScript(script, args: args)
         Logger.automationServer.info("Have result to execute script: \(String(describing: result))")
-        guard var result else {
+        guard let result else {
             return
         }
         do {

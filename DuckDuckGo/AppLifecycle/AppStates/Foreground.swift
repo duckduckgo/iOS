@@ -119,6 +119,7 @@ struct Foreground: AppState {
         appDependencies.subscriptionService.onForeground()
         appDependencies.autofillService.onForeground()
         appDependencies.reportingService.onForeground()
+        appDependencies.maliciousSiteProtectionService.onForeground()
 
         StatisticsLoader.shared.load(completion: onStatisticsLoaded)
         mainCoordinator.onForeground()

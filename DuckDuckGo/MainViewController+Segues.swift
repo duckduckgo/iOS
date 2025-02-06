@@ -277,7 +277,8 @@ extension MainViewController {
                                                   syncPausedStateManager: syncPausedStateManager,
                                                   privacyProDataReporter: privacyProDataReporter,
                                                   textZoomCoordinator: textZoomCoordinator,
-                                                  aiChatSettings: aiChatSettings)
+                                                  aiChatSettings: aiChatSettings,
+                                                  maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionPreferencesManager)
         Pixel.fire(pixel: .settingsPresented)
 
         if let navigationController = self.presentedViewController as? UINavigationController,

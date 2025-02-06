@@ -40,6 +40,7 @@ final class MainCoordinator {
          featureFlagger: FeatureFlagger,
          fireproofing: Fireproofing,
          accountManager: AccountManager,
+         maliciousSiteProtectionService: MaliciousSiteProtectionService,
          didFinishLaunchingStartTime: CFAbsoluteTime) {
         self.accountManager = accountManager
         let homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
@@ -75,7 +76,9 @@ final class MainCoordinator {
                                         subscriptionCookieManager: subscriptionService.subscriptionCookieManager,
                                         textZoomCoordinator: Self.makeTextZoomCoordinator(),
                                         websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
-                                        appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
+                                        appDidFinishLaunchingStartTime: didFinishLaunchingStartTime,
+                                        maliciousSiteProtectionManager: maliciousSiteProtectionService.manager,
+                                        maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionService.preferencesManager)
     }
 
     func start() {

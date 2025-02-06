@@ -36,6 +36,7 @@ enum AutofillSettingsSource: String {
     case lockScreenWidget = "lock_screen_widget"
     case newTabPageShortcut = "new_tab_page_shortcut"
     case saveLoginDisablePrompt = "save_login_disable_prompt"
+    case newTabPageToolbar = "new_tab_page_toolbar"
 }
 
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {

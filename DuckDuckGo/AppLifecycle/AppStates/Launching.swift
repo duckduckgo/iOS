@@ -58,6 +58,7 @@ struct Launching: AppState {
     private let reportingService: ReportingService
     private let subscriptionService: SubscriptionService
     private let crashCollectionService = CrashCollectionService()
+    private let maliciousSiteProtectionService: MaliciousSiteProtectionService
 
     private let persistentStoresConfiguration = PersistentStoresConfiguration()
     private let onboardingConfiguration = OnboardingConfiguration()
@@ -114,21 +115,25 @@ struct Launching: AppState {
                                           featureFlagger: featureFlagger,
                                           fireproofing: fireproofing,
                                           accountManager: accountManager,
+                                          maliciousSiteProtectionService: maliciousSiteProtectionService,
                                           didFinishLaunchingStartTime: didFinishLaunchingStartTime)
         syncService.presenter = mainCoordinator.controller
         vpnService = VPNService(mainCoordinator: mainCoordinator)
         let overlayWindowManager = OverlayWindowManager(window: window,
                                                         addressBarPosition: appSettings.currentAddressBarPosition,
-                                                        voiceSearchHelper: voiceSearchHelper)
+                                                        voiceSearchHelper: voiceSearchHelper,
+                                                        featureFlagger: featureFlagger)
         autoClearService = AutoClearService(worker: mainCoordinator.controller, overlayWindowManager: overlayWindowManager)
         screenshotService = ScreenshotService(window: window)
         authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
         keyboardService = KeyboardService(mainViewController: mainCoordinator.controller)
+        maliciousSiteProtectionService = MaliciousSiteProtectionService(featureFlagger: featureFlagger)
 
         autoClearService.onLaunching()
         vpnService.onLaunching()
         subscriptionService.onLaunching()
         autofillService.onLaunching()
+        maliciousSiteProtectionService.onLaunching()
 
         atbAndVariantConfiguration.configure(onVariantAssigned: onVariantAssigned)
         CrashHandlersConfiguration.handleCrashDuringCrashHandlersSetup()
@@ -168,7 +173,8 @@ struct Launching: AppState {
             crashCollectionService: crashCollectionService,
             keyboardService: keyboardService,
             configurationService: configurationService,
-            reportingService: reportingService
+            reportingService: reportingService,
+            maliciousSiteProtectionService: maliciousSiteProtectionService
         )
     }
     

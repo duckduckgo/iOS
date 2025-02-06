@@ -47,6 +47,7 @@ final class SettingsViewModel: ObservableObject {
     let privacyProDataReporter: PrivacyProDataReporting?
     let textZoomCoordinator: TextZoomCoordinating
     let aiChatSettings: AIChatSettingsProvider
+    let maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
 
     // Subscription Dependencies
     let subscriptionManager: SubscriptionManager
@@ -436,7 +437,9 @@ final class SettingsViewModel: ObservableObject {
          syncPausedStateManager: any SyncPausedStateManaging,
          privacyProDataReporter: PrivacyProDataReporting,
          textZoomCoordinator: TextZoomCoordinating,
-         aiChatSettings: AIChatSettingsProvider) {
+         aiChatSettings: AIChatSettingsProvider,
+         maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
+    ) {
 
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
@@ -449,7 +452,7 @@ final class SettingsViewModel: ObservableObject {
         self.privacyProDataReporter = privacyProDataReporter
         self.textZoomCoordinator = textZoomCoordinator
         self.aiChatSettings = aiChatSettings
-
+        self.maliciousSiteProtectionPreferencesManager = maliciousSiteProtectionPreferencesManager
         setupNotificationObservers()
         updateRecentlyVisitedSitesVisibility()
     }

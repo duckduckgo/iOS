@@ -547,7 +547,7 @@ private extension SubscriptionPagesUseSubscriptionFeature {
     ///
     /// - Parameter freeTrialsCohort: The cohort the user belongs to (`control` or `treatment`).
     /// - Returns: A `SubscriptionOptions` object containing the relevant subscription options.
-    func freeTrialSubscriptionOptions(for freeTrialsCohort: PrivacyProFreeTrialExperimentCohort) async -> SubscriptionOptions? {
+    func se async -> SubscriptionOptions? {
         var subscriptionOptions: SubscriptionOptions?
 
         switch freeTrialsCohort {

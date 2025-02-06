@@ -275,6 +275,4 @@ extension OmnibarDependencyProvider {
             return !voiceSearchHelper.isVoiceSearchEnabled
         }
     }
-
 }
-

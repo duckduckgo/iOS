@@ -295,6 +295,9 @@ struct Launching: AppState {
             }
         }
 
+        // Hide Dax Dialogs if users already completed old onboarding.
+        DaxDialogsOnboardingMigrator().migrateFromOldToNewOboarding()
+
         // MARK: Sync initialisation
 #if DEBUG
         let defaultEnvironment = ServerEnvironment.development

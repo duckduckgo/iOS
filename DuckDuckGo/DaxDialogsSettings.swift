@@ -19,10 +19,12 @@
 
 import Core
 
-protocol DaxDialogsSettings {
-    
+protocol DaxDialogsSettings: AnyObject {
+
     var isDismissed: Bool { get set }
-    
+
+    var homeScreenMessagesSeen: Int { get }
+
     var browsingAfterSearchShown: Bool { get set }
     
     var browsingWithTrackersShown: Bool { get set }
@@ -93,7 +95,9 @@ class DefaultDaxDialogsSettings: DaxDialogsSettings {
 class InMemoryDaxDialogsSettings: DaxDialogsSettings {
     
     var isDismissed: Bool = false
-    
+
+    var homeScreenMessagesSeen: Int = 0
+
     var browsingAfterSearchShown: Bool = false
     
     var browsingWithTrackersShown: Bool = false

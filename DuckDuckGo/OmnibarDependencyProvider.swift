@@ -18,13 +18,16 @@
 //
 
 import BrowserServicesKit
+import AIChat
 
 protocol OmnibarDependencyProvider {
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var featureFlagger: FeatureFlagger { get }
+    var aiChatSettings: AIChatSettingsProvider { get }
 }
 
 struct OmnibarDependencies: OmnibarDependencyProvider {
     let voiceSearchHelper: VoiceSearchHelperProtocol
     let featureFlagger: FeatureFlagger
+    let aiChatSettings: AIChatSettingsProvider
 }

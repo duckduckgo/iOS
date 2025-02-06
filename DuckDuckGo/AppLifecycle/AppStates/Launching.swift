@@ -407,7 +407,9 @@ struct Launching: AppState {
 
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
             window = UIWindow(frame: UIScreen.main.bounds)
-            let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper, featureFlagger: AppDependencyProvider.shared.featureFlagger)
+            let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                          featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                                          aiChatSettings: AIChatSettings())
             window.rootViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
                                                                     omnibarDependencies: omnibarDependencies,
                                                                     featureFlagger: AppDependencyProvider.shared.featureFlagger)
@@ -443,7 +445,8 @@ struct Launching: AppState {
                                                     websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
                                                     appDidFinishLaunchingStartTime: didFinishLaunchingStartTime,
                                                     maliciousSiteProtectionManager: maliciousSiteProtectionService.manager,
-                                                    maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionService.preferencesManager)
+                                                    maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionService.preferencesManager,
+                                                    aichatSettings: AIChatSettings())
 
             mainViewController!.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = mainViewController

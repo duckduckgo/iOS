@@ -185,6 +185,7 @@ class MainViewController: UIViewController {
 
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
+    let aiChatSettings: AIChatSettingsProvider
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
     let maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
@@ -196,8 +197,7 @@ class MainViewController: UIViewController {
     }()
 
     private lazy var omnibarAccessoryHandler: OmnibarAccessoryHandler = {
-        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
 
         return OmnibarAccessoryHandler(settings: settings, featureFlagger: featureFlagger)
     }()
@@ -229,7 +229,8 @@ class MainViewController: UIViewController {
         websiteDataManager: WebsiteDataManaging,
         appDidFinishLaunchingStartTime: CFAbsoluteTime?,
         maliciousSiteProtectionManager: MaliciousSiteProtectionManaging,
-        maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
+        maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging,
+        aichatSettings: AIChatSettingsProvider
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -240,7 +241,7 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-
+        self.aiChatSettings = aichatSettings
         self.previewsSource = previewsSource
 
         let interactionStateSource = WebViewStateRestorationManager(featureFlagger: featureFlagger).isFeatureEnabled ? TabInteractionStateDiskSource() : nil
@@ -313,7 +314,9 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                      featureFlagger: featureFlagger,
+                                                      aiChatSettings: aiChatSettings)
 
         viewCoordinator = MainViewFactory.createViewHierarchy(self.view,
                                                               omnibarDependencies: omnibarDependencies,
@@ -408,7 +411,9 @@ class MainViewController: UIViewController {
     private func installSwipeTabs() {
         guard swipeTabsCoordinator == nil else { return }
 
-        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                      featureFlagger: featureFlagger,
+                                                      aiChatSettings: aiChatSettings)
 
         swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
                                                     tabPreviewsSource: previewsSource,

@@ -72,7 +72,7 @@ extension URL {
         return queryItems?.contains { $0.name == DuckDuckGo.chatQueryName && $0.value == DuckDuckGo.chatQueryValue } == true
     }
 
-    private var isDuckAIBang: Bool {
+    var isDuckAIBang: Bool {
         guard host == DuckDuckGo.host else { return false }
         return queryItems?.contains { $0.name == DuckDuckGo.bangQueryName && isSupportedBang(value: $0.value) } == true
     }

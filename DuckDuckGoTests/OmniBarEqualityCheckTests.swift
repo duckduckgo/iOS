@@ -19,6 +19,7 @@
 
 import XCTest
 @testable import DuckDuckGo
+import BrowserServicesKit
 
 final class OmniBarEqualityCheckTests: XCTestCase {
     func testRequiresUpdateChecksForIsLoading() {
@@ -72,6 +73,7 @@ private struct DummyOmniBarState: OmniBarState, OmniBarLoadingBearerStateCreatin
     var name: String
     var isLoading: Bool
     var voiceSearchHelper: VoiceSearchHelperProtocol
+    var featureFlagger: FeatureFlagger
 
     var hasLargeWidth = false
     var showBackButton = false
@@ -90,6 +92,7 @@ private struct DummyOmniBarState: OmniBarState, OmniBarLoadingBearerStateCreatin
     var showSettings = false
     var showVoiceSearch = false
     var showAbort = false
+    var showDismiss = false
 
     var onEditingStoppedState: OmniBarState { DummyOmniBarState() }
     var onEditingStartedState: OmniBarState { DummyOmniBarState() }
@@ -101,13 +104,14 @@ private struct DummyOmniBarState: OmniBarState, OmniBarLoadingBearerStateCreatin
     var onEnterPadState: OmniBarState { DummyOmniBarState() }
     var onReloadState: OmniBarState { DummyOmniBarState() }
 
-    init(voiceSearchHelper: VoiceSearchHelperProtocol, isLoading: Bool) {
-        self.init(isLoading: isLoading, voiceSearchHelper: voiceSearchHelper)
+    init(voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger, isLoading: Bool) {
+        self.init(isLoading: isLoading, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
     }
 
-    init(name: String = "DummyOmniBarState", isLoading: Bool = false, voiceSearchHelper: VoiceSearchHelperProtocol = MockVoiceSearchHelper()) {
+    init(name: String = "DummyOmniBarState", isLoading: Bool = false, voiceSearchHelper: VoiceSearchHelperProtocol = MockVoiceSearchHelper(), featureFlagger: FeatureFlagger = MockFeatureFlagger()) {
         self.name = name
         self.isLoading = isLoading
         self.voiceSearchHelper = voiceSearchHelper
+        self.featureFlagger = featureFlagger
     }
 }

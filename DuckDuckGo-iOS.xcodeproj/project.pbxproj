@@ -12253,8 +12253,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit.git";
 			requirement = {
-				branch = "alessandro/malicious-site-protection-ios";
-				kind = branch;
+				kind = exactVersion;
+				version = 236.0.0;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

@@ -27,7 +27,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
+        var showAccessoryButton: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -49,13 +49,7 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
-        var showSearchLoupe: Bool {
-            if dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
-                return false
-            } else {
-                return !dependencies.voiceSearchHelper.isVoiceSearchEnabled
-            }
-        }
+        var showSearchLoupe: Bool { dependencies.shouldShowSearchLoupeIfPossible }
         var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
 
         let dependencies: OmnibarDependencyProvider
@@ -67,7 +61,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
+        var showAccessoryButton: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -90,13 +84,7 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return HomeTextEditingState(dependencies: dependencies, isLoading: isLoading) }
-        var showSearchLoupe: Bool {
-            if dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
-                return false
-            } else {
-                return !dependencies.voiceSearchHelper.isVoiceSearchEnabled
-            }
-        }
+        var showSearchLoupe: Bool { dependencies.shouldShowSearchLoupeIfPossible }
         let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
@@ -106,7 +94,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
+        var showAccessoryButton: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -141,7 +129,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
+        var showAccessoryButton: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -163,14 +151,7 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
-
-        var showSearchLoupe: Bool {
-            if dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
-                return false
-            } else {
-                return !dependencies.voiceSearchHelper.isVoiceSearchEnabled
-            }
-        }
+        var showSearchLoupe: Bool { dependencies.shouldShowSearchLoupeIfPossible }
 
         var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
         let dependencies: OmnibarDependencyProvider
@@ -183,7 +164,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
+        var showAccessoryButton: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -206,14 +187,7 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
-
-        var showSearchLoupe: Bool {
-            if dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
-                return false
-            } else {
-                return !dependencies.voiceSearchHelper.isVoiceSearchEnabled
-            }
-        }
+        var showSearchLoupe: Bool { dependencies.shouldShowSearchLoupeIfPossible }
 
         let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
@@ -259,7 +233,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        var showAccessoryButton: Bool { dependencies.aiChatSettings.isAIChatAddressBarUserSettingsEnabled && dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) }
+        var showAccessoryButton: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -281,16 +255,26 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return BrowsingTextEditingStartedState(dependencies: dependencies, isLoading: isLoading) }
-        var showSearchLoupe: Bool {
-            if dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
-                return false
-            } else {
-                return !dependencies.voiceSearchHelper.isVoiceSearchEnabled
-            }
-        }
+        var showSearchLoupe: Bool { dependencies.shouldShowSearchLoupeIfPossible }
         var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
 
         let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
 }
+
+extension OmnibarDependencyProvider {
+    var isAIChatEnabledOnSettingsAndFeatureFlagOn: Bool {
+        aiChatSettings.isAIChatAddressBarUserSettingsEnabled && featureFlagger.isFeatureOn(.aiChatNewTabPage)
+    }
+
+    var shouldShowSearchLoupeIfPossible: Bool {
+        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            return false
+        } else {
+            return !voiceSearchHelper.isVoiceSearchEnabled
+        }
+    }
+
+}
+

@@ -252,9 +252,7 @@ extension TabSwitcherViewController {
     }
 
     var allPagesCount: Int {
-        return tabsModel.tabs.compactMap {
-            $0.link
-        }.count
+        tabsModel.tabs.compactMap(\.link).count
     }
 
     func createMultiSelectionMenu() -> UIMenu {

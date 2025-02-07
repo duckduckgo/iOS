@@ -50,7 +50,7 @@ final class RemoteMessagingService {
         remoteMessagingClient.registerBackgroundRefreshTaskHandler()
     }
 
-    func onInitialForeground() {
+    func onForeground() {
         scheduleBackgroundTask()
         refreshRemoteMessages()
     }

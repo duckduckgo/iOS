@@ -22,17 +22,14 @@ import UIKit
 import Core
 import Combine
 
-/// Represents the state where the app is active and available for user interaction.
+/// Represents the state where the app is in the Foreground.
 /// - Usage:
 ///   - This state is typically associated with the `applicationDidBecomeActive(_:)` method.
 ///   - The app transitions to this state after completing the launch process or resuming from the background.
 ///   - During this state, the app is fully interactive, and the user can engage with the app's UI.
 /// - Transitions:
-///   - `Suspending`: The app transitions to this state when it begins the process of moving to the background,
-///     typically triggered by the `applicationWillResignActive(_:)` method, e.g.:
-///     - When the user presses the home button, swipes up to the App Switcher, or receives a system interruption.
-/// - Notes:
-///   - This is one of the two long-living states in the app's lifecycle (along with `Background`).
+///   - `Background`: The app transitions to this state when it begins the process of moving to the background,
+///     triggered by the `applicationDidEnterBackground(_:)` method
 @MainActor
 struct Foreground: AppState {
 
@@ -57,32 +54,10 @@ struct Foreground: AppState {
 
         observeAppReadiness()
 
-        onInitialForeground()
         onForeground()
     }
 
-    private mutating func observeAppReadiness() {
-        Publishers.CombineLatest(didAuthenticate, didSetupWebView)
-            .sink { [self] _, _ in
-                self.onAppReadyForInteraction()
-            }
-            .store(in: &cancellables)
-    }
-
-    private func onInitialForeground() {
-        configureGlobalAppearance()
-        appDependencies.subscriptionService.onInitialForeground()
-        appDependencies.configurationService.onInitialForeground()
-        appDependencies.remoteMessagingService.onInitialForeground()
-    }
-
-    private func configureGlobalAppearance() {
-        UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
-    }
-
-    // MARK: - Handle logic when transitioning from Resuming to Foreground
-    /// This transition occurs when the app returns to the foreground after being backgrounded (e.g., after unlocking the app).
-    init(stateContext: Resuming.StateContext) {
+    init(stateContext: Background.StateContext) {
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
@@ -90,28 +65,44 @@ struct Foreground: AppState {
 
         observeAppReadiness()
 
+        onResume() // We need to call this to ensure that all services suspended in onPause() are now properly resumed.
         onForeground()
+    }
+
+    private mutating func observeAppReadiness() {
+        Publishers.CombineLatest(didAuthenticate, didSetupWebView)
+            .sink { [self] _, _ in
+                self.onAppReadyForInteractions()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func configureGlobalAppearance() {
+        UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
     }
 
     // MARK: - Handle applicationDidBecomeActive(_:) logic here
     /// Before adding code here, ensure it does not depend on pending tasks:
-    /// - If your app needs to be ready for web navigations, see `onReadyToPerformWebNavigations` — this runs after AutoClear is complete.
+    /// - If the app requires authentication (e.g., to prevent the keyboard from covering the Authentication screen), see `onAuthenticated`.
+    /// - If the app needs to be ready for web navigations, see `onWebViewReadyForInteractions` — this runs after AutoClear is complete.
+    /// - If the app needs to be ready for any interactions, see `onAppReadyForInteractions` - this runs after AutoClear and after Authentication
     /// - If install/search statistics are required, see `onStatisticsLoaded`.
     /// - If crucial configuration files (e.g., TDS, privacy config) are needed, see `onConfigurationFetched`.
     ///
     /// This is **THE LAST POINT** for setting up anything. If you need something to happen earlier,
-    /// add it to Launching and Resuming to ensure it runs both on a cold start and when the app wakes up.
+    /// add it to Launching's `init()` and Background's `onWakeUp()` to ensure it runs both on a cold start and when the app wakes up.
     private func onForeground() {
-        /// Please note that authentication triggers a transition to the `Suspending` state.
-        /// Once authentication is completed, the app reenters the `Foreground` state.
+        configureGlobalAppearance()
+
         appDependencies.authenticationService.beginAuthentication(onAuthenticated: onAuthenticated)
-        appDependencies.autoClearService.registerForDataCleared(onWebViewReadyForInteraction)
+        appDependencies.autoClearService.registerForDataCleared(onWebViewReadyForInteractions)
 
         appDependencies.syncService.onForeground()
 
         appDependencies.configurationService.onConfigurationFetched = onConfigurationFetched
         appDependencies.configurationService.onForeground()
 
+        appDependencies.remoteMessagingService.onForeground()
         appDependencies.vpnService.onForeground()
         appDependencies.subscriptionService.onForeground()
         appDependencies.autofillService.onForeground()
@@ -129,25 +120,18 @@ struct Foreground: AppState {
     // MARK: - Handle any WebView related logic here
     /// Callback for the AutoClear feature, triggered when all browser data is cleared.
     /// This includes closing all tabs, clearing caches, and wiping `WKWebsiteDataStore.default()`.
-    /// Place any code here related to browser navigation or web view handling
-    /// to ensure it remains unaffected by the clearing process.
-    private func onWebViewReadyForInteraction() {
-        appDependencies.vpnService.onWebViewSetupComplete()
+    /// Place any code here related to browser navigation or web view handling to ensure it remains unaffected by the clearing process.
+    private func onWebViewReadyForInteractions() {
+        appDependencies.vpnService.onWebViewReadyForInteractions()
         handleLaunchActions()
         didSetupWebView.send()
     }
 
-    private func onAppReadyForInteraction() {
+    // MARK: - Handle UI-related logic that could be affected by Authentication screen or AutoClear feature
+    /// This is called when the app is ready to handle user interactions after data clear and authentication are complete.
+    private func onAppReadyForInteractions() {
         if urlToOpen == nil && shortcutItemToHandle == nil {
             appDependencies.keyboardService.showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
-        }
-    }
-
-    private func handleLaunchActions() {
-        if let url = urlToOpen {
-            openURL(url)
-        } else if let shortcutItemToHandle = shortcutItemToHandle {
-            handleShortcutItem(shortcutItemToHandle, appIsLaunching: true)
         }
     }
 
@@ -165,7 +149,29 @@ struct Foreground: AppState {
         appDependencies.reportingService.onConfigurationFetched()
     }
 
-    // MARK: - Handle application(_:open:options:) logic here
+}
+
+// MARK: - URL and shortcut items handling
+extension Foreground {
+
+    func handle(action: AppAction) {
+        switch action {
+        case .openURL(let url):
+            openURL(url)
+        case .handleShortcutItem(let shortcutItem):
+            handleShortcutItem(shortcutItem)
+        }
+    }
+
+    private func handleLaunchActions() {
+        if let url = urlToOpen {
+            openURL(url)
+        } else if let shortcutItemToHandle = shortcutItemToHandle {
+            handleShortcutItem(shortcutItemToHandle)
+        }
+    }
+
+    // MARK: Handle application(_:open:options:) logic here
     func openURL(_ url: URL) {
         Logger.sync.debug("App launched with url \(url.absoluteString)")
         guard mainCoordinator.shouldProcessDeepLink(url) else { return }
@@ -176,8 +182,8 @@ struct Foreground: AppState {
         mainCoordinator.handleURL(url)
     }
 
-    // MARK: - Handle application(_:performActionFor:completionHandler:) logic here
-    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, appIsLaunching: Bool = false) {
+    // MARK: Handle application(_:performActionFor:completionHandler:) logic here
+    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
         if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainCoordinator.handleQuery(query)
@@ -188,31 +194,37 @@ struct Foreground: AppState {
         }
     }
 
-    // MARK: - Suspending logic
+}
 
-    // MARK: - Handle application suspension (applicationWillResignActive(_:))
-    /// Called when the app is **briefly suspended** due to user actions or system interruptions.
-    /// This happens when the app is about to move to the background but has not fully transitioned yet.
+// MARK: - Pausing and resuming logic
+/// Currently, there’s no active use case, but in the future, this could apply to scenarios like pausing/resuming a game or video,
+/// where we wouldn’t want playback to continue during a system alert.
+extension Foreground {
+
+    // MARK: Handle application suspension (applicationWillResignActive(_:))
+    /// Called when the app is briefly paused due to user actions or system interruptions.
+    /// This occurs when the app is about to move to the background but has not fully transitioned yet.
     ///
     /// **Scenarios when this happens:**
-    /// - The user presses the home button or swipes up to enter the App Switcher.
-    /// - The app triggers an authentication prompt, causing a temporary suspension.
-    /// - A system alert (e.g., incoming call, notification) appears, momentarily pausing the app.
-    func onSuspended() { }
+    /// - The user presses the home button or swipes up to just open the App Switcher.
+    /// - The app prompts for authentication, causing a temporary suspension.
+    /// - A system alert (e.g., an incoming call or notification) momentarily interrupts the app.
+    func onPause() { }
 
-    // MARK: - Handle app reactivation after suspension (applicationDidBecomeActive(_:))
-    /// Called when the app **reenters the foreground after being suspended**.
-    /// This is the counterpart to `onSuspended()`, triggered when the app **was previously suspended**
-    /// and is now becoming active again.
+    // MARK: Handle app activation (applicationDidBecomeActive(_:))
+    /// Called when the app resumes activity after being **paused** or transitioning from launch or the background.
+    /// This is the counterpart to `onPause()`.
     ///
     /// **Scenarios when this happens:**
-    /// - The user successfully authenticates and returns to the app.
+    /// - The app completes its launch process and becomes active.
+    /// - The user returns to the app after authentication.
     /// - The user switches back to the app from the App Switcher.
-    /// - The app was interrupted by a system alert and is now resuming.
-    func onReenteredForeground() { }
+    /// - The app was temporarily interrupted (e.g., by a system alert) and is now resuming.
+    func onResume() { }
 
 }
 
+// MARK: - State context
 extension Foreground {
 
     struct StateContext {
@@ -227,19 +239,6 @@ extension Foreground {
 
     func makeStateContext() -> StateContext {
         .init(appDependencies: appDependencies)
-    }
-
-}
-
-extension Foreground {
-
-    func handle(action: AppAction) {
-        switch action {
-        case .openURL(let url):
-            openURL(url)
-        case .handleShortcutItem(let shortcutItem):
-            handleShortcutItem(shortcutItem)
-        }
     }
 
 }

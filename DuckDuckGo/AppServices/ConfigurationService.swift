@@ -46,8 +46,22 @@ final class ConfigurationService {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
     }
 
-    func onInitialForeground() {
+    func onForeground() {
         scheduleBackgroundTask()
+
+        if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
+            ContentBlocking.shared.contentBlockingManager.scheduleCompilation() // TODO: should compilation happen in line here
+            // or should other service be responsible for it? e.g. ContentBlockingService
+            AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
+        }
+        AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()
+
+        AppConfigurationFetch().start { result in
+            self.onConfigurationFetched?()
+            if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
+                ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+            }
+        }
     }
 
     private func scheduleBackgroundTask() {
@@ -60,22 +74,6 @@ final class ConfigurationService {
             let hasConfigurationTask = tasks.contains { $0.identifier == AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier }
             if !hasConfigurationTask {
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
-            }
-        }
-    }
-
-    func onForeground() {
-        if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
-            ContentBlocking.shared.contentBlockingManager.scheduleCompilation() // TODO: should compilation happen in line here
-            // or should other service be responsible for it? e.g. ContentBlockingService
-            AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
-        }
-        AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()
-
-        AppConfigurationFetch().start { result in
-            self.onConfigurationFetched?()
-            if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
-                ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             }
         }
     }

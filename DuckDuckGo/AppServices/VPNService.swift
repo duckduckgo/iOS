@@ -54,7 +54,7 @@ final class VPNService: NSObject {
         tipKitAppEventsHandler.appDidFinishLaunching()
     }
 
-    func onWebViewSetupComplete() {
+    func onWebViewReadyForInteractions() {
         installRedditSessionWorkaround()
     }
 

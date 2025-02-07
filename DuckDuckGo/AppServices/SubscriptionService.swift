@@ -31,8 +31,6 @@ final class SubscriptionService {
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private var cancellables: Set<AnyCancellable> = []
 
-    var onPrivacyConfigurationUpdate: (() -> Void)?
-
     init(application: UIApplication = UIApplication.shared,
          privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         subscriptionCookieManager = Self.makeSubscriptionCookieManager(application: application,
@@ -44,7 +42,7 @@ final class SubscriptionService {
         privacyConfigurationManager.updatesPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.onPrivacyConfigurationUpdate?()
+                self?.handlePrivacyConfigurationUpdates()
             }
             .store(in: &cancellables)
     }
@@ -75,20 +73,17 @@ final class SubscriptionService {
         return subscriptionCookieManager
     }
 
-    func onInitialForeground() {
-        handlePrivacyConfigurationUpdates()
-    }
-
+    private var isSubscriptionCookieEnabled: Bool? = nil
     private func handlePrivacyConfigurationUpdates() {
-        onPrivacyConfigurationUpdate = { [weak self] in
-            guard let self else { return }
-            let isEnabled = self.privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
-
+        let isEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
+        // check if the state has changed not to call this on every update
+        if isEnabled != isSubscriptionCookieEnabled {
+            isSubscriptionCookieEnabled = isEnabled
             Task { @MainActor in
                 if isEnabled {
-                    self.subscriptionCookieManager.enableSettingSubscriptionCookie()
+                    subscriptionCookieManager.enableSettingSubscriptionCookie()
                 } else {
-                    await self.subscriptionCookieManager.disableSettingSubscriptionCookie()
+                    await subscriptionCookieManager.disableSettingSubscriptionCookie()
                 }
             }
         }

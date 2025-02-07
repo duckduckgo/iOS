@@ -49,22 +49,22 @@ import Core
         return true
     }
 
-    /// See: Foreground.swift
+    /// See: Foreground.swift `onForeground()`
     func applicationDidBecomeActive(_ application: UIApplication) {
         appStateMachine.handle(.didBecomeActive)
     }
 
-    /// See: Suspending.swift
+    /// See: Foreground.swift `onPause()`
     func applicationWillResignActive(_ application: UIApplication) {
         appStateMachine.handle(.willResignActive)
     }
 
-    /// See: Resuming.swift
+    /// See: Background.swift `onWakeUp()`
     func applicationWillEnterForeground(_ application: UIApplication) {
         appStateMachine.handle(.willEnterForeground)
     }
 
-    /// See: Background.swift
+    /// See: Background.swift `onBackground()`
     func applicationDidEnterBackground(_ application: UIApplication) {
         appStateMachine.handle(.didEnterBackground)
     }

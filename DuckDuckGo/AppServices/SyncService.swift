@@ -113,13 +113,10 @@ final class SyncService {
     }
 
     func onForeground() {
+        sync.scheduler.resumeSyncQueue()
         sync.initializeIfNeeded()
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: sync)
         sync.scheduler.notifyAppLifecycleEvent()
-    }
-
-    func onResuming() {
-        sync.scheduler.resumeSyncQueue()
     }
 
     func onBackground() {

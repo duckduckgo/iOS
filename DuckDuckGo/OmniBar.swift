@@ -428,10 +428,6 @@ class OmniBar: UIView {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }
 
-        /// When a setting that affects the accessory button is modified, `refreshState` is called.
-        /// This requires updating the padding to ensure consistent layout.
-        updateOmniBarPadding(left: 0, right: 0)
-
         UIView.animate(withDuration: 0.0) { [weak self] in
             self?.layoutIfNeeded()
         }
@@ -442,8 +438,18 @@ class OmniBar: UIView {
         omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : trailingConstraintValueForSmallWidth) + right
     }
 
+    /// When a setting that affects the accessory button is modified, `refreshState` is called.
+    /// This requires updating the padding to ensure consistent layout.
+    func refreshOmnibarPaddingConstraintsForAccessoryButton() {
+        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : trailingConstraintValueForSmallWidth) + (UIApplication.shared.firstKeyWindow?.safeAreaInsets.right ?? 0)
+    }
+
     private var trailingConstraintValueForSmallWidth: CGFloat {
-        state.showAccessoryButton ? 14 : 4
+        if state.showAccessoryButton || state.showSettings {
+            return 14
+        } else {
+            return 4
+        }
     }
 
     /*

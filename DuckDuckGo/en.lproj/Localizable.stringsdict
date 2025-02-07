@@ -450,5 +450,21 @@ I blocked them!
 			<string>Bookmark Selected Tab</string>
 		</dict>
 	</dict>
+	<key>alertTitleBookmarkSelectedTabs.withCount</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>Bookmark %d Selected Tabs?</string>
+			<key>one</key>
+			<string>Bookmark Selected Tab?</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

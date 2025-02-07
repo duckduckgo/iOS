@@ -36,9 +36,9 @@ extension TabSwitcherViewController {
         tabsModel.count
     }
 
-    func bookmarkTabs(withIndexes indices: [Int]) {
-        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
-                                      message: UserText.alertBookmarkAllMessage,
+    func bookmarkTabs(withIndexes indices: [Int], title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) { [weak self] in
@@ -192,6 +192,9 @@ extension TabSwitcherViewController {
 
     func selectAllTabs() {
         collectionView.reloadData()
+        tabsModel.tabs.indices.forEach {
+            collectionView.selectItem(at: IndexPath(row: $0, section: 0), animated: true, scrollPosition: [])
+        }
         updateUIForSelectionMode()
     }
 
@@ -475,7 +478,9 @@ extension TabSwitcherViewController {
         barsHandler.addAllBookmarksButton.accessibilityLabel = UserText.bookmarkAllTabs
         barsHandler.addAllBookmarksButton.primaryAction = action(image: "Bookmark-New-24") { [weak self] in
             guard let self else { return }
-            self.bookmarkTabs(withIndexes: self.tabsModel.tabs.indices.map { $0 })
+            self.bookmarkTabs(withIndexes: self.tabsModel.tabs.indices.map { $0 },
+                              title: UserText.alertBookmarkAllTitle,
+                              message: UserText.alertBookmarkAllMessage)
         }
 
         barsHandler.plusButton.accessibilityLabel = UserText.keyCommandNewTab
@@ -547,11 +552,15 @@ extension TabSwitcherViewController {
     }
 
     func selectModeBookmarkAll() {
-        bookmarkTabs(withIndexes: tabsModel.tabs.indices.map { $0 })
+        bookmarkTabs(withIndexes: tabsModel.tabs.indices.map { $0 },
+                     title: UserText.alertBookmarkAllTitle,
+                     message: UserText.alertBookmarkAllMessage)
     }
 
     func selectModeBookmarkSelected() {
-        bookmarkTabs(withIndexes: selectedTabs)
+        bookmarkTabs(withIndexes: selectedTabs,
+                     title: UserText.alertTitleBookmarkSelectedTabs(withCount: selectedPagesCount),
+                     message: UserText.alertBookmarkAllMessage)
     }
 
     func selectModeShareLinks() {
@@ -580,7 +589,9 @@ extension TabSwitcherViewController {
     }
 
     func longPressMenuBookmarkSelectedTabs() {
-        bookmarkTabs(withIndexes: selectedTabs)
+        bookmarkTabs(withIndexes: selectedTabs,
+                     title: UserText.bookmarkSelectedTabs(withCount: selectedPagesCount),
+                     message: UserText.alertBookmarkAllMessage)
     }
 
     func longPressMenuCloseUnselectedTabs() {

@@ -356,7 +356,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cellIdentifier = tabSwitcherSettings.isGridViewEnabled ? TabViewGridCell.reuseIdentifier : TabViewListCell.reuseIdentifier
+        let cellIdentifier = tabSwitcherSettings.isGridViewEnabled ? TabViewCell.gridReuseIdentifier : TabViewCell.listReuseIdentifier
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? TabViewCell else {
             fatalError("Failed to dequeue cell \(cellIdentifier) as TabViewCell")
         }
@@ -448,7 +448,7 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
         
         // Calculate height based on the view size
         let contentAspectRatio = collectionView.bounds.width / collectionView.bounds.height
-        let heightToFit = (columnWidth / contentAspectRatio) + TabViewGridCell.Constants.cellHeaderHeight
+        let heightToFit = (columnWidth / contentAspectRatio) + TabViewCell.Constants.cellHeaderHeight
         
         // Try to display at least `preferredMinNumberOfRows`
         let preferredMaxHeight = collectionView.bounds.height / Constants.preferredMinNumberOfRows

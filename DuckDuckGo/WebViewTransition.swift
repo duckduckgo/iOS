@@ -34,7 +34,7 @@ class WebViewTransition: TabSwitcherTransition {
         }
         
         let previewAspectRatio = preview.size.height / preview.size.width
-        let containerAspectRatio = (cellBounds.height - TabViewGridCell.Constants.cellHeaderHeight) / cellBounds.width
+        let containerAspectRatio = (cellBounds.height - TabViewCell.Constants.cellHeaderHeight) / cellBounds.width
         let strechedVerically = containerAspectRatio < previewAspectRatio
         
         var targetSize = CGSize.zero
@@ -42,12 +42,12 @@ class WebViewTransition: TabSwitcherTransition {
             targetSize.width = cellBounds.width
             targetSize.height = cellBounds.width * previewAspectRatio
         } else {
-            targetSize.height = cellBounds.height - TabViewGridCell.Constants.cellHeaderHeight
+            targetSize.height = cellBounds.height - TabViewCell.Constants.cellHeaderHeight
             targetSize.width = targetSize.height / previewAspectRatio
         }
         
         let targetFrame = CGRect(x: 0,
-                                 y: TabViewGridCell.Constants.cellHeaderHeight,
+                                 y: TabViewCell.Constants.cellHeaderHeight,
                                  width: targetSize.width,
                                  height: targetSize.height)
         return targetFrame
@@ -108,7 +108,7 @@ class FromWebViewTransition: WebViewTransition {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
                 let containerFrame = self.tabSwitcherCellFrame(for: layoutAttr)
                 self.imageContainer.frame = containerFrame
-                self.imageContainer.layer.cornerRadius = TabViewGridCell.Constants.cellCornerRadius
+                self.imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
                 self.imageView.frame = self.previewFrame(for: containerFrame.size, preview: preview)
             }
             
@@ -156,7 +156,7 @@ class ToWebViewTransition: WebViewTransition {
         webView.addSubview(solidBackground)
         
         imageContainer.frame = tabSwitcherCellFrame(for: layoutAttr)
-        imageContainer.layer.cornerRadius = TabViewGridCell.Constants.cellCornerRadius
+        imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
         
         let preview = tabSwitcherViewController.previewsSource.preview(for: tab)
         if let preview = preview {

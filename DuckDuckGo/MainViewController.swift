@@ -1588,6 +1588,7 @@ class MainViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.refreshOmniBar()
+                self?.omniBar.refreshOmnibarPaddingConstraintsForAccessoryButton()
             }
             .store(in: &aiChatCancellables)
     }

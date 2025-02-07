@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
-        "revision" : "1169c5565a1d6e3091e93448a28485a736dfa6d4",
-        "version" : "236.0.0"
+        "branch" : "graeme/etld+1-matching-for-saves",
+        "revision" : "6bf1337a1cc9e9118a4c016bc5a2ef2fa4807a0b"
       }
     },
     {

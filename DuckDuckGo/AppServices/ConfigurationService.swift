@@ -50,8 +50,7 @@ final class ConfigurationService {
         scheduleBackgroundTask()
 
         if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
-            ContentBlocking.shared.contentBlockingManager.scheduleCompilation() // TODO: should compilation happen in line here
-            // or should other service be responsible for it? e.g. ContentBlockingService
+            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
         }
         AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()

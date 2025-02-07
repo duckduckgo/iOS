@@ -34,11 +34,11 @@ import Core
 
     override init() {
         super.init()
-        NotificationCenter.default.addObserver(forName: .databaseDidEncounterInsufficientDiskSpace, object: nil, queue: .main) { _ in
-            self.application(UIApplication.shared, willTerminateWithReason: .insufficientDiskSpace)
+        NotificationCenter.default.addObserver(forName: .databaseDidEncounterInsufficientDiskSpace, object: nil, queue: .main) { [weak self] _ in
+            self?.application(UIApplication.shared, willTerminateWithReason: .insufficientDiskSpace)
         }
-        NotificationCenter.default.addObserver(forName: .contentBlockingDidEncounterCompilationFatalError, object: nil, queue: .main) { _ in
-            self.application(UIApplication.shared, willTerminateWithReason: .rulesCompilationFatalError)
+        NotificationCenter.default.addObserver(forName: .contentBlockingDidEncounterCompilationFatalError, object: nil, queue: .main) { [weak self] _ in
+            self?.application(UIApplication.shared, willTerminateWithReason: .rulesCompilationFatalError)
         }
     }
 
@@ -103,13 +103,13 @@ import Core
         true
     }
 
-    var privacyProDataReporter: PrivacyProDataReporting? {
-        (appStateMachine.currentState as? Foreground)?.appDependencies.reportingService.privacyProDataReporter // just for now, we have to get rid of this anti pattern
+    /// It's public in order to allow access via Debug menu. Otherwise it shouldn't be called from outside.
+    /// Avoid abusing this pattern. Inject dependencies where needed instead of relying on global access.
+    var debugPrivacyProDataReporter: PrivacyProDataReporting? {
+        (appStateMachine.currentState as? Foreground)?.appDependencies.reportingService.privacyProDataReporter
     }
 
-    /// It's public in order to allow refreshing on demand via Debug menu. Otherwise it shouldn't be called from outside.
-    /// we have to get rid of this anti pattern
-    func refreshRemoteMessages() {
+    func debugRefreshRemoteMessages() {
         if let remoteMessagingService = (appStateMachine.currentState as? Foreground)?.appDependencies.remoteMessagingService {
             remoteMessagingService.refreshRemoteMessages()
         }

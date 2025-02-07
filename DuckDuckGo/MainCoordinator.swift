@@ -261,7 +261,7 @@ final class MainCoordinator {
 
     func onForeground() {
         controller.showBars()
-        controller.didReturnFromBackground() // TODO: why was it like this?
+        controller.onForeground()
     }
 
     func resetAppStartTime() {

@@ -35,14 +35,9 @@ final class PixelConfiguration {
 #else
         Pixel.isDryRun = false
 #endif
-
-        var dryRun = false
-#if DEBUG
-        dryRun = true
-#endif
         let isPhone = UIDevice.current.userInterfaceIdiom == .phone
         let source = isPhone ? PixelKit.Source.iOS : PixelKit.Source.iPadOS
-        PixelKit.setUp(dryRun: dryRun,
+        PixelKit.setUp(dryRun: Pixel.isDryRun,
                        appVersion: AppVersion.shared.versionNumber,
                        source: source.rawValue,
                        defaultHeaders: [:],
@@ -51,7 +46,7 @@ final class PixelConfiguration {
             let url = URL.pixelUrl(forPixelNamed: pixelName)
             let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
             guard let request = APIRequestV2(url: url, method: .get, queryItems: parameters.toQueryItems(), headers: apiHeaders) else {
-                assertionFailure("Invalid request Pixel request")
+                assertionFailure("Invalid Pixel request")
                 onComplete(false, nil)
                 return
             }

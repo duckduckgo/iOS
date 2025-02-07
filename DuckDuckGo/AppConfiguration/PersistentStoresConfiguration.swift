@@ -78,7 +78,7 @@ final class PersistentStoresConfiguration {
                         return
                     } else {
                         Thread.sleep(forTimeInterval: 1)
-                        fatalError("Could not create daetagtabase stack: \(error.localizedDescription)")
+                        fatalError("Could not create database stack: \(error.localizedDescription)")
                     }
                 }
             }

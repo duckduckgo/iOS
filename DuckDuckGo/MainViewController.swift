@@ -946,7 +946,7 @@ class MainViewController: UIViewController {
         currentTab?.goForward()
     }
     
-    func didReturnFromBackground() {
+    func onForeground() {
         skipSERPFlow = true
         
         // Show Fire Pulse only if Privacy button pulse should not be shown. In control group onboarding `shouldShowPrivacyButtonPulse` is always false.

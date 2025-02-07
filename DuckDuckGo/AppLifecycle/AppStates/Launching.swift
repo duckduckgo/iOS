@@ -83,15 +83,15 @@ struct Launching: AppState {
         PixelConfiguration.configure(featureFlagger: featureFlagger)
         ContentBlockingConfiguration.configure()
         UserAgentConfiguration.configureAPIRequestUserAgent()
-        NewTabPageIntroMessageConfiguration().configure() // TODO: @Mariusz can it be moved up here?
+        NewTabPageIntroMessageConfiguration().configure()
 
         persistentStoresConfiguration.configure()
 
         configurationService.onLaunching()
         crashCollectionService.onLaunching()
 
-        WidgetCenter.shared.reloadAllTimelines() // TODO: should it be moved to some service?
-        PrivacyFeatures.httpsUpgrade.loadDataAsync() // TODO: should it be moved to some service?
+        WidgetCenter.shared.reloadAllTimelines()
+        PrivacyFeatures.httpsUpgrade.loadDataAsync()
 
         syncService = SyncService(bookmarksDatabase: persistentStoresConfiguration.bookmarksDatabase)
         reportingService.syncService = syncService

@@ -18,8 +18,10 @@ tags:
 - pressKey: Enter
 
 # Create navigation stack
-- assertVisible: "English"
-- tapOn: "English"
+- assertVisible: 'English.*'
+- tapOn: 
+    text: 'English.*'
+    childOf: "Top languages, navigation"
 - assertVisible: "Welcome to Wikipedia.*"
 - tapOn: "Wikipedia" 
 - assertVisible: "Article"

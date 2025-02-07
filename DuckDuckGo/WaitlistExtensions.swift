@@ -34,7 +34,7 @@ extension Waitlist {
 
     var onBackgroundTaskSubmissionError: ((Error) -> Void)? {
         { error in
-            Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error)
+            Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error, withAdditionalParameters: [PixelParameters.backgroundTaskCategory: "waitlist"])
         }
     }
 }

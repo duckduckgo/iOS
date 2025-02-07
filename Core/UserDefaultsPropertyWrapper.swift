@@ -182,6 +182,9 @@ public struct UserDefaultsWrapper<T> {
 
         // TipKit
         case resetTipKitOnNextLaunch = "com.duckduckgo.ios.tipKit.resetOnNextLaunch"
+
+        // Malicious Site Protection
+        case maliciousSiteProtectionEnabled = "com.duckduckgo.ios.maliciousSiteProtection.enabled"
     }
 
     private let key: Key

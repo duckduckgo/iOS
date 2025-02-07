@@ -207,6 +207,9 @@ struct Foreground: AppState {
             await appDependencies.privacyProDataReporter.saveWidgetAdded()
         }
 
+        // Fetch Malicious Site protection datasets
+        appDependencies.maliciousSiteProtectionService.onForeground()
+
         AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
     }
 

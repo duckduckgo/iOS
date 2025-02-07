@@ -189,7 +189,9 @@ public struct UserText {
     
     public static let bookmarkAllTabsSaved = NSLocalizedString("bookmarkAll.tabs.saved", value: "All tabs bookmarked", comment: "Confirmation message after selecting Bookmark All button")
     public static let bookmarkAllTabsFailedToSave = NSLocalizedString("bookmarkAll.tabs.failed", value: "Added new bookmarks for all tabs", comment: "Info message after selecting Bookmark All button")
-    
+
+    public static let bookmarkAllTabs = NotLocalizedString("bookmarkAll.tabs.label", value: "Add all tabs as bookmarks", comment: "Accessibility label")
+
     public static let themeNameDefault = NSLocalizedString("theme.name.default", value: "System Default", comment: "Entry for Default System theme")
     public static let themeNameLight = NSLocalizedString("theme.name.light", value: "Light", comment: "Light Theme entry")
     public static let themeNameDark = NSLocalizedString("theme.name.dark", value: "Dark", comment: "Dark Theme entry")
@@ -221,16 +223,71 @@ public struct UserText {
     public static let openHomeTab = NSLocalizedString("tab.open.home", value: "Open home tab", comment: "Accessibility label on tab cell")
     public static let closeHomeTab = NSLocalizedString("tab.close.home", value: "Close home tab", comment: "Accessibility label on remove button")
 
+    public static let selectAllTabs = NotLocalizedString("tab.select.all", value: "Select All", comment: "Select all tabs")
+
+    public static let deselectAllTabs = NotLocalizedString("tab.select.none", value: "Deselect All", comment: "Deselect all tabs")
+
     public static func closeTabs(withCount count: Int) -> String {
-        let message = NotLocalizedString("tab.close.with.count", value: "Close All %@ Tabs", comment: "Close tabs with a count")
-        return message.format(arguments: "\(count)")
+        let format = Bundle.main.localizedString(forKey: "tab.close", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
+    public static func alertTitleCloseSelectedTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "alertTitleCloseSelectedTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
+    public static func alertTitleCloseOtherTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "alertTitleCloseOtherTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
+    public static func alertTitleCloseTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "alertTitleCloseTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
+    public static func alertMessageCloseTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "alertMessageCloseTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
+    public static func alertMessageCloseOtherTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "alertMessageCloseOtherTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
     }
 
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.close.with.title.and.address", value: "Close \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
         return message.format(arguments: title, address)
     }
-    
+
+    public static let tabSwitcherShareLink = NotLocalizedString("tab.switcher.share.link", value: "Share Link", comment: "Share link menu item")
+
+    public static let tabSwitcherBookmarkPage = NotLocalizedString("tab.switcher.bookmark.page", value: "Bookmark This Page", comment: "Bookmark this page menu item")
+
+    public static let tabSwitcherBookmarkAllTabs = NotLocalizedString("tab.switcher.bookmarkAll", value: "Bookmark All Tabs", comment: "Bookmark all tabs menu item")
+
+    public static func tabSwitcherSelectTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "tab.switcher.select-tabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
+    public static func tabSwitcherCloseOtherTabs(withCount count: Int)  -> String {
+        let format = Bundle.main.localizedString(forKey: "tab.switcher.close-others.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
+    public static func shareSelectedLink(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "tabs.share.selected.with.count", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
+    public static func bookmarkSelectedTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "bookmark.selected.tabs.with.count", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
     public static let favorite = NSLocalizedString("favorite", value: "Favorite", comment: "")
     
     public static let onboardingWelcomeHeader = NSLocalizedString("onboardingWelcomeHeader", value: "Welcome to DuckDuckGo!", comment: "")
@@ -1402,6 +1459,13 @@ Duck.ai is an optional feature that lets you chat anonymously with popular 3rd-p
     public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("duckai.settings.enable.browsing-menu-toggle", value: "Show Duck.ai in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
 
     public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("duckai.settings.enable.address-bar-searching-toggle", value: "Show Duck.ai on Search Page", comment: "Toggle text to enable/disable AI Chat in the address bar")
+
+    public enum MaliciousSiteProtectionSettings {
+        public static let header = NSLocalizedString("malicious-site-protection.settings.header", value: "Site Safety Warnings", comment: "Header text for Malicious Site Protection settings")
+        public static let toggleMessage = NSLocalizedString("malicious-site-protection.settings.toggle.message", value: "Warn me on sites flagged for phishing or malware", comment: "Text explaining what happens when Malicious Site Protection is enabled")
+        public static let footerLearnMore = NSLocalizedString("malicious-site-protection.settings.footer.button.learn-more", value: "Learn More", comment: "Button that redirect the user to a web page explaining what Malicious Site Protection is")
+        public static let footerDisabledMessage = NSLocalizedString("malicious-site-protection.settings.footer.message", value: "Disabling this feature can put your personal information at risk.", comment: "Footer text for Malicious Site Protection settings warning the user about the risks of disabling the feature")
+    }
 
     // MARK: - New Tab Page
 

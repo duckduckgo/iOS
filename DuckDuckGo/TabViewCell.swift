@@ -31,6 +31,10 @@ protocol TabViewCellDelegate: AnyObject {
 class TabViewCell: UICollectionViewCell {
     
     struct Constants {
+
+        static let selectedBorderWidth: CGFloat = 2.0
+        static let unselectedBorderWidth: CGFloat = 0.0
+        
         static let swipeToDeleteAlpha: CGFloat = 0.5
     }
 
@@ -43,8 +47,7 @@ class TabViewCell: UICollectionViewCell {
     var isCurrent = false
     var isDeleting = false
     var canDelete = false
-    
-    weak var collectionReorderRecognizer: UIGestureRecognizer?
+    var isSelectionModeEnabled = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -140,12 +143,11 @@ class TabViewCell: UICollectionViewCell {
     }
 
     func update(withTab tab: Tab,
-                preview: UIImage?,
-                reorderRecognizer: UIGestureRecognizer?) {}
+                isSelectionModeEnabled: Bool,
+                preview: UIImage?) {}
     
     func closeTab() {
         guard let tab = tab else { return }
-        guard isNotReordering(with: collectionReorderRecognizer) else { return }
         self.delegate?.deleteTab(tab: tab)
     }
 
@@ -154,10 +156,35 @@ class TabViewCell: UICollectionViewCell {
         closeTab()
     }
 
-    private func isNotReordering(with gestureRecognizer: UIGestureRecognizer?) -> Bool {
-        guard let gestureRecognizer = gestureRecognizer else { return true }
-        let inactiveStates: [UIGestureRecognizer.State] = [.possible, .failed, .cancelled, .ended]
-        return inactiveStates.contains(gestureRecognizer.state)
+    func updateSelectionIndicator(_ image: UIImageView) {
+        if !isSelected {
+            image.image = UIImage(systemName: "circle")
+        } else {
+            image.image = UIImage(systemName: "checkmark.circle.fill")
+            let symbolColorConfiguration = UIImage.SymbolConfiguration(paletteColors: [
+                .white, // The check
+                .clear, // This does nothing in this palette
+                UIColor(designSystemColor: .accent), // The filled background of the circle
+            ])
+            image.image = UIImage(systemName: "checkmark.circle.fill")?.applyingSymbolConfiguration(symbolColorConfiguration)
+        }
+    }
+
+    func updateCurrentTabBorder(_ border: UIView) {
+        let showBorder = isSelectionModeEnabled ? isSelected : isCurrent
+        border.layer.borderColor = UIColor(designSystemColor: isSelectionModeEnabled ? .accent : .textPrimary).cgColor
+        border.layer.borderWidth = showBorder ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
+    }
+
+    func updateUIForSelectionMode(_ removeButton: UIButton, _ selectionIndicator: UIImageView) {
+
+        if isSelectionModeEnabled {
+            removeButton.isHidden = true
+            selectionIndicator.isHidden = false
+            updateSelectionIndicator(selectionIndicator)
+        } else {
+            selectionIndicator.isHidden = true
+        }
     }
 }
 
@@ -173,12 +200,5 @@ extension TabViewCell: UIGestureRecognizerDelegate {
         let velocity = pan.velocity(in: self)
         return abs(velocity.y) < abs(velocity.x)
     }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard otherGestureRecognizer == collectionReorderRecognizer else {
-            return false
-        }
-        return true
-    }
-    
+
 }

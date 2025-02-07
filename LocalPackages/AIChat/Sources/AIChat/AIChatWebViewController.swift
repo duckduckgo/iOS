@@ -88,6 +88,12 @@ final class AIChatWebViewController: UIViewController {
 
 extension AIChatWebViewController {
 
+    struct QueryParameters {
+        static let queryKey = "q"
+        static let autoSendKey = "prompt"
+        static let autoSendValue = "1"
+    }
+
     func reload() {
         loadWebsite()
     }
@@ -97,8 +103,13 @@ extension AIChatWebViewController {
         webView.load(request)
     }
 
-    func loadQuery(_ query: URLQueryItem) {
-        let queryURL = chatModel.aiChatURL.addingOrReplacingQueryItem(query)
+    func loadQuery(_ query: String, autoSend: Bool) {
+        let urlQuery = URLQueryItem(name: QueryParameters.queryKey, value: query)
+        var queryURL = chatModel.aiChatURL.addingOrReplacing(urlQuery)
+        if autoSend {
+            let autoSendQuery = URLQueryItem(name: QueryParameters.autoSendKey, value: QueryParameters.autoSendValue)
+            queryURL = queryURL.addingOrReplacing(autoSendQuery)
+        }
         webView.load(URLRequest(url: queryURL))
     }
 }

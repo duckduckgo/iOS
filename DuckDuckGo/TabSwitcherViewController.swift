@@ -549,7 +549,12 @@ extension TabSwitcherViewController: UICollectionViewDropDelegate {
             collectionView.deleteItems(at: [source])
             collectionView.insertItems(at: [destination])
         } completion: { _ in
-            collectionView.reloadItems(at: [IndexPath(row: self.currentSelection ?? 0, section: 0)])
+            if self.isEditing {
+                collectionView.reloadData()
+                collectionView.selectItem(at: destination, animated: true, scrollPosition: [])
+            } else {
+                collectionView.reloadItems(at: [IndexPath(row: self.currentSelection ?? 0, section: 0)])
+            }
             self.delegate.tabSwitcherDidReorderTabs(tabSwitcher: self)
         }
 

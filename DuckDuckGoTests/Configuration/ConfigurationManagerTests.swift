@@ -24,6 +24,7 @@ import Configuration
 import Combine
 import TrackerRadarKit
 
+// Temporary disabled since flaky 
 final class ConfigurationManagerTests: XCTestCase {
     private var operationLog: OperationLog!
     private var configManager: ConfigurationManager!

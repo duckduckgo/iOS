@@ -130,9 +130,9 @@ final class ConfigurationManager: DefaultConfigurationManager {
         // Perform privacyConfiguration fetch and update
         do {
             try await fetcher.fetch(.privacyConfiguration, isDebug: isDebug)
-            didFetchAnyTrackerBlockingDependencies = true
             privacyConfigurationManager.reload(etag: store.loadEtag(for: .privacyConfiguration),
                                                data: store.loadData(for: .privacyConfiguration))
+            didFetchAnyTrackerBlockingDependencies = true
         } catch {
             Logger.general.error("Did not apply update to \(Configuration.privacyConfiguration.rawValue, privacy: .public): \(error.localizedDescription, privacy: .public)")
         }

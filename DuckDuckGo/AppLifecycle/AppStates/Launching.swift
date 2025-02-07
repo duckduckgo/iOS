@@ -343,6 +343,9 @@ struct Launching: AppState {
 
         let syncErrorHandler = SyncErrorHandler()
 
+        let decider = AppDependencyProvider.shared.internalUserDecider
+              (decider as? DefaultInternalUserDecider)?.debugSetInternalUserState(true)
+        
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,
             secureVaultErrorReporter: SecureVaultReporter(),

@@ -24,9 +24,9 @@ tags:
 - tapOn: Tab Switcher
 - assertVisible: ".*Privacy Test Pages.*"
 - assertVisible: 
-    id: "Add"
+    id: "New Tab"
 - tapOn:
-    id: "Add"
+    id: "New Tab"
 - assertVisible:
     id: "searchEntry"
 - tapOn: 
@@ -85,9 +85,9 @@ tags:
 - tapOn: Tab Switcher
 - assertVisible: ".*Privacy Test Pages.*"
 - assertVisible: 
-    id: "Add"
+    id: "New Tab"
 - tapOn:
-    id: "Add"
+    id: "New Tab"
 - assertVisible:
     id: "searchEntry"
 - tapOn: 

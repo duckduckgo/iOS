@@ -59,9 +59,9 @@ tags:
 - assertVisible: Tab Switcher
 - tapOn: Tab Switcher 
 - assertVisible:
-    id: "Add"
+    id: "New Tab"
 - tapOn:
-    id: "Add"
+    id: "New Tab"
 - assertVisible:
     id: "searchEntry"
 - tapOn: 

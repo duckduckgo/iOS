@@ -298,7 +298,7 @@ extension TabSwitcherViewController {
     }
     
     fileprivate func addBookmarkMultiSelectMenuItemIfNeeded(_ allPagesCount: Int, _ selectedPagesCount: Int, _ children: inout [UIMenuElement]) {
-        guard allPagesCount > 0 && selectedPagesCount < allPagesCount else { return  }
+        guard selectedTabs.isEmpty else { return  }
         children.append(UIMenu(title: "", options: .displayInline, children: [
             action(UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", { [weak self] in
                 guard let self else { return }

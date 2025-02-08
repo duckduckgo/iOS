@@ -138,7 +138,7 @@ final class VPNService: NSObject {
         }
 
         application.shortcutItems = [
-            UIApplicationShortcutItem(type: AppDelegate.ShortcutKey.openVPNSettings,
+            UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
                                       localizedTitle: UserText.netPOpenVPNQuickAction,
                                       localizedSubtitle: nil,
                                       icon: UIApplicationShortcutIcon(templateImageName: "VPN-16"),

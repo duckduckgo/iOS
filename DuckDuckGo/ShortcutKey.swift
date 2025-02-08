@@ -1,5 +1,5 @@
 //
-//  ContentBlockingConfiguration.swift
+//  ShortcutKey.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -18,16 +18,11 @@
 //
 
 import Foundation
-import Core
 
-final class ContentBlockingConfiguration {
+enum ShortcutKey {
 
-    static func configure() {
-        ContentBlocking.shared.onCriticalError = {
-            NotificationCenter.default.post(name: .appDidEncounterUnrecoverableState, object: nil)
-        }
-        // Explicitly prepare ContentBlockingUpdating instance before Tabs are created
-        _ = ContentBlockingUpdating.shared
-    }
+    static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
+    static let passwords = "com.duckduckgo.mobile.ios.passwords"
+    static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
 
 }

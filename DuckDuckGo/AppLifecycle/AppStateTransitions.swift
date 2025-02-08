@@ -38,7 +38,7 @@ extension Launching {
         case .didEnterBackground:
             return Background(stateContext: makeStateContext())
         case .willTerminate(let terminationReason):
-            return Terminating(stateContext: makeStateContext(), terminationReason: terminationReason)
+            return Terminating(terminationReason: terminationReason)
         default:
             return handleUnexpectedEvent(event)
         }
@@ -57,7 +57,7 @@ extension Foreground {
             onResume()
             return self
         case .willTerminate(let terminationReason):
-            return Terminating(stateContext: makeStateContext(), terminationReason: terminationReason)
+            return Terminating(terminationReason: terminationReason)
         case .didEnterBackground:
             return Background(stateContext: makeStateContext())
         default:
@@ -79,8 +79,8 @@ extension Background {
             return self
         case .didBecomeActive:
             return Foreground(stateContext: makeStateContext())
-        case .willTerminate(let terminationReason):
-            return Terminating(stateContext: makeStateContext(), terminationReason: terminationReason)
+        case .willTerminate:
+            return Terminating()
         default:
             return handleUnexpectedEvent(event)
         }

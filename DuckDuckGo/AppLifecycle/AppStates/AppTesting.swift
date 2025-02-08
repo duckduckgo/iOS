@@ -23,7 +23,7 @@ import UIKit
 @MainActor
 struct AppTesting: AppState {
 
-    init(application: UIApplication = .shared) {
+    init() {
         Pixel.isDryRun = true
         _ = DefaultUserAgentManager.shared
         Database.shared.loadStore { _, _ in }
@@ -38,7 +38,7 @@ struct AppTesting: AppState {
         window.rootViewController?.view.backgroundColor = .red
         webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
 
-        application.setWindow(window)
+        UIApplication.shared.setWindow(window)
 
         let request = URLRequest(url: URL(string: "about:blank")!)
         webView.load(request)

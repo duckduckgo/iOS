@@ -185,11 +185,11 @@ extension Foreground {
     // MARK: Handle application(_:performActionFor:completionHandler:) logic here
     func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
-        if shortcutItem.type == AppDelegate.ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+        if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainCoordinator.handleQuery(query)
-        } else if shortcutItem.type == AppDelegate.ShortcutKey.passwords {
+        } else if shortcutItem.type == ShortcutKey.passwords {
             mainCoordinator.handleSearchPassword()
-        } else if shortcutItem.type == AppDelegate.ShortcutKey.openVPNSettings {
+        } else if shortcutItem.type == ShortcutKey.openVPNSettings {
             mainCoordinator.presentNetworkProtectionStatusSettingsModal()
         }
     }

@@ -94,12 +94,11 @@ final class MainCoordinator {
 
         case .failure(let error):
             Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
-// Commenting out as it didn't work anyway - the window was just always nil at this point
-//            if error.isDiskFull {
-//                self.presentInsufficientDiskSpaceAlert()
-//            } else {
-//                self.presentPreemptiveCrashAlert()
-//            }
+            if error.isDiskFull {
+                NotificationCenter.default.post(name: .databaseDidEncounterInsufficientDiskSpace, object: nil)
+            } else {
+                NotificationCenter.default.post(name: .appDidEncounterUnrecoverableState, object: nil)
+            }
             return NullHistoryManager()
         case .success(let historyManager):
             return historyManager

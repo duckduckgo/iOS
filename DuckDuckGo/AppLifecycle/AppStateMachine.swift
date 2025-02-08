@@ -37,6 +37,7 @@ enum AppAction {
 
 }
 
+@MainActor
 protocol AppState {
 
     func apply(event: AppEvent) -> any AppState

@@ -103,3 +103,17 @@ final class PersistentStoresConfiguration {
     }
 
 }
+
+extension Error {
+
+    var isDiskFull: Bool {
+        let nsError = self as NSError
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError, underlyingError.code == 13 {
+            return true
+        } else if nsError.userInfo["NSSQLiteErrorDomain"] as? Int == 13 {
+            return true
+        }
+        return false
+    }
+
+}

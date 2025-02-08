@@ -21,20 +21,13 @@ import UIKit
 
 struct Terminating: AppState {
 
-    init(stateContext: Launching.StateContext,
-         terminationReason: UIApplication.TerminationReason,
-         application: UIApplication = UIApplication.shared) {
-        alertAndTerminate(application: application, terminationReason: terminationReason)
-    }
-
-    init(stateContext: Foreground.StateContext,
-         terminationReason: UIApplication.TerminationReason,
-         application: UIApplication = UIApplication.shared) {
-        alertAndTerminate(application: application, terminationReason: terminationReason)
-    }
-
-    init(stateContext: Background.StateContext, terminationReason: UIApplication.TerminationReason) {
+    init() {
         fatalError("App is in unrecoverable state")
+    }
+
+    init(terminationReason: UIApplication.TerminationReason,
+         application: UIApplication = UIApplication.shared) {
+        alertAndTerminate(application: application, terminationReason: terminationReason)
     }
 
     private func alertAndTerminate(application: UIApplication, terminationReason: UIApplication.TerminationReason) {
@@ -42,7 +35,7 @@ struct Terminating: AppState {
         switch terminationReason {
         case .insufficientDiskSpace:
             alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
-        case .rulesCompilationFatalError:
+        case .unrecoverableState:
             alertController = CriticalAlerts.makePreemptiveCrashAlert()
         }
         application.window?.rootViewController?.present(alertController, animated: true, completion: nil)

@@ -64,7 +64,7 @@ extension UIApplication {
     enum TerminationReason {
 
         case insufficientDiskSpace
-        case rulesCompilationFatalError
+        case unrecoverableState
 
     }
 

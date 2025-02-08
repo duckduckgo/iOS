@@ -145,9 +145,8 @@ struct Launching: AppState {
 
     private func setupWindow() {
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
-        let application = UIApplication.shared
         window.rootViewController = mainCoordinator.controller
-        application.setWindow(window)
+        UIApplication.shared.setWindow(window)
         window.makeKeyAndVisible()
         mainCoordinator.start()
     }

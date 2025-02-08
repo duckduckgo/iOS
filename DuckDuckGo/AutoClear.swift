@@ -103,3 +103,19 @@ class AutoClear {
         await clearDataIfEnabled(applicationState: applicationState)
     }
 }
+
+extension DataStoreWarmup.ApplicationState {
+
+    init(with state: UIApplication.State) {
+        switch state {
+        case .inactive:
+            self = .inactive
+        case .active:
+            self = .active
+        case .background:
+            self = .background
+        @unknown default:
+            self = .unknown
+        }
+    }
+}

@@ -20,13 +20,13 @@
 import UIKit
 import Core
 
-@UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
+public extension NSNotification.Name {
 
-    struct ShortcutKey {
-        static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
-        static let passwords = "com.duckduckgo.mobile.ios.passwords"
-        static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
-    }
+    static let appDidEncounterUnrecoverableState = Notification.Name("com.duckduckgo.app.unrecoverable.state")
+
+}
+
+@UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private let appStateMachine: AppStateMachine = AppStateMachine()
 
@@ -34,11 +34,15 @@ import Core
 
     override init() {
         super.init()
-        NotificationCenter.default.addObserver(forName: .databaseDidEncounterInsufficientDiskSpace, object: nil, queue: .main) { [weak self] _ in
+        NotificationCenter.default.addObserver(forName: .databaseDidEncounterInsufficientDiskSpace,
+                                               object: nil,
+                                               queue: .main) { [weak self] _ in
             self?.application(UIApplication.shared, willTerminateWithReason: .insufficientDiskSpace)
         }
-        NotificationCenter.default.addObserver(forName: .contentBlockingDidEncounterCompilationFatalError, object: nil, queue: .main) { [weak self] _ in
-            self?.application(UIApplication.shared, willTerminateWithReason: .rulesCompilationFatalError)
+        NotificationCenter.default.addObserver(forName: .appDidEncounterUnrecoverableState,
+                                               object: nil,
+                                               queue: .main) { [weak self] _ in
+            self?.application(UIApplication.shared, willTerminateWithReason: .unrecoverableState)
         }
     }
 
@@ -74,12 +78,14 @@ import Core
         appStateMachine.handle(.willTerminate(terminationReason))
     }
 
+    /// See: Foreground.swift `handleShortcutItem(_:)`
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
         appStateMachine.handle(.handleShortcutItem(shortcutItem))
     }
 
+    /// See: Foreground.swift `openURL(_:)`
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         appStateMachine.handle(.openURL(url))
         return true
@@ -103,7 +109,8 @@ import Core
         true
     }
 
-    /// It's public in order to allow access via Debug menu. Otherwise it shouldn't be called from outside.
+    // MARK: - Debug
+    /// These are public to allow access via Debug menu. Otherwise they shouldn't be called from outside.
     /// Avoid abusing this pattern. Inject dependencies where needed instead of relying on global access.
     var debugPrivacyProDataReporter: PrivacyProDataReporting? {
         (appStateMachine.currentState as? Foreground)?.appDependencies.reportingService.privacyProDataReporter
@@ -113,36 +120,6 @@ import Core
         if let remoteMessagingService = (appStateMachine.currentState as? Foreground)?.appDependencies.remoteMessagingService {
             remoteMessagingService.refreshRemoteMessages()
         }
-    }
-
-}
-
-extension DataStoreWarmup.ApplicationState {
-
-    init(with state: UIApplication.State) {
-        switch state {
-        case .inactive:
-            self = .inactive
-        case .active:
-            self = .active
-        case .background:
-            self = .background
-        @unknown default:
-            self = .unknown
-        }
-    }
-}
-
-extension Error {
-
-    var isDiskFull: Bool {
-        let nsError = self as NSError
-        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError, underlyingError.code == 13 {
-            return true
-        } else if nsError.userInfo["NSSQLiteErrorDomain"] as? Int == 13 {
-            return true
-        }
-        return false
     }
 
 }

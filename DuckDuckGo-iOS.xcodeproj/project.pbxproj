@@ -1076,6 +1076,7 @@
 		CB5516D1286500290079B175 /* ContentBlockingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904C24FD2DB000D41DDF /* ContentBlockingRulesTests.swift */; };
 		CB5516D2286500290079B175 /* AtbServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F21DBD21121147002631A6 /* AtbServerTests.swift */; };
 		CB63FB392D52127400CC71A9 /* TabInteractionStateConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63FB382D52127400CC71A9 /* TabInteractionStateConfiguration.swift */; };
+		CB69F31B2D581CF4008550E7 /* ShortcutKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB69F31A2D581CF4008550E7 /* ShortcutKey.swift */; };
 		CB6CC7E42CD2529000320907 /* BrokenSitePrompt in Frameworks */ = {isa = PBXBuildFile; productRef = CB6CC7E32CD2529000320907 /* BrokenSitePrompt */; };
 		CB6D8E982C80A9B100D0E772 /* SpecialErrorPages in Frameworks */ = {isa = PBXBuildFile; productRef = CB6D8E972C80A9B100D0E772 /* SpecialErrorPages */; };
 		CB84C7BD29A3EF530088A5B8 /* AppConfigurationURLProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB24F70E29A3EB15006DCC58 /* AppConfigurationURLProvider.swift */; };
@@ -3069,6 +3070,7 @@
 		CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageUserScript.swift; sourceTree = "<group>"; };
 		CB5038622AF6D563007FD69F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB63FB382D52127400CC71A9 /* TabInteractionStateConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabInteractionStateConfiguration.swift; sourceTree = "<group>"; };
+		CB69F31A2D581CF4008550E7 /* ShortcutKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutKey.swift; sourceTree = "<group>"; };
 		CB6ABD002AF6D52B004A8224 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB6CE65B2AF6D4EE00119848 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB7407BC2AF6D56D0090A41C /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -7055,6 +7057,7 @@
 				853C5F6021C277C7001F7A05 /* global.swift */,
 				85C8E61C2B0E47380029A6BD /* BookmarksDatabaseSetup.swift */,
 				9821234F2B6D233E00F08C57 /* UserSession.swift */,
+				CB69F31A2D581CF4008550E7 /* ShortcutKey.swift */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -8813,6 +8816,7 @@
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				6FD3F80F2C3EF4F000DA5797 /* DeviceOrientationEnvironmentValue.swift in Sources */,
 				CBF259542D3A4C1500AC63E4 /* CrashCollectionService.swift in Sources */,
+				CB69F31B2D581CF4008550E7 /* ShortcutKey.swift in Sources */,
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,
 				D64648AF2B5993890033090B /* SubscriptionEmailViewModel.swift in Sources */,
 				9F8E0F3D2CCFD072001EA7C5 /* AddToDockPromoViewModel.swift in Sources */,

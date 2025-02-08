@@ -225,12 +225,10 @@ class TabSwitcherViewController: UIViewController {
     }
 
     func displayBookmarkAllStatusMessage(with results: BookmarkAllResult, openTabsCount: Int) {
-        if results.newCount == openTabsCount {
-            ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
+        if interfaceMode.isMultiSelection {
+            ActionMessageView.present(message: UserText.tabsBookmarked(withCount: results.newCount))
         } else {
-            let failedToSaveCount = openTabsCount - results.newCount - results.existingCount
-            Logger.general.debug("Failed to save \(failedToSaveCount) tabs")
-            ActionMessageView.present(message: UserText.bookmarkAllTabsFailedToSave)
+            ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
         }
     }
 
@@ -406,11 +404,6 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
         return proposedIndexPath
     }
 
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        tabsModel.moveTab(from: sourceIndexPath.row, to: destinationIndexPath.row)
-        currentSelection = tabsModel.currentIndex
-    }
-
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
 
         assert(!indexPaths.isEmpty)
@@ -539,7 +532,7 @@ extension TabSwitcherViewController: UICollectionViewDropDelegate {
               let item = coordinator.items.first,
               let source = item.sourceIndexPath
         else {
-                assertionFailure("Unexpected state when dropping tab into new position")
+            // This can happen if the menu is shown and the user then drags to an invalid location
             return
         }
 

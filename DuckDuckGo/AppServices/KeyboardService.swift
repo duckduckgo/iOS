@@ -28,14 +28,11 @@ final class KeyboardService {
         self.mainViewController = mainViewController
     }
 
-    var showKeyboardIfSettingOn = true
-
     func showKeyboardOnLaunch(lastBackgroundDate: Date? = nil) {
-        guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn && shouldShowKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate) else { return }
+        guard KeyboardSettings().onAppLaunch && shouldShowKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate) else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.mainViewController.enterSearch()
         }
-        showKeyboardIfSettingOn = false
     }
 
     private func shouldShowKeyboardOnLaunch(lastBackgroundDate: Date? = nil) -> Bool {

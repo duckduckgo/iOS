@@ -178,7 +178,6 @@ extension Foreground {
 
         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
 
-        appDependencies.keyboardService.showKeyboardIfSettingOn = false
         mainCoordinator.handleURL(url)
     }
 

@@ -85,7 +85,6 @@ extension Background {
     /// This ensures that your app remains responsive and smooth as it enters the foreground.
     func onWakeUp() {
         ThemeManager.shared.updateUserInterfaceStyle()
-        appDependencies.keyboardService.showKeyboardIfSettingOn = true // TODO: validate if this is needed
         appDependencies.autoClearService.onResuming()
     }
 

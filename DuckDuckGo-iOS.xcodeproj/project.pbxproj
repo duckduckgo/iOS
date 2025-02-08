@@ -6096,8 +6096,11 @@
 		CBAD0F042CFE1DA2006267B8 /* AppLifecycle */ = {
 			isa = PBXGroup;
 			children = (
+				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
+				CBAD0F0B2CFF4EDD006267B8 /* AppDependencies.swift */,
 				CBAD0F052CFE270D006267B8 /* AppStateMachine.swift */,
 				CBAD0F072CFE27D5006267B8 /* AppStateTransitions.swift */,
+				98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */,
 				CBAD0EF72CFE1D14006267B8 /* AppStates */,
 			);
 			path = AppLifecycle;
@@ -7042,13 +7045,10 @@
 				CBAD0F0E2D006291006267B8 /* AppServices */,
 				EE9D68D72AE15AD600B55EF4 /* UIApplicationExtension.swift */,
 				CBF259912D47BFDD00AC63E4 /* OverlayWindowManager.swift */,
-				CBAD0F0B2CFF4EDD006267B8 /* AppDependencies.swift */,
 				CBF259B82D499D0B00AC63E4 /* MainCoordinator.swift */,
 				CBAD0F042CFE1DA2006267B8 /* AppLifecycle */,
 				83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */,
 				CB24F70E29A3EB15006DCC58 /* AppConfigurationURLProvider.swift */,
-				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
-				98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */,
 				85BA58591F3506AE00C6E8CA /* AppSettings.swift */,
 				85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */,
 				373608912ABB430D00629E7F /* FavoritesDisplayMode+UserDefaults.swift */,

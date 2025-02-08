@@ -2672,10 +2672,13 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcherDidRequestCloseAll(tabSwitcher: TabSwitcherViewController) {
-        // TODO polish
         self.forgetTabs()
         self.refreshUIAfterClear()
         tabSwitcher.dismiss()
+    }
+
+    func tabSwitcherDidReorderTabs(tabSwitcher: TabSwitcherViewController) {
+        tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
     }
 
 }

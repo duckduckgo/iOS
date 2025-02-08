@@ -72,6 +72,10 @@ protocol OmniBarDelegate: AnyObject {
     
     func onVoiceSearchPressed()
 
+    func onDidBeginEditing()
+
+    func onDidEndEditing()
+
 }
 
 extension OmniBarDelegate {

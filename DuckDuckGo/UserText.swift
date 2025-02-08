@@ -516,7 +516,7 @@ public struct UserText {
     public static let autofillDisablePromptAction = NSLocalizedString("autofill.disable.prompt.action.open-settings", value: "Open Settings", comment: "Open Settings action for disabling autofill in Settings")
 
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Passwords", comment: "Autofill Logins menu item opening the login list")
-    public static let actionAIChatNew = NSLocalizedString("action.title.duckai.new", value: "New Chat", comment: "Duck.ai menu item opening a new chat")
+    public static let actionAIChatNew = NSLocalizedString("action.title.duckai.new", value: "New AI Chat", comment: "Duck.ai menu item opening a new chat")
     public static let actionTabNew = NSLocalizedString("action.title.tab.new", value: "New Tab", comment: "New tab menu item opening a new tab")
 
     // MARK: - Control Center Widget Education
@@ -1458,7 +1458,7 @@ Duck.ai is an optional feature that lets you chat anonymously with popular 3rd-p
 """, comment: "Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and ()")
     public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("duckai.settings.enable.browsing-menu-toggle", value: "Show Duck.ai in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
 
-    public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("duckai.settings.enable.address-bar-searching-toggle", value: "Show Duck.ai on Search Page", comment: "Toggle text to enable/disable AI Chat in the address bar")
+    public static let aiChatSettingsEnableAddressBarToggle = NSLocalizedString("duckai.settings.enable.address-bar-toggle", value: "Show Duck.ai in Address Bar", comment: "Toggle text to enable/disable Duck.ai in the address bar")
 
     public enum MaliciousSiteProtectionSettings {
         public static let header = NSLocalizedString("malicious-site-protection.settings.header", value: "Site Safety Warnings", comment: "Header text for Malicious Site Protection settings")

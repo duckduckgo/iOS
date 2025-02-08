@@ -265,8 +265,7 @@ extension MainViewController {
                                                             fireproofing: fireproofing,
                                                             websiteDataManager: websiteDataManager)
 
-        let aiChatSettings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                            internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        let aiChatSettings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
                                                   subscriptionManager: AppDependencyProvider.shared.subscriptionManager,

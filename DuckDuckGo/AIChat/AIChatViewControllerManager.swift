@@ -33,19 +33,15 @@ final class AIChatViewControllerManager {
     private var aiChatUserScript: AIChatUserScript?
     private var payloadHandler = AIChatPayloadHandler()
     private let privacyConfigurationManager: PrivacyConfigurationManaging
-    private let internalUserDecider: InternalUserDecider
     private weak var userContentController: UserContentController?
 
-    init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
-         internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider) {
+    init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         self.privacyConfigurationManager = privacyConfigurationManager
-        self.internalUserDecider = internalUserDecider
     }
 
     @MainActor
-    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil, on viewController: UIViewController) {
-        let settings = AIChatSettings(privacyConfigurationManager: privacyConfigurationManager,
-                                      internalUserDecider: internalUserDecider)
+    func openAIChat(_ query: String? = nil, payload: Any? = nil, autoSend: Bool = false, on viewController: UIViewController) {
+        let settings = AIChatSettings(privacyConfigurationManager: privacyConfigurationManager)
 
         // Check if the viewController is already presenting a RoundedPageSheetContainerViewController with AIChatViewController inside
         if let presentedVC = viewController.presentedViewController as? RoundedPageSheetContainerViewController,
@@ -73,7 +69,7 @@ final class AIChatViewControllerManager {
         roundedPageSheet.delegate = self
 
         if let query = query {
-            aiChatViewController.loadQuery(query)
+            aiChatViewController.loadQuery(query, autoSend: autoSend)
         }
 
         // Force a reload to trigger the user script getUserValues

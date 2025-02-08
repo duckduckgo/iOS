@@ -19,6 +19,7 @@
 
 import Foundation
 import AIChat
+import BrowserServicesKit
 
 protocol OmnibarAccessoryHandling {
     func omnibarAccessory(for url: URL?) -> OmniBar.AccessoryType
@@ -26,11 +27,16 @@ protocol OmnibarAccessoryHandling {
 
 struct OmnibarAccessoryHandler: OmnibarAccessoryHandling {
     let settings: AIChatSettingsProvider
+    let featureFlagger: FeatureFlagger
 
     func omnibarAccessory(for url: URL?) -> OmniBar.AccessoryType {
         guard settings.isAIChatFeatureEnabled,
               settings.isAIChatAddressBarUserSettingsEnabled else {
             return .share
+        }
+
+        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            return (url?.isDuckDuckGoSearch == false) ? .share : .chat
         }
 
         return (url?.isDuckDuckGoSearch == true) ? .chat : .share

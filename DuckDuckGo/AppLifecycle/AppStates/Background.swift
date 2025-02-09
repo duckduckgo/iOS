@@ -24,7 +24,6 @@ import UIKit
 ///   - This state is typically associated with the `applicationDidEnterBackground(_:)` method.
 ///   - The app transitions to this state when it is no longer in the foreground, either due to the user
 ///     minimizing the app, switching to another app, or locking the device.
-@MainActor
 struct Background: AppState {
 
     private let lastBackgroundDate: Date = Date()

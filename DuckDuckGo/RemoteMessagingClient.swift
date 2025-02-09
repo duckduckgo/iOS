@@ -113,7 +113,7 @@ extension RemoteMessagingClient {
         let remoteMessagingAvailabilityProvider = remoteMessagingAvailabilityProvider
         let store = store
 
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { [weak self] task in
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
             guard Self.shouldRefresh else {
                 task.setTaskCompleted(success: true)
                 Self.scheduleBackgroundRefreshTask()

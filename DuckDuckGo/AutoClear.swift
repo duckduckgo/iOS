@@ -21,6 +21,7 @@ import Foundation
 import UIKit
 import Core
 
+@MainActor
 protocol AutoClearWorker {
 
     func clearNavigationStack()

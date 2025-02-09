@@ -117,8 +117,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                 self.state.subscriptionInfo = subscription
                 if loadingIndicator { self.displaySubscriptionLoader(false) }
             }
-            await updateSubscriptionsStatusMessage(status: subscription.status,
-                                                   activeOffers: subscription.activeOffers,
+            await updateSubscriptionsStatusMessage(subscription: subscription,
                                                    date: subscription.expiresOrRenewsAt,
                                                    product: subscription.productId,
                                                    billingPeriod: subscription.billingPeriod)
@@ -207,12 +206,12 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     @MainActor
-    private func updateSubscriptionsStatusMessage(status: PrivacyProSubscription.Status, activeOffers: [PrivacyProSubscription.Offer], date: Date, product: String, billingPeriod: PrivacyProSubscription.BillingPeriod) {
+    private func updateSubscriptionsStatusMessage(subscription: PrivacyProSubscription, date: Date, product: String, billingPeriod: PrivacyProSubscription.BillingPeriod) {
         let date = dateFormatter.string(from: date)
 
-        let hasActiveTrialOffer = activeOffers.contains(where: { $0.type == .trial })
+        let hasActiveTrialOffer = subscription.hasActiveTrialOffer
 
-        switch status {
+        switch subscription.status {
         case .autoRenewable:
             if hasActiveTrialOffer {
                 state.subscriptionDetails = UserText.renewingTrialSubscriptionInfo(billingPeriod: billingPeriod, renewalDate: date)

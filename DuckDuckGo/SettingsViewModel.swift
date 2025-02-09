@@ -808,7 +808,7 @@ extension SettingsViewModel {
             state.subscription.platform = subscription.platform
             state.subscription.hasSubscription = true
             state.subscription.hasActiveSubscription = subscription.isActive
-            state.subscription.isActiveTrialOffer = subscription.activeOffers.contains(where: { $0.type == .trial })
+            state.subscription.isActiveTrialOffer = subscription.hasActiveTrialOffer
 
             // Check entitlements and update state
             var currentEntitlements: [Entitlement.ProductName] = []

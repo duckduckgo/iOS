@@ -38,11 +38,10 @@ import WidgetKit
 @MainActor
 struct Launching: AppState {
 
-    private let accountManager = AppDependencyProvider.shared.accountManager
     private let appSettings = AppDependencyProvider.shared.appSettings
     private let voiceSearchHelper = VoiceSearchHelper()
     private let fireproofing = UserDefaultsFireproofing.xshared
-    private let featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger
+    private let featureFlagger = AppDependencyProvider.shared.featureFlagger
 
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
 
@@ -115,7 +114,6 @@ struct Launching: AppState {
                                           voiceSearchHelper: voiceSearchHelper,
                                           featureFlagger: featureFlagger,
                                           fireproofing: fireproofing,
-                                          accountManager: accountManager,
                                           maliciousSiteProtectionService: maliciousSiteProtectionService,
                                           didFinishLaunchingStartTime: didFinishLaunchingStartTime)
         syncService.presenter = mainCoordinator.controller

@@ -39,7 +39,7 @@ final class MainCoordinator {
          voiceSearchHelper: VoiceSearchHelper,
          featureFlagger: FeatureFlagger,
          fireproofing: Fireproofing,
-         accountManager: AccountManager,
+         accountManager: AccountManager = AppDependencyProvider.shared.accountManager,
          maliciousSiteProtectionService: MaliciousSiteProtectionService,
          didFinishLaunchingStartTime: CFAbsoluteTime) {
         self.accountManager = accountManager

@@ -72,7 +72,7 @@ extension Background {
     /// **Important note**
     /// By default, resume any services in the `onForeground()` method of the `Foreground` state.
     /// Use this method to resume **UI related tasks** that need to be completed promptly, preventing UI glitches when the user first sees the app.
-    /// This ensures that your app remains responsive and smooth as it enters the foreground.
+    /// This ensures that the app remains smooth as it enters the foreground.
     func onWakeUp() {
         ThemeManager.shared.updateUserInterfaceStyle()
         appDependencies.autoClearService.onResuming()

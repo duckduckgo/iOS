@@ -22,14 +22,11 @@ import UIKit
 import Core
 import Combine
 
-/// Represents the state where the app is in the Foreground.
+/// Represents the state where the app is in the Foreground and is visible to the user.
 /// - Usage:
 ///   - This state is typically associated with the `applicationDidBecomeActive(_:)` method.
 ///   - The app transitions to this state after completing the launch process or resuming from the background.
 ///   - During this state, the app is fully interactive, and the user can engage with the app's UI.
-/// - Transitions:
-///   - `Background`: The app transitions to this state when it begins the process of moving to the background,
-///     triggered by the `applicationDidEnterBackground(_:)` method
 @MainActor
 struct Foreground: AppState {
 
@@ -44,28 +41,30 @@ struct Foreground: AppState {
     private let didSetupWebView = PassthroughSubject<Void, Never>()
     private var cancellables = Set<AnyCancellable>()
 
-    // MARK: - Handle logic when transitioning from Launched to Foreground
-    /// This transition occurs when the app has completed its launch process and becomes active.
-    /// Note: You want to add here code that will happen one-time per app lifecycle, but you require the UI to be active at this point!
     init(stateContext: Launching.StateContext) {
-        appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
-        shortcutItemToHandle = stateContext.shortcutItemToHandle
-
-        observeAppReadiness()
-
-        onForeground()
+        self.init(appDependencies: stateContext.appDependencies,
+                  urlToOpen: stateContext.urlToOpen,
+                  shortcutItemToHandle: stateContext.shortcutItemToHandle)
     }
 
     init(stateContext: Background.StateContext) {
-        appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
-        shortcutItemToHandle = stateContext.shortcutItemToHandle
-        lastBackgroundDate = stateContext.lastBackgroundDate
+        self.init(appDependencies: stateContext.appDependencies,
+                  urlToOpen: stateContext.urlToOpen,
+                  shortcutItemToHandle: stateContext.shortcutItemToHandle,
+                  lastBackgroundDate: stateContext.lastBackgroundDate)
+    }
+
+    private init(appDependencies: AppDependencies,
+                 urlToOpen: URL?,
+                 shortcutItemToHandle: UIApplicationShortcutItem?,
+                 lastBackgroundDate: Date? = nil) {
+        self.appDependencies = appDependencies
+        self.urlToOpen = urlToOpen
+        self.shortcutItemToHandle = shortcutItemToHandle
+        self.lastBackgroundDate = lastBackgroundDate
 
         observeAppReadiness()
-
-        onResume() // We need to call this to ensure that all services suspended in onPause() are now properly resumed.
+        onResume()
         onForeground()
     }
 
@@ -77,20 +76,15 @@ struct Foreground: AppState {
             .store(in: &cancellables)
     }
 
-    private func configureGlobalAppearance() {
-        UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
-    }
-
     // MARK: - Handle applicationDidBecomeActive(_:) logic here
-    /// Before adding code here, ensure it does not depend on pending tasks:
-    /// - If the app requires authentication (e.g., to prevent the keyboard from covering the Authentication screen), see `onAuthenticated`.
-    /// - If the app needs to be ready for web navigations, see `onWebViewReadyForInteractions` — this runs after AutoClear is complete.
-    /// - If the app needs to be ready for any interactions, see `onAppReadyForInteractions` - this runs after AutoClear and after Authentication
-    /// - If install/search statistics are required, see `onStatisticsLoaded`.
-    /// - If crucial configuration files (e.g., TDS, privacy config) are needed, see `onConfigurationFetched`.
+    /// **Before adding code here, ensure it does not depend on pending tasks:**
+    /// - If the app needs to be ready for web navigations, use `onWebViewReadyForInteractions` — this runs after AutoClear is complete.
+    /// - If the app needs to be ready for any interactions, use `onAppReadyForInteractions` - this runs after AutoClear and authentication.
+    /// - If install/search statistics are required, use `onStatisticsLoaded`.
+    /// - If crucial configuration files (e.g., TDS, privacy config) are needed, use `onConfigurationFetched`.
     ///
-    /// This is **THE LAST POINT** for setting up anything. If you need something to happen earlier,
-    /// add it to Launching's `init()` and Background's `onWakeUp()` to ensure it runs both on a cold start and when the app wakes up.
+    /// This is **the last moment** for setting up anything. If you need something to happen earlier,
+    /// add it to `Launching`'s `init()` and `Background`'s `onWakeUp()` to ensure it runs both on a cold start and when the app wakes up.
     private func onForeground() {
         configureGlobalAppearance()
 
@@ -113,6 +107,10 @@ struct Foreground: AppState {
         mainCoordinator.onForeground()
     }
 
+    private func configureGlobalAppearance() {
+        UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
+    }
+
     private func onAuthenticated() {
         didAuthenticate.send()
     }
@@ -127,7 +125,7 @@ struct Foreground: AppState {
         didSetupWebView.send()
     }
 
-    // MARK: - Handle UI-related logic that could be affected by Authentication screen or AutoClear feature
+    // MARK: - Handle UI-related logic here that could be affected by Authentication screen or AutoClear feature
     /// This is called when the app is ready to handle user interactions after data clear and authentication are complete.
     private func onAppReadyForInteractions() {
         if urlToOpen == nil && shortcutItemToHandle == nil {
@@ -172,7 +170,7 @@ extension Foreground {
     }
 
     // MARK: Handle application(_:open:options:) logic here
-    func openURL(_ url: URL) {
+    private func openURL(_ url: URL) {
         Logger.sync.debug("App launched with url \(url.absoluteString)")
         guard mainCoordinator.shouldProcessDeepLink(url) else { return }
 
@@ -182,7 +180,7 @@ extension Foreground {
     }
 
     // MARK: Handle application(_:performActionFor:completionHandler:) logic here
-    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
+    private func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
         if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainCoordinator.handleQuery(query)
@@ -195,30 +193,27 @@ extension Foreground {
 
 }
 
-// MARK: - Pausing and resuming logic
-/// Currently, there’s no active use case, but in the future, this could apply to scenarios like pausing/resuming a game or video,
-/// where we wouldn’t want playback to continue during a system alert.
+// MARK: Handle application suspension (applicationWillResignActive(_:))
+/// No active use case currently, but could apply to scenarios like pausing/resuming a game or video during a system alert.
 extension Foreground {
 
-    // MARK: Handle application suspension (applicationWillResignActive(_:))
-    /// Called when the app is briefly paused due to user actions or system interruptions.
-    /// This occurs when the app is about to move to the background but has not fully transitioned yet.
+    /// Called when the app is **briefly** paused due to user actions or system interruptions.
+    /// or when the app is about to move to the background but has not fully transitioned yet.
     ///
     /// **Scenarios when this happens:**
-    /// - The user presses the home button or swipes up to just open the App Switcher.
+    /// - The user switches to another app or just swipes up to open the App Switcher.
     /// - The app prompts for authentication, causing a temporary suspension.
     /// - A system alert (e.g., an incoming call or notification) momentarily interrupts the app.
+    ///
+    /// **Important note**
+    /// By default, suspend any services in the `onBackground()` method of the `Background` state.
+    /// Use this method only to pause specific tasks, like video playback, when the app displays a system alert.
     func onPause() { }
 
-    // MARK: Handle app activation (applicationDidBecomeActive(_:))
-    /// Called when the app resumes activity after being **paused** or transitioning from launch or the background.
+    /// Called when the app resumes activity after being **paused** or when transitioning from launching or background.
     /// This is the counterpart to `onPause()`.
     ///
-    /// **Scenarios when this happens:**
-    /// - The app completes its launch process and becomes active.
-    /// - The user returns to the app after authentication.
-    /// - The user switches back to the app from the App Switcher.
-    /// - The app was temporarily interrupted (e.g., by a system alert) and is now resuming.
+    /// Use this method to revert any actions performed in `onPause()` (if applicable).
     func onResume() { }
 
 }

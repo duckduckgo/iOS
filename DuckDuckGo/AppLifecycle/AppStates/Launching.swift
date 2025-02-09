@@ -158,6 +158,7 @@ struct Launching: AppState {
         reportingService.onVariantAssigned()
     }
 
+    // MARK: -
     private var appDependencies: AppDependencies {
         .init(
             mainCoordinator: mainCoordinator,

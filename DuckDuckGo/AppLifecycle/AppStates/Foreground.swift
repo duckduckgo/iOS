@@ -30,12 +30,12 @@ import Combine
 @MainActor
 struct Foreground: AppState {
 
-    var appDependencies: AppDependencies
+    let appDependencies: AppDependencies
     private var mainCoordinator: MainCoordinator { appDependencies.mainCoordinator }
 
-    private var urlToOpen: URL?
-    private var shortcutItemToHandle: UIApplicationShortcutItem?
-    private var lastBackgroundDate: Date?
+    private let urlToOpen: URL?
+    private let shortcutItemToHandle: UIApplicationShortcutItem?
+    private let lastBackgroundDate: Date?
 
     private let didAuthenticate = PassthroughSubject<Void, Never>()
     private let didSetupWebView = PassthroughSubject<Void, Never>()

@@ -1148,7 +1148,7 @@ class MainViewController: UIViewController {
 
     private func refreshOmniBar() {
         updateOmniBarLoadingState()
-        viewCoordinator.omniBar.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: currentTab?.url)
+        viewCoordinator.omniBar.updateAccessoryType(omnibarAccessoryHandler.omnibarAccessory(for: currentTab?.url))
 
         guard let tab = currentTab, tab.link != nil else {
             viewCoordinator.omniBar.stopBrowsing()
@@ -2178,14 +2178,14 @@ extension MainViewController: OmniBarDelegate {
     /// We always want to show the AI Chat button if the keyboard is on focus
     func onDidBeginEditing() {
         if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
-            omniBar.accessoryType = .chat
+            omniBar.updateAccessoryType(.chat)
         }
     }
 
     /// When the keyboard is dismissed we'll apply the previous rule to define the accessory button back to whatever it was
     func onDidEndEditing() {
         if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
-            omniBar.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: currentTab?.url)
+            omniBar.updateAccessoryType(omnibarAccessoryHandler.omnibarAccessory(for: currentTab?.url))
         }
     }
 }

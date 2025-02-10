@@ -79,7 +79,12 @@ extension VoiceSearchFeedbackView {
             }
             .padding(.bottom, voiceCircleVerticalPadding)
             .padding(.top, voiceCircleVerticalPadding)
-            
+
+
+            GlassySegmentedControl(selectedOption: $speechModel.selectedOption)
+                .frame(width: 300, height: 60)
+
+
             Text(UserText.voiceSearchFooterOld)
                 .font(.footnote)
                 .multilineTextAlignment(.center)

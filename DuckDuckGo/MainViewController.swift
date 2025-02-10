@@ -3024,11 +3024,18 @@ extension MainViewController: UIDropInteractionDelegate {
 
 extension MainViewController: VoiceSearchViewControllerDelegate {
     
-    func voiceSearchViewController(_ controller: VoiceSearchViewController, didFinishQuery query: String?) {
+    func voiceSearchViewController(_ controller: VoiceSearchViewController, didFinishQuery query: String?, target: VoiceSearchTarget) {
         controller.dismiss(animated: true, completion: nil)
-        if let query = query {
+        guard let query = query else { return }
+
+        switch target {
+        case .search:
             Pixel.fire(pixel: .voiceSearchDone)
             loadQuery(query)
+
+        case .aiChat:
+            performCancel()
+            openAIChat(query, autoSend: true)
         }
     }
 }

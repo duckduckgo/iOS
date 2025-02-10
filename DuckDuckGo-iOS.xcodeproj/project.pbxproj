@@ -176,6 +176,7 @@
 		31860A5B2C57ED2D005561F5 /* DuckPlayerStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */; };
 		318C5B492D3022FE00DAA5FC /* AIChatPayloadHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C5B482D3022FE00DAA5FC /* AIChatPayloadHandling.swift */; };
 		318C5B4D2D302BDB00DAA5FC /* AIChatPayloadHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C5B4C2D302BDB00DAA5FC /* AIChatPayloadHandlerTests.swift */; };
+		3190CFC32D5A919E001A31E2 /* GlassySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3190CFC22D5A919E001A31E2 /* GlassySegmentedControl.swift */; };
 		31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */; };
 		319A37152829A55F0079FBCE /* AutofillListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A37142829A55F0079FBCE /* AutofillListItemTableViewCell.swift */; };
 		319A37172829C8AD0079FBCE /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A37162829C8AD0079FBCE /* UITableViewExtension.swift */; };
@@ -1651,6 +1652,7 @@
 		31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuckPlayerStorage.swift; sourceTree = "<group>"; };
 		318C5B482D3022FE00DAA5FC /* AIChatPayloadHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatPayloadHandling.swift; sourceTree = "<group>"; };
 		318C5B4C2D302BDB00DAA5FC /* AIChatPayloadHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatPayloadHandlerTests.swift; sourceTree = "<group>"; };
+		3190CFC22D5A919E001A31E2 /* GlassySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassySegmentedControl.swift; sourceTree = "<group>"; };
 		31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginDetailsHeaderView.swift; sourceTree = "<group>"; };
 		319A37142829A55F0079FBCE /* AutofillListItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillListItemTableViewCell.swift; sourceTree = "<group>"; };
 		319A37162829C8AD0079FBCE /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
@@ -3890,9 +3892,9 @@
 		3151F0E827357F8F00226F58 /* VoiceSearch */ = {
 			isa = PBXGroup;
 			children = (
+				3190CFC12D5A919C001A31E2 /* Views */,
 				3151F0EF2735802800226F58 /* VoiceSearchViewController.swift */,
 				3151F0EB27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift */,
-				3151F0ED2735800800226F58 /* VoiceSearchFeedbackView.swift */,
 				31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */,
 				3151F0E927357FBA00226F58 /* SpeechRecognizer.swift */,
 				31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */,
@@ -3967,6 +3969,15 @@
 				317DF6072D01E7B900DE0145 /* RoundedPageSheetContainerViewController.swift */,
 			);
 			path = RoundedPageContainer;
+			sourceTree = "<group>";
+		};
+		3190CFC12D5A919C001A31E2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3190CFC22D5A919E001A31E2 /* GlassySegmentedControl.swift */,
+				3151F0ED2735800800226F58 /* VoiceSearchFeedbackView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		31951E9328230D8900CAF535 /* Shared */ = {
@@ -8596,6 +8607,7 @@
 				F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */,
 				7BFD5FD52C9DA310000FF959 /* VPNAddWidgetTip.swift in Sources */,
 				31BB23A62D3A96F000809ABF /* DeepLinks.swift in Sources */,
+				3190CFC32D5A919E001A31E2 /* GlassySegmentedControl.swift in Sources */,
 				C17B595A2A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* UnprotectedSitesViewController.swift in Sources */,
 				CBD4F13C279EBF4A00B20FD7 /* HomeMessage.swift in Sources */,

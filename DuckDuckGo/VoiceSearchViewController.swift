@@ -21,7 +21,12 @@ import UIKit
 import SwiftUI
 
 protocol VoiceSearchViewControllerDelegate: AnyObject {
-    func voiceSearchViewController(_ controller: VoiceSearchViewController, didFinishQuery query: String?)
+    func voiceSearchViewController(_ controller: VoiceSearchViewController, didFinishQuery query: String?, target: VoiceSearchTarget)
+}
+
+enum VoiceSearchTarget {
+    case search
+    case aiChat
 }
 
 class VoiceSearchViewController: UIViewController {
@@ -62,7 +67,7 @@ class VoiceSearchViewController: UIViewController {
 }
 
 extension VoiceSearchViewController: VoiceSearchFeedbackViewModelDelegate {
-    func voiceSearchFeedbackViewModel(_ model: VoiceSearchFeedbackViewModel, didFinishQuery query: String?) {
-        delegate?.voiceSearchViewController(self, didFinishQuery: query)
+    func voiceSearchFeedbackViewModel(_ model: VoiceSearchFeedbackViewModel, didFinishQuery query: String?, target: VoiceSearchTarget) {
+        delegate?.voiceSearchViewController(self, didFinishQuery: query, target: target)
     }
 }

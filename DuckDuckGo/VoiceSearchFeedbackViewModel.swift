@@ -22,7 +22,7 @@ import Core
 import UIKit
 
 protocol VoiceSearchFeedbackViewModelDelegate: AnyObject {
-    func voiceSearchFeedbackViewModel(_ model: VoiceSearchFeedbackViewModel, didFinishQuery query: String?)
+    func voiceSearchFeedbackViewModel(_ model: VoiceSearchFeedbackViewModel, didFinishQuery query: String?, target: VoiceSearchTarget)
 }
 
 class VoiceSearchFeedbackViewModel: ObservableObject {
@@ -39,6 +39,16 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     
     @Published private(set) var speechFeedback = " "
     @Published private(set) var animationType: AnimationType = .pulse(scale: 1)
+
+    @UserDefaultsWrapper(key: .voiceSearchTargetPreferences, defaultValue: 0)
+    private var targedSelectedOption: Int
+
+    @Published var selectedOption: Int = 0 {
+        didSet {
+            targedSelectedOption = selectedOption
+        }
+    }
+
     weak var delegate: VoiceSearchFeedbackViewModelDelegate?
     private let speechRecognizer: SpeechRecognizerProtocol
     private var isSilent = true
@@ -55,8 +65,9 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
 
     internal init(speechRecognizer: SpeechRecognizerProtocol) {
         self.speechRecognizer = speechRecognizer
+        selectedOption = self.targedSelectedOption
     }
-    
+
     func startSpeechRecognizer() {
         speechRecognizer.startRecording { [weak self] text, error, speechDidFinish in
             DispatchQueue.main.async {
@@ -109,13 +120,20 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     func startSpeechAnimation(_ scale: CGFloat) {
         self.animationType = .speech(volume: scale)
     }
-    
+
+    var selectedOptionType: VoiceSearchTarget {
+        if selectedOption == 0 {
+            return .search
+        } else {
+            return .aiChat
+        }
+    }
     func cancel() {
         Pixel.fire(pixel: .voiceSearchCancelled)
-        delegate?.voiceSearchFeedbackViewModel(self, didFinishQuery: nil)
+        delegate?.voiceSearchFeedbackViewModel(self, didFinishQuery: nil, target: selectedOptionType)
     }
     
     func finish() {
-        delegate?.voiceSearchFeedbackViewModel(self, didFinishQuery: recognizedWords)
+        delegate?.voiceSearchFeedbackViewModel(self, didFinishQuery: recognizedWords, target: selectedOptionType)
     }
 }

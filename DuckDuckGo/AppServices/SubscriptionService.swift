@@ -73,7 +73,7 @@ final class SubscriptionService {
         return subscriptionCookieManager
     }
 
-    private var isSubscriptionCookieEnabled: Bool? = nil
+    private var isSubscriptionCookieEnabled: Bool?
     private func handlePrivacyConfigurationUpdates() {
         let isEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
         // check if the state has changed not to call this on every update

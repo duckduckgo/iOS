@@ -122,6 +122,7 @@ class PrivacyIconView: UIView {
             accessibilityHint = nil
             accessibilityTraits = .image
         case .shield, .shieldWithDot:
+            accessibilityIdentifier = "privacy-icon-shield.button"
             accessibilityLabel = UserText.privacyIconShield
             accessibilityHint = UserText.privacyIconOpenDashboardHint
             accessibilityTraits = .button

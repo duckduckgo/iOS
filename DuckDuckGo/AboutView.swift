@@ -45,13 +45,20 @@ struct AboutViewText: View {
 
             Image("TextDuckDuckGo")
 
-            Text("Welcome to the Duck Side!")
+            Text("Protection. Privacy. Peace of Mind.")
                 .daxHeadline()
 
             Rectangle()
                 .frame(width: 80, height: 0.5)
                 .foregroundColor(Color(designSystemColor: .lines))
                 .padding()
+
+            Text("Welcome to the Duck Side!")
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal, 32)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
             Text(LocalizedStringKey(UserText.aboutText))
                 .lineLimit(nil)

@@ -75,12 +75,37 @@
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
                             <rect key="frame" x="6" y="0.0" width="463" height="40"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="Find-Search-20" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
-                                    <rect key="frame" x="0.0" y="10" width="30" height="20"/>
+                                <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Lc-OW-dSJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="Find-Search-20" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
+                                            <rect key="frame" x="-3" y="10" width="36" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="36" id="WCw-cm-dCl"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5FH-Ge-Z9a" userLabel="Dismiss Button">
+                                            <rect key="frame" x="-5" y="0.0" width="40" height="40"/>
+                                            <accessibility key="accessibilityConfiguration" label="Voice Search"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" priority="900" constant="40" id="QWL-gP-sMT"/>
+                                                <constraint firstAttribute="height" constant="40" id="hqB-cj-vKd"/>
+                                            </constraints>
+                                            <state key="normal" image="Chevron-Left-24"/>
+                                            <connections>
+                                                <action selector="onDismissPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="OBF-YS-yXS"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="30" id="WCw-cm-dCl"/>
+                                        <constraint firstItem="5FH-Ge-Z9a" firstAttribute="centerX" secondItem="1Lc-OW-dSJ" secondAttribute="centerX" id="48N-BQ-uNY"/>
+                                        <constraint firstAttribute="width" constant="30" id="HuA-nN-PGT"/>
+                                        <constraint firstItem="u6L-hZ-ptn" firstAttribute="centerX" secondItem="1Lc-OW-dSJ" secondAttribute="centerX" id="OtF-Bf-UNZ"/>
+                                        <constraint firstItem="5FH-Ge-Z9a" firstAttribute="centerY" secondItem="1Lc-OW-dSJ" secondAttribute="centerY" id="gWc-6E-TJw"/>
+                                        <constraint firstItem="u6L-hZ-ptn" firstAttribute="centerY" secondItem="1Lc-OW-dSJ" secondAttribute="centerY" id="sGJ-aj-eji"/>
+                                        <constraint firstAttribute="height" constant="40" id="zQd-Fk-ZZK"/>
                                     </constraints>
-                                </imageView>
+                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sek-4Y-GoT" customClass="SearchFieldContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                     <rect key="frame" x="30" y="0.0" width="313" height="40"/>
                                     <subviews>
@@ -415,9 +440,11 @@
                 <outlet property="bookmarksButton" destination="ii4-Sq-bD1" id="XN8-Yb-eXK"/>
                 <outlet property="cancelButton" destination="IHT-9R-ERy" id="XVf-QQ-jSa"/>
                 <outlet property="clearButton" destination="Dt8-We-5tV" id="6d0-LL-4OJ"/>
+                <outlet property="dismissButton" destination="5FH-Ge-Z9a" id="iTV-bW-Zxj"/>
                 <outlet property="editingBackground" destination="Atk-JN-lv8" id="E2d-Lx-OrN"/>
                 <outlet property="forwardButton" destination="aXg-p3-oeq" id="J7v-AS-zDp"/>
                 <outlet property="leftButtonsSpacingConstraint" destination="qCb-MN-wKZ" id="k3Y-3n-0Np"/>
+                <outlet property="leftIconContainerView" destination="1Lc-OW-dSJ" id="LCy-q1-dBG"/>
                 <outlet property="menuButton" destination="nJo-2d-gri" id="PjK-JB-crC"/>
                 <outlet property="notificationContainer" destination="yEJ-P3-HpO" id="D20-lB-qBr"/>
                 <outlet property="omniBarLeadingConstraint" destination="D0r-SA-Vnj" id="07M-d7-p5r"/>
@@ -455,6 +482,7 @@
         <image name="Book-24" width="24" height="24"/>
         <image name="BrowseNext" width="24" height="24"/>
         <image name="BrowsePrevious" width="24" height="24"/>
+        <image name="Chevron-Left-24" width="24" height="24"/>
         <image name="Clear-24" width="24" height="24"/>
         <image name="Close-24" width="24" height="24"/>
         <image name="Find-Search-20" width="20" height="20"/>

@@ -56,7 +56,7 @@
 "action.title.duckai" = "AI Chat";
 
 /* Duck.ai menu item opening a new chat */
-"action.title.duckai.new" = "New Chat";
+"action.title.duckai.new" = "New AI Chat";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Edit Bookmark";
@@ -1068,8 +1068,8 @@
 "duckai.preferences.text.markdown" = "Duck.ai is an optional feature that lets you chat anonymously with popular 3rd-party Al chat models. Your chats are not used to train AI.
 [Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
-/* Toggle text to enable/disable AI Chat in the address bar */
-"duckai.settings.enable.address-bar-searching-toggle" = "Show Duck.ai on Search Page";
+/* Toggle text to enable/disable Duck.ai in the address bar */
+"duckai.settings.enable.address-bar-toggle" = "Show Duck.ai in Address Bar";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "duckai.settings.enable.browsing-menu-toggle" = "Show Duck.ai in Browser Menu";
@@ -2707,6 +2707,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)' */
 "subscription.subscription.expiring.monthly.caption" = "Your monthly subscription expires on %@.";
 
+/* Trial subscription expiration info where parameter is expiration date. This reads as 'Your free trial ends on (date) & will not convert to a paid subscription.' */
+"subscription.subscription.expiring.trial.monthly.caption" = "Your free trial ends on %@ & will not convert to a paid subscription.";
+
 /* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
 "subscription.subscription.expiring.unknown.caption" = "Your subscription expires on %@.";
 
@@ -2716,6 +2719,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)' */
 "subscription.subscription.renewing.monthly.caption" = "Your monthly subscription renews on %@.";
 
+/* Monthly trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date) & automatically converts to a monthly paid subscription on that day.' */
+"subscription.subscription.renewing.trial.monthly.caption" = "Your free trial ends on %@ & automatically converts to a monthly paid subscription on that day.";
+
+/* Annual trial subscription renewal info where parameter is renewal date. This reads as 'Your free trial ends on (date) & automatically converts to an annual paid subscription on that day.' */
+"subscription.subscription.renewing.trial.yearly.caption" = "Your free trial ends on %@ & automatically converts to an annual paid subscription on that day.";
+
 /* Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)' */
 "subscription.subscription.renewing.unknown.caption" = "Your subscription renews on %@.";
 
@@ -2724,6 +2733,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
+
+/* Subtitle in header when on a free trial subscription */
+"subscription.trial" = "Free Trial Active";
 
 /* Message confirming that recovery code was copied to clipboard */
 "sync.code.copied" = "Recovery code copied to clipboard";

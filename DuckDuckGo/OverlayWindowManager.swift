@@ -23,25 +23,29 @@ import BrowserServicesKit
 final class OverlayWindowManager {
 
     private var overlayWindow: UIWindow?
+
     private let window: UIWindow
-    private let addressBarPosition: AddressBarPosition
-    private let voiceSearchHelper: VoiceSearchHelper
+    private let appSettings: AppSettings
+    private let voiceSearchHelper: VoiceSearchHelperProtocol
     private let featureFlagger: FeatureFlagger
+    private let aiChatSettings: AIChatSettings
 
     init(window: UIWindow,
-         addressBarPosition: AddressBarPosition,
-         voiceSearchHelper: VoiceSearchHelper,
-         featureFlagger: FeatureFlagger) {
+         appSettings: AppSettings,
+         voiceSearchHelper: VoiceSearchHelperProtocol,
+         featureFlagger: FeatureFlagger,
+         aiChatSettings: AIChatSettings) {
         self.window = window
-        self.addressBarPosition = addressBarPosition
+        self.appSettings = appSettings
         self.voiceSearchHelper = voiceSearchHelper
         self.featureFlagger = featureFlagger
+        self.aiChatSettings = aiChatSettings
     }
 
     @discardableResult
     func displayBlankSnapshotWindow() -> BlankSnapshotViewController {
-        // If `voiceSearchHelper` is not needed, remove it from here or pass nil
-        let blankSnapshotViewController = BlankSnapshotViewController(addressBarPosition: addressBarPosition,
+        let blankSnapshotViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
+                                                                      aiChatSettings: aiChatSettings,
                                                                       voiceSearchHelper: voiceSearchHelper,
                                                                       featureFlagger: featureFlagger)
         blankSnapshotViewController.delegate = self

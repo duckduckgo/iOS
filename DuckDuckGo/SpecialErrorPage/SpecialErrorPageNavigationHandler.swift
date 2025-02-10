@@ -26,7 +26,7 @@ import MaliciousSiteProtection
 typealias SpecialErrorPageManaging = SpecialErrorPageContextHandling & WebViewNavigationHandling & SpecialErrorPageUserScriptDelegate
 
 final class SpecialErrorPageNavigationHandler: SpecialErrorPageContextHandling {
-    private var webView: WKWebView?
+    private weak var webView: WKWebView?
     private weak var userScript: SpecialErrorPageUserScript?
     weak var delegate: SpecialErrorPageNavigationDelegate?
 

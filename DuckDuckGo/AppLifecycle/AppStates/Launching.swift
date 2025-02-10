@@ -42,6 +42,8 @@ struct Launching: AppState {
     private let voiceSearchHelper = VoiceSearchHelper()
     private let fireproofing = UserDefaultsFireproofing.xshared
     private let featureFlagger = AppDependencyProvider.shared.featureFlagger
+    private let aiChatSettings = AIChatSettings()
+    private let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
 
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
 
@@ -83,6 +85,7 @@ struct Launching: AppState {
         ContentBlockingConfiguration.configure()
         UserAgentConfiguration.configureAPIRequestUserAgent()
         NewTabPageIntroMessageConfiguration().configure()
+        onboardingConfiguration.migrate()
 
         persistentStoresConfiguration.configure()
 
@@ -95,7 +98,6 @@ struct Launching: AppState {
         syncService = SyncService(bookmarksDatabase: persistentStoresConfiguration.bookmarksDatabase)
         reportingService.syncService = syncService
         autofillService.syncService = syncService
-        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
         remoteMessagingService = RemoteMessagingService(bookmarksDatabase: persistentStoresConfiguration.bookmarksDatabase,
                                                         database: persistentStoresConfiguration.database,
                                                         appSettings: appSettings,
@@ -113,15 +115,17 @@ struct Launching: AppState {
                                           subscriptionService: subscriptionService,
                                           voiceSearchHelper: voiceSearchHelper,
                                           featureFlagger: featureFlagger,
+                                          aiChatSettings: aiChatSettings,
                                           fireproofing: fireproofing,
                                           maliciousSiteProtectionService: maliciousSiteProtectionService,
                                           didFinishLaunchingStartTime: didFinishLaunchingStartTime)
         syncService.presenter = mainCoordinator.controller
         vpnService = VPNService(mainCoordinator: mainCoordinator)
         let overlayWindowManager = OverlayWindowManager(window: window,
-                                                        addressBarPosition: appSettings.currentAddressBarPosition,
+                                                        appSettings: appSettings,
                                                         voiceSearchHelper: voiceSearchHelper,
-                                                        featureFlagger: featureFlagger)
+                                                        featureFlagger: featureFlagger,
+                                                        aiChatSettings: aiChatSettings)
         autoClearService = AutoClearService(worker: mainCoordinator.controller, overlayWindowManager: overlayWindowManager)
         screenshotService = ScreenshotService(window: window)
         authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)

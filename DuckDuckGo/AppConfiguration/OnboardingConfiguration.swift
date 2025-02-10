@@ -24,6 +24,11 @@ final class OnboardingConfiguration {
 
     lazy var daxDialogs = DaxDialogs.shared
 
+    func migrate() {
+        // Hide Dax Dialogs if users already completed old onboarding.
+        DaxDialogsOnboardingMigrator().migrateFromOldToNewOboarding()
+    }
+
     // assign it here, because "did become active" is already too late and "viewWillAppear"
     // has already been called on the HomeViewController so won't show the home row CTA
     func onVariantAssigned() {

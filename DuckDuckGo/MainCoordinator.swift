@@ -38,6 +38,7 @@ final class MainCoordinator {
          subscriptionService: SubscriptionService,
          voiceSearchHelper: VoiceSearchHelper,
          featureFlagger: FeatureFlagger,
+         aiChatSettings: AIChatSettings,
          fireproofing: Fireproofing,
          accountManager: AccountManager = AppDependencyProvider.shared.accountManager,
          maliciousSiteProtectionService: MaliciousSiteProtectionService,
@@ -78,7 +79,8 @@ final class MainCoordinator {
                                         websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
                                         appDidFinishLaunchingStartTime: didFinishLaunchingStartTime,
                                         maliciousSiteProtectionManager: maliciousSiteProtectionService.manager,
-                                        maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionService.preferencesManager)
+                                        maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionService.preferencesManager,
+                                        aichatSettings: aiChatSettings)
     }
 
     func start() {

@@ -19,9 +19,9 @@
 
 import Foundation
 import Core
-
+import BrowserServicesKit
 struct LargeOmniBarState {
-    
+
     struct HomeEmptyEditingState: OmniBarState, OmniBarLoadingBearerStateCreating {
         let hasLargeWidth: Bool = true
         let showBackButton: Bool = true
@@ -38,28 +38,29 @@ struct LargeOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
-        var onEditingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onEditingStoppedState: OmniBarState { return HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
         var onTextClearedState: OmniBarState { return self }
-        var onTextEnteredState: OmniBarState { return HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onTextEnteredState: OmniBarState { return HomeTextEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onBrowsingStoppedState: OmniBarState { return self }
         var onEnterPadState: OmniBarState { return self }
-        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onReloadState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
-        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
+        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var showSearchLoupe: Bool { !dependencies.voiceSearchHelper.isVoiceSearchEnabled }
+        var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
 
         func withLoading() -> LargeOmniBarState.HomeEmptyEditingState {
-            Self.init(voiceSearchHelper: voiceSearchHelper, isLoading: true)
+            Self.init(dependencies: dependencies, isLoading: true)
         }
 
         func withoutLoading() -> LargeOmniBarState.HomeEmptyEditingState {
-            Self.init(voiceSearchHelper: voiceSearchHelper, isLoading: false)
+            Self.init(dependencies: dependencies, isLoading: false)
         }
     }
 
@@ -79,20 +80,21 @@ struct LargeOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
-        var onEditingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onEditingStoppedState: OmniBarState { return HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
-        var onTextClearedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onTextClearedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onTextEnteredState: OmniBarState { return self }
-        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPadState: OmniBarState { return self }
-        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onReloadState: OmniBarState { return HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
-        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
+        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.HomeTextEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return HomeTextEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var showSearchLoupe: Bool { !dependencies.voiceSearchHelper.isVoiceSearchEnabled }
+        var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
 
@@ -113,19 +115,20 @@ struct LargeOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
-        var onEditingStartedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onTextClearedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onTextEnteredState: OmniBarState { return HomeTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onEditingStartedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onTextClearedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onTextEnteredState: OmniBarState { return HomeTextEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPadState: OmniBarState { return self }
-        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onReloadState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
+        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
 
@@ -145,20 +148,21 @@ struct LargeOmniBarState {
         let showMenu = true
         let showSettings = false
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
-        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
         var onTextClearedState: OmniBarState { return self }
-        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onBrowsingStartedState: OmniBarState { return self }
-        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPadState: OmniBarState { return self }
-        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onReloadState: OmniBarState { return BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
-        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
+        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var showSearchLoupe: Bool { !dependencies.voiceSearchHelper.isVoiceSearchEnabled }
+        var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
 
@@ -178,20 +182,21 @@ struct LargeOmniBarState {
         let showMenu = true
         let showSettings = false
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
-        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEditingStartedState: OmniBarState { return self }
-        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onTextEnteredState: OmniBarState { return self }
         var onBrowsingStartedState: OmniBarState { return self }
-        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPadState: OmniBarState { return self }
-        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onReloadState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
-        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
+        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var showSearchLoupe: Bool { !dependencies.voiceSearchHelper.isVoiceSearchEnabled }
+        var showVoiceSearch: Bool { dependencies.voiceSearchHelper.isVoiceSearchEnabled }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
 
@@ -212,20 +217,20 @@ struct LargeOmniBarState {
         let showMenu = true
         let showSettings = false
         let showCancel: Bool = false
+        let showDismiss: Bool = false
         let showVoiceSearch = false
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
-        var onEditingStartedState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onEditingStartedState: OmniBarState { return BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onBrowsingStartedState: OmniBarState { return self }
-        var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState(dependencies: dependencies, isLoading: isLoading) }
         var onEnterPadState: OmniBarState { return self }
-        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
-        var onReloadState: OmniBarState { return BrowsingNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: isLoading) }
+        var onEnterPhoneState: OmniBarState { return SmallOmniBarState.BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
+        var onReloadState: OmniBarState { return BrowsingNonEditingState(dependencies: dependencies, isLoading: isLoading) }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
     }
-
 }

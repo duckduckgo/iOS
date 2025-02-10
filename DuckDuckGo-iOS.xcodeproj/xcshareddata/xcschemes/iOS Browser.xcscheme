@@ -67,6 +67,9 @@
                   Identifier = "AutoconsentMessageProtocolTests/testEval()">
                </Test>
                <Test
+                  Identifier = "ConfigurationManagerTests">
+               </Test>
+               <Test
                   Identifier = "FireButtonReferenceTests/testClearDataUsingLegacyContainer()">
                </Test>
                <Test

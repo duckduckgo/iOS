@@ -489,7 +489,7 @@ extension TabSwitcherViewController {
             self.addNewTab()
         })
 
-        barsHandler.fireButton.primaryAction = action(image: "Fire") { [weak self] in
+        barsHandler.fireButton.primaryAction = action(image: "FireLeftPadded") { [weak self] in
             guard let self else { return }
             self.burn(sender: self.barsHandler.fireButton)
         }

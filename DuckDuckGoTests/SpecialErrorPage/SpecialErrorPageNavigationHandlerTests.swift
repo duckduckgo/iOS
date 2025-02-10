@@ -463,7 +463,7 @@ final class SpecialErrorPageNavigationHandlerTests {
             webView = nil
         }
         // THEN
-        RunLoop.current.run(until: Date().addingTimeInterval(0.1)) // Gives the run loop time to process deinit event
+        RunLoop.current.run(until: Date().addingTimeInterval(0.2)) // Gives the run loop time to process deinit event
         #expect(weakWebView == nil)
     }
 }

@@ -125,7 +125,7 @@ final class TabViewCell: UICollectionViewCell {
 
         func unreadImage(for style: UIUserInterfaceStyle) -> UIImage {
             let color = ThemeManager.shared.currentTheme.tabSwitcherCellBackgroundColor.resolvedColor(with: .init(userInterfaceStyle: style))
-            let image = UIImage.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
+            let image = UIImage.stackedIconImage(withIconImage: UIImage(resource: .tabUnread),
                                                  borderWidth: 6.0,
                                                  foregroundColor: .cornflowerBlue,
                                                  borderColor: color)
@@ -141,7 +141,7 @@ final class TabViewCell: UICollectionViewCell {
     }
 
     static let logoImage: UIImage = {
-        let image = UIImage(named: "Logo")!
+        let image = UIImage(resource: .logo)
         let renderFormat = UIGraphicsImageRendererFormat.default()
         renderFormat.opaque = false
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: Constants.cellLogoSize,

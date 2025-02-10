@@ -17,8 +17,8 @@ tags:
 - inputText: "https://expired.badssl.com"
 - pressKey: Enter
 - assertVisible: "Warning: This site may be insecure"
-- assertNotVisible: 
-    id: "LogoIcon"
+- assertVisible:
+    id: "Globe-24"
 - tapOn: "Leave This Site"
 - assertNotVisible: "Warning: This site may be insecure"
 
@@ -27,11 +27,13 @@ tags:
     id: "searchEntry"
 - inputText: "https://expired.badssl.com"
 - pressKey: Enter
+- assertVisible:
+    id: "Globe-24"
 - tapOn: "Advanced"
 - scroll
 - tapOn: "Accept Risk and Visit Site"
 - assertVisible: 
-    id: "LogoIcon"
+    id: "privacy-icon-shield.button"
 - assertVisible: "expired.badssl.com"
 
 

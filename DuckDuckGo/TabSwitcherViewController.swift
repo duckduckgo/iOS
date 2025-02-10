@@ -95,8 +95,6 @@ class TabSwitcherViewController: UIViewController {
     var isProcessingUpdates = false
     private var canUpdateCollection = true
 
-    var selectedTabs = Set<Int>()
-
     let favicons: Favicons
 
     var tabsStyle: TabsStyle = .list
@@ -140,6 +138,10 @@ class TabSwitcherViewController: UIViewController {
         decorate()
         becomeFirstResponder()
         updateUIForSelectionMode()
+
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = true
+        collectionView.allowsMultipleSelectionDuringEditing = true
 
         if !tabSwitcherSettings.hasSeenNewLayout {
             Pixel.fire(pixel: .tabSwitcherNewLayoutSeen)
@@ -223,12 +225,10 @@ class TabSwitcherViewController: UIViewController {
     }
 
     func displayBookmarkAllStatusMessage(with results: BookmarkAllResult, openTabsCount: Int) {
-        if results.newCount == openTabsCount {
-            ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
+        if interfaceMode.isMultiSelection {
+            ActionMessageView.present(message: UserText.tabsBookmarked(withCount: results.newCount))
         } else {
-            let failedToSaveCount = openTabsCount - results.newCount - results.existingCount
-            Logger.general.debug("Failed to save \(failedToSaveCount) tabs")
-            ActionMessageView.present(message: UserText.bookmarkAllTabsFailedToSave)
+            ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
         }
     }
 
@@ -347,14 +347,14 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tabsModel.count
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cellIdentifier = tabSwitcherSettings.isGridViewEnabled ? TabViewGridCell.reuseIdentifier : TabViewListCell.reuseIdentifier
+        let cellIdentifier = tabSwitcherSettings.isGridViewEnabled ? TabViewCell.gridReuseIdentifier : TabViewCell.listReuseIdentifier
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? TabViewCell else {
             fatalError("Failed to dequeue cell \(cellIdentifier) as TabViewCell")
         }
@@ -364,7 +364,6 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         if indexPath.row < tabsModel.count {
             let tab = tabsModel.get(tabAt: indexPath.row)
             tab.addObserver(self)
-            cell.isSelected = selectedTabs.contains(indexPath.row)
             cell.update(withTab: tab,
                         isSelectionModeEnabled: self.isEditing,
                         preview: previewsSource.preview(for: tab))
@@ -380,14 +379,16 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
         Pixel.fire(pixel: .tabSwitcherSwitchTabs)
         currentSelection = indexPath.row
         if isEditing {
-            if !selectedTabs.insert(indexPath.row).inserted {
-                selectedTabs.remove(indexPath.row)
-            }
-            collectionView.reloadItems(at: [indexPath])
+            (collectionView.cellForItem(at: indexPath) as? TabViewCell)?.toggleSelection()
             updateUIForSelectionMode()
         } else {
             markCurrentAsViewedAndDismiss()
         }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        (collectionView.cellForItem(at: indexPath) as? TabViewCell)?.toggleSelection()
+        updateUIForSelectionMode()
     }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -403,23 +404,23 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
         return proposedIndexPath
     }
 
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        tabsModel.moveTab(from: sourceIndexPath.row, to: destinationIndexPath.row)
-        currentSelection = tabsModel.currentIndex
-    }
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
 
-    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        guard interfaceMode.isMultiSelection,
-              let tab = tabsModel.safeGetTabAt(indexPath.row) else { return nil }
+        assert(!indexPaths.isEmpty)
 
-        // Arbitrary but limit size of title. UIMenu supports display preferences on iOS 17.4 to
-        //  limit the number of title lines but that doesn't appear to work here.
-        let title = trimMenuTitleIfNeeded(tab.link?.displayTitle ?? "", 50)
+        guard interfaceMode.isMultiSelection else { return nil }
+
+        let title = indexPaths.count == 1 ?
+            trimMenuTitleIfNeeded(tabsModel.get(tabAt: indexPaths[0].row).link?.displayTitle ?? "", 50) :
+            UserText.numberOfTabs(indexPaths.count)
 
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let menuItems = self.createLongPressMenuItems(forIndex: indexPath.row)
+            let menuItems = indexPaths.count == 1 ?
+                self.createLongPressMenuItemsForSingleTab(forIndex: indexPaths[0].row) :
+                self.createLongPressMenuItemsForMultipleTabs()
             return UIMenu(title: title, children: menuItems.compactMap { $0 })
         }
+
     }
 
 }
@@ -440,7 +441,7 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
         
         // Calculate height based on the view size
         let contentAspectRatio = collectionView.bounds.width / collectionView.bounds.height
-        let heightToFit = (columnWidth / contentAspectRatio) + TabViewGridCell.Constants.cellHeaderHeight
+        let heightToFit = (columnWidth / contentAspectRatio) + TabViewCell.Constants.cellHeaderHeight
         
         // Try to display at least `preferredMinNumberOfRows`
         let preferredMaxHeight = collectionView.bounds.height / Constants.preferredMinNumberOfRows
@@ -531,7 +532,7 @@ extension TabSwitcherViewController: UICollectionViewDropDelegate {
               let item = coordinator.items.first,
               let source = item.sourceIndexPath
         else {
-                assertionFailure("Unexpected state when dropping tab into new position")
+            // This can happen if the menu is shown and the user then drags to an invalid location
             return
         }
 
@@ -541,7 +542,12 @@ extension TabSwitcherViewController: UICollectionViewDropDelegate {
             collectionView.deleteItems(at: [source])
             collectionView.insertItems(at: [destination])
         } completion: { _ in
-            collectionView.reloadItems(at: [IndexPath(row: self.currentSelection ?? 0, section: 0)])
+            if self.isEditing {
+                collectionView.reloadData()
+                collectionView.selectItem(at: destination, animated: true, scrollPosition: [])
+            } else {
+                collectionView.reloadItems(at: [IndexPath(row: self.currentSelection ?? 0, section: 0)])
+            }
             self.delegate.tabSwitcherDidReorderTabs(tabSwitcher: self)
         }
 

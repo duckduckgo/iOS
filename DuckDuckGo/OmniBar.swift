@@ -84,7 +84,7 @@ class OmniBar: UIView {
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState!
-    var accessoryType: AccessoryType = .share {
+    private(set) var accessoryType: AccessoryType = .share {
         didSet {
             switch accessoryType {
             case .chat:
@@ -284,7 +284,11 @@ class OmniBar: UIView {
     func removeTextSelection() {
         textField.selectedTextRange = nil
     }
-    
+
+    func updateAccessoryType(_ type: AccessoryType) {
+        DispatchQueue.main.async { self.accessoryType = type }
+    }
+
     public func hidePrivacyIcon() {
         privacyInfoContainer.privacyIcon.isHidden = true
     }
@@ -348,8 +352,10 @@ class OmniBar: UIView {
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         notificationAnimator.cancelAnimations(in: self)
         privacyIconContextualOnboardingAnimator.dismissPrivacyIconAnimation(privacyInfoContainer.privacyIcon)
+
+        dismissButtonAnimator?.stopAnimation(true)
     }
-    
+
     public func completeAnimationForDaxDialog() {
         privacyIconAndTrackersAnimator.completeAnimationForDaxDialog(in: self)
     }

@@ -86,7 +86,7 @@
                                         </imageView>
                                         <button contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5FH-Ge-Z9a" userLabel="Dismiss Button">
                                             <rect key="frame" x="-5" y="0.0" width="40" height="40"/>
-                                            <accessibility key="accessibilityConfiguration" label="Voice Search"/>
+                                            <accessibility key="accessibilityConfiguration" label="Cancel"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="40" id="QWL-gP-sMT"/>
                                                 <constraint firstAttribute="height" constant="40" id="hqB-cj-vKd"/>

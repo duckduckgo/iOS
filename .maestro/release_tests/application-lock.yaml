@@ -9,6 +9,7 @@ tags:
 - runFlow: 
     file: ../shared/setup.yaml
 
+- tapOn: "Browsing Menu"
 - tapOn: "Settings"
 - scrollUntilVisible:
     element: "General"

@@ -59,7 +59,7 @@ final class DaxDialog: XCTestCase {
 
     }
 
-    let settings: InMemoryDaxDialogsSettings = InMemoryDaxDialogsSettings()
+    let settings: MockDaxDialogsSettings = MockDaxDialogsSettings()
     lazy var mockVariantManager = MockVariantManager(isSupportedReturns: false)
     lazy var onboarding = DaxDialogs(settings: settings,
                                      entityProviding: MockEntityProvider(),
@@ -93,7 +93,7 @@ final class DaxDialog: XCTestCase {
 
         testCases.forEach { testCase in
             
-            let onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(),
+            let onboarding = DaxDialogs(settings: MockDaxDialogsSettings(),
                                         entityProviding: MockEntityProvider(),
                                         variantManager: mockVariantManager)
             let privacyInfo = makePrivacyInfo(url: URLs.example)
@@ -112,7 +112,7 @@ final class DaxDialog: XCTestCase {
     }
     
     func testWhenPrimingDaxDialogForUseThenDismissedIsFalse() {
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.isDismissed = true
         
         let onboarding = DaxDialogs(settings: settings, entityProviding: entityProvider)
@@ -126,7 +126,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenBrowsingSpecIsWithOneTrackerThenHighlightAddressBarIsFalse() throws {
         // GIVEN
-        let sut = makeSUT(settings: InMemoryDaxDialogsSettings())
+        let sut = makeSUT(settings: MockDaxDialogsSettings())
         let privacyInfo = makePrivacyInfo(url: URLs.example)
         let detectedTracker = detectedTrackerFrom(URLs.google, pageUrl: URLs.example.absoluteString)
         privacyInfo.trackerInfo.addDetectedTracker(detectedTracker, onPageWithURL: URLs.example)
@@ -141,7 +141,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenBrowsingSpecIsWithMultipleTrackerThenHighlightAddressBarIsFalse() throws {
         // GIVEN
-        let sut = makeSUT(settings: InMemoryDaxDialogsSettings())
+        let sut = makeSUT(settings: MockDaxDialogsSettings())
         let privacyInfo = makePrivacyInfo(url: URLs.example)
         [URLs.google, URLs.amazon].forEach { tracker in
             let detectedTracker = detectedTrackerFrom(tracker, pageUrl: URLs.example.absoluteString)
@@ -158,7 +158,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenURLIsDuckDuckGoSearchAndSearchDialogHasNotBeenSeenThenReturnSpecTypeAfterSearch() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingAfterSearchShown = false
         let sut = makeSUT(settings: settings)
 
@@ -171,7 +171,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenURLIsMajorTrackerWebsiteAndMajorTrackerDialogHasNotBeenSeenThenReturnSpecTypeSiteIsMajorTracker() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingMajorTrackingSiteShown = false
         let sut = makeSUT(settings: settings)
         let privacyInfo = makePrivacyInfo(url: URLs.facebook)
@@ -185,7 +185,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenURLIsOwnedByMajorTrackerAndMajorTrackerDialogHasNotBeenSeenThenReturnSpecTypeSiteOwnedByMajorTracker() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingMajorTrackingSiteShown = false
         let sut = makeSUT(settings: settings)
         let privacyInfo = makePrivacyInfo(url: URLs.ownedByFacebook)
@@ -199,7 +199,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenURLHasTrackersAndMultipleTrackersDialogHasNotBeenSeenThenReturnSpecTypeWithMultipleTrackers() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithTrackersShown = false
         let sut = makeSUT(settings: settings)
         let privacyInfo = makePrivacyInfo(url: URLs.example)
@@ -217,7 +217,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenURLHasNoTrackersAndIsNotSERPAndNoTrakcersDialogHasNotBeenSeenThenReturnSpecTypeWithoutTrackers() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithoutTrackersShown = false
         let sut = makeSUT(settings: settings)
 
@@ -231,7 +231,7 @@ final class DaxDialog: XCTestCase {
     func testWhenURLIsDuckDuckGoSearchAndHasVisitedWebsiteThenSpecTypeSearchIsReturned() throws {
         try [DaxDialogs.BrowsingSpec.withoutTrackers, .siteIsMajorTracker, .siteOwnedByMajorTracker, .withOneTracker, .withMultipleTrackers].forEach { spec in
             // GIVEN
-            let settings = InMemoryDaxDialogsSettings()
+            let settings = MockDaxDialogsSettings()
             let sut = DaxDialogs(settings: settings, entityProviding: entityProvider)
             sut.overrideShownFlagFor(spec, flag: true)
 
@@ -245,7 +245,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonSeen_AndFinalDialogNotSeen_AndSearchDone_ThenFinalBrowsingSpecIsReturned() throws {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingAfterSearchShown = true
         settings.fireMessageExperimentShown = true
         let sut = makeSUT(settings: settings)
@@ -259,7 +259,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonSeen_AndFinalDialogNotSeen_AndWebsiteWithoutTracker_ThenFinalBrowsingSpecIsReturned() throws {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithoutTrackersShown = true
         settings.fireMessageExperimentShown = true
         let sut = makeSUT(settings: settings)
@@ -273,7 +273,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonSeen_AndFinalDialogNotSeen_AndWebsiteWithTracker_ThenFinalBrowsingSpecIsReturned() throws {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithTrackersShown = true
         settings.fireMessageExperimentShown = true
         let sut = makeSUT(settings: settings)
@@ -290,7 +290,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonSeen_AndFinalDialogNotSeen_AndWebsiteMajorTracker_ThenFinalBrowsingSpecIsReturned() throws {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingMajorTrackingSiteShown = true
         settings.fireMessageExperimentShown = true
         let sut = makeSUT(settings: settings)
@@ -305,7 +305,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonSeen_AndFinalDialogSeen_AndSearchDone_ThenBrowsingSpecIsNil() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingAfterSearchShown = true
         settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = true
@@ -320,7 +320,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonSeen_AndFinalDialogSeen_AndWebsiteWithoutTracker_ThenBrowsingSpecIsNotFinal() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithoutTrackersShown = true
         settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = true
@@ -335,7 +335,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonSeen_AndFinalDialogSeen_AndWebsiteWithTracker_ThenBrowsingSpecIsNil() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithTrackersShown = true
         settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = true
@@ -353,7 +353,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonSeen_AndFinalDialogSeen_AndWebsiteMajorTracker_ThenFinalBrowsingSpecIsReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingMajorTrackingSiteShown = true
         settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = true
@@ -369,7 +369,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonSeen_AndFinalDialogSeen_AndSearchNotSeen_ThenAfterSearchSpecIsReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithoutTrackersShown = true
         settings.browsingWithTrackersShown = true
         settings.browsingMajorTrackingSiteShown = true
@@ -386,7 +386,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenSearchDialogSeen_OnReload_SearchDialogReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
 
         // WHEN
@@ -400,7 +400,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenSearchDialogSeen_OnLoadingAnotherSearch_NilReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
 
         // WHEN
@@ -414,7 +414,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenMajorTrackerDialogSeen_OnReload_MajorTrackerDialogReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
 
         // WHEN
@@ -428,7 +428,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenMajorTrackerDialogSeen_OnLoadingAnotherSearch_NilReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
 
         // WHEN
@@ -442,7 +442,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenMajorTrackerOwnerMessageSeen_OnReload_MajorTrackerOwnerDialogReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
 
         // WHEN
@@ -456,7 +456,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenMajorTrackerOwnerMessageSeen_OnLoadingAnotherSearch_NilReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
 
         // WHEN
@@ -470,7 +470,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenWithoutTrackersMessageSeen_OnReload_WithoutTrackersDialogReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
 
         // WHEN
@@ -484,7 +484,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenWithoutTrackersMessageSeen_OnLoadingAnotherSearch_NilReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
 
         // WHEN
@@ -498,7 +498,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFinalMessageSeen_OnReload_NilReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithoutTrackersShown = true
         settings.fireMessageExperimentShown = true
         let sut = makeSUT(settings: settings)
@@ -514,7 +514,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenVisitWebsiteSeen_OnReload_VisitWebsiteReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
         sut.setSearchMessageSeen()
 
@@ -532,7 +532,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenVisitWebsiteSeen_OnLoadingAnotherSearch_NilIseturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
         sut.setSearchMessageSeen()
 
@@ -550,7 +550,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireMessageSeen_OnReload_FireMessageReturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
         sut.setSearchMessageSeen()
 
@@ -568,7 +568,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenSearchNotSeen_AndFireMessageSeen_OnLoadingAnotherSearch_ExpectedDialogIseturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
         sut.setSearchMessageSeen()
 
@@ -586,7 +586,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenSearchSeen_AndFireMessageSeen_OnLoadingAnotherSearch_ExpectedDialogIseturned() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
         sut.setSearchMessageSeen()
 
@@ -607,7 +607,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenBrowserWithTrackersShown_AndPrivacyAnimationNotShown_ThenShowPrivacyAnimationPulse() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithTrackersShown = true
         settings.privacyButtonPulseShown = false
         let sut = makeSUT(settings: settings)
@@ -621,7 +621,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenBrowserWithTrackersShown_AndPrivacyAnimationShown_ThenDoNotShowPrivacyAnimationPulse() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithTrackersShown = true
         settings.privacyButtonPulseShown = true
         let sut = makeSUT(settings: settings)
@@ -635,7 +635,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenBrowserWithTrackersShown_AndFireButtonPulseActive_ThenDoNotShowPrivacyAnimationPulse() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithTrackersShown = true
         settings.privacyButtonPulseShown = false
         let sut = makeSUT(settings: settings)
@@ -650,7 +650,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenCallSetPrivacyButtonPulseSeen_ThenSetPrivacyButtonPulseShownFlagToTrue() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
         XCTAssertFalse(settings.privacyButtonPulseShown)
 
@@ -663,7 +663,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenSetFireEducationMessageSeenIsCalled_ThenSetPrivacyButtonPulseShownToTrue() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         let sut = makeSUT(settings: settings)
         XCTAssertFalse(settings.privacyButtonPulseShown)
 
@@ -676,7 +676,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonAnimationPulseNotShown__AndShouldShowFireButtonPulseIsCalled_ThenReturnTrue() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.privacyButtonPulseShown = true
         settings.browsingWithTrackersShown = true
         settings.fireButtonPulseDateShown = nil
@@ -691,7 +691,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireButtonAnimationPulseShown_AndShouldShowFireButtonPulseIsCalled_ThenReturnFalse() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.privacyButtonPulseShown = true
         settings.browsingWithTrackersShown = true
         settings.fireButtonPulseDateShown = Date()
@@ -706,7 +706,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenFireEducationMessageSeen_AndFinalMessageNotSeen_ThenShowFinalMessage() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = false
         let sut = makeSUT(settings: settings)
@@ -720,7 +720,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenNextHomeScreenMessageNewIsCalled_ThenLastVisitedOnboardingWebsiteAndLastShownDaxDialogAreSetToNil() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
         settings.lastVisitedOnboardingWebsiteURLPath = "https://www.example.com"
         let sut = makeSUT(settings: settings)
@@ -737,7 +737,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenEnableAddFavoritesFlowIsCalled_ThenIsAddFavoriteFlowIsTrue() {
         // GIVEN
-        let sut = makeSUT(settings: InMemoryDaxDialogsSettings())
+        let sut = makeSUT(settings: MockDaxDialogsSettings())
         XCTAssertFalse(sut.isAddFavoriteFlow)
 
         // WHEN
@@ -749,7 +749,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenBlockedTrackersDialogSeen_AndMajorTrackerNotSeen_ThenReturnNilSpec() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithTrackersShown = true
         settings.browsingMajorTrackingSiteShown = false
         let sut = makeSUT(settings: settings)
@@ -763,7 +763,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenBlockedTrackersDialogNotSeen_AndMajorTrackerNotSeen_ThenReturnMajorNetworkSpec() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithTrackersShown = false
         settings.browsingMajorTrackingSiteShown = false
         let sut = makeSUT(settings: settings)
@@ -777,7 +777,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenBlockedTrackersDialogSeen_AndOwnedByMajorTrackerNotSeen_ThenReturnNilSpec() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithTrackersShown = true
         settings.browsingMajorTrackingSiteShown = false
         let sut = makeSUT(settings: settings)
@@ -791,7 +791,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenBlockedTrackersDialogNotSeen_AndOwnedByMajorTrackerNotSeen_ThenReturnOwnedByMajorNetworkSpec() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.browsingWithTrackersShown = false
         settings.browsingMajorTrackingSiteShown = false
         let sut = makeSUT(settings: settings)
@@ -805,7 +805,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenDismissIsCalled_ThenLastVisitedOnboardingWebsiteAndLastShownDaxDialogAreSetToNil() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
         settings.lastVisitedOnboardingWebsiteURLPath = "https://www.example.com"
         let sut = makeSUT(settings: settings)
@@ -822,7 +822,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenSetDaxDialogDismiss_ThenLastVisitedOnboardingWebsiteAndLastShownDaxDialogAreSetToNil() {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
         settings.lastVisitedOnboardingWebsiteURLPath = "https://www.example.com"
         let sut = makeSUT(settings: settings)
@@ -839,7 +839,7 @@ final class DaxDialog: XCTestCase {
 
     func testWhenClearedBrowserDataIsCalled_ThenLastVisitedOnboardingWebsiteAndLastShownDaxDialogAreSetToNil() throws {
         // GIVEN
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
         settings.lastVisitedOnboardingWebsiteURLPath = "https://www.example.com"
         let sut = makeSUT(settings: settings)
@@ -858,7 +858,7 @@ final class DaxDialog: XCTestCase {
         // GIVEN
         let lastVisitedWebsitePath = "https://www.example.com"
         let lastVisitedWebsiteURL = try XCTUnwrap(URL(string: lastVisitedWebsitePath))
-        let settings = InMemoryDaxDialogsSettings()
+        let settings = MockDaxDialogsSettings()
         settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
         settings.lastVisitedOnboardingWebsiteURLPath = lastVisitedWebsitePath
         let sut = makeSUT(settings: settings)

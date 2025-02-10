@@ -1,8 +1,8 @@
 //
-//  SearchFieldContainerView.swift
+//  OmnibarDependencyProvider.swift
 //  DuckDuckGo
 //
-//  Copyright © 2020 DuckDuckGo. All rights reserved.
+//  Copyright © 2025 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,21 +17,17 @@
 //  limitations under the License.
 //
 
-import UIKit
+import BrowserServicesKit
+import AIChat
 
-class SearchFieldContainerView: UIView {
-    
-    @IBOutlet var textFieldOffset: NSLayoutConstraint!
-    
-    func adjustTextFieldOffset(for state: OmniBarState) {
-        let offset: CGFloat
-        
-        if state.showPrivacyIcon {
-            offset = 30
-        } else {
-            offset = state.showSearchLoupe || state.showDismiss ? 0 : 8
-        }
-        
-        textFieldOffset.constant = offset
-    }
+protocol OmnibarDependencyProvider {
+    var voiceSearchHelper: VoiceSearchHelperProtocol { get }
+    var featureFlagger: FeatureFlagger { get }
+    var aiChatSettings: AIChatSettingsProvider { get }
+}
+
+struct OmnibarDependencies: OmnibarDependencyProvider {
+    let voiceSearchHelper: VoiceSearchHelperProtocol
+    let featureFlagger: FeatureFlagger
+    let aiChatSettings: AIChatSettingsProvider
 }

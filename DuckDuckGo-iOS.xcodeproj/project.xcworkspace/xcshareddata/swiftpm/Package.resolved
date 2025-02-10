@@ -30,10 +30,10 @@
     {
       "identity" : "browserserviceskit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
-        "revision" : "1169c5565a1d6e3091e93448a28485a736dfa6d4",
-        "version" : "236.0.0"
+        "revision" : "8b7cb167b94dea66313175c88234fdc3cd2db306",
+        "version" : "236.0.2"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "7a37fdc86198b0447e9ff17dbf494171bfaddc33",
-        "version" : "7.16.0"
+        "revision" : "1876d68142cf4f9abfaaee235a015d287eb71226",
+        "version" : "7.17.0"
       }
     },
     {

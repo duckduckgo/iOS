@@ -86,9 +86,12 @@ struct Background: AppState {
         let syncDataProviders = appDependencies.syncDataProviders
         let uiService = appDependencies.uiService
         let featureFlagger = appDependencies.mainViewController.featureFlagger
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                      featureFlagger: featureFlagger,
+                                                      aiChatSettings: AIChatSettings())
 
         if autoClear.isClearingEnabled || privacyStore.authenticationEnabled {
-            uiService.displayBlankSnapshotWindow(voiceSearchHelper: voiceSearchHelper,
+            uiService.displayBlankSnapshotWindow(omnibarDependencies: omnibarDependencies,
                                                  addressBarPosition: appSettings.currentAddressBarPosition,
                                                  featureFlagger: featureFlagger)
         }

@@ -40,13 +40,12 @@ struct AIChatSettings: AIChatSettingsProvider {
     private var remoteSettings: PrivacyConfigurationData.PrivacyFeature.FeatureSettings {
         privacyConfigurationManager.privacyConfig.settings(for: .aiChat)
     }
-    private let internalUserDecider: InternalUserDecider
     private let userDefaults: UserDefaults
     private let notificationCenter: NotificationCenter
 
-    init(privacyConfigurationManager: PrivacyConfigurationManaging, internalUserDecider: InternalUserDecider, userDefaults: UserDefaults = .standard,
+    init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         userDefaults: UserDefaults = .standard,
          notificationCenter: NotificationCenter = .default) {
-        self.internalUserDecider = internalUserDecider
         self.privacyConfigurationManager = privacyConfigurationManager
         self.userDefaults = userDefaults
         self.notificationCenter = notificationCenter
@@ -70,7 +69,7 @@ struct AIChatSettings: AIChatSettingsProvider {
     }
 
     var isAIChatFeatureEnabled: Bool {
-        privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .aiChat) || internalUserDecider.isInternalUser
+        privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .aiChat)
     }
 
     var isAIChatAddressBarShortcutFeatureEnabled: Bool {
@@ -98,9 +97,7 @@ struct AIChatSettings: AIChatSettingsProvider {
     }
 
     private func isFeatureEnabled(for subfeature: AIChatSubfeature) -> Bool {
-        let isSubfeatureFlagEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(subfeature)
-        let isInternalUser = internalUserDecider.isInternalUser
-        return (isSubfeatureFlagEnabled || isInternalUser)
+        return privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(subfeature)
     }
     
     private func getSettingsData(_ value: SettingsValue) -> String {

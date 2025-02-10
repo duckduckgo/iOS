@@ -1961,7 +1961,7 @@ extension Pixel.Event {
         case .openAIChatFromWidgetLockScreenComplication: return "m_aichat-widget-lock-screen-complication"
 
         // MARK: Lifecycle
-        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-4"
 
         case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
 

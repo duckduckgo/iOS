@@ -37,6 +37,12 @@ extension Launching {
             return Foreground(stateContext: makeStateContext())
         case .didEnterBackground:
             return Background(stateContext: makeStateContext())
+        case .willEnterForeground:
+            // This event *shouldn’t* happen in the Launching state, but apparently, it does in some cases:
+            // https://developer.apple.com/forums/thread/769924
+            // We don’t support this transition and instead stay in Launching.
+            // From here, we can move to Foreground or Background, where resuming/suspension is handled properly.
+            return self
         case .willTerminate(let terminationReason):
             return Terminating(terminationReason: terminationReason)
         default:

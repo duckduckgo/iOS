@@ -24,7 +24,7 @@ import Suggestions
 
 class QuerySubmittedTests: XCTestCase {
     let mock = MockOmniBarDelegate()
-    let sut = OmniBar.loadFromXib(voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true))
+    let sut = OmniBar.loadFromXib(dependencies: MockOmnibarDependency(voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true)))
 
     override func setUp() {
         super.setUp()
@@ -147,4 +147,13 @@ final class MockOmniBarDelegate: OmniBarDelegate {
     func onTextFieldDidBeginEditing(_ omniBar: DuckDuckGo.OmniBar) -> Bool {
         return false
     }
+    func onBackPressed() {
+    }
+
+    func onForwardPressed() {
+    }
+
+    func onDidBeginEditing() { }
+
+    func onDidEndEditing() { }
 }

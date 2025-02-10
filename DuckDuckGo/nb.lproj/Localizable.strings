@@ -295,18 +295,6 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Når DuckDuckGo oppdager popup-vinduer om samtykke til informasjonskapsler på nettsteder du besøker, kan vi automatisk angi innstillingene for å minimere informasjonskapslene og maksimere personvernet, og deretter lukke popup-vinduene. Noen nettsteder tilbyr ikke noe alternativ for å administrere preferanser for informasjonskapsler, så slike popup-vinduer kan vi bare skjule.";
 
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
-
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Åpne innstillingene";
 
@@ -544,11 +532,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Ingen resultater";
 
-/* Do not translate - stringsdict entry */
-"autofill.number.of.passwords" = "autofill.number.of.passwords";
-
 /* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Passord er kryptert, lagret på enheten og låst med %@.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -707,9 +692,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Slett";
 
-/* Do not translate - stringsdict entry */
-"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Vil du slette %@?";
 
@@ -814,9 +796,6 @@
 
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Det er enkelt å legge meg til i docken din.";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "*%1$@* prøvde å spore deg her. Jeg blokkerte dem!\n\n☝️ Trykk på skjoldet for å få mer informasjon.";
@@ -931,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "High five!";
@@ -1061,6 +1037,9 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck-adresse";
 
+/* No comment provided by engineer. */
+"Duck Player" = "Duck Player";
+
 /* Title for message explaining to the user that Duck Player is not available */
 "duck-player.contingency-title" = "Duck Player er utilgjengelig";
 
@@ -1100,10 +1079,12 @@
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Skjønner!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Drukner du i annonser på YouTube? Prøv Duck Player!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "Drukner du i annonser på YouTube? Ikke med Duck Player!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1646,6 +1627,18 @@
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo-app for Mac";
 
+/* Button that redirect the user to a web page explaining what Malicious Site Protection is */
+"malicious-site-protection.settings.footer.button.learn-more" = "Finn ut mer";
+
+/* Footer text for Malicious Site Protection settings warning the user about the risks of disabling the feature */
+"malicious-site-protection.settings.footer.message" = "Deaktivering av denne funksjonen kan sette personopplysningene dine i fare.";
+
+/* Header text for Malicious Site Protection settings */
+"malicious-site-protection.settings.header" = "Sikkerhetsadvarsler om nettsteder";
+
+/* Text explaining what happens when Malicious Site Protection is enabled */
+"malicious-site-protection.settings.toggle.message" = "Varsle meg om nettsteder som er flagget for phishing eller skadelig programvare";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Alternativer";
 
@@ -1928,9 +1921,6 @@
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "Åpne menyen under de tre prikkene (•••) og velg **Legg til favoritt** for å legge den til ny fane-siden.";
 
-/* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Informasjonskapsler administrert";
 
@@ -2114,6 +2104,11 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Du har nådd det maksimale antallet passord. Slett noen for å gjenoppta synkronisering.";
 
+/* Description invalid credentials error when syncing.
+Description of incorrectly formatted data error when syncing.
+Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Noen bokmerker eller passord er formatert feil eller for lange og ble ikke synkronisert.";
+
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Synkronisering satt på pause";
 
@@ -2223,7 +2218,7 @@
 "settings.add.widget.vpn" = "Legg til DuckDuckGos VPN-widget på startskjermen din";
 
 /* Name of the settings subsection related to the address bar
-   Settings screen cell text for addess bar position */
+Settings screen cell text for addess bar position */
 "settings.address.bar" = "Adressefelt";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2281,7 +2276,7 @@
 "settings.data.clearing" = "Sletting av data";
 
 /* Settings screen cell text for setting the app as default browser
-   The name of Settings category in Privacy Features related to configuration of the default browser */
+The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Standardnettleser";
 
 /* Label of a button disabling email protection */
@@ -2497,14 +2492,23 @@
 /* No comment provided by engineer. */
 "Stored Hostname: %@" = "Lagret vertsnavn: %@";
 
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Få tilgang til Privacy Pro-abonnementet ditt på denne enheten via Apple-kontoen din eller en e-postadresse.";
+
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Legg til e-postadresse";
 
-/* Button text for restoring purchase via Apple ID */
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Apple-konto";
+
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Gjenopprett kjøp";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Gjenopprett kjøpet ditt for å aktivere abonnementet ditt på denne enheten.";
+
+/* Subscription Activation Info */
+"subscription.activate.description" = "Abonnementet ditt er automatisk tilgjengelig i DuckDuckGo på alle enheter som er logget inn på Apple-kontoen din.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Rediger e-postadresse";
@@ -2545,6 +2549,9 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Legg til e-postadresse";
 
+/* Subscription availability message on Apple devices */
+"subscription.available.apple" = "Privacy Pro er tilgjengelig på alle enheter som er logget inn på samme Apple-konto.";
+
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Abonnementet ditt ble kjøpt gjennom Google Play Store. Hvis du vil fornye abonnementet, må du åpne abonnementsinnstillingene for Google Play Store på en enhet som er logget på den samme Google-kontoen som du brukte til å kjøpe abonnementet.";
 
@@ -2578,6 +2585,9 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Abonnementet ble ikke funnet";
 
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "Abonnementet tilknyttet denne Apple-kontoen er ikke lenger aktivt.";
+
 /* FAQ Button */
 "subscription.faq" = "Vanlige spørsmål og kundestøtte";
 
@@ -2593,6 +2603,9 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Gjenopprett";
 
+/* Message for the existing subscription dialog */
+"subscription.found.text" = "Vi fant et abonnement tilknyttet denne Apple-kontoen.";
+
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Abonnementet er funnet";
 
@@ -2604,6 +2617,9 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Abonnement";
+
+/* Alert content for not found subscription */
+"subscription.notFound.alert.message" = "Det finnes ikke noe abonnement tilknyttet denne Apple-kontoen.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Abonnementet ble ikke funnet";

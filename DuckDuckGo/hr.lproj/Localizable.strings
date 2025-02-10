@@ -295,18 +295,6 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Kada DuckDuckGo otkrije skočne prozore pristanka na kolačiće na web lokacijama koje posjećuješ, mi možemo pokušati automatski odrediti tvoje postavke kolačića kako bismo minimizirali kolačiće i maksimizirali privatnost, a zatim zatvorili skočne prozore. Neke web lokacije ne nude opciju upravljanja postavkama kolačića, tako da možemo sakriti samo ovakve skočne prozore.";
 
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
-
-/* Do not translate - stringsdict entry */
-"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
-
 /* Open Settings action for disabling autofill in Settings */
 "autofill.disable.prompt.action.open-settings" = "Otvori Postavke";
 
@@ -544,11 +532,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Nema rezultata";
 
-/* Do not translate - stringsdict entry */
-"autofill.number.of.passwords" = "autofill.number.of.passwords";
-
 /* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
 "autofill.onboarding.key-features.secure-storage.description" = "Lozinke su šifrirane, pohranjene na uređaju i zaključane pomoću %@.";
 
 /* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
@@ -707,9 +692,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Izbriši";
 
-/* Do not translate - stringsdict entry */
-"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Izbrisati %@?";
 
@@ -814,9 +796,6 @@
 
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Dodavanje mene na tvoj Dock je jednostavno.";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
 /* Parameter is domain name (string) */
 "contextual.onboarding.browsing.one.tracker" = "*%1$@* te je pokušao pratiti ovdje. Blokirani su!\n\n☝️ Dodirni štit za više informacija.";
@@ -931,9 +910,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";
-
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.multiple.trackers.cta" = "Daj pet!";
@@ -1061,6 +1037,9 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
 
+/* No comment provided by engineer. */
+"Duck Player" = "Duck Player";
+
 /* Title for message explaining to the user that Duck Player is not available */
 "duck-player.contingency-title" = "Duck Player je nedostupan";
 
@@ -1100,10 +1079,12 @@
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Shvaćam!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Utapaš se u oglasima na YouTubeu? Isprobaj Duck Player!";
 
-/* Two line title (separated by \n) for the feature explanation */
+/* Two line title (separated by 
+) for the feature explanation */
 "duckplayer.presentation.modal.title.youtube" = "Utapaš se u oglasima na YouTubeu? Ne s Duck Playerom!";
 
 /* Footer label in the settings screen for Duck Player */
@@ -1646,6 +1627,18 @@
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo aplikacija za Mac";
 
+/* Button that redirect the user to a web page explaining what Malicious Site Protection is */
+"malicious-site-protection.settings.footer.button.learn-more" = "Saznajte više";
+
+/* Footer text for Malicious Site Protection settings warning the user about the risks of disabling the feature */
+"malicious-site-protection.settings.footer.message" = "Onemogućavanje ove značajke može ugroziti tvoje osobne podatke.";
+
+/* Header text for Malicious Site Protection settings */
+"malicious-site-protection.settings.header" = "Sigurnosna upozorenja za web-mjesto";
+
+/* Text explaining what happens when Malicious Site Protection is enabled */
+"malicious-site-protection.settings.toggle.message" = "Upozori me na web-mjestima označenim zbog krađe identiteta ili zlonamjernog softvera.";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Izbornik pregledavanja";
 
@@ -1928,9 +1921,6 @@
 /* Text shown on the favorites info tooltip */
 "new.tab.page.tooltip.body" = "Na bilo kojem web-mjestu otvori ••• izbornik i odaberi **Dodaj favorit** kako bi se on dodao na stranicu nove kartice.";
 
-/* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Upravlja se kolačićima";
 
@@ -2114,6 +2104,11 @@
 /* Description for sync credentials limits exceeded warning */
 "prefrences.sync.credentials-limit-exceeded-description" = "Dosegnut je maksimalni broj lozinki. Izbriši neke za nastavak sinkronizacije.";
 
+/* Description invalid credentials error when syncing.
+Description of incorrectly formatted data error when syncing.
+Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Neke oznake ili lozinke formatirane su pogrešno, ili su preduge i nisu sinkronizirane.";
+
 /* Title for sync limits exceeded warning */
 "prefrences.sync.limit-exceeded-title" = "Sinkronizacija je zaustavljena";
 
@@ -2223,7 +2218,7 @@
 "settings.add.widget.vpn" = "Dodaj DuckDuckGo VPN widget na svoj početni zaslon";
 
 /* Name of the settings subsection related to the address bar
-   Settings screen cell text for addess bar position */
+Settings screen cell text for addess bar position */
 "settings.address.bar" = "Adresna traka";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
@@ -2281,7 +2276,7 @@
 "settings.data.clearing" = "Brisanje podataka";
 
 /* Settings screen cell text for setting the app as default browser
-   The name of Settings category in Privacy Features related to configuration of the default browser */
+The name of Settings category in Privacy Features related to configuration of the default browser */
 "settings.default.browser" = "Zadani preglednik";
 
 /* Label of a button disabling email protection */
@@ -2497,14 +2492,23 @@
 /* No comment provided by engineer. */
 "Stored Hostname: %@" = "Pohranjeno ime glavnog računala: %@";
 
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Pristupi svojoj pretplati na Privacy Pro na ovom uređaju putem Apple računa ili adrese e-pošte.";
+
 /* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Dodaj e-poštu";
 
-/* Button text for restoring purchase via Apple ID */
+/* Apple Account option for activation */
+"subscription.activate.appleid" = "Apple račun";
+
+/* Button text for restoring purchase via Apple Account */
 "subscription.activate.appleid.button" = "Vrati kupnju";
 
-/* Description for Apple ID activation */
+/* Description for Apple Account activation */
 "subscription.activate.appleid.description" = "Vrati svoju kupnju kako bi aktivirao pretplatu na ovom uređaju.";
+
+/* Subscription Activation Info */
+"subscription.activate.description" = "Tvoja pretplata automatski je dostupna u DuckDuckGou na bilo kojem uređaju prijavljenom na tvoj Apple račun.";
 
 /* Button for editing email address added to subscription */
 "subscription.activate.edit.email.button" = "Uredi e-poštu";
@@ -2545,6 +2549,9 @@
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Dodaj e-poštu";
 
+/* Subscription availability message on Apple devices */
+"subscription.available.apple" = "Privacy Pro dostupan je na svakom uređaju prijavljenom na isti Apple račun.";
+
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Tvoja pretplata kupljena je putem trgovine Google Play. Za obnavljanje pretplate, otvori postavke pretplate na Google Play Storeu na uređaju koji je prijavljen na isti Google račun koji je upotrijebljen za prvobitnu kupnju pretplate.";
 
@@ -2578,6 +2585,9 @@
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Pretplata nije pronađena";
 
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "Tvoja pretplata povezana s ovim Apple računom više nije aktivna.";
+
 /* FAQ Button */
 "subscription.faq" = "Često postavljana pitanja i podrška";
 
@@ -2593,6 +2603,9 @@
 /* Restore action for the existing subscription dialog */
 "subscription.found.restore" = "Vrati";
 
+/* Message for the existing subscription dialog */
+"subscription.found.text" = "Pronašli smo pretplatu povezanu s ovim Apple računom.";
+
 /* Title for the existing subscription dialog */
 "subscription.found.title" = "Pretplata je pronađena";
 
@@ -2604,6 +2617,9 @@
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Pretplata";
+
+/* Alert content for not found subscription */
+"subscription.notFound.alert.message" = "Ne postoji pretplata povezana s ovim Apple računom.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Pretplata nije pronađena";

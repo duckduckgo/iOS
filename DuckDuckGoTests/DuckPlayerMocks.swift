@@ -197,6 +197,8 @@ final class MockDuckPlayer: DuckPlayerControlling {
     
     var hostView: TabViewController?
     
+    var youtubeNavigationRequest: PassthroughSubject<URL, Never>
+    
     func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
         nil
     }
@@ -226,6 +228,7 @@ final class MockDuckPlayer: DuckPlayerControlling {
     init(settings: any DuckDuckGo.DuckPlayerSettings, featureFlagger: any BrowserServicesKit.FeatureFlagger) {
         self.settings = settings
         self.featureFlagger = featureFlagger
+        self.youtubeNavigationRequest = PassthroughSubject<URL, Never>()
     }
     
     func setUserValues(params: Any, message: WKScriptMessage) -> (any Encodable)? {
@@ -267,13 +270,11 @@ final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
         return nil
     }
 
-    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag: FeatureFlagExperimentDescribing {
+    func resolveCohort<Flag>(for featureFlag: Flag, allowOverride: Bool) -> (any FeatureFlagCohortDescribing)? where Flag: FeatureFlagDescribing {
         return nil
     }
 
-    func getAllActiveExperiments() -> Experiments {
-        return [:]
-    }
+    var allActiveExperiments: Experiments = [:]
 }
 
 final class MockDuckPlayerStorage: DuckPlayerStorage {

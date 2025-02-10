@@ -4,9 +4,6 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Natrag";
 
-/* Do not translate - stringsdict entry */
-"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
-
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Neke se oznake ne sinkroniziraju zbog pretjerano dugog sadržaja u određenim poljima.";
 
@@ -48,9 +45,6 @@
 
 /* Standard Buttons - Copy Button */
 "copy.button" = "Kopiraj";
-
-/* Do not translate - stringsdict entry */
-"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Neke se prijave ne sinkroniziraju zbog pretjerano dugog sadržaja u određenim poljima.";

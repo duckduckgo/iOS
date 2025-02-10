@@ -82,7 +82,7 @@ struct SettingsDuckPlayerView: View {
             }
             
             /// Experimental features for internal users
-            if viewModel.isInternalUser {
+            if viewModel.isInternalUser && UIDevice.current.userInterfaceIdiom == .phone {
                 Section("Experimental (Internal only)", content: {
                     SettingsCellView(label: "Use Native UI (Alpha)", accessory: .toggle(isOn: viewModel.duckPlayerNativeUI))
                     if viewModel.appSettings.duckPlayerNativeUI {

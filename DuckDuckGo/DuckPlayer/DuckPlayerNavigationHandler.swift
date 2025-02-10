@@ -79,6 +79,9 @@ final class DuckPlayerNavigationHandler: NSObject {
     /// Cancellable for observing DuckPlayer Mode changes
     private var duckPlayerModeCancellable: AnyCancellable?
     
+    /// Cancellable for observing DuckPlayer Navigation Request
+    private var duckPlayerNavigationRequestCancellable: AnyCancellable?
+    
     private struct Constants {
         static let SERPURL =  "duckduckgo.com/"
         static let refererHeader = "Referer"
@@ -131,6 +134,12 @@ final class DuckPlayerNavigationHandler: NSObject {
         self.duckPlayerOverlayUsagePixels = duckPlayerOverlayUsagePixels
         
         super.init()
+    }
+    
+    deinit {
+        // Clean up Combine subscriptions
+        duckPlayerModeCancellable?.cancel()
+        duckPlayerNavigationRequestCancellable?.cancel()
     }
     
     /// Returns the file path for the Duck Player HTML template.
@@ -278,6 +287,11 @@ final class DuckPlayerNavigationHandler: NSObject {
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
         
+        // Mute audio for the opening tab if required
+        // This prevents opening tab from hijacking Audio Session
+        // and playing audio in the background
+        toggleAudioForTab(webView, mute: true)
+        
         if duckPlayer.settings.nativeUI {
             loadNativeDuckPlayerVideo(videoID: videoID)
             return
@@ -365,6 +379,22 @@ final class DuckPlayerNavigationHandler: NSObject {
             completion?()
         }
         
+    }
+    
+    /// Toggles audio playback for a specific webView.
+    ///
+    /// - Parameters:
+    ///  - webView: The `WKWebView` to manipulate.
+    ///  - mute: Whether to mute the audio.
+    @MainActor
+    private func toggleAudioForTab(_ webView: WKWebView, mute: Bool) {
+        if duckPlayer.settings.openInNewTab || duckPlayer.settings.nativeUI {
+            webView.evaluateJavaScript("""
+                document.querySelectorAll('video, audio').forEach(function(media) {
+                    media.muted = \(mute);
+                });
+            """)
+        }
     }
         
     /// Loads a request with Duck Player parameters, handling new tab logic and first video allowance.
@@ -576,6 +606,16 @@ final class DuckPlayerNavigationHandler: NSObject {
             }
     }
     
+    /// Register a DuckPlayer Youtube Navigation Request observer
+    /// Used when DuckPlayer requires direct Youtube Navigation
+    @MainActor
+    private func setupYoutubeNavigationRequestObserver(webView: WKWebView) {
+        duckPlayerNavigationRequestCancellable = duckPlayer.youtubeNavigationRequest
+            .sink { [weak self] url in
+                self?.redirectToYouTubeVideo(url: url, webView: webView)
+            }
+    }
+    
     /// // Handle "open in YouTube" links (duck://player/openInYoutube)
     ///
     /// - Parameter url: The `URL` used to determine the tab type.
@@ -600,11 +640,7 @@ final class DuckPlayerNavigationHandler: NSObject {
             redirectToYouTubeVideo(url: url, webView: webView, forceNewTab: true)
         }
     }
-    
-    deinit {
-        duckPlayerModeCancellable?.cancel()
-        duckPlayerModeCancellable = nil
-    }
+
     
     /// Checks if a URL contains a hash
     ///
@@ -860,6 +896,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         duckPlayerOverlayUsagePixels?.webView = webView
         duckPlayerOverlayUsagePixels?.duckPlayerMode = duckPlayer.settings.mode
         setupPlayerModeObserver()
+        setupYoutubeNavigationRequestObserver(webView: webView)
         
         // Ensure feature and mode are enabled
         guard isDuckPlayerFeatureEnabled,
@@ -989,6 +1026,18 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Allow everything else
         return false
         
+    }
+    
+    /// Sets the host view controller for Duck Player.
+    ///
+    /// - Parameters:
+    ///  - hostViewController: The `TabViewController` to set as the host.
+    @MainActor
+    func setHostViewController(_ hostViewController: TabViewController) {
+        duckPlayer.setHostViewController(hostViewController)
+        
+        // Ensure the tab is not muted
+        toggleAudioForTab(hostViewController.webView, mute: false)
     }
     
 }

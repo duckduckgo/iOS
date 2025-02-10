@@ -126,7 +126,7 @@ jobs:
     - name: Build and test
       run: |
         set -o pipefail && xcodebuild test \
-          -scheme "DuckDuckGo" \
+          -scheme "iOS Browser" \
           -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
@@ -237,7 +237,7 @@ jobs:
         bundle exec fastlane sync_signing
 
         set -o pipefail && xcodebuild \
-        -scheme "DuckDuckGo" \
+        -scheme "iOS Browser" \
         -destination "platform=iOS Simulator,name=iPhone 16" \
         -derivedDataPath "DerivedData" \
         -configuration "Release" \

@@ -56,6 +56,9 @@ class TabSwitcherBarsStateHandler {
         self.selectedTabsCount = selectedTabsCount
         self.totalTabsCount = totalTabsCount
 
+        self.fireButton.accessibilityLabel = "Close all tabs and clear data"
+        self.tabSwitcherStyleButton.accessibilityLabel = "Toggle between grid and list view"
+
         updateBottomBar()
         updateTopLeftButtons()
         updateTopRightButtons()

@@ -434,6 +434,10 @@ class OmniBar: UIView {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }
 
+        if oldState.showAccessoryButton != state.showAccessoryButton {
+            refreshOmnibarPaddingConstraintsForAccessoryButton()
+        }
+
         UIView.animate(withDuration: 0.0) { [weak self] in
             self?.layoutIfNeeded()
         }

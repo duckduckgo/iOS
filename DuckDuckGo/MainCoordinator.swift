@@ -265,7 +265,11 @@ final class MainCoordinator {
         controller.onForeground()
     }
 
-    func resetAppStartTime() {
+    func onBackground() {
+        resetAppStartTime()
+    }
+
+    private func resetAppStartTime() {
         controller.appDidFinishLaunchingStartTime = nil
     }
 

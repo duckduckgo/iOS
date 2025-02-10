@@ -34,7 +34,7 @@ protocol AutoClearWorker {
 
 class AutoClear {
 
-    private let worker: AutoClearWorker // shouldn't it be weak?
+    private let worker: AutoClearWorker
     private var timestamp: TimeInterval?
 
     private let appSettings: AppSettings

@@ -28,8 +28,6 @@ final class ConfigurationService {
     private var privacyConfigCustomURL: String?
     private let isDebugBuild: Bool
 
-    var onConfigurationFetched: (() -> Void)?
-
     init(isDebugBuild: Bool) {
         self.isDebugBuild = isDebugBuild
     }
@@ -46,7 +44,8 @@ final class ConfigurationService {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
     }
 
-    func onForeground() {
+    @MainActor
+    func resume() async {
         scheduleBackgroundTask()
 
         if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
@@ -55,10 +54,12 @@ final class ConfigurationService {
         }
         AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()
 
-        AppConfigurationFetch().start { result in
-            self.onConfigurationFetched?()
-            if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
-                ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+        await withCheckedContinuation { continuation in
+            AppConfigurationFetch().start { result in
+                continuation.resume()
+                if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
+                    ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                }
             }
         }
     }

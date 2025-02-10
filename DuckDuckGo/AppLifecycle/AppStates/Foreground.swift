@@ -20,7 +20,6 @@
 import Foundation
 import UIKit
 import Core
-import Combine
 
 /// Represents the state where the app is in the Foreground and is visible to the user.
 /// - Usage:
@@ -36,10 +35,6 @@ struct Foreground: AppState {
     private let urlToOpen: URL?
     private let shortcutItemToHandle: UIApplicationShortcutItem?
     private let lastBackgroundDate: Date?
-
-    private let didAuthenticate = PassthroughSubject<Void, Never>()
-    private let didSetupWebView = PassthroughSubject<Void, Never>()
-    private var cancellables = Set<AnyCancellable>()
 
     init(stateContext: Launching.StateContext) {
         self.init(appDependencies: stateContext.appDependencies,
@@ -63,39 +58,25 @@ struct Foreground: AppState {
         self.shortcutItemToHandle = shortcutItemToHandle
         self.lastBackgroundDate = lastBackgroundDate
 
-        observeAppReadiness()
         onResume()
         onForeground()
     }
 
-    private mutating func observeAppReadiness() {
-        Publishers.CombineLatest(didAuthenticate, didSetupWebView)
-            .sink { [self] _, _ in
-                self.onAppReadyForInteractions()
-            }
-            .store(in: &cancellables)
-    }
-
     // MARK: - Handle applicationDidBecomeActive(_:) logic here
     /// **Before adding code here, ensure it does not depend on pending tasks:**
-    /// - If the app needs to be ready for web navigations, use `onWebViewReadyForInteractions` — this runs after AutoClear is complete.
-    /// - If the app needs to be ready for any interactions, use `onAppReadyForInteractions` - this runs after AutoClear and authentication.
-    /// - If install/search statistics are required, use `onStatisticsLoaded`.
-    /// - If crucial configuration files (e.g., TDS, privacy config) are needed, use `onConfigurationFetched`.
+    /// - If the app needs to be ready for web navigations, use `onWebViewReadyForInteractions()` — this runs after AutoClear is complete.
+    /// - If the app needs to be ready for any interactions, use `onAppReadyForInteractions()` - this runs after AutoClear and authentication.
+    /// - If install/search statistics are required, use `onStatisticsLoaded()`.
+    /// - If crucial configuration files (e.g., TDS, privacy config) are needed, use `onConfigurationFetched()`.
     ///
     /// This is **the last moment** for setting up anything. If you need something to happen earlier,
     /// add it to `Launching`'s `init()` and `Background`'s `onWakeUp()` to ensure it runs both on a cold start and when the app wakes up.
     private func onForeground() {
-        configureGlobalAppearance()
+        configureAppearance()
 
-        appDependencies.authenticationService.beginAuthentication(onAuthenticated: onAuthenticated)
-        appDependencies.autoClearService.registerForDataCleared(onWebViewReadyForInteractions)
+        orchestrateForegroundAsyncTasks()
 
         appDependencies.syncService.onForeground()
-
-        appDependencies.configurationService.onConfigurationFetched = onConfigurationFetched
-        appDependencies.configurationService.onForeground()
-
         appDependencies.remoteMessagingService.onForeground()
         appDependencies.vpnService.onForeground()
         appDependencies.subscriptionService.onForeground()
@@ -107,12 +88,8 @@ struct Foreground: AppState {
         mainCoordinator.onForeground()
     }
 
-    private func configureGlobalAppearance() {
+    private func configureAppearance() {
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
-    }
-
-    private func onAuthenticated() {
-        didAuthenticate.send()
     }
 
     // MARK: - Handle any WebView related logic here
@@ -122,7 +99,6 @@ struct Foreground: AppState {
     private func onWebViewReadyForInteractions() {
         appDependencies.vpnService.onWebViewReadyForInteractions()
         handleLaunchActions()
-        didSetupWebView.send()
     }
 
     // MARK: - Handle UI-related logic here that could be affected by Authentication screen or AutoClear feature
@@ -145,6 +121,45 @@ struct Foreground: AppState {
     /// Place any code here that depends on up-to-date configuration data before executing.
     private func onConfigurationFetched() {
         appDependencies.reportingService.onConfigurationFetched()
+    }
+
+}
+
+// MARK: - Synchronization Layer
+/// This handles foreground-related async tasks that require coordination between services.
+/// It is **not** part of the public API of `Foreground`
+///
+/// **Important note**
+/// - Only use this for work that requires callbacks for other services.
+/// - If your service needs to perform async work, handle it **within the service itself** instead of spawning `Task` blocks here.
+/// - This ensures that each service manages its own async execution without unnecessary indirection.
+extension Foreground {
+
+    private func orchestrateForegroundAsyncTasks() {
+        Task { @MainActor in
+            async let authentication: () = authenticate()
+            async let dataClearing: () = clearData()
+
+            await (_, _) = (authentication, dataClearing)
+            onAppReadyForInteractions()
+        }
+        Task {
+            await fetchConfig()
+        }
+    }
+
+    private func authenticate() async {
+        await appDependencies.authenticationService.resume()
+    }
+
+    private func clearData() async {
+        await appDependencies.autoClearService.waitForDataCleared()
+        onWebViewReadyForInteractions()
+    }
+
+    private func fetchConfig() async {
+        await appDependencies.configurationService.resume()
+        onConfigurationFetched()
     }
 
 }

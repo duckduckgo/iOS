@@ -35,16 +35,14 @@ final class AutoClearService {
         self.application = application
     }
 
-    func registerForDataCleared(_ onAutoClear: @escaping () -> Void) {
+    @MainActor
+    func waitForDataCleared() async {
         guard let autoClearTask else {
             assertionFailure("AutoClear task must be started before registering. Call register after onLaunching or onResuming.")
             return
         }
-        Task { @MainActor in
-            await autoClearTask.value
-            overlayWindowManager.removeNonAuthenticationOverlay()
-            onAutoClear()
-        }
+        await autoClearTask.value
+        overlayWindowManager.removeNonAuthenticationOverlay()
     }
 
     func onLaunching() {

@@ -33,17 +33,14 @@ final class AuthenticationService {
         self.overlayWindowManager = overlayWindowManager
     }
 
-    func beginAuthentication(onAuthenticated: @escaping () -> Void) {
+    @MainActor
+    func resume() async {
         guard shouldAuthenticate else {
-            onAuthenticated()
             return
         }
         let authenticationViewController = showAuthenticationScreen()
         authenticationViewController.delegate = self
-        Task { @MainActor in
-            await authenticate(with: authenticationViewController)
-            onAuthenticated()
-        }
+        await authenticate(with: authenticationViewController)
     }
 
     func onBackground() {

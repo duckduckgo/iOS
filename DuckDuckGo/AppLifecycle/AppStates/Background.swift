@@ -56,7 +56,7 @@ struct Background: AppState {
         appDependencies.syncService.onBackground()
         appDependencies.reportingService.onBackground()
 
-        appDependencies.mainCoordinator.resetAppStartTime()
+        appDependencies.mainCoordinator.onBackground()
     }
 
 }

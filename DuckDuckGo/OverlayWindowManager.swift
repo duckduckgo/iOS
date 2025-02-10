@@ -67,6 +67,7 @@ final class OverlayWindowManager {
         overlayWindow?.windowLevel = .alert
         overlayWindow?.rootViewController = viewController
         overlayWindow?.makeKeyAndVisible()
+        ThemeManager.shared.updateUserInterfaceStyle(window: overlayWindow)
         window.isHidden = true
     }
 

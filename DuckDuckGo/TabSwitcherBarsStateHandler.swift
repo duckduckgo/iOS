@@ -66,11 +66,11 @@ class TabSwitcherBarsStateHandler {
         case .singleSelectNormal,
                 .multiSelectAvailableNormal:
             bottomBarItems = [
-                plusButton,
+                doneButton,
                 UIBarButtonItem.flexibleSpace(),
                 fireButton,
                 UIBarButtonItem.flexibleSpace(),
-                doneButton,
+                plusButton,
             ]
             isBottomBarHidden = false
 

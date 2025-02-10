@@ -26,13 +26,19 @@ import Bookmarks
 // TODO fire pixels from the source specific action implementations
 extension TabSwitcherViewController {
 
+    var selectedTabs: [Int] {
+        collectionView.indexPathsForSelectedItems?.map {
+            $0.row
+        } ?? []
+    }
+
     var tabCount: Int {
         tabsModel.count
     }
 
-    func bookmarkTabs(withIndexes indices: [Int]) {
-        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
-                                      message: UserText.alertBookmarkAllMessage,
+    func bookmarkTabs(withIndexes indices: [Int], title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) { [weak self] in
@@ -118,14 +124,12 @@ extension TabSwitcherViewController {
 
     func transitionToMultiSelect() {
         self.isEditing = true
-        selectedTabs = Set<Int>()
         collectionView.reloadData()
         updateUIForSelectionMode()
     }
 
     func transitionFromMultiSelect() {
         self.isEditing = false
-        selectedTabs = Set<Int>()
         collectionView.reloadData()
         updateUIForSelectionMode()
     }
@@ -148,6 +152,12 @@ extension TabSwitcherViewController {
         present(alert, animated: true)
     }
 
+    func closeSelectedTabs() {
+        self.closeTabs(withIndexes: selectedTabs,
+                       confirmTitle: UserText.alertTitleCloseSelectedTabs(withCount: selectedTabs.count),
+                       confirmMessage: UserText.alertMessageCloseTabs(withCount: selectedTabs.count))
+    }
+
     func closeTabs(withIndexes indices: [Int], confirmTitle: String, confirmMessage: String) {
 
         let alert = UIAlertController(
@@ -167,7 +177,6 @@ extension TabSwitcherViewController {
             }.forEach {
                 self.delegate.tabSwitcher(self, didRemoveTab: $0)
             }
-            self.selectedTabs = Set<Int>()
             self.collectionView.reloadData()
             self.refreshTitle()
             self.updateUIForSelectionMode()
@@ -177,14 +186,15 @@ extension TabSwitcherViewController {
     }
 
     func deselectAllTabs() {
-        selectedTabs = Set<Int>()
         collectionView.reloadData()
         updateUIForSelectionMode()
     }
 
     func selectAllTabs() {
-        selectedTabs = Set<Int>(tabsModel.tabs.indices)
         collectionView.reloadData()
+        tabsModel.tabs.indices.forEach {
+            collectionView.selectItem(at: IndexPath(row: $0, section: 0), animated: true, scrollPosition: [])
+        }
         updateUIForSelectionMode()
     }
 
@@ -278,7 +288,7 @@ extension TabSwitcherViewController {
         children.append(UIMenu(title: "", options: .displayInline, children: [
             action(UserText.shareSelectedLink(withCount: selectedPagesCount), "Share-Apple-16", { [weak self] in
                 guard let self else { return }
-                self.selectModeShareLink()
+                self.selectModeShareLinks()
             }),
             action(UserText.bookmarkSelectedTabs(withCount: selectedPagesCount), "Bookmark-Add-16", { [weak self] in
                 guard let self else { return }
@@ -288,7 +298,7 @@ extension TabSwitcherViewController {
     }
     
     fileprivate func addBookmarkMultiSelectMenuItemIfNeeded(_ allPagesCount: Int, _ selectedPagesCount: Int, _ children: inout [UIMenuElement]) {
-        guard allPagesCount > 0 && selectedPagesCount < allPagesCount else { return  }
+        guard selectedTabs.isEmpty else { return  }
         children.append(UIMenu(title: "", options: .displayInline, children: [
             action(UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", { [weak self] in
                 guard let self else { return }
@@ -353,6 +363,8 @@ extension TabSwitcherViewController {
         ])
     }
 
+    /// Trim title text explicitly. UIMenu supports display preferences on iOS 17.4 to
+    ///  limit the number of title lines but that doesn't appear to work here.
     func trimMenuTitleIfNeeded(_ s: String, _ maxLength: Int) -> String {
         if s.count > maxLength {
             return s.prefix(maxLength) + "..."
@@ -360,12 +372,66 @@ extension TabSwitcherViewController {
         return s
     }
 
-    func createLongPressMenuItems(forIndex index: Int) -> [UIMenuElement] {
+    func createLongPressMenuItemsForMultipleTabs() -> [UIMenuElement?] {
+        let selectedTabsCount = selectedTabs.count
+
+        let closeGroup = [
+            // Close selected
+            action(UserText.closeTabs(withCount: selectedTabsCount), "Close-16", destructive: true, { [weak self] in
+                self?.longPressMenuCloseSelectedTabs()
+            }),
+        ]
+
+        // Close Other
+        let closeOtherGroup = [
+            (tabsModel.count - selectedTabsCount) > 0 ?
+            action(UserText.tabSwitcherCloseOtherTabs(withCount: tabsModel.count - selectedTabsCount), "Tab-Close-16", destructive: true, { [weak self] in
+                self?.longPressMenuCloseUnselectedTabs()
+            }) : nil
+        ]
+
+        return [
+            // Share
+            action(UserText.shareSelectedLink(withCount: selectedTabsCount), "Share-Apple-16", { [weak self] in
+                self?.longPressMenuShareSelectedLinks()
+            }),
+
+            // Bookmark
+            selectedPagesCount > 0 ?
+                action(UserText.bookmarkSelectedTabs(withCount: selectedTabsCount), "Bookmark-Add-16", { [weak self] in
+                    self?.longPressMenuBookmarkSelectedTabs()
+                }) : nil,
+
+            // -- divider --
+            UIMenu(title: "", options: .displayInline, children: closeGroup.compactMap { $0 }),
+
+            // -- divider --
+            UIMenu(title: "", options: .displayInline, children: closeOtherGroup.compactMap { $0 }),
+        ]
+    }
+
+    func createLongPressMenuItemsForSingleTab(forIndex index: Int) -> [UIMenuElement?] {
         guard let tab = tabsModel.safeGetTabAt(index) else { return [] }
 
         let bookmarksModel = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
 
-        let group0 = [
+        let closeGroup = [
+            // Close Tab
+            self.action(index, UserText.keyCommandCloseTab, "Close-16", destructive: true, { [weak self] index in
+                guard let self else { return }
+                self.longPressMenuCloseTab(index: index)
+            }),
+        ]
+
+        let closeOtherGroup = [
+            // Close Other Tabs
+            tabsModel.count > 1 ? self.action(index, UserText.tabSwitcherCloseOtherTabs(withCount: tabsModel.count - selectedTabs.count), "Tab-Close-16", destructive: true, { [weak self] index in
+                guard let self else { return }
+                self.longPressMenuCloseOtherTabs(index: index)
+            }) : nil,
+        ]
+
+        return [
             // Share Link
             tabsModel.safeGetTabAt(index)?.link != nil ? self.action(index, UserText.tabSwitcherShareLink, "Share-Apple-16", { [weak self] index in
                 guard let self else { return }
@@ -377,41 +443,18 @@ extension TabSwitcherViewController {
                 guard let self else { return }
                 self.longPressMenuBookmarkThisPage(index: index)
             }) : nil,
-        ]
-
-        let group1 = [
-            // IMO: Doesn't make sense
-            // Bookmark All Tabs -> shortcut to same functionality at top level
-            // self.action(index, UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", self.longPressMenuBookmarkAllTabs),
 
             // Select Tabs -> switch to selection mode with this tab selected (if not already selected)
             selectedTabs.contains(index) ? nil : self.action(index, UserText.tabSwitcherSelectTabs(withCount: 1), "Check-Circle-16", { [weak self] index in
                 guard let self else { return }
                 self.longPressMenuSelectTabs(index: index)
             }),
-        ]
-
-        let group2 = [
-            // Close Tab
-            self.action(index, UserText.keyCommandCloseTab, "Close-16", destructive: true, { [weak self] index in
-                guard let self else { return }
-                self.longPressMenuCloseTab(index: index)
-            }),
-
-            // Close Other Tabs (only one of these two will be shown)
-            tabsModel.count > 1 ? self.action(index, UserText.tabSwitcherCloseOtherTabs(withCount: tabsModel.count - selectedTabs.count), "Tab-Close-16", destructive: true, { [weak self] index in
-                guard let self else { return }
-                self.longPressMenuCloseOtherTabs(index: index)
-            }) : nil,
-        ]
-
-        return group0.compactMap { $0 } +
-        [
-            // -- divider --
-            UIMenu(title: "", options: .displayInline, children: group1.compactMap { $0 }),
 
             // -- divider --
-            UIMenu(title: "", options: .displayInline, children: group2.compactMap { $0 }),
+            UIMenu(title: "", options: .displayInline, children: closeGroup.compactMap { $0 }),
+
+            // -- divider --
+            UIMenu(title: "", options: .displayInline, children: closeOtherGroup.compactMap { $0 }),
         ]
     }
 
@@ -435,7 +478,9 @@ extension TabSwitcherViewController {
         barsHandler.addAllBookmarksButton.accessibilityLabel = UserText.bookmarkAllTabs
         barsHandler.addAllBookmarksButton.primaryAction = action(image: "Bookmark-New-24") { [weak self] in
             guard let self else { return }
-            self.bookmarkTabs(withIndexes: self.tabsModel.tabs.indices.map { $0 })
+            self.bookmarkTabs(withIndexes: self.tabsModel.tabs.indices.map { $0 },
+                              title: UserText.alertBookmarkAllTitle,
+                              message: UserText.alertBookmarkAllMessage)
         }
 
         barsHandler.plusButton.accessibilityLabel = UserText.keyCommandNewTab
@@ -474,9 +519,7 @@ extension TabSwitcherViewController {
         barsHandler.closeTabsButton.isEnabled = selectedTabs.count > 0
         barsHandler.closeTabsButton.primaryAction = action(title: UserText.closeTabs(withCount: selectedTabs.count)) { [weak self] in
             guard let self else { return }
-            self.closeTabs(withIndexes: [Int](self.selectedTabs),
-                           confirmTitle: UserText.alertTitleCloseSelectedTabs(withCount: self.selectedTabs.count),
-                           confirmMessage: UserText.alertMessageCloseTabs(withCount: self.selectedTabs.count))
+            self.closeSelectedTabs()
         }
     }
 
@@ -499,24 +542,28 @@ extension TabSwitcherViewController {
 extension TabSwitcherViewController {
 
     func selectModeCloseSelectedTabs() {
-        self.closeTabs(withIndexes: [Int](self.selectedTabs),
+        self.closeTabs(withIndexes: selectedTabs,
                        confirmTitle: UserText.alertTitleCloseSelectedTabs(withCount: self.selectedTabs.count),
                        confirmMessage: UserText.alertMessageCloseTabs(withCount: self.selectedTabs.count))
     }
 
     func selectModeCloseOtherTabs() {
-        closeOtherTabs(retainingIndexes: [Int](selectedTabs))
+        closeOtherTabs(retainingIndexes: selectedTabs)
     }
 
     func selectModeBookmarkAll() {
-        bookmarkTabs(withIndexes: tabsModel.tabs.indices.map { $0 })
+        bookmarkTabs(withIndexes: tabsModel.tabs.indices.map { $0 },
+                     title: UserText.alertBookmarkAllTitle,
+                     message: UserText.alertBookmarkAllMessage)
     }
 
     func selectModeBookmarkSelected() {
-        bookmarkTabs(withIndexes: [Int](selectedTabs))
+        bookmarkTabs(withIndexes: selectedTabs,
+                     title: UserText.alertTitleBookmarkSelectedTabs(withCount: selectedPagesCount),
+                     message: UserText.alertBookmarkAllMessage)
     }
 
-    func selectModeShareLink() {
+    func selectModeShareLinks() {
         shareTabs(selectedTabs.compactMap { tabsModel.safeGetTabAt($0) })
     }
 
@@ -533,6 +580,24 @@ extension TabSwitcherViewController {
 // MARK: Long press menu actions
 extension TabSwitcherViewController {
 
+    func longPressMenuCloseSelectedTabs() {
+        closeSelectedTabs()
+    }
+
+    func longPressMenuShareSelectedLinks() {
+        shareTabs(selectedTabs.map { tabsModel.safeGetTabAt($0) }.compactMap { $0 })
+    }
+
+    func longPressMenuBookmarkSelectedTabs() {
+        bookmarkTabs(withIndexes: selectedTabs,
+                     title: UserText.bookmarkSelectedTabs(withCount: selectedPagesCount),
+                     message: UserText.alertBookmarkAllMessage)
+    }
+
+    func longPressMenuCloseUnselectedTabs() {
+        closeOtherTabs(retainingIndexes: selectedTabs)
+    }
+
     func longPressMenuShareLink(index: Int) {
         guard let tab = tabsModel.safeGetTabAt(index) else { return }
         shareTabs([tab])
@@ -542,17 +607,14 @@ extension TabSwitcherViewController {
         bookmarkTabAt(index)
     }
 
-    func longPressMenuBookmarkAllTabs(index: Int) {
-        selectAllTabs()
-    }
-
     func longPressMenuSelectTabs(index: Int) {
         if !isEditing {
             transitionToMultiSelect()
         }
 
-        selectedTabs.insert(index)
-        collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+        let path = IndexPath(row: index, section: 0)
+        collectionView.selectItem(at: path, animated: true, scrollPosition: .centeredVertically)
+        (collectionView.cellForItem(at: path) as? TabViewCell)?.toggleSelection()
         updateUIForSelectionMode()
     }
 

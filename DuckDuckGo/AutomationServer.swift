@@ -187,14 +187,14 @@ final class AutomationServer {
             self.respondError(on: connection, error: "no window")
             return
         }
-        self.respond(on: connection, response: String(UInt(bitPattern: ObjectIdentifier(handle))))
+        self.respond(on: connection, response: handle.tabModel.uid)
     }
 
     @MainActor
     func getWindowHandles(on connection: NWConnection, url: URLComponents) {
         let handles = self.main.tabManager.model.tabs.map({ tab in
             let tabView = self.main.tabManager.controller(for: tab)!
-            return String(UInt(bitPattern: ObjectIdentifier(tabView)))
+            return tabView.tabModel.uid
         })
 
         if let jsonData = try? JSONEncoder().encode(handles),
@@ -221,7 +221,7 @@ final class AutomationServer {
                 guard let tabView = self.main.tabManager.controller(for: tab) else {
                     return false
                 }
-                return String(UInt(bitPattern: ObjectIdentifier(tabView))) == handleString
+                return tabView.tabModel.uid == handleString
             }) {
                 Logger.automationServer.info("found tab \(tabIndex)")
                 self.main.tabManager.select(tabAt: tabIndex)
@@ -243,7 +243,7 @@ final class AutomationServer {
             return
         }
         // Response {handle: "", type: "tab"}
-        let response: [String: String] = ["handle": String(UInt(bitPattern: ObjectIdentifier(handle))), "type": "tab"]
+        let response: [String: String] = ["handle": handle.tabModel.uid, "type": "tab"]
         if let jsonData = try? JSONEncoder().encode(response),
         let jsonString = String(data: jsonData, encoding: .utf8) {
             self.respond(on: connection, response: jsonString)

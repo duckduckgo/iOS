@@ -447,6 +447,25 @@ final class SpecialErrorPageNavigationHandlerTests {
         // THEN
         #expect(maliciousSiteProtectionNavigationHandler.didCallCurrentThreatKind)
     }
+
+    @MainActor
+    @Test("Web View is not strongly retained")
+    func whenWebViewIsNilled_ThenWebViewIsDeallocated() {
+        weak var weakWebView: MockWebView?
+
+        autoreleasepool {
+            // GIVEN
+            var webView: MockWebView! = MockWebView()
+            weakWebView = webView
+            sut.attachWebView(webView)
+
+            // WHEN
+            webView = nil
+        }
+        // THEN
+        RunLoop.current.run(until: Date().addingTimeInterval(0.2)) // Gives the run loop time to process deinit event
+        #expect(weakWebView == nil)
+    }
 }
 
 private extension NSError {

@@ -38,17 +38,17 @@ class BlankSnapshotViewController: UIViewController {
 
     var tabSwitcherButton: TabSwitcherButton!
     let addressBarPosition: AddressBarPosition
-    let voiceSearchHelper: VoiceSearchHelperProtocol
     let featureFlagger: FeatureFlagger
+    let omnibarDependencies: OmnibarDependencyProvider
 
     var viewCoordinator: MainViewCoordinator!
 
     weak var delegate: BlankSnapshotViewRecoveringDelegate?
 
-    init(addressBarPosition: AddressBarPosition, voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger) {
+    init(addressBarPosition: AddressBarPosition, omnibarDependencies: OmnibarDependencyProvider, featureFlagger: FeatureFlagger) {
         self.addressBarPosition = addressBarPosition
-        self.voiceSearchHelper = voiceSearchHelper
         self.featureFlagger = featureFlagger
+        self.omnibarDependencies = omnibarDependencies
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,7 +61,7 @@ class BlankSnapshotViewController: UIViewController {
 
         tabSwitcherButton = TabSwitcherButton()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(view, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
+        viewCoordinator = MainViewFactory.createViewHierarchy(view, omnibarDependencies: omnibarDependencies, featureFlagger: featureFlagger)
         if addressBarPosition.isBottom {
             viewCoordinator.moveAddressBarToPosition(.bottom)
             viewCoordinator.hideToolbarSeparator()
@@ -164,6 +164,13 @@ extension BlankSnapshotViewController: UICollectionViewDataSource {
 }
 
 extension BlankSnapshotViewController: OmniBarDelegate {
+    func onDidBeginEditing() {
+        // No-op
+    }
+    
+    func onDidEndEditing() {
+        // No-op
+    }
 
     func onVoiceSearchPressed() {
        // No-op

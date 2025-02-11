@@ -47,6 +47,7 @@ struct SettingsState {
         var entitlements: [Entitlement.ProductName]
         var platform: PrivacyProSubscription.Platform
         var isShowingStripeView: Bool
+        var isActiveTrialOffer: Bool
     }
 
     struct AIChat: Codable {
@@ -147,7 +148,8 @@ struct SettingsState {
                                        subscriptionFeatures: [],
                                        entitlements: [],
                                        platform: .unknown,
-                                       isShowingStripeView: false),
+                                       isShowingStripeView: false,
+                                       isActiveTrialOffer: false),
             sync: SyncSettings(enabled: false, title: ""),
             syncSource: nil,
             duckPlayerEnabled: false,

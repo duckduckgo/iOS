@@ -296,6 +296,9 @@ struct Launching: AppState {
             }
         }
 
+        // Hide Dax Dialogs if users already completed old onboarding.
+        DaxDialogsOnboardingMigrator().migrateFromOldToNewOboarding()
+
         // MARK: Sync initialisation
 #if DEBUG
         let defaultEnvironment = ServerEnvironment.development
@@ -407,8 +410,11 @@ struct Launching: AppState {
 
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
             window = UIWindow(frame: UIScreen.main.bounds)
+            let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                          featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                                          aiChatSettings: AIChatSettings())
             window.rootViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
-                                                                    voiceSearchHelper: voiceSearchHelper,
+                                                                    omnibarDependencies: omnibarDependencies,
                                                                     featureFlagger: AppDependencyProvider.shared.featureFlagger)
             window.makeKeyAndVisible()
             application.setWindow(window)
@@ -442,7 +448,8 @@ struct Launching: AppState {
                                                     websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
                                                     appDidFinishLaunchingStartTime: didFinishLaunchingStartTime,
                                                     maliciousSiteProtectionManager: maliciousSiteProtectionService.manager,
-                                                    maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionService.preferencesManager)
+                                                    maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionService.preferencesManager,
+                                                    aichatSettings: AIChatSettings())
 
             mainViewController!.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = mainViewController

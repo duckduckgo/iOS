@@ -333,7 +333,6 @@ final class AutomationServer {
     
     @MainActor
     func handleConnection(_ connection: NWConnection) {
-        // connection.start(queue: .global())
         connection.start(queue: .main)
         self.receive(from: connection)
     }

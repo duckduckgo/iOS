@@ -24,7 +24,7 @@ extension Logger {
 }
 
 
-class AutomationServer {
+final class AutomationServer {
     let listener: NWListener
     let main: MainViewController
 

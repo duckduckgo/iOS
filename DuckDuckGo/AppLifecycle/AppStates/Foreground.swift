@@ -36,10 +36,15 @@ struct Foreground: AppState {
     private let shortcutItemToHandle: UIApplicationShortcutItem?
     private var lastBackgroundDate: Date?
 
+    /// Indicates whether this is the app's first transition to the foreground after launch.
+    /// If you need to differentiate between a cold start and a wake-up from the background, use this flag.
+    private let isFirstForeground: Bool
+
     init(stateContext: Launching.StateContext) {
         appDependencies = stateContext.appDependencies
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
+        isFirstForeground = true
     }
 
     init(stateContext: Background.StateContext) {
@@ -47,6 +52,7 @@ struct Foreground: AppState {
         urlToOpen = stateContext.urlToOpen
         shortcutItemToHandle = stateContext.shortcutItemToHandle
         lastBackgroundDate = stateContext.lastBackgroundDate
+        isFirstForeground = stateContext.didTransitionFromLaunching
     }
 
     // MARK: - Handle applicationDidBecomeActive(_:) logic here

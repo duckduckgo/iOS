@@ -28,16 +28,19 @@ struct Background: AppState {
 
     private let lastBackgroundDate: Date = Date()
     private let appDependencies: AppDependencies
+    private let didTransitionFromLaunching: Bool
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
     init(stateContext: Launching.StateContext) {
         appDependencies = stateContext.appDependencies
+        didTransitionFromLaunching = true
     }
 
     init(stateContext: Foreground.StateContext) {
         appDependencies = stateContext.appDependencies
+        didTransitionFromLaunching = false
     }
 
     // MARK: - Handle applicationDidEnterBackground(_:) logic here
@@ -87,6 +90,7 @@ extension Background {
         let urlToOpen: URL?
         let shortcutItemToHandle: UIApplicationShortcutItem?
         let appDependencies: AppDependencies
+        let didTransitionFromLaunching: Bool
 
     }
 
@@ -94,7 +98,8 @@ extension Background {
         .init(lastBackgroundDate: lastBackgroundDate,
               urlToOpen: urlToOpen,
               shortcutItemToHandle: shortcutItemToHandle,
-              appDependencies: appDependencies)
+              appDependencies: appDependencies,
+              didTransitionFromLaunching: didTransitionFromLaunching)
     }
 
 }

@@ -107,43 +107,45 @@ final class AutomationServer {
             Logger.automationServer.info("First line: \(firstLine)")
         }
 
+        // Ensure support for regex
+        guard #available(iOS 16.0, *) else {
+            self.respondError(on: connection, error: "Unsupported iOS version")
+            return
+        }
+
         // Get url parameter from path
         // GET / HTTP/1.1
-        if #available(iOS 16.0, *) {
-            let path = /^(GET|POST) (\/[^ ]*) HTTP/
-            if let match = stringContent.firstMatch(of: path) {
-                Logger.automationServer.info("Path: \(match.2)")
-                // Convert the path into a URL object
-                guard let url = URLComponents(string: String(match.2)) else {
-                    Logger.automationServer.error("Invalid URL: \(match.2)")
-                    return // Or handle the error appropriately
-                }
-                switch url.path {
-                case "/navigate":
-                    self.navigate(on: connection, url: url)
-                case "/execute":
-                    self.execute(on: connection, url: url)
-                case "/getUrl":
-                    let currentUrl = self.main.currentTab?.webView.url?.absoluteString
-                    self.respond(on: connection, response: currentUrl ?? "")
-                case "/getWindowHandles":
-                    self.getWindowHandles(on: connection, url: url)
-                case "/closeWindow":
-                    self.closeWindow(on: connection, url: url)
-                case "/switchToWindow":
-                    self.switchToWindow(on: connection, url: url)
-                case "/newWindow":
-                    self.newWindow(on: connection, url: url)
-                case "/getWindowHandle":
-                    self.getWindowHandle(on: connection, url: url)
-                default:
-                    self.respondError(on: connection, error: "unknown")
-                }
-            } else {
-                self.respondError(on: connection, error: "unknown method")
-            }
-        } else {
-            self.respondError(on: connection, error: "unhandled")
+        let path = /^(GET|POST) (\/[^ ]*) HTTP/
+        guard let match = stringContent.firstMatch(of: path) else {
+            self.respondError(on: connection, error: "Unknown method")
+            return
+        }
+        Logger.automationServer.info("Path: \(match.2)")
+        // Convert the path into a URL object
+        guard let url = URLComponents(string: String(match.2)) else {
+            Logger.automationServer.error("Invalid URL: \(match.2)")
+            return // Or handle the error appropriately
+        }
+        switch url.path {
+        case "/navigate":
+            self.navigate(on: connection, url: url)
+        case "/execute":
+            self.execute(on: connection, url: url)
+        case "/getUrl":
+            let currentUrl = self.main.currentTab?.webView.url?.absoluteString
+            self.respond(on: connection, response: currentUrl ?? "")
+        case "/getWindowHandles":
+            self.getWindowHandles(on: connection, url: url)
+        case "/closeWindow":
+            self.closeWindow(on: connection, url: url)
+        case "/switchToWindow":
+            self.switchToWindow(on: connection, url: url)
+        case "/newWindow":
+            self.newWindow(on: connection, url: url)
+        case "/getWindowHandle":
+            self.getWindowHandle(on: connection, url: url)
+        default:
+            self.respondError(on: connection, error: "unknown")
         }
     }
 

@@ -74,6 +74,8 @@ public extension NSNotification.Name {
     }
 
     /// See: `Terminating.swift`
+    /// **Note** This is *not* the system function `applicationWillTerminate(_:)`, and it is *not* called by the system.
+    /// This is used to handle force crashes due to unrecoverable errors (e.g., low disk space) and display an alert beforehand.
     func application(_ application: UIApplication, willTerminateWithReason terminationReason: UIApplication.TerminationReason) {
         appStateMachine.handle(.willTerminate(terminationReason))
     }

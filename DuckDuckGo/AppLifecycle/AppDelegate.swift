@@ -46,29 +46,29 @@ public extension NSNotification.Name {
         }
     }
 
-    /// See: Launching.swift
+    /// See: `Launching.swift`
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let isTesting: Bool = ProcessInfo().arguments.contains("testing")
         appStateMachine.handle(.didFinishLaunching(isTesting: isTesting))
         return true
     }
 
-    /// See: `Foreground.swift onTransition()`
+    /// See: `Foreground.swift` -> `onTransition()`
     func applicationDidBecomeActive(_ application: UIApplication) {
         appStateMachine.handle(.didBecomeActive)
     }
 
-    /// See: `Foreground.swift willLeave()`
+    /// See: `Foreground.swift` -> `willLeave()`
     func applicationWillResignActive(_ application: UIApplication) {
         appStateMachine.handle(.willResignActive)
     }
 
-    /// See: `Background.swift willLeave()`
+    /// See: `Background.swift` -> `willLeave()`
     func applicationWillEnterForeground(_ application: UIApplication) {
         appStateMachine.handle(.willEnterForeground)
     }
 
-    /// See: `Background.swift onTransition()`
+    /// See: `Background.swift` -> `onTransition()`
     func applicationDidEnterBackground(_ application: UIApplication) {
         appStateMachine.handle(.didEnterBackground)
     }
@@ -78,14 +78,14 @@ public extension NSNotification.Name {
         appStateMachine.handle(.willTerminate(terminationReason))
     }
 
-    /// See: `Foreground.swift handleShortcutItem(_:)`
+    /// See: `Foreground.swift` -> `handleShortcutItem(_:)`
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
         appStateMachine.handle(.handleShortcutItem(shortcutItem))
     }
 
-    /// See: `Foreground.swift openURL(_:)`
+    /// See: `Foreground.swift` -> `openURL(_:)`
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         appStateMachine.handle(.openURL(url))
         return true

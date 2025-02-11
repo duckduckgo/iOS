@@ -540,7 +540,7 @@ struct Launching: AppState {
         // Register Malicious Site Protection background tasks to fetch datasets
         maliciousSiteProtectionService.onLaunching()
 
-        startAutomationServer()
+        startAutomationServerIfNeeded()
     }
 
     private var appDependencies: AppDependencies {
@@ -652,7 +652,7 @@ struct Launching: AppState {
                                dataStoreIDManager: dataStoreIDManager)
     }
 
-    private func startAutomationServer() {
+    private func startAutomationServerIfNeeded() {
         let launchOptionsHandler = LaunchOptionsHandler()
         if launchOptionsHandler.isUITesting && launchOptionsHandler.automationPort != nil {
             AutomationServer(main: mainViewController!, port: launchOptionsHandler.automationPort)

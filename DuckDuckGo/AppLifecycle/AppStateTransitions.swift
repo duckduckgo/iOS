@@ -34,9 +34,15 @@ extension Launching {
     func apply(event: AppEvent) -> any AppState {
         switch event {
         case .didBecomeActive:
-            return Foreground(stateContext: makeStateContext())
+            let foreground = Foreground(stateContext: makeStateContext())
+            foreground.onTransition()
+            foreground.didReturn()
+            return foreground
         case .didEnterBackground:
-            return Background(stateContext: makeStateContext())
+            let background = Background(stateContext: makeStateContext())
+            background.onTransition()
+            background.didReturn()
+            return background
         case .willEnterForeground:
             // This event *shouldn’t* happen in the Launching state, but apparently, it does in some cases:
             // https://developer.apple.com/forums/thread/769924
@@ -62,10 +68,13 @@ extension Foreground {
         case .didBecomeActive:
             didReturn()
             return self
+        case .didEnterBackground:
+            let background = Background(stateContext: makeStateContext())
+            background.onTransition()
+            background.didReturn()
+            return background
         case .willTerminate(let terminationReason):
             return Terminating(terminationReason: terminationReason)
-        case .didEnterBackground:
-            return Background(stateContext: makeStateContext())
         default:
             return handleUnexpectedEvent(event)
         }
@@ -84,7 +93,10 @@ extension Background {
             didReturn()
             return self
         case .didBecomeActive:
-            return Foreground(stateContext: makeStateContext())
+            let foreground = Foreground(stateContext: makeStateContext())
+            foreground.onTransition()
+            foreground.didReturn()
+            return foreground
         case .willTerminate:
             return Terminating()
         default:

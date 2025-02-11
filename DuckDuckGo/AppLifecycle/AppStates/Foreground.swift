@@ -34,32 +34,19 @@ struct Foreground: AppState {
 
     private let urlToOpen: URL?
     private let shortcutItemToHandle: UIApplicationShortcutItem?
-    private let lastBackgroundDate: Date?
+    private var lastBackgroundDate: Date?
 
     init(stateContext: Launching.StateContext) {
-        self.init(appDependencies: stateContext.appDependencies,
-                  urlToOpen: stateContext.urlToOpen,
-                  shortcutItemToHandle: stateContext.shortcutItemToHandle)
+        appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
+        shortcutItemToHandle = stateContext.shortcutItemToHandle
     }
 
     init(stateContext: Background.StateContext) {
-        self.init(appDependencies: stateContext.appDependencies,
-                  urlToOpen: stateContext.urlToOpen,
-                  shortcutItemToHandle: stateContext.shortcutItemToHandle,
-                  lastBackgroundDate: stateContext.lastBackgroundDate)
-    }
-
-    private init(appDependencies: AppDependencies,
-                 urlToOpen: URL?,
-                 shortcutItemToHandle: UIApplicationShortcutItem?,
-                 lastBackgroundDate: Date? = nil) {
-        self.appDependencies = appDependencies
-        self.urlToOpen = urlToOpen
-        self.shortcutItemToHandle = shortcutItemToHandle
-        self.lastBackgroundDate = lastBackgroundDate
-
-        onTransition()
-        didReturn()
+        appDependencies = stateContext.appDependencies
+        urlToOpen = stateContext.urlToOpen
+        shortcutItemToHandle = stateContext.shortcutItemToHandle
+        lastBackgroundDate = stateContext.lastBackgroundDate
     }
 
     // MARK: - Handle applicationDidBecomeActive(_:) logic here
@@ -71,7 +58,7 @@ struct Foreground: AppState {
     ///
     /// This is **the last moment** for setting up anything. If you need something to happen earlier,
     /// add it to `Launching`'s `init()` and `Background`'s `onWakeUp()` to ensure it runs both on a cold start and when the app wakes up.
-    private func onTransition() {
+    func onTransition() {
         configureAppearance()
 
         orchestrateForegroundAsyncTasks()

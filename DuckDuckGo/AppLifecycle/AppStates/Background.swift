@@ -33,22 +33,15 @@ struct Background: AppState {
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
     init(stateContext: Launching.StateContext) {
-        self.init(appDependencies: stateContext.appDependencies)
+        appDependencies = stateContext.appDependencies
     }
 
     init(stateContext: Foreground.StateContext) {
-        self.init(appDependencies: stateContext.appDependencies)
-    }
-
-    private init(appDependencies: AppDependencies) {
-        self.appDependencies = appDependencies
-
-        onTransition()
-        didReturn()
+        appDependencies = stateContext.appDependencies
     }
 
     // MARK: - Handle applicationDidEnterBackground(_:) logic here
-    private func onTransition() {
+    func onTransition() {
         appDependencies.vpnService.onBackground()
         appDependencies.authenticationService.onBackground()
         appDependencies.autoClearService.onBackground()

@@ -161,17 +161,18 @@ final class AutomationServer {
     func execute(on connection: NWConnection, url: URLComponents) {
         let script = getQueryStringParameter(url: url, param: "script") ?? ""
         var args: [String: String] = [:]
-        // json decode args
+        // json decode args if present
         if let argsString = getQueryStringParameter(url: url, param: "args") {
-            if let argsData = argsString.data(using: .utf8) {
-                do {
-                    let jsonDecoder = JSONDecoder()
-                    args = try jsonDecoder.decode([String: String].self, from: argsData)
-                } catch {
-                    self.respondError(on: connection, error: error.localizedDescription)
-                }
-            } else {
+            guard let argsData = argsString.data(using: .utf8) else {
                 self.respondError(on: connection, error: "Unable to decode args")
+                return
+            }
+            do {
+                let jsonDecoder = JSONDecoder()
+                args = try jsonDecoder.decode([String: String].self, from: argsData)
+            } catch {
+                self.respondError(on: connection, error: error.localizedDescription)
+                return
             }
         }
         Task {
@@ -198,7 +199,7 @@ final class AutomationServer {
 
         if let jsonData = try? JSONEncoder().encode(handles),
            let jsonString = String(data: jsonData, encoding: .utf8) {
-            self.respond(on: connection, response: jsonString)
+           self.respond(on: connection, response: jsonString)
         } else {
             // Handle JSON encoding failure
             self.respondError(on: connection, error: "Failed to encode response")

@@ -511,15 +511,12 @@ class MainViewController: UIViewController {
     }
     
     func startOnboardingFlowIfNotSeenBefore() {
-        
-        guard ProcessInfo.processInfo.environment["ONBOARDING"] != "false" else {
+        guard !LaunchOptionsHandler().isOnboardingCompleted else {
             // explicitly skip onboarding, e.g. for integration tests
             return
         }
 
-        let showOnboarding = !tutorialSettings.hasSeenOnboarding ||
-            // explicitly show onboarding, can be set in the scheme > Run > Environment Variables
-            ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
+        let showOnboarding = !tutorialSettings.hasSeenOnboarding
         guard showOnboarding else { return }
 
         segueToDaxOnboarding()

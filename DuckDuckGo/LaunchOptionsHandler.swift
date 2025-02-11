@@ -32,7 +32,7 @@ public final class LaunchOptionsHandler {
     }
 
     public var isOnboardingCompleted: Bool {
-        userDefaults.string(forKey: Self.isOnboardingcompleted) == "true"
+        ProcessInfo.processInfo.environment["ONBOARDING"] == "false" || userDefaults.string(forKey: Self.isOnboardingcompleted) == "true"
     }
 
     public var appVariantName: String? {

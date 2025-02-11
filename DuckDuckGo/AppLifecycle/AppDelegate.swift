@@ -53,39 +53,39 @@ public extension NSNotification.Name {
         return true
     }
 
-    /// See: Foreground.swift `onForeground()`
+    /// See: `Foreground.swift onTransition()`
     func applicationDidBecomeActive(_ application: UIApplication) {
         appStateMachine.handle(.didBecomeActive)
     }
 
-    /// See: Foreground.swift `onPause()`
+    /// See: `Foreground.swift willLeave()`
     func applicationWillResignActive(_ application: UIApplication) {
         appStateMachine.handle(.willResignActive)
     }
 
-    /// See: Background.swift `onWakeUp()`
+    /// See: `Background.swift willLeave()`
     func applicationWillEnterForeground(_ application: UIApplication) {
         appStateMachine.handle(.willEnterForeground)
     }
 
-    /// See: Background.swift `onBackground()`
+    /// See: `Background.swift onTransition()`
     func applicationDidEnterBackground(_ application: UIApplication) {
         appStateMachine.handle(.didEnterBackground)
     }
 
-    /// See: Terminating.swift
+    /// See: `Terminating.swift`
     func application(_ application: UIApplication, willTerminateWithReason terminationReason: UIApplication.TerminationReason) {
         appStateMachine.handle(.willTerminate(terminationReason))
     }
 
-    /// See: Foreground.swift `handleShortcutItem(_:)`
+    /// See: `Foreground.swift handleShortcutItem(_:)`
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
         appStateMachine.handle(.handleShortcutItem(shortcutItem))
     }
 
-    /// See: Foreground.swift `openURL(_:)`
+    /// See: `Foreground.swift openURL(_:)`
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         appStateMachine.handle(.openURL(url))
         return true

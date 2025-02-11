@@ -58,8 +58,8 @@ struct Foreground: AppState {
         self.shortcutItemToHandle = shortcutItemToHandle
         self.lastBackgroundDate = lastBackgroundDate
 
-        onForeground()
-        onResume()
+        onTransition()
+        didReturn()
     }
 
     // MARK: - Handle applicationDidBecomeActive(_:) logic here
@@ -71,7 +71,7 @@ struct Foreground: AppState {
     ///
     /// This is **the last moment** for setting up anything. If you need something to happen earlier,
     /// add it to `Launching`'s `init()` and `Background`'s `onWakeUp()` to ensure it runs both on a cold start and when the app wakes up.
-    private func onForeground() {
+    private func onTransition() {
         configureAppearance()
 
         orchestrateForegroundAsyncTasks()
@@ -216,15 +216,15 @@ extension Foreground {
     /// - A system alert (e.g., an incoming call or notification) momentarily interrupts the app.
     ///
     /// **Important note**
-    /// By default, suspend any services in the `onBackground()` method of the `Background` state.
+    /// By default, suspend any services in the `onTransition()` method of the `Background` state.
     /// Use this method only to pause specific tasks, like video playback, when the app displays a system alert.
-    func onPause() { }
+    func willLeave() { }
 
     /// Called when the app resumes activity after being **paused** or when transitioning from launching or background.
-    /// This is the counterpart to `onPause()`.
+    /// This is the counterpart to `willLeave()`.
     ///
-    /// Use this method to revert any actions performed in `onPause()` (if applicable).
-    func onResume() { }
+    /// Use this method to revert any actions performed in `willLeave()` (if applicable).
+    func didReturn() { }
 
 }
 

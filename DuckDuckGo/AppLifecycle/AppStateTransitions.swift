@@ -57,10 +57,10 @@ extension Foreground {
     func apply(event: AppEvent) -> any AppState {
         switch event {
         case .willResignActive:
-            onPause()
+            willLeave()
             return self
         case .didBecomeActive:
-            onResume()
+            didReturn()
             return self
         case .willTerminate(let terminationReason):
             return Terminating(terminationReason: terminationReason)
@@ -78,10 +78,10 @@ extension Background {
     func apply(event: AppEvent) -> any AppState {
         switch event {
         case .willEnterForeground:
-            onWakeUp()
+            willLeave()
             return self
         case .didEnterBackground:
-            onSnooze()
+            didReturn()
             return self
         case .didBecomeActive:
             return Foreground(stateContext: makeStateContext())

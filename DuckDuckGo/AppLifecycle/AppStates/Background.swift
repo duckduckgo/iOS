@@ -43,12 +43,12 @@ struct Background: AppState {
     private init(appDependencies: AppDependencies) {
         self.appDependencies = appDependencies
 
-        onBackground()
-        onSnooze()
+        onTransition()
+        didReturn()
     }
 
     // MARK: - Handle applicationDidEnterBackground(_:) logic here
-    private func onBackground() {
+    private func onTransition() {
         appDependencies.vpnService.onBackground()
         appDependencies.authenticationService.onBackground()
         appDependencies.autoClearService.onBackground()
@@ -65,24 +65,24 @@ struct Background: AppState {
 extension Background {
 
     /// Called when the app is attempting to enter the foreground from the background.
-    /// If the app uses the system Face ID lock feature and the user does not authenticate, it will return to the background, triggering `onSnooze()`.
-    /// Use `onSnooze()` to revert any actions performed in `onWakeUp()`, e.g. suspend services that were resumed (if applicable).
+    /// If the app uses the system Face ID lock feature and the user does not authenticate, it will return to the background, triggering `didReturn()`.
+    /// Use `didReturn()` to revert any actions performed in `willLeave()`, e.g. suspend services that were resumed (if applicable).
     ///
     /// **Important note**
-    /// By default, resume any services in the `onForeground()` method of the `Foreground` state.
-    /// Use this method to wake up **UI related tasks** that need to be completed promptly, preventing UI glitches when the user first sees the app.
+    /// By default, resume any services in the `onTransition()` method of the `Foreground` state.
+    /// Use this method to resume **UI related tasks** that need to be completed promptly, preventing UI glitches when the user first sees the app.
     /// This ensures that the app remains smooth as it enters the foreground.
-    func onWakeUp() {
+    func willLeave() {
         ThemeManager.shared.updateUserInterfaceStyle()
         appDependencies.autoClearService.onResuming()
     }
 
     /// Called when the app transitions from launching or foreground to background,
     /// or when the app fails to wake up from the background (due to system Face ID lock).
-    /// This is the counterpart to `onWakeUp()`.
+    /// This is the counterpart to `willLeave()`.
     ///
-    /// Use this method to revert any actions performed in `onWakeUp` (if applicable).
-    func onSnooze() { }
+    /// Use this method to revert any actions performed in `willLeave` (if applicable).
+    func didReturn() { }
 
 }
 

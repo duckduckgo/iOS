@@ -282,7 +282,7 @@ struct Launching: AppState {
 
                 // MARK: perform first time launch logic here
                 // If it's running UI Tests check if the onboarding should be in a completed state.
-                if launchOptionsHandler.isUITesting && launchOptionsHandler.isOnboardingCompleted {
+                if launchOptionsHandler.isOnboardingCompleted {
                     daxDialogs.dismiss()
                 } else {
                     daxDialogs.primeForUse()

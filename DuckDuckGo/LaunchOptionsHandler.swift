@@ -20,7 +20,6 @@
 import Foundation
 
 public final class LaunchOptionsHandler {
-    private static let isUITesting = "isUITesting"
     private static let isOnboardingcompleted = "isOnboardingCompleted"
     private static let appVariantName = "currentAppVariant"
 
@@ -30,10 +29,6 @@ public final class LaunchOptionsHandler {
     public init(launchArguments: [String] = ProcessInfo.processInfo.arguments, userDefaults: UserDefaults = .app) {
         self.launchArguments = launchArguments
         self.userDefaults = userDefaults
-    }
-
-    public var isUITesting: Bool {
-        launchArguments.contains(Self.isUITesting)
     }
 
     public var isOnboardingCompleted: Bool {
@@ -55,7 +50,6 @@ public final class LaunchOptionsHandler {
 extension LaunchOptionsHandler: VariantNameOverriding {
 
     public var overriddenAppVariantName: String? {
-        guard isUITesting else { return nil }
         return appVariantName
     }
 

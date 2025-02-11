@@ -35,31 +35,6 @@ final class LaunchOptionsHandlerTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    // MARK: - isUITesting
-
-    func testShouldReturnTrueWhenIsUITestingIsCalledAndLaunchArgumentContainsIsUITesting() {
-        // GIVEN
-        let launchArguments = ["isUITesting"]
-        let sut = LaunchOptionsHandler(launchArguments: launchArguments, userDefaults: userDefaults)
-
-        // WHEN
-        let result = sut.isUITesting
-
-        // THEN
-        XCTAssertTrue(result)
-    }
-
-    func testShouldReturnFalseWhenIsUITestingIsCalledAndLaunchArgumentsDoesNotContainIsUITesting() {
-        // GIVEN
-        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
-
-        // WHEN
-        let result = sut.isUITesting
-
-        // THEN
-        XCTAssertFalse(result)
-    }
-
     // MARK: - isOnboardingCompleted
 
     func testShouldReturnTrueWhenIsOnboardingCompletedAndDefaultsIsOnboardingCompletedIsTrue() {
@@ -124,15 +99,4 @@ final class LaunchOptionsHandlerTests: XCTestCase {
         XCTAssertNil(result)
     }
 
-    func testShouldReturnNilWhenAppVariantIsCalledAndisUITestingIsFalse() {
-        // GIVEN
-        userDefaults.removeObject(forKey: "isOnboardingCompleted")
-        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
-
-        // WHEN
-        let result = sut.appVariantName
-
-        // THEN
-        XCTAssertNil(result)
-    }
 }

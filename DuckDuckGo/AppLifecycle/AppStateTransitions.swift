@@ -23,8 +23,8 @@ import Core
 extension Initializing {
 
     func apply(event: AppEvent) -> any AppState {
-        guard case .didFinishLaunching(let application, let isTesting) = event else { return handleUnexpectedEvent(event) }
-        return isTesting ? AppTesting(application: application) : Launching(stateContext: makeStateContext(application: application))
+        guard case .didFinishLaunching(let isTesting) = event else { return handleUnexpectedEvent(event) }
+        return isTesting ? Simulated() : Launching()
     }
 
 }
@@ -34,9 +34,23 @@ extension Launching {
     func apply(event: AppEvent) -> any AppState {
         switch event {
         case .didBecomeActive:
-            return Foreground(stateContext: makeStateContext())
+            let foreground = Foreground(stateContext: makeStateContext())
+            foreground.onTransition()
+            foreground.didReturn()
+            return foreground
         case .didEnterBackground:
-            return Background(stateContext: makeStateContext())
+            let background = Background(stateContext: makeStateContext())
+            background.onTransition()
+            background.didReturn()
+            return background
+        case .willEnterForeground:
+            // This event *shouldn’t* happen in the Launching state, but apparently, it does in some cases:
+            // https://developer.apple.com/forums/thread/769924
+            // We don’t support this transition and instead stay in Launching.
+            // From here, we can move to Foreground or Background, where resuming/suspension is handled properly.
+            return self
+        case .willTerminate(let terminationReason):
+            return Terminating(terminationReason: terminationReason)
         default:
             return handleUnexpectedEvent(event)
         }
@@ -47,20 +61,20 @@ extension Launching {
 extension Foreground {
 
     func apply(event: AppEvent) -> any AppState {
-        guard case .willResignActive = event else { return handleUnexpectedEvent(event) }
-        return Suspending(stateContext: makeStateContext())
-    }
-
-}
-
-extension Suspending {
-
-    func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .didEnterBackground:
-            return Background(stateContext: makeStateContext())
+        case .willResignActive:
+            willLeave()
+            return self
         case .didBecomeActive:
-            return Foreground(stateContext: makeStateContext())
+            didReturn()
+            return self
+        case .didEnterBackground:
+            let background = Background(stateContext: makeStateContext())
+            background.onTransition()
+            background.didReturn()
+            return background
+        case .willTerminate(let terminationReason):
+            return Terminating(terminationReason: terminationReason)
         default:
             return handleUnexpectedEvent(event)
         }
@@ -71,20 +85,20 @@ extension Suspending {
 extension Background {
 
     func apply(event: AppEvent) -> any AppState {
-        guard case .willEnterForeground = event else { return handleUnexpectedEvent(event) }
-        return Resuming(stateContext: makeStateContext())
-    }
-
-}
-
-extension Resuming {
-
-    func apply(event: AppEvent) -> any AppState {
         switch event {
-        case .didBecomeActive:
-            return Foreground(stateContext: makeStateContext())
+        case .willEnterForeground:
+            willLeave()
+            return self
         case .didEnterBackground:
-            return Background(stateContext: makeStateContext())
+            didReturn()
+            return self
+        case .didBecomeActive:
+            let foreground = Foreground(stateContext: makeStateContext())
+            foreground.onTransition()
+            foreground.didReturn()
+            return foreground
+        case .willTerminate:
+            return Terminating()
         default:
             return handleUnexpectedEvent(event)
         }
@@ -92,7 +106,14 @@ extension Resuming {
 
 }
 
-extension AppTesting {
+extension Terminating {
+
+    func apply(event: AppEvent) -> any AppState { self }
+
+}
+
+
+extension Simulated {
 
     func apply(event: AppEvent) -> any AppState { self }
 

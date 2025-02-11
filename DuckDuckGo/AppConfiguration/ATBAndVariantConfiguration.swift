@@ -1,8 +1,8 @@
 //
-//  MockVoiceSearchHelper.swift
+//  ATBAndVariantConfiguration.swift
 //  DuckDuckGo
 //
-//  Copyright © 2021 DuckDuckGo. All rights reserved.
+//  Copyright © 2025 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,20 +19,21 @@
 
 import Foundation
 import Core
-@testable import DuckDuckGo
+import BrowserServicesKit
 
-class MockVoiceSearchHelper: VoiceSearchHelperProtocol {
-    var isVoiceSearchEnabled: Bool
-    var isSpeechRecognizerAvailable: Bool
+final class ATBAndVariantConfiguration {
 
-    func enableVoiceSearch(_ enable: Bool) {}
-    
-    init(isSpeechRecognizerAvailable: Bool = true, voiceSearchEnabled: Bool = true) {
-        self.isSpeechRecognizerAvailable = isSpeechRecognizerAvailable
-        self.isVoiceSearchEnabled = voiceSearchEnabled
-        
-        if !isSpeechRecognizerAvailable {
-            self.isVoiceSearchEnabled = false
+    lazy var variantManager = DefaultVariantManager()
+
+    func configure(onVariantAssigned: () -> Void) {
+        cleanUpATBAndAssignVariant(onVariantAssigned: onVariantAssigned)
+    }
+
+    private func cleanUpATBAndAssignVariant(onVariantAssigned: () -> Void) {
+        AtbAndVariantCleanup.cleanup()
+        variantManager.assignVariantIfNeeded { _ in
+            onVariantAssigned()
         }
     }
+
 }

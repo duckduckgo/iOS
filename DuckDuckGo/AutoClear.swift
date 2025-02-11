@@ -34,7 +34,7 @@ protocol AutoClearWorker {
 
 class AutoClear {
 
-    private let worker: AutoClearWorker // shouldn't it be weak?
+    private let worker: AutoClearWorker
     private var timestamp: TimeInterval?
 
     private let appSettings: AppSettings
@@ -101,5 +101,21 @@ class AutoClear {
         self.timestamp = nil
         worker.clearNavigationStack()
         await clearDataIfEnabled(applicationState: applicationState)
+    }
+}
+
+extension DataStoreWarmup.ApplicationState {
+
+    init(with state: UIApplication.State) {
+        switch state {
+        case .inactive:
+            self = .inactive
+        case .active:
+            self = .active
+        case .background:
+            self = .background
+        @unknown default:
+            self = .unknown
+        }
     }
 }

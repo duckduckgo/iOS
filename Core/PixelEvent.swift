@@ -962,7 +962,6 @@ extension Pixel {
         // MARK: Launch time
         case appDidFinishLaunchingTime(time: BucketAggregation)
         case appDidShowUITime(time: BucketAggregation)
-        case appDidBecomeActiveTime(time: BucketAggregation)
 
         // MARK: AI Chat
         case aiChatNoRemoteSettingsFound(settings: String)
@@ -1951,7 +1950,6 @@ extension Pixel.Event {
         // MARK: Launch time
         case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"
         case .appDidShowUITime(let time): return "m_debug_app-did-show-ui-time-\(time)"
-        case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
 
         // MARK: AI Chat
         case .aiChatNoRemoteSettingsFound(let settings):
@@ -1963,7 +1961,7 @@ extension Pixel.Event {
         case .openAIChatFromWidgetLockScreenComplication: return "m_aichat-widget-lock-screen-complication"
 
         // MARK: Lifecycle
-        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-4"
 
         case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
 

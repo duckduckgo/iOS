@@ -128,7 +128,7 @@ class RemoteMessagingDebugViewModel: ObservableObject {
     }
 
     func refreshConfig() {
-        (UIApplication.shared.delegate as? AppDelegate)?.refreshRemoteMessages()
+        (UIApplication.shared.delegate as? AppDelegate)?.debugRefreshRemoteMessages()
     }
 
     func fetchMessages() {

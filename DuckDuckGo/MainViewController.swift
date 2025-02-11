@@ -314,12 +314,9 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
-                                                      featureFlagger: featureFlagger,
-                                                      aiChatSettings: aiChatSettings)
-
         viewCoordinator = MainViewFactory.createViewHierarchy(self.view,
-                                                              omnibarDependencies: omnibarDependencies,
+                                                              aiChatSettings: aiChatSettings,
+                                                              voiceSearchHelper: voiceSearchHelper,
                                                               featureFlagger: featureFlagger)
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
 
@@ -955,7 +952,7 @@ class MainViewController: UIViewController {
         currentTab?.goForward()
     }
     
-    func didReturnFromBackground() {
+    func onForeground() {
         skipSERPFlow = true
         
         // Show Fire Pulse only if Privacy button pulse should not be shown. In control group onboarding `shouldShowPrivacyButtonPulse` is always false.

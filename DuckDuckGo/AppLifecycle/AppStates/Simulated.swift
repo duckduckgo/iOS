@@ -1,5 +1,5 @@
 //
-//  AppTesting.swift
+//  Simulated.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,9 +21,9 @@ import Core
 import UIKit
 
 @MainActor
-struct AppTesting: AppState {
+struct Simulated: AppState {
 
-    init(application: UIApplication) {
+    init() {
         Pixel.isDryRun = true
         _ = DefaultUserAgentManager.shared
         Database.shared.loadStore { _, _ in }
@@ -38,7 +38,7 @@ struct AppTesting: AppState {
         window.rootViewController?.view.backgroundColor = .red
         webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
 
-        application.setWindow(window)
+        UIApplication.shared.setWindow(window)
 
         let request = URLRequest(url: URL(string: "about:blank")!)
         webView.load(request)
@@ -46,7 +46,7 @@ struct AppTesting: AppState {
 
 }
 
-extension AppTesting {
+extension Simulated {
 
     mutating func handle(action: AppAction) { }
 

@@ -1,8 +1,8 @@
 //
-//  Initializing.swift
+//  HistoryManagerConfiguration.swift
 //  DuckDuckGo
 //
-//  Copyright © 2024 DuckDuckGo. All rights reserved.
+//  Copyright © 2025 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,23 +17,13 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
-/// The initial setup phase of the app, where basic services or components are initialized.
-/// This state can be invoked when the system prewarms the app but does not fully launch it.
-/// - Transitions:
-///   - `Launching` after initialization is complete.
-@MainActor
-struct Initializing: AppState {
+final class HistoryManagerConfiguration {
 
-    init() {
-        CrashHandlersConfiguration.setupCrashHandlers()
+    func onVariantAssigned() {
+        // New users don't see the message
+        HistoryMessageManager().dismiss()
     }
-
-}
-
-extension Initializing {
-
-    mutating func handle(action: AppAction) { }
 
 }

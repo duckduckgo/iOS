@@ -54,6 +54,10 @@ public class StatisticsLoader {
     }
 
     public func load(completion: @escaping Completion = {}) {
+        let completion = {
+            self.refreshAppRetentionAtb()
+            completion()
+        }
         if statisticsStore.hasInstallStatistics {
             completion()
             return

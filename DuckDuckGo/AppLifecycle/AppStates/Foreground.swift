@@ -57,7 +57,7 @@ struct Foreground: AppState {
     /// - If crucial configuration files (e.g., TDS, privacy config) are needed, use `onConfigurationFetched()`.
     ///
     /// This is **the last moment** for setting up anything. If you need something to happen earlier,
-    /// add it to `Launching`'s `init()` and `Background`'s `onWakeUp()` to ensure it runs both on a cold start and when the app wakes up.
+    /// add it to `Launching.swift` -> `init()` and `Background.swift` -> `willLeave()` so it runs both on a cold start and when the app wakes up.
     func onTransition() {
         configureAppearance()
 

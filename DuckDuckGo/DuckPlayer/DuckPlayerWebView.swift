@@ -24,7 +24,8 @@ import os.log
 import Combine
 
 struct DuckPlayerWebView: UIViewRepresentable {
-   let viewModel: DuckPlayerViewModel
+   @ObservedObject
+   var viewModel: DuckPlayerViewModel
    let coordinator: Coordinator
        
    struct Constants {
@@ -70,14 +71,16 @@ struct DuckPlayerWebView: UIViewRepresentable {
        webView.uiDelegate = context.coordinator
        
        // Set DDG's agent
-       webView.customUserAgent = DefaultUserAgentManager.shared.userAgent(isDesktop: false, url: viewModel.getVideoURL())
+       webView.customUserAgent = DefaultUserAgentManager.shared.userAgent(isDesktop: false, url: viewModel.url)
        
        return webView
    }
    
    func updateUIView(_ webView: WKWebView, context: Context) {
-       guard let url = viewModel.getVideoURL() else { return }
-       Logger.duckplayer.debug("Updating WebView with URL: \(url)")
+       guard let url = viewModel.url else { return }
+       
+       Logger.duckplayer.debug("WebView updateUIView called with URL: \(url)")
+       // Always reload when updateUIView is called to ensure video updates
        var request = URLRequest(url: url)
        request.setValue(Constants.referrerHeaderValue, forHTTPHeaderField: Constants.referrerHeader)
        webView.load(request)

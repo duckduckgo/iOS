@@ -337,35 +337,76 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
 
     // Loads a native DuckPlayerView
     private var cancellables = Set<AnyCancellable>()
+    private var currentPlayerController: UIHostingController<DuckPlayerView>?
+    @Published private var isLargeDetent: Bool = false
         
     func loadNativeDuckPlayerVideo(videoID: String) {
         Logger.duckplayer.debug("Starting loadNativeDuckPlayerVideo with ID: \(videoID)")
+        
         let viewModel = DuckPlayerViewModel(videoID: videoID)
+        
         guard let url = viewModel.getVideoURL() else {
             Logger.duckplayer.debug("Failed to get video URL for ID: \(videoID)")
             return
         }
         
-        Logger.duckplayer.debug("Creating webView for videoID: \(videoID)")
-        // Create webView with viewModel
-        let webView = DuckPlayerWebView(viewModel: viewModel)
-        
-        let duckPlayerView = DuckPlayerView(viewModel: viewModel, webView: webView)
-        let hostingController = UIHostingController(rootView: duckPlayerView)
-        hostingController.modalPresentationStyle = .formSheet
-        hostingController.isModalInPresentation = false
-
-        // Subscribe to the viewModel's publisher
-        viewModel.youtubeNavigationRequestPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self, weak hostingController] url in
-                Logger.duckplayer.debug("Received YouTube navigation request: \(url)")
-                self?.youtubeNavigationRequest.send(url)
-                hostingController?.dismiss(animated: true)
+        // Check if we have an existing controller that's still presented
+        if let existingController = currentPlayerController,
+           existingController.presentingViewController != nil {
+            // Update existing player with new video
+            Logger.duckplayer.debug("Updating existing player with videoID: \(videoID)")
+            if let currentView = existingController.rootView as? DuckPlayerView {
+                currentView.viewModel.videoID = videoID
+                currentView.viewModel.loadVideo()
             }
-            .store(in: &cancellables)
-
-        hostView?.present(hostingController, animated: true)
+            
+            // Update navigation subscription
+            viewModel.youtubeNavigationRequestPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self, weak existingController] url in
+                    Logger.duckplayer.debug("Received YouTube navigation request: \(url)")
+                    self?.youtubeNavigationRequest.send(url)
+                    existingController?.dismiss(animated: true)
+                }
+                .store(in: &cancellables)
+        } else {
+            // Create new player controller
+            Logger.duckplayer.debug("Creating new player for videoID: \(videoID)")
+            let webView = DuckPlayerWebView(viewModel: viewModel)
+            let duckPlayerView = DuckPlayerView(viewModel: viewModel, webView: webView, isLargeDetent: Binding(get: { self.isLargeDetent }, set: { self.isLargeDetent = $0 }))
+            let hostingController = UIHostingController(rootView: duckPlayerView)
+            
+            // Configure presentation style for interactive sheet
+            hostingController.modalPresentationStyle = .pageSheet
+            hostingController.isModalInPresentation = false
+            
+            if #available(iOS 16.0, *) {
+                if let sheet = hostingController.sheetPresentationController {
+                    sheet.detents = [.custom(identifier: .init("small")) { _ in return 360 }, .large()]
+                    sheet.prefersGrabberVisible = true
+                    sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                    sheet.prefersEdgeAttachedInCompactHeight = true
+                    sheet.preferredCornerRadius = 10
+                    sheet.largestUndimmedDetentIdentifier = .init("small")
+                    
+                    // Add delegate to handle dismissal
+                    sheet.delegate = self
+                }
+            }
+            
+            // Subscribe to navigation requests
+            viewModel.youtubeNavigationRequestPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self, weak hostingController] url in
+                    Logger.duckplayer.debug("Received YouTube navigation request: \(url)")
+                    self?.youtubeNavigationRequest.send(url)
+                    hostingController?.dismiss(animated: true)
+                }
+                .store(in: &cancellables)
+            
+            currentPlayerController = hostingController
+            hostView?.present(hostingController, animated: true)
+        }
     }
 
 
@@ -647,7 +688,70 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     
 }
 
+extension DuckPlayer: UISheetPresentationControllerDelegate {
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        if #available(iOS 16.0, *) {
+            let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
+            withAnimation {
+                self.isLargeDetent = isLarge
+            }
+        }
+    }
+    
+    func sheetPresentationControllerDidDismiss(_ presentationController: UISheetPresentationController) {
+        // Restore the player container in the web view
+        hostView?.webView.evaluateJavaScript("""
+            const container = document.getElementById('player-container-id');
+            if (container) {
+                container.style.display = 'block';
+            }
+        """, completionHandler: nil)
+        
+        // Clear the reference to the dismissed controller
+        currentPlayerController = nil
+    }
+}
+
 extension DuckPlayer: UIGestureRecognizerDelegate {
+    @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
+        guard let hostView = hostView,
+              let view = gesture.view else { return }
+        
+        let translation = gesture.translation(in: hostView.view)
+        let minHeight: CGFloat = 320
+        let maxHeight: CGFloat = hostView.view.bounds.height - 100 // Leave some space at top
+        
+        switch gesture.state {
+        case .changed:
+            let newY = view.frame.minY + translation.y
+            let newHeight = hostView.view.bounds.height - newY
+            
+            // Constrain the height between min and max
+            if newHeight >= minHeight && newHeight <= maxHeight {
+                view.frame.origin.y = newY
+            }
+            
+            gesture.setTranslation(.zero, in: hostView.view)
+            
+        case .ended:
+            let velocity = gesture.velocity(in: hostView.view)
+            let isMovingUp = velocity.y < 0
+            
+            UIView.animate(withDuration: 0.3) {
+                if isMovingUp {
+                    // Expand to full height
+                    view.frame.origin.y = hostView.view.bounds.height - maxHeight
+                } else {
+                    // Collapse to minimum height
+                    view.frame.origin.y = hostView.view.bounds.height - minHeight
+                }
+            }
+            
+        default:
+            break
+        }
+    }
+    
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true

@@ -43,7 +43,6 @@ class AtbIntegrationTests: XCTestCase {
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
             "BASE_PIXEL_URL": "http://localhost:8080",
-            "DAXDIALOGS": "false",
             "ONBOARDING": "false",
             // usually just has to match an existing variant to prevent one being allocated
             "VARIANT": "sc"

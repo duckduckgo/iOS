@@ -31,7 +31,6 @@ class FingerprintUITest: XCTestCase {
         let app = XCUIApplication()
         
         app.launchEnvironment = [
-            "DAXDIALOGS": "false",
             "ONBOARDING": "false",
             "VARIANT": "sc",
             "UITESTING": "true"

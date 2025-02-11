@@ -58,14 +58,14 @@ struct Foreground: AppState {
         self.shortcutItemToHandle = shortcutItemToHandle
         self.lastBackgroundDate = lastBackgroundDate
 
-        onResume()
         onForeground()
+        onResume()
     }
 
     // MARK: - Handle applicationDidBecomeActive(_:) logic here
     /// **Before adding code here, ensure it does not depend on pending tasks:**
-    /// - If the app needs to be ready for web navigations, use `onWebViewReadyForInteractions()` — this runs after AutoClear is complete.
-    /// - If the app needs to be ready for any interactions, use `onAppReadyForInteractions()` - this runs after AutoClear and authentication.
+    /// - If the app needs to be ready for web navigations, use `onWebViewReadyForInteractions()` — this runs after `AutoClear` is complete.
+    /// - If the app needs to be ready for any interactions, use `onAppReadyForInteractions()` - this runs after `AutoClear` and authentication.
     /// - If install/search statistics are required, use `onStatisticsLoaded()`.
     /// - If crucial configuration files (e.g., TDS, privacy config) are needed, use `onConfigurationFetched()`.
     ///
@@ -93,7 +93,7 @@ struct Foreground: AppState {
     }
 
     // MARK: - Handle any WebView related logic here
-    /// Callback for the AutoClear feature, triggered when all browser data is cleared.
+    /// Callback for the `AutoClear` feature, triggered when all browser data is cleared.
     /// This includes closing all tabs, clearing caches, and wiping `WKWebsiteDataStore.default()`.
     /// Place any code here related to browser navigation or web view handling to ensure it remains unaffected by the clearing process.
     private func onWebViewReadyForInteractions() {
@@ -112,7 +112,6 @@ struct Foreground: AppState {
     // MARK: - Handle StatisticsLoader completion logic here
     /// Place any code here that requires install and search statistics to be available before executing.
     private func onStatisticsLoaded() {
-        StatisticsLoader.shared.refreshAppRetentionAtb() // TODO: can we move it inside StatisticsLoader.shared.load?
         appDependencies.reportingService.onStatisticsLoaded()
     }
 
@@ -143,8 +142,9 @@ extension Foreground {
             await (_, _) = (authentication, dataClearing)
             onAppReadyForInteractions()
         }
-        Task {
-            await fetchConfig()
+        Task { @MainActor in
+            await appDependencies.configurationService.resume()
+            onConfigurationFetched()
         }
     }
 
@@ -155,11 +155,6 @@ extension Foreground {
     private func clearData() async {
         await appDependencies.autoClearService.waitForDataCleared()
         onWebViewReadyForInteractions()
-    }
-
-    private func fetchConfig() async {
-        await appDependencies.configurationService.resume()
-        onConfigurationFetched()
     }
 
 }

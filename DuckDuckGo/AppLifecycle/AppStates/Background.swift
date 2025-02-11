@@ -43,8 +43,8 @@ struct Background: AppState {
     private init(appDependencies: AppDependencies) {
         self.appDependencies = appDependencies
 
-        onSnooze()
         onBackground()
+        onSnooze()
     }
 
     // MARK: - Handle applicationDidEnterBackground(_:) logic here
@@ -70,7 +70,7 @@ extension Background {
     ///
     /// **Important note**
     /// By default, resume any services in the `onForeground()` method of the `Foreground` state.
-    /// Use this method to resume **UI related tasks** that need to be completed promptly, preventing UI glitches when the user first sees the app.
+    /// Use this method to wake up **UI related tasks** that need to be completed promptly, preventing UI glitches when the user first sees the app.
     /// This ensures that the app remains smooth as it enters the foreground.
     func onWakeUp() {
         ThemeManager.shared.updateUserInterfaceStyle()

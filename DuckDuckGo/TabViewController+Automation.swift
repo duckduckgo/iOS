@@ -35,8 +35,4 @@ extension TabViewController {
         }
     }
 
-    public func getUrl() -> String? {
-        return webView.url?.absoluteString
-    }
-
 }

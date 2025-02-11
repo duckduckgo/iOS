@@ -27,8 +27,4 @@ extension MainViewController {
         return result! // TODO fix !
     }
 
-    func currentUrl() -> String? {
-        return currentTab?.getUrl()
-    }
-
 }

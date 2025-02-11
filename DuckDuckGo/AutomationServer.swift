@@ -124,7 +124,8 @@ final class AutomationServer {
                 case "/execute":
                     self.execute(on: connection, url: url)
                 case "/getUrl":
-                    self.respond(on: connection, response: self.main.currentUrl() ?? "")
+                    let currentUrl = self.main.currentTab?.webView.url?.absoluteString
+                    self.respond(on: connection, response: currentUrl ?? "")
                 case "/getWindowHandles":
                     self.getWindowHandles(on: connection, url: url)
                 case "/closeWindow":

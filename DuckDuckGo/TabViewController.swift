@@ -1131,7 +1131,6 @@ class TabViewController: UIViewController {
     }
     
     func didLaunchBrowsingMenu() {
-        Pixel.fire(pixel: .browsingMenuOpened)
         DaxDialogs.shared.resumeRegularFlow()
     }
 

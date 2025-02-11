@@ -324,7 +324,7 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
         viewCoordinator.toolbarPasswordsButton.action = #selector(onPasswordsPressed)
-        viewCoordinator.toolbarBookmarksButton.action = #selector(onBookmarksPressed)
+        viewCoordinator.toolbarBookmarksButton.action = #selector(onToolbarBookmarksPressed)
 
         installSwipeTabs()
             
@@ -1984,6 +1984,12 @@ extension MainViewController: OmniBarDelegate {
 
         self.presentedMenuButton.setState(.closeImage, animated: true)
         tab.didLaunchBrowsingMenu()
+
+        if isNewTabPageEnabled && newTabPageViewController != nil {
+            Pixel.fire(pixel: .browsingMenuOpenedNewTabPage)
+        } else {
+            Pixel.fire(pixel: .browsingMenuOpened)
+        }
     }
     
     @objc func onBookmarksPressed() {
@@ -1993,7 +1999,12 @@ extension MainViewController: OmniBarDelegate {
         performCancel()
         segueToBookmarks()
     }
-    
+
+    @objc func onToolbarBookmarksPressed() {
+        Pixel.fire(pixel: .bookmarksOpenFromToolbar)
+        onBookmarksPressed()
+    }
+
     func onBookmarkEdit() {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
@@ -2463,6 +2474,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestAIChat(tab: TabViewController) {
+        Pixel.fire(pixel: .browsingMenuListAIChat)
         openAIChat()
     }
 

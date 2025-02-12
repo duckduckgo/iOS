@@ -418,7 +418,7 @@ I blocked them!
 			<string>Close Other Tab</string>
 		</dict>
 	</dict>
-	<key>tabs.share.selected.with.count</key>
+	<key>shareLinks.withCount</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@tabs@</string>
@@ -429,7 +429,23 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>Share %d Selected Tabs</string>
+			<string>Share Links</string>
+			<key>one</key>
+			<string>Share Link</string>
+		</dict>
+	</dict>
+	<key>shareSelectedTabs.withCount</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>Share Selected Tabs</string>
 			<key>one</key>
 			<string>Share Selected Tab</string>
 		</dict>
@@ -445,7 +461,7 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>Bookmark %d Selected Tabs</string>
+			<string>Bookmark Selected Tabs</string>
 			<key>one</key>
 			<string>Bookmark Selected Tab</string>
 		</dict>

@@ -277,8 +277,6 @@ public struct UserText {
         return message.format(arguments: title, address)
     }
 
-    public static let tabSwitcherShareLink = NotLocalizedString("tab.switcher.share.link", value: "Share Link", comment: "Share link menu item")
-
     public static let tabSwitcherBookmarkPage = NotLocalizedString("tab.switcher.bookmark.page", value: "Bookmark This Page", comment: "Bookmark this page menu item")
 
     public static let tabSwitcherBookmarkAllTabs = NotLocalizedString("tab.switcher.bookmarkAll", value: "Bookmark All Tabs", comment: "Bookmark all tabs menu item")
@@ -293,8 +291,13 @@ public struct UserText {
         return String.localizedStringWithFormat(format, count)
     }
 
-    public static func shareSelectedLink(withCount count: Int) -> String {
-        let format = Bundle.main.localizedString(forKey: "tabs.share.selected.with.count", value: nil, table: nil)
+    public static func shareLinks(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "shareLinks.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
+    public static func shareSelectedTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "shareSelectedTabs.withCount", value: nil, table: nil)
         return String.localizedStringWithFormat(format, count)
     }
 

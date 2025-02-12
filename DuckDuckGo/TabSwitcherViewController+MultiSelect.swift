@@ -283,21 +283,26 @@ extension TabSwitcherViewController {
         }
     }
     
-    fileprivate func addSelectedPagesMultiSelectMenuItemsIfNeeded(_ selectedPagesCount: Int, _ children: inout [UIMenuElement]) {
+    fileprivate func addSelectedPagesMultiSelectMenuItemsIfNeeded(_ children: inout [UIMenuElement]) {
+
+        // Only show these if there's at least one non-home page tab selected
         guard selectedPagesCount > 0 else { return }
+
+        // But use the total count for determining the text (Tab vs Tabs)
+        let selectedTabsCount = selectedTabs.count
         children.append(UIMenu(title: "", options: .displayInline, children: [
-            action(UserText.shareSelectedLink(withCount: selectedPagesCount), "Share-Apple-16", { [weak self] in
+            action(UserText.shareSelectedTabs(withCount: selectedTabsCount), "Share-Apple-16", { [weak self] in
                 guard let self else { return }
                 self.selectModeShareLinks()
             }),
-            action(UserText.bookmarkSelectedTabs(withCount: selectedPagesCount), "Bookmark-Add-16", { [weak self] in
+            action(UserText.bookmarkSelectedTabs(withCount: selectedTabsCount), "Bookmark-Add-16", { [weak self] in
                 guard let self else { return }
                 self.selectModeBookmarkSelected()
             }),
         ]))
     }
     
-    fileprivate func addBookmarkMultiSelectMenuItemIfNeeded(_ allPagesCount: Int, _ selectedPagesCount: Int, _ children: inout [UIMenuElement]) {
+    fileprivate func addBookmarkMultiSelectMenuItemIfNeeded(_ children: inout [UIMenuElement]) {
         guard selectedTabs.isEmpty else { return  }
         children.append(UIMenu(title: "", options: .displayInline, children: [
             action(UserText.tabSwitcherBookmarkAllTabs, "Bookmark-All-16", { [weak self] in
@@ -327,19 +332,16 @@ extension TabSwitcherViewController {
     }
     
     func createMultiSelectionMenu() -> UIMenu {
-        let selectedPagesCount = self.selectedPagesCount
-        let allPagesCount = self.allPagesCount
-
         var children = [UIMenuElement]()
         
         addLargeInterfaceMultiSelectMenuItemsIfNeeded(&children)
 
         // share
         // bookmark
-        addSelectedPagesMultiSelectMenuItemsIfNeeded(selectedPagesCount, &children)
+        addSelectedPagesMultiSelectMenuItemsIfNeeded(&children)
 
         // bookmark all
-        addBookmarkMultiSelectMenuItemIfNeeded(allPagesCount, selectedPagesCount, &children)
+        addBookmarkMultiSelectMenuItemIfNeeded(&children)
 
         // close (large UI only)
         // close other
@@ -377,7 +379,7 @@ extension TabSwitcherViewController {
 
         let closeGroup = [
             // Close selected
-            action(UserText.closeTabs(withCount: selectedTabsCount), "Close-16", destructive: true, { [weak self] in
+            action(UserText.keyCommandClose, "Close-16", destructive: true, { [weak self] in
                 self?.longPressMenuCloseSelectedTabs()
             }),
         ]
@@ -392,13 +394,13 @@ extension TabSwitcherViewController {
 
         return [
             // Share
-            action(UserText.shareSelectedLink(withCount: selectedTabsCount), "Share-Apple-16", { [weak self] in
+            action(UserText.shareLinks(withCount: selectedTabsCount), "Share-Apple-16", { [weak self] in
                 self?.longPressMenuShareSelectedLinks()
             }),
 
             // Bookmark
             selectedPagesCount > 0 ?
-                action(UserText.bookmarkSelectedTabs(withCount: selectedTabsCount), "Bookmark-Add-16", { [weak self] in
+            action(UserText.actionBookmark, "Bookmark-Add-16", { [weak self] in
                     self?.longPressMenuBookmarkSelectedTabs()
                 }) : nil,
 
@@ -433,7 +435,7 @@ extension TabSwitcherViewController {
 
         return [
             // Share Link
-            tabsModel.safeGetTabAt(index)?.link != nil ? self.action(index, UserText.tabSwitcherShareLink, "Share-Apple-16", { [weak self] index in
+            tabsModel.safeGetTabAt(index)?.link != nil ? self.action(index, UserText.shareLinks(withCount: 1), "Share-Apple-16", { [weak self] index in
                 guard let self else { return }
                 self.longPressMenuShareLink(index: index)
             }) : nil,

@@ -421,7 +421,7 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
 
         let title = indexPaths.count == 1 ?
             trimMenuTitleIfNeeded(tabsModel.get(tabAt: indexPaths[0].row).link?.displayTitle ?? "", 50) :
-            UserText.numberOfTabs(indexPaths.count)
+        UserText.numberOfSelectedTabs(withCount: indexPaths.count)
 
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let menuItems = indexPaths.count == 1 ?

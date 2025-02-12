@@ -19,27 +19,32 @@
 
 import UIKit
 import BrowserServicesKit
+import AIChat
 
 class MainViewFactory {
 
     private let coordinator: MainViewCoordinator
-    private let voiceSearchHelper: VoiceSearchHelperProtocol
     private let featureFlagger: FeatureFlagger
+    private let omnibarDependencies: OmnibarDependencyProvider
 
     var superview: UIView {
         coordinator.superview
     }
 
-    private init(superview: UIView, voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger) {
+    private init(superview: UIView, omnibarDependencies: OmnibarDependencyProvider, featureFlagger: FeatureFlagger) {
         coordinator = MainViewCoordinator(superview: superview)
-        self.voiceSearchHelper = voiceSearchHelper
         self.featureFlagger = featureFlagger
+        self.omnibarDependencies = omnibarDependencies
     }
 
     static func createViewHierarchy(_ superview: UIView,
+                                    aiChatSettings: AIChatSettingsProvider,
                                     voiceSearchHelper: VoiceSearchHelperProtocol,
                                     featureFlagger: FeatureFlagger) -> MainViewCoordinator {
-        let factory = MainViewFactory(superview: superview, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                      featureFlagger: featureFlagger,
+                                                      aiChatSettings: aiChatSettings)
+        let factory = MainViewFactory(superview: superview, omnibarDependencies: omnibarDependencies, featureFlagger: featureFlagger)
         factory.createViews()
         factory.disableAutoresizingOnImmediateSubviews(superview)
         factory.constrainViews()
@@ -77,7 +82,7 @@ extension MainViewFactory {
     }
 
     private func createOmniBar() {
-        coordinator.omniBar = OmniBar.loadFromXib(voiceSearchHelper: voiceSearchHelper)
+        coordinator.omniBar = OmniBar.loadFromXib(dependencies: omnibarDependencies)
         coordinator.omniBar.translatesAutoresizingMaskIntoConstraints = false
     }
     

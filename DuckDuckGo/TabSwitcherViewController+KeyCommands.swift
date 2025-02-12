@@ -78,6 +78,7 @@ extension TabSwitcherViewController {
         } else {
             currentSelection = nil
         }
+        refreshTitle()
         collectionView.reloadData()
     }
     

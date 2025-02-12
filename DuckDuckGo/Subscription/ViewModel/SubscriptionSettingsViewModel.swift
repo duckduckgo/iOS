@@ -117,7 +117,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                 self.state.subscriptionInfo = subscription
                 if loadingIndicator { self.displaySubscriptionLoader(false) }
             }
-            await updateSubscriptionsStatusMessage(status: subscription.status,
+            await updateSubscriptionsStatusMessage(subscription: subscription,
                                                    date: subscription.expiresOrRenewsAt,
                                                    product: subscription.productId,
                                                    billingPeriod: subscription.billingPeriod)
@@ -206,12 +206,24 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     @MainActor
-    private func updateSubscriptionsStatusMessage(status: PrivacyProSubscription.Status, date: Date, product: String, billingPeriod: PrivacyProSubscription.BillingPeriod) {
+    private func updateSubscriptionsStatusMessage(subscription: PrivacyProSubscription, date: Date, product: String, billingPeriod: PrivacyProSubscription.BillingPeriod) {
         let date = dateFormatter.string(from: date)
 
-        switch status {
+        let hasActiveTrialOffer = subscription.hasActiveTrialOffer
+
+        switch subscription.status {
         case .autoRenewable:
-            state.subscriptionDetails = UserText.renewingSubscriptionInfo(billingPeriod: billingPeriod, renewalDate: date)
+            if hasActiveTrialOffer {
+                state.subscriptionDetails = UserText.renewingTrialSubscriptionInfo(billingPeriod: billingPeriod, renewalDate: date)
+            } else {
+                state.subscriptionDetails = UserText.renewingSubscriptionInfo(billingPeriod: billingPeriod, renewalDate: date)
+            }
+        case .notAutoRenewable:
+            if hasActiveTrialOffer {
+                state.subscriptionDetails = UserText.expiringTrialSubscriptionInfo(expiryDate: date)
+            } else {
+                state.subscriptionDetails = UserText.expiringSubscriptionInfo(billingPeriod: billingPeriod, expiryDate: date)
+            }
         case .expired, .inactive:
             state.subscriptionDetails = UserText.expiredSubscriptionInfo(expiration: date)
         default:

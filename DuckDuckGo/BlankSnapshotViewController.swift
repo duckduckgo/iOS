@@ -37,16 +37,22 @@ class BlankSnapshotViewController: UIViewController {
     let menuButton = MenuButton()
 
     var tabSwitcherButton: TabSwitcherButton!
+
     let addressBarPosition: AddressBarPosition
-    let voiceSearchHelper: VoiceSearchHelperProtocol
     let featureFlagger: FeatureFlagger
+    let aiChatSettings: AIChatSettings
+    let voiceSearchHelper: VoiceSearchHelperProtocol
 
     var viewCoordinator: MainViewCoordinator!
 
     weak var delegate: BlankSnapshotViewRecoveringDelegate?
 
-    init(addressBarPosition: AddressBarPosition, voiceSearchHelper: VoiceSearchHelperProtocol, featureFlagger: FeatureFlagger) {
+    init(addressBarPosition: AddressBarPosition,
+         aiChatSettings: AIChatSettings,
+         voiceSearchHelper: VoiceSearchHelperProtocol,
+         featureFlagger: FeatureFlagger) {
         self.addressBarPosition = addressBarPosition
+        self.aiChatSettings = aiChatSettings
         self.voiceSearchHelper = voiceSearchHelper
         self.featureFlagger = featureFlagger
         super.init(nibName: nil, bundle: nil)
@@ -61,7 +67,10 @@ class BlankSnapshotViewController: UIViewController {
 
         tabSwitcherButton = TabSwitcherButton()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(view, voiceSearchHelper: voiceSearchHelper, featureFlagger: featureFlagger)
+        viewCoordinator = MainViewFactory.createViewHierarchy(view,
+                                                              aiChatSettings: aiChatSettings,
+                                                              voiceSearchHelper: voiceSearchHelper,
+                                                              featureFlagger: featureFlagger)
         if addressBarPosition.isBottom {
             viewCoordinator.moveAddressBarToPosition(.bottom)
             viewCoordinator.hideToolbarSeparator()
@@ -164,6 +173,13 @@ extension BlankSnapshotViewController: UICollectionViewDataSource {
 }
 
 extension BlankSnapshotViewController: OmniBarDelegate {
+    func onDidBeginEditing() {
+        // No-op
+    }
+    
+    func onDidEndEditing() {
+        // No-op
+    }
 
     func onVoiceSearchPressed() {
        // No-op

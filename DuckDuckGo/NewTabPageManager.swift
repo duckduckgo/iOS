@@ -67,7 +67,7 @@ final class NewTabPageManager: NewTabPageManaging, NewTabPageDebugging {
         switch FeatureFlag.newTabPageSections.source {
         case .disabled, .internalOnly, .remoteDevelopment:
             return false
-        case .remoteReleasable:
+        case .remoteReleasable, .enabled:
             return true
         }
     }

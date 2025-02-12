@@ -26,7 +26,6 @@ class MockVoiceSearchHelper: VoiceSearchHelperProtocol {
     var isSpeechRecognizerAvailable: Bool
 
     func enableVoiceSearch(_ enable: Bool) {}
-    func migrateSettingsFlagIfNecessary() {}
     
     init(isSpeechRecognizerAvailable: Bool = true, voiceSearchEnabled: Bool = true) {
         self.isSpeechRecognizerAvailable = isSpeechRecognizerAvailable

@@ -53,8 +53,8 @@ class HomeScreenTransition: TabSwitcherTransition {
             return targetFrame
         }
         
-        targetFrame.origin.y += TabViewGridCell.Constants.cellHeaderHeight
-        targetFrame.size.height -= TabViewGridCell.Constants.cellHeaderHeight
+        targetFrame.origin.y += TabViewCell.Constants.cellHeaderHeight
+        targetFrame.size.height -= TabViewCell.Constants.cellHeaderHeight
         return targetFrame
     }
     
@@ -64,8 +64,8 @@ class HomeScreenTransition: TabSwitcherTransition {
         }
         
         var targetFrame = CGRect(origin: .zero, size: cellBounds)
-        targetFrame.origin.y -= TabViewGridCell.Constants.cellHeaderHeight
-        targetFrame.size.height += TabViewGridCell.Constants.cellHeaderHeight
+        targetFrame.origin.y -= TabViewCell.Constants.cellHeaderHeight
+        targetFrame.size.height += TabViewCell.Constants.cellHeaderHeight
         return targetFrame
     }
     
@@ -114,7 +114,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
         imageView.frame = imageContainer.bounds
         imageView.contentMode = .center
         if tabSwitcherSettings.isGridViewEnabled {
-            imageView.image = TabViewGridCell.logoImage
+            imageView.image = TabViewCell.logoImage
         }
         
         UIView.animateKeyframes(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .calculationModeLinear, animations: {
@@ -122,7 +122,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
                 let containerFrame = self.tabSwitcherCellFrame(for: layoutAttr)
                 self.imageContainer.frame = containerFrame
-                self.imageContainer.layer.cornerRadius = TabViewGridCell.Constants.cellCornerRadius
+                self.imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
                 self.imageContainer.backgroundColor = theme.tabSwitcherCellBackgroundColor
                 self.imageView.frame = self.previewFrame(for: self.imageContainer.bounds.size)
                 self.homeScreenSnapshot?.frame = self.imageContainer.bounds
@@ -177,7 +177,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
         let theme = ThemeManager.shared.currentTheme
         imageContainer.frame = tabSwitcherCellFrame(for: layoutAttr)
         imageContainer.backgroundColor = theme.tabSwitcherCellBackgroundColor
-        imageContainer.layer.cornerRadius = TabViewGridCell.Constants.cellCornerRadius
+        imageContainer.layer.cornerRadius = TabViewCell.Constants.cellCornerRadius
         
         prepareSnapshots(with: homeScreen, transitionContext: transitionContext)
         homeScreenSnapshot?.alpha = 0
@@ -186,7 +186,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
         imageView.frame = previewFrame(for: imageContainer.bounds.size)
         imageView.contentMode = .center
         if tabSwitcherSettings.isGridViewEnabled {
-            imageView.image = TabViewGridCell.logoImage
+            imageView.image = TabViewCell.logoImage
             imageView.alpha = tab.viewed ? 1 : 0
         }
         imageView.backgroundColor = .clear

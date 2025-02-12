@@ -220,8 +220,11 @@ struct SettingsSubscriptionView: View {
             }
             .disabled(!hasITREntitlement)
         }
-        
-        NavigationLink(destination: LazyView(SubscriptionSettingsView(configuration: .subscribed, settingsViewModel: settingsViewModel))
+
+        let isActiveTrialOffer = settingsViewModel.state.subscription.isActiveTrialOffer
+        let configuration: SubscriptionSettingsView.Configuration = isActiveTrialOffer ? .trial : .subscribed
+
+        NavigationLink(destination: LazyView(SubscriptionSettingsView(configuration: configuration, settingsViewModel: settingsViewModel))
             .environmentObject(subscriptionNavigationCoordinator)
         ) {
             SettingsCustomCell(content: { manageSubscriptionView })

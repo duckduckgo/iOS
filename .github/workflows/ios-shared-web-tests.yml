@@ -48,6 +48,7 @@ jobs:
     - name: Checkout shared web tests
       uses: actions/checkout@v4
       with:
+        submodules: recursive
         repository: duckduckgo/shared-web-tests
         path: shared-web-tests
         ref: jkt/webdriver
@@ -55,9 +56,9 @@ jobs:
 
     - name: Build and Test
       run: |
-          cd ../shared-web-tests
+          cd shared-web-tests
           npm run build
-          cd web-driver
+          cd webdriver
           cargo build
 
     - name: Build iOS

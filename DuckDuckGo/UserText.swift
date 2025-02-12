@@ -216,10 +216,15 @@ public struct UserText {
     public static let bookmarksButtonHint = NSLocalizedString("bookmarks.button.hint", value: "Bookmarks", comment: "")
     
     public static func numberOfTabs(_ number: Int) -> String {
-        let message = NSLocalizedString("number.of.tabs", comment: "Do not translate - stringsdict entry")
-        return message.format(arguments: number)
+        let format = Bundle.main.localizedString(forKey: "number.of.tabs", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, number)
     }
-    
+
+    public static func numberOfSelectedTabs(withCount count: Int) -> String {
+        let format = Bundle.main.localizedString(forKey: "numberOfSelectedTabs.withCount", value: nil, table: nil)
+        return String.localizedStringWithFormat(format, count)
+    }
+
     public static func openTab(withTitle title: String, atAddress address: String) -> String {
         let message = NSLocalizedString("tab.open.with.title.and.address", value: "Open \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
         return message.format(arguments: title, address)

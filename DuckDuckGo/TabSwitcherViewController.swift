@@ -222,6 +222,12 @@ class TabSwitcherViewController: UIViewController {
 
     func refreshTitle() {
         topBarView.topItem?.title = UserText.numberOfTabs(tabsModel.count)
+
+        guard interfaceMode.isMultiSelection else { return }
+
+        if !selectedTabs.isEmpty {
+            topBarView.topItem?.title = UserText.numberOfSelectedTabs(withCount: selectedTabs.count)
+        }
     }
 
     func displayBookmarkAllStatusMessage(with results: BookmarkAllResult, openTabsCount: Int) {
@@ -381,6 +387,7 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
         if isEditing {
             (collectionView.cellForItem(at: indexPath) as? TabViewCell)?.toggleSelection()
             updateUIForSelectionMode()
+            refreshTitle()
         } else {
             markCurrentAsViewedAndDismiss()
         }
@@ -389,6 +396,7 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         (collectionView.cellForItem(at: indexPath) as? TabViewCell)?.toggleSelection()
         updateUIForSelectionMode()
+        refreshTitle()
     }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {

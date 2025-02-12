@@ -35,8 +35,8 @@ struct LargeOmniBarState {
         let showClear = false
         let showAbort = false
         let showRefresh = false
-        var showMenu: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
-        var showSettings: Bool { !dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
+        var showMenu: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showSettings: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
         let showCancel: Bool = false
         let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
@@ -77,8 +77,8 @@ struct LargeOmniBarState {
         let showClear = true
         let showAbort = false
         let showRefresh = false
-        var showMenu: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
-        var showSettings: Bool { !dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
+        var showMenu: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showSettings: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
         let showCancel: Bool = false
         let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
@@ -112,8 +112,8 @@ struct LargeOmniBarState {
         let showClear = false
         let showAbort = false
         let showRefresh = false
-        var showMenu: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
-        var showSettings: Bool { !dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
+        var showMenu: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showSettings: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
         let showCancel: Bool = false
         let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }

@@ -115,7 +115,7 @@ jobs:
     with:
       asana-task-url: ${{ github.event.inputs.asana-task-url }}
       branch: ${{ github.ref_name }}
-      base-branch: ${{ github.event.inputs.current-internal-release-branch || 'main' }}
+      base-branch: ${{ inputs.current-internal-release-branch || 'main' }}
       release-type: internal # Pre-release for now, after submitting to app store we will run ios-tag-release-update-asana again manually with 'hotfix' release type to finish up
     secrets:
       ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}

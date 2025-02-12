@@ -31,6 +31,7 @@ import SwiftUI
 struct InitialPlayerSettings: Codable {
     struct PlayerSettings: Codable {
         let pip: PIP
+        let customError: CustomError
     }
 
     struct PIP: Codable {
@@ -39,6 +40,11 @@ struct InitialPlayerSettings: Codable {
     
     struct Platform: Codable {
         let name: String
+    }
+
+    struct CustomError: Codable {
+        let status: Status
+        let signInRequiredSelector: String
     }
 
     enum Status: String, Codable {
@@ -50,7 +56,7 @@ struct InitialPlayerSettings: Codable {
         case development
         case production
     }
-
+    
     let userValues: UserValues
     let ui: UIValues
     let settings: PlayerSettings
@@ -121,6 +127,10 @@ enum Attributes: Decodable {
     }
 }
 
+// Custom Error privacy config settings
+struct CustomErrorSettings: Codable {
+    let signInRequiredSelector: String
+}
 
 /// Protocol defining the Duck Player functionality.
 protocol DuckPlayerControlling: AnyObject {
@@ -178,6 +188,13 @@ protocol DuckPlayerControlling: AnyObject {
     ///   - message: The script message containing the parameters.
     func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable?
     
+    /// Handles a YouTube Error event from the web view
+    ///
+    /// - Parameters:
+    ///   - params: Parameters from the web content.
+    ///   - message: The script message containing the parameters.
+    func handleYoutubeError(params: Any, message: WKScriptMessage) async -> Encodable?
+
     /// Sends a telemetry event from the FE.
     ///
     /// - Parameters:
@@ -530,6 +547,27 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
         return nil
     }
     
+    /// Handles a YouTube Error event from the web view
+    ///
+    /// - Parameters:
+    ///   - params: Parameters from the web content.
+    ///   - message: The script message containing the parameters.
+    @MainActor
+    func handleYoutubeError(params: Any, message: WKScriptMessage) async -> Encodable? {
+        var pixelParams: [String: String] = [:]
+        if let paramsDict = params as? [String: Any],
+           let errorParam = paramsDict["error"] as? String {
+            pixelParams["error"] = errorParam
+        } else {
+            pixelParams["error"] = "unknown"
+        }
+
+        // TODO: Fire once daily impression
+        Pixel.fire(.duckPlayerYouTubeErrorImpression, withAdditionalParameters: pixelParams)
+        return nil
+    }
+
+
     /// Opens Duck Player information modal.
     ///
     /// - Parameters:
@@ -583,9 +621,13 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     private func encodedPlayerSettings(with webView: WKWebView?) async -> InitialPlayerSettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let pip = InitialPlayerSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
+        // TODO: Remove temporary override to skip deploying a new config
+        // let customError = InitialPlayerSettings.CustomError(status: settings.customError ? .enabled : .disabled, signInRequiredSelector: "")
+        let customError = InitialPlayerSettings.CustomError(status: .enabled, signInRequiredSelector: "[href*=\"//support.google.com/youtube/answer/3037019\"]")
         let platform = InitialPlayerSettings.Platform(name: "ios")
         let locale = Locale.current.languageCode ?? "en"
-        let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip)
+        let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip, customError: customError)
+
         let userValues = encodeUserValues()
         let uiValues = encodeUIValues()
         let settings = InitialPlayerSettings(

@@ -935,6 +935,7 @@ extension Pixel {
         case duckPlayerContingencyLearnMoreClicked
         case duckPlayerNewTabSettingOn
         case duckPlayerNewTabSettingOff
+        case duckPlayerYouTubeErrorImpression
 
         // MARK: enhanced statistics
         case usageSegments
@@ -1918,6 +1919,7 @@ extension Pixel.Event {
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
         case .duckPlayerNewTabSettingOn: return "duckplayer_ios_newtab_setting-on"
         case .duckPlayerNewTabSettingOff: return "duckplayer_ios_newtab_setting-off"
+        case .duckPlayerYouTubeErrorImpression: return "duckplayer_ios_youtube-error_impression"
 
         // MARK: Enhanced statistics
         case .usageSegments: return "m_retention_segments"

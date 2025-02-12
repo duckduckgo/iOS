@@ -92,6 +92,9 @@ protocol DuckPlayerSettings: AnyObject {
     /// Autoplay Videos when opening
     var autoplay: Bool { get }
     
+    // Determines if we should show a custom view when YouTube returns an error
+    var customError: Bool { get }
+    
     /// Initializes a new instance with the provided app settings and privacy configuration manager.
     ///
     /// - Parameters:
@@ -197,6 +200,11 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     // Determines if we should use the native verion of DuckPlayer (Internal only)
     var autoplay: Bool {
         return appSettings.duckPlayerAutoplay && internalUserDecider.isInternalUser && UIDevice.current.userInterfaceIdiom == .phone
+    }
+    
+    // Determines if we should show a custom view when YouTube returns an error
+    var customError: Bool {
+        return privacyConfigManager.privacyConfig.isSubfeatureEnabled(DuckPlayerSubfeature.customError)
     }
     
     /// Registers a publisher to listen for changes in the privacy configuration.

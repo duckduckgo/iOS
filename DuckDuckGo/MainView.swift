@@ -19,6 +19,7 @@
 
 import UIKit
 import BrowserServicesKit
+import AIChat
 
 class MainViewFactory {
 
@@ -37,8 +38,12 @@ class MainViewFactory {
     }
 
     static func createViewHierarchy(_ superview: UIView,
-                                    omnibarDependencies: OmnibarDependencyProvider,
+                                    aiChatSettings: AIChatSettingsProvider,
+                                    voiceSearchHelper: VoiceSearchHelperProtocol,
                                     featureFlagger: FeatureFlagger) -> MainViewCoordinator {
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                      featureFlagger: featureFlagger,
+                                                      aiChatSettings: aiChatSettings)
         let factory = MainViewFactory(superview: superview, omnibarDependencies: omnibarDependencies, featureFlagger: featureFlagger)
         factory.createViews()
         factory.disableAutoresizingOnImmediateSubviews(superview)

@@ -314,12 +314,9 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
-                                                      featureFlagger: featureFlagger,
-                                                      aiChatSettings: aiChatSettings)
-
         viewCoordinator = MainViewFactory.createViewHierarchy(self.view,
-                                                              omnibarDependencies: omnibarDependencies,
+                                                              aiChatSettings: aiChatSettings,
+                                                              voiceSearchHelper: voiceSearchHelper,
                                                               featureFlagger: featureFlagger)
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
 
@@ -327,7 +324,7 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
         viewCoordinator.toolbarPasswordsButton.action = #selector(onPasswordsPressed)
-        viewCoordinator.toolbarBookmarksButton.action = #selector(onBookmarksPressed)
+        viewCoordinator.toolbarBookmarksButton.action = #selector(onToolbarBookmarksPressed)
 
         installSwipeTabs()
             
@@ -954,7 +951,7 @@ class MainViewController: UIViewController {
         currentTab?.goForward()
     }
     
-    func didReturnFromBackground() {
+    func onForeground() {
         skipSERPFlow = true
         
         // Show Fire Pulse only if Privacy button pulse should not be shown. In control group onboarding `shouldShowPrivacyButtonPulse` is always false.
@@ -1986,6 +1983,12 @@ extension MainViewController: OmniBarDelegate {
 
         self.presentedMenuButton.setState(.closeImage, animated: true)
         tab.didLaunchBrowsingMenu()
+
+        if isNewTabPageEnabled && newTabPageViewController != nil {
+            Pixel.fire(pixel: .browsingMenuOpenedNewTabPage)
+        } else {
+            Pixel.fire(pixel: .browsingMenuOpened)
+        }
     }
     
     @objc func onBookmarksPressed() {
@@ -1995,7 +1998,12 @@ extension MainViewController: OmniBarDelegate {
         performCancel()
         segueToBookmarks()
     }
-    
+
+    @objc func onToolbarBookmarksPressed() {
+        Pixel.fire(pixel: .bookmarksOpenFromToolbar)
+        onBookmarksPressed()
+    }
+
     func onBookmarkEdit() {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
@@ -2465,6 +2473,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestAIChat(tab: TabViewController) {
+        Pixel.fire(pixel: .browsingMenuListAIChat)
         openAIChat()
     }
 

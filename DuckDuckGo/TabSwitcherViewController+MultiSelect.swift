@@ -466,7 +466,7 @@ extension TabSwitcherViewController {
 
 }
 
-// MARK: Button factories
+// MARK: Button configuration
 extension TabSwitcherViewController {
 
     func refreshBarButtons() {

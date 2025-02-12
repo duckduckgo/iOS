@@ -255,7 +255,6 @@ final class TabViewCell: UICollectionViewCell {
         if !isSelected {
             image.image = UIImage(systemName: "circle")
         } else {
-            image.image = UIImage(systemName: "checkmark.circle.fill")
             let symbolColorConfiguration = UIImage.SymbolConfiguration(paletteColors: [
                 .white, // The check
                 .clear, // This does nothing in this palette

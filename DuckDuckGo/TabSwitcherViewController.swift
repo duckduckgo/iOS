@@ -406,9 +406,10 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
 
-        assert(!indexPaths.isEmpty)
-
         guard interfaceMode.isMultiSelection else { return nil }
+
+        // This can happen if you long press in the whitespace
+        guard !indexPaths.isEmpty else { return nil }
 
         let title = indexPaths.count == 1 ?
             trimMenuTitleIfNeeded(tabsModel.get(tabAt: indexPaths[0].row).link?.displayTitle ?? "", 50) :
@@ -543,15 +544,16 @@ extension TabSwitcherViewController: UICollectionViewDropDelegate {
             collectionView.insertItems(at: [destination])
         } completion: { _ in
             if self.isEditing {
-                collectionView.reloadData()
+                collectionView.reloadData() // Clears the selection
                 collectionView.selectItem(at: destination, animated: true, scrollPosition: [])
+                self.refreshBarButtons()
             } else {
                 collectionView.reloadItems(at: [IndexPath(row: self.currentSelection ?? 0, section: 0)])
             }
             self.delegate.tabSwitcherDidReorderTabs(tabSwitcher: self)
+            coordinator.drop(item.dragItem, toItemAt: destination)
         }
 
-        coordinator.drop(item.dragItem, toItemAt: destination)
     }
 
 }

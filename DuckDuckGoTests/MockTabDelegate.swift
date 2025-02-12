@@ -178,10 +178,10 @@ class DummySpecialErrorPageNavigationHandler: SpecialErrorPageManaging {
 
     }
     
-    func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: any DuckDuckGo.WebViewNavigation, withError error: NSError) {}
+    func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: (any WebViewNavigation)?, withError error: NSError) {}
     
-    func handleWebView(_ webView: WKWebView, didFinish navigation: any DuckDuckGo.WebViewNavigation) {}
-    
+    func handleWebView(_ webView: WKWebView, didFinish navigation: (any WebViewNavigation)?) {}
+
     var errorData: SpecialErrorPages.SpecialErrorData?
     
     func leaveSiteAction() {}

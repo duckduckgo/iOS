@@ -382,7 +382,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
             
             if #available(iOS 16.0, *) {
                 if let sheet = hostingController.sheetPresentationController {
-                    sheet.detents = [.custom(identifier: .init("small")) { _ in return 360 }, .large()]
+                    sheet.detents = [.custom(identifier: .init("small")) { _ in return 320 }, .large()]
                     sheet.prefersGrabberVisible = true
                     sheet.prefersScrollingExpandsWhenScrolledToEdge = false
                     sheet.prefersEdgeAttachedInCompactHeight = true

@@ -31,6 +31,25 @@ final class DuckPlayerViewModel: ObservableObject {
     @Published private(set) var videoDescription: String = ""
     @Published private(set) var isLoadingDescription: Bool = false
     
+    /// Comments
+    @Published private(set) var comments: [YouTubeComment] = []
+    @Published private(set) var isLoadingComments: Bool = false
+    
+    /// Currently selected tab
+    @Published var selectedTab: Tab = .description {
+        didSet {
+            // Only fetch comments data if we haven't already
+            if selectedTab == .comments && comments.isEmpty && !isLoadingComments {
+                fetchComments()
+            }
+        }
+    }
+    
+    enum Tab {
+        case description
+        case comments
+    }
+    
     enum Constants {
         static let baseURL = "https://www.youtube-nocookie.com/embed/"
         
@@ -55,19 +74,31 @@ final class DuckPlayerViewModel: ObservableObject {
     init(videoID: String, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         self.videoID = videoID
         self.appSettings = appSettings
-        loadVideo()
+        setupVideoURL()
+        fetchVideoDescription()
+    }
+    
+    private func setupVideoURL() {
+        if let newURL = getVideoURL() {
+            self.url = newURL
+            Logger.duckplayer.debug("Set initial video URL to: \(String(describing: self.url))")
+        }
     }
     
     func loadVideo() {
-        // Force a new URL instance to trigger observation
+        // Update video ID URL without forcing a reload
         if let newURL = getVideoURL() {
-            self.url = nil  // Force view update
-            DispatchQueue.main.async {
+            // Only update URL if it's different to prevent unnecessary reloads
+            if self.url != newURL {
                 self.url = newURL
                 Logger.duckplayer.debug("Updated video URL to: \(String(describing: self.url))")
             }
         }
-        fetchVideoDescription()
+        
+        // Fetch new description for the video
+        if videoDescription.isEmpty {
+            fetchVideoDescription()
+        }
     }
     
     private func fetchVideoDescription() {
@@ -127,6 +158,75 @@ final class DuckPlayerViewModel: ObservableObject {
         }.resume()
     }
     
+    private func fetchComments() {
+        Logger.duckplayer.debug("Starting fetchComments for videoID: \(self.videoID)")
+        isLoadingComments = true
+        
+        let urlString = "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=\(videoID)&maxResults=50&order=relevance&key=AIzaSyA69c2ZelhzXWMzqdiw3BTPYY9sHL_UMqI"
+        guard let url = URL(string: urlString) else {
+            Logger.duckplayer.error("Failed to create comments URL")
+            isLoadingComments = false
+            return
+        }
+        
+        Logger.duckplayer.debug("Making comments API request to: \(url)")
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            if let error = error {
+                Logger.duckplayer.error("Comments API request failed: \(error)")
+                DispatchQueue.main.async {
+                    self?.isLoadingComments = false
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self?.isLoadingComments = false
+                guard let data = data else {
+                    Logger.duckplayer.error("No comments data received")
+                    return
+                }
+                
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+                    guard let items = json?["items"] as? [[String: Any]] else {
+                        Logger.duckplayer.error("Failed to parse comments JSON")
+                        return
+                    }
+                    
+                    let comments = items.compactMap { item -> YouTubeComment? in
+                        guard let snippet = item["snippet"] as? [String: Any],
+                              let topLevelComment = snippet["topLevelComment"] as? [String: Any],
+                              let commentSnippet = topLevelComment["snippet"] as? [String: Any],
+                              let id = topLevelComment["id"] as? String,
+                              let authorDisplayName = commentSnippet["authorDisplayName"] as? String,
+                              let authorProfileImageUrl = commentSnippet["authorProfileImageUrl"] as? String,
+                              let textDisplay = commentSnippet["textDisplay"] as? String,
+                              let likeCount = commentSnippet["likeCount"] as? Int,
+                              let publishedAtString = commentSnippet["publishedAt"] as? String,
+                              let publishedAt = ISO8601DateFormatter().date(from: publishedAtString) else {
+                            return nil
+                        }
+                        
+                        return YouTubeComment(
+                            id: id,
+                            authorDisplayName: authorDisplayName,
+                            authorProfileImageUrl: authorProfileImageUrl,
+                            textDisplay: textDisplay,
+                            likeCount: likeCount,
+                            publishedAt: publishedAt
+                        )
+                    }
+                    
+                    Logger.duckplayer.debug("Successfully parsed \(comments.count) comments")
+                    self?.comments = comments
+                    
+                } catch {
+                    Logger.duckplayer.error("Comments JSON parsing failed: \(error)")
+                }
+            }
+        }.resume()
+    }
+    
     func getVideoURL() -> URL? {
         var parameters = defaultParameters
         parameters[Constants.autoplayParameter] = appSettings.duckPlayerAutoplay ? Constants.enabled : Constants.disabled
@@ -160,8 +260,6 @@ final class DuckPlayerViewModel: ObservableObject {
                                                   name: UIDevice.orientationDidChangeNotification,
                                                   object: nil)
     }
-    
-
     
     private func parseDescription(_ text: String) {
         let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
@@ -198,4 +296,13 @@ final class DuckPlayerViewModel: ObservableObject {
     var shouldShowYouTubeButton: Bool {
         !isLandscape
     }
+}
+
+struct YouTubeComment: Identifiable {
+    let id: String
+    let authorDisplayName: String
+    let authorProfileImageUrl: String
+    let textDisplay: String
+    let likeCount: Int
+    let publishedAt: Date
 }

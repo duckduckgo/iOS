@@ -12363,8 +12363,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit.git";
 			requirement = {
-				kind = exactVersion;
-				version = 237.1.0;
+				branch = "mgurgel/duckplayer-custom-error";
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

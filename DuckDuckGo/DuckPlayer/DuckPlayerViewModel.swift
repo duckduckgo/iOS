@@ -105,7 +105,7 @@ final class DuckPlayerViewModel: ObservableObject {
         Logger.duckplayer.debug("Starting fetchVideoDescription for videoID: \(self.videoID)")
         isLoadingDescription = true
         
-        let urlString = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=\(videoID)&key=AIzaSyA69c2ZelhzXWMzqdiw3BTPYY9sHL_UMqI"
+        let urlString = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=\(videoID)&key=KEY"
         guard let url = URL(string: urlString) else {
             Logger.duckplayer.error("Failed to create URL from string: \(urlString)")
             isLoadingDescription = false

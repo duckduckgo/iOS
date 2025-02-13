@@ -21,7 +21,7 @@ import SwiftUI
 import NetworkProtection
 
 struct NetworkProtectionDNSSettingsView: View {
-    @StateObject var viewModel = NetworkProtectionDNSSettingsViewModel(settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
+    @StateObject var viewModel = NetworkProtectionDNSSettingsViewModel(settings: VPNSettings(defaults: .networkProtectionGroupDefaults), controller: AppDependencyProvider.shared.networkProtectionTunnelController)
     @Environment(\.dismiss) private var dismiss
     @FocusState private var isCustomDNSServerFocused: Bool
 
@@ -29,14 +29,14 @@ struct NetworkProtectionDNSSettingsView: View {
         VStack {
             List {
                 Section {
-                    ChecklistItem(isSelected: !viewModel.isCustomDNSSelected) {
+                    NetworkProtectionUIElements.ChecklistItem(isSelected: !viewModel.isCustomDNSSelected) {
                         viewModel.toggleDNSSettings()
                     } label: {
                         Text(UserText.vpnSettingDNSServerOptionRecommended)
                             .daxBodyRegular()
                             .foregroundStyle(Color(designSystemColor: .textPrimary))
                     }
-                    ChecklistItem(isSelected: viewModel.isCustomDNSSelected) {
+                    NetworkProtectionUIElements.ChecklistItem(isSelected: viewModel.isCustomDNSSelected) {
                         viewModel.toggleDNSSettings()
                     } label: {
                         Text(UserText.vpnSettingDNSServerOptionCustom)
@@ -57,6 +57,8 @@ struct NetworkProtectionDNSSettingsView: View {
 
                 if viewModel.isCustomDNSSelected {
                     customDNSSection()
+                } else {
+                    blockRiskyDomainsSection()
                 }
             }
         }
@@ -70,7 +72,7 @@ struct NetworkProtectionDNSSettingsView: View {
                 } label: {
                     Text(UserText.vpnSettingDNSServerApplyButtonTitle)
                 }
-                .disabled(!viewModel.isApplyButtonEnabled)
+                .disabled(viewModel.isApplyButtonEnabled)
             }
         }
     }
@@ -105,29 +107,15 @@ struct NetworkProtectionDNSSettingsView: View {
             isCustomDNSServerFocused = true
         }
     }
-}
 
-private struct ChecklistItem<Content>: View where Content: View {
-    let isSelected: Bool
-    let action: () -> Void
-    @ViewBuilder let label: () -> Content
-
-    var body: some View {
-        Button(
-            action: action,
-            label: {
-                HStack(spacing: 12) {
-                    label()
-                    Spacer()
-                    Image(systemName: "checkmark")
-                        .tint(.init(designSystemColor: .accent))
-                        .if(!isSelected) {
-                            $0.hidden()
-                        }
-                }
-            }
-        )
-        .tint(Color(designSystemColor: .textPrimary))
-        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+    func blockRiskyDomainsSection() -> some View {
+        NetworkProtectionUIElements.ToggleSectionView(
+            text: "Block risky domains",
+            headerText: "Content Blocking and Filtering",
+            footerText: UserText.vpnContentBlockingFilteringFooter
+        ) {
+            Toggle("", isOn: $viewModel.isBlockRiskyDomainsOn)
+        }
     }
+
 }

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
-        "revision" : "7356a39ecc21ec36cb1006a6cdacdae48fe1eaae",
-        "version" : "236.1.0"
+        "branch" : "sabrina/risky-sites-protection",
+        "revision" : "af0e405b22c2b750a99bdc208f1beb0efb764b0d"
       }
     },
     {

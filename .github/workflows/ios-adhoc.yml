@@ -83,9 +83,10 @@ jobs:
           path: ${{ env.dsyms_path }}
 
       - name: Get Asana Task ID
+        if: inputs.asana-task-url
         id: get-task-id
         env:
-          ASANA_TASK_URL: ${{ github.event.inputs.asana-task-url || inputs.asana-task-url }}
+          ASANA_TASK_URL: ${{ inputs.asana-task-url }}
         run: |
           task_id=$(echo "$ASANA_TASK_URL" \
             | sed -E 's|.*https://(.*)|\1|' \
@@ -93,7 +94,7 @@ jobs:
           echo "task_id=${task_id//[^0-9]/}" >> $GITHUB_OUTPUT
 
       - name: Upload IPA to Asana
-        if: github.event.inputs.asana-task-url
+        if: inputs.asana-task-url
         env:
           ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
         run: |

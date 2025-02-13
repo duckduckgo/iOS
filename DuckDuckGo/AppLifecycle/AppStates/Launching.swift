@@ -183,9 +183,13 @@ struct Launching: AppState {
 
     private func startAutomationServerIfNeeded() {
         let launchOptionsHandler = LaunchOptionsHandler()
-        if launchOptionsHandler.isUITesting && launchOptionsHandler.automationPort != nil {
-            AutomationServer(main: mainViewController!, port: launchOptionsHandler.automationPort)
+        guard launchOptionsHandler.isUITesting && launchOptionsHandler.automationPort != nil else {
+            return
         }
+        guard let rootViewController = window.rootViewController as? MainViewController else {
+            return
+        }
+        AutomationServer(main: rootViewController, port: launchOptionsHandler.automationPort)
     }
 }
 

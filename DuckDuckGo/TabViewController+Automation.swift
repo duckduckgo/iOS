@@ -28,7 +28,7 @@ extension TabViewController {
                 arguments: args,
                 in: nil,
                 contentWorld: .page
-            )
+            ) ?? ""
             return .success(result)
         } catch {
             return .failure(error)

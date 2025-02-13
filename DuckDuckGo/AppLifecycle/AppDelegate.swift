@@ -20,52 +20,74 @@
 import UIKit
 import Core
 
-@UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
+public extension NSNotification.Name {
 
-    static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
-    struct ShortcutKey {
-        static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
-        static let passwords = "com.duckduckgo.mobile.ios.passwords"
-        static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
-    }
+    static let appDidEncounterUnrecoverableState = Notification.Name("com.duckduckgo.app.unrecoverable.state")
+
+}
+
+@UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private let appStateMachine: AppStateMachine = AppStateMachine()
 
     var window: UIWindow?
 
-    /// See: Launching.swift
+    override init() {
+        super.init()
+        NotificationCenter.default.addObserver(forName: .databaseDidEncounterInsufficientDiskSpace,
+                                               object: nil,
+                                               queue: .main) { [weak self] _ in
+            self?.application(UIApplication.shared, willTerminateWithReason: .insufficientDiskSpace)
+        }
+        NotificationCenter.default.addObserver(forName: .appDidEncounterUnrecoverableState,
+                                               object: nil,
+                                               queue: .main) { [weak self] _ in
+            self?.application(UIApplication.shared, willTerminateWithReason: .unrecoverableState)
+        }
+    }
+
+    /// See: `Launching.swift`
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let isTesting: Bool = ProcessInfo().arguments.contains("testing")
-        appStateMachine.handle(.didFinishLaunching(application, isTesting: isTesting))
+        appStateMachine.handle(.didFinishLaunching(isTesting: isTesting))
         return true
     }
 
-    /// See: Foreground.swift
+    /// See: `Foreground.swift` -> `onTransition()`
     func applicationDidBecomeActive(_ application: UIApplication) {
         appStateMachine.handle(.didBecomeActive)
     }
 
-    /// See: Suspending.swift
+    /// See: `Foreground.swift` -> `willLeave()`
     func applicationWillResignActive(_ application: UIApplication) {
         appStateMachine.handle(.willResignActive)
     }
 
-    /// See: Resuming.swift
+    /// See: `Background.swift` -> `willLeave()`
     func applicationWillEnterForeground(_ application: UIApplication) {
         appStateMachine.handle(.willEnterForeground)
     }
 
-    /// See: Background.swift
+    /// See: `Background.swift` -> `onTransition()`
     func applicationDidEnterBackground(_ application: UIApplication) {
         appStateMachine.handle(.didEnterBackground)
     }
 
+    /// See: `Terminating.swift`
+    /// **Note** This is *not* the system function `applicationWillTerminate(_:)`, and it is *not* called by the system.
+    /// This is used to handle force crashes due to unrecoverable errors (e.g., low disk space) and display an alert beforehand.
+    func application(_ application: UIApplication, willTerminateWithReason terminationReason: UIApplication.TerminationReason) {
+        appStateMachine.handle(.willTerminate(terminationReason))
+    }
+
+    /// See: `Foreground.swift` -> `handleShortcutItem(_:)`
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
         appStateMachine.handle(.handleShortcutItem(shortcutItem))
     }
 
+    /// See: `Foreground.swift` -> `openURL(_:)`
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         appStateMachine.handle(.openURL(url))
         return true
@@ -89,48 +111,17 @@ import Core
         true
     }
 
-    var privacyProDataReporter: PrivacyProDataReporting? {
-        (appStateMachine.currentState as? Foreground)?.appDependencies.privacyProDataReporter // just for now, we have to get rid of this anti pattern
+    // MARK: - Debug
+    /// These are public to allow access via Debug menu. Otherwise they shouldn't be called from outside.
+    /// Avoid abusing this pattern. Inject dependencies where needed instead of relying on global access.
+    var debugPrivacyProDataReporter: PrivacyProDataReporting? {
+        (appStateMachine.currentState as? Foreground)?.appDependencies.reportingService.privacyProDataReporter
     }
 
-    /// It's public in order to allow refreshing on demand via Debug menu. Otherwise it shouldn't be called from outside.
-    /// we have to get rid of this anti pattern
-    func refreshRemoteMessages() {
-        Task {
-            if let remoteMessagingClient = (appStateMachine.currentState as? Foreground)?.appDependencies.remoteMessagingClient {
-                try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingClient.store)
-            }
+    func debugRefreshRemoteMessages() {
+        if let remoteMessagingService = (appStateMachine.currentState as? Foreground)?.appDependencies.remoteMessagingService {
+            remoteMessagingService.refreshRemoteMessages()
         }
-    }
-
-}
-
-extension DataStoreWarmup.ApplicationState {
-
-    init(with state: UIApplication.State) {
-        switch state {
-        case .inactive:
-            self = .inactive
-        case .active:
-            self = .active
-        case .background:
-            self = .background
-        @unknown default:
-            self = .unknown
-        }
-    }
-}
-
-extension Error {
-
-    var isDiskFull: Bool {
-        let nsError = self as NSError
-        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError, underlyingError.code == 13 {
-            return true
-        } else if nsError.userInfo["NSSQLiteErrorDomain"] as? Int == 13 {
-            return true
-        }
-        return false
     }
 
 }

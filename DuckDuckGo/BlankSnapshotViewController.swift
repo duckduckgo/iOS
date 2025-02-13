@@ -37,18 +37,24 @@ class BlankSnapshotViewController: UIViewController {
     let menuButton = MenuButton()
 
     var tabSwitcherButton: TabSwitcherButton!
+
     let addressBarPosition: AddressBarPosition
     let featureFlagger: FeatureFlagger
-    let omnibarDependencies: OmnibarDependencyProvider
+    let aiChatSettings: AIChatSettings
+    let voiceSearchHelper: VoiceSearchHelperProtocol
 
     var viewCoordinator: MainViewCoordinator!
 
     weak var delegate: BlankSnapshotViewRecoveringDelegate?
 
-    init(addressBarPosition: AddressBarPosition, omnibarDependencies: OmnibarDependencyProvider, featureFlagger: FeatureFlagger) {
+    init(addressBarPosition: AddressBarPosition,
+         aiChatSettings: AIChatSettings,
+         voiceSearchHelper: VoiceSearchHelperProtocol,
+         featureFlagger: FeatureFlagger) {
         self.addressBarPosition = addressBarPosition
+        self.aiChatSettings = aiChatSettings
+        self.voiceSearchHelper = voiceSearchHelper
         self.featureFlagger = featureFlagger
-        self.omnibarDependencies = omnibarDependencies
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,7 +67,10 @@ class BlankSnapshotViewController: UIViewController {
 
         tabSwitcherButton = TabSwitcherButton()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(view, omnibarDependencies: omnibarDependencies, featureFlagger: featureFlagger)
+        viewCoordinator = MainViewFactory.createViewHierarchy(view,
+                                                              aiChatSettings: aiChatSettings,
+                                                              voiceSearchHelper: voiceSearchHelper,
+                                                              featureFlagger: featureFlagger)
         if addressBarPosition.isBottom {
             viewCoordinator.moveAddressBarToPosition(.bottom)
             viewCoordinator.hideToolbarSeparator()

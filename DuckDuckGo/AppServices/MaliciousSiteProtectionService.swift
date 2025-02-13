@@ -76,6 +76,7 @@ final class MaliciousSiteProtectionService {
     }
 
     func onLaunching() {
+        // Register Malicious Site Protection background tasks to fetch datasets
         manager.registerBackgroundRefreshTaskHandler()
     }
 

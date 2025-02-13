@@ -112,8 +112,7 @@ class SwipeTabsCoordinator: NSObject {
         updateLayout()
         scrollToCurrent()
 
-        let indexPath = IndexPath(row: self.tabsModel.currentIndex, section: 0)
-        collectionView.reloadItems(at: [indexPath])
+        collectionView.reloadData()
     }
 
     private func updateLayout() {

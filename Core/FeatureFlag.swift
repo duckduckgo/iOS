@@ -180,7 +180,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .syncSeamlessAccountSwitching:
             return .remoteReleasable(.subfeature(SyncSubfeature.seamlessAccountSwitching))
         case .aiChatNewTabPage:
-            return .internalOnly()
+            return .enabled
         case .testExperiment:
             return .remoteReleasable(.subfeature(ExperimentTestSubfeatures.experimentTestAA))
         case .maliciousSiteProtection:

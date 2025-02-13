@@ -36,7 +36,7 @@ final class SubscriptionDebugViewController: UITableViewController {
     }
 
     // swiftlint:disable:next force_cast
-    private let reporter = (UIApplication.shared.delegate as! AppDelegate).privacyProDataReporter as! PrivacyProDataReporter
+    private let reporter = (UIApplication.shared.delegate as! AppDelegate).debugPrivacyProDataReporter as! PrivacyProDataReporter
 
     private let titles = [
         Sections.authorization: "Authentication",

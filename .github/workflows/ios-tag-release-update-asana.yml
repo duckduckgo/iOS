@@ -57,7 +57,7 @@ jobs:
     uses: ./.github/workflows/ios-tag-release.yml
     with:
       asana-task-url: ${{ inputs.asana-task-url || github.event.inputs.asana-task-url }}
-      base-branch: ${{ github.event.inputs.base-branch || 'main' }}
+      base-branch: ${{ inputs.base-branch || 'main' }}
       branch: ${{ inputs.branch || github.ref_name }}
       internal-release-bump: ${{ inputs.internal-release-bump || false }}
       prerelease: ${{ inputs.release-type == 'internal' }}

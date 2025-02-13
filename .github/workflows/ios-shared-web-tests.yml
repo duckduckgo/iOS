@@ -58,8 +58,6 @@ jobs:
       run: |
           cd shared-web-tests
           npm run build
-          cd webdriver
-          cargo build
 
     - name: Build iOS
       run: |
@@ -67,13 +65,9 @@ jobs:
         project_root=$(pwd)
         build_app
 
-    - name: Add CA key
-      run: |
-        xcrun simctl keychain booted add-root-cert ../shared-web-tests/web-platform-tests/build/tools/certs/cacert.pem
-
     - name: Run tests
       run: |
-        cd ../build
+        cd shared-web-tests/build
         ./wpt run  --product duckduckgo --binary ../webdriver/target/debug/ddgdriver --log-mach - --log-mach-level info duckduckgo
 
   

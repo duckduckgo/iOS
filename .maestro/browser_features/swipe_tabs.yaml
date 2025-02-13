@@ -21,8 +21,7 @@ tags:
 
 # Open New Tab
 - tapOn: "Tab Switcher"
-- tapOn:
-    id: Add
+- tapOn: "New Tab"
 
 # Perform a search
 - assertVisible:

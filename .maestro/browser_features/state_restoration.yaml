@@ -1,0 +1,55 @@
+# state_restoration.yaml
+appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
+---
+
+# Set up 
+- runFlow: 
+    file: ../shared/setup.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn:
+    id: "searchEntry"
+- inputText: "https://www.wikipedia.org/"
+- pressKey: Enter
+
+# Create navigation stack
+- assertVisible: 'English.*'
+- tapOn: 
+    text: 'English.*'
+    childOf: "Top languages, navigation"
+- assertVisible: "Welcome to Wikipedia.*"
+- tapOn: "Wikipedia" 
+- assertVisible: "Article"
+- scrollUntilVisible:
+    element: "United States"
+# Make sure bottom bar is visible
+- tapOn:
+    point: 80%, 99%
+- tapOn: "Browse Back"
+- assertVisible: "Welcome to Wikipedia.*"
+
+# Load a new tab
+- longPressOn: "Tab Switcher"
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://example.com"
+- pressKey: Enter
+
+- stopApp
+- launchApp
+
+- tapOn: "Tab Switcher"
+- tapOn:
+    point: 20%, 25%
+
+# Check if state from previous session was restored
+- assertVisible: "Welcome to Wikipedia.*"
+- tapOn: "Browse Forward"
+- assertVisible: "United States"

@@ -57,7 +57,6 @@ public struct UserDefaultsWrapper<T> {
         case daxLastShownContextualOnboardingDialogType = "com.duckduckgo.ios.daxLastShownContextualOnboardingDialogType"
 
         case notFoundCache = "com.duckduckgo.ios.favicons.notFoundCache"
-        case faviconSizeNeedsMigration = "com.duckduckgo.ios.favicons.sizeNeedsMigration"
         case faviconTabsCacheNeedsCleanup = "com.duckduckgo.ios.favicons.tabsCacheNeedsCleanup"
 
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
@@ -182,6 +181,9 @@ public struct UserDefaultsWrapper<T> {
 
         // TipKit
         case resetTipKitOnNextLaunch = "com.duckduckgo.ios.tipKit.resetOnNextLaunch"
+
+        // Malicious Site Protection
+        case maliciousSiteProtectionEnabled = "com.duckduckgo.ios.maliciousSiteProtection.enabled"
     }
 
     private let key: Key
@@ -212,7 +214,7 @@ public struct UserDefaultsWrapper<T> {
             if let optional = newValue as? AnyOptional, optional.isNil {
                 container.removeObject(forKey: key.rawValue)
             } else {
-                container.setValue(newValue, forKey: key.rawValue)
+                container.set(newValue, forKey: key.rawValue)
             }
         }
     }

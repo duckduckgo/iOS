@@ -29,13 +29,17 @@ import PixelExperimentKit
 
 extension TabViewController {
 
-    private var shouldShowAIChatInMenuHeader: Bool {
-        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+    private enum ShortcutEntriesState {
+        case newTab
+        case pageLoaded
+    }
+
+    private var shouldShowAIChatInMenu: Bool {
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
         return settings.isAIChatBrowsingMenuUserSettingsEnabled
     }
 
-    private var shouldShowPrintButtonInBrowsingMenuList: Bool { shouldShowAIChatInMenuHeader }
+    private var shouldShowPrintButtonInBrowsingMenuList: Bool { shouldShowAIChatInMenu }
 
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
         var entries = [BrowsingMenuEntry]()
@@ -78,7 +82,7 @@ extension TabViewController {
             self?.openAIChat()
         })
 
-        if shouldShowAIChatInMenuHeader {
+        if shouldShowAIChatInMenu {
             entries.append(newTabEntry)
             entries.append(chatEntry)
             entries.append(shareEntry)
@@ -97,7 +101,7 @@ extension TabViewController {
     var favoriteEntryIndex: Int { 1 }
 
     func buildShortcutsMenu() -> [BrowsingMenuEntry] {
-        buildShortcutsEntries(includeBookmarks: true)
+        buildShortcutsEntries(state: .newTab)
     }
 
     func buildBrowsingMenu(with bookmarksInterface: MenuBookmarksInteracting) -> [BrowsingMenuEntry] {
@@ -134,19 +138,38 @@ extension TabViewController {
             entries.append(.separator)
         }
 
-        let shortcutsEntries = buildShortcutsEntries(includeBookmarks: false)
+        let shortcutsEntries = buildShortcutsEntries(state: .pageLoaded)
         entries.append(contentsOf: shortcutsEntries)
 
         return entries
     }
 
-    private func buildShortcutsEntries(includeBookmarks: Bool) -> [BrowsingMenuEntry] {
+    private func buildShortcutsEntries(state: ShortcutEntriesState) -> [BrowsingMenuEntry] {
         var entries = [BrowsingMenuEntry]()
 
-        if includeBookmarks {
-            entries.append(buildOpenBookmarksEntry())
+        if state == .newTab {
+            if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+                entries.append(BrowsingMenuEntry.regular(name: UserText.actionTabNew,
+                                                         image: UIImage(named: "Add-16")!,
+                                                         action: { [weak self] in
+                    self?.onNewTabAction()
+                }))
 
+                if featureFlagger.isFeatureOn(.aiChat) && shouldShowAIChatInMenu {
+                    entries.append(BrowsingMenuEntry.regular(name: UserText.actionAIChatNew,
+                                                             image: UIImage(named: "AIChat-16")!,
+                                                             action: { [weak self] in
+                        self?.openAIChat()
+                    }))
+                }
+
+
+            }
             entries.append(.separator)
+        }
+
+        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            entries.append(buildOpenBookmarksEntry())
         }
 
         if featureFlagger.isFeatureOn(.autofillAccessCredentialManagement) {
@@ -182,8 +205,10 @@ extension TabViewController {
         entries.append(bookmarkEntries.bookmark)
         assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
         entries.append(bookmarkEntries.favorite)
-                
-        entries.append(buildOpenBookmarksEntry())
+
+        if !featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            entries.append(buildOpenBookmarksEntry())
+        }
 
         entries.append(.separator)
 

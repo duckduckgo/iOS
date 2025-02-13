@@ -168,6 +168,9 @@ public struct PixelParameters {
     public static let appEvent = "event"
 
     public static let didCallWillEnterForeground = "didCallWillEnterForeground"
+
+    // Background Tasks
+    public static let backgroundTaskCategory = "category"
 }
 
 public struct PixelValues {

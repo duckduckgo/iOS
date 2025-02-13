@@ -24,11 +24,13 @@ import PrivacyDashboard
 import DesignResourcesKit
 import DuckPlayer
 import os.log
+import BrowserServicesKit
 
 extension OmniBar: NibLoading {}
 
 public enum OmniBarIcon: String {
     case duckPlayer = "DuckPlayerURLIcon"
+    case specialError = "Globe-24"
 }
 
 class OmniBar: UIView {
@@ -74,9 +76,15 @@ class OmniBar: UIView {
     @IBOutlet var omniBarTrailingConstraint: NSLayoutConstraint!
     @IBOutlet var separatorToBottom: NSLayoutConstraint!
 
+    @IBOutlet weak var dismissButton: UIButton!
+
+    /// A container view designed to maintain visual consistency among various items within this space.
+    /// Additionally, it facilitates smooth animations for the elements it contains.
+    @IBOutlet weak var leftIconContainerView: UIView!
+
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState!
-    var accessoryType: AccessoryType = .share {
+    private(set) var accessoryType: AccessoryType = .share {
         didSet {
             switch accessoryType {
             case .chat:
@@ -90,15 +98,15 @@ class OmniBar: UIView {
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()
     private let privacyIconContextualOnboardingAnimator = PrivacyIconContextualOnboardingAnimator()
+    private var dismissButtonAnimator: UIViewPropertyAnimator?
 
     // Set up a view to add a custom icon to the Omnibar
     private var customIconView: UIImageView = UIImageView(frame: CGRect(x: 4, y: 8, width: 26, height: 26))
 
-    static func loadFromXib(voiceSearchHelper: VoiceSearchHelperProtocol) -> OmniBar {
+    static func loadFromXib(dependencies: OmnibarDependencyProvider) -> OmniBar {
         let omniBar = OmniBar.load(nibName: "OmniBar")
-        omniBar.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: false)
+        omniBar.state = SmallOmniBarState.HomeNonEditingState(dependencies: dependencies, isLoading: false)
         omniBar.refreshState(omniBar.state)
-
         return omniBar
     }
 
@@ -107,8 +115,8 @@ class OmniBar: UIView {
     }
 
     // Tests require this
-    init(voiceSearchHelper: VoiceSearchHelperProtocol, frame: CGRect) {
-        self.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: false)
+    init(dependencies: OmnibarDependencyProvider, frame: CGRect) {
+        self.state = SmallOmniBarState.HomeNonEditingState(dependencies: dependencies, isLoading: false)
         super.init(frame: frame)
     }
 
@@ -276,7 +284,11 @@ class OmniBar: UIView {
     func removeTextSelection() {
         textField.selectedTextRange = nil
     }
-    
+
+    func updateAccessoryType(_ type: AccessoryType) {
+        DispatchQueue.main.async { self.accessoryType = type }
+    }
+
     public func hidePrivacyIcon() {
         privacyInfoContainer.privacyIcon.isHidden = true
     }
@@ -300,10 +312,15 @@ class OmniBar: UIView {
             showCustomIcon(icon: .duckPlayer)
             return
         }
-        
-        privacyInfoContainer.privacyIcon.isHidden = privacyInfo.isSpecialErrorPageVisible
+
+        if privacyInfo.isSpecialErrorPageVisible {
+            showCustomIcon(icon: .specialError)
+            return
+        }
+
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
+        privacyInfoContainer.privacyIcon.isHidden = false
         customIconView.isHidden = true
     }
     
@@ -335,8 +352,10 @@ class OmniBar: UIView {
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         notificationAnimator.cancelAnimations(in: self)
         privacyIconContextualOnboardingAnimator.dismissPrivacyIconAnimation(privacyInfoContainer.privacyIcon)
+
+        dismissButtonAnimator?.stopAnimation(true)
     }
-    
+
     public func completeAnimationForDaxDialog() {
         privacyIconAndTrackersAnimator.completeAnimationForDaxDialog(in: self)
     }
@@ -375,6 +394,7 @@ class OmniBar: UIView {
     }
 
     fileprivate func refreshState(_ newState: any OmniBarState) {
+        let oldState: OmniBarState = self.state
         if state.requiresUpdate(transitioningInto: newState) {
             Logger.general.debug("OmniBar entering \(newState.description) from \(self.state.description)")
 
@@ -384,14 +404,14 @@ class OmniBar: UIView {
                 }
                 cancelAllAnimations()
             }
-
             state = newState
         }
 
         searchFieldContainer.adjustTextFieldOffset(for: state)
-        
+
+        updateLeftIconContainerState(oldState: oldState, newState: state)
+
         setVisibility(privacyInfoContainer, hidden: !state.showPrivacyIcon)
-        setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(settingsButton, hidden: !state.showSettings)
@@ -404,25 +424,42 @@ class OmniBar: UIView {
         setVisibility(forwardButton, hidden: !state.showForwardButton)
         setVisibility(bookmarksButton, hidden: !state.showBookmarksButton)
         setVisibility(accessoryButton, hidden: !state.showAccessoryButton)
-        
+
         searchContainerCenterConstraint.isActive = state.hasLargeWidth
         searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
         leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
-        rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
+        rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : trailingConstraintValueForSmallWidth
 
         if state.showVoiceSearch && state.showClear {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }
 
+        if oldState.showAccessoryButton != state.showAccessoryButton {
+            refreshOmnibarPaddingConstraintsForAccessoryButton()
+        }
+
         UIView.animate(withDuration: 0.0) { [weak self] in
             self?.layoutIfNeeded()
         }
-        
     }
 
     func updateOmniBarPadding(left: CGFloat, right: CGFloat) {
         omniBarLeadingConstraint.constant = (state.hasLargeWidth ? 24 : 8) + left
-        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : 14) + right
+        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : trailingConstraintValueForSmallWidth) + right
+    }
+
+    /// When a setting that affects the accessory button is modified, `refreshState` is called.
+    /// This requires updating the padding to ensure consistent layout.
+    func refreshOmnibarPaddingConstraintsForAccessoryButton() {
+        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : trailingConstraintValueForSmallWidth) + (UIApplication.shared.firstKeyWindow?.safeAreaInsets.right ?? 0)
+    }
+
+    private var trailingConstraintValueForSmallWidth: CGFloat {
+        if state.showAccessoryButton || state.showSettings {
+            return 14
+        } else {
+            return 4
+        }
     }
 
     /*
@@ -548,7 +585,12 @@ class OmniBar: UIView {
     @IBAction func onAccessoryPressed(_ sender: Any) {
         omniDelegate?.onAccessoryPressed(accessoryType: accessoryType)
     }
-    
+
+    @IBAction func onDismissPressed(_ sender: Any) {
+        omniDelegate?.onCancelPressed()
+        refreshState(state.onEditingStoppedState)
+    }
+
     func enterPhoneState() {
         refreshState(state.onEnterPhoneState)
     }
@@ -561,7 +603,6 @@ class OmniBar: UIView {
         super.layoutSubviews()
         NotificationCenter.default.post(name: OmniBar.didLayoutNotification, object: self)
     }
-
 }
 
 extension OmniBar: UITextFieldDelegate {
@@ -583,6 +624,7 @@ extension OmniBar: UITextFieldDelegate {
             if highlightText {
                 self.textField.selectAll(nil)
             }
+            self.omniDelegate?.onDidBeginEditing()
         }
     }
     
@@ -598,6 +640,7 @@ extension OmniBar: UITextFieldDelegate {
         case .suspended:
             refreshState(state.onEditingSuspendedState)
         }
+        self.omniDelegate?.onDidEndEditing()
     }
 }
 
@@ -637,5 +680,68 @@ extension OmniBar {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             privacyIconAndTrackersAnimator.resetImageProvider()
         }
+    }
+}
+
+extension OmniBar {
+
+    private func updateLeftIconContainerState(oldState: any OmniBarState, newState: any OmniBarState) {
+        if state.dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            if oldState.showSearchLoupe && newState.showDismiss {
+                animateTransition(from: searchLoupe, to: dismissButton)
+            } else if oldState.showDismiss && newState.showSearchLoupe {
+                animateTransition(from: dismissButton, to: searchLoupe)
+            } else if dismissButtonAnimator == nil || dismissButtonAnimator?.isRunning == false {
+                updateLeftContainerVisibility(state: newState)
+            }
+
+        } else {
+            updateLeftContainerVisibility(state: newState)
+        }
+
+        if !state.showDismiss && !newState.showSearchLoupe {
+            leftIconContainerView.isHidden = true
+        } else {
+            leftIconContainerView.isHidden = false
+        }
+    }
+
+    private func updateLeftContainerVisibility(state: any OmniBarState) {
+        setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
+        setVisibility(dismissButton, hidden: !state.showDismiss)
+        dismissButton.alpha = state.showDismiss ? 1 : 0
+        searchLoupe.alpha = state.showSearchLoupe ? 0.5 : 0
+    }
+
+    private func animateTransition(from oldView: UIView, to newView: UIView) {
+        dismissButtonAnimator?.stopAnimation(true)
+        let animationOffset: CGFloat = 20
+        let animationDuration: CGFloat = 0.7
+        let animationDampingRatio: CGFloat = 0.6
+
+        newView.alpha = 0
+        newView.transform = CGAffineTransform(translationX: -animationOffset, y: 0)
+        newView.isHidden = false
+        oldView.isHidden = false
+
+        let targetAlpha: CGFloat = (newView == searchLoupe) ? 0.5 : 1.0
+
+        dismissButtonAnimator = UIViewPropertyAnimator(duration: animationDuration, dampingRatio: animationDampingRatio) {
+            oldView.alpha = 0
+            oldView.transform = CGAffineTransform(translationX: -animationOffset, y: 0)
+            newView.alpha = targetAlpha
+            newView.transform = .identity
+        }
+
+        dismissButtonAnimator?.isInterruptible = true
+
+        dismissButtonAnimator?.addCompletion { position in
+            if position == .end {
+                oldView.isHidden = true
+                oldView.transform = .identity
+            }
+        }
+
+        dismissButtonAnimator?.startAnimation()
     }
 }

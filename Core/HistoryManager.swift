@@ -114,6 +114,10 @@ class NullHistoryCoordinator: HistoryCoordinating {
         return nil
     }
 
+    func addVisit(of url: URL, at date: Date) -> History.Visit? {
+        return nil
+    }
+
     func addBlockedTracker(entityName: String, on url: URL) {
     }
 

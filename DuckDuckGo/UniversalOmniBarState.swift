@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import BrowserServicesKit
 
 enum UniversalOmniBarState {
     struct EditingSuspendedState: OmniBarState {
@@ -32,10 +33,11 @@ enum UniversalOmniBarState {
         var clearTextOnStart: Bool { baseState.clearTextOnStart }
         var allowsTrackersAnimation: Bool { baseState.allowsTrackersAnimation }
         var showSearchLoupe: Bool { baseState.showSearchLoupe }
-        var showCancel: Bool { true }
+        var showCancel: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
         var showPrivacyIcon: Bool { baseState.showPrivacyIcon }
         var showBackground: Bool { baseState.showBackground }
-        var showClear: Bool { false }
+        var showClear: Bool {  dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? baseState.showClear : false  }
+        var showDismiss: Bool { baseState.showDismiss }
         var showAbort: Bool { baseState.showAbort }
         var showRefresh: Bool { baseState.showRefresh }
         var showMenu: Bool { baseState.showMenu }
@@ -52,15 +54,15 @@ enum UniversalOmniBarState {
         var onEnterPadState: any OmniBarState { baseState.onEnterPadState }
         var onReloadState: any OmniBarState { baseState.onReloadState }
 
-        let voiceSearchHelper: VoiceSearchHelperProtocol
+        let dependencies: OmnibarDependencyProvider
         let isLoading: Bool
 
         func withLoading() -> UniversalOmniBarState.EditingSuspendedState {
-            Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, isLoading: true)
+            Self.init(baseState: baseState, dependencies: dependencies, isLoading: true)
         }
 
         func withoutLoading() -> UniversalOmniBarState.EditingSuspendedState {
-            Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, isLoading: false)
+            Self.init(baseState: baseState, dependencies: dependencies, isLoading: false)
         }
     }
 }

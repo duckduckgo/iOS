@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import BrowserServicesKit
 
 protocol OmniBarState: CustomStringConvertible {
 
@@ -33,7 +34,7 @@ protocol OmniBarState: CustomStringConvertible {
     var clearTextOnStart: Bool { get }
     var allowsTrackersAnimation: Bool { get }
     var showSearchLoupe: Bool { get }
-    var showCancel: Bool { get }
+    var showCancel: Bool { get } // Cancel button outside the address bar
     var showPrivacyIcon: Bool { get }
     var showBackground: Bool { get }
     var showClear: Bool { get }
@@ -42,6 +43,7 @@ protocol OmniBarState: CustomStringConvertible {
     var showSettings: Bool { get }
     var showVoiceSearch: Bool { get }
     var showAbort: Bool { get }
+    var showDismiss: Bool { get } // < button inside the address bar
 
     var onEditingStoppedState: OmniBarState { get }
     var onEditingSuspendedState: OmniBarState { get }
@@ -54,8 +56,7 @@ protocol OmniBarState: CustomStringConvertible {
     var onEnterPadState: OmniBarState { get }
     var onReloadState: OmniBarState { get }
 
-    var voiceSearchHelper: VoiceSearchHelperProtocol { get }
-
+    var dependencies: OmnibarDependencyProvider { get }
     var isLoading: Bool { get }
 
     func withLoading() -> Self
@@ -83,21 +84,21 @@ extension OmniBarState {
 
     var onEditingSuspendedState: OmniBarState {
         UniversalOmniBarState.EditingSuspendedState(baseState: onEditingStartedState,
-                                                    voiceSearchHelper: voiceSearchHelper,
+                                                    dependencies: dependencies,
                                                     isLoading: isLoading)
     }
 }
 
 protocol OmniBarLoadingBearerStateCreating {
-    init(voiceSearchHelper: VoiceSearchHelperProtocol, isLoading: Bool)
+    init(dependencies: OmnibarDependencyProvider, isLoading: Bool)
 }
 
 extension OmniBarLoadingBearerStateCreating where Self: OmniBarState {
     func withLoading() -> Self {
-        Self.init(voiceSearchHelper: voiceSearchHelper, isLoading: true)
+        Self.init(dependencies: dependencies, isLoading: true)
     }
 
     func withoutLoading() -> Self {
-        Self.init(voiceSearchHelper: voiceSearchHelper, isLoading: false)
+        Self.init(dependencies: dependencies, isLoading: false)
     }
 }

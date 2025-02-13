@@ -70,7 +70,14 @@ public enum FeatureFlag: String {
     /// https://app.asana.com/0/72649045549333/1208944782348823/f
     case syncSeamlessAccountSwitching
 
+    /// https://app.asana.com/0/1204167627774280/1209205869217377
+    case aiChatNewTabPage
+
     case testExperiment
+
+    /// Feature flag to enable / disable phishing and malware protection
+    /// https://app.asana.com/0/1206329551987282/1207149365636877/f
+    case maliciousSiteProtection
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
@@ -172,8 +179,12 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.feature(.webViewStateRestoration))
         case .syncSeamlessAccountSwitching:
             return .remoteReleasable(.subfeature(SyncSubfeature.seamlessAccountSwitching))
+        case .aiChatNewTabPage:
+            return .enabled
         case .testExperiment:
             return .remoteReleasable(.subfeature(ExperimentTestSubfeatures.experimentTestAA))
+        case .maliciousSiteProtection:
+            return .remoteReleasable(.subfeature(MaliciousSiteProtectionSubfeature.onByDefault))
         }
     }
 }

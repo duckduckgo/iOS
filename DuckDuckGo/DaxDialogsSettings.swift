@@ -19,10 +19,13 @@
 
 import Core
 
-protocol DaxDialogsSettings {
-    
+protocol DaxDialogsSettings: AnyObject {
+
     var isDismissed: Bool { get set }
-    
+
+    // Used to understand if users completed the old onboarding flow and should not be prompted in-context dax dialogs.
+    var homeScreenMessagesSeen: Int { get }
+
     var browsingAfterSearchShown: Bool { get set }
     
     var browsingWithTrackersShown: Bool { get set }
@@ -86,34 +89,6 @@ class DefaultDaxDialogsSettings: DaxDialogsSettings {
     var lastVisitedOnboardingWebsiteURLPath: String?
 
     @UserDefaultsWrapper(key: .daxLastShownContextualOnboardingDialogType, defaultValue: nil)
-    var lastShownContextualOnboardingDialogType: String?
-
-}
-
-class InMemoryDaxDialogsSettings: DaxDialogsSettings {
-    
-    var isDismissed: Bool = false
-    
-    var browsingAfterSearchShown: Bool = false
-    
-    var browsingWithTrackersShown: Bool = false
-    
-    var browsingWithoutTrackersShown: Bool = false
-    
-    var browsingMajorTrackingSiteShown: Bool = false
-    
-    var fireButtonEducationShownOrExpired: Bool = false
-
-    var fireMessageExperimentShown: Bool = false
-
-    var fireButtonPulseDateShown: Date?
-
-    var privacyButtonPulseShown: Bool = false
-
-    var browsingFinalDialogShown = false
-
-    var lastVisitedOnboardingWebsiteURLPath: String?
-
     var lastShownContextualOnboardingDialogType: String?
 
 }

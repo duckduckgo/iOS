@@ -47,6 +47,7 @@ final class SettingsViewModel: ObservableObject {
     let privacyProDataReporter: PrivacyProDataReporting?
     let textZoomCoordinator: TextZoomCoordinating
     let aiChatSettings: AIChatSettingsProvider
+    let maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
 
     // Subscription Dependencies
     let subscriptionManager: SubscriptionManager
@@ -436,7 +437,9 @@ final class SettingsViewModel: ObservableObject {
          syncPausedStateManager: any SyncPausedStateManaging,
          privacyProDataReporter: PrivacyProDataReporting,
          textZoomCoordinator: TextZoomCoordinating,
-         aiChatSettings: AIChatSettingsProvider) {
+         aiChatSettings: AIChatSettingsProvider,
+         maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
+    ) {
 
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
@@ -449,7 +452,7 @@ final class SettingsViewModel: ObservableObject {
         self.privacyProDataReporter = privacyProDataReporter
         self.textZoomCoordinator = textZoomCoordinator
         self.aiChatSettings = aiChatSettings
-
+        self.maliciousSiteProtectionPreferencesManager = maliciousSiteProtectionPreferencesManager
         setupNotificationObservers()
         updateRecentlyVisitedSitesVisibility()
     }
@@ -792,6 +795,7 @@ extension SettingsViewModel {
             state.subscription.hasActiveSubscription = false
             state.subscription.entitlements = []
             state.subscription.platform = .unknown
+            state.subscription.isActiveTrialOffer = false
 
             subscriptionStateCache.set(state.subscription) // Sync cache
             return
@@ -804,6 +808,7 @@ extension SettingsViewModel {
             state.subscription.platform = subscription.platform
             state.subscription.hasSubscription = true
             state.subscription.hasActiveSubscription = subscription.isActive
+            state.subscription.isActiveTrialOffer = subscription.hasActiveTrialOffer
 
             // Check entitlements and update state
             var currentEntitlements: [Entitlement.ProductName] = []
@@ -826,6 +831,7 @@ extension SettingsViewModel {
                     state.subscription.hasActiveSubscription = false
                     state.subscription.entitlements = []
                     state.subscription.platform = .unknown
+                    state.subscription.isActiveTrialOffer = false
 
                     DailyPixel.fireDailyAndCount(pixel: .settingsPrivacyProAccountWithNoSubscriptionFound)
                 }

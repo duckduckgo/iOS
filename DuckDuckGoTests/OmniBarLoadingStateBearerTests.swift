@@ -43,23 +43,21 @@ final class OmniBarLoadingStateBearerTests: XCTestCase {
 
     func testUnaffectedByLoadingStatesDoNotShowAbortButtonWhenLoading() {
         for state in Self.unaffectedByLoadingStates {
-            let state = state.init(voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: false), isLoading: true)
-
+            let state = state.init(dependencies: MockOmnibarDependency(voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: false)), isLoading: true)
             XCTAssertFalse(state.showAbort)
         }
     }
 
     func testAffectedByLoadingStatesShowAbortInPlaceOfRefreshButtonWhenLoading() {
         for state in Self.affectedByLoadingStates {
-            let state = state.init(voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: false), isLoading: true)
-
+            let state = state.init(dependencies: MockOmnibarDependency(voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: false)), isLoading: true)
             XCTAssertTrue(state.showAbort)
             XCTAssertFalse(state.showRefresh)
         }
     }
 
     func testLoadingStateIsPreservedAcrossStates() {
-        let initialState = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: false), isLoading: false)
+        let initialState = SmallOmniBarState.BrowsingEmptyEditingState(dependencies: MockOmnibarDependency(voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: false)), isLoading: true)
 
         let lastState = initialState
             .withLoading()

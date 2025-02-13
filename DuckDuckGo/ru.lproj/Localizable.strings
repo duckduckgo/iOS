@@ -1627,6 +1627,18 @@ Description of autofill onboarding prompt's secure storage feature with a string
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "Приложение DuckDuckGo для Mac";
 
+/* Button that redirect the user to a web page explaining what Malicious Site Protection is */
+"malicious-site-protection.settings.footer.button.learn-more" = "Узнать больше";
+
+/* Footer text for Malicious Site Protection settings warning the user about the risks of disabling the feature */
+"malicious-site-protection.settings.footer.message" = "При отключении этой функции ваши личные данные могут оказаться под угрозой.";
+
+/* Header text for Malicious Site Protection settings */
+"malicious-site-protection.settings.header" = "Предупреждения о безопасности на сайте";
+
+/* Text explaining what happens when Malicious Site Protection is enabled */
+"malicious-site-protection.settings.toggle.message" = "Предупреждать о вредоносных и фишинговых сайтах";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Меню браузера";
 

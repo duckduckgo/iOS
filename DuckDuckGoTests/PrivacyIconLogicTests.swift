@@ -118,6 +118,32 @@ class PrivacyIconLogicTests: XCTestCase {
         XCTAssertEqual(icon, .shield)
     }
 
+    func testWhenPrivacyIconThreatKindIsPhishingThenPrivacyIconIsAlert() {
+        // GIVEN
+        let url = PrivacyIconLogicTests.pageURL
+        let protectionStatus = ProtectionStatus(unprotectedTemporary: false, enabledFeatures: [], allowlisted: true, denylisted: false)
+        let privacyInfo = PrivacyInfo(url: url, parentEntity: nil, protectionStatus: protectionStatus, malicousSiteThreatKind: .phishing)
+
+        // WHEN
+        let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
+
+        // THEN
+        XCTAssertEqual(icon, .alert)
+    }
+
+    func testWhenPrivacyIconThreatKindIsMalwareThenPrivacyIconIsAlert() {
+        // GIVEN
+        let url = PrivacyIconLogicTests.pageURL
+        let protectionStatus = ProtectionStatus(unprotectedTemporary: false, enabledFeatures: [], allowlisted: true, denylisted: false)
+        let privacyInfo = PrivacyInfo(url: url, parentEntity: nil, protectionStatus: protectionStatus, malicousSiteThreatKind: .malware)
+
+        // WHEN
+        let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
+
+        // THEN
+        XCTAssertEqual(icon, .alert)
+    }
+
 }
 
 final class MockSecTrust: SecurityTrust {}

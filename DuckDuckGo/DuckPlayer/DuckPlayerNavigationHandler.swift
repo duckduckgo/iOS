@@ -287,6 +287,11 @@ final class DuckPlayerNavigationHandler: NSObject {
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
         
+        // Mute audio for the opening tab if required
+        // This prevents opening tab from hijacking Audio Session
+        // and playing audio in the background
+        toggleAudioForTab(webView, mute: true)
+        
         if duckPlayer.settings.nativeUI {
             loadNativeDuckPlayerVideo(videoID: videoID)
             return
@@ -374,6 +379,22 @@ final class DuckPlayerNavigationHandler: NSObject {
             completion?()
         }
         
+    }
+    
+    /// Toggles audio playback for a specific webView.
+    ///
+    /// - Parameters:
+    ///  - webView: The `WKWebView` to manipulate.
+    ///  - mute: Whether to mute the audio.
+    @MainActor
+    private func toggleAudioForTab(_ webView: WKWebView, mute: Bool) {
+        if duckPlayer.settings.openInNewTab || duckPlayer.settings.nativeUI {
+            webView.evaluateJavaScript("""
+                document.querySelectorAll('video, audio').forEach(function(media) {
+                    media.muted = \(mute);
+                });
+            """)
+        }
     }
         
     /// Loads a request with Duck Player parameters, handling new tab logic and first video allowance.
@@ -1005,6 +1026,18 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Allow everything else
         return false
         
+    }
+    
+    /// Sets the host view controller for Duck Player.
+    ///
+    /// - Parameters:
+    ///  - hostViewController: The `TabViewController` to set as the host.
+    @MainActor
+    func setHostViewController(_ hostViewController: TabViewController) {
+        duckPlayer.setHostViewController(hostViewController)
+        
+        // Ensure the tab is not muted
+        toggleAudioForTab(hostViewController.webView, mute: false)
     }
     
 }

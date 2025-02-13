@@ -119,17 +119,17 @@ jobs:
 
     
 
-  # notify-failure:
-  #   name: Notify on failure
-  #   if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.ref_name == 'main' }}
-  #   needs: [build-for-sync-end-to-end-tests, sync-end-to-end-tests]
-  #   runs-on: ubuntu-latest
+  notify-failure:
+    name: Notify on failure
+    if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.ref_name == 'main' }}
+    needs: [build-for-sync-end-to-end-tests, sync-end-to-end-tests]
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Create Asana task when workflow failed
-  #       run: |
-  #         curl -s "https://app.asana.com/api/1.0/tasks" \
-  #           --header "Accept: application/json" \
-  #           --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
-  #           --header "Content-Type: application/json" \
-  #           --data ' { "data": { "name": "GH Workflow Failure - Sync End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" } }'
+    steps:
+      - name: Create Asana task when workflow failed
+        run: |
+          curl -s "https://app.asana.com/api/1.0/tasks" \
+            --header "Accept: application/json" \
+            --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+            --header "Content-Type: application/json" \
+            --data ' { "data": { "name": "GH Workflow Failure - Sync End to end tests", "workspace": "${{ vars.ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" } }'

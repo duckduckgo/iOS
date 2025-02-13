@@ -24,7 +24,6 @@ class MainViewCoordinator {
     let superview: UIView
 
     var contentContainer: UIView!
-    var lastToolbarButton: UIBarButtonItem!
     var logo: UIImageView!
     var logoContainer: UIView!
     var topSlideContainer: UIView!
@@ -38,12 +37,16 @@ class MainViewCoordinator {
     var suggestionTrayContainer: UIView!
     var tabBarContainer: UIView!
     var toolbar: UIToolbar!
-    var toolbarBackButton: UIBarButtonItem!
-    var toolbarFireButton: UIBarButtonItem!
-    var toolbarForwardButton: UIBarButtonItem!
-    var toolbarTabSwitcherButton: UIBarButtonItem!
+    var toolbarBackButton: UIBarButtonItem { toolbarHandler.backButton }
+    var toolbarFireButton: UIBarButtonItem { toolbarHandler.fireButton }
+    var toolbarForwardButton: UIBarButtonItem { toolbarHandler.forwardButton }
+    var toolbarTabSwitcherButton: UIBarButtonItem { toolbarHandler.tabSwitcherButton }
+    var menuToolbarButton: UIBarButtonItem { toolbarHandler.browserMenuButton }
+    var toolbarPasswordsButton: UIBarButtonItem { toolbarHandler.passwordsButton }
+    var toolbarBookmarksButton: UIBarButtonItem { toolbarHandler.bookmarkButton }
 
     let constraints = Constraints()
+    var toolbarHandler: ToolbarHandler!
 
     // The default after creating the hiearchy is top
     var addressBarPosition: AddressBarPosition = .top
@@ -152,6 +155,10 @@ class MainViewCoordinator {
         constraints.navigationBarContainerBottom.isActive = active
         constraints.topSlideContainerBottomToStatusBackgroundBottom.isActive = active
         constraints.statusBackgroundBottomToSafeAreaTop.isActive = active
+    }
+
+    func updateToolbarWithState(_ state: ToolbarContentState) {
+        toolbarHandler.updateToolbarWithState(state)
     }
 
 }

@@ -106,11 +106,7 @@ final class BrowsingMenuAnimator: NSObject, UIViewControllerAnimatedTransitionin
 
         fromViewController.view.isHidden = true
 
-        if toViewController.newTabPageViewController != nil {
-            toViewController.presentedMenuButton.setState(.bookmarksImage, animated: true)
-        } else {
-            toViewController.presentedMenuButton.setState(.menuImage, animated: true)
-        }
+        toViewController.presentedMenuButton.setState(.menuImage, animated: true)
 
         UIView.animate(withDuration: Constants.dismissAnimationDuration, animations: {
             snapshot?.alpha = 0

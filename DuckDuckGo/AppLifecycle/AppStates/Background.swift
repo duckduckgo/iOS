@@ -17,114 +17,68 @@
 //  limitations under the License.
 //
 
-import Foundation
-import Combine
-import DDGSync
 import UIKit
-import Core
 
-/// Represents the state where the app is fully in the background and not visible to the user.
+/// Represents the state where the app is in the background and not visible to the user.
 /// - Usage:
 ///   - This state is typically associated with the `applicationDidEnterBackground(_:)` method.
 ///   - The app transitions to this state when it is no longer in the foreground, either due to the user
 ///     minimizing the app, switching to another app, or locking the device.
-/// - Transitions:
-///   - `Resuming`: The app transitions to the `Resuming` state when the user brings the app back to the foreground.
-/// - Notes:
-///   - This is one of the app's two long-lived states, alongside `Foreground`.
-///   - Background tasks, such as saving data or refreshing content, should be handled in this state.
-///   - Use this state to ensure that the app's current state is saved and any necessary cleanup is performed
-///     to release resources or prepare for a potential termination.
 struct Background: AppState {
 
     private let lastBackgroundDate: Date = Date()
-    private let application: UIApplication
-    private var appDependencies: AppDependencies
+    private let appDependencies: AppDependencies
+    private let didTransitionFromLaunching: Bool
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
-    // MARK: Handle logic when transitioning from Launching to Background
-    // This transition can occur if the app is protected by FaceID (e.g., the app is launched, but the user doesn't authenticate).
-    // Note: In this case, the Foreground state was never shown to the user, so you may want to avoid ending sessions that were never started, etc.
     init(stateContext: Launching.StateContext) {
-        application = stateContext.application
         appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
-
-        run()
+        didTransitionFromLaunching = true
     }
 
-    // MARK: Handle logic when transitioning from Suspending to Background
-    // This transition occurs when the app moves from foreground to the background.
-    init(stateContext: Suspending.StateContext) {
-        application = stateContext.application
+    init(stateContext: Foreground.StateContext) {
         appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
-
-        run()
+        didTransitionFromLaunching = false
     }
 
-    // MARK: Handle logic when transitioning from Resuming to Background
-    // This transition can occur when the app returns to the background after being in the background (e.g., user doesn't authenticate on a locked app).
-    init(stateContext: Resuming.StateContext) {
-        application = stateContext.application
-        appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
+    // MARK: - Handle applicationDidEnterBackground(_:) logic here
+    func onTransition() {
+        appDependencies.vpnService.onBackground()
+        appDependencies.authenticationService.onBackground()
+        appDependencies.autoClearService.onBackground()
+        appDependencies.autofillService.onBackground()
+        appDependencies.syncService.onBackground()
+        appDependencies.reportingService.onBackground()
 
-        run()
+        appDependencies.mainCoordinator.onBackground()
     }
 
-    mutating func run() {
-        let autoClear = appDependencies.autoClear
-        let privacyStore = appDependencies.privacyStore
-        let privacyProDataReporter = appDependencies.privacyProDataReporter
-        let voiceSearchHelper = appDependencies.voiceSearchHelper
-        let appSettings = appDependencies.appSettings
-        let autofillLoginSession = appDependencies.autofillLoginSession
-        let syncService = appDependencies.syncService
-        let syncDataProviders = appDependencies.syncDataProviders
-        let uiService = appDependencies.uiService
+}
 
-        if autoClear.isClearingEnabled || privacyStore.authenticationEnabled {
-            uiService.displayBlankSnapshotWindow(voiceSearchHelper: voiceSearchHelper,
-                                                 addressBarPosition: appSettings.currentAddressBarPosition)
-        }
-        autoClear.startClearingTimer()
-        autofillLoginSession.endSession()
+// MARK: - Handle application resumption (applicationWillEnterForeground(_:)) logic here
+extension Background {
 
-        suspendSync(syncService: syncService)
-        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
-        privacyProDataReporter.saveApplicationLastSessionEnded()
-
-        resetAppStartTime()
+    /// Called when the app is attempting to enter the foreground from the background.
+    /// If the app uses the system Face ID lock feature and the user does not authenticate, it will return to the background, triggering `didReturn()`.
+    /// Use `didReturn()` to revert any actions performed in `willLeave()`, e.g. suspend services that were resumed (if applicable).
+    ///
+    /// **Important note**
+    /// By default, resume any services in the `onTransition()` method of the `Foreground` state.
+    /// Use this method to resume **UI related tasks** that need to be completed promptly, preventing UI glitches when the user first sees the app.
+    /// This ensures that the app remains smooth as it enters the foreground.
+    func willLeave() {
+        ThemeManager.shared.updateUserInterfaceStyle()
+        appDependencies.autoClearService.onResuming()
     }
 
-    private mutating func suspendSync(syncService: DDGSync) {
-        if syncService.isSyncInProgress {
-            Logger.sync.debug("Sync is in progress. Starting background task to allow it to gracefully complete.")
-
-            var taskID: UIBackgroundTaskIdentifier!
-            taskID = UIApplication.shared.beginBackgroundTask(withName: "Cancelled Sync Completion Task") {
-                Logger.sync.debug("Forcing background task completion")
-                UIApplication.shared.endBackgroundTask(taskID)
-            }
-            appDependencies.syncDidFinishCancellable?.cancel()
-            appDependencies.syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
-                .prefix(1)
-                .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    Logger.sync.debug("Ending background task")
-                    UIApplication.shared.endBackgroundTask(taskID)
-                }
-        }
-
-        syncService.scheduler.cancelSyncAndSuspendSyncQueue()
-    }
-
-    private func resetAppStartTime() {
-        appDependencies.mainViewController.appDidFinishLaunchingStartTime = nil
-    }
+    /// Called when the app transitions from launching or foreground to background,
+    /// or when the app fails to wake up from the background (due to system Face ID lock).
+    /// This is the counterpart to `willLeave()`.
+    ///
+    /// Use this method to revert any actions performed in `willLeave` (if applicable).
+    func didReturn() { }
 
 }
 
@@ -132,21 +86,20 @@ extension Background {
 
     struct StateContext {
 
-        let application: UIApplication
         let lastBackgroundDate: Date
         let urlToOpen: URL?
         let shortcutItemToHandle: UIApplicationShortcutItem?
-
         let appDependencies: AppDependencies
+        let didTransitionFromLaunching: Bool
 
     }
 
     func makeStateContext() -> StateContext {
-        .init(application: application,
-              lastBackgroundDate: lastBackgroundDate,
+        .init(lastBackgroundDate: lastBackgroundDate,
               urlToOpen: urlToOpen,
               shortcutItemToHandle: shortcutItemToHandle,
-              appDependencies: appDependencies)
+              appDependencies: appDependencies,
+              didTransitionFromLaunching: didTransitionFromLaunching)
     }
 
 }

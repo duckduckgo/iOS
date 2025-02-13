@@ -39,8 +39,7 @@ tags:
 # Close tab
 - tapOn: "Tab Switcher"
 - tapOn: "Close \"Example Domain\" at example.com"
-- tapOn:
-    id: "Add"
+- tapOn: "New Tab"
 
 # Check history
 - assertVisible:

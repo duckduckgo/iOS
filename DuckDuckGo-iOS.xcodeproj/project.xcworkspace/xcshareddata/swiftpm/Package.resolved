@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
-        "revision" : "8ea6cdb74fed2e9ff9d60aafe636291dff8024dc",
-        "version" : "235.0.0"
+        "revision" : "92f57bfcf15258a360f6df8a48da756491683fe0",
+        "version" : "237.1.0"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "5a463e35ce86fc11394fe62392d32960de22f7d7",
-        "version" : "7.11.0"
+        "revision" : "874b27ad51d1784c934760c85493f78e609c4409",
+        "version" : "7.18.0"
       }
     },
     {
@@ -131,8 +131,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "c52bd5d851b1f8f0482e82b8720852670f525497",
-        "version" : "8.1.0"
+        "revision" : "099f7ed5faac946e4d80746703aaaf87fdfbee09",
+        "version" : "8.3.0"
       }
     },
     {
@@ -167,8 +167,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",
       "state" : {
-        "revision" : "ff0f781cf7c6a22d52957e50b104f5768b50c779",
-        "version" : "3.10.0"
+        "revision" : "f2f3774fd116a305136b6866e5e7cb7dff39d8f2",
+        "version" : "3.10.1"
       }
     },
     {

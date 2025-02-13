@@ -39,7 +39,7 @@ final class URLExtensionTests: XCTestCase {
     func testAddingQueryItemToEmptyURL() {
         let url = URL(string: TestURLs.example)!
         let queryItem = URLQueryItem(name: "key", value: "value")
-        let result = url.addingOrReplacingQueryItem(queryItem)
+        let result = url.addingOrReplacing(queryItem)
 
         XCTAssertEqual(result.scheme, "https")
         XCTAssertEqual(result.host, "example.com")
@@ -49,7 +49,7 @@ final class URLExtensionTests: XCTestCase {
     func testReplacingExistingQueryItem() {
         let url = URL(string: TestURLs.exampleWithKeyOldValue)!
         let queryItem = URLQueryItem(name: "key", value: "newValue")
-        let result = url.addingOrReplacingQueryItem(queryItem)
+        let result = url.addingOrReplacing(queryItem)
 
         XCTAssertEqual(result.scheme, "https")
         XCTAssertEqual(result.host, "example.com")
@@ -59,7 +59,7 @@ final class URLExtensionTests: XCTestCase {
     func testAddingQueryItemToExistingQuery() {
         let url = URL(string: TestURLs.exampleWithExistingQuery)!
         let queryItem = URLQueryItem(name: "newKey", value: "newValue")
-        let result = url.addingOrReplacingQueryItem(queryItem)
+        let result = url.addingOrReplacing(queryItem)
 
         XCTAssertEqual(result.scheme, "https")
         XCTAssertEqual(result.host, "example.com")
@@ -69,7 +69,7 @@ final class URLExtensionTests: XCTestCase {
     func testReplacingOneOfMultipleQueryItems() {
         let url = URL(string: TestURLs.exampleWithMultipleQueryItems)!
         let queryItem = URLQueryItem(name: "key1", value: "newValue1")
-        let result = url.addingOrReplacingQueryItem(queryItem)
+        let result = url.addingOrReplacing(queryItem)
 
         XCTAssertEqual(result.scheme, "https")
         XCTAssertEqual(result.host, "example.com")
@@ -79,21 +79,21 @@ final class URLExtensionTests: XCTestCase {
     func testAddingQueryItemWithNilValue() {
         let url = URL(string: TestURLs.example)!
         let queryItem = URLQueryItem(name: "key", value: nil)
-        let result = url.addingOrReplacingQueryItem(queryItem)
+        let result = url.addingOrReplacing(queryItem)
 
         XCTAssertEqual(result.scheme, "https")
         XCTAssertEqual(result.host, "example.com")
-        XCTAssertEqual(result.queryItemsDictionary, ["key": ""])
+        XCTAssertEqual(result.queryItemsDictionary, [:])
     }
 
     func testReplacingQueryItemWithNilValue() {
         let url = URL(string: "\(TestURLs.example)?key=value")!
         let queryItem = URLQueryItem(name: "key", value: nil)
-        let result = url.addingOrReplacingQueryItem(queryItem)
+        let result = url.addingOrReplacing(queryItem)
 
         XCTAssertEqual(result.scheme, "https")
         XCTAssertEqual(result.host, "example.com")
-        XCTAssertEqual(result.queryItemsDictionary, ["key": ""])
+        XCTAssertEqual(result.queryItemsDictionary, ["key": "value"])
     }
 
     func testIsDuckAIURLWithValidURL() {

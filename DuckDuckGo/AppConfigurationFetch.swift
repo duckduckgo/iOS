@@ -161,7 +161,7 @@ class AppConfigurationFetch {
         do {
             try BGTaskScheduler.shared.submit(task)
         } catch {
-            Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error)
+            Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error, withAdditionalParameters: [PixelParameters.backgroundTaskCategory: "appConfiguration"])
         }
         #endif
     }

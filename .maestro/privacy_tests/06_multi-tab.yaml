@@ -58,10 +58,8 @@ tags:
     text: "Publisher site"
 - assertVisible: Tab Switcher
 - tapOn: Tab Switcher 
-- assertVisible:
-    id: "Add"
-- tapOn:
-    id: "Add"
+- assertVisible: "New Tab"
+- tapOn: "New Tab"
 - assertVisible:
     id: "searchEntry"
 - tapOn: 

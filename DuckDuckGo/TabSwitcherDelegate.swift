@@ -31,4 +31,6 @@ protocol TabSwitcherDelegate: AnyObject {
     
     func tabSwitcherDidRequestCloseAll(tabSwitcher: TabSwitcherViewController)
 
+    func tabSwitcherDidReorderTabs(tabSwitcher: TabSwitcherViewController)
+
 }

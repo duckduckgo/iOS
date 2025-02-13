@@ -20,64 +20,74 @@
 import Foundation
 
 extension URL {
-    enum Constants {
-        static let duckDuckGoHost = "duckduckgo.com"
+
+    private enum DuckDuckGo {
+        static let host = "duckduckgo.com"
         static let chatQueryName = "ia"
         static let chatQueryValue = "chat"
-
         static let bangQueryName = "q"
         static let supportedBangs: Set<String> = ["ai", "aichat", "chat", "duckai"]
     }
 
-    func addingOrReplacingQueryItem(_ queryItem: URLQueryItem) -> URL {
-        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
+    /**
+     Returns a new URL with the given query item added or replaced.  If the query item's value
+     is nil or empty after trimming whitespace, the original URL is returned.
+
+     - Parameter queryItem: The query item to add or replace.
+     - Returns: A new URL with the query item added or replaced, or the original URL if the query item's value is invalid.
+     */
+    func addingOrReplacing(_ queryItem: URLQueryItem) -> URL {
+        guard let queryValue = queryItem.value,
+              !queryValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return self
         }
 
-        var queryItems = urlComponents.queryItems ?? []
+        var components = URLComponents(url: self, resolvingAgainstBaseURL: false)
+
+        var queryItems = components?.queryItems ?? []
         queryItems.removeAll { $0.name == queryItem.name }
         queryItems.append(queryItem)
+        components?.queryItems = queryItems
 
-        urlComponents.queryItems = queryItems
-        return urlComponents.url ?? self
+        return components?.url ?? self
     }
 
+    /**
+     Returns `true` if the URL is a DuckDuckGo URL for Duck.ai
+
+     This property checks if the URL's host is `duckduckgo.com` and if it either contains the Duck.ai chat query parameter
+     or is a Duck.ai bang.
+
+     - Returns: `true` if the URL is a DuckDuckGo URL for DuckAssist (chat), `false` otherwise.
+     */
     public var isDuckAIURL: Bool {
-        guard let host = self.host, host == Constants.duckDuckGoHost else {
-            return false
-        }
-
-        guard let urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false),
-              let queryItems = urlComponents.queryItems else {
-            return false
-        }
-
-        return queryItems.contains { $0.name == Constants.chatQueryName && $0.value == Constants.chatQueryValue } || self.isDuckAIBang
+        guard host == DuckDuckGo.host else { return false }
+        return isDuckAIChatQuery || isDuckAIBang
     }
 
-    public var isDuckAIBang: Bool {
-        guard let host = self.host, host == Constants.duckDuckGoHost else {
-            return false
-        }
 
-        guard let urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false),
-              let queryItems = urlComponents.queryItems else {
-            return false
-        }
+    // MARK: - Private methods
 
-        return queryItems.contains { $0.name == Constants.bangQueryName && hasSupportedBangPrefix($0.value) }
+    private var isDuckAIChatQuery: Bool {
+        return queryItems?.contains { $0.name == DuckDuckGo.chatQueryName && $0.value == DuckDuckGo.chatQueryValue } == true
     }
 
-    private func hasSupportedBangPrefix(_ input: String?) -> Bool {
-        guard let input = input else {
-            return false
-        }
-
-        /// Bangs can be used either at the beginning or at the end of a query.
-        let bangValues = Constants.supportedBangs.flatMap { bang in
-            return ["!\(bang)", "\(bang)!"]
-        }
-        return bangValues.contains { input.hasPrefix($0) }
+    var isDuckAIBang: Bool {
+        guard host == DuckDuckGo.host else { return false }
+        return queryItems?.contains { $0.name == DuckDuckGo.bangQueryName && isSupportedBang(value: $0.value) } == true
     }
 
+    private var queryItems: [URLQueryItem]? {
+        return URLComponents(url: self, resolvingAgainstBaseURL: false)?.queryItems
+    }
+
+    private func isSupportedBang(value: String?) -> Bool {
+        guard let value = value else { return false }
+
+        let bangValues = DuckDuckGo.supportedBangs.flatMap { bang in
+            ["!\(bang)", "\(bang)!"]
+        }
+
+        return bangValues.contains { value.hasPrefix($0) }
+    }
 }

@@ -26,14 +26,12 @@ import Combine
 class AIChatSettingsTests: XCTestCase {
 
     private var mockPrivacyConfigurationManager: PrivacyConfigurationManagerMock!
-    private var mockInternalUserDecider: MockInternalUserDecider!
     private var mockUserDefaults: UserDefaults!
     private var mockNotificationCenter: NotificationCenter!
 
     override func setUp() {
         super.setUp()
         mockPrivacyConfigurationManager = PrivacyConfigurationManagerMock()
-        mockInternalUserDecider = MockInternalUserDecider()
         mockUserDefaults = UserDefaults(suiteName: "TestDefaults")
         mockNotificationCenter = NotificationCenter()
     }
@@ -41,7 +39,6 @@ class AIChatSettingsTests: XCTestCase {
     override func tearDown() {
         mockUserDefaults.removePersistentDomain(forName: "TestDefaults")
         mockPrivacyConfigurationManager = nil
-        mockInternalUserDecider = nil
         mockUserDefaults = nil
         mockNotificationCenter = nil
         super.tearDown()
@@ -49,7 +46,6 @@ class AIChatSettingsTests: XCTestCase {
 
     func testAIChatURLReturnsDefaultWhenRemoteSettingsMissing() {
         let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
-                                      internalUserDecider: mockInternalUserDecider,
                                       userDefaults: mockUserDefaults,
                                       notificationCenter: mockNotificationCenter)
 
@@ -61,7 +57,6 @@ class AIChatSettingsTests: XCTestCase {
 
     func testAIChatURLReturnsRemoteSettingWhenAvailable() {
         let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
-                                      internalUserDecider: mockInternalUserDecider,
                                       userDefaults: mockUserDefaults,
                                       notificationCenter: mockNotificationCenter)
 
@@ -75,7 +70,6 @@ class AIChatSettingsTests: XCTestCase {
 
     func testIsAIChatFeatureEnabledWhenFeatureIsEnabled() {
         let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
-                                      internalUserDecider: mockInternalUserDecider,
                                       userDefaults: mockUserDefaults,
                                       notificationCenter: mockNotificationCenter)
 
@@ -86,19 +80,8 @@ class AIChatSettingsTests: XCTestCase {
         XCTAssertTrue(settings.isAIChatFeatureEnabled)
     }
 
-    func testIsAIChatFeatureEnabledForInternalUser() {
-        let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
-                                      internalUserDecider: mockInternalUserDecider,
-                                      userDefaults: mockUserDefaults,
-                                      notificationCenter: mockNotificationCenter)
-
-        mockInternalUserDecider.mockIsInternalUser = true
-        XCTAssertTrue(settings.isAIChatFeatureEnabled)
-    }
-
     func testEnableAIChatBrowsingMenuUserSettings() {
         let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
-                                      internalUserDecider: mockInternalUserDecider,
                                       userDefaults: mockUserDefaults,
                                       notificationCenter: mockNotificationCenter)
 
@@ -118,7 +101,6 @@ class AIChatSettingsTests: XCTestCase {
 
     func testEnableAIChatAddressBarUserSettings() {
         let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
-                                      internalUserDecider: mockInternalUserDecider,
                                       userDefaults: mockUserDefaults,
                                       notificationCenter: mockNotificationCenter)
 
@@ -139,7 +121,6 @@ class AIChatSettingsTests: XCTestCase {
 
     func testNotificationPostedWhenSettingsChange() {
         let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
-                                      internalUserDecider: mockInternalUserDecider,
                                       userDefaults: mockUserDefaults,
                                       notificationCenter: mockNotificationCenter)
 
@@ -156,7 +137,6 @@ class AIChatSettingsTests: XCTestCase {
 
     func testAIChatBrowsingMenuUserSettingsDisabledWhenToolbarShortcutFeatureDisabled() {
         let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
-                                      internalUserDecider: mockInternalUserDecider,
                                       userDefaults: mockUserDefaults,
                                       notificationCenter: mockNotificationCenter)
 
@@ -171,7 +151,6 @@ class AIChatSettingsTests: XCTestCase {
 
     func testAIChatAddressBarUserSettingsDisabledWhenAddressBarShortcutFeatureDisabled() {
         let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
-                                      internalUserDecider: mockInternalUserDecider,
                                       userDefaults: mockUserDefaults,
                                       notificationCenter: mockNotificationCenter)
 
@@ -184,24 +163,4 @@ class AIChatSettingsTests: XCTestCase {
         XCTAssertFalse(settings.isAIChatAddressBarUserSettingsEnabled)
     }
 
-}
-
-final private class MockInternalUserDecider: InternalUserDecider {
-    var mockIsInternalUser: Bool = false
-    var mockIsInternalUserPublisher: AnyPublisher<Bool, Never> {
-        Just(mockIsInternalUser).eraseToAnyPublisher()
-    }
-
-    var isInternalUser: Bool {
-        return mockIsInternalUser
-    }
-
-    var isInternalUserPublisher: AnyPublisher<Bool, Never> {
-        return mockIsInternalUserPublisher
-    }
-
-    @discardableResult
-    func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) -> Bool {
-        return mockIsInternalUser
-    }
 }

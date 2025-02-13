@@ -18,23 +18,33 @@
 //
 
 import UIKit
+import BrowserServicesKit
+import AIChat
 
 class MainViewFactory {
 
     private let coordinator: MainViewCoordinator
-    private let voiceSearchHelper: VoiceSearchHelperProtocol
+    private let featureFlagger: FeatureFlagger
+    private let omnibarDependencies: OmnibarDependencyProvider
 
     var superview: UIView {
         coordinator.superview
     }
 
-    private init(superview: UIView, voiceSearchHelper: VoiceSearchHelperProtocol) {
+    private init(superview: UIView, omnibarDependencies: OmnibarDependencyProvider, featureFlagger: FeatureFlagger) {
         coordinator = MainViewCoordinator(superview: superview)
-        self.voiceSearchHelper = voiceSearchHelper
+        self.featureFlagger = featureFlagger
+        self.omnibarDependencies = omnibarDependencies
     }
 
-    static func createViewHierarchy(_ superview: UIView, voiceSearchHelper: VoiceSearchHelperProtocol) -> MainViewCoordinator {
-        let factory = MainViewFactory(superview: superview, voiceSearchHelper: voiceSearchHelper)
+    static func createViewHierarchy(_ superview: UIView,
+                                    aiChatSettings: AIChatSettingsProvider,
+                                    voiceSearchHelper: VoiceSearchHelperProtocol,
+                                    featureFlagger: FeatureFlagger) -> MainViewCoordinator {
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                      featureFlagger: featureFlagger,
+                                                      aiChatSettings: aiChatSettings)
+        let factory = MainViewFactory(superview: superview, omnibarDependencies: omnibarDependencies, featureFlagger: featureFlagger)
         factory.createViews()
         factory.disableAutoresizingOnImmediateSubviews(superview)
         factory.constrainViews()
@@ -72,7 +82,7 @@ extension MainViewFactory {
     }
 
     private func createOmniBar() {
-        coordinator.omniBar = OmniBar.loadFromXib(voiceSearchHelper: voiceSearchHelper)
+        coordinator.omniBar = OmniBar.loadFromXib(dependencies: omnibarDependencies)
         coordinator.omniBar.translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -141,25 +151,9 @@ extension MainViewFactory {
 
         coordinator.toolbar = HitTestingToolbar()
         coordinator.toolbar.isTranslucent = false
-
-        coordinator.toolbarBackButton = UIBarButtonItem(title: UserText.keyCommandBrowserBack, image: UIImage(named: "BrowsePrevious"))
-        coordinator.toolbarForwardButton = UIBarButtonItem(title: UserText.keyCommandBrowserForward, image: UIImage(named: "BrowseNext"))
-        coordinator.toolbarFireButton = UIBarButtonItem(title: UserText.actionForgetAll, image: UIImage(named: "Fire"))
-        coordinator.toolbarTabSwitcherButton = UIBarButtonItem(title: UserText.tabSwitcherAccessibilityLabel, image: UIImage(named: "Add-24"))
-        coordinator.lastToolbarButton = UIBarButtonItem(title: UserText.actionOpenBookmarks, image: UIImage(named: "Book-24"))
         superview.addSubview(coordinator.toolbar)
-
-        coordinator.toolbar.setItems([
-            coordinator.toolbarBackButton!,
-            .flexibleSpace(),
-            coordinator.toolbarForwardButton!,
-            .flexibleSpace(),
-            coordinator.toolbarFireButton!,
-            .flexibleSpace(),
-            coordinator.toolbarTabSwitcherButton!,
-            .flexibleSpace(),
-            coordinator.lastToolbarButton!,
-        ], animated: true)
+        coordinator.toolbarHandler = ToolbarHandler(toolbar: coordinator.toolbar, featureFlagger: featureFlagger)
+        coordinator.updateToolbarWithState(.newTab)
     }
 
     final class LogoBackgroundView: UIView { }

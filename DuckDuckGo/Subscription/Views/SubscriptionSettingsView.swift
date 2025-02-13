@@ -29,6 +29,7 @@ struct SubscriptionSettingsView: View {
         case subscribed
         case expired
         case activating
+        case trial
     }
     @State var configuration: Configuration
     @Environment(\.dismiss) var dismiss
@@ -70,6 +71,8 @@ struct SubscriptionSettingsView: View {
                 SubscriptionSettingsHeaderView(state: .expired(viewModel.state.subscriptionDetails))
             case .activating:
                 SubscriptionSettingsHeaderView(state: .activating)
+            case .trial:
+                SubscriptionSettingsHeaderView(state: .trial)
             }
         }
         .listRowBackground(Color.clear)
@@ -121,7 +124,7 @@ struct SubscriptionSettingsView: View {
                 footer: manageSectionFooter) {
 
             switch configuration {
-            case .subscribed, .expired:
+            case .subscribed, .expired, .trial:
                 let active = viewModel.state.subscriptionInfo?.isActive ?? false
                 SettingsCustomCell(content: {
                     if !viewModel.state.isLoadingSubscriptionInfo {
@@ -283,7 +286,7 @@ struct SubscriptionSettingsView: View {
             headerSection
                 .padding(.horizontal, -20)
                 .padding(.vertical, -10)
-            if configuration == .subscribed || configuration == .expired {
+            if configuration == .subscribed || configuration == .expired || configuration == .trial {
                 devicesSection
             }
             manageSection

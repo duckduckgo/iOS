@@ -185,8 +185,10 @@ class MainViewController: UIViewController {
 
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
+    let aiChatSettings: AIChatSettingsProvider
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
+    let maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
 
     private lazy var aiChatViewControllerManager: AIChatViewControllerManager = {
         let manager = AIChatViewControllerManager()
@@ -194,11 +196,10 @@ class MainViewController: UIViewController {
         return manager
     }()
 
-    private var omnibarAccessoryHandler: OmnibarAccessoryHandler = {
-        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+    private lazy var omnibarAccessoryHandler: OmnibarAccessoryHandler = {
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
 
-        return OmnibarAccessoryHandler(settings: settings)
+        return OmnibarAccessoryHandler(settings: settings, featureFlagger: featureFlagger)
     }()
 
     init(
@@ -226,7 +227,10 @@ class MainViewController: UIViewController {
         subscriptionCookieManager: SubscriptionCookieManaging,
         textZoomCoordinator: TextZoomCoordinating,
         websiteDataManager: WebsiteDataManaging,
-        appDidFinishLaunchingStartTime: CFAbsoluteTime?
+        appDidFinishLaunchingStartTime: CFAbsoluteTime?,
+        maliciousSiteProtectionManager: MaliciousSiteProtectionManaging,
+        maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging,
+        aichatSettings: AIChatSettingsProvider
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -237,7 +241,7 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-
+        self.aiChatSettings = aichatSettings
         self.previewsSource = previewsSource
 
         let interactionStateSource = WebViewStateRestorationManager(featureFlagger: featureFlagger).isFeatureEnabled ? TabInteractionStateDiskSource() : nil
@@ -256,7 +260,9 @@ class MainViewController: UIViewController {
                                      appSettings: appSettings,
                                      textZoomCoordinator: textZoomCoordinator,
                                      websiteDataManager: websiteDataManager,
-                                     fireproofing: fireproofing)
+                                     fireproofing: fireproofing,
+                                     maliciousSiteProtectionManager: maliciousSiteProtectionManager,
+                                     maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionPreferencesManager)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -272,6 +278,7 @@ class MainViewController: UIViewController {
         self.textZoomCoordinator = textZoomCoordinator
         self.websiteDataManager = websiteDataManager
         self.appDidFinishLaunchingStartTime = appDidFinishLaunchingStartTime
+        self.maliciousSiteProtectionPreferencesManager = maliciousSiteProtectionPreferencesManager
 
         super.init(nibName: nil, bundle: nil)
         
@@ -307,12 +314,17 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(self.view, voiceSearchHelper: voiceSearchHelper)
+        viewCoordinator = MainViewFactory.createViewHierarchy(self.view,
+                                                              aiChatSettings: aiChatSettings,
+                                                              voiceSearchHelper: voiceSearchHelper,
+                                                              featureFlagger: featureFlagger)
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
 
         viewCoordinator.toolbarBackButton.action = #selector(onBackPressed)
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
+        viewCoordinator.toolbarPasswordsButton.action = #selector(onPasswordsPressed)
+        viewCoordinator.toolbarBookmarksButton.action = #selector(onToolbarBookmarksPressed)
 
         installSwipeTabs()
             
@@ -395,11 +407,15 @@ class MainViewController: UIViewController {
 
     private func installSwipeTabs() {
         guard swipeTabsCoordinator == nil else { return }
-        
+
+        let omnibarDependencies = OmnibarDependencies(voiceSearchHelper: voiceSearchHelper,
+                                                      featureFlagger: featureFlagger,
+                                                      aiChatSettings: aiChatSettings)
+
         swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
                                                     tabPreviewsSource: previewsSource,
                                                     appSettings: appSettings,
-                                                    voiceSearchHelper: voiceSearchHelper,
+                                                    omnibarDependencies: omnibarDependencies,
                                                     omnibarAccessoryHandler: omnibarAccessoryHandler) { [weak self] in
 
             guard $0 != self?.tabManager.model.currentIndex else { return }
@@ -717,10 +733,10 @@ class MainViewController: UIViewController {
     }
     
     private func initMenuButton() {
-        viewCoordinator.lastToolbarButton.customView = menuButton
-        viewCoordinator.lastToolbarButton.isAccessibilityElement = true
-        viewCoordinator.lastToolbarButton.accessibilityTraits = .button
-        
+        viewCoordinator.menuToolbarButton.customView = menuButton
+        viewCoordinator.menuToolbarButton.isAccessibilityElement = true
+        viewCoordinator.menuToolbarButton.accessibilityTraits = .button
+
         menuButton.delegate = self
     }
     
@@ -900,7 +916,11 @@ class MainViewController: UIViewController {
         
         performCancel()
     }
-    
+
+    @objc func onPasswordsPressed() {
+        launchAutofillLogins(source: .newTabPageToolbar)
+    }
+
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
         forgetAllWithAnimation {}
@@ -932,7 +952,7 @@ class MainViewController: UIViewController {
         currentTab?.goForward()
     }
     
-    func didReturnFromBackground() {
+    func onForeground() {
         skipSERPFlow = true
         
         // Show Fire Pulse only if Privacy button pulse should not be shown. In control group onboarding `shouldShowPrivacyButtonPulse` is always false.
@@ -1125,6 +1145,7 @@ class MainViewController: UIViewController {
 
     private func refreshOmniBar() {
         updateOmniBarLoadingState()
+        viewCoordinator.omniBar.updateAccessoryType(omnibarAccessoryHandler.omnibarAccessory(for: currentTab?.url))
 
         guard let tab = currentTab, tab.link != nil else {
             viewCoordinator.omniBar.stopBrowsing()
@@ -1140,8 +1161,6 @@ class MainViewController: UIViewController {
         } else {
             viewCoordinator.omniBar.resetPrivacyIcon(for: tab.url)
         }
-
-        viewCoordinator.omniBar.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: tab.url)
 
         viewCoordinator.omniBar.startBrowsing()
     }
@@ -1167,9 +1186,6 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func refreshBackForwardButtons() {
-        viewCoordinator.toolbarBackButton.isEnabled = currentTab?.canGoBack ?? false
-        viewCoordinator.toolbarForwardButton.isEnabled = currentTab?.canGoForward ?? false
-        
         viewCoordinator.omniBar.backButton.isEnabled = viewCoordinator.toolbarBackButton.isEnabled
         viewCoordinator.omniBar.forwardButton.isEnabled = viewCoordinator.toolbarForwardButton.isEnabled
     }
@@ -1237,23 +1253,25 @@ class MainViewController: UIViewController {
     }
 
     func refreshMenuButtonState() {
-        let expectedState: MenuButton.State
         if !homeTabManager.isNewTabPageSectionsEnabled && newTabPageViewController != nil {
-            expectedState = .bookmarksImage
-            viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
+            viewCoordinator.updateToolbarWithState(.newTab)
+            presentedMenuButton.setState(.menuImage, animated: false)
 
         } else {
+            let expectedState: MenuButton.State
             if presentedViewController is BrowsingMenuViewController {
                 expectedState = .closeImage
             } else {
                 expectedState = .menuImage
             }
-            viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
-        }
 
-        presentedMenuButton.setState(expectedState, animated: false)
+            if let currentTab = currentTab {
+                viewCoordinator.updateToolbarWithState(.pageLoaded(currentTab: currentTab))
+            }
+            presentedMenuButton.setState(expectedState, animated: false)
+        }
     }
 
     private func applyWidthToTrayController() {
@@ -1567,6 +1585,7 @@ class MainViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.refreshOmniBar()
+                self?.omniBar.refreshOmnibarPaddingConstraintsForAccessoryButton()
             }
             .store(in: &aiChatCancellables)
     }
@@ -1729,8 +1748,8 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    func openAIChat(_ query: URLQueryItem? = nil, payload: Any? = nil) {
-        aiChatViewControllerManager.openAIChat(query, payload: payload, on: self)
+    func openAIChat(_ query: String? = nil, autoSend: Bool = false, payload: Any? = nil) {
+        aiChatViewControllerManager.openAIChat(query, payload: payload, autoSend: autoSend, on: self)
     }
 }
 
@@ -1942,7 +1961,10 @@ extension MainViewController: OmniBarDelegate {
 
         let menuEntries: [BrowsingMenuEntry]
         let headerEntries: [BrowsingMenuEntry]
-        if homeTabManager.isNewTabPageSectionsEnabled && newTabPageViewController != nil {
+
+        let isNewTabPageEnabled = homeTabManager.isNewTabPageSectionsEnabled || featureFlagger.isFeatureOn(.aiChatNewTabPage)
+
+        if isNewTabPageEnabled && newTabPageViewController != nil {
             menuEntries = tab.buildShortcutsMenu()
             headerEntries = []
         } else {
@@ -1962,6 +1984,12 @@ extension MainViewController: OmniBarDelegate {
 
         self.presentedMenuButton.setState(.closeImage, animated: true)
         tab.didLaunchBrowsingMenu()
+
+        if isNewTabPageEnabled && newTabPageViewController != nil {
+            Pixel.fire(pixel: .browsingMenuOpenedNewTabPage)
+        } else {
+            Pixel.fire(pixel: .browsingMenuOpened)
+        }
     }
     
     @objc func onBookmarksPressed() {
@@ -1971,7 +1999,12 @@ extension MainViewController: OmniBarDelegate {
         performCancel()
         segueToBookmarks()
     }
-    
+
+    @objc func onToolbarBookmarksPressed() {
+        Pixel.fire(pixel: .bookmarksOpenFromToolbar)
+        onBookmarksPressed()
+    }
+
     func onBookmarkEdit() {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
@@ -2092,17 +2125,44 @@ extension MainViewController: OmniBarDelegate {
 
     func onAccessoryPressed(accessoryType: OmniBar.AccessoryType) {
         hideSuggestionTray()
-        guard let link = currentTab?.link else { return }
 
         switch accessoryType {
         case .chat:
-            let queryItem = currentTab?.url?.getQueryItems()?.filter { $0.name == "q" }.first
-            openAIChat(queryItem)
-            Pixel.fire(pixel: .openAIChatFromAddressBar)
+            openAIChatFromAddressBar()
         case .share:
+            guard let link = currentTab?.link else { return }
             Pixel.fire(pixel: .addressBarShare)
             currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.accessoryButton)
         }
+    }
+
+    private func openAIChatFromAddressBar() {
+        /// https://app.asana.com/0/1204167627774280/1209322943444951
+
+        if omniBar.textField.isEditing {
+            let textFieldValue = omniBar.textField.text
+            omniBar.textField.resignFirstResponder()
+
+            /// Check if the URL in the text field is the same as the one loaded
+            /// If it is, open the chat normally (no auto-send)
+            /// If the URLs differ, open the chat with the new text and auto-send enabled
+            if let currentURLString = currentTab?.url?.absoluteString, currentURLString == textFieldValue {
+                openAIChat()
+            } else {
+                openAIChat(textFieldValue, autoSend: true)
+            }
+        } else {
+            /// Check if the current tab's URL is a DuckDuckGo search page
+            /// If it is, get the query item and open the chat with the query item's value
+            if currentTab?.url?.isDuckDuckGoSearch == true {
+                let queryItem = currentTab?.url?.getQueryItems()?.filter { $0.name == "q" }.first
+                openAIChat(queryItem?.value, autoSend: true)
+            } else {
+                openAIChat()
+            }
+        }
+
+        Pixel.fire(pixel: .openAIChatFromAddressBar)
     }
 
     func onAccessoryLongPressed(accessoryType: OmniBar.AccessoryType) {
@@ -2120,6 +2180,20 @@ extension MainViewController: OmniBarDelegate {
             } else {
                 self.showNoMicrophonePermissionAlert()
             }
+        }
+    }
+
+    /// We always want to show the AI Chat button if the keyboard is on focus
+    func onDidBeginEditing() {
+        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            omniBar.updateAccessoryType(.chat)
+        }
+    }
+
+    /// When the keyboard is dismissed we'll apply the previous rule to define the accessory button back to whatever it was
+    func onDidEndEditing() {
+        if featureFlagger.isFeatureOn(.aiChatNewTabPage) {
+            omniBar.updateAccessoryType(omnibarAccessoryHandler.omnibarAccessory(for: currentTab?.url))
         }
     }
 }
@@ -2330,8 +2404,8 @@ extension MainViewController: TabDelegate {
         return newTab.webView
     }
 
-    func tabDidRequestClose(_ tab: TabViewController) {
-        closeTab(tab.tabModel)
+    func tabDidRequestClose(_ tab: TabViewController, shouldCreateEmptyTabAtSamePosition: Bool) {
+        closeTab(tab.tabModel, andOpenEmptyOneAtSamePosition: shouldCreateEmptyTabAtSamePosition)
     }
 
     func tabLoadingStateDidChange(tab: TabViewController) {
@@ -2400,6 +2474,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestAIChat(tab: TabViewController) {
+        Pixel.fire(pixel: .browsingMenuListAIChat)
         openAIChat()
     }
 
@@ -2581,12 +2656,20 @@ extension MainViewController: TabSwitcherDelegate {
             showFireButtonPulse()
         }
     }
-    
-    func closeTab(_ tab: Tab) {
+
+    func closeTab(_ tab: Tab, andOpenEmptyOneAtSamePosition shouldOpen: Bool = false) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
         hideNotificationBarIfBrokenSitePromptShown()
-        tabManager.remove(at: index)
+
+        if shouldOpen {
+            let newTab = Tab()
+            tabManager.replaceTab(at: index, withNewTab: newTab)
+            tabManager.selectTab(newTab)
+        } else {
+            tabManager.remove(at: index)
+        }
+
         updateCurrentTab()
         tabsBarController?.refresh(tabsModel: tabManager.model)
     }
@@ -2598,10 +2681,13 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcherDidRequestCloseAll(tabSwitcher: TabSwitcherViewController) {
-        // TODO polish
         self.forgetTabs()
         self.refreshUIAfterClear()
         tabSwitcher.dismiss()
+    }
+
+    func tabSwitcherDidReorderTabs(tabSwitcher: TabSwitcherViewController) {
+        tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
     }
 
 }

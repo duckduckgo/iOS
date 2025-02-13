@@ -26,6 +26,8 @@ import Core
 import Persistence
 import Subscription
 import SubscriptionTestingUtilities
+import SpecialErrorPages
+import MaliciousSiteProtection
 @testable import DuckDuckGo
 
 final class MockTabDelegate: TabDelegate {
@@ -44,7 +46,7 @@ final class MockTabDelegate: TabDelegate {
 
     func tab(_ tab: DuckDuckGo.TabViewController, didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, inheritingAttribution: BrowserServicesKit.AdClickAttributionLogic.State?) -> WKWebView? { nil }
 
-    func tabDidRequestClose(_ tab: DuckDuckGo.TabViewController) {}
+    func tabDidRequestClose(_ tab: DuckDuckGo.TabViewController, shouldCreateEmptyTabAtSamePosition: Bool) {}
 
     func tab(_ tab: DuckDuckGo.TabViewController, didRequestNewTabForUrl url: URL, openedByPage: Bool, inheritingAttribution: BrowserServicesKit.AdClickAttributionLogic.State?) {}
 
@@ -117,14 +119,6 @@ final class MockTabDelegate: TabDelegate {
 
 }
 
-final class MockCredentialCreator: URLCredentialCreating {
-
-    func urlCredentialFrom(trust: SecTrust?) -> URLCredential? {
-        return URLCredential(user: "", password: "", persistence: .forSession)
-    }
-
-}
-
 extension TabViewController {
 
     static func fake(
@@ -145,16 +139,55 @@ extension TabViewController {
             contextualOnboardingPresenter: contextualOnboardingPresenter,
             contextualOnboardingLogic: contextualOnboardingLogic,
             onboardingPixelReporter: contextualOnboardingPixelReporter,
-            urlCredentialCreator: MockCredentialCreator(),
             featureFlagger: featureFlagger,
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
             textZoomCoordinator: MockTextZoomCoordinator(),
             websiteDataManager: MockWebsiteDataManager(),
             fireproofing: MockFireproofing(),
-            tabInteractionStateSource: MockTabInteractionStateSource()
+            tabInteractionStateSource: MockTabInteractionStateSource(),
+            specialErrorPageNavigationHandler: DummySpecialErrorPageNavigationHandler()
         )
         tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false, customWebView: customWebView)
         return tab
     }
+
+}
+
+class DummySpecialErrorPageNavigationHandler: SpecialErrorPageManaging {
+    var delegate: (any DuckDuckGo.SpecialErrorPageNavigationDelegate)?
+    
+    var isSpecialErrorPageVisible: Bool = false
+
+    var failedURL: URL?
+    
+    var isSpecialErrorPageRequest: Bool = false
+
+    var currentThreatKind: MaliciousSiteProtection.ThreatKind?
+
+    func attachWebView(_ webView: WKWebView) {}
+    
+    func setUserScript(_ userScript: SpecialErrorPages.SpecialErrorPageUserScript?) {}
+    
+    func handleDecidePolicy(for navigationAction: WKNavigationAction, webView: WKWebView) {}
+    
+    func handleDecidePolicy(for navigationResponse: WKNavigationResponse, webView: WKWebView) async -> Bool {
+        true
+    }
+    
+    func handleWebView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+
+    }
+    
+    func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: (any WebViewNavigation)?, withError error: NSError) {}
+    
+    func handleWebView(_ webView: WKWebView, didFinish navigation: (any WebViewNavigation)?) {}
+
+    var errorData: SpecialErrorPages.SpecialErrorData?
+    
+    func leaveSiteAction() {}
+    
+    func visitSiteAction() {}
+    
+    func advancedInfoPresented() {}
 
 }

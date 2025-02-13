@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import BrowserServicesKit
 
 class SwipeTabsCoordinator: NSObject {
     
@@ -30,7 +31,7 @@ class SwipeTabsCoordinator: NSObject {
     weak var coordinator: MainViewCoordinator!
     weak var tabPreviewsSource: TabPreviewsSource!
     weak var appSettings: AppSettings!
-    let voiceSearchHelper: VoiceSearchHelperProtocol
+    private let omnibarDependencies: OmnibarDependencyProvider
 
     let selectTab: (Int) -> Void
     let newTab: () -> Void
@@ -57,7 +58,7 @@ class SwipeTabsCoordinator: NSObject {
     init(coordinator: MainViewCoordinator,
          tabPreviewsSource: TabPreviewsSource,
          appSettings: AppSettings,
-         voiceSearchHelper: VoiceSearchHelperProtocol,
+         omnibarDependencies: OmnibarDependencyProvider,
          omnibarAccessoryHandler: OmnibarAccessoryHandler,
          selectTab: @escaping (Int) -> Void,
          newTab: @escaping () -> Void,
@@ -66,7 +67,7 @@ class SwipeTabsCoordinator: NSObject {
         self.coordinator = coordinator
         self.tabPreviewsSource = tabPreviewsSource
         self.appSettings = appSettings
-        self.voiceSearchHelper = voiceSearchHelper
+        self.omnibarDependencies = omnibarDependencies
         self.omnibarAccessoryHandler = omnibarAccessoryHandler
         self.selectTab = selectTab
         self.newTab = newTab
@@ -111,8 +112,7 @@ class SwipeTabsCoordinator: NSObject {
         updateLayout()
         scrollToCurrent()
 
-        let indexPath = IndexPath(row: self.tabsModel.currentIndex, section: 0)
-        collectionView.reloadItems(at: [indexPath])
+        collectionView.reloadData()
     }
 
     private func updateLayout() {
@@ -322,7 +322,7 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             cell.omniBar = coordinator.omniBar
         } else {
             // Strong reference while we use the omnibar
-            let omniBar = OmniBar.loadFromXib(voiceSearchHelper: voiceSearchHelper)
+            let omniBar = OmniBar.loadFromXib(dependencies: omnibarDependencies)
 
             cell.omniBar = omniBar
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
@@ -338,7 +338,7 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
                 cell.omniBar?.startBrowsing()
                 cell.omniBar?.refreshText(forUrl: url, forceFullURL: appSettings.showFullSiteAddress)
                 cell.omniBar?.resetPrivacyIcon(for: url)
-                cell.omniBar?.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: url)
+                cell.omniBar?.updateAccessoryType(omnibarAccessoryHandler.omnibarAccessory(for: url))
 
             }
         }

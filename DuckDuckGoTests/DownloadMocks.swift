@@ -51,11 +51,12 @@ class MockDownloadSession: DownloadSession {
 }
 
 class MockNavigationResponse: WKNavigationResponse {
+    var url = URL(string: "https://www.duck.com")!
     var suggestedFileName: String?
     var mimeType: String?
     
     override var response: URLResponse {
-        let response = MockURLResponse(url: URL(string: "https://www.duck.com")!,
+        let response = MockURLResponse(url: url,
                         mimeType: mimeType!,
                         expectedContentLength: 1234,
                         textEncodingName: "")

@@ -38,6 +38,7 @@ public extension URL {
     static let apps = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/apps?origin=funnel_app_ios"))!
     static let searchSettings = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/settings"))!
     static let autofillHelpPageLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/duckduckgo-help-pages/sync-and-backup/password-manager-security/"))!
+    static let maliciousSiteProtectionLearnMore = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/duckduckgo-help-pages/privacy/phishing-and-malware-protection/"))!
 
     static let surrogates = URL(string: "\(staticBase)/surrogates.txt")!
 

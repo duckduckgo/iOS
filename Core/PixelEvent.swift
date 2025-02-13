@@ -22,6 +22,8 @@ import BrowserServicesKit
 import Bookmarks
 import Configuration
 import DDGSync
+import MaliciousSiteProtection
+import PixelKit
 
 extension Pixel {
     
@@ -74,6 +76,7 @@ extension Pixel {
         case settingsAutoconsentOff
         
         case browsingMenuOpened
+        case browsingMenuOpenedNewTabPage
         case browsingMenuNewTab
         case browsingMenuAddToBookmarks
         case browsingMenuEditBookmark
@@ -93,6 +96,7 @@ extension Pixel {
         case browsingMenuFireproof
         case browsingMenuAutofill
         case browsingMenuAIChat
+        case browsingMenuListAIChat
 
         case addressBarShare
         case addressBarSettings
@@ -667,7 +671,8 @@ extension Pixel {
         case bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration
         case bookmarksMigrationCouldNotRemoveOldStore
         case bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders
-        
+
+        case bookmarksOpenFromToolbar
         case syncSignupDirect
         case syncSignupConnect
         case syncLogin
@@ -960,7 +965,6 @@ extension Pixel {
         // MARK: Launch time
         case appDidFinishLaunchingTime(time: BucketAggregation)
         case appDidShowUITime(time: BucketAggregation)
-        case appDidBecomeActiveTime(time: BucketAggregation)
 
         // MARK: AI Chat
         case aiChatNoRemoteSettingsFound(settings: String)
@@ -979,6 +983,9 @@ extension Pixel {
 
         case tabInteractionStateFailedToRestore
         case tabInteractionStateRestorationTime(_ time: BucketAggregation)
+
+        // MARK: Malicious Site Protection
+        case maliciousSiteProtection(event: MaliciousSiteProtectionEvent)
     }
 
 }
@@ -1056,6 +1063,7 @@ extension Pixel.Event {
         case .settingsMoreSearchSettings: return "m_settings_more_search_settings"
 
         case .browsingMenuOpened: return "mb"
+        case .browsingMenuOpenedNewTabPage: return "m_nav_menu_ntp"
         case .browsingMenuNewTab: return "mb_tb"
         case .browsingMenuAddToBookmarks: return "mb_abk"
         case .browsingMenuEditBookmark: return "mb_ebk"
@@ -1075,9 +1083,7 @@ extension Pixel.Event {
         case .browsingMenuAutofill: return "m_nav_autofill_menu_item_pressed"
             
         case .browsingMenuShare: return "m_browsingmenu_share"
-        case .browsingMenuAIChat: return "m_aichat_menu_tab_icon"
         case .browsingMenuListPrint: return "m_browsing_menu_list_print"
-
         case .addressBarShare: return "m_addressbar_share"
         case .addressBarSettings: return "m_addressbar_settings"
         case .addressBarCancelPressedOnNTP: return "m_addressbar_cancel_ntp"
@@ -1540,7 +1546,7 @@ extension Pixel.Event {
         case .webKitWarmupUnexpectedDidFinish: return "m_d_webkit-warmup-unexpected-did-finish"
         case .webKitWarmupUnexpectedDidTerminate: return "m_d_webkit-warmup-unexpected-did-terminate"
 
-        case .backgroundTaskSubmissionFailed: return "m_bt_rf"
+        case .backgroundTaskSubmissionFailed: return "m_background-task_submission-failed"
             
         case .blankOverlayNotDismissed: return "m_d_ovs"
             
@@ -1624,7 +1630,7 @@ extension Pixel.Event {
             return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
         case .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders: return "m_d_bookmarks_migration_could_not_prepare_multiple_favorite_folders"
-            
+        case .bookmarksOpenFromToolbar: return "m_nav_bookmarks"
         case .syncSignupDirect: return "m_sync_signup_direct"
         case .syncSignupConnect: return "m_sync_signup_connect"
         case .syncLogin: return "m_sync_login"
@@ -1946,7 +1952,6 @@ extension Pixel.Event {
         // MARK: Launch time
         case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"
         case .appDidShowUITime(let time): return "m_debug_app-did-show-ui-time-\(time)"
-        case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
 
         // MARK: AI Chat
         case .aiChatNoRemoteSettingsFound(let settings):
@@ -1956,11 +1961,16 @@ extension Pixel.Event {
         case .openAIChatFromWidgetQuickAction: return "m_aichat-widget-quickaction"
         case .openAIChatFromWidgetControlCenter: return "m_aichat-widget-control-center"
         case .openAIChatFromWidgetLockScreenComplication: return "m_aichat-widget-lock-screen-complication"
+        case .browsingMenuAIChat: return "m_aichat_menu_tab_icon"
+        case .browsingMenuListAIChat: return "m_browsing_menu_list_aichat"
 
         // MARK: Lifecycle
-        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-4"
 
         case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
+
+        // MARK: Malicious Site Protection
+        case .maliciousSiteProtection(let event): return "m_\(event.name)"
         }
     }
 }
@@ -2078,6 +2088,70 @@ extension Pixel.Event {
             default:
                 self = .more
             }
+        }
+    }
+}
+
+// This is a temporary mapper from PixelKit to Pixel events for MaliciousSiteProtection
+// Malicious Site Protection BSK library depends on PixelKit which is not ready yet to be ported to iOS.
+// The below code maps between `PixelKitEvent` to `Pixel.Event` in order to use `Pixel.fire` on the client.
+public extension Pixel.Event {
+
+    enum MaliciousSiteProtectionEvent: Equatable {
+        case errorPageShown(category: ThreatKind, clientSideHit: Bool?)
+        case visitSite(category: ThreatKind)
+        case iframeLoaded(category: ThreatKind)
+        case settingToggled(to: Bool)
+        case matchesApiTimeout
+        case failedToDownloadInitialDataSets(category: ThreatKind, type: DataManager.StoredDataType.Kind)
+
+        public init?(_ pixelKitEvent: MaliciousSiteProtection.Event) {
+            switch pixelKitEvent {
+            case .errorPageShown(category: let category, clientSideHit: let clientSideHit):
+                self = .errorPageShown(category: category, clientSideHit: clientSideHit)
+            case .visitSite(category: let category):
+                self = .visitSite(category: category)
+            case .iframeLoaded(category: let category):
+                self = .iframeLoaded(category: category)
+            case .settingToggled(let enabled):
+                self = .settingToggled(to: enabled)
+            case .matchesApiTimeout:
+                self = .matchesApiTimeout
+            case .matchesApiFailure:
+                return nil
+            case .failedToDownloadInitialDataSets(category: let category, type: let type):
+                self = .failedToDownloadInitialDataSets(category: category, type: type)
+            }
+        }
+
+        private var event: PixelKitEventV2 {
+            switch self {
+            case .errorPageShown(let category, let clientSideHit):
+                return MaliciousSiteProtection.Event.errorPageShown(category: category, clientSideHit: clientSideHit)
+            case .visitSite(let category):
+                return MaliciousSiteProtection.Event.visitSite(category: category)
+            case .iframeLoaded(let category):
+                return MaliciousSiteProtection.Event.iframeLoaded(category: category)
+            case .settingToggled(let enabled):
+                return MaliciousSiteProtection.Event.settingToggled(to: enabled)
+            case .matchesApiTimeout:
+                return MaliciousSiteProtection.Event.matchesApiTimeout
+            case .failedToDownloadInitialDataSets(let category, let type):
+                return MaliciousSiteProtection.Event.failedToDownloadInitialDataSets(category: category, type: type)
+            }
+        }
+
+        var name: String {
+            switch self {
+            case .failedToDownloadInitialDataSets:
+                return "debug_\(event.name)"
+            default:
+                return event.name
+            }
+        }
+
+        public var parameters: [String: String] {
+            event.parameters ?? [:]
         }
     }
 }

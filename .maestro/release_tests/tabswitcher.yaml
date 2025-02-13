@@ -23,10 +23,8 @@ tags:
 - assertVisible: Tab Switcher
 - tapOn: Tab Switcher
 - assertVisible: ".*Privacy Test Pages.*"
-- assertVisible: 
-    id: "Add"
-- tapOn:
-    id: "Add"
+- assertVisible: "New Tab"
+- tapOn: "New Tab"
 - assertVisible:
     id: "searchEntry"
 - tapOn: 

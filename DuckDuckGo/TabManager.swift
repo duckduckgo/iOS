@@ -49,6 +49,8 @@ class TabManager {
     private let websiteDataManager: WebsiteDataManaging
     private let subscriptionCookieManager: SubscriptionCookieManaging
     private let appSettings: AppSettings
+    private let maliciousSiteProtectionManager: MaliciousSiteProtectionManaging
+    private let maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
 
     weak var delegate: TabDelegate?
 
@@ -72,7 +74,10 @@ class TabManager {
          appSettings: AppSettings,
          textZoomCoordinator: TextZoomCoordinating,
          websiteDataManager: WebsiteDataManaging,
-         fireproofing: Fireproofing) {
+         fireproofing: Fireproofing,
+         maliciousSiteProtectionManager: MaliciousSiteProtectionManaging,
+         maliciousSiteProtectionPreferencesManager: MaliciousSiteProtectionPreferencesManaging
+    ) {
         self.model = model
         self.previewsSource = previewsSource
         self.interactionStateSource = interactionStateSource
@@ -90,6 +95,8 @@ class TabManager {
         self.textZoomCoordinator = textZoomCoordinator
         self.websiteDataManager = websiteDataManager
         self.fireproofing = fireproofing
+        self.maliciousSiteProtectionManager = maliciousSiteProtectionManager
+        self.maliciousSiteProtectionPreferencesManager = maliciousSiteProtectionPreferencesManager
         registerForNotifications()
     }
 
@@ -106,6 +113,12 @@ class TabManager {
                                  interactionState: Data?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
 
+        let specialErrorPageNavigationHandler = SpecialErrorPageNavigationHandler(
+            maliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandler(
+                maliciousSiteProtectionManager: maliciousSiteProtectionManager
+            )
+        )
+
         let controller = TabViewController.loadFromStoryboard(model: tab,
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
@@ -120,7 +133,8 @@ class TabManager {
                                                               textZoomCoordinator: textZoomCoordinator,
                                                               websiteDataManager: websiteDataManager,
                                                               fireproofing: fireproofing,
-                                                              tabInteractionStateSource: interactionStateSource)
+                                                              tabInteractionStateSource: interactionStateSource,
+                                                              specialErrorPageNavigationHandler: specialErrorPageNavigationHandler)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  interactionStateData: interactionState,
@@ -190,6 +204,12 @@ class TabManager {
         model.insert(tab: tab, at: model.currentIndex + 1)
         model.select(tabAt: model.currentIndex + 1)
 
+        let specialErrorPageNavigationHandler = SpecialErrorPageNavigationHandler(
+            maliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandler(
+                maliciousSiteProtectionManager: maliciousSiteProtectionManager
+            )
+        )
+
         let controller = TabViewController.loadFromStoryboard(model: tab,
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
@@ -204,7 +224,8 @@ class TabManager {
                                                               textZoomCoordinator: textZoomCoordinator,
                                                               websiteDataManager: websiteDataManager,
                                                               fireproofing: fireproofing,
-                                                              tabInteractionStateSource: interactionStateSource)
+                                                              tabInteractionStateSource: interactionStateSource,
+                                                              specialErrorPageNavigationHandler: specialErrorPageNavigationHandler)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,
@@ -283,6 +304,17 @@ class TabManager {
             removeFromCache(controller)
         }
         interactionStateSource?.removeStateForTab(tab)
+        save()
+    }
+
+    func replaceTab(at index: Int, withNewTab newTab: Tab) {
+        // Removing a Tab automatically inserts a new one if tabs are empty. Hence add a new one only if needed
+        if model.tabs.count == 1 {
+            model.remove(at: index)
+        } else {
+            model.remove(at: index)
+            model.insert(tab: newTab, at: index)
+        }
         save()
     }
 

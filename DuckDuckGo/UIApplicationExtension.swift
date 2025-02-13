@@ -18,8 +18,12 @@
 //
 
 import UIKit
+import Subscription
 
 extension UIApplication {
+
+    // MARK: notification settings
+
     private static let notificationSettingsURL: URL? = {
         let settingsString: String
         if #available(iOS 16, *) {
@@ -38,9 +42,9 @@ extension UIApplication {
             self.canOpenURL(url) else { return false }
         return await self.open(url)
     }
-}
 
-extension UIApplication {
+    // MARK: foreground scene windows
+
     var foregroundSceneWindows: [UIWindow] {
         guard let scene = UIApplication.shared.connectedScenes.first(where: {
             $0.activationState == .foregroundActive
@@ -54,4 +58,22 @@ extension UIApplication {
     var firstKeyWindow: UIWindow? {
         return foregroundSceneWindows.first(where: \.isKeyWindow)
     }
+
+    // MARK: app delegate helpers
+
+    enum TerminationReason {
+
+        case insufficientDiskSpace
+        case unrecoverableState
+
+    }
+
+    func setWindow(_ window: UIWindow?) {
+        (delegate as? AppDelegate)?.window = window
+    }
+
+    var window: UIWindow? {
+        delegate?.window ?? nil
+    }
+
 }

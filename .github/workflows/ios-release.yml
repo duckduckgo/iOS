@@ -65,7 +65,7 @@ jobs:
     - name: Set destination output
       id: destination
       run: |
-        INPUT_DESTINATION=${{ github.event.inputs.destination }}
+        INPUT_DESTINATION=${{ env.destination }}
         echo "destination=${INPUT_DESTINATION:-"testflight"}" >> $GITHUB_OUTPUT
 
     - name: Assert release branch

@@ -10,6 +10,11 @@ appId: com.duckduckgo.mobile.ios
 - pressKey: Enter
 - assertVisible: Get Started
 - tapOn: Get Started
+- runFlow:
+    when:
+      visible: Allows you to upload photographs and videos
+    commands:
+        - tapOn: "Allow"
 - tapOn: Enter Text Code Manually
 - tapOn: Paste
 - assertVisible: Save Recovery Code

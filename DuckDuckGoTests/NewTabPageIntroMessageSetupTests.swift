@@ -30,7 +30,7 @@ final class NewTabPageIntroMessageSetupTests: XCTestCase {
         let sut = createSUT()
         statistics.installDate = Date()
 
-        sut.perform()
+        sut.configure()
 
         XCTAssertEqual(storage.newTabPageIntroMessageEnabled, true)
     }
@@ -39,7 +39,7 @@ final class NewTabPageIntroMessageSetupTests: XCTestCase {
         let sut = createSUT()
         statistics.installDate = nil
 
-        sut.perform()
+        sut.configure()
 
         XCTAssertEqual(storage.newTabPageIntroMessageEnabled, false)
     }
@@ -49,7 +49,7 @@ final class NewTabPageIntroMessageSetupTests: XCTestCase {
         statistics.installDate = nil
         storage.newTabPageIntroMessageEnabled = true
 
-        sut.perform()
+        sut.configure()
 
         XCTAssertEqual(storage.newTabPageIntroMessageEnabled, true)
     }
@@ -60,13 +60,13 @@ final class NewTabPageIntroMessageSetupTests: XCTestCase {
         ntpManagerMock.isAvailableInPublicRelease = false
         storage.newTabPageIntroMessageEnabled = nil
 
-        sut.perform()
+        sut.configure()
 
         XCTAssertNil(storage.newTabPageIntroMessageEnabled)
     }
 
-    private func createSUT() -> NewTabPageIntroMessageSetup {
-        NewTabPageIntroMessageSetup(storage: storage, statistics: statistics, newTabPageManager: ntpManagerMock)
+    private func createSUT() -> NewTabPageIntroMessageConfiguration {
+        NewTabPageIntroMessageConfiguration(storage: storage, statistics: statistics, newTabPageManager: ntpManagerMock)
     }
 }
 

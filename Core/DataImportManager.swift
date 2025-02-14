@@ -60,7 +60,7 @@ public final class DataImportManager: DataImportManaging {
         }
     }
 
-    private let loginImporter: SecureVaultLoginImporter
+    private let loginImporter: LoginImporter
     private let reporter: SecureVaultReporting
     private let bookmarksDatabase: CoreDataDatabase
     private let favoritesDisplayMode: FavoritesDisplayMode
@@ -68,7 +68,7 @@ public final class DataImportManager: DataImportManaging {
     private var csvImporter: CSVImporter?
     private var bookmarksImporter: BookmarksImporter?
 
-    public init(loginImporter: SecureVaultLoginImporter = SecureVaultLoginImporter(),
+    public init(loginImporter: LoginImporter = SecureVaultLoginImporter(),
                 reporter: SecureVaultReporting,
                 bookmarksDatabase: CoreDataDatabase,
                 favoritesDisplayMode: FavoritesDisplayMode) {

@@ -38,6 +38,7 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         static let openSettings = "openSettings"
         static let openInfo = "openInfo"
         static let telemetryEvent = "telemetryEvent"
+        static let reportYouTubeError = "reportYouTubeError"
     }
     
     init(duckPlayer: DuckPlayerControlling) {
@@ -82,6 +83,8 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
             return duckPlayer.openDuckPlayerInfo
         case Handlers.telemetryEvent:
             return duckPlayer.telemetryEvent
+        case Handlers.reportYouTubeError:
+            return duckPlayer.handleYoutubeError
         default:
             assertionFailure("YoutubePlayerUserScript: Failed to parse User Script message: \(methodName)")
             return nil

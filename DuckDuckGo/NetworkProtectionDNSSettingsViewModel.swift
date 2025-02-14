@@ -21,10 +21,12 @@ import Foundation
 import Combine
 import NetworkProtection
 import Core
+import BrowserServicesKit
 
 final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
     private let settings: VPNSettings
     private let controller: TunnelController
+    private let featureFlagger: FeatureFlagger
     private var cancellables: Set<AnyCancellable> = []
 
     @Published public var dnsSettings: NetworkProtectionDNSSettings
@@ -41,9 +43,14 @@ final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
 
     @Published public var isApplyButtonEnabled = false
 
-    init(settings: VPNSettings, controller: TunnelController) {
+    var isRiskySitesProtectionFeatureEnabled: Bool {
+        featureFlagger.isFeatureOn(.networkProtectionRiskyDomainsProtection)
+    }
+
+    init(settings: VPNSettings, controller: TunnelController, featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.settings = settings
         self.controller = controller
+        self.featureFlagger = featureFlagger
 
         dnsSettings = settings.dnsSettings
         isBlockRiskyDomainsOn = settings.isBlockRiskyDomainsOn

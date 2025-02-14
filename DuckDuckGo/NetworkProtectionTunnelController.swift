@@ -292,7 +292,12 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         }
         options[NetworkProtectionOptionKey.selectedEnvironment] = AppDependencyProvider.shared.vpnSettings
             .selectedEnvironment.rawValue as NSString
-        if let data = try? JSONEncoder().encode(AppDependencyProvider.shared.vpnSettings.dnsSettings) {
+
+        var dnsSettings = settings.dnsSettings
+        if dnsSettings == .ddg(blockRiskyDomains: true) && !featureFlagger.isFeatureOn(.networkProtectionRiskyDomainsProtection) {
+            dnsSettings = .ddg(blockRiskyDomains: false)
+        }
+        if let data = try? JSONEncoder().encode(dnsSettings) {
             options[NetworkProtectionOptionKey.dnsSettings] = NSData(data: data)
         }
 

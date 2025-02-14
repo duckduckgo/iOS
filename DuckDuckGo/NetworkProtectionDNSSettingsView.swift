@@ -58,7 +58,9 @@ struct NetworkProtectionDNSSettingsView: View {
                 if viewModel.isCustomDNSSelected {
                     customDNSSection()
                 } else {
-                    blockRiskyDomainsSection()
+                    if viewModel.isRiskySitesProtectionFeatureEnabled {
+                        blockRiskyDomainsSection()
+                    }
                 }
             }
         }

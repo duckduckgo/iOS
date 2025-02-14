@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit.git",
       "state" : {
         "branch" : "mgurgel/duckplayer-custom-error",
-        "revision" : "130692f3d84c9defa811b205603f9a7c5c3654d9"
+        "revision" : "5541bca673240f221d243e9dfc3cd2bdb4831963"
       }
     },
     {
@@ -42,7 +42,7 @@
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
         "branch" : "pr-releases/pr-1421",
-        "revision" : "371b1a444ac9ebcf553f708f9c759f1f5777fcdc"
+        "revision" : "493603682a81328186987796e67396e74e9679d4"
       }
     },
     {

@@ -37,10 +37,15 @@ final class ReportingService {
 
     init(fireproofing: Fireproofing) {
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
-        NotificationCenter.default.addObserver(forName: .configurationFetchedOnForeground,
+        NotificationCenter.default.addObserver(forName: .didFetchConfigurationOnForeground,
                                                object: nil,
                                                queue: .main) { _ in
             self.sendAppLaunchPostback(marketplaceAdPostbackManager: self.marketplaceAdPostbackManager)
+        }
+        NotificationCenter.default.addObserver(forName: .didLoadStatisticsOnForeground,
+                                               object: nil,
+                                               queue: .main) { _ in
+            self.onStatisticsLoaded()
         }
     }
 

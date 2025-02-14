@@ -59,6 +59,7 @@ struct Launching: AppState {
     private let subscriptionService: SubscriptionService
     private let crashCollectionService = CrashCollectionService()
     private let maliciousSiteProtectionService: MaliciousSiteProtectionService
+    private let statisticsService = StatisticsService()
 
     private let persistentStoresConfiguration = PersistentStoresConfiguration()
     private let onboardingConfiguration = OnboardingConfiguration()
@@ -176,7 +177,8 @@ struct Launching: AppState {
             crashCollectionService: crashCollectionService,
             configurationService: configurationService,
             reportingService: reportingService,
-            maliciousSiteProtectionService: maliciousSiteProtectionService
+            maliciousSiteProtectionService: maliciousSiteProtectionService,
+            statisticsService: statisticsService
         )
     }
     

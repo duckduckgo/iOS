@@ -33,5 +33,6 @@ struct AppDependencies {
     let configurationService: ConfigurationService
     let reportingService: ReportingService
     let maliciousSiteProtectionService: MaliciousSiteProtectionService
+    let statisticsService: StatisticsService
 
 }

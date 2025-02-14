@@ -119,19 +119,13 @@ struct Foreground: AppState {
         appDependencies.maliciousSiteProtectionService.onForeground()
         appDependencies.syncService.onForeground()
         appDependencies.remoteMessagingService.onForeground()
+        appDependencies.statisticsService.resume()
 
-        StatisticsLoader.shared.load(completion: onStatisticsLoaded)
         appDependencies.mainCoordinator.onForeground()
     }
 
     private func configureAppearance() {
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
-    }
-
-    /// Handle StatisticsLoader completion logic here
-    /// Place any code here that requires install and search statistics to be available before executing.
-    private func onStatisticsLoaded() {
-        appDependencies.reportingService.onStatisticsLoaded()
     }
 
 }

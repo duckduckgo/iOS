@@ -24,7 +24,7 @@ import BackgroundTasks
 
 public extension NSNotification.Name {
 
-    static let configurationFetchedOnForeground = Notification.Name("com.duckduckgo.app.configurationFetchedOnForeground")
+    static let didFetchConfigurationOnForeground = Notification.Name("com.duckduckgo.app.didFetchConfigurationOnForeground")
 
 }
 
@@ -62,7 +62,7 @@ final class ConfigurationService {
         AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()
 
         AppConfigurationFetch().start { result in
-            NotificationCenter.default.post(name: .configurationFetchedOnForeground, object: nil)
+            NotificationCenter.default.post(name: .didFetchConfigurationOnForeground, object: nil)
             if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
                 ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             }

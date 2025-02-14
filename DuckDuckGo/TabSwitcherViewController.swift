@@ -416,6 +416,16 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
         return configuration
     }
 
+    func collectionView(_ collectionView: UICollectionView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: (any UIContextMenuInteractionAnimating)?) {
+        if let selected = collectionView.indexPathsForSelectedItems {
+            collectionView.reloadItems(at: selected)
+            selected.forEach {
+                collectionView.selectItem(at: $0, animated: false, scrollPosition: [])
+                self.collectionView(collectionView, didSelectItemAt: $0)
+            }
+        }
+    }
+
 }
 
 extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {

@@ -132,6 +132,7 @@ extension TabSwitcherViewController {
         self.isEditing = false
         collectionView.reloadData()
         updateUIForSelectionMode()
+        refreshTitle()
     }
 
     func closeAllTabs() {

@@ -76,7 +76,7 @@
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
                                                                     <state key="normal" image="Remove"/>
                                                                     <connections>
-                                                                        <action selector="deleteTab" destination="Mdh-yg-dRH" eventType="touchUpInside" id="NiJ-Kn-E29"/>
+                                                                        <action selector="deleteTab" destination="Mdh-yg-dRH" eventType="touchUpInside" id="6wP-xf-LjC"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
@@ -145,7 +145,7 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cRB-zI-zcI">
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cRB-zI-zcI">
                                                     <rect key="frame" x="0.0" y="0.0" width="327" height="206"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
@@ -218,7 +218,7 @@
                                                                     </constraints>
                                                                     <state key="normal" image="Remove"/>
                                                                     <connections>
-                                                                        <action selector="deleteTab" destination="Ml9-Ia-4eU" eventType="touchUpInside" id="O4f-UF-Jat"/>
+                                                                        <action selector="deleteTab" destination="Ml9-Ia-4eU" eventType="touchUpInside" id="4Hc-yv-AVc"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
@@ -292,7 +292,7 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O9l-O9-Bme">
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O9l-O9-Bme">
                                                     <rect key="frame" x="0.0" y="0.0" width="327" height="70"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>

@@ -43,7 +43,7 @@ struct InitialPlayerSettings: Codable {
     }
 
     struct CustomError: Codable {
-        let status: Status
+        let state: Status
         let signInRequiredSelector: String
     }
 
@@ -56,7 +56,7 @@ struct InitialPlayerSettings: Codable {
         case development
         case production
     }
-    
+
     let userValues: UserValues
     let ui: UIValues
     let settings: PlayerSettings
@@ -608,7 +608,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     private func encodedPlayerSettings(with webView: WKWebView?) async -> InitialPlayerSettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let pip = InitialPlayerSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
-        let customError = InitialPlayerSettings.CustomError(status: settings.customError ? .enabled : .disabled, signInRequiredSelector: settings.customErrorSettings?.signInRequiredSelector ?? "")
+        let customError = InitialPlayerSettings.CustomError(state: settings.customError ? .enabled : .disabled, signInRequiredSelector: settings.customErrorSettings?.signInRequiredSelector ?? "")
         let platform = InitialPlayerSettings.Platform(name: "ios")
         let locale = Locale.current.languageCode ?? "en"
         let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip, customError: customError)

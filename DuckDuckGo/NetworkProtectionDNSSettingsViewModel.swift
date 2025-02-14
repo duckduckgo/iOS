@@ -55,7 +55,7 @@ final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
         dnsSettings = settings.dnsSettings
         isBlockRiskyDomainsOn = settings.isBlockRiskyDomainsOn
         isCustomDNSSelected = settings.dnsSettings.usesCustomDNS
-        customDNSServers = settings.dnsSettings.dnsServersText
+        customDNSServers = settings.customDnsServers.joined(separator: ", ")
 
         subscribeToDNSSettingsChanges()
     }

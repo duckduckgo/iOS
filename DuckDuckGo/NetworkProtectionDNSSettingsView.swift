@@ -74,7 +74,7 @@ struct NetworkProtectionDNSSettingsView: View {
                 } label: {
                     Text(UserText.vpnSettingDNSServerApplyButtonTitle)
                 }
-                .disabled(viewModel.isApplyButtonEnabled)
+                .disabled(!viewModel.isApplyButtonEnabled)
             }
         }
     }

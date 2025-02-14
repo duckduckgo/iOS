@@ -24,11 +24,11 @@ final class UIInteractionManager {
 
     private let authenticationService: AuthenticationServiceProtocol
     private let autoClearService: AutoClearServiceProtocol
-    private let launchActionHandler: LaunchActionHandlerProtocol
+    private let launchActionHandler: LaunchActionHandling
 
     init(authenticationService: AuthenticationServiceProtocol,
          autoClearService: AutoClearServiceProtocol,
-         launchActionHandler: LaunchActionHandlerProtocol) {
+         launchActionHandler: LaunchActionHandling) {
         self.authenticationService = authenticationService
         self.autoClearService = autoClearService
         self.launchActionHandler = launchActionHandler

@@ -73,7 +73,7 @@ extension Background {
         appDependencies.autoClearService.onResuming()
     }
 
-    /// Called when the app transitions from launching or foreground to background,
+    /// Called when the app transitions from launching or foreground to background
     /// or when the app fails to wake up from the background (due to system Face ID lock).
     /// This is the counterpart to `willLeave()`.
     ///

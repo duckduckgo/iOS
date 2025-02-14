@@ -100,12 +100,12 @@ struct Foreground: AppState {
 
         interactionManager.start(
             launchAction: launchAction,
-            /// Handle **WebView-related logic** here that could be affected by `AutoClear` feature.
+            /// Handle **WebView related logic** here that could be affected by `AutoClear` feature.
             /// This is called when the **app is ready to handle web navigations** after all browser data has been cleared.
             onWebViewReadyForInteractions: {
                 vpnService.installRedditSessionWorkaround()
             },
-            /// Handle **UI-related logic** here that could be affected by Authentication screen or `AutoClear` feature
+            /// Handle **UI related logic** here that could be affected by Authentication screen or `AutoClear` feature
             /// This is called when the **app is ready to handle user interactions** after data clear and authentication are complete.
             onAppReadyForInteractions: {
                 /* ... */
@@ -141,12 +141,12 @@ struct Foreground: AppState {
 /// No active use case currently, but could apply to scenarios like pausing/resuming a game or video during a system alert.
 extension Foreground {
 
-    /// Called when the app is **briefly** paused due to user actions or system interruptions.
+    /// Called when the app is **briefly** paused due to user actions or system interruptions
     /// or when the app is about to move to the background but has not fully transitioned yet.
     ///
     /// **Scenarios when this happens:**
     /// - The user switches to another app or just swipes up to open the App Switcher.
-    /// - The app prompts for authentication, causing a temporary suspension.
+    /// - The app prompts for system authentication (>iOS 18.0), causing a temporary suspension.
     /// - A system alert (e.g., an incoming call or notification) momentarily interrupts the app.
     ///
     /// **Important note**

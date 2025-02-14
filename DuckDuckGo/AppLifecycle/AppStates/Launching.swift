@@ -53,7 +53,6 @@ struct Launching: AppState {
     private let vpnService: VPNService
     private let autofillService = AutofillService()
     private let remoteMessagingService: RemoteMessagingService
-    private let keyboardService: KeyboardService
     private let configurationService = ConfigurationService(isDebugBuild: isDebugBuild)
     private let autoClearService: AutoClearService
     private let reportingService: ReportingService
@@ -73,6 +72,7 @@ struct Launching: AppState {
     var shortcutItemToHandle: UIApplicationShortcutItem?
 
     // MARK: - Handle application(_:didFinishLaunchingWithOptions:) logic here
+
     init() {
         defer {
             let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
@@ -129,7 +129,6 @@ struct Launching: AppState {
         autoClearService = AutoClearService(worker: mainCoordinator.controller, overlayWindowManager: overlayWindowManager)
         screenshotService = ScreenshotService(window: window)
         authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
-        keyboardService = KeyboardService(mainViewController: mainCoordinator.controller)
 
         autoClearService.onLaunching()
         vpnService.onLaunching()
@@ -154,6 +153,7 @@ struct Launching: AppState {
     }
 
     // MARK: - Handle ATB and variant assigned logic here
+
     func onVariantAssigned() {
         onboardingConfiguration.onVariantAssigned()
         historyManagerConfiguration.onVariantAssigned()
@@ -161,6 +161,7 @@ struct Launching: AppState {
     }
 
     // MARK: -
+
     private var appDependencies: AppDependencies {
         .init(
             mainCoordinator: mainCoordinator,
@@ -173,7 +174,6 @@ struct Launching: AppState {
             subscriptionService: subscriptionService,
             autofillService: autofillService,
             crashCollectionService: crashCollectionService,
-            keyboardService: keyboardService,
             configurationService: configurationService,
             reportingService: reportingService,
             maliciousSiteProtectionService: maliciousSiteProtectionService

@@ -30,7 +30,6 @@ struct AppDependencies {
     let subscriptionService: SubscriptionService
     let autofillService: AutofillService
     let crashCollectionService: CrashCollectionService
-    let keyboardService: KeyboardService
     let configurationService: ConfigurationService
     let reportingService: ReportingService
     let maliciousSiteProtectionService: MaliciousSiteProtectionService

@@ -23,7 +23,13 @@ import UIKit
 import NotificationCenter
 import Core
 
-final class VPNService: NSObject {
+protocol VPNServiceProtocol {
+
+    func installRedditSessionWorkaround()
+
+}
+
+final class VPNService: NSObject, VPNServiceProtocol {
 
     private let tunnelController = AppDependencyProvider.shared.networkProtectionTunnelController
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
@@ -54,11 +60,7 @@ final class VPNService: NSObject {
         tipKitAppEventsHandler.appDidFinishLaunching()
     }
 
-    func onWebViewReadyForInteractions() {
-        installRedditSessionWorkaround()
-    }
-
-    private func installRedditSessionWorkaround() {
+    func installRedditSessionWorkaround() {
         Task {
             await vpnWorkaround.installRedditSessionWorkaround()
         }

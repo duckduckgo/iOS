@@ -80,14 +80,14 @@ public extension NSNotification.Name {
         appStateMachine.handle(.willTerminate(terminationReason))
     }
 
-    /// See: `Foreground.swift` -> `handleShortcutItem(_:)`
+    /// See: `LaunchActionHandler.swift` -> `handleShortcutItem(_:)`
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
         appStateMachine.handle(.handleShortcutItem(shortcutItem))
     }
 
-    /// See: `Foreground.swift` -> `openURL(_:)`
+    /// See: `LaunchActionHandler.swift` -> `openURL(_:)`
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         appStateMachine.handle(.openURL(url))
         return true

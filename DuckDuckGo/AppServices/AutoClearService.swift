@@ -19,7 +19,13 @@
 
 import UIKit
 
-final class AutoClearService {
+protocol AutoClearServiceProtocol {
+
+    func waitForDataCleared() async
+
+}
+
+final class AutoClearService: AutoClearServiceProtocol {
 
     private let autoClear: AutoClear
     private let overlayWindowManager: OverlayWindowManager
@@ -35,16 +41,6 @@ final class AutoClearService {
         self.application = application
     }
 
-    @MainActor
-    func waitForDataCleared() async {
-        guard let autoClearTask else {
-            assertionFailure("AutoClear task must be started before registering. Call register after onLaunching or onResuming.")
-            return
-        }
-        await autoClearTask.value
-        overlayWindowManager.removeNonAuthenticationOverlay()
-    }
-
     func onLaunching() {
         autoClearTask = Task {
             await autoClear.clearDataIfEnabled(applicationState: .init(with: application.applicationState))
@@ -55,6 +51,16 @@ final class AutoClearService {
         autoClearTask = Task {
             await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
         }
+    }
+
+    @MainActor
+    func waitForDataCleared() async {
+        guard let autoClearTask else {
+            assertionFailure("AutoClear task must be started before registering. Call register after onLaunching or onResuming.")
+            return
+        }
+        await autoClearTask.value
+        overlayWindowManager.removeNonAuthenticationOverlay()
     }
 
     func onBackground() {

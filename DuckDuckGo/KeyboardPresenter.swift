@@ -1,5 +1,5 @@
 //
-//  KeyboardService.swift
+//  KeyboardPresenter.swift
 //  DuckDuckGo
 //
 //  Copyright © 2025 DuckDuckGo. All rights reserved.
@@ -19,10 +19,17 @@
 
 import Foundation
 
-final class KeyboardService {
+@MainActor
+protocol KeyboardPresenting {
 
-    static let showKeyboardOnLaunchThreshold = TimeInterval(20)
-    let mainViewController: MainViewController
+    func showKeyboardOnLaunch(lastBackgroundDate: Date?)
+
+}
+
+final class KeyboardPresenter: KeyboardPresenting {
+
+    private static let showKeyboardOnLaunchThreshold = TimeInterval(20)
+    private let mainViewController: MainViewController
 
     init(mainViewController: MainViewController) {
         self.mainViewController = mainViewController

@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-import Foundation
 import UIKit
 import Core
 
@@ -30,173 +29,115 @@ import Core
 struct Foreground: AppState {
 
     let appDependencies: AppDependencies
-    private var mainCoordinator: MainCoordinator { appDependencies.mainCoordinator }
-
-    private let urlToOpen: URL?
-    private let shortcutItemToHandle: UIApplicationShortcutItem?
-    private var lastBackgroundDate: Date?
 
     /// Indicates whether this is the app's first transition to the foreground after launch.
     /// If you need to differentiate between a cold start and a wake-up from the background, use this flag.
     private let isFirstForeground: Bool
 
+    private let launchAction: LaunchAction
+    private let launchActionHandler: LaunchActionHandler
+    private let interactionManager: UIInteractionManager
+
     init(stateContext: Launching.StateContext) {
-        appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
-        shortcutItemToHandle = stateContext.shortcutItemToHandle
-        isFirstForeground = true
+        self.init(
+            appDependencies: stateContext.appDependencies,
+            urlToOpen: stateContext.urlToOpen,
+            shortcutItemToHandle: stateContext.shortcutItemToHandle,
+            lastBackgroundDate: nil,
+            isFirstForeground: true
+        )
     }
 
     init(stateContext: Background.StateContext) {
-        appDependencies = stateContext.appDependencies
-        urlToOpen = stateContext.urlToOpen
-        shortcutItemToHandle = stateContext.shortcutItemToHandle
-        lastBackgroundDate = stateContext.lastBackgroundDate
-        isFirstForeground = stateContext.didTransitionFromLaunching
+        self.init(
+            appDependencies: stateContext.appDependencies,
+            urlToOpen: stateContext.urlToOpen,
+            shortcutItemToHandle: stateContext.shortcutItemToHandle,
+            lastBackgroundDate: stateContext.lastBackgroundDate,
+            isFirstForeground: stateContext.didTransitionFromLaunching
+        )
+    }
+
+    private init(appDependencies: AppDependencies,
+                 urlToOpen: URL?,
+                 shortcutItemToHandle: UIApplicationShortcutItem?,
+                 lastBackgroundDate: Date?,
+                 isFirstForeground: Bool) {
+        self.appDependencies = appDependencies
+        self.isFirstForeground = isFirstForeground
+        launchAction = LaunchAction(urlToOpen: urlToOpen,
+                                    shortcutItemToHandle: shortcutItemToHandle,
+                                    lastBackgroundDate: lastBackgroundDate)
+        launchActionHandler = LaunchActionHandler(
+            urlHandler: appDependencies.mainCoordinator,
+            shortcutItemHandler: appDependencies.mainCoordinator,
+            keyboardPresenter: KeyboardPresenter(mainViewController: appDependencies.mainCoordinator.controller)
+        )
+        interactionManager = UIInteractionManager(
+            authenticationService: appDependencies.authenticationService,
+            autoClearService: appDependencies.autoClearService,
+            launchActionHandler: launchActionHandler
+        )
     }
 
     // MARK: - Handle applicationDidBecomeActive(_:) logic here
+
     /// **Before adding code here, ensure it does not depend on pending tasks:**
-    /// - If the app needs to be ready for web navigations, use `onWebViewReadyForInteractions()` — this runs after `AutoClear` is complete.
-    /// - If the app needs to be ready for any interactions, use `onAppReadyForInteractions()` - this runs after `AutoClear` and authentication.
-    /// - If install/search statistics are required, use `onStatisticsLoaded()`.
-    /// - If crucial configuration files (e.g., TDS, privacy config) are needed, use `onConfigurationFetched()`.
+    /// - If your code relies on web navigations, use `onWebViewReadyForInteractions` callback — it runs after `AutoClear` is complete.
+    /// - If your code relies on UI interactions, use `onAppReadyForInteractions` callback - it runs after `AutoClear` and authentication.
     ///
     /// This is **the last moment** for setting up anything. If you need something to happen earlier,
     /// add it to `Launching.swift` -> `init()` and `Background.swift` -> `willLeave()` so it runs both on a cold start and when the app wakes up.
+    ///
+    /// **Important note**
+    /// If your service needs to perform async work, handle it **within the service** instead of spawning `Task {}` blocks here.
+    /// This ensures that each service manages its own async execution without unnecessary indirection.
     func onTransition() {
         configureAppearance()
 
-        orchestrateForegroundAsyncTasks()
+        let vpnService = appDependencies.vpnService
+        vpnService.onForeground()
 
-        appDependencies.syncService.onForeground()
-        appDependencies.remoteMessagingService.onForeground()
-        appDependencies.vpnService.onForeground()
+        interactionManager.start(
+            launchAction: launchAction,
+            /// Handle **WebView-related logic** here that could be affected by `AutoClear` feature.
+            /// This is called when the **app is ready to handle web navigations** after all browser data has been cleared.
+            onWebViewReadyForInteractions: {
+                vpnService.installRedditSessionWorkaround()
+            },
+            /// Handle **UI-related logic** here that could be affected by Authentication screen or `AutoClear` feature
+            /// This is called when the **app is ready to handle user interactions** after data clear and authentication are complete.
+            onAppReadyForInteractions: {
+                /* ... */
+            }
+        )
+
+        appDependencies.configurationService.resume()
+        appDependencies.reportingService.onForeground()
         appDependencies.subscriptionService.onForeground()
         appDependencies.autofillService.onForeground()
-        appDependencies.reportingService.onForeground()
         appDependencies.maliciousSiteProtectionService.onForeground()
+        appDependencies.syncService.onForeground()
+        appDependencies.remoteMessagingService.onForeground()
 
         StatisticsLoader.shared.load(completion: onStatisticsLoaded)
-        mainCoordinator.onForeground()
+        appDependencies.mainCoordinator.onForeground()
     }
 
     private func configureAppearance() {
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
     }
 
-    // MARK: - Handle any WebView related logic here
-    /// Callback for the `AutoClear` feature, triggered when all browser data is cleared.
-    /// This includes closing all tabs, clearing caches, and wiping `WKWebsiteDataStore.default()`.
-    /// Place any code here related to browser navigation or web view handling to ensure it remains unaffected by the clearing process.
-    private func onWebViewReadyForInteractions() {
-        appDependencies.vpnService.onWebViewReadyForInteractions()
-        handleLaunchActions()
-    }
-
-    // MARK: - Handle UI-related logic here that could be affected by Authentication screen or AutoClear feature
-    /// This is called when the app is ready to handle user interactions after data clear and authentication are complete.
-    private func onAppReadyForInteractions() {
-        if urlToOpen == nil && shortcutItemToHandle == nil {
-            appDependencies.keyboardService.showKeyboardOnLaunch(lastBackgroundDate: lastBackgroundDate)
-        }
-    }
-
-    // MARK: - Handle StatisticsLoader completion logic here
+    /// Handle StatisticsLoader completion logic here
     /// Place any code here that requires install and search statistics to be available before executing.
     private func onStatisticsLoaded() {
         appDependencies.reportingService.onStatisticsLoaded()
     }
 
-    // MARK: - Handle AppConfiguration fetch completion logic here
-    /// Called when crucial configuration files (e.g., TDS, privacy configuration) have been fetched.
-    /// Place any code here that depends on up-to-date configuration data before executing.
-    private func onConfigurationFetched() {
-        appDependencies.reportingService.onConfigurationFetched()
-    }
-
-}
-
-// MARK: - Synchronization Layer
-/// This handles foreground-related async tasks that require coordination between services.
-/// It is **not** part of the public API of `Foreground`
-///
-/// **Important note**
-/// - Only use this for work that requires callbacks for other services.
-/// - If your service needs to perform async work, handle it **within the service itself** instead of spawning `Task` blocks here.
-/// - This ensures that each service manages its own async execution without unnecessary indirection.
-extension Foreground {
-
-    private func orchestrateForegroundAsyncTasks() {
-        Task { @MainActor in
-            async let authentication: () = authenticate()
-            async let dataClearing: () = clearData()
-
-            await (_, _) = (authentication, dataClearing)
-            onAppReadyForInteractions()
-        }
-        Task { @MainActor in
-            await appDependencies.configurationService.resume()
-            onConfigurationFetched()
-        }
-    }
-
-    private func authenticate() async {
-        await appDependencies.authenticationService.resume()
-    }
-
-    private func clearData() async {
-        await appDependencies.autoClearService.waitForDataCleared()
-        onWebViewReadyForInteractions()
-    }
-
-}
-
-// MARK: - URL and shortcut items handling
-extension Foreground {
-
-    func handle(action: AppAction) {
-        switch action {
-        case .openURL(let url):
-            openURL(url)
-        case .handleShortcutItem(let shortcutItem):
-            handleShortcutItem(shortcutItem)
-        }
-    }
-
-    private func handleLaunchActions() {
-        if let url = urlToOpen {
-            openURL(url)
-        } else if let shortcutItemToHandle = shortcutItemToHandle {
-            handleShortcutItem(shortcutItemToHandle)
-        }
-    }
-
-    // MARK: Handle application(_:open:options:) logic here
-    private func openURL(_ url: URL) {
-        Logger.sync.debug("App launched with url \(url.absoluteString)")
-        guard mainCoordinator.shouldProcessDeepLink(url) else { return }
-
-        NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
-
-        mainCoordinator.handleURL(url)
-    }
-
-    // MARK: Handle application(_:performActionFor:completionHandler:) logic here
-    private func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
-        Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
-        if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
-            mainCoordinator.handleQuery(query)
-        } else if shortcutItem.type == ShortcutKey.passwords {
-            mainCoordinator.handleSearchPassword()
-        } else if shortcutItem.type == ShortcutKey.openVPNSettings {
-            mainCoordinator.presentNetworkProtectionStatusSettingsModal()
-        }
-    }
-
 }
 
 // MARK: Handle application suspension (applicationWillResignActive(_:))
+
 /// No active use case currently, but could apply to scenarios like pausing/resuming a game or video during a system alert.
 extension Foreground {
 
@@ -221,7 +162,23 @@ extension Foreground {
 
 }
 
-// MARK: - State context
+// MARK: - AppEventHandler
+
+extension Foreground {
+
+    func handle(action: AppAction) {
+        switch action {
+        case .openURL(let url):
+            launchActionHandler.handleLaunchAction(.openURL(url))
+        case .handleShortcutItem(let shortcutItem):
+            launchActionHandler.handleLaunchAction(.handleShortcutItem(shortcutItem))
+        }
+    }
+
+}
+
+// MARK: - StateContext
+
 extension Foreground {
 
     struct StateContext {

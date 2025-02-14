@@ -24,6 +24,21 @@ import Subscription
 import Persistence
 
 @MainActor
+protocol URLHandling {
+
+    func handleURL(_ url: URL)
+    func shouldProcessDeepLink(_ url: URL) -> Bool
+
+}
+
+@MainActor
+protocol ShortcutItemHandling {
+
+    func handleShortcutItem(_ item: UIApplicationShortcutItem)
+
+}
+
+@MainActor
 final class MainCoordinator {
 
     let controller: MainViewController
@@ -51,7 +66,6 @@ final class MainCoordinator {
         let historyManager = Self.makeHistoryManager()
         let tabsModel = Self.prepareTabsModel(previewsSource: previewsSource)
         reportingService.privacyProDataReporter.injectTabsModel(tabsModel)
-
         let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs,
                                                                       contextualOnboardingPixelReporter: reportingService.onboardingPixelReporter)
         let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
@@ -80,7 +94,7 @@ final class MainCoordinator {
                                         appDidFinishLaunchingStartTime: didFinishLaunchingStartTime,
                                         maliciousSiteProtectionManager: maliciousSiteProtectionService.manager,
                                         maliciousSiteProtectionPreferencesManager: maliciousSiteProtectionService.preferencesManager,
-                                        aichatSettings: aiChatSettings)
+                                        aiChatSettings: aiChatSettings)
     }
 
     func start() {
@@ -108,8 +122,7 @@ final class MainCoordinator {
     }
 
     private static func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
-                                         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-                                         isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
+                                         appSettings: AppSettings = AppDependencyProvider.shared.appSettings) -> TabsModel {
         let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
         let tabsModel: TabsModel
         if AutoClearSettingsModel(settings: appSettings) != nil {
@@ -144,8 +157,61 @@ final class MainCoordinator {
                                dataStoreIDManager: dataStoreIDManager)
     }
 
-    func handleAppDeepLink(url: URL, application: UIApplication = UIApplication.shared) -> Bool {
+    func segueToPrivacyPro() {
+        controller.segueToPrivacyPro()
+    }
 
+    func presentNetworkProtectionStatusSettingsModal() {
+        Task {
+            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
+                controller.segueToVPN()
+            } else {
+                controller.segueToPrivacyPro()
+            }
+        }
+    }
+
+    // MARK: App Lifecycle handling
+
+    func onForeground() {
+        controller.showBars()
+        controller.onForeground()
+    }
+
+    func onBackground() {
+        resetAppStartTime()
+    }
+
+    private func resetAppStartTime() {
+        controller.appDidFinishLaunchingStartTime = nil
+    }
+
+}
+
+extension MainCoordinator: URLHandling {
+
+    func shouldProcessDeepLink(_ url: URL) -> Bool {
+        // Ignore deeplinks if onboarding is active
+        // as well as handle email sign-up deep link separately
+        !controller.needsToShowOnboardingIntro() && !handleEmailSignUpDeepLink(url)
+    }
+
+    func handleURL(_ url: URL) {
+        guard !handleAppDeepLink(url: url) else { return }
+        controller.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil, fromExternalLink: true)
+    }
+
+    private func handleEmailSignUpDeepLink(_ url: URL) -> Bool {
+        guard url.absoluteString.starts(with: URL.emailProtection.absoluteString),
+              let navViewController = controller.presentedViewController as? UINavigationController,
+              let emailSignUpViewController = navViewController.topViewController as? EmailSignupViewController else {
+            return false
+        }
+        emailSignUpViewController.loadUrl(url)
+        return true
+    }
+
+    private func handleAppDeepLink(url: URL, application: UIApplication = UIApplication.shared) -> Bool {
         if url != AppDeepLinkSchemes.openVPN.url && url.scheme != AppDeepLinkSchemes.openAIChat.url.scheme {
             controller.clearNavigationStack()
         }
@@ -207,70 +273,35 @@ final class MainCoordinator {
                            openedByPage: true,
                            inheritingAttribution: nil)
         }
-
         return true
     }
 
-    func segueToPrivacyPro() {
-        controller.segueToPrivacyPro()
-    }
+}
 
-    func presentNetworkProtectionStatusSettingsModal() {
-        Task {
-            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
-                controller.segueToVPN()
-            } else {
-                controller.segueToPrivacyPro()
-            }
+extension MainCoordinator: ShortcutItemHandling {
+
+    func handleShortcutItem(_ item: UIApplicationShortcutItem) {
+        if item.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+            handleQuery(query)
+        } else if item.type == ShortcutKey.passwords {
+            handleSearchPassword()
+        } else if item.type == ShortcutKey.openVPNSettings {
+            presentNetworkProtectionStatusSettingsModal()
         }
     }
 
-    private func handleEmailSignUpDeepLink(_ url: URL) -> Bool {
-        guard url.absoluteString.starts(with: URL.emailProtection.absoluteString),
-              let navViewController = controller.presentedViewController as? UINavigationController,
-              let emailSignUpViewController = navViewController.topViewController as? EmailSignupViewController else {
-            return false
-        }
-        emailSignUpViewController.loadUrl(url)
-        return true
-    }
-
-    func handleQuery(_ query: String) {
+    private func handleQuery(_ query: String) {
         controller.clearNavigationStack()
         controller.loadQueryInNewTab(query)
     }
 
-    func handleSearchPassword() {
+    private func handleSearchPassword() {
         controller.clearNavigationStack()
         // Give the `clearNavigationStack` call time to complete.
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
             self.controller.launchAutofillLogins(openSearch: true, source: .appIconShortcut)
         }
         Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
-    }
-
-    func handleURL(_ url: URL) {
-        guard !handleAppDeepLink(url: url) else { return }
-        controller.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil, fromExternalLink: true)
-    }
-
-    func shouldProcessDeepLink(_ url: URL) -> Bool {
-        // Ignore deeplinks if onboarding is active
-        // as well as handle email sign-up deep link separately
-        !controller.needsToShowOnboardingIntro() && !handleEmailSignUpDeepLink(url)
-    }
-
-    func onForeground() {
-        controller.showBars()
-        controller.onForeground()
-    }
-
-    func onBackground() {
-        resetAppStartTime()
-    }
-
-    private func resetAppStartTime() {
-        controller.appDidFinishLaunchingStartTime = nil
     }
 
 }

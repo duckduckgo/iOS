@@ -19,7 +19,13 @@
 
 import Foundation
 
-final class AuthenticationService {
+protocol AuthenticationServiceProtocol {
+
+    func authenticate() async
+
+}
+
+final class AuthenticationService: AuthenticationServiceProtocol {
 
     private let authenticator = Authenticator()
     private let overlayWindowManager: OverlayWindowManager
@@ -33,20 +39,20 @@ final class AuthenticationService {
         self.overlayWindowManager = overlayWindowManager
     }
 
+    func onBackground() {
+        if privacyStore.authenticationEnabled {
+            overlayWindowManager.displayBlankSnapshotWindow()
+        }
+    }
+
     @MainActor
-    func resume() async {
+    func authenticate() async {
         guard shouldAuthenticate else {
             return
         }
         let authenticationViewController = showAuthenticationScreen()
         authenticationViewController.delegate = self
         await authenticate(with: authenticationViewController)
-    }
-
-    func onBackground() {
-        if privacyStore.authenticationEnabled {
-            overlayWindowManager.displayBlankSnapshotWindow()
-        }
     }
 
     @MainActor

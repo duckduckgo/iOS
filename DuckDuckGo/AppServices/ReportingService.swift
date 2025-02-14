@@ -37,6 +37,11 @@ final class ReportingService {
 
     init(fireproofing: Fireproofing) {
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
+        NotificationCenter.default.addObserver(forName: .configurationFetchedOnForeground,
+                                               object: nil,
+                                               queue: .main) { _ in
+            self.sendAppLaunchPostback(marketplaceAdPostbackManager: self.marketplaceAdPostbackManager)
+        }
     }
 
     func onForeground() {
@@ -56,10 +61,6 @@ final class ReportingService {
         fireAppLaunchPixel()
         reportAdAttribution()
         onboardingPixelReporter.fireEnqueuedPixelsIfNeeded()
-    }
-
-    func onConfigurationFetched() {
-        sendAppLaunchPostback(marketplaceAdPostbackManager: marketplaceAdPostbackManager)
     }
 
     func onBackground() {

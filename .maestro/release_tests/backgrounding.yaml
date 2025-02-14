@@ -33,8 +33,7 @@ tags:
 - tapOn: "Browsing menu"
 - assertVisible: "Add Bookmark"
 - tapOn: "Add Bookmark"
-- tapOn: 
-    id: PrivacyIcon
+- tapOn: "Privacy Icon"
 - assertVisible: "Protections are ON for this site"
 - tapOn: "Done"
 
@@ -55,6 +54,7 @@ tags:
 
 # Check menus
 - tapOn: "Cancel"
+- tapOn: "Browsing menu"
 - tapOn: "Settings"
 - assertVisible: "Default Browser"
 - tapOn: "Done"

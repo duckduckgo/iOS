@@ -41,18 +41,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="327" height="206"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MYN-to-hpz" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="-4" y="-4" width="335" height="214"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="12"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </view>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="puo-AS-QV7" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="327" height="206"/>
                                                     <subviews>
@@ -153,28 +141,32 @@
                                                             <real key="value" value="2"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="8"/>
+                                                            <real key="value" value="12"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cRB-zI-zcI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="327" height="206"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="puo-AS-QV7" secondAttribute="bottom" id="3fw-42-0yk"/>
                                             <constraint firstAttribute="trailing" secondItem="puo-AS-QV7" secondAttribute="trailing" id="44L-7t-6zy"/>
-                                            <constraint firstItem="MYN-to-hpz" firstAttribute="bottom" secondItem="puo-AS-QV7" secondAttribute="bottom" constant="4" id="9QA-no-odW"/>
-                                            <constraint firstItem="MYN-to-hpz" firstAttribute="leading" secondItem="puo-AS-QV7" secondAttribute="leading" constant="-4" id="AqS-pq-yrH"/>
+                                            <constraint firstItem="cRB-zI-zcI" firstAttribute="height" secondItem="Mdh-yg-dRH" secondAttribute="height" id="4LC-QR-gqI"/>
                                             <constraint firstItem="puo-AS-QV7" firstAttribute="top" secondItem="Mdh-yg-dRH" secondAttribute="top" id="GAj-kD-YVQ"/>
                                             <constraint firstItem="puo-AS-QV7" firstAttribute="leading" secondItem="Mdh-yg-dRH" secondAttribute="leading" id="Gfv-Fx-eYf"/>
-                                            <constraint firstItem="MYN-to-hpz" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="-4" id="WwS-Ef-De3"/>
-                                            <constraint firstItem="MYN-to-hpz" firstAttribute="trailing" secondItem="puo-AS-QV7" secondAttribute="trailing" constant="4" id="b0f-mM-ISy"/>
+                                            <constraint firstItem="cRB-zI-zcI" firstAttribute="centerX" secondItem="Mdh-yg-dRH" secondAttribute="centerX" id="QeY-oc-aYP"/>
+                                            <constraint firstItem="cRB-zI-zcI" firstAttribute="width" secondItem="Mdh-yg-dRH" secondAttribute="width" id="eCB-pB-sns"/>
+                                            <constraint firstItem="cRB-zI-zcI" firstAttribute="centerY" secondItem="Mdh-yg-dRH" secondAttribute="centerY" id="pWZ-lr-H5p"/>
                                         </constraints>
                                         <size key="customSize" width="327" height="206"/>
                                         <connections>
                                             <outlet property="background" destination="puo-AS-QV7" id="DYO-r7-lm0"/>
-                                            <outlet property="border" destination="MYN-to-hpz" id="tSf-9A-I8S"/>
+                                            <outlet property="border" destination="cRB-zI-zcI" id="zmz-qR-8ZO"/>
                                             <outlet property="favicon" destination="ucs-Dd-y53" id="5MN-9p-Rmy"/>
                                             <outlet property="preview" destination="iu2-rk-hOZ" id="FwQ-2l-FZ8"/>
                                             <outlet property="previewBottomConstraint" destination="FtQ-fl-Drb" id="QPw-68-F1b"/>
@@ -193,18 +185,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="327" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnL-HD-Ke8" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="-4" y="-4" width="335" height="78"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="12"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </view>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PJG-u5-taI" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="327" height="70"/>
                                                     <subviews>
@@ -308,28 +288,32 @@
                                                             <real key="value" value="2"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="6"/>
+                                                            <real key="value" value="12"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O9l-O9-Bme">
+                                                    <rect key="frame" x="0.0" y="0.0" width="327" height="70"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="PJG-u5-taI" firstAttribute="top" secondItem="Ml9-Ia-4eU" secondAttribute="top" id="7B6-Jw-HGG"/>
                                             <constraint firstAttribute="bottom" secondItem="PJG-u5-taI" secondAttribute="bottom" id="Aoa-Lh-KNE"/>
-                                            <constraint firstItem="gnL-HD-Ke8" firstAttribute="top" secondItem="PJG-u5-taI" secondAttribute="top" constant="-4" id="JB7-bl-B0D"/>
+                                            <constraint firstItem="O9l-O9-Bme" firstAttribute="centerY" secondItem="Ml9-Ia-4eU" secondAttribute="centerY" id="PwU-Nl-Zgr"/>
                                             <constraint firstAttribute="trailing" secondItem="PJG-u5-taI" secondAttribute="trailing" id="Q7P-qV-oLG"/>
-                                            <constraint firstItem="gnL-HD-Ke8" firstAttribute="trailing" secondItem="PJG-u5-taI" secondAttribute="trailing" constant="4" id="anC-Iz-ya0"/>
-                                            <constraint firstItem="gnL-HD-Ke8" firstAttribute="bottom" secondItem="PJG-u5-taI" secondAttribute="bottom" constant="4" id="cVg-dC-OEA"/>
+                                            <constraint firstItem="O9l-O9-Bme" firstAttribute="height" secondItem="Ml9-Ia-4eU" secondAttribute="height" id="TBm-dj-wB7"/>
+                                            <constraint firstItem="O9l-O9-Bme" firstAttribute="width" secondItem="Ml9-Ia-4eU" secondAttribute="width" id="WwE-f0-15n"/>
+                                            <constraint firstItem="O9l-O9-Bme" firstAttribute="centerX" secondItem="Ml9-Ia-4eU" secondAttribute="centerX" id="sMV-d6-K40"/>
                                             <constraint firstItem="PJG-u5-taI" firstAttribute="leading" secondItem="Ml9-Ia-4eU" secondAttribute="leading" id="tk0-5g-bz5"/>
-                                            <constraint firstItem="gnL-HD-Ke8" firstAttribute="leading" secondItem="PJG-u5-taI" secondAttribute="leading" constant="-4" id="xNg-ND-pBj"/>
                                         </constraints>
                                         <size key="customSize" width="327" height="70"/>
                                         <connections>
                                             <outlet property="background" destination="PJG-u5-taI" id="YY2-YL-SyA"/>
-                                            <outlet property="border" destination="gnL-HD-Ke8" id="zPZ-Ni-Mcc"/>
+                                            <outlet property="border" destination="O9l-O9-Bme" id="dkV-Q5-r8b"/>
                                             <outlet property="favicon" destination="ARc-nQ-K4S" id="9Xm-Sn-4YD"/>
                                             <outlet property="link" destination="LbT-NO-T0G" id="gbZ-zt-wiq"/>
                                             <outlet property="removeButton" destination="2en-CB-bYH" id="Kz8-Ay-ARL"/>
@@ -584,10 +568,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemTealColor">
-            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

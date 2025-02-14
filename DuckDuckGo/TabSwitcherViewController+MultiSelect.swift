@@ -616,7 +616,7 @@ extension TabSwitcherViewController {
 
         let path = IndexPath(row: index, section: 0)
         collectionView.selectItem(at: path, animated: true, scrollPosition: .centeredVertically)
-        (collectionView.cellForItem(at: path) as? TabViewCell)?.toggleSelection()
+        (collectionView.cellForItem(at: path) as? TabViewCell)?.refreshSelectionAppearance()
         updateUIForSelectionMode()
     }
 

@@ -38,9 +38,9 @@ final class TabViewCell: UICollectionViewCell {
         static let cellHeaderHeight: CGFloat = 38.0
         static let cellLogoSize: CGFloat = 68.0
 
-        static let selectedBorderWidth: CGFloat = 2.0
+        static let selectedBorderWidth: CGFloat = 4.0
         static let unselectedBorderWidth: CGFloat = 0.0
-   }
+    }
 
     var removeThreshold: CGFloat {
         return frame.width / 3
@@ -59,6 +59,31 @@ final class TabViewCell: UICollectionViewCell {
 
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var border: UIView!
+
+    override func dragStateDidChange(_ dragState: UICollectionViewCell.DragState) {
+        super.dragStateDidChange(dragState)
+        
+        switch dragState {
+        case .none:
+            print("***, none", isSelected)
+            selectionIndicator.isHidden = !isSelectionModeEnabled
+            border.isHidden = false
+            refreshSelectionAppearance()
+
+        case .lifting, .dragging:
+            print("***, lifting", isSelected)
+            selectionIndicator.isHidden = true
+            border.isHidden = true
+            border.layer.borderWidth = 0.0
+            backgroundColor = .red
+
+        default: break
+        }
+
+        setNeedsLayout()
+        setNeedsDisplay()
+    }
+
     @IBOutlet weak var favicon: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var removeButton: UIButton!
@@ -77,8 +102,13 @@ final class TabViewCell: UICollectionViewCell {
     @IBOutlet var previewTrailingConstraint: NSLayoutConstraint?
 
     func setupSubviews() {
+
         backgroundColor = .clear
-        layer.cornerRadius = backgroundView?.layer.cornerRadius ?? 0.0
+        backgroundView?.backgroundColor = .clear
+
+        border.layer.cornerRadius = 12
+
+        layer.cornerRadius = 12
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowRadius = 3.0
@@ -185,7 +215,7 @@ final class TabViewCell: UICollectionViewCell {
                 canDelete = true
             } else {
                 if canDelete {
-                   makeOpaque()
+                    makeOpaque()
                 }
                 canDelete = false
             }
@@ -236,9 +266,9 @@ final class TabViewCell: UICollectionViewCell {
         }
     }
 
-    func toggleSelection() {
+    func refreshSelectionAppearance() {
         updateSelectionIndicator(selectionIndicator)
-        updateCurrentTabBorder(border)
+        updateCurrentTabBorder()
     }
 
     func closeTab() {
@@ -264,7 +294,8 @@ final class TabViewCell: UICollectionViewCell {
         }
     }
 
-    func updateCurrentTabBorder(_ border: UIView) {
+    func updateCurrentTabBorder() {
+        print("***", #function, isSelectionModeEnabled, isSelected, isCurrent)
         let showBorder = isSelectionModeEnabled ? isSelected : isCurrent
         border.layer.borderColor = UIColor(designSystemColor: isSelectionModeEnabled ? .accent : .textPrimary).cgColor
         border.layer.borderWidth = showBorder ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
@@ -296,7 +327,7 @@ final class TabViewCell: UICollectionViewCell {
 
         decorate()
 
-        updateCurrentTabBorder(border)
+        updateCurrentTabBorder()
 
         if let link = tab.link {
             removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle, atAddress: link.url.host ?? "")
@@ -349,23 +380,20 @@ final class TabViewCell: UICollectionViewCell {
         super.traitCollectionDidChange(previousTraitCollection)
 
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            setBorderColor()
+            decorate()
         }
     }
 
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
-        setBorderColor()
+        border.layer.borderColor = theme.tabSwitcherCellBorderColor.cgColor
         unread.image = Self.unreadImageAsset.image(with: .current)
 
         background.backgroundColor = theme.tabSwitcherCellBackgroundColor
         title.textColor = theme.tabSwitcherCellTextColor
-    }
 
-    private func setBorderColor() {
-        border.layer.borderColor = ThemeManager.shared.currentTheme.tabSwitcherCellBorderColor.cgColor
+        background.superview?.backgroundColor = .clear
     }
-
 }
 
 extension TabViewCell: UIGestureRecognizerDelegate {

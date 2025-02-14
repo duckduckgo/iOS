@@ -190,24 +190,6 @@ class TabSwitcherViewController: UIViewController {
         }
     }
 
-    @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            guard let path = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { return }
-            collectionView.beginInteractiveMovementForItem(at: path)
-
-        case .changed:
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: collectionView))
-
-        case .ended:
-            collectionView.endInteractiveMovement()
-
-        default:
-            collectionView.cancelInteractiveMovement()
-        }
-
-    }
-
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         collectionView.collectionViewLayout.invalidateLayout()
@@ -377,6 +359,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         
         return cell
     }
+
 }
 
 extension TabSwitcherViewController: UICollectionViewDelegate {
@@ -385,7 +368,7 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
         Pixel.fire(pixel: .tabSwitcherSwitchTabs)
         currentSelection = indexPath.row
         if isEditing {
-            (collectionView.cellForItem(at: indexPath) as? TabViewCell)?.toggleSelection()
+            (collectionView.cellForItem(at: indexPath) as? TabViewCell)?.refreshSelectionAppearance()
             updateUIForSelectionMode()
             refreshTitle()
         } else {
@@ -394,7 +377,7 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        (collectionView.cellForItem(at: indexPath) as? TabViewCell)?.toggleSelection()
+        (collectionView.cellForItem(at: indexPath) as? TabViewCell)?.refreshSelectionAppearance()
         updateUIForSelectionMode()
         refreshTitle()
     }
@@ -423,13 +406,14 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
             trimMenuTitleIfNeeded(tabsModel.get(tabAt: indexPaths[0].row).link?.displayTitle ?? "", 50) :
         UserText.numberOfSelectedTabs(withCount: indexPaths.count)
 
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let menuItems = indexPaths.count == 1 ?
                 self.createLongPressMenuItemsForSingleTab(forIndex: indexPaths[0].row) :
                 self.createLongPressMenuItemsForMultipleTabs()
             return UIMenu(title: title, children: menuItems.compactMap { $0 })
         }
 
+        return configuration
     }
 
 }
@@ -513,14 +497,18 @@ extension TabSwitcherViewController {
                 
         collectionView.reloadData()
     }
+
 }
 
+// These don't appear to do anything but at least one needs to exist for dragging to even work
 extension TabSwitcherViewController: UICollectionViewDragDelegate {
 
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: any UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        guard let cell = collectionView.cellForItem(at: indexPath),
-              let snapshot = cell.createImageSnapshot() else { return [] }
-        return [.init(itemProvider: .init(object: snapshot))]
+        return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+
+    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: any UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+        return [UIDragItem(itemProvider: NSItemProvider())]
     }
 
 }
@@ -562,6 +550,19 @@ extension TabSwitcherViewController: UICollectionViewDropDelegate {
             coordinator.drop(item.dragItem, toItemAt: destination)
         }
 
+    }
+
+}
+
+class XPreview: UIViewController {
+
+    var snapshot: UIView?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        guard let snapshot else { return }
+        view.frame = snapshot.frame
+        view.addSubview(snapshot)
     }
 
 }

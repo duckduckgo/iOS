@@ -27,7 +27,7 @@ struct LargeOmniBarState {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showAccessoryButton: Bool = false
+        var showAccessoryButton: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -35,8 +35,8 @@ struct LargeOmniBarState {
         let showClear = false
         let showAbort = false
         let showRefresh = false
-        let showMenu = false
-        let showSettings = true
+        var showMenu: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showSettings: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
         let showCancel: Bool = false
         let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
@@ -69,7 +69,7 @@ struct LargeOmniBarState {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showAccessoryButton: Bool = false
+        var showAccessoryButton: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -77,8 +77,8 @@ struct LargeOmniBarState {
         let showClear = true
         let showAbort = false
         let showRefresh = false
-        let showMenu = false
-        let showSettings = true
+        var showMenu: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showSettings: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
         let showCancel: Bool = false
         let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }
@@ -103,7 +103,7 @@ struct LargeOmniBarState {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showAccessoryButton: Bool = false
+        var showAccessoryButton: Bool { dependencies.isAIChatEnabledOnSettingsAndFeatureFlagOn }
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -112,8 +112,8 @@ struct LargeOmniBarState {
         let showClear = false
         let showAbort = false
         let showRefresh = false
-        let showMenu = false
-        let showSettings = true
+        var showMenu: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? true : false }
+        var showSettings: Bool { dependencies.featureFlagger.isFeatureOn(.aiChatNewTabPage) ? false : true }
         let showCancel: Bool = false
         let showDismiss: Bool = false
         var name: String { return "Pad" + Type.name(self) }

@@ -21,11 +21,12 @@ import UIKit
 
 enum AppEvent {
 
-    case didFinishLaunching(UIApplication, isTesting: Bool)
+    case didFinishLaunching(isTesting: Bool)
     case didBecomeActive
     case didEnterBackground
     case willResignActive
     case willEnterForeground
+    case willTerminate(UIApplication.TerminationReason)
 
 }
 
@@ -36,6 +37,7 @@ enum AppAction {
 
 }
 
+@MainActor
 protocol AppState {
 
     func apply(event: AppEvent) -> any AppState

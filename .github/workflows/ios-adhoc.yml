@@ -83,18 +83,18 @@ jobs:
           path: ${{ env.dsyms_path }}
 
       - name: Get Asana Task ID
+        if: inputs.asana-task-url
         id: get-task-id
-        if: github.event.inputs.asana-task-url
+        env:
+          ASANA_TASK_URL: ${{ inputs.asana-task-url }}
         run: |
-          task_url_regex='^https://app.asana.com/[0-9]/[0-9]*/([0-9]*)/f$'
-          if [[ "${{ github.event.inputs.asana-task-url }}" =~ ${task_url_regex} ]]; then
-            echo "task_id=${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
-          else
-            echo "::error::Asana Task URL has incorrect format (attempted to match ${task_url_regex})."
-          fi
+          task_id=$(echo "$ASANA_TASK_URL" \
+            | sed -E 's|.*https://(.*)|\1|' \
+            | cut -d '/' -f 4)
+          echo "task_id=${task_id//[^0-9]/}" >> $GITHUB_OUTPUT
 
       - name: Upload IPA to Asana
-        if: github.event.inputs.asana-task-url
+        if: inputs.asana-task-url
         env:
           ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
         run: |

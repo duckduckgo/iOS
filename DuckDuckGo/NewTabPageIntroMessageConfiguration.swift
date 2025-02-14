@@ -1,5 +1,5 @@
 //
-//  NewTabPageIntroMessageSetup.swift
+//  NewTabPageIntroMessageConfiguration.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import BrowserServicesKit
 import Core
 
-struct NewTabPageIntroMessageSetup {
+struct NewTabPageIntroMessageConfiguration {
     let storage: NewTabPageIntroDataStoring
     let statistics: StatisticsStore
     let newTabPageManager: NewTabPageManaging
@@ -33,7 +33,7 @@ struct NewTabPageIntroMessageSetup {
         self.newTabPageManager = newTabPageManager
     }
 
-    func perform() {
+    func configure() {
         
         let isNotSetUp = storage.newTabPageIntroMessageEnabled == nil
         guard newTabPageManager.isAvailableInPublicRelease && isNotSetUp else { return }

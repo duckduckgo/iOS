@@ -21,6 +21,7 @@ tags:
 
 # Enable autoclear
 
+- tapOn: "Browsing Menu"
 - tapOn: "Settings"
 - assertVisible: "Default Browser"
 - scrollUntilVisible:

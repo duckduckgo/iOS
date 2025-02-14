@@ -76,6 +76,7 @@ extension Pixel {
         case settingsAutoconsentOff
         
         case browsingMenuOpened
+        case browsingMenuOpenedNewTabPage
         case browsingMenuNewTab
         case browsingMenuAddToBookmarks
         case browsingMenuEditBookmark
@@ -95,6 +96,7 @@ extension Pixel {
         case browsingMenuFireproof
         case browsingMenuAutofill
         case browsingMenuAIChat
+        case browsingMenuListAIChat
 
         case addressBarShare
         case addressBarSettings
@@ -669,7 +671,8 @@ extension Pixel {
         case bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration
         case bookmarksMigrationCouldNotRemoveOldStore
         case bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders
-        
+
+        case bookmarksOpenFromToolbar
         case syncSignupDirect
         case syncSignupConnect
         case syncLogin
@@ -962,7 +965,6 @@ extension Pixel {
         // MARK: Launch time
         case appDidFinishLaunchingTime(time: BucketAggregation)
         case appDidShowUITime(time: BucketAggregation)
-        case appDidBecomeActiveTime(time: BucketAggregation)
 
         // MARK: AI Chat
         case aiChatNoRemoteSettingsFound(settings: String)
@@ -1061,6 +1063,7 @@ extension Pixel.Event {
         case .settingsMoreSearchSettings: return "m_settings_more_search_settings"
 
         case .browsingMenuOpened: return "mb"
+        case .browsingMenuOpenedNewTabPage: return "m_nav_menu_ntp"
         case .browsingMenuNewTab: return "mb_tb"
         case .browsingMenuAddToBookmarks: return "mb_abk"
         case .browsingMenuEditBookmark: return "mb_ebk"
@@ -1080,9 +1083,7 @@ extension Pixel.Event {
         case .browsingMenuAutofill: return "m_nav_autofill_menu_item_pressed"
             
         case .browsingMenuShare: return "m_browsingmenu_share"
-        case .browsingMenuAIChat: return "m_aichat_menu_tab_icon"
         case .browsingMenuListPrint: return "m_browsing_menu_list_print"
-
         case .addressBarShare: return "m_addressbar_share"
         case .addressBarSettings: return "m_addressbar_settings"
         case .addressBarCancelPressedOnNTP: return "m_addressbar_cancel_ntp"
@@ -1629,7 +1630,7 @@ extension Pixel.Event {
             return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
         case .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders: return "m_d_bookmarks_migration_could_not_prepare_multiple_favorite_folders"
-            
+        case .bookmarksOpenFromToolbar: return "m_nav_bookmarks"
         case .syncSignupDirect: return "m_sync_signup_direct"
         case .syncSignupConnect: return "m_sync_signup_connect"
         case .syncLogin: return "m_sync_login"
@@ -1951,7 +1952,6 @@ extension Pixel.Event {
         // MARK: Launch time
         case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"
         case .appDidShowUITime(let time): return "m_debug_app-did-show-ui-time-\(time)"
-        case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
 
         // MARK: AI Chat
         case .aiChatNoRemoteSettingsFound(let settings):
@@ -1961,9 +1961,11 @@ extension Pixel.Event {
         case .openAIChatFromWidgetQuickAction: return "m_aichat-widget-quickaction"
         case .openAIChatFromWidgetControlCenter: return "m_aichat-widget-control-center"
         case .openAIChatFromWidgetLockScreenComplication: return "m_aichat-widget-lock-screen-complication"
+        case .browsingMenuAIChat: return "m_aichat_menu_tab_icon"
+        case .browsingMenuListAIChat: return "m_browsing_menu_list_aichat"
 
         // MARK: Lifecycle
-        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-3"
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state-4"
 
         case .debugBreakageExperiment: return "m_debug_breakage_experiment_u"
 

@@ -81,17 +81,16 @@ struct Launching: AppState {
                        withAdditionalParameters: [PixelParameters.time: String(launchTime)])
         }
         reportingService = ReportingService(fireproofing: fireproofing)
-        KeyboardConfiguration.configure()
-        PixelConfiguration.configure(featureFlagger: featureFlagger)
+        KeyboardConfiguration.disableHardwareKeyboardForUITests()
+        PixelConfiguration.configure(with: featureFlagger)
         ContentBlockingConfiguration.configure()
         UserAgentConfiguration.configureAPIRequestUserAgent()
-        NewTabPageIntroMessageConfiguration().configure()
+        NewTabPageIntroMessageConfiguration().disableIntroMessageForReturningUsers()
         onboardingConfiguration.migrate()
-
         persistentStoresConfiguration.configure()
 
-        configurationService.onLaunching()
-        crashCollectionService.onLaunching()
+        configurationService.start()
+        crashCollectionService.start()
 
         WidgetCenter.shared.reloadAllTimelines()
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
@@ -131,15 +130,18 @@ struct Launching: AppState {
         screenshotService = ScreenshotService(window: window)
         authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
 
-        autoClearService.onLaunching()
-        vpnService.onLaunching()
-        subscriptionService.onLaunching()
-        autofillService.onLaunching()
-        maliciousSiteProtectionService.onLaunching()
+        syncService.start()
+        remoteMessagingService.start()
+        autoClearService.start()
+        vpnService.start()
+        subscriptionService.start()
+        autofillService.start()
+        maliciousSiteProtectionService.start()
 
-        atbAndVariantConfiguration.configure(onVariantAssigned: onVariantAssigned)
+        atbAndVariantConfiguration.cleanUpATBAndAssignVariant(onVariantAssigned: onVariantAssigned)
         CrashHandlersConfiguration.handleCrashDuringCrashHandlersSetup()
-        TabInteractionStateConfiguration.configure(autoClearService: autoClearService, mainViewController: mainCoordinator.controller)
+        TabInteractionStateConfiguration.removeLeftoverStatesIfAutoClearDisabled(isAutoClearDisabled: !autoClearService.isClearingEnabled,
+                                                                                 mainViewController: mainCoordinator.controller)
         UserAgentConfiguration.configureUserBrowsingUserAgent()
 
         setupWindow()
@@ -156,9 +158,9 @@ struct Launching: AppState {
     // MARK: - Handle ATB and variant assigned logic here
 
     func onVariantAssigned() {
-        onboardingConfiguration.onVariantAssigned()
-        historyManagerConfiguration.onVariantAssigned()
-        reportingService.onVariantAssigned()
+        onboardingConfiguration.adjustDialogsForUITesting()
+        historyManagerConfiguration.dismissHistoryMessage()
+        reportingService.setupStorageForMarketPlacePostback()
     }
 
     // MARK: -

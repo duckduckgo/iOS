@@ -24,22 +24,21 @@ final class CrashCollectionService {
 
     private let appSettings: AppSettings
     private let application: UIApplication
-    init(appSettings: AppSettings = AppUserDefaults(),
-         application: UIApplication = UIApplication.shared) {
-        self.appSettings = appSettings
-        self.application = application
-    }
 
     private lazy var crashCollection = CrashCollection(crashReportSender: CrashReportSender(platform: .iOS,
                                                                                             pixelEvents: CrashReportSender.pixelEvents),
                                                        crashCollectionStorage: UserDefaults())
     private lazy var crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: appSettings)
 
-    func onLaunching() {
-        startAttachingCrashLogMessages()
+    init(appSettings: AppSettings = AppUserDefaults(),
+         application: UIApplication = UIApplication.shared) {
+        self.appSettings = appSettings
+        self.application = application
     }
 
-    private func startAttachingCrashLogMessages() {
+    // MARK: - Start
+
+    func start() {
         crashCollection.startAttachingCrashLogMessages { [weak self] pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])

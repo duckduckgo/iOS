@@ -21,7 +21,7 @@ import Foundation
 
 final class HistoryManagerConfiguration {
 
-    func onVariantAssigned() {
+    func dismissHistoryMessage() {
         // New users don't see the message
         HistoryMessageManager().dismiss()
     }

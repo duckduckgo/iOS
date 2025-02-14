@@ -21,7 +21,7 @@ import UIKit
 
 struct KeyboardConfiguration {
 
-    static func configure() {
+    static func disableHardwareKeyboardForUITests() {
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
             // Disable hardware keyboards.

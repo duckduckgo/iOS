@@ -21,6 +21,7 @@ import BrowserServicesKit
 import Core
 
 struct NewTabPageIntroMessageConfiguration {
+
     let storage: NewTabPageIntroDataStoring
     let statistics: StatisticsStore
     let newTabPageManager: NewTabPageManaging
@@ -33,12 +34,12 @@ struct NewTabPageIntroMessageConfiguration {
         self.newTabPageManager = newTabPageManager
     }
 
-    func configure() {
-        
+    func disableIntroMessageForReturningUsers() {
         let isNotSetUp = storage.newTabPageIntroMessageEnabled == nil
         guard newTabPageManager.isAvailableInPublicRelease && isNotSetUp else { return }
 
         // For new users we **don't** want intro message
         storage.newTabPageIntroMessageEnabled = statistics.installDate != nil
     }
+
 }

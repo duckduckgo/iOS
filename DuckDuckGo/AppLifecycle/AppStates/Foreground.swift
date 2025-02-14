@@ -96,7 +96,7 @@ struct Foreground: AppState {
         configureAppearance()
 
         let vpnService = appDependencies.vpnService
-        vpnService.onForeground()
+        vpnService.resume()
 
         interactionManager.start(
             launchAction: launchAction,
@@ -113,12 +113,12 @@ struct Foreground: AppState {
         )
 
         appDependencies.configurationService.resume()
-        appDependencies.reportingService.onForeground()
-        appDependencies.subscriptionService.onForeground()
-        appDependencies.autofillService.onForeground()
-        appDependencies.maliciousSiteProtectionService.onForeground()
-        appDependencies.syncService.onForeground()
-        appDependencies.remoteMessagingService.onForeground()
+        appDependencies.reportingService.resume()
+        appDependencies.subscriptionService.resume()
+        appDependencies.autofillService.resume()
+        appDependencies.maliciousSiteProtectionService.resume()
+        appDependencies.syncService.resume()
+        appDependencies.remoteMessagingService.resume()
         appDependencies.statisticsService.resume()
 
         appDependencies.mainCoordinator.onForeground()

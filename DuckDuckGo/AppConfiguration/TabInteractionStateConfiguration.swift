@@ -21,8 +21,8 @@ import Foundation
 
 final class TabInteractionStateConfiguration {
 
-    static func configure(autoClearService: AutoClearService, mainViewController: MainViewController) {
-        if !autoClearService.isClearingEnabled {
+    static func removeLeftoverStatesIfAutoClearDisabled(isAutoClearDisabled: Bool, mainViewController: MainViewController) {
+        if isAutoClearDisabled {
             // If not using autoclear, make sure there are no leftover states on disk.
             mainViewController.tabManager.removeLeftoverInteractionStates()
         }

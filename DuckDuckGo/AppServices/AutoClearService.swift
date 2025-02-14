@@ -25,13 +25,17 @@ protocol AutoClearServiceProtocol {
 
 }
 
-final class AutoClearService: AutoClearServiceProtocol {
+final class AutoClearService {
 
     private let autoClear: AutoClear
     private let overlayWindowManager: OverlayWindowManager
     private let application: UIApplication
 
     private var autoClearTask: Task<Void, Never>?
+
+    var isClearingEnabled: Bool {
+        autoClear.isClearingEnabled
+    }
 
     init(worker: AutoClearWorker,
          overlayWindowManager: OverlayWindowManager,
@@ -41,17 +45,34 @@ final class AutoClearService: AutoClearServiceProtocol {
         self.application = application
     }
 
-    func onLaunching() {
+    // - MARK: Start
+
+    func start() {
         autoClearTask = Task {
             await autoClear.clearDataIfEnabled(applicationState: .init(with: application.applicationState))
         }
     }
 
-    func onResuming() {
+    // - MARK: Resume
+
+    func resume() {
         autoClearTask = Task {
             await autoClear.clearDataIfEnabledAndTimeExpired(applicationState: .active)
         }
     }
+
+    // - MARK: Suspend
+
+    func suspend() {
+        if autoClear.isClearingEnabled {
+            overlayWindowManager.displayBlankSnapshotWindow()
+        }
+        autoClear.startClearingTimer()
+    }
+
+}
+
+extension AutoClearService: AutoClearServiceProtocol {
 
     @MainActor
     func waitForDataCleared() async {
@@ -61,17 +82,6 @@ final class AutoClearService: AutoClearServiceProtocol {
         }
         await autoClearTask.value
         overlayWindowManager.removeNonAuthenticationOverlay()
-    }
-
-    func onBackground() {
-        if autoClear.isClearingEnabled {
-            overlayWindowManager.displayBlankSnapshotWindow()
-        }
-        autoClear.startClearingTimer()
-    }
-
-    var isClearingEnabled: Bool {
-        autoClear.isClearingEnabled
     }
 
 }

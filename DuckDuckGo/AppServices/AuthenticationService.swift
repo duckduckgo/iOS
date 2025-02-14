@@ -25,25 +25,27 @@ protocol AuthenticationServiceProtocol {
 
 }
 
-final class AuthenticationService: AuthenticationServiceProtocol {
+final class AuthenticationService {
 
     private let authenticator = Authenticator()
     private let overlayWindowManager: OverlayWindowManager
     private let privacyStore: PrivacyStore = PrivacyUserDefaults()
 
-    private var shouldAuthenticate: Bool {
-         privacyStore.authenticationEnabled && authenticator.canAuthenticate()
-    }
-
     init(overlayWindowManager: OverlayWindowManager) {
         self.overlayWindowManager = overlayWindowManager
     }
 
-    func onBackground() {
+    // MARK: - Suspend
+
+    func suspend() {
         if privacyStore.authenticationEnabled {
             overlayWindowManager.displayBlankSnapshotWindow()
         }
     }
+
+}
+
+extension AuthenticationService: AuthenticationServiceProtocol {
 
     @MainActor
     func authenticate() async {
@@ -53,6 +55,10 @@ final class AuthenticationService: AuthenticationServiceProtocol {
         let authenticationViewController = showAuthenticationScreen()
         authenticationViewController.delegate = self
         await authenticate(with: authenticationViewController)
+    }
+
+    private var shouldAuthenticate: Bool {
+         privacyStore.authenticationEnabled && authenticator.canAuthenticate()
     }
 
     @MainActor

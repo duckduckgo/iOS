@@ -29,7 +29,7 @@ protocol VPNServiceProtocol {
 
 }
 
-final class VPNService: NSObject, VPNServiceProtocol {
+final class VPNService: NSObject {
 
     private let tunnelController = AppDependencyProvider.shared.networkProtectionTunnelController
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
@@ -55,20 +55,18 @@ final class VPNService: NSObject, VPNServiceProtocol {
         notificationCenter.delegate = self
     }
 
-    func onLaunching() {
+    // MARK: - Start
+
+    func start() {
         widgetRefreshModel.beginObservingVPNStatus()
         tipKitAppEventsHandler.appDidFinishLaunching()
     }
 
-    func installRedditSessionWorkaround() {
-        Task {
-            await vpnWorkaround.installRedditSessionWorkaround()
-        }
-    }
+    // MARK: - Resume
 
     @MainActor
-    func onForeground() {
-        refreshVPNWidget()
+    func resume() {
+        widgetRefreshModel.refreshVPNWidget()
         presentExpiredEntitlementAlertIfNeeded()
         presentExpiredEntitlementNotificationIfNeeded()
 
@@ -80,17 +78,6 @@ final class VPNService: NSObject, VPNServiceProtocol {
                 await VPNSnoozeLiveActivityManager().endSnoozeActivityIfNecessary()
             }
         }
-    }
-
-    func onBackground() {
-        Task { @MainActor in
-            await refreshVPNShortcuts()
-            await vpnWorkaround.removeRedditSessionWorkaround()
-        }
-    }
-
-    private func refreshVPNWidget() {
-        widgetRefreshModel.refreshVPNWidget()
     }
 
     private func presentExpiredEntitlementNotificationIfNeeded() {
@@ -129,6 +116,15 @@ final class VPNService: NSObject, VPNServiceProtocol {
         await tunnelController.removeVPN(reason: .didBecomeActiveCheck)
     }
 
+    // MARK: - Suspend
+
+    func suspend() {
+        Task { @MainActor in
+            await refreshVPNShortcuts()
+            await vpnWorkaround.removeRedditSessionWorkaround()
+        }
+    }
+
     @MainActor
     private func refreshVPNShortcuts() async {
         guard vpnFeatureVisibility.shouldShowVPNShortcut(),
@@ -146,6 +142,16 @@ final class VPNService: NSObject, VPNServiceProtocol {
                                       icon: UIApplicationShortcutIcon(templateImageName: "VPN-16"),
                                       userInfo: nil)
         ]
+    }
+
+}
+
+extension VPNService: VPNServiceProtocol {
+
+    func installRedditSessionWorkaround() {
+        Task {
+            await vpnWorkaround.installRedditSessionWorkaround()
+        }
     }
 
 }

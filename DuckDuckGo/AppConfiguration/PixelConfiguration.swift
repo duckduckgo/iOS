@@ -28,7 +28,7 @@ import BrowserServicesKit
 
 final class PixelConfiguration {
 
-    static func configure(featureFlagger: FeatureFlagger) {
+    static func configure(with featureFlagger: FeatureFlagger) {
 
 #if DEBUG
         Pixel.isDryRun = true

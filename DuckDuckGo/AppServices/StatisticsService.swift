@@ -28,10 +28,12 @@ public extension NSNotification.Name {
 
 final class StatisticsService {
 
-    lazy var statisiticsLoader: StatisticsLoader = .shared
+    private lazy var statisticsLoader: StatisticsLoader = .shared
+
+    // MARK: - Resume
 
     func resume() {
-        statisiticsLoader.load {
+        statisticsLoader.load {
             NotificationCenter.default.post(name: .didLoadStatisticsOnForeground, object: nil)
         }
     }

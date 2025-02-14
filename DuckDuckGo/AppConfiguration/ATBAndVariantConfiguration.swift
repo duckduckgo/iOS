@@ -25,11 +25,7 @@ final class ATBAndVariantConfiguration {
 
     lazy var variantManager = DefaultVariantManager()
 
-    func configure(onVariantAssigned: () -> Void) {
-        cleanUpATBAndAssignVariant(onVariantAssigned: onVariantAssigned)
-    }
-
-    private func cleanUpATBAndAssignVariant(onVariantAssigned: () -> Void) {
+    func cleanUpATBAndAssignVariant(onVariantAssigned: () -> Void) {
         AtbAndVariantCleanup.cleanup()
         variantManager.assignVariantIfNeeded { _ in
             onVariantAssigned()

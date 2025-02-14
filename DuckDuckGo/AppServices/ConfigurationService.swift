@@ -40,7 +40,9 @@ final class ConfigurationService {
         self.isDebugBuild = isDebugBuild
     }
 
-    func onLaunching() {
+    // MARK: - Start
+
+    func start() {
         if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
             Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
         } else {
@@ -51,6 +53,8 @@ final class ConfigurationService {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
     }
+
+    // MARK: - Resume
 
     func resume() {
         scheduleBackgroundTask()

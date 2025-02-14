@@ -49,37 +49,18 @@ final class ReportingService {
         }
     }
 
-    func onForeground() {
-        Task {
-            await privacyProDataReporter.saveWidgetAdded()
+    private func sendAppLaunchPostback(marketplaceAdPostbackManager: MarketplaceAdPostbackManaging) {
+        // Attribution support
+        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
+        if privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .marketplaceAdPostback) {
+            marketplaceAdPostbackManager.sendAppLaunchPostback()
         }
-        fireFailedCompilationsPixelIfNeeded()
-        AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
     }
 
-    func onVariantAssigned() {
-        // Setup storage for marketplace postback
-        marketplaceAdPostbackManager.updateReturningUserValue()
-    }
-
-    func onStatisticsLoaded() {
+    private func onStatisticsLoaded() {
         fireAppLaunchPixel()
         reportAdAttribution()
         onboardingPixelReporter.fireEnqueuedPixelsIfNeeded()
-    }
-
-    func onBackground() {
-        privacyProDataReporter.saveApplicationLastSessionEnded()
-    }
-
-    private func fireFailedCompilationsPixelIfNeeded() {
-        let store = FailedCompilationsStore()
-        if store.hasAnyFailures {
-            DailyPixel.fire(pixel: .compilationFailed, withAdditionalParameters: store.summary) { error in
-                guard error != nil else { return }
-                store.cleanup()
-            }
-        }
     }
 
     private func fireAppLaunchPixel() {
@@ -111,18 +92,40 @@ final class ReportingService {
         }
     }
 
-    private func sendAppLaunchPostback(marketplaceAdPostbackManager: MarketplaceAdPostbackManaging) {
-        // Attribution support
-        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
-        if privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .marketplaceAdPostback) {
-            marketplaceAdPostbackManager.sendAppLaunchPostback()
-        }
-    }
-
     private func reportAdAttribution() {
         Task.detached(priority: .background) {
             await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
         }
+    }
+
+    func setupStorageForMarketPlacePostback() {
+        marketplaceAdPostbackManager.updateReturningUserValue()
+    }
+
+    // MARK: - Resume
+
+    func resume() {
+        Task {
+            await privacyProDataReporter.saveWidgetAdded()
+        }
+        fireFailedCompilationsPixelIfNeeded()
+        AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
+    }
+
+    private func fireFailedCompilationsPixelIfNeeded() {
+        let store = FailedCompilationsStore()
+        if store.hasAnyFailures {
+            DailyPixel.fire(pixel: .compilationFailed, withAdditionalParameters: store.summary) { error in
+                guard error != nil else { return }
+                store.cleanup()
+            }
+        }
+    }
+
+    // MARK: - Suspend
+
+    func suspend() {
+        privacyProDataReporter.saveApplicationLastSessionEnded()
     }
 
 }

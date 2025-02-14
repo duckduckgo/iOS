@@ -73,7 +73,7 @@ final class SyncService {
             privacyConfigurationManager: privacyConfigurationManager,
             environment: environment
         )
-        sync.initializeIfNeeded()
+
         isSyncInProgressCancellable = sync.isSyncInProgressPublisher
             .filter { $0 }
             .sink { [weak sync] _ in
@@ -84,6 +84,28 @@ final class SyncService {
                                includedParameters: [.appVersion])
                 })
             }
+    }
+
+    // MARK: - Start
+
+    func start() {
+        sync.initializeIfNeeded()
+    }
+
+    // MARK: - Resume
+
+    func resume() {
+        sync.scheduler.resumeSyncQueue()
+        sync.initializeIfNeeded()
+        syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: sync)
+        sync.scheduler.notifyAppLifecycleEvent()
+    }
+
+    // MARK: - Suspend
+
+    func suspend() {
+        suspendSync()
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
     }
 
     private func suspendSync() {
@@ -106,22 +128,6 @@ final class SyncService {
         }
 
         sync.scheduler.cancelSyncAndSuspendSyncQueue()
-    }
-
-    private func cancelFaviconsFetching() {
-        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
-    }
-
-    func onForeground() {
-        sync.scheduler.resumeSyncQueue()
-        sync.initializeIfNeeded()
-        syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: sync)
-        sync.scheduler.notifyAppLifecycleEvent()
-    }
-
-    func onBackground() {
-        suspendSync()
-        cancelFaviconsFetching()
     }
 
 }

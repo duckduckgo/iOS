@@ -10,6 +10,7 @@ name: 02_login_account
     file: ../shared/setup.yaml
 
 #  Copy Recovery Code
+- tapOn: Browsing menu
 - tapOn: Settings
 - runFlow:
     file: ../shared/copy_recovery_code_from_settings.yaml

@@ -10,7 +10,8 @@ name: 03_recover_account
     file: ../shared/setup.yaml
 
 # Set Internal User
-- tapOn: Settings
+- tapOn: "Browsing menu"
+- tapOn: "Settings"
 - runFlow:
     file: ../shared/set_internal_user_from_settings.yaml
 

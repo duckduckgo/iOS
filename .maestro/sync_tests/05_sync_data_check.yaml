@@ -14,6 +14,7 @@ name: 05_sync_data_check
     file: ../shared/setup.yaml
 
 #  Copy Recovery Code
+- tapOn: Browsing menu
 - tapOn: Settings
 - runFlow:
     file: ../shared/copy_recovery_code_from_settings.yaml
@@ -32,17 +33,20 @@ name: 05_sync_data_check
 - assertVisible: Sync & Backup
 
 # Verify bookmarks have been merged
+- tapOn: Browsing menu
 - tapOn: Settings
 - runFlow:
     file: ../shared/sync_verify_bookmarks.yaml
 
 # Verify favorites are unified
 - tapOn: Done
+- tapOn: Browsing menu
 - tapOn: Settings
 - runFlow:
     file: ../shared/sync_verify_unified_favorites.yaml
 
 # Verify logins
+- tapOn: Browsing menu
 - tapOn: Settings
 - runFlow:
     file: ../shared/sync_verify_logins.yaml

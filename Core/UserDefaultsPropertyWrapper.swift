@@ -214,7 +214,7 @@ public struct UserDefaultsWrapper<T> {
             if let optional = newValue as? AnyOptional, optional.isNil {
                 container.removeObject(forKey: key.rawValue)
             } else {
-                container.setValue(newValue, forKey: key.rawValue)
+                container.set(newValue, forKey: key.rawValue)
             }
         }
     }

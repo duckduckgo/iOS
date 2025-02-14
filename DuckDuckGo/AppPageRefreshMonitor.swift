@@ -21,6 +21,8 @@ import Core
 import Common
 import PageRefreshMonitor
 import PixelExperimentKit
+import Configuration
+import PixelKit
 
 extension PageRefreshMonitor {
 
@@ -31,14 +33,30 @@ extension PageRefreshMonitor {
             TDSOverrideExperimentMetrics.fireTDSExperimentMetric(metricType: .refresh2X, etag: tdsEtag, fireDebugExperiment: { parameters in
                 UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
             })
+            TDSOverrideExperimentMetrics.fireTDSExperimentMetricUpdated(metricType: .refresh2X)
         case 3:
             Pixel.fire(pixel: .pageRefreshThreeTimesWithin20Seconds)
             TDSOverrideExperimentMetrics.fireTDSExperimentMetric(metricType: .refresh3X, etag: tdsEtag, fireDebugExperiment: { parameters in
                 UniquePixel.fire(pixel: .debugBreakageExperiment, withAdditionalParameters: parameters)
             })
+            TDSOverrideExperimentMetrics.fireTDSExperimentMetricUpdated(metricType: .refresh3X)
         default:
             return
         }
     }
 
+}
+
+public extension TDSOverrideExperimentMetrics {
+    static func fireTDSExperimentMetricUpdated( metricType: TDSExperimentMetricType) {
+        for experiment in TDSExperimentType.allCases {
+            PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: metricType.rawValue, conversionWindowDays: 0...0, value: "1")
+            PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: metricType.rawValue, conversionWindowDays: 0...1, value: "1")
+            PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: metricType.rawValue, conversionWindowDays: 0...2, value: "1")
+            PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: metricType.rawValue, conversionWindowDays: 0...3, value: "1")
+            PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: metricType.rawValue, conversionWindowDays: 0...4, value: "1")
+            PixelKit.fireExperimentPixel(for: experiment.subfeature.rawValue, metric: metricType.rawValue, conversionWindowDays: 0...5, value: "1")
+
+        }
+    }
 }

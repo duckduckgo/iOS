@@ -63,8 +63,7 @@ class EmailSignupViewController: UIViewController {
     }()
 
     lazy private var vaultManager: SecureVaultManager = {
-        let manager = SecureVaultManager(includePartialAccountMatches: true,
-                                         shouldAllowPartialFormSaves: featureFlagger.isFeatureOn(.autofillPartialFormSaves),
+        let manager = SecureVaultManager(shouldAllowPartialFormSaves: featureFlagger.isFeatureOn(.autofillPartialFormSaves),
                                          tld: AppDependencyProvider.shared.storageCache.tld)
         manager.delegate = self
         return manager

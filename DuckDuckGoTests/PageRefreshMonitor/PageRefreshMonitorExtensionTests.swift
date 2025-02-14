@@ -22,12 +22,14 @@ import XCTest
 @testable import PixelExperimentKit
 import PageRefreshMonitor
 import BrowserServicesKit
+import PixelKit
 
 final class PageRefreshMonitorExtensionTests: XCTestCase {
 
     var captureMetric: String?
 
     override func setUpWithError() throws {
+        PixelKit.configureExperimentKit(featureFlagger: MockFeatureFlagger(), eventTracker: ExperimentEventTracker(), fire: { _, _, _ in })
         TDSOverrideExperimentMetrics.configureTDSOverrideExperimentMetrics { _, metric, _, _ in
             self.captureMetric = metric
         }

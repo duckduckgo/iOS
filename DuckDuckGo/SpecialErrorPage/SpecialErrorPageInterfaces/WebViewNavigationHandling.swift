@@ -69,7 +69,7 @@ protocol WebViewNavigationHandling: AnyObject {
     ///   - navigation: The navigation object for the operation.
     ///   - error: The error that occurred.
     @MainActor
-    func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WebViewNavigation, withError error: NSError)
+    func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WebViewNavigation?, withError error: NSError)
 
     /// Handles the successful completion of a navigation in the web view.
     ///
@@ -77,5 +77,5 @@ protocol WebViewNavigationHandling: AnyObject {
     ///   - webView: The web view that loaded the content.
     ///   - navigation: The navigation object that finished.
     @MainActor
-    func handleWebView(_ webView: WKWebView, didFinish navigation: WebViewNavigation)
+    func handleWebView(_ webView: WKWebView, didFinish navigation: WebViewNavigation?)
 }

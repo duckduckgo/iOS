@@ -107,7 +107,6 @@ final class MainCoordinator {
                                    isRecentlyVisitedSitesEnabledByUser: provider.appSettings.recentlyVisitedSites,
                                    privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
                                    tld: provider.storageCache.tld) {
-
         case .failure(let error):
             Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
             if error.isDiskFull {
@@ -142,20 +141,19 @@ final class MainCoordinator {
     }
 
     private static func makeTextZoomCoordinator() -> TextZoomCoordinator {
-        let provider = AppDependencyProvider.shared
-        let storage = TextZoomStorage()
-
-        return TextZoomCoordinator(appSettings: provider.appSettings,
-                                   storage: storage,
-                                   featureFlagger: provider.featureFlagger)
+        TextZoomCoordinator(appSettings: AppDependencyProvider.shared.appSettings,
+                            storage: TextZoomStorage(),
+                            featureFlagger: AppDependencyProvider.shared.featureFlagger)
     }
 
     private static func makeWebsiteDataManager(fireproofing: Fireproofing,
                                                dataStoreIDManager: DataStoreIDManaging = DataStoreIDManager.shared) -> WebsiteDataManaging {
-        return WebCacheManager(cookieStorage: MigratableCookieStorage(),
-                               fireproofing: fireproofing,
-                               dataStoreIDManager: dataStoreIDManager)
+        WebCacheManager(cookieStorage: MigratableCookieStorage(),
+                        fireproofing: fireproofing,
+                        dataStoreIDManager: dataStoreIDManager)
     }
+
+    // MARK: - Public API
 
     func segueToPrivacyPro() {
         controller.segueToPrivacyPro()
@@ -215,58 +213,33 @@ extension MainCoordinator: URLHandling {
         if url != AppDeepLinkSchemes.openVPN.url && url.scheme != AppDeepLinkSchemes.openAIChat.url.scheme {
             controller.clearNavigationStack()
         }
-
         switch AppDeepLinkSchemes.fromURL(url) {
         case .newSearch:
             controller.newTab(reuseExisting: true)
             controller.enterSearch()
-
         case .favorites:
             controller.newTab(reuseExisting: true, allowingKeyboard: false)
-
         case .quickLink:
             let query = AppDeepLinkSchemes.query(fromQuickLink: url)
             controller.loadQueryInNewTab(query, reuseExisting: true)
-
         case .addFavorite:
             controller.startAddFavoriteFlow()
-
         case .fireButton:
             controller.forgetAllWithAnimation()
-
         case .voiceSearch:
             controller.onVoiceSearchPressed()
-
         case .newEmail:
             controller.newEmailAddress()
-
         case .openVPN:
             presentNetworkProtectionStatusSettingsModal()
-
         case .openPasswords:
-            var source: AutofillSettingsSource = .homeScreenWidget
-
-            if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-                let queryItems = components.queryItems,
-                queryItems.first(where: { $0.name == "ls" }) != nil {
-                Pixel.fire(pixel: .autofillLoginsLaunchWidgetLock)
-                source = .lockScreenWidget
-            } else {
-                Pixel.fire(pixel: .autofillLoginsLaunchWidgetHome)
-            }
-
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                self.controller.launchAutofillLogins(openSearch: true, source: source)
-            }
+            handleOpenPasswords(url: url)
         case .openAIChat:
             AIChatDeepLinkHandler().handleDeepLink(url, on: controller)
-
         default:
-            guard application.applicationState == .active,
-                  let currentTab = controller.currentTab else {
+            guard application.applicationState == .active, let currentTab = controller.currentTab else {
                 return false
             }
-
             // If app is in active state, treat this navigation as something initiated form the context of the current tab.
             controller.tab(currentTab,
                            didRequestNewTabForUrl: url,
@@ -274,6 +247,22 @@ extension MainCoordinator: URLHandling {
                            inheritingAttribution: nil)
         }
         return true
+    }
+
+    private func handleOpenPasswords(url: URL) {
+        var source: AutofillSettingsSource = .homeScreenWidget
+        if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+           let queryItems = components.queryItems,
+           queryItems.contains(where: { $0.name == "ls" }) {
+            Pixel.fire(pixel: .autofillLoginsLaunchWidgetLock)
+            source = .lockScreenWidget
+        } else {
+            Pixel.fire(pixel: .autofillLoginsLaunchWidgetHome)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.controller.launchAutofillLogins(openSearch: true, source: source)
+        }
     }
 
 }

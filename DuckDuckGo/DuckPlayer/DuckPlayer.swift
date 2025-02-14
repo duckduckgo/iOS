@@ -608,7 +608,10 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     private func encodedPlayerSettings(with webView: WKWebView?) async -> InitialPlayerSettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let pip = InitialPlayerSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
-        let customError = InitialPlayerSettings.CustomError(state: settings.customError ? .enabled : .disabled, signInRequiredSelector: settings.customErrorSettings?.signInRequiredSelector ?? "")
+        // TODO: Remove temporary override to skip deploying a new config
+        // let customError = InitialPlayerSettings.CustomError(state: settings.customError ? .enabled : .disabled, signInRequiredSelector: settings.customErrorSettings?.signInRequiredSelector ?? "")
+        let customError = InitialPlayerSettings.CustomError(state: .enabled, signInRequiredSelector: "[href*=\"//support.google.com/youtube/answer/3037019\"]")
+
         let platform = InitialPlayerSettings.Platform(name: "ios")
         let locale = Locale.current.languageCode ?? "en"
         let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip, customError: customError)

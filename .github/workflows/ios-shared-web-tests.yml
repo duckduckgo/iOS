@@ -58,6 +58,7 @@ jobs:
       run: |
           cd shared-web-tests
           npm run build
+          sudo npm run install-hosts
 
     - name: Build iOS
       run: |
@@ -67,7 +68,7 @@ jobs:
 
     - name: Run tests
       run: |
-        cd shared-web-tests/build
-        ./wpt run  --product duckduckgo --binary ../webdriver/target/debug/ddgdriver --log-mach - --log-mach-level info duckduckgo
+        cd shared-web-tests
+        npm run test
 
   

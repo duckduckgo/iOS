@@ -31,7 +31,7 @@ final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
 
     @Published public var dnsSettings: NetworkProtectionDNSSettings
 
-    @Published public var isCustomDNSSelected = false
+    @Published public var isCustomDNSSelected: Bool
 
     @Published var isBlockRiskyDomainsOn: Bool {
         didSet {
@@ -39,7 +39,7 @@ final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
         }
     }
 
-    @Published public var customDNSServers = ""
+    @Published public var customDNSServers: String
 
     @Published public var isApplyButtonEnabled = false
 

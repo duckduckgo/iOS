@@ -68,6 +68,11 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     }
 }
 
+// Custom Error privacy config settings
+struct CustomErrorSettings: Codable {
+    let signInRequiredSelector: String
+}
+
 /// Protocol defining the settings for Duck Player.
 protocol DuckPlayerSettings: AnyObject {
     
@@ -94,6 +99,9 @@ protocol DuckPlayerSettings: AnyObject {
     
     // Determines if we should show a custom view when YouTube returns an error
     var customError: Bool { get }
+
+    // Holds additional configuration for the custom error view
+    var customErrorSettings: CustomErrorSettings? { get }
     
     /// Initializes a new instance with the provided app settings and privacy configuration manager.
     ///
@@ -207,6 +215,22 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
         return privacyConfigManager.privacyConfig.isSubfeatureEnabled(DuckPlayerSubfeature.customError)
     }
     
+    // Holds additional configuration for the custom error view
+    var customErrorSettings: CustomErrorSettings? {
+        let decoder = JSONDecoder()
+
+        if let customErrorSettingsJSON = privacyConfigManager.privacyConfig.settings(for: DuckPlayerSubfeature.customError),
+           let jsonData = customErrorSettingsJSON.data(using: .utf8) {
+            do {
+                let customErrorSettings = try decoder.decode(CustomErrorSettings.self, from: jsonData)
+                return customErrorSettings
+            } catch {
+                return nil
+            }
+        }
+        return nil
+    }
+
     /// Registers a publisher to listen for changes in the privacy configuration.
     private func registerConfigPublisher() {
         isFeatureEnabledCancellable = privacyConfigManager.updatesPublisher

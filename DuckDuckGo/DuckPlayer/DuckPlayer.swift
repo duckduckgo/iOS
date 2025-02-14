@@ -127,11 +127,6 @@ enum Attributes: Decodable {
     }
 }
 
-// Custom Error privacy config settings
-struct CustomErrorSettings: Codable {
-    let signInRequiredSelector: String
-}
-
 /// Protocol defining the Duck Player functionality.
 protocol DuckPlayerControlling: AnyObject {
     
@@ -553,20 +548,12 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     ///   - params: Parameters from the web content.
     ///   - message: The script message containing the parameters.
     @MainActor
-    func handleYoutubeError(params: Any, message: WKScriptMessage) async -> Encodable? {
-        var pixelParams: [String: String] = [:]
-        if let paramsDict = params as? [String: Any],
-           let errorParam = paramsDict["error"] as? String {
-            pixelParams["error"] = errorParam
-        } else {
-            pixelParams["error"] = "unknown"
-        }
-
-        // TODO: Fire once daily impression
-        Pixel.fire(.duckPlayerYouTubeErrorImpression, withAdditionalParameters: pixelParams)
+    public func handleYoutubeError(params: Any, message: WKScriptMessage) -> Encodable? {
+        let (volumePixel, dailyPixel) = getPixelsForYouTubeErrorParams(params)
+        DailyPixel.fire(pixel: dailyPixel)
+        Pixel.fire(pixel: volumePixel)
         return nil
     }
-
 
     /// Opens Duck Player information modal.
     ///
@@ -621,9 +608,7 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
     private func encodedPlayerSettings(with webView: WKWebView?) async -> InitialPlayerSettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let pip = InitialPlayerSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
-        // TODO: Remove temporary override to skip deploying a new config
-        // let customError = InitialPlayerSettings.CustomError(status: settings.customError ? .enabled : .disabled, signInRequiredSelector: "")
-        let customError = InitialPlayerSettings.CustomError(status: .enabled, signInRequiredSelector: "[href*=\"//support.google.com/youtube/answer/3037019\"]")
+        let customError = InitialPlayerSettings.CustomError(status: settings.customError ? .enabled : .disabled, signInRequiredSelector: settings.customErrorSettings?.signInRequiredSelector ?? "")
         let platform = InitialPlayerSettings.Platform(name: "ios")
         let locale = Locale.current.languageCode ?? "en"
         let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip, customError: customError)
@@ -686,7 +671,23 @@ final class DuckPlayer: NSObject, DuckPlayerControlling {
        
     }
 
-    
+    /// Returns tuple of Pixels for firing when a YouTube Error occurs
+    private func getPixelsForYouTubeErrorParams(_ params: Any) -> (Pixel.Event, Pixel.Event) {
+        if let paramsDict = params as? [String: Any],
+           let errorParam = paramsDict["error"] as? String{
+                switch errorParam {
+                case "sign-in-required":
+                    return (.duckPlayerYouTubeSignInErrorImpression, .duckPlayerYouTubeSignInErrorDaily)
+                case "age-restricted":
+                    return (.duckPlayerYouTubeAgeRestrictedErrorImpression, .duckPlayerYouTubeAgeRestrictedErrorDaily)
+                case "no-embed":
+                    return (.duckPlayerYouTubeNoEmbedErrorImpression, .duckPlayerYouTubeNoEmbedErrorDaily)
+                default:
+                    return (.duckPlayerYouTubeUnknownErrorImpression, .duckPlayerYouTubeUnknownErrorDaily)
+                }
+        }
+        return (.duckPlayerYouTubeUnknownErrorImpression, .duckPlayerYouTubeUnknownErrorDaily)
+    }
 }
 
 extension DuckPlayer: UIGestureRecognizerDelegate {

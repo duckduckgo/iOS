@@ -935,7 +935,14 @@ extension Pixel {
         case duckPlayerContingencyLearnMoreClicked
         case duckPlayerNewTabSettingOn
         case duckPlayerNewTabSettingOff
-        case duckPlayerYouTubeErrorImpression
+        case duckPlayerYouTubeSignInErrorImpression
+        case duckPlayerYouTubeAgeRestrictedErrorImpression
+        case duckPlayerYouTubeNoEmbedErrorImpression
+        case duckPlayerYouTubeUnknownErrorImpression
+        case duckPlayerYouTubeSignInErrorDaily
+        case duckPlayerYouTubeAgeRestrictedErrorDaily
+        case duckPlayerYouTubeNoEmbedErrorDaily
+        case duckPlayerYouTubeUnknownErrorDaily
 
         // MARK: enhanced statistics
         case usageSegments
@@ -1919,7 +1926,14 @@ extension Pixel.Event {
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
         case .duckPlayerNewTabSettingOn: return "duckplayer_ios_newtab_setting-on"
         case .duckPlayerNewTabSettingOff: return "duckplayer_ios_newtab_setting-off"
-        case .duckPlayerYouTubeErrorImpression: return "duckplayer_ios_youtube-error_impression"
+        case .duckPlayerYouTubeSignInErrorImpression: return "duckplayer_youtube-signin-error_impression_ios"
+        case .duckPlayerYouTubeAgeRestrictedErrorImpression: return "duckplayer_youtube-age-restricted-error_impression_ios"
+        case .duckPlayerYouTubeNoEmbedErrorImpression: return "duckplayer_youtube-no-embed-error_impression_ios"
+        case .duckPlayerYouTubeUnknownErrorImpression: return "duckplayer_youtube-unknown-error_impression_ios"
+        case .duckPlayerYouTubeSignInErrorDaily: return "duckplayer_youtube-signin-error_daily-unique_ios"
+        case .duckPlayerYouTubeAgeRestrictedErrorDaily: return "duckplayer_youtube-age-restricted-error_daily-unique_ios"
+        case .duckPlayerYouTubeNoEmbedErrorDaily: return "duckplayer_youtube-no-embed-error_daily-unique_ios"
+        case .duckPlayerYouTubeUnknownErrorDaily: return "duckplayer_youtube-unknown-error_daily-unique_ios"
 
         // MARK: Enhanced statistics
         case .usageSegments: return "m_retention_segments"

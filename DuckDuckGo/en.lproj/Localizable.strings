@@ -762,7 +762,10 @@
 "bookmarks.export.share.success.message" = "Your bookmarks have been shared.";
 
 /* Title of option to export HTML */
-"bookmarks.exportAction.title" = "Export HTML File";
+"bookmarks.exportAction.html.title" = "Export HTML File";
+
+/* Title of option to export bookmarks as HTML */
+"bookmarks.exportAction.title" = "Export Bookmarks";
 
 /* Failure message when bookmarks failed to import */
 "bookmarks.import.failed.message" = "Sorry, we aren’t able to import this file.";
@@ -771,13 +774,13 @@
 "bookmarks.import.success.message" = "Your bookmarks have been imported.";
 
 /* Title of option to import HTML */
-"bookmarks.importAction.title" = "Import HTML File";
+"bookmarks.importAction.html.title" = "Import HTML File";
 
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Import bookmark file from another browser";
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Import Bookmarks";
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Import an HTML file of bookmarks from another browser, or export your existing bookmarks.";
+"bookmarks.importExport.title" = "Import your bookmarks from other DuckDuckGo Privacy Browsers and most popular Browsers.";
 
 /* Button to open report form */
 "broken.site.report.menu.title" = "Report Problem With This Site";
@@ -905,6 +908,15 @@
 /* Crash Report dialog title */
 "crash.report.dialog.title" = "Automatically send crash reports?";
 
+/* Button label to select zip or html file for importing */
+"data.import.bookmarks.file-button" = "Import Bookmarks File...";
+
+/* Subtitle for screen to import bookmarks */
+"data.import.bookmarks.subtitle" = "Select the file containing bookmarks. This is usually a ZIP or HTML file..";
+
+/* Title for screen to import bookmarks */
+"data.import.bookmarks.title" = "Import Bookmarks to DuckDuckGo";
+
 /* Error message displayed when import fails */
 "data.import.failed.error-message" = "Data failed to import";
 
@@ -915,7 +927,13 @@
 "data.import.failed.unsupported-file-error-message" = "The file selected is not supported. Please select a different file and try again.";
 
 /* Error message displayed when the zip file can't be opened */
-"data.import.failed.zip-read-error-message" = "The zip file could not be read.";
+"data.import.failed.zip-read-error-message" = "The zip file could not be read. Please review the Safari export instructions and try again";
+
+/* Step 2 for instructions to import passwords.'Scroll to History and Website Data and select Export, check the box for Passwords, and save the file.' */
+"data.import.instructions.safari.step2" = "Scroll to %1$@ and select %2$@, check the box for %3$@, and save the file.";
+
+/* first parameter for autofill.import.passwords.instructions.safari.step2 */
+"data.import.instructions.safari.step2.history" = "History and Website Data";
 
 /* Button label to select zip or csv file for importing */
 "data.import.passwords.file-button" = "Import Passwords File...";
@@ -947,16 +965,11 @@
 /* second parameter for autofill.import.passwords.instructions.safari.step1 */
 "data.import.passwords.instructions.safari.step1.system-settings" = "Settings → Apps → Safari";
 
-/* Step 2 for instructions to import passwords.'Scroll to History and Website Data and select Export, check the box for Passwords, and save the file.' */
-"data.import.passwords.instructions.safari.step2" = "Scroll to %1$@ and select %2$@, check the box for %3$@, and save the file.";
-
-/* second parameter for autofill.import.passwords.instructions.safari.step2 */
+/* second parameter for autofill.import.instructions.safari.step2 */
 "data.import.passwords.instructions.safari.step2.export" = "Export";
 
-/* first parameter for autofill.import.passwords.instructions.safari.step2 */
-"data.import.passwords.instructions.safari.step2.history" = "History and Website Data";
-
-/* third parameter for autofill.import.passwords.instructions.safari.step2 */
+/* third parameter for autofill.import.instructions.safari.step2 if user is importing bookmarks
+   third parameter for autofill.import.instructions.safari.step2 if user is importing passwords */
 "data.import.passwords.instructions.safari.step2.passwords" = "Passwords";
 
 /* Text next to selector for which browser to export passwords from (Safari | Chrome) */
@@ -1290,8 +1303,11 @@
 /* Title for prompt to sign up for email protection */
 "email.signup-prompt.title" = "Hide Your Email and\nBlock Trackers";
 
-/* Empty list state placholder */
+/* Empty list state placeholder title */
 "empty.bookmarks" = "No bookmarks added yet";
+
+/* Empty list state placeholder subtitle */
+"empty.bookmarks.subtitle" = "If your bookmarks are saved in another browser, you can import them into DuckDuckGo.";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "No matches found";

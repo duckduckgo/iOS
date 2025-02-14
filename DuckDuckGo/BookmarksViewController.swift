@@ -36,15 +36,16 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private enum Constants {
         static var saveToFiles = "com.apple.DocumentManagerUICore.SaveToFiles"
         static var bookmarksFileName = "DuckDuckGo Bookmarks.html"
-        static var importBookmarkImage = "Import-24"
-        static var exportBookmarkImage = "Export-24"
+        static var moreButtonImage = "More-Apple-24"
+        static var addButtonImage = "Folder-Add-24"
+        static var importBookmarkImage = "Import-16"
+        static var exportBookmarkImage = "Export-Right-16"
     }
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var favoritesContainer: UIView!
     @IBOutlet weak var selectorControl: UISegmentedControl!
-    @IBOutlet weak var importFooterButton: UIButton!
 
     // Need to retain these as we're going to add/remove them from the view hierarchy
     @IBOutlet var doneButton: UIBarButtonItem!
@@ -59,35 +60,54 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private var syncUpdatesCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
-    /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
+    private lazy var addFolderBarButtonItem = UIBarButtonItem(customView: addFolderButton)
     private lazy var addFolderButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(UserText.addbookmarkFolderButton, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
-        button.sizeToFit()
-        button.addTarget(self, action: #selector(onAddFolderPressed(_:)), for: .touchUpInside)
-        return button
-    }()
-
-    private lazy var addFolderBarButtonItem = UIBarButtonItem(customView: addFolderButton)
-
-    private lazy var moreButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle(UserText.moreBookmarkButton, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
-        button.sizeToFit()
-        button.showsMenuAsPrimaryAction = true
+        button.setImage(UIImage(named: Constants.addButtonImage), for: .normal)
+        button.addTarget(self, action: #selector(onAddFolderPressed), for: .touchUpInside)
         return button
     }()
 
     private lazy var moreBarButtonItem = UIBarButtonItem(customView: moreButton)
+    private lazy var moreButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: Constants.moreButtonImage), for: .normal)
+        button.showsMenuAsPrimaryAction = true
+        return button
+    }()
 
     private var bookmarksMenu: UIMenu {
-        return UIMenu(title: UserText.importExportBookmarksTitle,
-                      children: [exportAction(), importAction()])
+        if #available(iOS 18.2, *) {
+            return UIMenu(title: UserText.importExportBookmarksTitle,
+                          children: [exportAction(), importAction()])
+        } else {
+            return UIMenu(title: UserText.importExportBookmarksTitle,
+                          children: [exportAction(), importViaDocumentPickerAction()])
+        }
     }
 
     private lazy var headerView: UIView = UIView()
+
+    private lazy var emptyView: UIView = {
+        let emptyView = BookmarksEmptyView(importViaSafariButtonAction: { [weak self] in
+            self?.segueToDataImport()
+            // TODO - new pixel?
+    //            Pixel.fire(pixel: )
+        }, importDocumentButtonAction: { [weak self] in
+            self?.presentDocumentPicker()
+        })
+
+        let hostingController = UIHostingController(rootView: emptyView)
+        var size = hostingController.sizeThatFits(in: UIScreen.main.bounds.size)
+        size.height += 50
+        hostingController.view.frame = CGRect(origin: .zero, size: size)
+        hostingController.view.layoutIfNeeded()
+        hostingController.view.backgroundColor = .clear
+
+        self.tableView.tableFooterView?.frame.size.height = hostingController.view.frame.height
+
+        return hostingController.view
+    }()
 
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -121,11 +141,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private lazy var syncPromoViewHostingController: UIHostingController<SyncPromoView> = {
         let headerView = SyncPromoView(viewModel: SyncPromoViewModel(touchpointType: .bookmarks, primaryButtonAction: { [weak self] in
-            if let mainVC = self?.presentingViewController as? MainViewController {
-                self?.dismiss(animated: true) {
-                    mainVC.segueToSettingsSync(with: "promotion_bookmarks")
-                }
-            }
+            self?.segueToSync(source: "promotion_bookmarks")
             Pixel.fire(.syncPromoConfirmed, withAdditionalParameters: ["source": SyncPromoManager.Touchpoint.bookmarks.rawValue])
         }, dismissButtonAction: { [weak self] in
             self?.syncPromoManager.dismissPromoFor(.bookmarks)
@@ -254,7 +270,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
 
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(false, animated: animated)
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
@@ -508,19 +529,24 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
 
         tableView.dataSource = dataSource
-        importFooterButton.setTitle(UserText.importBookmarksFooterButton, for: .normal)
-        importFooterButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
-        importFooterButton.titleLabel?.textAlignment = .center
-        
-        importFooterButton.addAction(UIAction { [weak self] _ in
-            self?.presentDocumentPicker()
-        }, for: .touchUpInside)
-        
+        emptyStateContainer.addSubview(emptyView)
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            emptyView.leadingAnchor.constraint(equalTo: emptyStateContainer.leadingAnchor),
+            emptyView.trailingAnchor.constraint(equalTo: emptyStateContainer.trailingAnchor),
+            emptyView.topAnchor.constraint(equalTo: emptyStateContainer.topAnchor),
+            emptyView.bottomAnchor.constraint(lessThanOrEqualTo: emptyStateContainer.bottomAnchor),
+            emptyView.centerXAnchor.constraint(equalTo: emptyStateContainer.centerXAnchor),
+            emptyView.centerYAnchor.constraint(equalTo: emptyStateContainer.centerYAnchor, constant: -50)
+        ])
+
         if viewModel.totalBookmarksCount == 0 {
             tableView.tableHeaderView?.removeFromSuperview()
         }
 
         refreshFooterView()
+        refreshMoreButton()
     }
 
     @objc func onApplicationBecameActive(notification: NSNotification) {
@@ -529,32 +555,23 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     func configureBars() {
         self.navigationController?.setToolbarHidden(false, animated: true)
-        toolbarItems?.insert(addFolderBarButtonItem, at: 0)
+        toolbarItems?.insert(moreBarButtonItem, at: 0)
+
+        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        fixedSpace.width = 20
+        toolbarItems?.insert(fixedSpace, at: 1)
+
+        toolbarItems?.insert(addFolderBarButtonItem, at: 2)
+
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
-        toolbarItems?.insert(flexibleSpace, at: 1)
-        // Edit button is at position 2
-        configureToolbarMoreItem()
+        toolbarItems?.insert(flexibleSpace, at: 3)
+
+        refreshMoreButton()
 
         if isNested, let title = viewModel.currentFolder?.title {
             self.title = title
         }
         refreshEditButton()
-    }
-
-    private func configureToolbarMoreItem() {
-        if isEditingBookmarks {
-            if toolbarItems?.count ?? 0 >= 5 {
-                toolbarItems?.remove(at: 4)
-                toolbarItems?.remove(at: 3)
-            }
-        } else {
-            if toolbarItems?.contains(moreBarButtonItem) == false {
-                let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
-                toolbarItems?.insert(flexibleSpace, at: 3)
-                toolbarItems?.insert(moreBarButtonItem, at: 4)
-            }
-            refreshMoreButton()
-        }
     }
 
     private func refreshEditButton() {
@@ -660,8 +677,18 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     // MARK: Import bookmarks
 
+    // when importing on iOS 18.2 and above
     func importAction() -> UIAction {
         return UIAction(title: UserText.importBookmarksActionTitle,
+                        image: UIImage(named: Constants.importBookmarkImage)
+        ) { [weak self] _ in
+            self?.segueToDataImport()
+        }
+    }
+
+    // when importing < iOS 18.2
+    func importViaDocumentPickerAction() -> UIAction {
+        return UIAction(title: UserText.importBookmarksActionHtmlTitle,
                         image: UIImage(named: Constants.importBookmarkImage)
         ) { [weak self] _ in
             self?.presentDocumentPicker()
@@ -669,6 +696,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     func presentDocumentPicker() {
+        finishEditing()
+
         let docTypes = [UTType.html]
         let docPicker = UIDocumentPickerViewController(forOpeningContentTypes: docTypes, asCopy: true)
         docPicker.delegate = self
@@ -676,24 +705,34 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         present(docPicker, animated: true)
     }
 
+    private func segueToDataImport() {
+        finishEditing()
+
+        let dataImportManager = DataImportManager(reporter: SecureVaultReporter(),
+                                                  bookmarksDatabase: bookmarksDatabase,
+                                                  favoritesDisplayMode: appSettings.favoritesDisplayMode)
+        let dataImportViewController = DataImportViewController(importManager: dataImportManager,
+                                                                importScreen: DataImportViewModel.ImportScreen.bookmarks,
+                                                                syncService: syncService)
+        dataImportViewController.delegate = self
+        navigationController?.setToolbarHidden(true, animated: true)
+        navigationController?.pushViewController(dataImportViewController, animated: true)
+    }
+
     func importBookmarks(fromHtml html: String) {
-        
-        let bookmarkCountBeforeImport = dataSource.viewModel.totalBookmarksCount
-        let bookmarksDatabase = bookmarksDatabase
         Task {
 
-            let result = await BookmarksImporter(
-                coreDataStore: bookmarksDatabase,
-                favoritesDisplayMode: self.appSettings.favoritesDisplayMode
-            ).parseAndSave(html: html)
+            let result = await BookmarksImporter(coreDataStore: bookmarksDatabase,
+                                                 favoritesDisplayMode: self.appSettings.favoritesDisplayMode,
+                                                 htmlContent: html)
+                .parseAndSave()
+
             switch result {
-            case .success:
+            case .success(let summary):
                 WidgetCenter.shared.reloadAllTimelines()
-                DispatchQueue.main.async { [weak self] in
-                    let bookmarkCountAfterImport = self?.dataSource.viewModel.totalBookmarksCount ?? 0
-                    let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
+                DispatchQueue.main.async {
                     Pixel.fire(pixel: .bookmarkImportSuccess,
-                               withAdditionalParameters: [PixelParameters.bookmarkCount: "\(bookmarksImported)"])
+                               withAdditionalParameters: [PixelParameters.bookmarkCount: "\(summary.successful)"])
                     ActionMessageView.present(message: UserText.importBookmarksSuccessMessage)
                 }
             case .failure(let bookmarksImportError):
@@ -706,12 +745,26 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
     }
 
+    func segueToSync(source: String? = nil) {
+        if let mainVC = presentingViewController as? MainViewController {
+            dismiss(animated: true) {
+                mainVC.segueToSettingsSync(with: source)
+            }
+        }
+    }
+
     // MARK: Export bookmarks
 
     func exportAction() -> UIAction {
-        return UIAction(title: UserText.exportBookmarksActionTitle,
-                image: UIImage(named: Constants.exportBookmarkImage),
-                attributes: dataSource.isEmpty ? .disabled : []) { [weak self] _ in
+        return UIAction(title: {
+            if #available(iOS 18.2, *) {
+                return UserText.exportBookmarksActionTitle
+            } else {
+                return UserText.exportBookmarksActionHtmlTitle
+            }
+        }(),
+                        image: UIImage(named: Constants.exportBookmarkImage),
+                        attributes: dataSource.isEmpty ? .disabled : []) { [weak self] _ in
             self?.exportHtmlFile()
         }
     }
@@ -785,7 +838,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
         self.isEditingBookmarks = true
         changeEditButtonToDone()
-        configureToolbarMoreItem()
+        refreshMoreButton()
         refreshFooterView()
     }
 
@@ -800,7 +853,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         self.isEditingBookmarks = false
         refreshEditButton()
         enableDoneButton()
-        configureToolbarMoreItem()
+        refreshMoreButton()
         refreshFooterView()
     }
 
@@ -818,11 +871,11 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         addFolderBarButtonItem.title = UserText.addbookmarkFolderButton
         addFolderBarButtonItem.isEnabled = true
     }
-    
+
     private func disableAddFolderButton() {
         addFolderBarButtonItem.isEnabled = false
     }
-    
+
     private func changeEditButtonToDone() {
         editButton.title = UserText.navigationTitleDone
         doneButton.title = ""
@@ -830,13 +883,13 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         navigationItem.rightBarButtonItem = nil
         doneButton.isEnabled = false
     }
-    
+
     private func enableDoneButton() {
         doneButton.title = UserText.navigationTitleDone
         navigationItem.rightBarButtonItem = doneButton
         doneButton.isEnabled = true
     }
-    
+
     private func enableMoreButton() {
         moreButton.menu = bookmarksMenu
         moreButton.isEnabled = true
@@ -848,15 +901,11 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private func showEmptyState() {
         emptyStateContainer.isHidden = false
-        importFooterButton.isHidden = false
-        importFooterButton.isEnabled = true
         tableView.tableHeaderView = nil
     }
 
     private func hideEmptyState() {
         emptyStateContainer.isHidden = true
-        importFooterButton.isHidden = true
-        importFooterButton.isEnabled = false
         configureSearchBarHeaderView()
         refreshTableHeaderView()
     }
@@ -952,11 +1001,11 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         disableAddFolderButton()
         isSearching = true
     }
-    
+
     private func finishSearching() {
         tableView.dataSource = dataSource
         tableView.reloadData()
-        
+
         enableEditButton()
         enableAddFolderButton()
         isSearching = false
@@ -973,7 +1022,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func dismiss() {
         dismiss(animated: true, completion: nil)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let viewController = segue.destination as? FavoritesViewController {
             viewController.delegate = self
@@ -986,7 +1035,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 }
 
 extension BookmarksViewController: UISearchBarDelegate {
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
             if tableView.dataSource !== dataSource {
@@ -994,7 +1043,7 @@ extension BookmarksViewController: UISearchBarDelegate {
             }
             return
         }
-        
+
         if dataSource !== searchDataSource {
             prepareForSearching()
             tableView.dataSource = searchDataSource
@@ -1003,7 +1052,7 @@ extension BookmarksViewController: UISearchBarDelegate {
         searchDataSource.performSearch(searchText)
         tableView.reloadData()
     }
-    
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         finishSearching()
     }
@@ -1016,19 +1065,19 @@ extension BookmarksViewController: UISearchResultsUpdating {
 }
 
 extension BookmarksViewController {
-    
+
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
         decorateNavigationBar(with: theme)
         decorateToolbar(with: theme)
-        
+
         searchController?.searchBar.searchTextField.textColor = theme.searchBarTextColor
 
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
-        
+
         navigationController?.view.backgroundColor = tableView.backgroundColor
-        
+
         tableView.reloadData()
     }
 }
@@ -1111,4 +1160,10 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
         }
     }
 
+}
+
+extension BookmarksViewController: DataImportViewControllerDelegate {
+    func dataImportViewControllerDidFinish(_ controller: DataImportViewController) {
+        viewModel.reloadData()
+    }
 }

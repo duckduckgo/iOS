@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -274,36 +274,6 @@
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PgY-PQ-Rpw" userLabel="Empty State">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarksEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="qlm-0s-MVq">
-                                        <rect key="frame" x="91.5" y="201.5" width="192" height="144"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="144" id="ezx-Lp-bY2"/>
-                                            <constraint firstAttribute="width" constant="192" id="zCW-hg-WhG"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No bookmarks added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdA-wE-Hkh">
-                                        <rect key="frame" x="92" y="353.5" width="191" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
-                                        <rect key="frame" x="0.0" y="396" width="375" height="29"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Import bookmark file from another browser"/>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="qlm-0s-MVq" firstAttribute="centerX" secondItem="PgY-PQ-Rpw" secondAttribute="centerX" id="4Vk-Cu-wRv"/>
-                                    <constraint firstItem="jdA-wE-Hkh" firstAttribute="top" secondItem="qlm-0s-MVq" secondAttribute="bottom" constant="8" symbolic="YES" id="Dbs-rf-1YS"/>
-                                    <constraint firstItem="qlm-0s-MVq" firstAttribute="centerY" secondItem="PgY-PQ-Rpw" secondAttribute="centerY" constant="-60" id="NTL-7X-bco"/>
-                                    <constraint firstItem="R7T-q4-qHz" firstAttribute="centerX" secondItem="jdA-wE-Hkh" secondAttribute="centerX" id="aHT-5n-gx4"/>
-                                    <constraint firstItem="R7T-q4-qHz" firstAttribute="width" secondItem="PgY-PQ-Rpw" secondAttribute="width" id="dZF-PE-FeI"/>
-                                    <constraint firstItem="jdA-wE-Hkh" firstAttribute="bottom" secondItem="R7T-q4-qHz" secondAttribute="top" constant="-22" id="dcG-9f-ERC"/>
-                                    <constraint firstItem="R7T-q4-qHz" firstAttribute="centerX" secondItem="qlm-0s-MVq" secondAttribute="centerX" id="igS-qm-U8g"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -342,7 +312,6 @@
                         <outlet property="editButton" destination="Ksa-Pd-Mv5" id="VNS-MT-YxS"/>
                         <outlet property="emptyStateContainer" destination="PgY-PQ-Rpw" id="F72-bA-dTB"/>
                         <outlet property="favoritesContainer" destination="rRM-18-dYh" id="N76-id-b2D"/>
-                        <outlet property="importFooterButton" destination="R7T-q4-qHz" id="JZd-ar-KeL"/>
                         <outlet property="selectorControl" destination="NJH-oV-DbS" id="tVX-k9-DgN"/>
                         <outlet property="tableView" destination="vYN-5M-awE" id="4rq-bu-ZLw"/>
                         <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddOrEditBookmarkFolder" id="Uhm-2I-Xo5"/>
@@ -676,7 +645,6 @@
         <segue reference="Uhm-2I-Xo5"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="BookmarksEmpty" width="128" height="96"/>
         <image name="Favorite-24" width="24" height="24"/>
         <image name="Favorite-Solid-16" width="16" height="16"/>
         <image name="FavoritesEmpty" width="128" height="96"/>
@@ -714,7 +682,7 @@
             <color red="0.0" green="0.0" blue="0.0" alpha="0.8399999737739563" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="surface">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.99607843137254903" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

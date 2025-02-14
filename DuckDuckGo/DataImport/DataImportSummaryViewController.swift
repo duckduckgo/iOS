@@ -24,50 +24,56 @@ import BrowserServicesKit
 import DDGSync
 
 final class DataImportSummaryViewController: UIViewController {
-    
+
     private var viewModel: DataImportSummaryViewModel
-    
+
     init(summary: DataImportSummary, syncService: DDGSyncing) {
         self.viewModel = DataImportSummaryViewModel(summary: summary, syncService: syncService)
-        
+
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
     }
-    
+
     private func setupView() {
         viewModel.delegate = self
         let controller = UIHostingController(rootView: DataImportSummaryView(viewModel: viewModel))
         controller.view.backgroundColor = .clear
         installChildViewController(controller)
     }
-    
+
 }
 
 // MARK: - DataImportSummaryViewModelDelegate
 
 extension DataImportSummaryViewController: DataImportSummaryViewModelDelegate {
-    
+
     func dataImportSummaryViewModelDidRequestLaunchSync(_ viewModel: DataImportSummaryViewModel) {
-        if let navigationController = presentingViewController as? UINavigationController, let parent = navigationController.topViewController as? AutofillLoginSettingsListViewController {
+        guard let navigationController = presentingViewController as? UINavigationController else { return }
+
+        if let parent = navigationController.topViewController as? AutofillLoginSettingsListViewController {
             // TODO - pass source?
+            dismiss(animated: true) {
+                parent.segueToSync()
+            }
+        } else if let parent = navigationController.topViewController as? BookmarksViewController {
             dismiss(animated: true) {
                 parent.segueToSync()
             }
         }
     }
-    
-    
+
+
     func dataImportSummaryViewModelComplete(_ viewModel: DataImportSummaryViewModel) {
         dismiss(animated: true)
     }
-    
+
 }

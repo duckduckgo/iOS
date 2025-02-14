@@ -32,10 +32,10 @@ protocol DataImportViewControllerDelegate: AnyObject {
 
 final class DataImportViewController: UIViewController {
 
+    weak var delegate: DataImportViewControllerDelegate?
+
     private let viewModel: DataImportViewModel
     private let syncService: DDGSyncing
-
-    weak var delegate: DataImportViewControllerDelegate?
 
     init(importManager: DataImportManager, importScreen: DataImportViewModel.ImportScreen, syncService: DDGSyncing) {
         self.viewModel = DataImportViewModel(importScreen: importScreen, importManager: importManager)
@@ -67,7 +67,7 @@ final class DataImportViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
 
-            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: viewModel.importScreen.documentTypes, asCopy: true)
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: viewModel.state.importScreen.documentTypes, asCopy: true)
             documentPicker.delegate = self
             documentPicker.allowsMultipleSelection = false
             present(documentPicker, animated: true)
@@ -75,7 +75,7 @@ final class DataImportViewController: UIViewController {
     }
 
     private func presentDataTypePicker(for contents: ImportArchiveContents) {
-        let dataTypes = DataImportManager.preview(contents: contents)
+        let dataTypes = viewModel.importDataTypes(for: contents)
 
         let zipContentSelectionViewController = ZipContentSelectionViewController(dataTypes) { [weak self] dataTypes in
             self?.viewModel.importZipArchive(from: contents, for: dataTypes)
@@ -94,6 +94,7 @@ final class DataImportViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
 
+            self.viewModel.isLoading = false
             self.present(zipContentSelectionViewController, animated: true)
         }
     }
@@ -118,6 +119,7 @@ final class DataImportViewController: UIViewController {
 extension DataImportViewController: DataImportViewModelDelegate {
 
     func dataImportViewModelDidRequestImportFile(_ viewModel: DataImportViewModel) {
+        viewModel.isLoading = true
         presentDocumentPicker()
     }
 
@@ -126,7 +128,10 @@ extension DataImportViewController: DataImportViewModelDelegate {
     }
 
     func dataImportViewModelDidRequestPresentSummary(_ viewModel: DataImportViewModel, summary: BrowserServicesKit.DataImportSummary) {
-        presentSummary(for: summary)
+        DispatchQueue.main.async { [weak self] in
+            self?.viewModel.isLoading = false
+            self?.presentSummary(for: summary)
+        }
     }
 
 }
@@ -137,7 +142,17 @@ extension DataImportViewController: DataImportViewModelDelegate {
 extension DataImportViewController: UIDocumentPickerDelegate {
 
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let selectedFileURL = urls.first else { return }
+        var validDocumentSelected = false
+
+        defer {
+            if !validDocumentSelected {
+                viewModel.isLoading = false
+            }
+        }
+
+        guard let selectedFileURL = urls.first else {
+            return
+        }
 
         do {
             let resourceValues = try selectedFileURL.resourceValues(forKeys: [.typeIdentifierKey])
@@ -148,6 +163,7 @@ extension DataImportViewController: UIDocumentPickerDelegate {
                 return
             }
 
+            validDocumentSelected = true
             viewModel.handleFileSelection(selectedFileURL, type: fileType)
 
         } catch {
@@ -156,4 +172,7 @@ extension DataImportViewController: UIDocumentPickerDelegate {
         }
     }
 
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        viewModel.isLoading = false
+    }
 }

@@ -137,6 +137,8 @@ final public class BookmarksImporter {
                 let folder = try? element.select("H3").first()
 
                 if folder != nil {
+                    // Apple includes folders in the bookmarks count when exporting from Safari
+                    count += 1
                     // Recursively count contents of folder
                     try? countBookmarks(in: element, count: &count)
                 } else {

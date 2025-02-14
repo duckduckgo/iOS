@@ -31,13 +31,12 @@ struct DataImportView: View {
             VStack(spacing: 0) {
                 ImportOverview(viewModel: viewModel)
 
-                PasswordFooterView()
-
-                switch viewModel.importScreen.layout {
-                case .safariOnly:
-                    SafariOnlyInstructions(viewModel: viewModel)
-                case .safariAndChrome:
-                    SafariAndChromeInstructions(viewModel: viewModel)
+                switch viewModel.state.importScreen {
+                case .bookmarks:
+                    BookmarksInstructions(viewModel: viewModel)
+                case .passwords:
+                    PasswordFooterView()
+                    PasswordsInstructions(viewModel: viewModel)
                 }
 
                 Spacer()
@@ -51,21 +50,22 @@ struct DataImportView: View {
     }
 
     private struct ImportOverview: View {
-        var viewModel: DataImportViewModel
+        @ObservedObject var viewModel: DataImportViewModel
 
         var body: some View {
             VStack(alignment: .center, spacing: 8) {
-                Image(.passwordsImport128)
+                viewModel.state.image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 72)
                     .padding(.top, 24)
 
-                Text(UserText.dataImportPasswordsTitle)
+                Text(viewModel.state.title)
                     .daxTitle3()
                     .multilineTextAlignment(.center)
+                    .padding(.horizontal, 8)
 
-                Text(UserText.dataImportPasswordsSubtitle)
+                Text(viewModel.state.subtitle)
                     .daxBodyRegular()
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(designSystemColor: .textSecondary))
@@ -74,9 +74,17 @@ struct DataImportView: View {
                 Button {
                     viewModel.selectFile()
                 } label: {
-                    Text(UserText.dataImportPasswordsFileButton)
+                    if viewModel.isLoading {
+                        SwiftUI.ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(0.8)
+                            .padding(.trailing, 8)
+                            .foregroundStyle(Color(.white))
+                    } else {
+                        Text(viewModel.state.buttonTitle)
+                    }
                 }
-                .buttonStyle(PrimaryButtonStyle())
+                .buttonStyle(PrimaryButtonStyle(disabled: viewModel.isLoading))
                 .frame(maxWidth: 360)
                 .padding(.top, 16)
                 .padding(.bottom, 24)
@@ -101,26 +109,28 @@ struct DataImportView: View {
         }
     }
 
-    private struct SafariOnlyInstructions: View {
+    private struct BookmarksInstructions: View {
         var viewModel: DataImportViewModel
 
         var body: some View {
-            Divider()
-                .padding(.vertical, 16)
-                .padding(.top, 24)
 
-            Text(UserText.dataImportPasswordsInstructionsTitle)
-                .daxHeadline()
-                .foregroundColor(Color(designSystemColor: .textPrimary))
-                .padding(.bottom, 12)
+            HStack {
+                Text(UserText.dataImportBookmarksInstructionHeader.uppercased())
+                    .daxFootnoteRegular()
+                    .foregroundColor(.secondary)
+                    .padding(.leading, 24)
+
+                Spacer()
+            }
+            .padding(.top, 24)
 
             StepByStepInstructions(viewModel: viewModel)
                 .padding(.horizontal, 16)
-                .padding(.top, 16)
+                .padding(.top, 24)
         }
     }
 
-    private struct SafariAndChromeInstructions: View {
+    private struct PasswordsInstructions: View {
         var viewModel: DataImportViewModel
 
         var body: some View {
@@ -155,7 +165,7 @@ struct DataImportView: View {
 
         var body: some View {
             HStack {
-                viewModel.selectedBrowser.icon
+                viewModel.state.icon
                     .resizable()
                     .frame(width: 24, height: 24)
 
@@ -165,7 +175,7 @@ struct DataImportView: View {
 
                 Spacer()
 
-                Picker("", selection: $viewModel.selectedBrowser) {
+                Picker("", selection: $viewModel.state.browser) {
                     ForEach(DataImportViewModel.BrowserInstructions.allCases) { browser in
                         Text(browser.displayName)
                             .daxBodyRegular()
@@ -186,8 +196,8 @@ struct DataImportView: View {
 
         var body: some View {
             VStack(alignment: .leading) {
-                ForEach(DataImportViewModel.BrowserInstructions.InstructionStep.allCases, id: \.self) { step in
-                    Instruction(step: step.rawValue, instructionText: Text(step.attributedInstructions(for: viewModel.selectedBrowser)))
+                ForEach(DataImportViewModel.InstructionStep.allCases, id: \.self) { step in
+                    Instruction(step: step.rawValue, instructionText: Text(step.attributedInstructions(for: viewModel.state)))
                 }
             }
         }

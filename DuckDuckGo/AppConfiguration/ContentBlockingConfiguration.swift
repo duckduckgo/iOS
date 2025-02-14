@@ -22,7 +22,7 @@ import Core
 
 final class ContentBlockingConfiguration {
 
-    static func configure() {
+    static func prepareContentBlocking() {
         ContentBlocking.shared.onCriticalError = {
             NotificationCenter.default.post(name: .appDidEncounterUnrecoverableState, object: nil)
         }

@@ -32,12 +32,9 @@ final class PersistentStoresConfiguration {
     let database = Database.shared
     let bookmarksDatabase = BookmarksDatabase.make()
     private let application: UIApplication
-    private let notificationCenter: NotificationCenter
 
-    init(application: UIApplication = .shared,
-         notificationCenter: NotificationCenter = .default) {
+    init(application: UIApplication = .shared) {
         self.application = application
-        self.notificationCenter = notificationCenter
     }
 
     func configure() {

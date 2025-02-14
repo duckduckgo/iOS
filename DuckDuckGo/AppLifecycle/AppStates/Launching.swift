@@ -19,8 +19,6 @@
 
 import Core
 import UIKit
-import BrowserServicesKit
-import WidgetKit
 
 /// Represents the transient state where the app is being prepared for user interaction after being launched by the system.
 /// - Usage:
@@ -43,30 +41,17 @@ struct Launching: AppState {
     private let fireproofing = UserDefaultsFireproofing.xshared
     private let featureFlagger = AppDependencyProvider.shared.featureFlagger
     private let aiChatSettings = AIChatSettings()
-    private let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
 
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
-
-    private let screenshotService: ScreenshotService
-    private let authenticationService: AuthenticationService
-    private let syncService: SyncService
-    private let vpnService: VPNService
-    private let autofillService = AutofillService()
-    private let remoteMessagingService: RemoteMessagingService
-    private let configurationService = ConfigurationService(isDebugBuild: isDebugBuild)
-    private let autoClearService: AutoClearService
-    private let reportingService: ReportingService
-    private let subscriptionService: SubscriptionService
-    private let crashCollectionService = CrashCollectionService()
-    private let maliciousSiteProtectionService: MaliciousSiteProtectionService
-    private let statisticsService = StatisticsService()
-
-    private let persistentStoresConfiguration = PersistentStoresConfiguration()
-    private let onboardingConfiguration = OnboardingConfiguration()
-    private let atbAndVariantConfiguration = ATBAndVariantConfiguration()
-    private let historyManagerConfiguration = HistoryManagerConfiguration()
-
     private let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
+
+    /// Handles one-time application setup during launch
+    private let configuration = AppConfiguration()
+
+    /// Holds app-wide services that respond to lifecycle events and live throughout the app's lifetime.
+    private let services: AppServices
+
+    /// Coordinates and initializes the main view controller.
     private let mainCoordinator: MainCoordinator
 
     var urlToOpen: URL?
@@ -80,71 +65,46 @@ struct Launching: AppState {
             Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
                        withAdditionalParameters: [PixelParameters.time: String(launchTime)])
         }
-        reportingService = ReportingService(fireproofing: fireproofing)
-        KeyboardConfiguration.disableHardwareKeyboardForUITests()
-        PixelConfiguration.configure(with: featureFlagger)
-        ContentBlockingConfiguration.configure()
-        UserAgentConfiguration.configureAPIRequestUserAgent()
-        NewTabPageIntroMessageConfiguration().disableIntroMessageForReturningUsers()
-        onboardingConfiguration.migrate()
-        persistentStoresConfiguration.configure()
-
-        configurationService.start()
-        crashCollectionService.start()
-
-        WidgetCenter.shared.reloadAllTimelines()
-        PrivacyFeatures.httpsUpgrade.loadDataAsync()
-
-        syncService = SyncService(bookmarksDatabase: persistentStoresConfiguration.bookmarksDatabase)
-        reportingService.syncService = syncService
-        autofillService.syncService = syncService
-        remoteMessagingService = RemoteMessagingService(bookmarksDatabase: persistentStoresConfiguration.bookmarksDatabase,
-                                                        database: persistentStoresConfiguration.database,
-                                                        appSettings: appSettings,
-                                                        internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
-                                                        configurationStore: AppDependencyProvider.shared.configurationStore,
-                                                        privacyConfigurationManager: privacyConfigurationManager)
-        subscriptionService = SubscriptionService(privacyConfigurationManager: privacyConfigurationManager)
-        maliciousSiteProtectionService = MaliciousSiteProtectionService(featureFlagger: featureFlagger)
-        mainCoordinator = MainCoordinator(syncService: syncService,
-                                          bookmarksDatabase: persistentStoresConfiguration.bookmarksDatabase,
-                                          remoteMessagingService: remoteMessagingService,
-                                          daxDialogs: onboardingConfiguration.daxDialogs,
-                                          reportingService: reportingService,
-                                          variantManager: atbAndVariantConfiguration.variantManager,
-                                          subscriptionService: subscriptionService,
-                                          voiceSearchHelper: voiceSearchHelper,
-                                          featureFlagger: featureFlagger,
-                                          aiChatSettings: aiChatSettings,
-                                          fireproofing: fireproofing,
-                                          maliciousSiteProtectionService: maliciousSiteProtectionService,
-                                          didFinishLaunchingStartTime: didFinishLaunchingStartTime)
-        syncService.presenter = mainCoordinator.controller
-        vpnService = VPNService(mainCoordinator: mainCoordinator)
+        configuration.start()
         let overlayWindowManager = OverlayWindowManager(window: window,
                                                         appSettings: appSettings,
                                                         voiceSearchHelper: voiceSearchHelper,
                                                         featureFlagger: featureFlagger,
                                                         aiChatSettings: aiChatSettings)
-        autoClearService = AutoClearService(worker: mainCoordinator.controller, overlayWindowManager: overlayWindowManager)
-        screenshotService = ScreenshotService(window: window)
-        authenticationService = AuthenticationService(overlayWindowManager: overlayWindowManager)
+        let servicesBuilder = AppServicesBuilder(window: window,
+                                                 fireproofing: fireproofing,
+                                                 overlayWindowManager: overlayWindowManager,
+                                                 persistentStoresConfiguration: configuration.persistentStoresConfiguration)
+        mainCoordinator = MainCoordinator(syncService: servicesBuilder.syncService,
+                                          bookmarksDatabase: configuration.persistentStoresConfiguration.bookmarksDatabase,
+                                          remoteMessagingService: servicesBuilder.remoteMessagingService,
+                                          daxDialogs: configuration.onboardingConfiguration.daxDialogs,
+                                          reportingService: servicesBuilder.reportingService,
+                                          variantManager: configuration.atbAndVariantConfiguration.variantManager,
+                                          subscriptionService: servicesBuilder.subscriptionService,
+                                          voiceSearchHelper: voiceSearchHelper,
+                                          featureFlagger: featureFlagger,
+                                          aiChatSettings: aiChatSettings,
+                                          fireproofing: fireproofing,
+                                          maliciousSiteProtectionService: servicesBuilder.maliciousSiteProtectionService,
+                                          didFinishLaunchingStartTime: didFinishLaunchingStartTime)
+        services = servicesBuilder.complete(with: mainCoordinator)
+        services.syncService.presenter = mainCoordinator.controller
 
-        syncService.start()
-        remoteMessagingService.start()
-        autoClearService.start()
-        vpnService.start()
-        subscriptionService.start()
-        autofillService.start()
-        maliciousSiteProtectionService.start()
-
-        atbAndVariantConfiguration.cleanUpATBAndAssignVariant(onVariantAssigned: onVariantAssigned)
-        CrashHandlersConfiguration.handleCrashDuringCrashHandlersSetup()
-        TabInteractionStateConfiguration.removeLeftoverStatesIfAutoClearDisabled(isAutoClearDisabled: !autoClearService.isClearingEnabled,
-                                                                                 mainViewController: mainCoordinator.controller)
-        UserAgentConfiguration.configureUserBrowsingUserAgent()
-
+        startServices()
+        configuration.finalize(with: services.reportingService)
         setupWindow()
+    }
+
+    private func startServices() {
+        services.crashCollectionService.start()
+        services.syncService.start()
+        services.remoteMessagingService.start()
+        services.autoClearService.start()
+        services.vpnService.start()
+        services.subscriptionService.start()
+        services.autofillService.start()
+        services.maliciousSiteProtectionService.start()
     }
 
     private func setupWindow() {
@@ -155,32 +115,12 @@ struct Launching: AppState {
         mainCoordinator.start()
     }
 
-    // MARK: - Handle ATB and variant assigned logic here
-
-    func onVariantAssigned() {
-        onboardingConfiguration.adjustDialogsForUITesting()
-        historyManagerConfiguration.dismissHistoryMessage()
-        reportingService.setupStorageForMarketPlacePostback()
-    }
-
     // MARK: -
 
     private var appDependencies: AppDependencies {
         .init(
             mainCoordinator: mainCoordinator,
-            vpnService: vpnService,
-            authenticationService: authenticationService,
-            screenshotService: screenshotService,
-            autoClearService: autoClearService,
-            syncService: syncService,
-            remoteMessagingService: remoteMessagingService,
-            subscriptionService: subscriptionService,
-            autofillService: autofillService,
-            crashCollectionService: crashCollectionService,
-            configurationService: configurationService,
-            reportingService: reportingService,
-            maliciousSiteProtectionService: maliciousSiteProtectionService,
-            statisticsService: statisticsService
+            services: services
         )
     }
     

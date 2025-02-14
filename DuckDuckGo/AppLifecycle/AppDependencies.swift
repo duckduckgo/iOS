@@ -20,18 +20,23 @@
 struct AppDependencies {
 
     let mainCoordinator: MainCoordinator
+    let services: AppServices
 
-    let vpnService: VPNService
-    let authenticationService: AuthenticationService
+}
+
+struct AppServices {
+
     let screenshotService: ScreenshotService
-    let autoClearService: AutoClearService
+    let authenticationService: AuthenticationService
     let syncService: SyncService
-    let remoteMessagingService: RemoteMessagingService
-    let subscriptionService: SubscriptionService
+    let vpnService: VPNService
     let autofillService: AutofillService
-    let crashCollectionService: CrashCollectionService
+    let remoteMessagingService: RemoteMessagingService
     let configurationService: ConfigurationService
+    let autoClearService: AutoClearService
     let reportingService: ReportingService
+    let subscriptionService: SubscriptionService
+    let crashCollectionService: CrashCollectionService
     let maliciousSiteProtectionService: MaliciousSiteProtectionService
     let statisticsService: StatisticsService
 

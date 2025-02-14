@@ -30,25 +30,9 @@ public extension NSNotification.Name {
 
 final class ConfigurationService {
 
-    @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
-    private var privacyConfigCustomURL: String?
-    private let isDebugBuild: Bool
-
-    var onConfigurationFetched: (() -> Void)?
-
-    init(isDebugBuild: Bool) {
-        self.isDebugBuild = isDebugBuild
-    }
-
     // MARK: - Start
 
     func start() {
-        if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
-            Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
-        } else {
-            Configuration.setURLProvider(AppConfigurationURLProvider())
-        }
-
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()

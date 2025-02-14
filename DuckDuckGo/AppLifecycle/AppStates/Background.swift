@@ -29,6 +29,7 @@ struct Background: AppState {
     private let lastBackgroundDate: Date = Date()
     private let appDependencies: AppDependencies
     private let didTransitionFromLaunching: Bool
+    private var services: AppServices { appDependencies.services }
 
     var urlToOpen: URL?
     var shortcutItemToHandle: UIApplicationShortcutItem?
@@ -45,12 +46,12 @@ struct Background: AppState {
 
     // MARK: - Handle applicationDidEnterBackground(_:) logic here
     func onTransition() {
-        appDependencies.vpnService.suspend()
-        appDependencies.authenticationService.suspend()
-        appDependencies.autoClearService.suspend()
-        appDependencies.autofillService.suspend()
-        appDependencies.syncService.suspend()
-        appDependencies.reportingService.suspend()
+        services.vpnService.suspend()
+        services.authenticationService.suspend()
+        services.autoClearService.suspend()
+        services.autofillService.suspend()
+        services.syncService.suspend()
+        services.reportingService.suspend()
 
         appDependencies.mainCoordinator.onBackground()
     }
@@ -70,7 +71,7 @@ extension Background {
     /// This ensures that the app remains smooth as it enters the foreground.
     func willLeave() {
         ThemeManager.shared.updateUserInterfaceStyle()
-        appDependencies.autoClearService.resume()
+        services.autoClearService.resume()
     }
 
     /// Called when the app transitions from launching or foreground to background

@@ -28,7 +28,8 @@ import Core
 @MainActor
 struct Foreground: AppState {
 
-    let appDependencies: AppDependencies
+    private let appDependencies: AppDependencies
+    var services: AppServices { appDependencies.services }
 
     /// Indicates whether this is the app's first transition to the foreground after launch.
     /// If you need to differentiate between a cold start and a wake-up from the background, use this flag.
@@ -74,8 +75,8 @@ struct Foreground: AppState {
             keyboardPresenter: KeyboardPresenter(mainViewController: appDependencies.mainCoordinator.controller)
         )
         interactionManager = UIInteractionManager(
-            authenticationService: appDependencies.authenticationService,
-            autoClearService: appDependencies.autoClearService,
+            authenticationService: appDependencies.services.authenticationService,
+            autoClearService: appDependencies.services.autoClearService,
             launchActionHandler: launchActionHandler
         )
     }
@@ -95,7 +96,7 @@ struct Foreground: AppState {
     func onTransition() {
         configureAppearance()
 
-        let vpnService = appDependencies.vpnService
+        let vpnService = services.vpnService
         vpnService.resume()
 
         interactionManager.start(
@@ -112,14 +113,14 @@ struct Foreground: AppState {
             }
         )
 
-        appDependencies.configurationService.resume()
-        appDependencies.reportingService.resume()
-        appDependencies.subscriptionService.resume()
-        appDependencies.autofillService.resume()
-        appDependencies.maliciousSiteProtectionService.resume()
-        appDependencies.syncService.resume()
-        appDependencies.remoteMessagingService.resume()
-        appDependencies.statisticsService.resume()
+        services.configurationService.resume()
+        services.reportingService.resume()
+        services.subscriptionService.resume()
+        services.autofillService.resume()
+        services.maliciousSiteProtectionService.resume()
+        services.syncService.resume()
+        services.remoteMessagingService.resume()
+        services.statisticsService.resume()
 
         appDependencies.mainCoordinator.onForeground()
     }

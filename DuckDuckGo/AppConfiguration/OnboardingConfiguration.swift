@@ -24,7 +24,7 @@ final class OnboardingConfiguration {
 
     lazy var daxDialogs = DaxDialogs.shared
 
-    func migrate() {
+    func migrateToNewOnboarding() {
         // Hide Dax Dialogs if users already completed old onboarding.
         DaxDialogsOnboardingMigrator().migrateFromOldToNewOboarding()
     }

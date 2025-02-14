@@ -37,12 +37,20 @@ final class AutoClearService {
         autoClear.isClearingEnabled
     }
 
-    init(worker: AutoClearWorker,
+    init(mainViewController: MainViewController,
          overlayWindowManager: OverlayWindowManager,
          application: UIApplication = UIApplication.shared) {
-        autoClear = AutoClear(worker: worker)
+        autoClear = AutoClear(worker: mainViewController)
         self.overlayWindowManager = overlayWindowManager
         self.application = application
+
+        removeLeftoverStatesIfAutoClearDisabled()
+
+        func removeLeftoverStatesIfAutoClearDisabled() {
+            if !autoClear.isClearingEnabled {
+                mainViewController.tabManager.removeLeftoverInteractionStates()
+            }
+        }
     }
 
     // - MARK: Start

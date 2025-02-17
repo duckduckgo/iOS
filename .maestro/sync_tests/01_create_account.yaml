@@ -10,6 +10,7 @@ name: 01_create_account
     file: ../shared/setup.yaml
 
 # Set Internal User
+- tapOn: Browsing menu
 - tapOn: Settings
 - runFlow:
     file: ../shared/set_internal_user_from_settings.yaml

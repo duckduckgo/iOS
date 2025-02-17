@@ -41,7 +41,7 @@ struct NetworkProtectionVPNLocationView: View {
     @ViewBuilder
     private func nearest(isSelected: Bool) -> some View {
         Section {
-            ChecklistItem(
+            NetworkProtectionUIElements.ChecklistItem(
                 isSelected: isSelected,
                 action: {
                     Task {
@@ -106,7 +106,7 @@ private struct CountryItem: View {
     }
 
     var body: some View {
-        ChecklistItem(
+        NetworkProtectionUIElements.ChecklistItem(
             isSelected: itemModel.isSelected,
             action: action,
             label: {
@@ -125,7 +125,7 @@ private struct CountryItem: View {
                     Spacer()
                     Menu {
                         ForEach(itemModel.cityPickerItems) { cityItem in
-                            MenuItem(isSelected: cityItem.isSelected, title: cityItem.name) {
+                            NetworkProtectionUIElements.MenuItem(isSelected: cityItem.isSelected, title: cityItem.name) {
                                 cityPickerAction(cityItem.id)
                             }
                         }
@@ -138,53 +138,5 @@ private struct CountryItem: View {
                 }
             }
         )
-    }
-}
-
-private struct ChecklistItem<Content>: View where Content: View {
-    let isSelected: Bool
-    let action: () -> Void
-    @ViewBuilder let label: () -> Content
-
-    var body: some View {
-        Button(
-            action: action,
-            label: {
-                HStack(spacing: 12) {
-                    Image(systemName: "checkmark")
-                        .tint(.init(designSystemColor: .accent))
-                        .if(!isSelected) {
-                            $0.hidden()
-                        }
-                    label()
-                }
-            }
-        )
-        .tint(Color(designSystemColor: .textPrimary))
-        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-    }
-}
-
-private struct MenuItem: View {
-    let isSelected: Bool
-    let title: String
-    let action: () -> Void
-
-    var body: some View {
-        Button(
-            action: action,
-            label: {
-                HStack(spacing: 12) {
-                    Text(title).daxBodyRegular()
-                    Spacer()
-                    Image(systemName: "checkmark")
-                        .if(!isSelected) {
-                            $0.hidden()
-                        }
-                        .tint(Color(designSystemColor: .textPrimary))
-                }
-            }
-        )
-        .tint(Color(designSystemColor: .textPrimary))
     }
 }

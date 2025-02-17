@@ -21,41 +21,67 @@ import Foundation
 import Combine
 import NetworkProtection
 import Core
+import BrowserServicesKit
 
 final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
     private let settings: VPNSettings
+    private let controller: TunnelController
+    private let featureFlagger: FeatureFlagger
     private var cancellables: Set<AnyCancellable> = []
 
-    @Published public var dnsSettings: NetworkProtectionDNSSettings = .default
+    @Published public var dnsSettings: NetworkProtectionDNSSettings
 
-    @Published public var isCustomDNSSelected = false
-    
-    @Published public var customDNSServers = ""
+    @Published public var isCustomDNSSelected: Bool
+
+    @Published var isBlockRiskyDomainsOn: Bool {
+        didSet {
+            applyDNSSettings()
+        }
+    }
+
+    @Published public var customDNSServers: String
 
     @Published public var isApplyButtonEnabled = false
 
-    init(settings: VPNSettings) {
-        self.settings = settings
+    var isRiskySitesProtectionFeatureEnabled: Bool {
+        featureFlagger.isFeatureOn(.networkProtectionRiskyDomainsProtection)
+    }
 
+    init(settings: VPNSettings, controller: TunnelController, featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
+        self.settings = settings
+        self.controller = controller
+        self.featureFlagger = featureFlagger
+
+        dnsSettings = settings.dnsSettings
+        isBlockRiskyDomainsOn = settings.isBlockRiskyDomainsOn
+        isCustomDNSSelected = settings.dnsSettings.usesCustomDNS
+        customDNSServers = settings.customDnsServers.joined(separator: ", ")
+
+        subscribeToDNSSettingsChanges()
+    }
+
+    func subscribeToDNSSettingsChanges() {
         settings.dnsSettingsPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.dnsSettings, onWeaklyHeld: self)
             .store(in: &cancellables)
-
-        isCustomDNSSelected = settings.dnsSettings.usesCustomDNS
-        customDNSServers = settings.dnsSettings.dnsServersText
     }
 
     func toggleDNSSettings() {
         isCustomDNSSelected.toggle()
     }
 
+    func toggleIsBlockRiskyDomainsOn() {
+        isBlockRiskyDomainsOn.toggle()
+    }
+
     func applyDNSSettings() {
         if isCustomDNSSelected {
             settings.dnsSettings = .custom([customDNSServers])
         } else {
-            settings.dnsSettings = .default
+            settings.dnsSettings = .ddg(blockRiskyDomains: isBlockRiskyDomainsOn)
         }
+        reloadVPN()
 
         /// Updating `dnsSettings` does an IPv4 conversion before actually commiting the change,
         /// so we do a final check to see which outcome the user ends up with
@@ -73,12 +99,20 @@ final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
             isApplyButtonEnabled = true
         }
     }
+
+    private func reloadVPN() {
+        Task {
+            // We need to allow some time for the setting to propagate
+            try await Task.sleep(interval: 0.1)
+            try await controller.command(.restartAdapter)
+        }
+    }
 }
 
 extension NetworkProtectionDNSSettings {
     fileprivate var dnsServersText: String {
         switch self {
-        case .default: return ""
+        case .ddg: return ""
         case .custom(let servers): return servers.joined(separator: ", ")
         }
     }

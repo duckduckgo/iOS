@@ -1,0 +1,74 @@
+name: iOS - PR Checks
+
+on:
+  push:
+    branches: [ main, "release/**", 'jkt/shared-web-tests' ]
+  pull_request:
+  workflow_call:
+    inputs:
+      branch:
+        description: "Branch name"
+        required: false
+        type: string
+      skip-release:
+        description: "Skip release build"
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      APPLE_API_KEY_BASE64:
+        required: true
+      APPLE_API_KEY_ID:
+        required: true
+      APPLE_API_KEY_ISSUER:
+        required: true
+      ASANA_ACCESS_TOKEN:
+        required: true
+      MATCH_PASSWORD:
+        required: true
+      SSH_PRIVATE_KEY_FASTLANE_MATCH:
+        required: true
+
+jobs:
+  shared-web-tests:
+    name: Shared web tests
+
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+    - name: Check out the code
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
+
+    - name: Checkout shared web tests
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        repository: duckduckgo/shared-web-tests
+        path: shared-web-tests
+        ref: jkt/webdriver
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and Test
+      run: |
+          cd shared-web-tests
+          npm run build
+          sudo npm run install-hosts
+
+    - name: Build iOS
+      run: |
+        source .maestro/common.sh
+        project_root=$(pwd)
+        build_app
+
+    - name: Run tests
+      run: |
+        cd shared-web-tests
+        npm run test
+
+  

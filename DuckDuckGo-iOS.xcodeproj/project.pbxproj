@@ -445,7 +445,10 @@
 		7B4F87EA2D0738F90010B18F /* SiriEducationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F87E92D0738F40010B18F /* SiriEducationView.swift */; };
 		7B4F87EC2D07396A0010B18F /* SiriEducation.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F87EB2D07396A0010B18F /* SiriEducation.xcassets */; };
 		7B4F87EE2D0739EB0010B18F /* SiriBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F87ED2D0739E80010B18F /* SiriBubbleView.swift */; };
+		7B70CC3C2D15C0BC0096A1C6 /* AutomationServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B70CC3B2D15C0BC0096A1C6 /* AutomationServer.swift */; };
 		7B8E0EC62CC81B4900B2B722 /* TipKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8E0EC52CC81B4800B2B722 /* TipKitController.swift */; };
+		7B9D532F2D5431E400D9E937 /* MainViewController+Automation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D532E2D5431E400D9E937 /* MainViewController+Automation.swift */; };
+		7B9D53312D54321200D9E937 /* TabViewController+Automation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D53302D54321200D9E937 /* TabViewController+Automation.swift */; };
 		7BC571202BDBB877003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
 		7BC571212BDBB977003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
 		7BDBAD0E2CBFB3F1000379B7 /* VPN.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BDBAD0D2CBFB3F1000379B7 /* VPN.xcassets */; };
@@ -1911,7 +1914,10 @@
 		7B4F87E92D0738F40010B18F /* SiriEducationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriEducationView.swift; sourceTree = "<group>"; };
 		7B4F87EB2D07396A0010B18F /* SiriEducation.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SiriEducation.xcassets; sourceTree = "<group>"; };
 		7B4F87ED2D0739E80010B18F /* SiriBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriBubbleView.swift; sourceTree = "<group>"; };
+		7B70CC3B2D15C0BC0096A1C6 /* AutomationServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationServer.swift; sourceTree = "<group>"; };
 		7B8E0EC52CC81B4800B2B722 /* TipKitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipKitController.swift; sourceTree = "<group>"; };
+		7B9D532E2D5431E400D9E937 /* MainViewController+Automation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Automation.swift"; sourceTree = "<group>"; };
+		7B9D53302D54321200D9E937 /* TabViewController+Automation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabViewController+Automation.swift"; sourceTree = "<group>"; };
 		7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNActivationDateStore.swift; sourceTree = "<group>"; };
 		7BDBAD0D2CBFB3F1000379B7 /* VPN.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = VPN.xcassets; sourceTree = "<group>"; };
 		7BF78E012CA2CC3E0026A1FC /* TipKitAppEventHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipKitAppEventHandling.swift; sourceTree = "<group>"; };
@@ -6685,6 +6691,7 @@
 				984147C224F026A300362052 /* Tab.storyboard */,
 				F1386BA31E6846C40062FC3C /* TabDelegate.swift */,
 				F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */,
+				7B9D53302D54321200D9E937 /* TabViewController+Automation.swift */,
 				31D4CD4F2D4D3CD600BC27C6 /* Navigatable.swift */,
 				CBC88EE42C8097B500F0F8C5 /* URLCredentialCreator.swift */,
 				CB2A7EEE283D185100885F67 /* RulesCompilationMonitor.swift */,
@@ -7066,6 +7073,7 @@
 				85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */,
 				373608912ABB430D00629E7F /* FavoritesDisplayMode+UserDefaults.swift */,
 				850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */,
+				7B70CC3B2D15C0BC0096A1C6 /* AutomationServer.swift */,
 				983EABB7236198F6003948D1 /* DatabaseMigration.swift */,
 				853C5F6021C277C7001F7A05 /* global.swift */,
 				85C8E61C2B0E47380029A6BD /* BookmarksDatabaseSetup.swift */,
@@ -7088,6 +7096,7 @@
 				8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */,
 				85DDE03F2AC6FF65006ABCA2 /* MainView.swift */,
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
+				7B9D532E2D5431E400D9E937 /* MainViewController+Automation.swift */,
 				31D4CD4A2D4D1C2600BC27C6 /* ToolbarStateHandling.swift */,
 				566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */,
 				981CA7E92617797500E119D5 /* MainViewController+AddFavoriteFlow.swift */,
@@ -8273,6 +8282,7 @@
 				851672D12BED1FC900592F24 /* AutocompleteView.swift in Sources */,
 				7B1681022D106CCC005EAE24 /* UserTextShared.swift in Sources */,
 				3161D13227AC161B00285CF6 /* DownloadMetadata.swift in Sources */,
+				7B9D532F2D5431E400D9E937 /* MainViewController+Automation.swift in Sources */,
 				D664C7C72B289AA200CBFA76 /* PurchaseInProgressView.swift in Sources */,
 				9F465E1E2D3F5C2E00490109 /* Logger+MaliciousSiteProtection.swift in Sources */,
 				7BFD5FD72C9DB9D7000FF959 /* VPNGeoswitchingTip.swift in Sources */,
@@ -8391,6 +8401,7 @@
 				C12324C32C4697C900FBB26B /* AutofillBreakageReportTableViewCell.swift in Sources */,
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
 				9FB0271D2C293619009EA190 /* OnboardingIntroViewModel.swift in Sources */,
+				7B70CC3C2D15C0BC0096A1C6 /* AutomationServer.swift in Sources */,
 				9FE08BD62C2A60CD001D5EBC /* MetricBuilder.swift in Sources */,
 				1E1626072968413B0004127F /* ViewExtension.swift in Sources */,
 				31A42566285A0A6300049386 /* FaviconViewModel.swift in Sources */,
@@ -8617,6 +8628,7 @@
 				1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */,
 				4B412ACC2BBB3D0900A39F5E /* LazyView.swift in Sources */,
 				7B10FF252D11A56300F36BF2 /* ControlWidgetVPNIntents.swift in Sources */,
+				7B9D53312D54321200D9E937 /* TabViewController+Automation.swift in Sources */,
 				85047C772A0D5D3D00D2FF3F /* SyncSettingsViewController+SyncDelegate.swift in Sources */,
 				C12552972D0B06A100A0FDAA /* FreeTrialsFeatureFlagExperiment.swift in Sources */,
 				85DDE0402AC6FF65006ABCA2 /* MainView.swift in Sources */,

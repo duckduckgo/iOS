@@ -508,8 +508,7 @@ class MainViewController: UIViewController {
     }
     
     func startOnboardingFlowIfNotSeenBefore() {
-        
-        guard ProcessInfo.processInfo.environment["ONBOARDING"] != "false" else {
+        guard !LaunchOptionsHandler().isOnboardingCompleted else {
             // explicitly skip onboarding, e.g. for integration tests
             return
         }
@@ -1036,7 +1035,7 @@ class MainViewController: UIViewController {
             currentTab?.executeBookmarklet(url: url)
         }
     }
-    
+
     private func loadBackForwardItem(_ item: WKBackForwardListItem) {
         prepareTabForRequest {
             currentTab?.load(backForwardListItem: item)

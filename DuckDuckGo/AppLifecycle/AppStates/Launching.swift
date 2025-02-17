@@ -143,6 +143,7 @@ struct Launching: AppState {
         UserAgentConfiguration.configureUserBrowsingUserAgent()
 
         setupWindow()
+        startAutomationServerIfNeeded()
     }
 
     private func setupWindow() {
@@ -179,7 +180,17 @@ struct Launching: AppState {
             maliciousSiteProtectionService: maliciousSiteProtectionService
         )
     }
-    
+
+    private func startAutomationServerIfNeeded() {
+        let launchOptionsHandler = LaunchOptionsHandler()
+        guard launchOptionsHandler.isUITesting && launchOptionsHandler.automationPort != nil else {
+            return
+        }
+        guard let rootViewController = window.rootViewController as? MainViewController else {
+            return
+        }
+        AutomationServer(main: rootViewController, port: launchOptionsHandler.automationPort)
+    }
 }
 
 extension Launching {

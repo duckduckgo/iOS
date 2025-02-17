@@ -911,6 +911,9 @@
 /* Button label to select zip or html file for importing */
 "data.import.bookmarks.file-button" = "Import Bookmarks File...";
 
+/* Header for section with instructions for how to export bookmarks from Safari */
+"data.import.bookmarks.instructions.header" = "How to export bookmarks from Safari";
+
 /* Subtitle for screen to import bookmarks */
 "data.import.bookmarks.subtitle" = "Select the file containing bookmarks. This is usually a ZIP or HTML file..";
 

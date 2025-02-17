@@ -22,6 +22,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 import Core
 import BrowserServicesKit
+import Common
 
 protocol DataImportViewModelDelegate: AnyObject {
     func dataImportViewModelDidRequestImportFile(_ viewModel: DataImportViewModel)
@@ -245,7 +246,7 @@ final class DataImportViewModel: ObservableObject {
     }
 
     func importDataTypes(for contents: ImportArchiveContents) -> [DataImportManager.ImportPreview] {
-        DataImportManager.preview(contents: contents)
+        DataImportManager.preview(contents: contents, tld: AppDependencyProvider.shared.storageCache.tld)
     }
 
     func handleFileSelection(_ url: URL, type: DataImportFileType) {
@@ -262,12 +263,14 @@ final class DataImportViewModel: ObservableObject {
                 case .bookmarksOnly:
                     importZipArchive(from: contents, for: [.bookmarks])
                 case .none:
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.isLoading = false
                         ActionMessageView.present(message: UserText.dataImportFailedNoDataInZipErrorMessage)
                     }
                 }
             } catch {
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    self?.isLoading = false
                     ActionMessageView.present(message: UserText.dataImportFailedReadZipErrorMessage)
                 }
             }
@@ -277,7 +280,7 @@ final class DataImportViewModel: ObservableObject {
     }
 
     func importZipArchive(from contents: ImportArchiveContents,
-                                  for dataTypes: [DataImport.DataType]) {
+                          for dataTypes: [DataImport.DataType]) {
         isLoading = true
         Task {
             let summary = await importManager.importZipArchive(from: contents, for: dataTypes)

@@ -710,7 +710,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
         let dataImportManager = DataImportManager(reporter: SecureVaultReporter(),
                                                   bookmarksDatabase: bookmarksDatabase,
-                                                  favoritesDisplayMode: appSettings.favoritesDisplayMode)
+                                                  favoritesDisplayMode: appSettings.favoritesDisplayMode,
+                                                  tld: AppDependencyProvider.shared.storageCache.tld)
         let dataImportViewController = DataImportViewController(importManager: dataImportManager,
                                                                 importScreen: DataImportViewModel.ImportScreen.bookmarks,
                                                                 syncService: syncService)

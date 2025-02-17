@@ -23,11 +23,12 @@ import SecureStorage
 import os.log
 import Persistence
 import Bookmarks
+import Common
 
 public protocol DataImportManaging: DataImporter {
     func importFile(at url: URL, for fileType: DataImportFileType) async throws -> DataImportSummary?
     func importZipArchive(from contents: ImportArchiveContents, for dataTypes: [DataImport.DataType]) async -> DataImportSummary
-    static func preview(contents: ImportArchiveContents) -> [DataImportPreview]
+    static func preview(contents: ImportArchiveContents, tld: TLD) -> [DataImportPreview]
 }
 
 public typealias DataImportFileType = DataImportManager.FileType
@@ -64,6 +65,7 @@ public final class DataImportManager: DataImportManaging {
     private let reporter: SecureVaultReporting
     private let bookmarksDatabase: CoreDataDatabase
     private let favoritesDisplayMode: FavoritesDisplayMode
+    private let tld: TLD
 
     private var csvImporter: CSVImporter?
     private var bookmarksImporter: BookmarksImporter?
@@ -71,11 +73,13 @@ public final class DataImportManager: DataImportManaging {
     public init(loginImporter: LoginImporter = SecureVaultLoginImporter(),
                 reporter: SecureVaultReporting,
                 bookmarksDatabase: CoreDataDatabase,
-                favoritesDisplayMode: FavoritesDisplayMode) {
+                favoritesDisplayMode: FavoritesDisplayMode,
+                tld: TLD) {
         self.loginImporter = loginImporter
         self.reporter = reporter
         self.bookmarksDatabase = bookmarksDatabase
         self.favoritesDisplayMode = favoritesDisplayMode
+        self.tld = tld
     }
 
     public func importFile(at url: URL, for fileType: DataImportFileType) async throws -> DataImportSummary? {
@@ -110,11 +114,11 @@ public final class DataImportManager: DataImportManaging {
         return await importData(types: Set(dataTypes)).task.value
     }
 
-    public static func preview(contents: ImportArchiveContents) -> [ImportPreview] {
+    public static func preview(contents: ImportArchiveContents, tld: TLD) -> [ImportPreview] {
         var importPreview: [ImportPreview] = []
 
         if let csvContents = contents.passwords.first {
-            let passwordsCount = CSVImporter.totalValidLogins(in: csvContents, defaultColumnPositions: nil)
+            let passwordsCount = CSVImporter.totalValidLogins(in: csvContents, defaultColumnPositions: nil, tld: tld)
             if passwordsCount > 0 {
                 importPreview.append(ImportPreview(type: .passwords, count: passwordsCount))
             }
@@ -157,7 +161,8 @@ public final class DataImportManager: DataImportManaging {
                     csvContent: csvContent,
                     loginImporter: loginImporter,
                     defaultColumnPositions: nil,
-                    reporter: reporter)
+                    reporter: reporter,
+                    tld: tld)
     }
 
     private func cleanupImporters() {

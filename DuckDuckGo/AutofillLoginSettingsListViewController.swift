@@ -145,7 +145,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         searchController.searchBar.placeholder = UserText.autofillLoginListSearchPlaceholder
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
-        
+
         return searchController
     }()
 
@@ -236,11 +236,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
         Pixel.fire(pixel: .autofillManagementOpened, withAdditionalParameters: ["source": source.rawValue])
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = UserText.autofillLoginListTitle
@@ -318,7 +318,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         detailsViewController = detailsController
         return detailsController
     }
-    
+
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
         let detailsController = makeAccountDetailsScreen(account)
         navigationController?.pushViewController(detailsController, animated: animated)
@@ -348,7 +348,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 self?.updateViewState()
             }
             .store(in: &cancellables)
-        
+
         viewModel.$sections
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -365,7 +365,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
              .store(in: &cancellables)
 
     }
-    
+
     private func configureNotification() {
         addObserver(for: UIApplication.didBecomeActiveNotification, selector: #selector(appDidBecomeActiveCallback))
         addObserver(for: UIApplication.willResignActiveNotification, selector: #selector(appWillResignActiveCallback))
@@ -388,7 +388,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             return
         }
     }
-    
+
     @objc private func appWillResignActiveCallback() {
         viewModel.lockUI()
     }
@@ -396,12 +396,12 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     @objc private func authenticatorInvalidateContext() {
         viewModel.authenticateInvalidateContext()
     }
-    
+
     private func authenticate() {
         viewModel.authenticate {[weak self] error in
             guard let self = self else { return }
             self.viewModel.isAuthenticating = false
-            
+
             if error != nil {
                 if error != .noAuthAvailable {
                     self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)
@@ -413,7 +413,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             }
         }
     }
-    
+
     private func editAction() -> UIAction {
         return UIAction(title: UserText.actionGenericEdit, image: UIImage(named: "Edit-16")) { [weak self] _ in
             self?.setEditing(true, animated: true)
@@ -438,8 +438,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func segueToFileImport() {
         let dataImportManager = DataImportManager(reporter: SecureVaultReporter(),
                                                   bookmarksDatabase: bookmarksDatabase,
-                                                  favoritesDisplayMode: favoritesDisplayMode)
-        let dataImportViewController = DataImportViewController(importManager: dataImportManager, importScreen: DataImportViewModel.ImportScreen.passwords, syncService: syncService)
+                                                  favoritesDisplayMode: favoritesDisplayMode,
+                                                  tld: tld)
+        let dataImportViewController = DataImportViewController(importManager: dataImportManager,
+                                                                importScreen: DataImportViewModel.ImportScreen.passwords,
+                                                                syncService: syncService)
         dataImportViewController.delegate = self
         navigationController?.pushViewController(dataImportViewController, animated: true)
     }
@@ -570,8 +573,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                   actionTitle: UserText.actionGenericUndo,
                                   presentationLocation: .withoutBottomBar,
                                   onAction: {
-                                      shouldDeleteAccounts = false
-                                  }, onDidDismiss: {
+            shouldDeleteAccounts = false
+        }, onDidDismiss: {
             if shouldDeleteAccounts {
                 if self.viewModel.deleteAllCredentials() {
                     self.syncService.scheduler.notifyDataChanged()
@@ -588,7 +591,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     // MARK: Subviews Setup
 
     private func updateViewState() {
-        
+
         switch viewModel.viewState {
         case .showItems:
             tableView.tableFooterView = nil
@@ -776,7 +779,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         view.addSubview(lockedView)
         view.addSubview(noAuthAvailableView)
     }
-    
+
     private func installConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         emptySearchView.translatesAutoresizingMaskIntoConstraints = false
@@ -818,7 +821,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     // MARK: Cell Methods
-    
+
     private func credentialCell(for tableView: UITableView, item: AutofillLoginItem, indexPath: IndexPath) -> AutofillListItemTableViewCell {
         let cell = tableView.dequeueCell(ofType: AutofillListItemTableViewCell.self, for: indexPath)
         cell.item = item
@@ -826,7 +829,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         cell.backgroundColor = UIColor(designSystemColor: .surface)
         return cell
     }
-    
+
     private func enableAutofillCell(for tableView: UITableView, indexPath: IndexPath) -> EnableAutofillSettingsTableViewCell {
         let cell = tableView.dequeueCell(ofType: EnableAutofillSettingsTableViewCell.self, for: indexPath)
         cell.delegate = self
@@ -863,7 +866,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 // MARK: UITableViewDelegate
 
 extension AutofillLoginSettingsListViewController: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         switch viewModel.sections[indexPath.section] {
         case .enableAutofill:
@@ -872,10 +875,10 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
             return 60
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         switch viewModel.sections[indexPath.section] {
         case .enableAutofill:
             switch EnableAutofillRows(rawValue: indexPath.row) {
@@ -940,15 +943,15 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
 // MARK: UITableViewDataSource
 
 extension AutofillLoginSettingsListViewController: UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.rowsInSection(section)
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         viewModel.sections.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel.sections[indexPath.section] {
         case .enableAutofill:
@@ -970,11 +973,11 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
             return credentialCell(for: tableView, item: items[indexPath.row], indexPath: indexPath)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         tableView.isEditing ? .delete : .none
     }
-    
+
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch viewModel.sections[indexPath.section] {
         case .credentials(_, let items), .suggestions(_, let items):
@@ -1005,7 +1008,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
             break
         }
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch viewModel.sections[section] {
         case .enableAutofill:
@@ -1014,21 +1017,21 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
             return title
         }
     }
-    
+
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         viewModel.viewState == .showItems ? UILocalizedIndexedCollation.current().sectionIndexTitles : []
     }
-    
+
     func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         var closestSoFar = 0
         var exactMatchIndex: Int?
         for (index, section) in viewModel.sections.enumerated() {
             if case .credentials(let sectionTitle, _) = section {
-                
+
                 if let first = title.first, !first.isLetter {
                     return viewModel.sections.count - 1
                 }
-                
+
                 let result = sectionTitle.localizedCaseInsensitiveCompare(title)
                 if result == .orderedSame {
                     exactMatchIndex = index
@@ -1041,7 +1044,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         }
         return exactMatchIndex ?? closestSoFar
     }
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         switch viewModel.sections[indexPath.section] {
         case .credentials, .suggestions:
@@ -1099,7 +1102,7 @@ extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableVi
         } else {
             Pixel.fire(pixel: .autofillLoginsSettingsDisabled, withAdditionalParameters: ["source": source.rawValue])
         }
-        
+
         viewModel.isAutofillEnabledInSettings = value
         updateViewState()
     }

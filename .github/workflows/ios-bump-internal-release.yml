@@ -1,8 +1,8 @@
 name: iOS - Bump Internal Release
 
 on:
-  schedule:
-    - cron: '0 5 * * 2-5' # Run at 05:00 UTC, Tuesday through Friday
+  # schedule:
+  #   - cron: '0 5 * * 2-5' # Run at 05:00 UTC, Tuesday through Friday
   workflow_dispatch:
     inputs:
       asana-task-url:

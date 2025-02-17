@@ -23,8 +23,7 @@ tags:
 - pressKey: Enter
 
 - assertVisible: "1 major tracker loaded via script src"
-- tapOn: 
-    id: PrivacyIcon
+- tapOn: "Privacy Icon"
 - assertVisible: "Protections are ON for this site"
 
 - assertVisible: "We blocked Google Ads (Google) from loading tracking requests on this page."
@@ -47,7 +46,6 @@ tags:
 
 - assertVisible: "1 major tracker loaded via script src"
 
-- tapOn: 
-    id: PrivacyIcon
+- tapOn: "Privacy Icon"
 - assertVisible: "Protections are OFF for this site"
 

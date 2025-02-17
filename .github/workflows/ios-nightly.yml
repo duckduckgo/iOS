@@ -1,8 +1,9 @@
 name: iOS - Nightly Test and Deploy
 
 on:
-  schedule:
-    - cron: '0 2 * * *' # Run at 2 AM UTC
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 2 * * *' # Run at 2 AM UTC
 
 jobs:
   atb-ui-tests:
